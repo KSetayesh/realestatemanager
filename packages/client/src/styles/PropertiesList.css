@@ -1,0 +1,26 @@
+/* PropertiesList.css */
+.properties-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.properties-table th,
+.properties-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.properties-table th {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.properties-table tr:hover {
+    background-color: #a09d9d;
+}
+
+.properties-table a {
+    color: #04AA6D;
+    text-decoration: none;
+}
