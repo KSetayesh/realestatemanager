@@ -8,6 +8,7 @@ import {
 import './App.css';
 import Home from './pages/Home';
 import User from './pages/PropertyForm';
+// import PropertiesList from './pages/PropertiesList';
 
 console.log("App component is rendering");
 console.log("Client is running on http://localhost:5173/");
@@ -24,6 +25,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/propertyForm" element={<User />} />
+                    {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
                     {/* Add other routes here */}
                 </Routes>
             </div>

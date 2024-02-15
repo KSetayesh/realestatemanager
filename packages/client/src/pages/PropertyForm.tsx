@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Country, HomeType, State } from '../constants/Constant';
+// import { ListingInformationDTO } from '@realestatemanager/shared';
+// import { ListingInformationDTO } from '@realestatemanager/shared';
 
 const PropertyForm: React.FC = () => {
 
@@ -12,16 +14,16 @@ const PropertyForm: React.FC = () => {
         zipcode: '',
         town: '',
         county: '',
-        country: '',
+        country: Country.UnitedStates,
         streetAddress: '',
         apartmentNumber: '',
         numberOfDaysOnMarket: '',
-        elementarySchoolRating: '',
-        middleSchoolRating: '',
-        highSchoolRating: '',
-        numberOfBedrooms: '',
-        numberOfFullBathrooms: '',
-        numberOfHalfBathrooms: '',
+        elementarySchoolRating: '1',
+        middleSchoolRating: '1',
+        highSchoolRating: '1',
+        numberOfBedrooms: '1',
+        numberOfFullBathrooms: '1',
+        numberOfHalfBathrooms: '1',
         squareFeet: '',
         acres: '',
         yearBuilt: '',
@@ -46,11 +48,11 @@ const PropertyForm: React.FC = () => {
                 propertyInformation: {
                     address: {
                         fullAddress: formData.fullAddress,
-                        state: formData.state,
+                        state: formData.state as State,
                         zipcode: formData.zipcode,
                         town: formData.town,
                         county: formData.county,
-                        country: formData.country,
+                        country: formData.country as Country,
                         streetAddress: formData.streetAddress,
                         apartmentNumber: formData.apartmentNumber,
                     },
@@ -64,7 +66,7 @@ const PropertyForm: React.FC = () => {
                     squareFeet: parseInt(formData.squareFeet),
                     acres: parseFloat(formData.acres),
                     yearBuilt: parseInt(formData.yearBuilt),
-                    homeType: formData.homeType,
+                    homeType: formData.homeType as HomeType,
                 },
                 listingPriceInformation: {
                     price: parseFloat(formData.price),
@@ -74,7 +76,8 @@ const PropertyForm: React.FC = () => {
                     monthlyHomeInsuranceAmount: parseFloat(formData.monthlyHomeInsuranceAmount),
                     monthlyHOAFeesAmount: parseFloat(formData.monthlyHOAFeesAmount),
                 },
-            },
+
+            }
         };
 
         try {
