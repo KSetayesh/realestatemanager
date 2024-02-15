@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { Address, HomeType, ListingInformationDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
@@ -7,20 +7,24 @@ export class CalcController {
 
     constructor(private readonly calcService: CalcService) { }
 
-
     @Get()
     async getAllProperties(): Promise<ListingInformationDTO[]> {
         return this.calcService.getAllProperties();
+    }
+
+    @Get('property')
+    async getPropertyByZillowUrl(@Query('zillowURL') zillowURL: string): Promise<ListingInformationDTO> {
+        if (!zillowURL) {
+            throw new Error('zillowURL query parameter is required');
+        }
+        return this.calcService.getPropertyByZillowURL(zillowURL);
     }
 
     @Post('addProperty')
     async addNewProperty(
         @Body('listingInformation') listingInformation: ListingInformationDTO,
     ): Promise<void> {
-        console.log("---listingInformation:", listingInformation);
-        console.log("---listingInformationHOA:", listingInformation.listingPriceInformation.monthlyHOAFeesAmount);
         this.calcService.addNewProperty(listingInformation);
-
     }
 
 }

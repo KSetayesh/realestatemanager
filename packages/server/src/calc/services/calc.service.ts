@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InvestmentPropertyDTO, ListingInformationDTO } from '@realestatemanager/shared';
+import { ListingInformationDTO } from '@realestatemanager/shared';
 import { RealEstateManager } from 'src/db/realestate/realestate.db';
 
 @Injectable()
@@ -11,17 +11,17 @@ export class CalcService {
         this.realEstateManager = new RealEstateManager();
     }
 
+    async getPropertyByZillowURL(zillowURL: string): Promise<ListingInformationDTO> {
+        return this.realEstateManager.getPropertyByZillowURL(zillowURL);
+    }
+
+    async getAllProperties(): Promise<ListingInformationDTO[]> {
+        return this.realEstateManager.getAllListings();
+    }
+
     async addNewProperty(listingInformationDTO: ListingInformationDTO): Promise<void> {
         this.realEstateManager.insertListingInformation(listingInformationDTO);
     }
 
-    async getAllProperties(): Promise<ListingInformationDTO[]> {
-        return [];
-    }
-
-    async getInvestmentPropertyInformation(zillowURL: string): Promise<InvestmentPropertyDTO> {
-        // ...Fetch home data from database...
-        return;
-    }
 
 }
