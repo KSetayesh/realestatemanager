@@ -8,7 +8,7 @@ export class CalcController {
     constructor(private readonly calcService: CalcService) { }
 
     @Get()
-    async getAllProperties(): Promise<ListingDetailsDTO[]> {
+    async getAllProperties(): Promise<PropertyListingDTO[]> {
         return this.calcService.getAllProperties();
     }
 

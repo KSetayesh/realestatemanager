@@ -6,18 +6,13 @@ import fs from 'fs';
 export const pool = new Pool(dbConfig);
 
 
-// Tables from dbschema.sql
-// const createListingTableString: string = 'CreateListingTable';
-// const createListingPricesString: string = 'CreateListingPrices';
-// const createAddressTableString: string = 'CreateAddressTable';
-
-const sqlTableQueries: string[] = [
-    'CreateAddressTable',
-    'CreatePropertyDetailsTable',
-    'CreateZillowMarketEstimatesTable',
-    'CreatePriceDetailsTable',
-    'CreateListingDetailsTable'
-];
+enum SQLTable {
+    CREATE_ADDRESS_TABLE = 'CreateAddressTable',
+    CREATE_PROPERTY_DETAILS_TABLE = 'CreatePropertyDetailsTable',
+    CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
+    CREATE_PRICE_DETAILS_TABLE = 'CreatePriceDetailsTable',
+    CREATE_LISTING_DETAILS_TABLE = 'CreateListingDetailsTable',
+};
 
 const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;
 
@@ -45,9 +40,13 @@ async function loadSqlStatementToExecute(): Promise<void> {
 
     try {
         // Needs to be in same order as the tables in dbschema.sql
-        for (const query of sqlTableQueries) {
+        for (const query of Object.values(SQLTable)) {
             await createTable(sqlContent, query, client);
+            // await createTable(sqlContent, value, client); // Use this in your actual code where you need to execute the queries
         }
+        // for (const query of sqlTableQueries) {
+        //     await createTable(sqlContent, query, client);
+        // }
     } catch (err) {
         console.error('Could not create database', err);
     } finally {
