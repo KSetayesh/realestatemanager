@@ -1,4 +1,5 @@
 // import { HomeType } from '@realestatemanager/shared';
+import '../styles/PropertyForm.css';
 import { useState } from 'react';
 import axios from 'axios';
 import { Country, HomeType, State } from '../constants/Constant';
@@ -93,72 +94,71 @@ const PropertyForm: React.FC = () => {
     };
 
     return (
-        <div style={{ margin: '20px', maxWidth: '600px' }}>
+        <div className="form-container">
             <h2>Property Listing Form</h2>
             <form onSubmit={handleSubmit}>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Zillow URL: </label>
+                <div className="form-field">
+                    <label className="form-label">Zillow URL: </label>
                     <input
                         type="text"
                         name="zillowURL"
                         value={formData.zillowURL}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Full Address: </label>
+                <div className="form-field">
+                    <label className="form-label">Full Address: </label>
                     <input
                         type="text"
                         name="fullAddress"
                         value={formData.fullAddress}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Zipcode: </label>
+                <div className="form-field">
+                    <label className="form-label">Zipcode: </label>
                     <input
                         type="text"
                         name="zipcode"
                         value={formData.zipcode}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Town: </label>
+                <div className="form-field">
+                    <label className="form-label">Town: </label>
                     <input
                         type="text"
                         name="town"
                         value={formData.town}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>County: </label>
+                <div className="form-field">
+                    <label className="form-label">County: </label>
                     <input
                         type="text"
                         name="county"
                         value={formData.county}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>State: </label>
+                <div className="form-field">
+                    <label className="form-label">State: </label>
                     <select
                         name="state"
                         value={formData.state}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries(State).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -168,13 +168,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Country: </label>
+                <div className="form-field">
+                    <label className="form-label">Country: </label>
                     <select
                         name="country"
                         value={formData.country}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries(Country).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -184,46 +183,45 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Street Address: </label>
+                <div className="form-field">
+                    <label className="form-label">Street Address: </label>
                     <input
                         type="text"
                         name="streetAddress"
                         value={formData.streetAddress}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Apartment Number: </label>
+                <div className="form-field">
+                    <label className="form-label">Apartment Number: </label>
                     <input
                         type="text"
                         name="apartmentNumber"
                         value={formData.apartmentNumber}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Number Of Days On Market: </label>
+                <div className="form-field">
+                    <label className="form-label">Number Of Days On Market: </label>
                     <input
                         type="text"
                         name="numberOfDaysOnMarket"
                         value={formData.numberOfDaysOnMarket}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Elementary School Rating: </label>
+                <div className="form-field">
+                    <label className="form-label">Elementary School Rating: </label>
                     <select
                         name="elementarySchoolRating"
                         value={formData.elementarySchoolRating}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -233,13 +231,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Middle School Rating: </label>
+                <div className="form-field">
+                    <label className="form-label">Middle School Rating: </label>
                     <select
                         name="middleSchoolRating"
                         value={formData.middleSchoolRating}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -249,13 +246,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>High School Rating: </label>
+                <div className="form-field">
+                    <label className="form-label">High School Rating: </label>
                     <select
                         name="highSchoolRating"
                         value={formData.highSchoolRating}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -265,13 +261,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Number Of Bedrooms: </label>
+                <div className="form-field">
+                    <label className="form-label">Number Of Bedrooms: </label>
                     <select
                         name="numberOfBedrooms"
                         value={formData.numberOfBedrooms}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -281,13 +276,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Number Of Full Bathrooms: </label>
+                <div className="form-field">
+                    <label className="form-label">Number Of Full Bathrooms: </label>
                     <select
                         name="numberOfFullBathrooms"
                         value={formData.numberOfFullBathrooms}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -297,13 +291,12 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Number Of Half Bathrooms: </label>
+                <div className="form-field">
+                    <label className="form-label">Number Of Half Bathrooms: </label>
                     <select
                         name="numberOfHalfBathrooms"
                         value={formData.numberOfHalfBathrooms}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -313,46 +306,45 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Acres: </label>
+                <div className="form-field">
+                    <label className="form-label">Acres: </label>
                     <input
                         type="text"
                         name="acres"
                         value={formData.acres}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Year Built: </label>
+                <div className="form-field">
+                    <label className="form-label">Year Built: </label>
                     <input
                         type="text"
                         name="yearBuilt"
                         value={formData.yearBuilt}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Square Feet: </label>
+                <div className="form-field">
+                    <label className="form-label">Square Feet: </label>
                     <input
                         type="text"
                         name="squareFeet"
                         value={formData.squareFeet}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Home Type: </label>
+                <div className="form-field">
+                    <label className="form-label">Home Type: </label>
                     <select
                         name="homeType"
                         value={formData.homeType}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '320px' }}
                     >
                         {Object.entries(HomeType).map(([key, value]) => (
                             <option key={key} value={value}>
@@ -362,73 +354,73 @@ const PropertyForm: React.FC = () => {
                     </select>
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Price: </label>
+                <div className="form-field">
+                    <label className="form-label">Price: </label>
                     <input
                         type="text"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Zestimate: </label>
+                <div className="form-field">
+                    <label className="form-label">Zestimate: </label>
                     <input
                         type="text"
                         name="zestimate"
                         value={formData.zestimate}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Rent Estimate: </label>
+                <div className="form-field">
+                    <label className="form-label">Rent Estimate: </label>
                     <input
                         type="text"
                         name="rentEstimate"
                         value={formData.rentEstimate}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Monthly Property Tax Amount: </label>
+                <div className="form-field">
+                    <label className="form-label">Monthly Property Tax Amount: </label>
                     <input
                         type="text"
                         name="monthlyPropertyTaxAmount"
                         value={formData.monthlyPropertyTaxAmount}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Monthly Home Insurance Amount: </label>
+                <div className="form-field">
+                    <label className="form-label">Monthly Home Insurance Amount: </label>
                     <input
                         type="text"
                         name="monthlyHomeInsuranceAmount"
                         value={formData.monthlyHomeInsuranceAmount}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div style={{ marginBottom: '10px' }}>
-                    <label>Monthly HOA Fees Amount: </label>
+                <div className="form-field">
+                    <label className="form-label">Monthly HOA Fees Amount: </label>
                     <input
                         type="text"
                         name="monthlyHOAFeesAmount"
                         value={formData.monthlyHOAFeesAmount}
                         onChange={handleChange}
-                        style={{ marginLeft: '10px', width: '300px' }}
+                        className="form-input"
                     />
                 </div>
 
-                <div>
+                <div className="submit-button-container">
                     <br></br>
                     <button type="submit">Submit</button>
                 </div>

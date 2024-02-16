@@ -1,16 +1,16 @@
 import '../styles/PropertiesList.css';
-import { ListingInformationDTO } from '@realestatemanager/shared';
+import { ListingDTO } from '@realestatemanager/shared';
 import { useEffect, useState } from 'react';
 import { HomeType, State } from '../constants/Constant';
 
 const PropertiesList: React.FC = () => {
-    const [properties, setProperties] = useState<ListingInformationDTO[]>([]);
+    const [properties, setProperties] = useState<ListingDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('http://localhost:3000/calc')
             .then(response => response.json())
-            .then((data: ListingInformationDTO[]) => {
+            .then((data: ListingDTO[]) => {
                 setProperties(data);
                 setIsLoading(false);
             })
@@ -45,18 +45,18 @@ const PropertiesList: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {properties.map((property: ListingInformationDTO, index) => (
+                        {properties.map((property: ListingDTO, index) => (
                             <tr key={index}>
-                                <td>{HomeType[property.propertyInformation.homeType as keyof typeof HomeType]}</td>
-                                <td>{property.propertyInformation.address!.fullAddress}</td>
-                                <td>{getFullStateName(property.propertyInformation.address!.state)}</td>
+                                <td>{HomeType[property.listingInformation.propertyInformation.homeType as keyof typeof HomeType]}</td>
+                                <td>{property.listingInformation.propertyInformation.address!.fullAddress}</td>
+                                <td>{getFullStateName(property.listingInformation.propertyInformation.address!.state)}</td>
                                 <td>
-                                    <a href={property.zillowURL} target="_blank" rel="noopener noreferrer">
+                                    <a href={property.listingInformation.zillowURL} target="_blank" rel="noopener noreferrer">
                                         View Listing
                                     </a>
                                 </td>
-                                <td>{property.listingPriceInformation.price}</td>
-                                <td>{property.listingPriceInformation.rentEstimate}</td>
+                                <td>{property.listingInformation.listingPriceInformation.price}</td>
+                                <td>{property.listingInformation.listingPriceInformation.rentEstimate}</td>
                             </tr>
                         ))}
                     </tbody>

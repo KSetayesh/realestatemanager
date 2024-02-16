@@ -1,3 +1,5 @@
+//-----Enums----
+
 export enum HomeType {
     Condo = "Condo",
     SingleFamilyHome = "Single Family Home",
@@ -62,23 +64,21 @@ export enum State {
     WY = "Wyoming",
 };
 
-export interface UserDTO {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
+export enum InterestType {
+    FIXED = "Fixed",
+    VARIABLE = "Variable",
 };
 
-export interface InvestmentPropertyDTO {
-    // propertyInformation: PropertyInformationDTO;
-    amortizationSchedule: AmortizationScheduleDTO;
-    projections: ProjectionsDTO;
-    mortgage: MortgageDTO;
-    additionalExpenses: AdditionalExpensesDTO;
-    rentEstimate: number;
+//-----Interfaces----
+
+export interface InvestmentAnalysis {
+    amortizationDetails: AmortizationDetails;
+    financialProjections: FinancialProjections;
+    mortgageDetails: MortgageDetails;
+    operatingExpenses: OperatingExpenses;
 };
 
-export interface AmortizationScheduleDTO {
+export interface AmortizationDetails {
     month: number;
     year: number;
     monthlyPayment: number;
@@ -92,40 +92,33 @@ export interface AmortizationScheduleDTO {
 };
 
 
-export interface ProjectionsDTO {
+export interface FinancialProjections {
     annualAppreciationRate?: number;
     annualTaxIncreaseRate?: number;
     annualRentIncreaseRate?: number;
 };
 
-export interface LoanDTO {
-    principal: number; // The total loan amount
-    annualInterestRate: number; // The annual interest rate as a percentage (e.g., 5.3 for 5.3%)
-    termInYears: number; // The term of the loan in years
+export interface LoanDetails {
+    principal: number;
+    annualInterestRate: number;
+    termInYears: number;
+    interestType: InterestType;
 };
 
-export interface MortgageDTO extends LoanDTO {
-    costOfProperty: number;
+export interface MortgageDetails extends LoanDetails {
     downPaymentPercentage: number;
-    closingCostsRate: number;
     pmiRate: number;
-    monthlyPropertyTaxAmount: number;
-    monthlyHomeInsuranceAmount: number;
-    monthlyHOAFeesAmount: number;
+    closingCosts?: number;
 };
 
-export interface AdditionalExpensesDTO {
+export interface OperatingExpenses {
     propertyManagementRate?: number;
     vacancyRate?: number;
     maintenanceRate?: number;
     otherExpensesRate?: number;
-    capExReserveRate?: number; // Optional field for capital expenditure reserve
-    legalAndProfessionalFees?: number; // Optional
+    capExReserveRate?: number;
+    legalAndProfessionalFees?: number;
     initialRepairCosts?: number;
-};
-
-export interface InvestmentPropertiesData {
-    investmentProperties: { investmentProperty: InvestmentPropertyDTO }[];
 };
 
 export type Address = {
@@ -139,13 +132,18 @@ export type Address = {
     apartmentNumber?: string;
 };
 
-export interface ListingInformationDTO {
-    zillowURL: string;
-    propertyInformation: PropertyInformationDTO;
-    listingPriceInformation: ListingPriceInformationDTO;
+export interface PropertyListing {
+    listingDetails: ListingDetails;
+    investmentAnalysis: InvestmentAnalysis;
 };
 
-export interface PropertyInformationDTO {
+export interface ListingDetails {
+    zillowURL: string;
+    propertyDetails: PropertyDetails;
+    priceDetails: PriceDetails;
+};
+
+export interface PropertyDetails {
     address?: Address;
     numberOfDaysOnMarket?: number;
     elementarySchoolRating?: number;
@@ -160,11 +158,16 @@ export interface PropertyInformationDTO {
     homeType?: HomeType;
 };
 
-export interface ListingPriceInformationDTO {
-    price?: number;
-    zestimate?: number;
-    rentEstimate?: number;
+export interface PriceDetails {
+    listingPrice: number; // The current listing or sale price
+    marketEstimates?: MarketEstimates;
     monthlyPropertyTaxAmount?: number;
     monthlyHomeInsuranceAmount?: number;
     monthlyHOAFeesAmount?: number;
 };
+
+export interface MarketEstimates {
+    zestimate?: number; // Estimated market value
+    rentEstimate?: number; // Estimated rental value
+};
+
