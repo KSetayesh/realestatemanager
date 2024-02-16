@@ -71,14 +71,20 @@ export enum InterestType {
 
 //-----Interfaces----
 
-export interface InvestmentAnalysis {
-    amortizationDetails: AmortizationDetails;
-    financialProjections: FinancialProjections;
-    mortgageDetails: MortgageDetails;
-    operatingExpenses: OperatingExpenses;
+export interface PropertyListingDTO {
+    listingDetails: ListingDetailsDTO;
+    investmentAnalysis: InvestmentAnalysisDTO;
 };
 
-export interface AmortizationDetails {
+export interface InvestmentAnalysisDTO {
+    amortizationDetails: AmortizationDetailsDTO;
+    financialProjections: FinancialProjectionsDTO;
+    mortgageDetails: MortgageDetailsDTO;
+    operatingExpenses: OperatingExpensesDTO;
+    rentEstimate: number;
+};
+
+export interface AmortizationDetailsDTO {
     month: number;
     year: number;
     monthlyPayment: number;
@@ -91,27 +97,26 @@ export interface AmortizationDetails {
     appreciationValue: number,
 };
 
-
-export interface FinancialProjections {
+export interface FinancialProjectionsDTO {
     annualAppreciationRate?: number;
     annualTaxIncreaseRate?: number;
     annualRentIncreaseRate?: number;
 };
 
-export interface LoanDetails {
+export interface LoanDetailsDTO {
     principal: number;
     annualInterestRate: number;
     termInYears: number;
     interestType: InterestType;
 };
 
-export interface MortgageDetails extends LoanDetails {
+export interface MortgageDetailsDTO extends LoanDetailsDTO {
     downPaymentPercentage: number;
     pmiRate: number;
     closingCosts?: number;
 };
 
-export interface OperatingExpenses {
+export interface OperatingExpensesDTO {
     propertyManagementRate?: number;
     vacancyRate?: number;
     maintenanceRate?: number;
@@ -121,7 +126,7 @@ export interface OperatingExpenses {
     initialRepairCosts?: number;
 };
 
-export type Address = {
+export type AddressDTO = {
     fullAddress?: string;
     state?: State;
     zipcode?: string;
@@ -132,19 +137,14 @@ export type Address = {
     apartmentNumber?: string;
 };
 
-export interface PropertyListing {
-    listingDetails: ListingDetails;
-    investmentAnalysis: InvestmentAnalysis;
-};
-
-export interface ListingDetails {
+export interface ListingDetailsDTO {
     zillowURL: string;
-    propertyDetails: PropertyDetails;
-    priceDetails: PriceDetails;
+    propertyDetails: PropertyDetailsDTO;
+    priceDetails: PriceDetailsDTO;
 };
 
-export interface PropertyDetails {
-    address?: Address;
+export interface PropertyDetailsDTO {
+    address?: AddressDTO;
     numberOfDaysOnMarket?: number;
     elementarySchoolRating?: number;
     middleSchoolRating?: number;
@@ -158,16 +158,16 @@ export interface PropertyDetails {
     homeType?: HomeType;
 };
 
-export interface PriceDetails {
+export interface PriceDetailsDTO {
     listingPrice: number; // The current listing or sale price
-    marketEstimates?: MarketEstimates;
+    zillowMarketEstimates?: ZillowMarketEstimatesDTO;
     monthlyPropertyTaxAmount?: number;
     monthlyHomeInsuranceAmount?: number;
     monthlyHOAFeesAmount?: number;
 };
 
-export interface MarketEstimates {
+export interface ZillowMarketEstimatesDTO {
     zestimate?: number; // Estimated market value
-    rentEstimate?: number; // Estimated rental value
+    zillowRentEstimate?: number; // Estimated rental value
 };
 

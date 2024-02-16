@@ -1,6 +1,5 @@
 import { Pool } from 'pg';
 import dbConfig from '../../config/dbConfig';
-import { Address, ListingInformationDTO, ListingPriceInformationDTO, PropertyInformationDTO } from '@realestatemanager/shared';
 
 export class RealEstateManager {
 

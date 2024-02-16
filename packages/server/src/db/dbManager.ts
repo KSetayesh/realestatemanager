@@ -7,9 +7,17 @@ export const pool = new Pool(dbConfig);
 
 
 // Tables from dbschema.sql
-const createListingTableString: string = 'CreateListingTable';
-const createListingPricesString: string = 'CreateListingPrices';
-const createAddressTableString: string = 'CreateAddressTable';
+// const createListingTableString: string = 'CreateListingTable';
+// const createListingPricesString: string = 'CreateListingPrices';
+// const createAddressTableString: string = 'CreateAddressTable';
+
+const sqlTableQueries: string[] = [
+    'CreateAddressTable',
+    'CreatePropertyDetailsTable',
+    'CreateZillowMarketEstimatesTable',
+    'CreatePriceDetailsTable',
+    'CreateListingDetailsTable'
+];
 
 const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;
 
@@ -37,9 +45,9 @@ async function loadSqlStatementToExecute(): Promise<void> {
 
     try {
         // Needs to be in same order as the tables in dbschema.sql
-        await createTable(sqlContent, createAddressTableString, client);
-        await createTable(sqlContent, createListingTableString, client);
-        await createTable(sqlContent, createListingPricesString, client);
+        for (const query of sqlTableQueries) {
+            await createTable(sqlContent, query, client);
+        }
     } catch (err) {
         console.error('Could not create database', err);
     } finally {

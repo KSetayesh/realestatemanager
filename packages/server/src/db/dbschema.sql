@@ -7,22 +7,23 @@
 -- Query: CreateAddressTable
 CREATE TABLE IF NOT EXISTS address (
     id SERIAL PRIMARY KEY,
-    full_address VARCHAR(255),
-    state VARCHAR(50), -- Changed from ENUM to VARCHAR
+    full_address VARCHAR(255) UNIQUE,
+    state VARCHAR(50),
     zipcode VARCHAR(10),
     town VARCHAR(50),
     county VARCHAR(50),
-    country VARCHAR(50), -- Changed from ENUM to VARCHAR
+    country VARCHAR(50),
     street_address VARCHAR(255),
-    apartment_number VARCHAR(50)
+    apartment_number VARCHAR(50),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
 
--- Query: CreateListingTable
-CREATE TABLE IF NOT EXISTS listing (
+-- Query: CreatePropertyDetailsTable
+CREATE TABLE IF NOT EXISTS property_details (
     id SERIAL PRIMARY KEY,
     address_id INT,
-    zillow_url VARCHAR(255),
     number_of_days_on_market INT,
     elementary_school_rating INT,
     middle_school_rating INT,
@@ -31,7 +32,7 @@ CREATE TABLE IF NOT EXISTS listing (
     number_of_full_bathrooms INT,
     number_of_half_bathrooms INT,
     square_feet INT,
-    acres NUMERIC(12, 2),
+    acres DECIMAL,
     year_built INT,
     home_type VARCHAR(50), -- Changed from ENUM to VARCHAR
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
@@ -40,19 +41,40 @@ CREATE TABLE IF NOT EXISTS listing (
 );
 -- EndQuery
 
--- Query: CreateListingPrices
-CREATE TABLE IF NOT EXISTS listing_price (
+-- Query: CreateZillowMarketEstimatesTable
+CREATE TABLE zillow_market_estimates (
     id SERIAL PRIMARY KEY,
-    listing_id INT,
-    price NUMERIC(12, 2),
-    zestimate NUMERIC(12, 2),
-    rent_estimate NUMERIC(12, 2),
-    monthly_property_tax_amount NUMERIC(12, 2),
-    monthly_home_insurance_amount NUMERIC(12, 2),
-    monthly_hoa_fees_amount NUMERIC(12, 2),
+    zestimate INT,
+    zillow_rent_estimate INT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (listing_id) REFERENCES listing(id) ON DELETE CASCADE
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
+
+-- Query: CreatePriceDetailsTable
+CREATE TABLE price_details (
+    id SERIAL PRIMARY KEY,
+    listing_price INT NOT NULL,
+    zillow_market_estimates_id INT,
+    monthly_property_tax_amount INT,
+    monthly_home_insurance_amount INT,
+    monthly_hoa_fees_amount INT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
+);
+-- EndQuery
+
+-- Query: CreateListingDetailsTable
+CREATE TABLE listing_details (
+    id SERIAL PRIMARY KEY,
+    zillow_url VARCHAR(255) UNIQUE,
+    property_details_id INT,
+    price_details_id INT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_details_id) REFERENCES price_details(id) ON DELETE CASCADE
+);
+
 
