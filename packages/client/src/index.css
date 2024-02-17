@@ -17,7 +17,7 @@ a {
     font-weight: 500;
     color: #646cff;
     text-decoration: inherit;
-    font-size: 1.4em;
+    font-size: 1.5em;
 }
 
 a:hover {
@@ -26,10 +26,10 @@ a:hover {
 
 body {
     margin: 0;
-    display: flex;
+    /* display: flex; */
     place-items: center;
     min-width: 320px;
-    min-height: 40vh;
+    min-height: 25vh;
 }
 
 h1 {
@@ -44,7 +44,7 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: #317cff;
     cursor: pointer;
     transition: border-color 0.25s;
 }

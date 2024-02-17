@@ -76,5 +76,6 @@ CREATE TABLE listing_details (
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
     FOREIGN KEY (price_details_id) REFERENCES price_details(id) ON DELETE CASCADE
 );
+-- EndQuery
 
 

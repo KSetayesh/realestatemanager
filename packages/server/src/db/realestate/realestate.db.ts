@@ -28,16 +28,71 @@ export class RealEstateManager {
         }
     }
 
+    //     async getAllListings(): Promise<ListingDetails[]> {
+    //         const listings: ListingDetails[] = [];
+    //         const query = `
+    //     SELECT ld.zillow_url, pd.*, ad.*, zd.*, pdt.*, zme.zestimate, zme.zillow_rent_estimate
+    //     FROM listing_details ld
+    //     JOIN property_details pd ON ld.property_details_id = pd.id
+    //     JOIN address ad ON pd.address_id = ad.id
+    //     JOIN price_details pdt ON ld.price_details_id = pdt.id
+    //     LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id;
+    //   `;
+
+    //         try {
+    //             const res = await this.pool.query(query);
+    //             res.rows.forEach(row => {
+    //                 const listing: ListingDetails = this.mapRowToListingDetails(row);
+    //                 listings.push(listing);
+    //             });
+    //             return listings;
+    //         } catch (err) {
+    //             console.error('Error fetching all listings', err);
+    //             throw err;
+    //         }
+    //     }
+
+    //     async getPropertyByZillowURL(zillowURL: string): Promise<ListingDetails | null> {
+    //         const query = `
+    //     SELECT ld.zillow_url, pd.*, ad.*, zd.*, pdt.*, zme.zestimate, zme.zillow_rent_estimate
+    //     FROM listing_details ld
+    //     JOIN property_details pd ON ld.property_details_id = pd.id
+    //     JOIN address ad ON pd.address_id = ad.id
+    //     JOIN price_details pdt ON ld.price_details_id = pdt.id
+    //     LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id
+    //     WHERE ld.zillow_url = $1;
+    //   `;
+
+    //         try {
+    //             const res = await this.pool.query(query, [zillowURL]);
+    //             if (res.rows.length > 0) {
+    //                 const row = res.rows[0];
+    //                 const listing: ListingDetails = this.mapRowToListingDetails(row);
+    //                 return listing;
+    //             }
+    //             return null;
+    //         } catch (err) {
+    //             console.error(`Error fetching property by Zillow URL: ${zillowURL}`, err);
+    //             throw err;
+    //         }
+    //     }
+
     async getAllListings(): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
         const query = `
-    SELECT ld.zillow_url, pd.*, ad.*, zd.*, pdt.*, zme.zestimate, zme.zillow_rent_estimate
-    FROM listing_details ld
-    JOIN property_details pd ON ld.property_details_id = pd.id
-    JOIN address ad ON pd.address_id = ad.id
-    JOIN price_details pdt ON ld.price_details_id = pdt.id
-    LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id;
-  `;
+        SELECT 
+            ld.zillow_url, 
+            ad.full_address, ad.state, ad.zipcode, ad.town, ad.county, ad.country, ad.street_address, ad.apartment_number,
+            pd.number_of_days_on_market, pd.elementary_school_rating, pd.middle_school_rating, pd.high_school_rating, 
+            pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, pd.acres, pd.year_built, pd.home_type,
+            pdt.listing_price, pdt.monthly_property_tax_amount, pdt.monthly_home_insurance_amount, pdt.monthly_hoa_fees_amount,
+            zme.zestimate, zme.zillow_rent_estimate
+        FROM listing_details ld
+        JOIN property_details pd ON ld.property_details_id = pd.id
+        JOIN address ad ON pd.address_id = ad.id
+        JOIN price_details pdt ON ld.price_details_id = pdt.id
+        LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id;
+    `;
 
         try {
             const res = await this.pool.query(query);
@@ -54,14 +109,20 @@ export class RealEstateManager {
 
     async getPropertyByZillowURL(zillowURL: string): Promise<ListingDetails | null> {
         const query = `
-    SELECT ld.zillow_url, pd.*, ad.*, zd.*, pdt.*, zme.zestimate, zme.zillow_rent_estimate
-    FROM listing_details ld
-    JOIN property_details pd ON ld.property_details_id = pd.id
-    JOIN address ad ON pd.address_id = ad.id
-    JOIN price_details pdt ON ld.price_details_id = pdt.id
-    LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id
-    WHERE ld.zillow_url = $1;
-  `;
+        SELECT 
+            ld.zillow_url, 
+            ad.full_address, ad.state, ad.zipcode, ad.town, ad.county, ad.country, ad.street_address, ad.apartment_number,
+            pd.number_of_days_on_market, pd.elementary_school_rating, pd.middle_school_rating, pd.high_school_rating, 
+            pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, pd.acres, pd.year_built, pd.home_type,
+            pdt.listing_price, pdt.monthly_property_tax_amount, pdt.monthly_home_insurance_amount, pdt.monthly_hoa_fees_amount,
+            zme.zestimate, zme.zillow_rent_estimate
+        FROM listing_details ld
+        JOIN property_details pd ON ld.property_details_id = pd.id
+        JOIN address ad ON pd.address_id = ad.id
+        JOIN price_details pdt ON ld.price_details_id = pdt.id
+        LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id
+        WHERE ld.zillow_url = $1;
+    `;
 
         try {
             const res = await this.pool.query(query, [zillowURL]);

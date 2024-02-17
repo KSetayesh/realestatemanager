@@ -11,10 +11,11 @@ export class PropertyListing {
         this.investmentAnalysis = investmentsAnalysis;
     }
 
+    // TODO:  Uncomment "this.investmentAnalysis.toDTO()" once finished with code
     toDTO(): PropertyListingDTO {
         return {
             listingDetails: this.listingDetails.toDTO(),
-            investmentAnalysis: this.investmentAnalysis.toDTO(),
+            investmentAnalysis: null, // this.investmentAnalysis.toDTO(),
         };
     }
 }
