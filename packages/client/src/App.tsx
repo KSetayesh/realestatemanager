@@ -9,6 +9,7 @@ import './App.css';
 import Home from './pages/Home';
 import PropertiesList from './pages/PropertiesList';
 import PropertyForm from './pages/PropertyForm';
+import Projections from './pages/Projections';
 
 console.log("App component is rendering");
 console.log("Client is running on http://localhost:5173/");
@@ -20,12 +21,16 @@ const App: React.FC = () => {
             <div className="App">
                 <nav>
                     {/* You could also put a navigation link here if you like */}
-                    <Link to="/">Home</Link> | <Link to="/propertyForm">Property Form</Link> | <Link to="/propertiesList">Properties List</Link>
+                    <Link to="/">Home</Link> &nbsp;|&nbsp;
+                    <Link to="/propertyForm">Property Form</Link> &nbsp;|&nbsp;
+                    <Link to="/propertiesList">Properties List</Link> &nbsp;|&nbsp;
+                    <Link to="/projections">Projections</Link>
                 </nav>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/propertyForm" element={<PropertyForm />} />
                     <Route path="/propertiesList" element={<PropertiesList />} />
+                    <Route path="/projections" element={<Projections />} />
                     {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
                     {/* Add other routes here */}
                 </Routes>
