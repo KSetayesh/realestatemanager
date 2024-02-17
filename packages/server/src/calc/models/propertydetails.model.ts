@@ -15,7 +15,33 @@ export class PropertyDetails {
     yearBuilt?: number;
     homeType?: HomeType;
 
-    constructor() { }
+    constructor(
+        address?: Address,
+        numberOfDaysOnMarket?: number,
+        elementarySchoolRating?: number,
+        middleSchoolRating?: number,
+        highSchoolRating?: number,
+        numberOfBedrooms?: number,
+        numberOfFullBathrooms?: number,
+        numberOfHalfBathrooms?: number,
+        squareFeet?: number,
+        acres?: number,
+        yearBuilt?: number,
+        homeType?: HomeType
+    ) {
+        this.address = address;
+        this.numberOfDaysOnMarket = numberOfDaysOnMarket;
+        this.elementarySchoolRating = elementarySchoolRating;
+        this.middleSchoolRating = middleSchoolRating;
+        this.highSchoolRating = highSchoolRating;
+        this.numberOfBedrooms = numberOfBedrooms;
+        this.numberOfFullBathrooms = numberOfFullBathrooms;
+        this.numberOfHalfBathrooms = numberOfHalfBathrooms;
+        this.squareFeet = squareFeet;
+        this.acres = acres;
+        this.yearBuilt = yearBuilt;
+        this.homeType = homeType;
+    }
 
     toDTO(): PropertyDetailsDTO {
         return {

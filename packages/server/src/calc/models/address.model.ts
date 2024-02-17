@@ -10,7 +10,24 @@ export class Address {
     streetAddress?: string;
     apartmentNumber?: string;
 
-    constructor() { }
+    constructor(fullAddress: string,
+        state?: State,
+        zipCode?: string,
+        town?: string,
+        county?: string,
+        country?: Country,
+        streetAddress?: string,
+        apartmentNumber?: string) {
+
+        this.fullAddress = fullAddress;
+        this.state = state;
+        this.zipcode = zipCode;
+        this.town = town;
+        this.county = county;
+        this.country = country;
+        this.streetAddress = streetAddress;
+        this.apartmentNumber = apartmentNumber;
+    }
 
     toDTO(): AddressDTO {
         return {

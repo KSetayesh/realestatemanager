@@ -7,7 +7,11 @@ export class ListingDetails {
     propertyDetails: PropertyDetails;
     priceDetails: PriceDetails;
 
-    constructor() { }
+    constructor(zillowURL: string, propertyDetails: PropertyDetails, priceDetails: PriceDetails) {
+        this.zillowURL = zillowURL;
+        this.propertyDetails = propertyDetails;
+        this.priceDetails = priceDetails;
+    }
 
     toDTO(): ListingDetailsDTO {
         return {

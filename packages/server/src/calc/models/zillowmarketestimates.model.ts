@@ -4,7 +4,10 @@ export class ZillowMarketEstimates {
     zestimate?: number; // Estimated market value
     zillowRentEstimate?: number; // Estimated rental value
 
-    constructor() { }
+    constructor(zestimate?: number, zillowRentEstimate?: number) {
+        this.zestimate = zestimate;
+        this.zillowRentEstimate = zillowRentEstimate;
+    }
 
     toDTO(): ZillowMarketEstimatesDTO {
         return {

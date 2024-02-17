@@ -10,7 +10,18 @@ export class PriceDetails {
     monthlyHomeInsuranceAmount?: number;
     monthlyHOAFeesAmount?: number;
 
-    constructor() { }
+    constructor(listingPrice: number,
+        zillowMarketEstimates?: ZillowMarketEstimates,
+        monthlyPropertyTaxAmount?: number,
+        monthlyHomeInsuranceAmount?: number,
+        monthlyHOAFeesAmount?: number
+    ) {
+        this.listingPrice = listingPrice;
+        this.zillowMarketEstimates = zillowMarketEstimates;
+        this.monthlyPropertyTaxAmount = monthlyPropertyTaxAmount;
+        this.monthlyHomeInsuranceAmount = monthlyHomeInsuranceAmount;
+        this.monthlyHOAFeesAmount = monthlyHOAFeesAmount;
+    }
 
     toDTO(): PriceDetailsDTO {
         return {
