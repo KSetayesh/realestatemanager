@@ -1,6 +1,7 @@
 import { AddressDTO, Country, State } from "@realestatemanager/shared";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class Address {
+export class Address implements IDTOConvertible<AddressDTO> {
     fullAddress: string;
     state?: State; // Assuming State is a type or enum you've defined
     zipcode?: string;

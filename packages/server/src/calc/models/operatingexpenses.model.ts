@@ -1,6 +1,7 @@
 import { OperatingExpensesDTO } from "@realestatemanager/shared";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class OperatingExpenses {
+export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
     propertyManagementRate?: number;
     vacancyRate?: number;
     maintenanceRate?: number;

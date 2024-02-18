@@ -3,8 +3,9 @@ import { AmortizationDetails } from "./amortizationdetails.model";
 import { FinancialProjections } from "./financialprojections.model";
 import { MortgageDetails } from "./mortgagedetails.model";
 import { OperatingExpenses } from "./operatingexpenses.model";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class InvestmentAnalysis {
+export class InvestmentAnalysis implements IDTOConvertible<InvestmentAnalysisDTO>{
     amortizationDetails: AmortizationDetails;
     financialProjections: FinancialProjections;
     mortgageDetails: MortgageDetails;

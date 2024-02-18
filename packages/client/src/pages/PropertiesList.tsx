@@ -65,10 +65,3 @@ const PropertiesList: React.FC = () => {
 
 export default PropertiesList;
 
-// const PropertiesList: React.FC = () => {
-//     return (
-//         <div><h2>On Properties List Page</h2></div>
-//     );
-// };
-
-// export default PropertiesList;

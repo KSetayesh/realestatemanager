@@ -1,6 +1,7 @@
 import { AmortizationDetailsDTO } from "@realestatemanager/shared";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class AmortizationDetails {
+export class AmortizationDetails implements IDTOConvertible<AmortizationDetailsDTO>{
     month: number;
     year: number;
     monthlyPayment: number;

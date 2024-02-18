@@ -1,6 +1,7 @@
 import { FinancialProjectionsDTO } from "@realestatemanager/shared";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class FinancialProjections {
+export class FinancialProjections implements IDTOConvertible<FinancialProjectionsDTO>{
     annualAppreciationRate?: number;
     annualTaxIncreaseRate?: number;
     annualRentIncreaseRate?: number;

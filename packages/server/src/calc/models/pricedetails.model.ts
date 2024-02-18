@@ -1,8 +1,9 @@
 import { PriceDetailsDTO } from "@realestatemanager/shared";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
 
-export class PriceDetails {
+export class PriceDetails implements IDTOConvertible<PriceDetailsDTO>{
 
     listingPrice: number; // The current listing or sale price
     zillowMarketEstimates?: ZillowMarketEstimates;

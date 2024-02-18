@@ -1,8 +1,9 @@
 import { PropertyListingDTO } from "@realestatemanager/shared";
 import { InvestmentAnalysis } from "./investmentanalysis.model";
 import { ListingDetails } from "./listingdetails.model";
+import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class PropertyListing {
+export class PropertyListing implements IDTOConvertible<PropertyListingDTO>{
     private listingDetails: ListingDetails;
     private investmentAnalysis: InvestmentAnalysis;
 
