@@ -6,13 +6,24 @@ import { OperatingExpenses } from "./operatingexpenses.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class InvestmentAnalysis implements IDTOConvertible<InvestmentAnalysisDTO>{
-    amortizationDetails: AmortizationDetails;
-    financialProjections: FinancialProjections;
-    mortgageDetails: MortgageDetails;
-    operatingExpenses: OperatingExpenses;
-    rentEstimate: number;
+    private amortizationDetails: AmortizationDetails;
+    private financialProjections: FinancialProjections;
+    private mortgageDetails: MortgageDetails;
+    private operatingExpenses: OperatingExpenses;
+    private rentEstimate: number;
 
-    constructor() { }
+    constructor(amortizationDetails: AmortizationDetails,
+        financialProjections: FinancialProjections,
+        mortgageDetails: MortgageDetails,
+        operatingExpenses: OperatingExpenses,
+        rentEstimate: number) {
+
+        this.amortizationDetails = amortizationDetails;
+        this.financialProjections = financialProjections;
+        this.mortgageDetails = mortgageDetails;
+        this.operatingExpenses = operatingExpenses;
+        this.rentEstimate = rentEstimate;
+    }
 
     toDTO(): InvestmentAnalysisDTO {
         return {

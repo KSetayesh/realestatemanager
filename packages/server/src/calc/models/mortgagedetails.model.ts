@@ -2,9 +2,9 @@ import { InterestType, MortgageDetailsDTO } from "@realestatemanager/shared";
 import { LoanDetails } from "./loandetails.model";
 
 export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
-    downPaymentPercentage: number;
-    pmiRate: number;
-    closingCosts?: number;
+    private downPaymentPercentage: number;
+    private pmiRate: number;
+    private closingCosts?: number;
 
     constructor(
         principal: number,
@@ -23,10 +23,10 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
 
     toDTO(): MortgageDetailsDTO {
         return {
-            principal: this.principal,
-            annualInterestRate: this.annualInterestRate,
-            termInYears: this.termInYears,
-            interestType: this.interestType,
+            principal: this.getPrincipal(),
+            annualInterestRate: this.getAnnualInterestRate(),
+            termInYears: this.getTermInYears(),
+            interestType: this.getInterestType(),
             downPaymentPercentage: this.downPaymentPercentage,
             pmiRate: this.pmiRate,
             closingCosts: this.closingCosts,

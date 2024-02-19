@@ -2,14 +2,14 @@ import { AddressDTO, Country, State } from "@realestatemanager/shared";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class Address implements IDTOConvertible<AddressDTO> {
-    fullAddress: string;
-    state?: State; // Assuming State is a type or enum you've defined
-    zipcode?: string;
-    town?: string;
-    county?: string;
-    country?: Country; // Assuming Country is a type or enum you've defined
-    streetAddress?: string;
-    apartmentNumber?: string;
+    private fullAddress: string;
+    private state?: State; // Assuming State is a type or enum you've defined
+    private zipcode?: string;
+    private town?: string;
+    private county?: string;
+    private country?: Country; // Assuming Country is a type or enum you've defined
+    private streetAddress?: string;
+    private apartmentNumber?: string;
 
     constructor(fullAddress: string,
         state?: State,

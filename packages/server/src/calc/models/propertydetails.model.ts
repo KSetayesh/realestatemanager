@@ -3,18 +3,18 @@ import { Address } from "./address.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
-    address?: Address;
-    numberOfDaysOnMarket?: number;
-    elementarySchoolRating?: number;
-    middleSchoolRating?: number;
-    highSchoolRating?: number;
-    numberOfBedrooms?: number;
-    numberOfFullBathrooms?: number;
-    numberOfHalfBathrooms?: number;
-    squareFeet?: number;
-    acres?: number;
-    yearBuilt?: number;
-    homeType?: HomeType;
+    private address?: Address;
+    private numberOfDaysOnMarket?: number;
+    private elementarySchoolRating?: number;
+    private middleSchoolRating?: number;
+    private highSchoolRating?: number;
+    private numberOfBedrooms?: number;
+    private numberOfFullBathrooms?: number;
+    private numberOfHalfBathrooms?: number;
+    private squareFeet?: number;
+    private acres?: number;
+    private yearBuilt?: number;
+    private homeType?: HomeType;
 
     constructor(
         address?: Address,
@@ -46,7 +46,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
 
     toDTO(): PropertyDetailsDTO {
         return {
-            address: this.address,
+            address: this.address.toDTO(),
             numberOfDaysOnMarket: this.numberOfDaysOnMarket,
             elementarySchoolRating: this.elementarySchoolRating,
             middleSchoolRating: this.middleSchoolRating,

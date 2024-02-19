@@ -4,9 +4,9 @@ import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
-    zillowURL: string;
-    propertyDetails: PropertyDetails;
-    priceDetails: PriceDetails;
+    private zillowURL: string;
+    private propertyDetails: PropertyDetails;
+    private priceDetails: PriceDetails;
 
     constructor(zillowURL: string, propertyDetails: PropertyDetails, priceDetails: PriceDetails) {
         this.zillowURL = zillowURL;
