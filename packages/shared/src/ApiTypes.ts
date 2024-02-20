@@ -73,7 +73,7 @@ export enum InterestType {
 
 export interface ListingWithScenariosDTO {
     listingDetails: ListingDetailsDTO;
-    scenarios: InvestmentScenarioDTO[];
+    metrics: InvestmentMetricsDTO[];
 }
 
 export interface InvestmentScenarioDTO {
@@ -82,6 +82,24 @@ export interface InvestmentScenarioDTO {
     operatingExpenses: OperatingExpensesDTO;
     rentEstimate: number;
     purchasePrice: number;
+};
+
+export interface InvestmentScenarioRequestDTO {
+    useDefaultRequest: boolean;
+    investmentScenario?: InvestmentScenarioDTO;
+}
+
+export interface InvestmentMetricsDTO {
+    investmentScenario: InvestmentScenarioDTO;
+    downPaymentAmount: number;
+    loanAmount: number;
+    ROI: number;
+    capRate: number;
+    monthlyCashFlow: number;
+    yearlyCashFlow: number;
+    initialCosts: number;
+    mortgage: number;
+    ammortizationDetails?: AmortizationDetailsDTO[];
 };
 
 export interface AmortizationDetailsDTO {

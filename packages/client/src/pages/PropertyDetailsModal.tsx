@@ -9,6 +9,9 @@ const PropertyDetailsModal: React.FC<{ property: ListingWithScenariosDTO | null;
         e.stopPropagation();
     };
 
+    // Utility function to convert boolean values to "Yes" or "No"
+    const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
+
     return (
         <div className="modal-backdrop" onClick={onClose}>
             {/* Add onClick event to stop propagation */}
@@ -39,9 +42,9 @@ const PropertyDetailsModal: React.FC<{ property: ListingWithScenariosDTO | null;
                 <p><span className="modal-label">Square Feet:</span> {property.listingDetails.propertyDetails.squareFeet}</p>
                 <p><span className="modal-label">Acres:</span> {property.listingDetails.propertyDetails.acres}</p>
                 <p><span className="modal-label">Year Built:</span> {property.listingDetails.propertyDetails.yearBuilt}</p>
-                <p><span className="modal-label">Has Garage:</span> {property.listingDetails.propertyDetails.hasGarage}</p>
-                <p><span className="modal-label">Has Pool:</span> {property.listingDetails.propertyDetails.hasPool}</p>
-                <p><span className="modal-label">Has Basement:</span> {property.listingDetails.propertyDetails.hasBasement}</p>
+                <p><span className="modal-label">Has Garage:</span> {booleanToYesNo(property.listingDetails.propertyDetails.hasGarage)}</p>
+                <p><span className="modal-label">Has Pool:</span> {booleanToYesNo(property.listingDetails.propertyDetails.hasPool)}</p>
+                <p><span className="modal-label">Has Basement:</span> {booleanToYesNo(property.listingDetails.propertyDetails.hasBasement)}</p>
                 <p><span className="modal-label">Home Type:</span> {property.listingDetails.propertyDetails.homeType}</p>
                 <p><span className="modal-label">Listing Price:</span> {property.listingDetails.listingPrice}</p>
                 <p><span className="modal-label">Zestimate:</span> {property.listingDetails.zillowMarketEstimates.zestimate}</p>

@@ -1,4 +1,4 @@
-import { InvestmentScenarioDTO, Utility } from "@realestatemanager/shared";
+import { AmortizationDetailsDTO, InvestmentMetricsDTO, InvestmentScenarioDTO, Utility } from "@realestatemanager/shared";
 import { AmortizationDetails } from "./amortizationdetails.model";
 import { FinancialProjections } from "./financialprojections.model";
 import { MortgageDetails } from "./mortgagedetails.model";
@@ -13,15 +13,17 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
     private purchasePrice: number;
 
     constructor(
-        financialProjections: FinancialProjections,
         mortgageDetails: MortgageDetails,
+        financialProjections: FinancialProjections,
         operatingExpenses: OperatingExpenses,
-        rentEstimate: number) {
+        rentEstimate: number,
+        purchasePrice: number) {
 
-        this.financialProjections = financialProjections;
         this.mortgageDetails = mortgageDetails;
+        this.financialProjections = financialProjections;
         this.operatingExpenses = operatingExpenses;
         this.rentEstimate = rentEstimate;
+        this.purchasePrice = purchasePrice;
     }
 
     toDTO(): InvestmentScenarioDTO {
@@ -34,14 +36,38 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         };
     }
 
-    calculateAmortizationSchedule(): AmortizationDetails[] {
+    createInvestmentMetrics(): InvestmentMetricsDTO {
+        const downPayment = this.calculateDownPaymentAmount();
+        const loanAmount = this.calculateLoanAmount();
+        const ROI = this.calculateROI();
+        const capRate = this.calculateCapRate();
+        const monthlyCashFlow = this.calculateMonthlyCashFlow();
+        const yearlyCashFlow = this.calculateYearlyCashFlow();
+        const initialCosts = this.calculateInitialCosts();
+        const mortgage = this.calculateMortgagePayment();
+        return {
+            investmentScenario: this.toDTO(),
+            downPaymentAmount: downPayment,
+            loanAmount: loanAmount,
+            ROI: ROI,
+            capRate: capRate,
+            monthlyCashFlow: monthlyCashFlow,
+            yearlyCashFlow: yearlyCashFlow,
+            initialCosts: initialCosts,
+            mortgage: mortgage,
+            ammortizationDetails: this.calculateAmortizationSchedule()
+        }
+
+    }
+
+    private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
         const principal = this.purchasePrice;
-        const loanAmount = this.mortgageDetails.getLoanAmount();
+        const loanAmount = this.calculateLoanAmount();
         const downPaymentAmount = this.calculateDownPaymentAmount();
         const monthlyInterestRate = this.mortgageDetails.getMonthlyInterestRate() / 100;
         const totalPayments = this.mortgageDetails.getNumberOfPayments();
-        const monthlyPayment = this.mortgageDetails.calculateMortgagePayment();
-        let schedule: AmortizationDetails[] = [];
+        const monthlyPayment = this.calculateMortgagePayment();
+        let schedule: AmortizationDetailsDTO[] = [];
         let remainingBalance = loanAmount;
         let cumulativePrincipalPaid = 0;
         let propertyValue = principal;
@@ -85,13 +111,13 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 equityWithAppreciationRounded,
                 appreciationValueRounded);
 
-            schedule.push(amortizationDetails);
+            schedule.push(amortizationDetails.toDTO());
         }
 
         return schedule;
     }
 
-    calculateROI(): number {
+    private calculateROI(): number {
         const downPaymentAmount = this.calculateDownPaymentAmount();
         // Ensure downPaymentAmount is non-zero to avoid division by zero
         if (downPaymentAmount === 0) {
@@ -103,28 +129,36 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         return Utility.round((yearlyReturn / initialExpeses) * 100);
     }
 
-    calculateYearlyCashFlow(): number {
+    private calculateYearlyCashFlow(): number {
         return this.calculateMonthlyCashFlow() * 12;
     }
 
-    calculateMonthlyCashFlow(): number {
+    private calculateMonthlyCashFlow(): number {
         const recurringExpenses = this.operatingExpenses.calculateRecurringExpenses();
-        return this.rentEstimate - (this.mortgageDetails.calculateMortgagePayment() + recurringExpenses);
+        return this.rentEstimate - (this.calculateMortgagePayment() + recurringExpenses);
     }
 
-    calculateCapRate(): number {
-        const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.mortgageDetails.calculateMortgagePayment()) * 12;
+    private calculateCapRate(): number {
+        const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.calculateMortgagePayment()) * 12;
         return (annualNetOperatingIncome / this.purchasePrice) * 100;
     }
 
-    calculateInitialCosts(): number {
+    private calculateInitialCosts(): number {
         const downPaymentAmount = this.calculateDownPaymentAmount();
         const initialExpeses = this.operatingExpenses.calculateOneTimeExpenses();
         return downPaymentAmount + initialExpeses;
     }
 
-    calculateDownPaymentAmount(): number {
+    private calculateDownPaymentAmount(): number {
         return this.purchasePrice * (this.mortgageDetails.getDownPaymentPercentage() / 100);
+    }
+
+    private calculateLoanAmount(): number {
+        return this.mortgageDetails.getLoanAmount();
+    }
+
+    private calculateMortgagePayment(): number {
+        return this.mortgageDetails.calculateMortgagePayment();
     }
 
 }

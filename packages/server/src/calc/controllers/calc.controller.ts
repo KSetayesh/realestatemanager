@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ListingDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioRequestDTO, ListingDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('calc')
@@ -8,16 +8,29 @@ export class CalcController {
     constructor(private readonly calcService: CalcService) { }
 
     @Get()
-    async getAllProperties(): Promise<ListingWithScenariosDTO[]> {
-        return this.calcService.getAllProperties();
+    async getAllProperties(
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequestDTO
+    ): Promise<ListingWithScenariosDTO[]> {
+
+        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+            throw new Error('Not a valid Investment Scenario Request');
+        }
+        return this.calcService.getAllProperties(investmentScenarioRequest);
     }
 
     @Get('property')
-    async getPropertyByZillowUrl(@Query('zillowURL') zillowURL: string): Promise<ListingWithScenariosDTO> {
+    async getPropertyByZillowUrl(
+        @Query('zillowURL') zillowURL: string,
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequestDTO
+    ): Promise<ListingWithScenariosDTO> {
+
         if (!zillowURL) {
             throw new Error('zillowURL query parameter is required');
         }
-        return this.calcService.getPropertyByZillowURL(zillowURL);
+        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+            throw new Error('Not a valid Investment Scenario Request');
+        }
+        return this.calcService.getPropertyByZillowURL(zillowURL, investmentScenarioRequest);
     }
 
     @Post('addNewProperty')
@@ -25,6 +38,18 @@ export class CalcController {
         @Body() listingDetails: ListingDetailsDTO,
     ): Promise<void> {
         this.calcService.addNewProperty(listingDetails);
+    }
+
+    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequestDTO): boolean {
+        if (investmentScenarioRequest) {
+            if (investmentScenarioRequest.useDefaultRequest && investmentScenarioRequest.investmentScenario) {
+                return false;
+            }
+            if (!investmentScenarioRequest.useDefaultRequest && !investmentScenarioRequest.investmentScenario) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

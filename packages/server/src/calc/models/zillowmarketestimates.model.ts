@@ -6,7 +6,7 @@ export class ZillowMarketEstimates implements IDTOConvertible<ZillowMarketEstima
     private zestimateRange?: {
         low?: number,
         high?: number,
-    }
+    };
     private zillowRentEstimate?: number; // Estimated rental value
     private zillowMonthlyPropertyTaxAmount?: number;
     private zillowMonthlyHomeInsuranceAmount?: number;
