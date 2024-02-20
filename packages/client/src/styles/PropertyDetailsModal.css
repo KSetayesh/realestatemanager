@@ -1,0 +1,37 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 5px;
+    border: 15px solid #595959;
+    text-align: left;
+    font-size: 20px;
+    height: 800px;
+    /* Example fixed height */
+    overflow-y: auto;
+    /* Enables vertical scrolling if content overflows */
+    min-width: 900px;
+}
+
+.modal button {
+    display: block;
+    /* Make the button a block-level element */
+    margin: 0 auto;
+    /* Automatically margin on both sides */
+    /* Additional styling for the button as needed */
+}
+
+.modal-label {
+    font-weight: bold;
+}

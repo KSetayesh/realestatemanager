@@ -1,16 +1,17 @@
+import React, { useState, useEffect } from 'react';
 import { ListingWithScenariosDTO } from '@realestatemanager/shared';
+import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
-import { useEffect, useState } from 'react';
 
 const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
 
     useEffect(() => {
         fetch('http://localhost:3000/calc')
             .then(response => response.json())
             .then((data: ListingWithScenariosDTO[]) => {
-                console.log("data:", data);
                 setProperties(data);
                 setIsLoading(false);
             })
@@ -20,6 +21,13 @@ const PropertiesList: React.FC = () => {
             });
     }, []);
 
+    const handleRowClick = (property: ListingWithScenariosDTO) => {
+        setSelectedProperty(property);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedProperty(null);
+    };
 
     return (
         <div>
@@ -27,40 +35,41 @@ const PropertiesList: React.FC = () => {
             {isLoading ? (
                 <p>Loading properties...</p>
             ) : (
-                <table className="properties-table">
-                    <thead>
-                        <tr>
-                            <th>Home Type</th>
-                            <th>Full Address</th>
-                            <th>State</th>
-                            <th>Zillow URL</th>
-                            <th>Price</th>
-                            <th>Rent Estimate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {properties.map((property: ListingWithScenariosDTO, index) => (
-                            <tr key={index}>
-                                <td>{property.listingDetails.propertyDetails.homeType}</td>
-                                <td>{property.listingDetails.propertyDetails.address!.fullAddress}</td>
-                                <td>{property.listingDetails.propertyDetails.address!.state}</td>
-                                <td>
-                                    <a href={property.listingDetails.zillowURL} target="_blank" rel="noopener noreferrer">
-                                        View Listing
-                                    </a>
-                                </td>
-                                <td>{property.listingDetails.listingPrice}</td>
-                                <td>{property.listingDetails.zillowMarketEstimates?.zillowRentEstimate}</td>
+                <>
+                    <table className="properties-table">
+                        <thead>
+                            <tr>
+                                <th>Home Type</th>
+                                <th>Full Address</th>
+                                <th>State</th>
+                                <th>Zillow URL</th>
+                                <th>Price</th>
+                                <th>Rent Estimate</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {properties.map((property, index) => (
+                                <tr key={index} onClick={() => handleRowClick(property)} style={{ cursor: 'pointer' }}>
+                                    <td>{property.listingDetails.propertyDetails.homeType}</td>
+                                    <td>{property.listingDetails.propertyDetails.address!.fullAddress}</td>
+                                    <td>{property.listingDetails.propertyDetails.address!.state}</td>
+                                    <td>
+                                        <a href={property.listingDetails.zillowURL} target="_blank" rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}>
+                                            View Listing
+                                        </a>
+                                    </td>
+                                    <td>{property.listingDetails.listingPrice}</td>
+                                    <td>{property.listingDetails.zillowMarketEstimates.zillowRentEstimate}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <PropertyDetailsModal property={selectedProperty} onClose={handleCloseModal} />
+                </>
             )}
         </div>
     );
-
-
 };
 
 export default PropertiesList;
-
