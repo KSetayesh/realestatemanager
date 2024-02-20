@@ -61,3 +61,9 @@ export enum State {
     WI = "Wisconsin",
     WY = "Wyoming",
 };
+
+export enum InputType {
+    TEXT = 'text',
+    SELECT = 'select',
+    NUMBER = 'number'
+};

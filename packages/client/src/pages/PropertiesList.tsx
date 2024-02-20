@@ -1,16 +1,15 @@
+import { ListingWithScenariosDTO } from '@realestatemanager/shared';
 import '../styles/PropertiesList.css';
-// import { ListingDTO } from '@realestatemanager/shared';
 import { useEffect, useState } from 'react';
-import { PropertyListingDTO } from '@realestatemanager/shared';
 
 const PropertiesList: React.FC = () => {
-    const [properties, setProperties] = useState<PropertyListingDTO[]>([]);
+    const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch('http://localhost:3000/calc')
             .then(response => response.json())
-            .then((data: PropertyListingDTO[]) => {
+            .then((data: ListingWithScenariosDTO[]) => {
                 console.log("data:", data);
                 setProperties(data);
                 setIsLoading(false);
@@ -40,7 +39,7 @@ const PropertiesList: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {properties.map((property: PropertyListingDTO, index) => (
+                        {properties.map((property: ListingWithScenariosDTO, index) => (
                             <tr key={index}>
                                 <td>{property.listingDetails.propertyDetails.homeType}</td>
                                 <td>{property.listingDetails.propertyDetails.address!.fullAddress}</td>
@@ -50,8 +49,8 @@ const PropertiesList: React.FC = () => {
                                         View Listing
                                     </a>
                                 </td>
-                                <td>{property.listingDetails.priceDetails.listingPrice}</td>
-                                <td>{property.listingDetails.priceDetails.zillowMarketEstimates?.zillowRentEstimate}</td>
+                                <td>{property.listingDetails.listingPrice}</td>
+                                <td>{property.listingDetails.zillowMarketEstimates?.zillowRentEstimate}</td>
                             </tr>
                         ))}
                     </tbody>

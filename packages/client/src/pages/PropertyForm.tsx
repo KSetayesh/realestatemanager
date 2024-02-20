@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Country, HomeType, State } from '../constants/Constant';
+import { Country, HomeType, State, InputType } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 
 const PropertyForm: React.FC = () => {
@@ -10,38 +10,177 @@ const PropertyForm: React.FC = () => {
     type FormFieldConfig = {
         name: string;
         label: string;
-        type: 'text' | 'number' | 'select';
+        type: InputType;
         defaultValue: string | Country | HomeType;
         selections?: State[] | Country[] | HomeType[] | number[];
     };
 
     const formFieldsConfig: FormFieldConfig[] = [
-        { name: 'zillowURL', label: 'Zillow URL', type: 'text', defaultValue: '' },
-        { name: 'fullAddress', label: 'Full Address', type: 'text', defaultValue: '' },
-        { name: 'state', label: 'State', type: 'select', defaultValue: '', selections: Object.values(State) }, // Assuming state will be a dropdown
-        { name: 'zipcode', label: 'Zipcode', type: 'text', defaultValue: '' },
-        { name: 'town', label: 'Town', type: 'text', defaultValue: '' },
-        { name: 'county', label: 'County', type: 'text', defaultValue: '' },
-        { name: 'country', label: 'Country', type: 'select', defaultValue: Country.UnitedStates, selections: Object.values(Country) }, // Assuming country will be a dropdown
-        { name: 'streetAddress', label: 'Street Address', type: 'text', defaultValue: '' },
-        { name: 'apartmentNumber', label: 'Apartment Number', type: 'text', defaultValue: '' },
-        { name: 'numberOfDaysOnMarket', label: 'Number Of Days On Market', type: 'number', defaultValue: '' },
-        { name: 'elementarySchoolRating', label: 'Elementary School Rating', type: 'select', defaultValue: '1', selections: ratingSelections },
-        { name: 'middleSchoolRating', label: 'Middle School Rating', type: 'select', defaultValue: '1', selections: ratingSelections },
-        { name: 'highSchoolRating', label: 'High School Rating', type: 'select', defaultValue: '1', selections: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
-        { name: 'numberOfBedrooms', label: 'Number Of Bedrooms', type: 'select', defaultValue: '0', selections: [0, ...ratingSelections] },
-        { name: 'numberOfFullBathrooms', label: 'Number Of Full Bathrooms', type: 'select', defaultValue: '0', selections: [0, ...ratingSelections] },
-        { name: 'numberOfHalfBathrooms', label: 'Number Of Half Bathrooms', type: 'select', defaultValue: '0', selections: [0, ...ratingSelections] },
-        { name: 'squareFeet', label: 'Square Feet', type: 'number', defaultValue: '' },
-        { name: 'acres', label: 'Acres', type: 'number', defaultValue: '' },
-        { name: 'yearBuilt', label: 'Year Built', type: 'number', defaultValue: '' },
-        { name: 'homeType', label: 'Home Type', type: 'select', defaultValue: HomeType.SingleFamilyHome, selections: Object.values(HomeType) }, // Assuming homeType will be a dropdown
-        { name: 'listingPrice', label: 'Listing Price', type: 'number', defaultValue: '' },
-        { name: 'zestimate', label: 'Zestimate', type: 'number', defaultValue: '' },
-        { name: 'zillowRentEstimate', label: 'Zillow Rent Estimate', type: 'number', defaultValue: '' },
-        { name: 'monthlyPropertyTaxAmount', label: 'Monthly Property Tax Amount', type: 'number', defaultValue: '' },
-        { name: 'monthlyHomeInsuranceAmount', label: 'Monthly Home Insurance Amount', type: 'number', defaultValue: '' },
-        { name: 'monthlyHOAFeesAmount', label: 'Monthly HOA Fees Amount', type: 'number', defaultValue: '' },
+        {
+            name: 'zillowURL',
+            label: 'Zillow URL',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'fullAddress',
+            label: 'Full Address',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'state',
+            label: 'State',
+            type: InputType.SELECT,
+            defaultValue: '',
+            selections: Object.values(State)
+        },
+        {
+            name: 'zipcode',
+            label: 'Zipcode',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'town',
+            label: 'Town',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'county',
+            label: 'County',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'country',
+            label: 'Country',
+            type: InputType.SELECT,
+            defaultValue: Country.UnitedStates,
+            selections: Object.values(Country)
+        },
+        {
+            name: 'streetAddress',
+            label: 'Street Address',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'apartmentNumber',
+            label: 'Apartment Number',
+            type: InputType.TEXT,
+            defaultValue: ''
+        },
+        {
+            name: 'numberOfDaysOnMarket',
+            label: 'Number Of Days On Market',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'elementarySchoolRating',
+            label: 'Elementary School Rating',
+            type: InputType.SELECT,
+            defaultValue: '1',
+            selections: ratingSelections
+        },
+        {
+            name: 'middleSchoolRating',
+            label: 'Middle School Rating',
+            type: InputType.SELECT,
+            defaultValue: '1',
+            selections: ratingSelections
+        },
+        {
+            name: 'highSchoolRating',
+            label: 'High School Rating',
+            type: InputType.SELECT,
+            defaultValue: '1',
+            selections: ratingSelections
+        },
+        {
+            name: 'numberOfBedrooms',
+            label: 'Number Of Bedrooms',
+            type: InputType.SELECT,
+            defaultValue: '0',
+            selections: [0, ...ratingSelections]
+        },
+        {
+            name: 'numberOfFullBathrooms',
+            label: 'Number Of Full Bathrooms',
+            type: InputType.SELECT,
+            defaultValue: '0',
+            selections: [0, ...ratingSelections]
+        },
+        {
+            name: 'numberOfHalfBathrooms',
+            label: 'Number Of Half Bathrooms',
+            type: InputType.SELECT,
+            defaultValue: '0',
+            selections: [0, ...ratingSelections]
+        },
+        {
+            name: 'squareFeet',
+            label: 'Square Feet',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'acres',
+            label: 'Acres',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'yearBuilt',
+            label: 'Year Built',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'homeType',
+            label: 'Home Type',
+            type: InputType.SELECT,
+            defaultValue: HomeType.SingleFamilyHome,
+            selections: Object.values(HomeType)
+        },
+        {
+            name: 'listingPrice',
+            label: 'Listing Price',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'zestimate',
+            label: 'Zestimate',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'zillowRentEstimate',
+            label: 'Zillow Rent Estimate',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'monthlyPropertyTaxAmount',
+            label: 'Monthly Property Tax Amount',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'monthlyHomeInsuranceAmount',
+            label: 'Monthly Home Insurance Amount',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'monthlyHOAFeesAmount',
+            label: 'Monthly HOA Fees Amount',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
     ];
 
     const initialFormState = formFieldsConfig.reduce((acc, { name, defaultValue }) => {
