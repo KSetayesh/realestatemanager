@@ -14,15 +14,16 @@ export class RealEstateManager {
     private GET_LISTINGS_QUERY = `SELECT 
             ld.zillow_url, ld.listing_price, 
             ad.full_address, ad.state, ad.zipcode, ad.town, ad.county, ad.country, ad.street_address, ad.apartment_number,
-            pd.number_of_days_on_market, pd.elementary_school_rating, pd.middle_school_rating, pd.high_school_rating, 
+            pd.number_of_days_on_market, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
             pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd._description,
             zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
             zme.zillow_monthly_home_insurance_amount, zme.zillow_monthly_hoa_fees_amount 
         FROM listing_details ld
+        JOIN zillow_market_estimates zme ON ld.zillow_market_estimates_id = zme.id 
         JOIN property_details pd ON ld.property_details_id = pd.id
-        JOIN address ad ON pd.address_id = ad.id
-        LEFT JOIN zillow_market_estimates zme ON pdt.zillow_market_estimates_id = zme.id`;
+        JOIN address ad ON pd.address_id = ad.id 
+        JOIN school_rating sr ON pd.school_rating_id = sr.id;`;
 
     private INSERT_LISTING_DETAILS_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
