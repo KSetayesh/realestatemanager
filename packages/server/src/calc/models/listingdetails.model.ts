@@ -2,23 +2,35 @@ import { ListingDetailsDTO } from "@realestatemanager/shared";
 import { PriceDetails } from "./pricedetails.model";
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
+import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private zillowURL: string;
     private propertyDetails: PropertyDetails;
-    private priceDetails: PriceDetails;
+    private listingPrice: number;
+    private zillowMarketEstimates: ZillowMarketEstimates;
+    // private priceDetails: PriceDetails;
 
-    constructor(zillowURL: string, propertyDetails: PropertyDetails, priceDetails: PriceDetails) {
+    constructor(zillowURL: string,
+        propertyDetails: PropertyDetails,
+        listingPrice: number,
+        zillowMarketEstimates: ZillowMarketEstimates) {
         this.zillowURL = zillowURL;
         this.propertyDetails = propertyDetails;
-        this.priceDetails = priceDetails;
+        this.listingPrice = listingPrice;
+        this.zillowMarketEstimates = zillowMarketEstimates;
+        // this.priceDetails = priceDetails;
+    }
+
+    getListingPrice(): number {
+        return this.listingPrice;
     }
 
     toDTO(): ListingDetailsDTO {
         return {
             zillowURL: this.zillowURL,
             propertyDetails: this.propertyDetails.toDTO(),
-            priceDetails: this.priceDetails.toDTO(),
+            priceDetails: null, // this.priceDetails.toDTO(),
         }
     }
 

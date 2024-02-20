@@ -2,13 +2,13 @@ import { InterestType } from "@realestatemanager/shared";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export abstract class LoanDetails<T> implements IDTOConvertible<T> {
-    private principal: number;
+    private loanAmount: number;
     private annualInterestRate: number;
     private termInYears: number;
     private interestType: InterestType;
 
-    constructor(principal: number, annualInterestRate: number, termInYears: number, interestType: InterestType) {
-        this.principal = principal;
+    constructor(loanAmount: number, annualInterestRate: number, termInYears: number, interestType: InterestType) {
+        this.loanAmount = loanAmount;
         this.annualInterestRate = annualInterestRate;
         this.termInYears = termInYears;
         this.interestType = interestType;
@@ -16,19 +16,27 @@ export abstract class LoanDetails<T> implements IDTOConvertible<T> {
 
     abstract toDTO(): T;
 
-    protected getPrincipal(): number {
-        return this.principal;
+    getLoanAmount(): number {
+        return this.loanAmount;
     }
 
-    protected getAnnualInterestRate(): number {
+    getAnnualInterestRate(): number {
         return this.annualInterestRate;
     }
 
-    protected getTermInYears(): number {
+    getMonthlyInterestRate(): number {
+        return this.getAnnualInterestRate() / 12;
+    }
+
+    getTermInYears(): number {
         return this.termInYears;
     }
 
-    protected getInterestType(): InterestType {
+    getNumberOfPayments(): number {
+        return this.getTermInYears() * 12;
+    }
+
+    getInterestType(): InterestType {
         return this.interestType;
     }
 

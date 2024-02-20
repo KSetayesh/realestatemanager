@@ -71,17 +71,14 @@ export enum InterestType {
 
 //-----Interfaces----
 
-export interface PropertyListingDTO {
-    listingDetails: ListingDetailsDTO;
-    investmentAnalysis: InvestmentAnalysisDTO;
-};
-
 export interface InvestmentAnalysisDTO {
+    listingDetails: ListingDetailsDTO;
     amortizationDetails: AmortizationDetailsDTO;
     financialProjections: FinancialProjectionsDTO;
     mortgageDetails: MortgageDetailsDTO;
     operatingExpenses: OperatingExpensesDTO;
     rentEstimate: number;
+    expectedPrice: number;
 };
 
 export interface AmortizationDetailsDTO {
@@ -104,7 +101,7 @@ export interface FinancialProjectionsDTO {
 };
 
 export interface LoanDetailsDTO {
-    principal: number;
+    loanAmount: number;
     annualInterestRate: number;
     termInYears: number;
     interestType: InterestType;
@@ -145,10 +142,8 @@ export interface ListingDetailsDTO {
 
 export interface PropertyDetailsDTO {
     address?: AddressDTO;
+    schoolRating?: SchoolRatingDTO;
     numberOfDaysOnMarket?: number;
-    elementarySchoolRating?: number;
-    middleSchoolRating?: number;
-    highSchoolRating?: number;
     numberOfBedrooms?: number;
     numberOfFullBathrooms?: number;
     numberOfHalfBathrooms?: number;
@@ -156,7 +151,14 @@ export interface PropertyDetailsDTO {
     acres?: number;
     yearBuilt?: number;
     homeType?: HomeType;
+    description?: string;
 };
+
+export interface SchoolRatingDTO {
+    elementarySchoolRating?: number;
+    middleSchoolRating?: number;
+    highSchoolRating?: number;
+}
 
 export interface PriceDetailsDTO {
     listingPrice: number; // The current listing or sale price

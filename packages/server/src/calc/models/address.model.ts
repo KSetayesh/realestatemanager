@@ -11,7 +11,8 @@ export class Address implements IDTOConvertible<AddressDTO> {
     private streetAddress?: string;
     private apartmentNumber?: string;
 
-    constructor(fullAddress: string,
+    constructor(
+        fullAddress: string,
         state?: State,
         zipCode?: string,
         town?: string,

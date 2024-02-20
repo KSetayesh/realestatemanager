@@ -7,6 +7,7 @@ export const pool = new Pool(dbConfig);
 
 
 enum SQLTable {
+    CREATE_SCHOOL_RATING_TABLE = 'CreateSchoolRatingTable',
     CREATE_ADDRESS_TABLE = 'CreateAddressTable',
     CREATE_PROPERTY_DETAILS_TABLE = 'CreatePropertyDetailsTable',
     CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
@@ -39,14 +40,9 @@ async function loadSqlStatementToExecute(): Promise<void> {
     const client = await pool.connect();
 
     try {
-        // Needs to be in same order as the tables in dbschema.sql
         for (const query of Object.values(SQLTable)) {
             await createTable(sqlContent, query, client);
-            // await createTable(sqlContent, value, client); // Use this in your actual code where you need to execute the queries
         }
-        // for (const query of sqlTableQueries) {
-        //     await createTable(sqlContent, query, client);
-        // }
     } catch (err) {
         console.error('Could not create database', err);
     } finally {

@@ -50,4 +50,5 @@ export class AmortizationDetails implements IDTOConvertible<AmortizationDetailsD
             appreciationValue: this.appreciationValue,
         };
     }
+    
 }

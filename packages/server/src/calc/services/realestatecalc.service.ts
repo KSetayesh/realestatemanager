@@ -1,6 +1,6 @@
 // import { Utility } from './utility';
 
-import { InvestmentAnalysis } from "../models/investmentanalysis.model";
+import { InvestmentAnalysis } from "../models/investmentscenario.model";
 import { ListingDetails } from "../models/listingdetails.model";
 
 
