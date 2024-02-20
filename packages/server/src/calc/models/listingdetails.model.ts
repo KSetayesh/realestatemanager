@@ -1,5 +1,4 @@
 import { ListingDetailsDTO } from "@realestatemanager/shared";
-import { PriceDetails } from "./pricedetails.model";
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";

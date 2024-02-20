@@ -71,14 +71,12 @@ export enum InterestType {
 
 //-----Interfaces----
 
-export interface InvestmentAnalysisDTO {
-    listingDetails: ListingDetailsDTO;
-    amortizationDetails: AmortizationDetailsDTO;
-    financialProjections: FinancialProjectionsDTO;
+export interface InvestmentScenarioDTO {
     mortgageDetails: MortgageDetailsDTO;
+    financialProjections: FinancialProjectionsDTO;
     operatingExpenses: OperatingExpensesDTO;
     rentEstimate: number;
-    expectedPrice: number;
+    purchasePrice: number;
 };
 
 export interface AmortizationDetailsDTO {
@@ -90,8 +88,8 @@ export interface AmortizationDetailsDTO {
     remainingBalance: number;
     equityWithDownPayment: number;
     equityWithoutDownPayment: number;
-    equityWithAppreciation: number,
-    appreciationValue: number,
+    equityWithAppreciation: number;
+    appreciationValue: number;
 };
 
 export interface FinancialProjectionsDTO {
@@ -110,7 +108,9 @@ export interface LoanDetailsDTO {
 export interface MortgageDetailsDTO extends LoanDetailsDTO {
     downPaymentPercentage: number;
     pmiRate: number;
-    closingCosts?: number;
+    monthlyPropertyTaxAmount?: number;
+    monthlyHomeInsuranceAmount?: number;
+    monthlyHOAFeesAmount?: number;
 };
 
 export interface OperatingExpensesDTO {
@@ -121,7 +121,10 @@ export interface OperatingExpensesDTO {
     capExReserveRate?: number;
     legalAndProfessionalFees?: number;
     initialRepairCosts?: number;
+    closingCosts?: number;
 };
+
+// ---ListingDetails related models---
 
 export type AddressDTO = {
     fullAddress?: string;
@@ -137,7 +140,8 @@ export type AddressDTO = {
 export interface ListingDetailsDTO {
     zillowURL: string;
     propertyDetails: PropertyDetailsDTO;
-    priceDetails: PriceDetailsDTO;
+    listingPrice: number;
+    zillowMarketEstimates: ZillowMarketEstimatesDTO;
 };
 
 export interface PropertyDetailsDTO {
@@ -150,6 +154,9 @@ export interface PropertyDetailsDTO {
     squareFeet?: number;
     acres?: number;
     yearBuilt?: number;
+    hasGarage?: boolean;
+    hasPool?: boolean;
+    hasBasement?: boolean;
     homeType?: HomeType;
     description?: string;
 };
@@ -158,18 +165,17 @@ export interface SchoolRatingDTO {
     elementarySchoolRating?: number;
     middleSchoolRating?: number;
     highSchoolRating?: number;
-}
-
-export interface PriceDetailsDTO {
-    listingPrice: number; // The current listing or sale price
-    zillowMarketEstimates?: ZillowMarketEstimatesDTO;
-    monthlyPropertyTaxAmount?: number;
-    monthlyHomeInsuranceAmount?: number;
-    monthlyHOAFeesAmount?: number;
 };
 
 export interface ZillowMarketEstimatesDTO {
     zestimate?: number; // Estimated market value
+    zestimateRange?: {
+        low?: number,
+        high?: number,
+    },
     zillowRentEstimate?: number; // Estimated rental value
+    zillowMonthlyPropertyTaxAmount?: number;
+    zillowMonthlyHomeInsuranceAmount?: number;
+    zillowMonthlyHOAFeesAmount?: number;
 };
 
