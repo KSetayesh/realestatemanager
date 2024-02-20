@@ -63,6 +63,9 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
             acres: this.acres,
             yearBuilt: this.yearBuilt,
             homeType: this.homeType,
+            hasGarage: this.hasGarage,
+            hasPool: this.hasPool,
+            hasBasement: this.hasBasement,
             description: this.description,
         }
     }

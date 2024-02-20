@@ -18,7 +18,6 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         monthlyPropertyTaxAmount?: number,
         monthlyHomeInsuranceAmount?: number,
         monthlyHOAFeesAmount?: number
-        // closingCosts?: number
     ) {
         super(principal, annualInterestRate, termInYears, interestType);
         this.downPaymentPercentage = downPaymentPercentage;
@@ -26,7 +25,6 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         this.monthlyPropertyTaxAmount = monthlyPropertyTaxAmount;
         this.monthlyHomeInsuranceAmount = monthlyHomeInsuranceAmount;
         this.monthlyHOAFeesAmount = monthlyHOAFeesAmount;
-        //    this.closingCosts = closingCosts;
     }
 
     calculateMortgagePayment(): number {
@@ -62,10 +60,6 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         return this.downPaymentPercentage;
     }
 
-    // getClosingCostsAmount(): number {
-    //     return this.closingCosts;
-    // }
-
     toDTO(): MortgageDetailsDTO {
         return {
             loanAmount: this.getLoanAmount(),
@@ -74,9 +68,12 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
             interestType: this.getInterestType(),
             downPaymentPercentage: this.downPaymentPercentage,
             pmiRate: this.pmiRate,
-            closingCosts: null, // this.closingCosts,
+            monthlyPropertyTaxAmount: this.monthlyPropertyTaxAmount,
+            monthlyHomeInsuranceAmount: this.monthlyHomeInsuranceAmount,
+            monthlyHOAFeesAmount: this.monthlyHOAFeesAmount,
         };
     }
+
 }
 
 

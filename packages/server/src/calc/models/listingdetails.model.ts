@@ -29,7 +29,8 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return {
             zillowURL: this.zillowURL,
             propertyDetails: this.propertyDetails.toDTO(),
-            priceDetails: null, // this.priceDetails.toDTO(),
+            listingPrice: this.listingPrice,
+            zillowMarketEstimates: this.zillowMarketEstimates.toDTO(),
         }
     }
 

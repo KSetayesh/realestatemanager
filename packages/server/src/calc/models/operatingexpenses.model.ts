@@ -47,6 +47,7 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
             capExReserveRate: this.capExReserveRate,
             legalAndProfessionalFees: this.legalAndProfessionalFees,
             initialRepairCosts: this.initialRepairCosts,
+            closingCosts: this.closingCosts,
         };
     }
 }

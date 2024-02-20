@@ -1,12 +1,11 @@
-import { InvestmentAnalysisDTO, Utility } from "@realestatemanager/shared";
+import { InvestmentScenarioDTO, Utility } from "@realestatemanager/shared";
 import { AmortizationDetails } from "./amortizationdetails.model";
 import { FinancialProjections } from "./financialprojections.model";
 import { MortgageDetails } from "./mortgagedetails.model";
 import { OperatingExpenses } from "./operatingexpenses.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
-import { ListingDetails } from "./listingdetails.model";
 
-export class InvestmentScenario implements IDTOConvertible<InvestmentAnalysisDTO>{
+export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO>{
     private mortgageDetails: MortgageDetails;
     private financialProjections: FinancialProjections;
     private operatingExpenses: OperatingExpenses;
@@ -25,15 +24,13 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentAnalysisDTO
         this.rentEstimate = rentEstimate;
     }
 
-    toDTO(): InvestmentAnalysisDTO {
+    toDTO(): InvestmentScenarioDTO {
         return {
-            listingDetails: null, // this.listingDetails.toDTO(),
-            amortizationDetails: null, // this.amortizationDetails.toDTO(),
-            financialProjections: this.financialProjections.toDTO(),
             mortgageDetails: this.mortgageDetails.toDTO(),
+            financialProjections: this.financialProjections.toDTO(),
             operatingExpenses: this.operatingExpenses.toDTO(),
             rentEstimate: this.rentEstimate,
-            expectedPrice: null, // this.expectedPrice,
+            purchasePrice: this.purchasePrice
         };
     }
 
