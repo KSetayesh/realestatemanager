@@ -16,7 +16,7 @@ export class RealEstateManager {
             ad.full_address, ad.state, ad.zipcode, ad.town, ad.county, ad.country, ad.street_address, ad.apartment_number,
             pd.number_of_days_on_market, pd.elementary_school_rating, pd.middle_school_rating, pd.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
-            pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd.description,
+            pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd._description,
             zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
             zme.zillow_monthly_home_insurance_amount, zme.zillow_monthly_hoa_fees_amount 
         FROM listing_details ld
@@ -59,7 +59,7 @@ export class RealEstateManager {
                 has_pool,
                 has_basement,
                 home_type, 
-                description)`;
+                _description)`;
 
     private INSERT_ZILLOW_MARKET_ESTIMATES_QUERY = `INSERT INTO zillow_market_estimates 
             (zestimate, 
@@ -155,7 +155,7 @@ export class RealEstateManager {
         const hasPool: boolean = row.has_pool;
         const hasBasement: boolean = row.has_basement;
         const homeType: HomeType = row.home_type;
-        const description: string = row.description;
+        const description: string = row._description;
         const schoolRating: SchoolRating = new SchoolRating(elementarySchoolRating, middleSchoolRating, highSchoolRating);
 
         const propertyDetails: PropertyDetails =
