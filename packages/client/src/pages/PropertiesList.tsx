@@ -13,6 +13,7 @@ const PropertiesList: React.FC = () => {
             .then(response => response.json())
             .then((data: ListingWithScenariosDTO[]) => {
                 setProperties(data);
+                console.log(data);
                 setIsLoading(false);
             })
             .catch(error => {
@@ -32,6 +33,7 @@ const PropertiesList: React.FC = () => {
     return (
         <div>
             <h2>Properties List</h2>
+            <></>
             {isLoading ? (
                 <p>Loading properties...</p>
             ) : (
@@ -45,6 +47,15 @@ const PropertiesList: React.FC = () => {
                                 <th>Zillow URL</th>
                                 <th>Price</th>
                                 <th>Rent Estimate</th>
+                                <th>Initial Costs</th>
+                                <th>Loan Amount</th>
+                                <th>Down Payment Amount</th>
+                                <th>Annual Interest Rate</th>
+                                <th>ROI</th>
+                                <th>Cap Rate</th>
+                                <th>Mortgage</th>
+                                <th>Monthly Cash Flow</th>
+                                <th>Yearly Cash Flow</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +72,16 @@ const PropertiesList: React.FC = () => {
                                     </td>
                                     <td>{property.listingDetails.listingPrice}</td>
                                     <td>{property.listingDetails.zillowMarketEstimates.zillowRentEstimate}</td>
+                                    <td>{property.metrics[0].initialCosts}</td>
+                                    <td>{property.metrics[0].loanAmount}</td>
+                                    <td>{property.metrics[0].downPaymentAmount}</td>
+                                    <td>{property.metrics[0].investmentScenario.mortgageDetails.annualInterestRate}%</td>
+                                    <td>{property.metrics[0].ROI}%</td>
+                                    <td>{property.metrics[0].capRate}%</td>
+                                    <td>{property.metrics[0].mortgage}</td>
+                                    <td>{property.metrics[0].monthlyCashFlow}</td>
+                                    <td>{property.metrics[0].yearlyCashFlow}</td>
+
                                 </tr>
                             ))}
                         </tbody>

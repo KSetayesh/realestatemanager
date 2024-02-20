@@ -28,6 +28,22 @@ export class ZillowMarketEstimates implements IDTOConvertible<ZillowMarketEstima
         this.zillowMonthlyHOAFeesAmount = zillowMonthlyHOAFeesAmount;
     }
 
+    getZillowRentEstimate(): number {
+        return this.zillowRentEstimate;
+    }
+
+    getZillowMonthlyPropertyTaxAmount(): number {
+        return this.zillowMonthlyPropertyTaxAmount;
+    }
+
+    getZillowMonthlyHomeInsuranceAmount(): number {
+        return this.zillowMonthlyHomeInsuranceAmount;
+    }
+
+    getZillowMonthlyHOAFeesAmount(): number {
+        return this.zillowMonthlyHOAFeesAmount;
+    }
+
     toDTO(): ZillowMarketEstimatesDTO {
         return {
             zestimate: this.zestimate,

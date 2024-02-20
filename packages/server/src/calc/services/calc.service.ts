@@ -6,7 +6,8 @@ import {
     InvestmentScenarioDTO,
     InvestmentScenarioRequestDTO,
     ListingDetailsDTO,
-    ListingWithScenariosDTO
+    ListingWithScenariosDTO,
+    Utility
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listingdetails.model';
 import { InvestmentScenario } from '../models/investmentscenario.model';
@@ -28,7 +29,7 @@ export class CalcService {
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
         for (const listingDetails of listingDetailsArr) {
-            const investmentScenario: InvestmentScenario = this.determineScenarioRequest(investmentScenarioRequest);
+            const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
             const investmentMetricsDTO: InvestmentMetricsDTO = investmentScenario.createInvestmentMetrics();
             const listingWithScenariosDTO: ListingWithScenariosDTO = {
                 listingDetails: listingDetails.toDTO(),
@@ -42,7 +43,7 @@ export class CalcService {
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequestDTO): Promise<ListingWithScenariosDTO> {
 
         const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
-        const investmentScenario: InvestmentScenario = this.determineScenarioRequest(investmentScenarioRequest);
+        const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
         const investmentMetricsDTO: InvestmentMetricsDTO = investmentScenario.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
@@ -54,9 +55,9 @@ export class CalcService {
         this.realEstateManager.insertListingDetails(listingDetailsDTO);
     }
 
-    private determineScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequestDTO): InvestmentScenario {
+    private determineScenarioRequest(listingDetails: ListingDetails, investmentScenarioRequest?: InvestmentScenarioRequestDTO): InvestmentScenario {
         if (!investmentScenarioRequest || investmentScenarioRequest.useDefaultRequest) {
-            return this.createDefaultInvestmentScenario();
+            return this.createDefaultInvestmentScenario(listingDetails);
         }
         return this.createInvestmentScenario(investmentScenarioRequest.investmentScenario);
     }
@@ -127,16 +128,21 @@ export class CalcService {
         return investmentScenario;
     }
 
-    private createDefaultInvestmentScenario(): InvestmentScenario {
-        const loanAmount = 0;
-        const annualInterestRate = 0;
+    private createDefaultInvestmentScenario(listingDetails: ListingDetails): InvestmentScenario {
+        const rentEstimate = listingDetails.getZillowRentEstimate();
+        const purchasePrice = listingDetails.getListingPrice();
+        const annualInterestRate = 6.5;
         const termInYears = 30;
         const interestType = InterestType.FIXED;
         const downPaymentPercentage = 20;
+
+        // Move this code somewhere else
+        const loanAmount = Utility.round(purchasePrice * (1 - (downPaymentPercentage / 100)));
+
         const pmiRate = 0;
-        const monthlyPropertyTaxAmount = 0;
-        const monthlyHomeInsuranceAmount = 0;
-        const monthlyHOAFeesAmount = 0;
+        const monthlyPropertyTaxAmount = listingDetails.getZillowMonthlyPropertyTaxAmount();
+        const monthlyHomeInsuranceAmount = listingDetails.getZillowMonthlyHomeInsuranceAmount();
+        const monthlyHOAFeesAmount = listingDetails.getZillowMonthlyHOAFeesAmount();
 
         const mortgageDetails: MortgageDetails = new MortgageDetails(
             loanAmount,
@@ -178,9 +184,6 @@ export class CalcService {
             initialRepairCosts,
             closingCosts
         );
-
-        const rentEstimate = 100;
-        const purchasePrice = 100;
 
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
             mortgageDetails,

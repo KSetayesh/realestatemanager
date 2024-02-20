@@ -47,16 +47,16 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const mortgage = this.calculateMortgagePayment();
         return {
             investmentScenario: this.toDTO(),
-            downPaymentAmount: downPayment,
-            loanAmount: loanAmount,
-            ROI: ROI,
-            capRate: capRate,
-            monthlyCashFlow: monthlyCashFlow,
-            yearlyCashFlow: yearlyCashFlow,
-            initialCosts: initialCosts,
-            mortgage: mortgage,
+            downPaymentAmount: Utility.round(downPayment),
+            loanAmount: Utility.round(loanAmount),
+            ROI: Utility.round(ROI),
+            capRate: Utility.round(capRate),
+            monthlyCashFlow: Utility.round(monthlyCashFlow),
+            yearlyCashFlow: Utility.round(yearlyCashFlow),
+            initialCosts: Utility.round(initialCosts),
+            mortgage: Utility.round(mortgage),
             ammortizationDetails: this.calculateAmortizationSchedule()
-        }
+        };
 
     }
 

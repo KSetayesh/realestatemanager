@@ -9,7 +9,7 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
     private monthlyHOAFeesAmount?: number;
 
     constructor(
-        principal: number,
+        loanAmount: number,
         annualInterestRate: number,
         termInYears: number,
         interestType: InterestType,
@@ -19,7 +19,7 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         monthlyHomeInsuranceAmount?: number,
         monthlyHOAFeesAmount?: number
     ) {
-        super(principal, annualInterestRate, termInYears, interestType);
+        super(loanAmount, annualInterestRate, termInYears, interestType);
         this.downPaymentPercentage = downPaymentPercentage;
         this.pmiRate = pmiRate;
         this.monthlyPropertyTaxAmount = monthlyPropertyTaxAmount;

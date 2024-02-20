@@ -25,6 +25,22 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return this.listingPrice;
     }
 
+    getZillowRentEstimate(): number {
+        return this.zillowMarketEstimates.getZillowRentEstimate();
+    }
+
+    getZillowMonthlyPropertyTaxAmount(): number {
+        return this.zillowMarketEstimates.getZillowMonthlyPropertyTaxAmount();
+    }
+
+    getZillowMonthlyHomeInsuranceAmount(): number {
+        return this.zillowMarketEstimates.getZillowMonthlyHomeInsuranceAmount();
+    }
+
+    getZillowMonthlyHOAFeesAmount(): number {
+        return this.zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
+    }
+
     toDTO(): ListingDetailsDTO {
         return {
             zillowURL: this.zillowURL,
