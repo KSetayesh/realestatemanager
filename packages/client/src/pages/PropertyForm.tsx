@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Country, HomeType, State, InputType } from '../constants/Constant';
+import { Country, HomeType, State, InputType, ratingSelections } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 
 const PropertyForm: React.FC = () => {
-
-    const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     type FormFieldConfig = {
         name: string;
         label: string;
         type: InputType;
-        defaultValue: string | Country | HomeType;
-        selections?: State[] | Country[] | HomeType[] | number[];
+        defaultValue: boolean | string | Country | HomeType;
+        selections?: State[] | Country[] | HomeType[] | number[] | boolean[];
     };
 
     const formFieldsConfig: FormFieldConfig[] = [
@@ -139,6 +137,27 @@ const PropertyForm: React.FC = () => {
             defaultValue: ''
         },
         {
+            name: 'hasGarage',
+            label: 'Has Garage',
+            type: InputType.SELECT,
+            defaultValue: false,
+            selections: [true, false]
+        },
+        {
+            name: 'hasPool',
+            label: 'Has Pool',
+            type: InputType.SELECT,
+            defaultValue: false,
+            selections: [true, false]
+        },
+        {
+            name: 'hasBasement',
+            label: 'Has Basement',
+            type: InputType.SELECT,
+            defaultValue: false,
+            selections: [true, false]
+        },
+        {
             name: 'homeType',
             label: 'Home Type',
             type: InputType.SELECT,
@@ -164,21 +183,39 @@ const PropertyForm: React.FC = () => {
             defaultValue: ''
         },
         {
-            name: 'monthlyPropertyTaxAmount',
-            label: 'Monthly Property Tax Amount',
+            name: 'zestimateRangeLow',
+            label: 'Zillow Range Low',
             type: InputType.NUMBER,
             defaultValue: ''
         },
         {
-            name: 'monthlyHomeInsuranceAmount',
-            label: 'Monthly Home Insurance Amount',
+            name: 'zestimateRangeHigh',
+            label: 'Zillow Range High',
             type: InputType.NUMBER,
             defaultValue: ''
         },
         {
-            name: 'monthlyHOAFeesAmount',
-            label: 'Monthly HOA Fees Amount',
+            name: 'zillowMonthlyPropertyTaxAmount',
+            label: 'Zillow Monthly Property Tax Amount',
             type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'zillowMonthlyHomeInsuranceAmount',
+            label: 'Zillow Monthly Home Insurance Amount',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'zillowMonthlyHOAFeesAmount',
+            label: 'Zillow Monthly HOA Fees Amount',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'description',
+            label: 'Discription',
+            type: InputType.TEXT,
             defaultValue: ''
         },
     ];
@@ -265,8 +302,8 @@ const PropertyForm: React.FC = () => {
                         {type === 'select' && selections ? (
                             <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
                                 {selections.map((selection, index) => (
-                                    <option key={index} value={selection}>
-                                        {typeof selection === 'number' ? selection : selection.toString()}
+                                    <option key={index} value={selection.toString()}>
+                                        {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
                                     </option>
                                 ))}
                             </select>

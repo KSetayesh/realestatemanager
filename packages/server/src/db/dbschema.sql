@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS property_details (
     description TEXT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (school_rating_id) REFERENCES school_rating(id) ON DELETE CASCADE
+    FOREIGN KEY (school_rating_id) REFERENCES school_rating(id) ON DELETE CASCADE,
     FOREIGN KEY (address_id) REFERENCES address(id) ON DELETE CASCADE
 );
 -- EndQuery
