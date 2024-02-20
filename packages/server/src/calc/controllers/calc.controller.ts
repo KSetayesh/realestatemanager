@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { InvestmentAnalysisDTO, ListingDetailsDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioDTO, ListingDetailsDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('calc')
@@ -8,12 +8,12 @@ export class CalcController {
     constructor(private readonly calcService: CalcService) { }
 
     @Get()
-    async getAllProperties(): Promise<InvestmentAnalysisDTO[]> {
+    async getAllProperties(): Promise<InvestmentScenarioDTO[]> {
         return this.calcService.getAllProperties();
     }
 
     @Get('property')
-    async getPropertyByZillowUrl(@Query('zillowURL') zillowURL: string): Promise<InvestmentAnalysisDTO> {
+    async getPropertyByZillowUrl(@Query('zillowURL') zillowURL: string): Promise<InvestmentScenarioDTO> {
         if (!zillowURL) {
             throw new Error('zillowURL query parameter is required');
         }

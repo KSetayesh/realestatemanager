@@ -43,6 +43,9 @@ CREATE TABLE IF NOT EXISTS property_details (
     square_feet INT,
     acres DECIMAL,
     year_built INT,
+    has_garage BOOLEAN,
+    has_pool BOOLEAN,
+    has_basement BOOLEAN,
     home_type VARCHAR(50), -- Changed from ENUM to VARCHAR
     description TEXT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
@@ -57,22 +60,13 @@ CREATE TABLE zillow_market_estimates (
     id SERIAL PRIMARY KEY,
     zestimate INT,
     zillow_rent_estimate INT,
+    zestimate_low INT,
+    zestimate_high INT,
+    zillow_monthly_property_tax_amount INT,
+    zillow_monthly_home_insurance_amount INT,
+    zillow_monthly_hoa_fees_amount INT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
-);
--- EndQuery
-
--- Query: CreatePriceDetailsTable
-CREATE TABLE price_details (
-    id SERIAL PRIMARY KEY,
-    listing_price INT NOT NULL,
-    zillow_market_estimates_id INT,
-    monthly_property_tax_amount INT,
-    monthly_home_insurance_amount INT,
-    monthly_hoa_fees_amount INT,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
 );
 -- EndQuery
 
@@ -81,11 +75,13 @@ CREATE TABLE listing_details (
     id SERIAL PRIMARY KEY,
     zillow_url VARCHAR(255) UNIQUE,
     property_details_id INT,
-    price_details_id INT,
+    zillow_market_estimates_id INT, 
+    listing_price INT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
-    FOREIGN KEY (price_details_id) REFERENCES price_details(id) ON DELETE CASCADE
+    FOREIGN KEY (price_details_id) REFERENCES price_details(id) ON DELETE CASCADE,
+    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
 );
 -- EndQuery
 

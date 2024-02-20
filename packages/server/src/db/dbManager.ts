@@ -11,7 +11,6 @@ enum SQLTable {
     CREATE_ADDRESS_TABLE = 'CreateAddressTable',
     CREATE_PROPERTY_DETAILS_TABLE = 'CreatePropertyDetailsTable',
     CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
-    CREATE_PRICE_DETAILS_TABLE = 'CreatePriceDetailsTable',
     CREATE_LISTING_DETAILS_TABLE = 'CreateListingDetailsTable',
 };
 

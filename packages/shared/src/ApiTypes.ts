@@ -140,8 +140,8 @@ export type AddressDTO = {
 export interface ListingDetailsDTO {
     zillowURL: string;
     propertyDetails: PropertyDetailsDTO;
-    listingPrice: number;
     zillowMarketEstimates: ZillowMarketEstimatesDTO;
+    listingPrice: number;
 };
 
 export interface PropertyDetailsDTO {

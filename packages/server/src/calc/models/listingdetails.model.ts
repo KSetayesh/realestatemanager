@@ -6,18 +6,18 @@ import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private zillowURL: string;
     private propertyDetails: PropertyDetails;
-    private listingPrice: number;
     private zillowMarketEstimates: ZillowMarketEstimates;
+    private listingPrice: number;
     // private priceDetails: PriceDetails;
 
     constructor(zillowURL: string,
         propertyDetails: PropertyDetails,
-        listingPrice: number,
-        zillowMarketEstimates: ZillowMarketEstimates) {
+        zillowMarketEstimates: ZillowMarketEstimates,
+        listingPrice: number) {
         this.zillowURL = zillowURL;
         this.propertyDetails = propertyDetails;
-        this.listingPrice = listingPrice;
         this.zillowMarketEstimates = zillowMarketEstimates;
+        this.listingPrice = listingPrice;
         // this.priceDetails = priceDetails;
     }
 
@@ -29,8 +29,8 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return {
             zillowURL: this.zillowURL,
             propertyDetails: this.propertyDetails.toDTO(),
-            listingPrice: this.listingPrice,
             zillowMarketEstimates: this.zillowMarketEstimates.toDTO(),
+            listingPrice: this.listingPrice,
         }
     }
 
