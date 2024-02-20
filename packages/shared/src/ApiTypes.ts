@@ -71,6 +71,11 @@ export enum InterestType {
 
 //-----Interfaces----
 
+export interface ListingWithScenariosDTO {
+    listingDetails: ListingDetailsDTO;
+    scenarios: InvestmentScenarioDTO[];
+}
+
 export interface InvestmentScenarioDTO {
     mortgageDetails: MortgageDetailsDTO;
     financialProjections: FinancialProjectionsDTO;
