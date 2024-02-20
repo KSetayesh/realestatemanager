@@ -135,7 +135,7 @@ export type AddressDTO = {
     fullAddress?: string;
     state?: State;
     zipcode?: string;
-    town?: string;
+    city?: string;
     county?: string;
     country?: Country;
     streetAddress?: string;

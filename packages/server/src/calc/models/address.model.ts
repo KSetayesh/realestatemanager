@@ -5,7 +5,7 @@ export class Address implements IDTOConvertible<AddressDTO> {
     private fullAddress: string;
     private state?: State; // Assuming State is a type or enum you've defined
     private zipcode?: string;
-    private town?: string;
+    private city?: string;
     private county?: string;
     private country?: Country; // Assuming Country is a type or enum you've defined
     private streetAddress?: string;
@@ -15,7 +15,7 @@ export class Address implements IDTOConvertible<AddressDTO> {
         fullAddress: string,
         state?: State,
         zipCode?: string,
-        town?: string,
+        city?: string,
         county?: string,
         country?: Country,
         streetAddress?: string,
@@ -24,7 +24,7 @@ export class Address implements IDTOConvertible<AddressDTO> {
         this.fullAddress = fullAddress;
         this.state = state;
         this.zipcode = zipCode;
-        this.town = town;
+        this.city = city;
         this.county = county;
         this.country = country;
         this.streetAddress = streetAddress;
@@ -36,7 +36,7 @@ export class Address implements IDTOConvertible<AddressDTO> {
             fullAddress: this.fullAddress,
             state: this.state,
             zipcode: this.zipcode,
-            town: this.town,
+            city: this.city,
             county: this.county,
             country: this.country,
             streetAddress: this.streetAddress,

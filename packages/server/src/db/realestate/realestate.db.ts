@@ -13,7 +13,7 @@ export class RealEstateManager {
 
     private GET_LISTINGS_QUERY = `SELECT 
             ld.zillow_url, ld.listing_price, 
-            ad.full_address, ad.state, ad.zipcode, ad.town, ad.county, ad.country, ad.street_address, ad.apartment_number,
+            ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
             pd.number_of_days_on_market, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
             pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd._description,
@@ -40,7 +40,7 @@ export class RealEstateManager {
             (full_address, 
             state, 
             zipcode, 
-            town, 
+            city,
             county, 
             country, 
             street_address, 
@@ -71,13 +71,13 @@ export class RealEstateManager {
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
 
-    async insertListingInformation(listingInfo: ListingDetailsDTO): Promise<void> {
+    async insertListingDetails(listingDetails: ListingDetailsDTO): Promise<void> {
         const client = await this.pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._insertListingInformation(listingInfo);
+            await this._insertListingDetails(listingDetails);
 
             await client.query('COMMIT');
         } catch (e) {
@@ -126,7 +126,7 @@ export class RealEstateManager {
         const fullAddress: string = row.full_address;
         const state: State = row.state;
         const zipCode: string = row.zipCode;
-        const town: string = row.town;
+        const city: string = row.city;
         const county: string = row.county;
         const country: Country = row.country;
         const streetAddress: string = row.street_address;
@@ -136,7 +136,7 @@ export class RealEstateManager {
                 fullAddress,
                 state,
                 zipCode,
-                town,
+                city,
                 county,
                 country,
                 streetAddress,
@@ -201,17 +201,17 @@ export class RealEstateManager {
 
     }
 
-    private async _insertListingInformation(listingInfo: ListingDetailsDTO): Promise<void> {
+    private async _insertListingDetails(listingDetails: ListingDetailsDTO): Promise<void> {
         try {
-            const addressId = await this.insertAddress(listingInfo.propertyDetails.address);
-            const schoolRatingId = await this._insertSchoolRating(listingInfo.propertyDetails.schoolRating);
-            const propertyDetailsId = await this.insertPropertyDetails(listingInfo.propertyDetails, addressId, schoolRatingId);
+            const addressId = await this.insertAddress(listingDetails.propertyDetails.address);
+            const schoolRatingId = await this._insertSchoolRating(listingDetails.propertyDetails.schoolRating);
+            const propertyDetailsId = await this.insertPropertyDetails(listingDetails.propertyDetails, addressId, schoolRatingId);
             let zillowMarketEstimatesId: number | null = null;
-            if (listingInfo.zillowMarketEstimates) {
-                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(listingInfo.zillowMarketEstimates);
+            if (listingDetails.zillowMarketEstimates) {
+                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(listingDetails.zillowMarketEstimates);
             }
 
-            const values: any[] = [listingInfo.zillowURL, propertyDetailsId, zillowMarketEstimatesId, listingInfo.listingPrice];
+            const values: any[] = [listingDetails.zillowURL, propertyDetailsId, zillowMarketEstimatesId, listingDetails.listingPrice];
             this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
 
             console.log('Listing information inserted successfully');
@@ -237,7 +237,7 @@ export class RealEstateManager {
             address.fullAddress,
             address.state,
             address.zipcode,
-            address.town,
+            address.city,
             address.county,
             address.country,
             address.streetAddress,
@@ -291,6 +291,8 @@ export class RealEstateManager {
             }
         }
         insertString += ') RETURNING id;'
+
+        console.log(insertString);
 
         const res = await this.pool.query(`${query} ${insertString}`, values);
         return res.rows[0].id;

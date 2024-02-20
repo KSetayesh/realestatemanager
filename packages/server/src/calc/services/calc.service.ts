@@ -30,7 +30,7 @@ export class CalcService {
     }
 
     async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
-        this.realEstateManager.insertListingInformation(listingDetailsDTO);
+        this.realEstateManager.insertListingDetails(listingDetailsDTO);
     }
 
 

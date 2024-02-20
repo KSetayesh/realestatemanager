@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS address (
     full_address VARCHAR(255) UNIQUE,
     state VARCHAR(50),
     zipcode VARCHAR(10),
-    town VARCHAR(50),
+    city VARCHAR(50),
     county VARCHAR(50),
     country VARCHAR(50),
     street_address VARCHAR(255),

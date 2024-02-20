@@ -20,9 +20,9 @@ export class CalcController {
         return this.calcService.getPropertyByZillowURL(zillowURL);
     }
 
-    @Post('addProperty')
+    @Post('addNewProperty')
     async addNewProperty(
-        @Body('listingDetails') listingDetails: ListingDetailsDTO,
+        @Body() listingDetails: ListingDetailsDTO,
     ): Promise<void> {
         this.calcService.addNewProperty(listingDetails);
     }

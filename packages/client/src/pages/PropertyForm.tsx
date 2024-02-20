@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Country, HomeType, State, InputType, ratingSelections } from '../constants/Constant';
 import '../styles/PropertyForm.css';
+import { ListingDetailsDTO } from '@realestatemanager/shared';
 
 const PropertyForm: React.FC = () => {
 
@@ -40,8 +41,8 @@ const PropertyForm: React.FC = () => {
             defaultValue: ''
         },
         {
-            name: 'town',
-            label: 'Town',
+            name: 'city',
+            label: 'City',
             type: InputType.TEXT,
             defaultValue: ''
         },
@@ -238,50 +239,53 @@ const PropertyForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const dataToSubmit = {
-            listingDetails: {
-                zillowURL: formData.zillowURL,
-                propertyDetails: {
-                    address: {
-                        fullAddress: formData.fullAddress,
-                        state: formData.state as State,
-                        zipcode: formData.zipcode,
-                        town: formData.town,
-                        county: formData.county,
-                        country: formData.country as Country,
-                        streetAddress: formData.streetAddress,
-                        apartmentNumber: formData.apartmentNumber,
-                    },
-                    numberOfDaysOnMarket: parseInt(formData.numberOfDaysOnMarket),
-                    schoolRating: {
-                        elementarySchoolRating: parseInt(formData.elementarySchoolRating),
-                        middleSchoolRating: parseInt(formData.middleSchoolRating),
-                        highSchoolRating: parseInt(formData.highSchoolRating),
-                    },
-                    numberOfBedrooms: parseInt(formData.numberOfBedrooms),
-                    numberOfFullBathrooms: parseInt(formData.numberOfFullBathrooms),
-                    numberOfHalfBathrooms: parseInt(formData.numberOfHalfBathrooms),
-                    squareFeet: parseInt(formData.squareFeet),
-                    acres: parseFloat(formData.acres),
-                    yearBuilt: parseInt(formData.yearBuilt),
-                    homeType: formData.homeType as HomeType,
+        const dataToSubmit: ListingDetailsDTO = {
+            zillowURL: formData.zillowURL,
+            listingPrice: formData.listingPrice,
+            propertyDetails: {
+                address: {
+                    fullAddress: formData.fullAddress,
+                    state: formData.state as State,
+                    zipcode: formData.zipcode,
+                    city: formData.city,
+                    county: formData.county,
+                    country: formData.country as Country,
+                    streetAddress: formData.streetAddress,
+                    apartmentNumber: formData.apartmentNumber,
                 },
-                priceDetails: {
-                    listingPrice: parseFloat(formData.listingPrice),
-                    zillowMarketEstimates: {
-                        zestimate: parseInt(formData.zestimate), // Estimated market value
-                        zillowRentEstimate: parseInt(formData.zillowRentEstimate), // Estimated rental value
-                    },
-                    monthlyPropertyTaxAmount: parseFloat(formData.monthlyPropertyTaxAmount),
-                    monthlyHomeInsuranceAmount: parseFloat(formData.monthlyHomeInsuranceAmount),
-                    monthlyHOAFeesAmount: parseFloat(formData.monthlyHOAFeesAmount),
+                schoolRating: {
+                    elementarySchoolRating: parseInt(formData.elementarySchoolRating),
+                    middleSchoolRating: parseInt(formData.middleSchoolRating),
+                    highSchoolRating: parseInt(formData.highSchoolRating),
                 },
+                numberOfDaysOnMarket: parseInt(formData.numberOfDaysOnMarket),
+                numberOfBedrooms: parseInt(formData.numberOfBedrooms),
+                numberOfFullBathrooms: parseInt(formData.numberOfFullBathrooms),
+                numberOfHalfBathrooms: parseInt(formData.numberOfHalfBathrooms),
+                squareFeet: parseInt(formData.squareFeet),
+                acres: parseFloat(formData.acres),
+                yearBuilt: parseInt(formData.yearBuilt),
+                hasGarage: formData.hasGarage,
+                hasPool: formData.hasPool,
+                hasBasement: formData.hasBasement,
+                homeType: formData.homeType as HomeType,
+                description: formData.description,
             },
-
+            zillowMarketEstimates: {
+                zestimate: parseInt(formData.zestimate), // Estimated market value
+                zestimateRange: {
+                    low: parseInt(formData.zestimateLow),
+                    high: parseInt(formData.zestimateHigh),
+                },
+                zillowRentEstimate: parseInt(formData.zillowRentEstimate), // Estimated rental value
+                zillowMonthlyPropertyTaxAmount: parseFloat(formData.zillowMonthlyPropertyTaxAmount),
+                zillowMonthlyHomeInsuranceAmount: parseFloat(formData.zillowMonthlyHomeInsuranceAmount),
+                zillowMonthlyHOAFeesAmount: parseFloat(formData.zillowMonthlyHOAFeesAmount),
+            },
         };
 
         try {
-            await axios.post('http://localhost:3000/calc/addProperty', dataToSubmit, {
+            await axios.post('http://localhost:3000/calc/addNewProperty', dataToSubmit, {
                 headers: { 'Content-Type': 'application/json' },
             });
             alert('Data submitted successfully!');
