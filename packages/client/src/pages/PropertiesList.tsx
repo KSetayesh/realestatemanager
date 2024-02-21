@@ -92,6 +92,7 @@ const PropertiesList: React.FC = () => {
             zillowMonthlyHomeInsuranceAmount: renderCellData(property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount!),
             zillowMonthlyHOAFeesAmount: renderCellData(property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount!),
             description: renderCellData(property.listingDetails.propertyDetails.description),
+            investmentBreakdown: renderCellData(property.listingDetails.propertyDetails.address!.fullAddress),
         }
     }
 
@@ -139,6 +140,7 @@ const PropertiesList: React.FC = () => {
         { header: "Zillow Monthly Home Insurance Amount", accessor: "zillowMonthlyHomeInsuranceAmount", isURL: false, showColumn: false },
         { header: "Zillow Monthly HOA Fees Amount", accessor: "zillowMonthlyHOAFeesAmount", isURL: false, showColumn: false },
         { header: "Description", accessor: "description", isURL: false, showColumn: false },
+        { header: "Investment Breakdown", accessor: "investmentBreakdown", isURL: false, showColumn: true, routeTo: 'investmentBreakdown' },
     ];
 
     // const tableData: { [key: string]: string }[] = properties.map(property => ({

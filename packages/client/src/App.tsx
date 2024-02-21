@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/propertyForm" element={<PropertyForm />} />
                     <Route path="/propertiesList" element={<PropertiesList />} />
-                    <Route path="/investmentBreakdown" element={<InvestmentBreakdown />} />
+                    <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} />
                     <Route path="/projections" element={<Projections />} />
                     {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
                     {/* Add other routes here */}

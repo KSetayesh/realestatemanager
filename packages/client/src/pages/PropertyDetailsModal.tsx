@@ -2,6 +2,7 @@ import React from 'react';
 import { ListingWithScenariosDTO } from "@realestatemanager/shared";
 import '../styles/PropertyDetailsModal.css';
 import { TableColumn, TableRow } from "../components/ReusableTable";
+import { Link } from 'react-router-dom';
 
 const PropertyDetailsModal: React.FC<{
     property: ListingWithScenariosDTO | null;
@@ -19,15 +20,22 @@ const PropertyDetailsModal: React.FC<{
                 <h2>Property Details</h2>
                 {columns.map((column, colIndex) => {
                     const cellData = rowData[column.accessor as keyof ListingWithScenariosDTO];
-                    // const displayData = renderCellData(cellData);
+                    let content;
+                    if (column.routeTo) {
+                        content = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: property }}>
+                            {column.routeTo}
+                        </Link></span>;
+                    }
+                    else if (column.isURL && typeof cellData === 'string') {
+                        content = <a href={cellData} target="_blank" rel="noopener noreferrer">View</a>;
+                    } else {
+                        content = <span> {cellData}</span>;
+                    }
+
                     return (
                         <p key={colIndex}>
                             <span className="modal-label">{column.header}:</span>
-                            {column.isURL && typeof cellData === 'string' ? (
-                                <a href={cellData} target="_blank" rel="noopener noreferrer">View</a>
-                            ) : (
-                                <span> {cellData}</span>
-                            )}
+                            {content}
                         </p>
                     );
                 })}
@@ -35,6 +43,7 @@ const PropertyDetailsModal: React.FC<{
             </div>
         </div>
     );
+
 };
 
 export default PropertyDetailsModal;

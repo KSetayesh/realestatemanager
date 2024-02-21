@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../styles/PropertiesList.css';
 
 // export interface TableColumn {
@@ -27,6 +28,7 @@ export interface TableColumn {
     accessor: string; // Consider making this more specific or generic to match keys of tableData items
     isURL: boolean;
     showColumn: boolean;
+    routeTo?: string;
 }
 
 export interface ReusableTableProps<T> {
@@ -50,22 +52,27 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick }: ReusableTableProp
                     <tr
                         key={rowIndex}
                         style={{ cursor: 'pointer' }}
-                        onClick={() => onRowClick && onRowClick(item.objectData.key)}
+                        onClick={() => onRowClick ? onRowClick(item.objectData.key) : undefined}
                     >
                         {columns.filter(column => column.showColumn).map((column, colIndex) => {
-                            // Access cell data from rowData using column.accessor
                             const cellData = item.rowData[column.accessor];
-                            return (
-                                <td key={colIndex}>
-                                    {column.isURL && typeof cellData === 'string' ? (
-                                        <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                                            View
-                                        </a>
-                                    ) : (
-                                        cellData
-                                    )}
-                                </td>
-                            );
+                            let cellContent;
+
+                            if (column.routeTo) {
+                                cellContent = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: tableData[rowIndex].objectData.key }}>
+                                    {column.routeTo}
+                                </Link></span>;
+                            }
+                            else if (column.isURL && typeof cellData === 'string') {
+                                cellContent = (
+                                    <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                                        View
+                                    </a>
+                                );
+                            } else {
+                                cellContent = cellData;
+                            }
+                            return <td key={colIndex}>{cellContent}</td>;
                         })}
                     </tr>
                 ))}
@@ -73,6 +80,7 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick }: ReusableTableProp
         </table>
     );
 };
+
 
 export default ReusableTable;
 
