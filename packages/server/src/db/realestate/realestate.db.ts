@@ -125,7 +125,7 @@ export class RealEstateManager {
     private mapRowToListingDetails(row: any): ListingDetails {
         const fullAddress: string = row.full_address;
         const state: State = row.state;
-        const zipCode: string = row.zipCode;
+        const zipcode: string = row.zipcode;
         const city: string = row.city;
         const county: string = row.county;
         const country: Country = row.country;
@@ -135,7 +135,7 @@ export class RealEstateManager {
             new Address(
                 fullAddress,
                 state,
-                zipCode,
+                zipcode,
                 city,
                 county,
                 country,
