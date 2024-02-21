@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ListingWithScenariosDTO } from '@realestatemanager/shared';
 import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
-import ReusableTable, { TableColumn } from '../components/ReusableTable';
+import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 
 const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
@@ -30,6 +30,70 @@ const PropertiesList: React.FC = () => {
     const handleCloseModal = () => {
         setSelectedProperty(null);
     };
+
+    const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
+
+    // Function to render the cell data based on its type
+    const renderCellData = (cellData: any): string => {
+        if (typeof cellData === 'boolean') {
+            return booleanToYesNo(cellData);
+        } else if (typeof cellData === 'string' || typeof cellData === 'number') {
+            return cellData.toString();
+        } else if (Array.isArray(cellData)) {
+            return cellData.join(', '); // Example: array to comma-separated string
+        } else if (typeof cellData === 'object' && cellData !== null) {
+            return JSON.stringify(cellData); // Or extract specific properties to render
+        }
+        return ''; // Fallback for undefined or null
+    };
+
+    const createRowData = (property: ListingWithScenariosDTO): TableRow => {
+        return {
+            homeType: renderCellData(property.listingDetails.propertyDetails.homeType!),
+            fullAddress: renderCellData(property.listingDetails.propertyDetails.address!.fullAddress),
+            state: renderCellData(property.listingDetails.propertyDetails.address!.state),
+            zipcode: renderCellData(property.listingDetails.propertyDetails.address!.zipcode),
+            zillowURL: renderCellData(property.listingDetails.zillowURL),
+            price: renderCellData(property.listingDetails.listingPrice),
+            rentEstimate: renderCellData(property.listingDetails.zillowMarketEstimates.zillowRentEstimate!),
+            initialCosts: renderCellData(property.metrics[0].initialCosts),
+            loanAmount: renderCellData(property.metrics[0].loanAmount),
+            downPaymentAmount: renderCellData(property.metrics[0].downPaymentAmount),
+            annualInterestRate: renderCellData(property.metrics[0].investmentScenario.mortgageDetails.annualInterestRate),
+            ROI: renderCellData(property.metrics[0].ROI),
+            capRate: renderCellData(property.metrics[0].capRate),
+            mortgage: renderCellData(property.metrics[0].mortgage),
+            monthlyCashFlow: renderCellData(property.metrics[0].monthlyCashFlow),
+            yearlyCashFlow: renderCellData(property.metrics[0].yearlyCashFlow),
+            city: renderCellData(property.listingDetails.propertyDetails.address!.city),
+            county: renderCellData(property.listingDetails.propertyDetails.address!.county),
+            country: renderCellData(property.listingDetails.propertyDetails.address!.country),
+            streetAddress: renderCellData(property.listingDetails.propertyDetails.address!.streetAddress),
+            apartmentNumber: renderCellData(property.listingDetails.propertyDetails.address!.apartmentNumber),
+            numberOfDaysOnMarket: renderCellData(property.listingDetails.propertyDetails.numberOfDaysOnMarket!),
+            elementarySchoolRating: renderCellData(property.listingDetails.propertyDetails.schoolRating!.elementarySchoolRating!),
+            middleSchoolRating: renderCellData(property.listingDetails.propertyDetails.schoolRating!.middleSchoolRating!),
+            highSchoolRating: renderCellData(property.listingDetails.propertyDetails.schoolRating!.highSchoolRating!),
+            numberOfBedrooms: renderCellData(property.listingDetails.propertyDetails.numberOfBedrooms!),
+            numberOfFullBathrooms: renderCellData(property.listingDetails.propertyDetails.numberOfFullBathrooms!),
+            numberOfHalfBathrooms: renderCellData(property.listingDetails.propertyDetails.numberOfHalfBathrooms!),
+            squareFeet: renderCellData(property.listingDetails.propertyDetails.squareFeet!),
+            acres: renderCellData(property.listingDetails.propertyDetails.acres!),
+            yearBuilt: renderCellData(property.listingDetails.propertyDetails.yearBuilt!),
+            hasGarage: renderCellData(property.listingDetails.propertyDetails.hasGarage!),
+            hasPool: renderCellData(property.listingDetails.propertyDetails.hasPool!),
+            hasBasement: renderCellData(property.listingDetails.propertyDetails.hasBasement!),
+            listingPrice: renderCellData(property.listingDetails.listingPrice),
+            zestimate: renderCellData(property.listingDetails.zillowMarketEstimates.zestimate!),
+            zillowRentEstimate: renderCellData(property.listingDetails.zillowMarketEstimates.zillowRentEstimate!),
+            zestimateRangeLow: renderCellData(property.listingDetails.zillowMarketEstimates.zestimateRange!.low!),
+            zestimateRangeHigh: renderCellData(property.listingDetails.zillowMarketEstimates.zestimateRange!.high!),
+            zillowMonthlyPropertyTaxAmount: renderCellData(property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount!),
+            zillowMonthlyHomeInsuranceAmount: renderCellData(property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount!),
+            zillowMonthlyHOAFeesAmount: renderCellData(property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount!),
+            description: renderCellData(property.listingDetails.propertyDetails.description),
+        }
+    }
 
     const columns: TableColumn[] = [
         { header: "Home Type", accessor: "homeType", isURL: false, showColumn: true },
@@ -77,51 +141,14 @@ const PropertiesList: React.FC = () => {
         { header: "Description", accessor: "description", isURL: false, showColumn: false },
     ];
 
-    const rows = properties.map(property => ({
-        homeType: property.listingDetails.propertyDetails.homeType,
-        fullAddress: property.listingDetails.propertyDetails.address!.fullAddress,
-        state: property.listingDetails.propertyDetails.address!.state,
-        zipcode: property.listingDetails.propertyDetails.address!.zipcode,
-        zillowURL: property.listingDetails.zillowURL,
-        price: property.listingDetails.listingPrice,
-        rentEstimate: property.listingDetails.zillowMarketEstimates.zillowRentEstimate,
-        initialCosts: property.metrics[0].initialCosts,
-        loanAmount: property.metrics[0].loanAmount,
-        downPaymentAmount: property.metrics[0].downPaymentAmount,
-        annualInterestRate: property.metrics[0].investmentScenario.mortgageDetails.annualInterestRate,
-        ROI: property.metrics[0].ROI,
-        capRate: property.metrics[0].capRate,
-        mortgage: property.metrics[0].mortgage,
-        monthlyCashFlow: property.metrics[0].monthlyCashFlow,
-        yearlyCashFlow: property.metrics[0].yearlyCashFlow,
-        city: property.listingDetails.propertyDetails.address?.city,
-        county: property.listingDetails.propertyDetails.address?.county,
-        country: property.listingDetails.propertyDetails.address?.country,
-        streetAddress: property.listingDetails.propertyDetails.address?.streetAddress,
-        apartmentNumber: property.listingDetails.propertyDetails.address?.apartmentNumber,
-        numberOfDaysOnMarket: property.listingDetails.propertyDetails.numberOfDaysOnMarket,
-        elementarySchoolRating: property.listingDetails.propertyDetails.schoolRating?.elementarySchoolRating,
-        middleSchoolRating: property.listingDetails.propertyDetails.schoolRating?.middleSchoolRating,
-        highSchoolRating: property.listingDetails.propertyDetails.schoolRating?.highSchoolRating,
-        numberOfBedrooms: property.listingDetails.propertyDetails.numberOfBedrooms,
-        numberOfFullBathrooms: property.listingDetails.propertyDetails.numberOfFullBathrooms,
-        numberOfHalfBathrooms: property.listingDetails.propertyDetails.numberOfHalfBathrooms,
-        squareFeet: property.listingDetails.propertyDetails.squareFeet,
-        acres: property.listingDetails.propertyDetails.acres,
-        yearBuilt: property.listingDetails.propertyDetails.yearBuilt,
-        hasGarage: property.listingDetails.propertyDetails.hasGarage,
-        hasPool: property.listingDetails.propertyDetails.hasPool,
-        hasBasement: property.listingDetails.propertyDetails.hasBasement,
-        listingPrice: property.listingDetails.listingPrice,
-        zestimate: property.listingDetails.zillowMarketEstimates.zestimate,
-        zillowRentEstimate: property.listingDetails.zillowMarketEstimates.zillowRentEstimate,
-        zestimateRangeLow: property.listingDetails.zillowMarketEstimates.zestimateRange?.low,
-        zestimateRangeHigh: property.listingDetails.zillowMarketEstimates.zestimateRange?.high,
-        zillowMonthlyPropertyTaxAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount,
-        zillowMonthlyHomeInsuranceAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount,
-        zillowMonthlyHOAFeesAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount,
-        description: property.listingDetails.propertyDetails.description,
-    }));
+    // const tableData: { [key: string]: string }[] = properties.map(property => ({
+    const tableData: TableDataItem<ListingWithScenariosDTO>[] = properties.map(property => ({
+        objectData: {
+            key: property,
+        },
+        rowData: createRowData(property),
+    }
+    ));
 
     // Inside PropertiesList component
 
@@ -134,11 +161,12 @@ const PropertiesList: React.FC = () => {
                 <>
                     <ReusableTable
                         columns={columns} // Filter columns based on showColumn
-                        tableData={rows}
+                        tableData={tableData}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}
+                        rowData={createRowData(selectedProperty)}
                         onClose={handleCloseModal}
                         columns={columns}
                     />}

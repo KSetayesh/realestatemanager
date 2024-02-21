@@ -1,21 +1,41 @@
-import React from 'react';
 import '../styles/PropertiesList.css';
+
+// export interface TableColumn {
+//     header: string;
+//     accessor: string; // Property name in the tableData objects
+//     isURL: boolean;
+//     showColumn: boolean;
+// }
+
+// export interface ReusableTableProps {
+//     columns: TableColumn[];
+//     tableData: any[]; // Consider specifying a more specific type if possible
+//     onRowClick?: (item: any) => void;
+// }
+
+export interface TableRow { [key: string]: string };
+
+export interface TableDataItem<T> {
+    objectData: {
+        key: T;
+    };
+    rowData: TableRow;
+}
 
 export interface TableColumn {
     header: string;
-    accessor: string; // Property name in the tableData objects
+    accessor: string; // Consider making this more specific or generic to match keys of tableData items
     isURL: boolean;
     showColumn: boolean;
 }
 
-export interface ReusableTableProps {
+export interface ReusableTableProps<T> {
     columns: TableColumn[];
-    tableData: any[]; // Consider specifying a more specific type if possible
-    onRowClick?: (item: any) => void;
+    tableData: TableDataItem<T>[]; // Array of objects with string keys and string values
+    onRowClick?: (item: T) => void; // Now explicitly accepts an object with string keys and string values
 }
 
-const ReusableTable: React.FC<ReusableTableProps> = ({ columns, tableData, onRowClick }) => {
-
+const ReusableTable = <T,>({ columns, tableData, onRowClick }: ReusableTableProps<T>) => {
     return (
         <table className="properties-table">
             <thead>
@@ -30,13 +50,14 @@ const ReusableTable: React.FC<ReusableTableProps> = ({ columns, tableData, onRow
                     <tr
                         key={rowIndex}
                         style={{ cursor: 'pointer' }}
-                        onClick={() => onRowClick && onRowClick(item)}
+                        onClick={() => onRowClick && onRowClick(item.objectData.key)}
                     >
                         {columns.filter(column => column.showColumn).map((column, colIndex) => {
-                            const cellData = item[column.accessor];
+                            // Access cell data from rowData using column.accessor
+                            const cellData = item.rowData[column.accessor];
                             return (
                                 <td key={colIndex}>
-                                    {column.isURL ? (
+                                    {column.isURL && typeof cellData === 'string' ? (
                                         <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                                             View
                                         </a>
@@ -54,3 +75,4 @@ const ReusableTable: React.FC<ReusableTableProps> = ({ columns, tableData, onRow
 };
 
 export default ReusableTable;
+

@@ -1,47 +1,32 @@
 import React from 'react';
 import { ListingWithScenariosDTO } from "@realestatemanager/shared";
 import '../styles/PropertyDetailsModal.css';
-import { TableColumn } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "../components/ReusableTable";
 
 const PropertyDetailsModal: React.FC<{
     property: ListingWithScenariosDTO | null;
+    rowData: TableRow;
     onClose: () => void;
     columns: TableColumn[];
-}> = ({ property, onClose, columns }) => {
+}> = ({ property, rowData, onClose, columns }) => {
     if (!property) return null;
 
     const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
-
-    const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
-
-    // Function to render the cell data based on its type
-    const renderCellData = (cellData: any) => {
-        if (typeof cellData === 'boolean') {
-            return booleanToYesNo(cellData);
-        } else if (typeof cellData === 'string' || typeof cellData === 'number') {
-            return cellData;
-        } else if (Array.isArray(cellData)) {
-            return cellData.join(', '); // Example: array to comma-separated string
-        } else if (typeof cellData === 'object' && cellData !== null) {
-            return JSON.stringify(cellData); // Or extract specific properties to render
-        }
-        return ''; // Fallback for undefined or null
-    };
 
     return (
         <div className="modal-backdrop" onClick={onClose}>
             <div className="modal" onClick={stopPropagation}>
                 <h2>Property Details</h2>
                 {columns.map((column, colIndex) => {
-                    const cellData = property[column.accessor as keyof ListingWithScenariosDTO];
-                    const displayData = renderCellData(cellData);
+                    const cellData = rowData[column.accessor as keyof ListingWithScenariosDTO];
+                    // const displayData = renderCellData(cellData);
                     return (
                         <p key={colIndex}>
                             <span className="modal-label">{column.header}:</span>
-                            {column.isURL && typeof displayData === 'string' ? (
-                                <a href={displayData} target="_blank" rel="noopener noreferrer">View</a>
+                            {column.isURL && typeof cellData === 'string' ? (
+                                <a href={cellData} target="_blank" rel="noopener noreferrer">View</a>
                             ) : (
-                                <span> {displayData}</span>
+                                <span> {cellData}</span>
                             )}
                         </p>
                     );
