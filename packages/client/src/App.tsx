@@ -25,7 +25,7 @@ const App: React.FC = () => {
                     <Link to="/">Home</Link> &nbsp;|&nbsp;
                     <Link to="/propertyForm">Property Form</Link> &nbsp;|&nbsp;
                     <Link to="/propertiesList">Properties List</Link> &nbsp;|&nbsp;
-                    <Link to="/investmentBreakdown">Investment Breakdown</Link> &nbsp;|&nbsp;
+                    {/* <Link to="/investmentBreakdown">Investment Breakdown</Link> &nbsp;|&nbsp; */}
                     <Link to="/projections">Projections</Link>
                 </nav>
                 <Routes>

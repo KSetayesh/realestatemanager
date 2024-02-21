@@ -157,6 +157,7 @@ const PropertiesList: React.FC = () => {
     // Assuming your ReusableTable component and TableColumn interface are set up to handle this
     return (
         <div>
+            <h2> Properties List </h2>
             {isLoading ? (
                 <p>Loading properties...</p>
             ) : (
