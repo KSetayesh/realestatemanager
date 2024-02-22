@@ -3,6 +3,13 @@ export class Utility {
         const multiplier = Math.pow(10, places);
         return Math.round((num + Number.EPSILON) * multiplier) / multiplier;
     }
+
+    static formatDollarAmount(amount: number): string {
+        return amount.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+    }
 }
 
 
