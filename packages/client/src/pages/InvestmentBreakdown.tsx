@@ -1,9 +1,11 @@
 import { AmortizationDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import InvestmentForm from './InvestmentForm';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 import PropertyDetailsModal from './PropertyDetailsModal';
 import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
+
 
 const InvestmentBreakdown: React.FC = () => {
 
@@ -82,6 +84,7 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
+            <InvestmentForm />
             {properties.length > 0 ? (
                 <>
                     <ReusableTable

@@ -1,0 +1,54 @@
+.investment-form {
+    max-width: 400px;
+    /* Reduced width for a more compact form */
+    margin: 20px auto;
+    background: #f7f7f7;
+    padding: 25px;
+    /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Keeps the two-column layout */
+    gap: 30px;
+    /* Reduced gap for a tighter layout */
+}
+
+.form-group {
+    margin-bottom: 5px;
+    /* Reduced bottom margin for form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    /* Smaller font size for labels */
+}
+
+.form-control {
+    width: 100%;
+    padding: 4px 4px;
+    /* Reduced padding for a slimmer input field */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 0.9em;
+    /* Smaller font size for input text */
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: left;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    /* Space between checkbox and label text */
+}
+
+label {
+    font-weight: bold;
+}

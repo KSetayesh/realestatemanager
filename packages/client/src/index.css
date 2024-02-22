@@ -46,12 +46,17 @@ button {
     font-weight: 500;
     font-family: inherit;
     background-color: #317cff;
+    /* Original Button Color */
     cursor: pointer;
-    transition: border-color 0.25s;
+    transition: background-color 0.25s, border-color 0.25s;
+    /* Added background-color to transition */
 }
 
 button:hover {
+    background-color: #4a8fff;
+    /* Lighter or Different Shade for Hover */
     border-color: #646cff;
+    /* Adjusted Hover Border Color */
 }
 
 button:focus,
