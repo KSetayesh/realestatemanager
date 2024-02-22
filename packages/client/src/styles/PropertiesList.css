@@ -17,6 +17,15 @@
     color: white;
     border-right: 1px solid #ddd;
     /* Add right border to header cells */
+    cursor: pointer;
+    /* Makes the cursor appear as a pointer when hovering over table headers */
+    transition: background-color 0.3s ease;
+    /* Optional: smooth transition for background color */
+}
+
+.properties-table th:hover {
+    background-color: #037f58;
+    /* Darkens the header background slightly on hover */
 }
 
 .properties-table td {
