@@ -17,10 +17,10 @@ console.log("Client is running on http://localhost:5173/");
 
 const App: React.FC = () => {
     return (
-        <Router>
-            <br></br>
-            <div className="App">
-                <nav>
+        <div className="App">
+            <Router>
+                <nav className="navbar">
+                    <br></br>
                     {/* You could also put a navigation link here if you like */}
                     <Link to="/">Home</Link> &nbsp;|&nbsp;
                     <Link to="/propertyForm">Property Form</Link> &nbsp;|&nbsp;
@@ -37,8 +37,8 @@ const App: React.FC = () => {
                     {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
                     {/* Add other routes here */}
                 </Routes>
-            </div>
-        </Router>
+            </Router>
+        </div>
     );
 };
 
