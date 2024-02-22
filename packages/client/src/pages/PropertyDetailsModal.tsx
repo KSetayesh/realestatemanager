@@ -38,7 +38,7 @@ const PropertyDetailsModal: React.FC<{
                     }
                     return (
                         <p key={colIndex}>
-                            <span className="modal-label">{column.header}:</span>
+                            <span className="modal-label">{column.header}: </span>
                             {content}
                         </p>
                     );

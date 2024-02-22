@@ -28,15 +28,17 @@ const App: React.FC = () => {
                     {/* <Link to="/investmentBreakdown">Investment Breakdown</Link> &nbsp;|&nbsp; */}
                     <Link to="/projections">Projections</Link>
                 </nav>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/propertyForm" element={<PropertyForm />} />
-                    <Route path="/propertiesList" element={<PropertiesList />} />
-                    <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} />
-                    <Route path="/projections" element={<Projections />} />
-                    {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
-                    {/* Add other routes here */}
-                </Routes>
+                <div className='pages'>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/propertyForm" element={<PropertyForm />} />
+                        <Route path="/propertiesList" element={<PropertiesList />} />
+                        <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} />
+                        <Route path="/projections" element={<Projections />} />
+                        {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
+                        {/* Add other routes here */}
+                    </Routes>
+                </div>
             </Router>
         </div>
     );

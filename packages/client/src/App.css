@@ -15,3 +15,9 @@
     background-color: #b3b1b1;
     padding: 2rem;
 }
+
+.pages {
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
