@@ -69,3 +69,40 @@ export enum InputType {
 };
 
 export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+// const round = (num: number, places: number = 2): number => {
+//     const multiplier = Math.pow(10, places);
+//     return Math.round((num + Number.EPSILON) * multiplier) / multiplier;
+// }
+
+const formatDollarAmount = (amount: number): string => {
+    return amount.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+};
+
+const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
+
+// Function to render the cell data based on its type
+export const renderCellData = (cellData: any, isDollarAmount: boolean = false, addSuffix?: string): string => {
+    let toReturn = '';
+    if (typeof cellData === 'boolean') {
+        toReturn = booleanToYesNo(cellData);
+    }
+    else if (typeof cellData === 'string') {
+        toReturn = cellData.toString();
+    }
+    else if (typeof cellData === 'number') {
+        toReturn = isDollarAmount ? formatDollarAmount(cellData) : cellData.toString();
+    }
+    else if (Array.isArray(cellData)) {
+        toReturn = cellData.join(', '); // Example: array to comma-separated string
+    }
+    else if (typeof cellData === 'object' && cellData !== null) {
+        toReturn = JSON.stringify(cellData); // Or extract specific properties to render
+    }
+
+    return toReturn === '' ? toReturn : toReturn + (addSuffix ? addSuffix : ''); // Fallback for undefined or null
+
+};

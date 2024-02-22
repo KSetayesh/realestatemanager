@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../styles/PropertiesList.css';
+import { renderCellData } from '../constants/Constant';
 
 // export interface TableColumn {
 //     header: string;
@@ -14,7 +15,7 @@ import '../styles/PropertiesList.css';
 //     onRowClick?: (item: any) => void;
 // }
 
-export interface TableRow { [key: string]: string };
+export interface TableRow { [key: string]: any };
 
 export interface TableDataItem<T> {
     objectData: {
@@ -27,8 +28,10 @@ export interface TableColumn {
     header: string;
     accessor: string; // Consider making this more specific or generic to match keys of tableData items
     isURL: boolean;
+    isDollarAmount: boolean;
     showColumn: boolean;
     routeTo?: string;
+    addSuffix?: string;
 }
 
 export interface ReusableTableProps<T> {
@@ -55,15 +58,17 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick }: ReusableTableProp
                         onClick={() => onRowClick ? onRowClick(item.objectData.key) : undefined}
                     >
                         {columns.filter(column => column.showColumn).map((column, colIndex) => {
-                            const cellData = item.rowData[column.accessor];
-                            let cellContent;
+                            const cellData = renderCellData(item.rowData[column.accessor],
+                                column.isDollarAmount,
+                                column.addSuffix);
 
+                            let cellContent;
                             if (column.routeTo) {
                                 cellContent = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: tableData[rowIndex].objectData.key }}>
                                     {column.routeTo}
                                 </Link></span>;
                             }
-                            else if (column.isURL && typeof cellData === 'string') {
+                            else if (column.isURL) {
                                 cellContent = (
                                     <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                                         View
