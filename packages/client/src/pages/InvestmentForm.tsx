@@ -15,7 +15,7 @@ const InvestmentForm: React.FC = () => {
         insuranceCosts: '',
         vacancyRate: '',
         managementFees: '',
-        useDefaultValues: false,
+        setNewDefaultValues: false,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,10 +99,10 @@ const InvestmentForm: React.FC = () => {
                     <label>
                         <input
                             type="checkbox"
-                            name="useDefaultValues"
-                            checked={formData.useDefaultValues}
+                            name="setNewDefaultValues"
+                            checked={formData.setNewDefaultValues}
                             onChange={handleChange}
-                        /> Use Default Values
+                        /> Set New Default Values
                     </label>
                 </div>
                 {/* ... add other new form groups similarly */}
