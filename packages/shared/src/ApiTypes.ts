@@ -76,6 +76,45 @@ export enum FinancingType {
     OTHER = 'Other',
 };
 
+export enum ValueType {
+    AMOUNT = 'Amount',
+    RATE = 'Rate',
+};
+
+export enum DefaultInvestmentRates {
+    PMI_Rate = 0, // PMI rate expressed as a percentage of the loan amount annually.
+    DownPaymentPercentage = 20, // Typical down payment percentage for avoiding PMI.
+    PropertyManagementRate = 10, // Percentage of rental income paid for property management.
+    VacancyRate = 10, // Percentage of the year that the property is expected to be vacant.
+    MaintenanceRate = 1, // Percentage of the property's value allocated annually for maintenance.
+    OtherExpensesRate = 3, // Miscellaneous expenses as a percentage of rental income.
+    CapExReserveRate = 5, // Capital expenditure reserve as a percentage of rental income.
+    LegalAndProfessionalFees = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
+    InitialRepairCosts = 5000, // Estimated initial repair costs in dollars.
+    ClosingCosts = 15000, // Estimated closing costs in dollars.
+};
+
+//-----------------------------------------------------------------------------------------
+
+// Defines the base structure for input that can either be a rate or an amount
+export interface ValueInputBase {
+    type: ValueType;
+}
+
+// Structure for specifying an absolute amount
+export interface ValueAmountInput extends ValueInputBase {
+    type: ValueType.AMOUNT;
+    amount: number; // The fixed amount in dollars
+}
+
+// Structure for specifying a rate (as a percentage)
+export interface ValueRateInput extends ValueInputBase {
+    type: ValueType.RATE;
+    rate: number; // The rate as a percentage of some base value
+}
+
+export type ValueInput = ValueAmountInput | ValueRateInput;
+
 //------------------------------ Investment Related Requests ------------------------------
 
 export interface ListingWithScenariosDTO {
@@ -107,9 +146,9 @@ export interface LoanDetailsDTO {
 export interface MortgageDetailsDTO extends LoanDetailsDTO {
     downPaymentPercentage: number;
     pmiRate: number;
-    monthlyPropertyTaxAmount?: number;
-    monthlyHomeInsuranceAmount?: number;
-    monthlyHOAFeesAmount?: number;
+    monthlyPropertyTax?: ValueInput; // Now accepts both amount and rate.
+    monthlyHomeInsuranceAmount?: ValueInput; // Now accepts both amount and rate.
+    monthlyHOAFeesAmount?: ValueInput; // Now accepts both amount and rate.
 };
 
 export interface OperatingExpensesDTO {
@@ -118,9 +157,9 @@ export interface OperatingExpensesDTO {
     maintenanceRate?: number;
     otherExpensesRate?: number;
     capExReserveRate?: number;
-    legalAndProfessionalFees?: number;
-    initialRepairCosts?: number;
-    closingCosts?: number;
+    legalAndProfessionalFees?: ValueInput;
+    initialRepairCosts?: ValueInput;
+    closingCosts?: ValueInput;
 };
 
 //------------------------------ Investment Related Response ------------------------------
@@ -166,6 +205,7 @@ export type MortgageWithRecurringExpensesBreakdown = {
     totalCosts: number; // Total of mortgage and recurring expenses.
     breakdown: {
         mortgageBreakdown: MortgageBreakdown; // Details of the mortgage.
+        fixedMonthlyExpenses: FixedMonthlyExpenses; // Detailed fixed monthly expenses.
         recurringExpensesBreakdown: RecurringExpensesBreakdown; // Details of recurring expenses.
     };
 };
@@ -174,6 +214,7 @@ export type MortgageWithRecurringExpensesBreakdown = {
 export type PMIDetails = {
     pmiAmount: number; // The monthly PMI payment.
     pmiRate: number; // PMI rate used to calculate the pmiAmount.
+    pmiRateFormula: string; // A description on PMIRate is calculated
     pmiDropoffPoint: number; // Loan-to-value ratio (%) at which PMI is no longer required.
 };
 
@@ -188,6 +229,15 @@ export type MortgageBreakdown = {
         interestAmount: number; // Portion of monthly payment going toward interest.
         percentTowardsInterest: number; // Percentage of monthly payment applied to interest.
     };
+};
+
+export type FixedMonthlyExpenses = {
+    totalCosts: number; // Total of all recurring expenses.
+    breakdown: {
+        monthlyPropertyTaxAmount: number; // Fixed monthly amount allocated for property taxes.
+        monthlyHomeInsuranceAmount: number; // Fixed monthly home insurance payment.
+        monthlyHOAFeesAmount: number; // Monthly HOA fees, if applicable.
+    }
 };
 
 // Detailed breakdown of recurring expenses associated with managing and maintaining the property.
@@ -280,6 +330,7 @@ export interface InvestmentMetricsResponseDTO {
     financingOptions: FinancingOption[]; // Available financing options.
     growthProjections: GrowthProjections; // Growth projections for rent, value, and taxes.
     recurringExpensesBreakdown: RecurringExpensesBreakdown; // Detailed recurring expenses.
+    fixedMonthlyExpenses: FixedMonthlyExpenses; // Includes fixed monthly expenses directly in the response for easy access.
     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
 };
 
