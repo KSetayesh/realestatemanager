@@ -1,7 +1,7 @@
-import { FinancialProjectionsDTO } from "@realestatemanager/shared";
+import { GrowthProjectionsDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
-export class FinancialProjections implements IDTOConvertible<FinancialProjectionsDTO> {
+export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> {
     private annualAppreciationRate?: number;
     private annualTaxIncreaseRate?: number;
     private annualRentIncreaseRate?: number;
@@ -27,7 +27,7 @@ export class FinancialProjections implements IDTOConvertible<FinancialProjection
         return this.annualRentIncreaseRate;
     }
 
-    toDTO(): FinancialProjectionsDTO {
+    toDTO(): GrowthProjectionsDTO {
         return {
             annualAppreciationRate: this.annualAppreciationRate,
             annualTaxIncreaseRate: this.annualTaxIncreaseRate,

@@ -1,4 +1,4 @@
-import { InterestType, MortgageDetailsDTO } from "@realestatemanager/shared";
+import { InterestType, MortgageDetailsDTO, ValueInput, ValueType } from "@realestatemanager/shared";
 import { LoanDetails } from "./loandetails.model";
 
 export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
@@ -34,18 +34,23 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         let monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
         // Add PMI calculation if down payment is less than 20%
-        if (this.isPMI()) {
-            // Assume PMI rate of 0.75% of the loan amount annually as an example
-            const annualPMI = loanAmount * (this.pmiRate / 100); //  0.0075;
-            const monthlyPMI = annualPMI / 12;
-            monthlyPayment += monthlyPMI;
-        }
+        monthlyPayment += this.calculatePMIAmount();
 
         monthlyPayment += (this.monthlyPropertyTaxAmount +
             this.monthlyHomeInsuranceAmount +
             this.monthlyHOAFeesAmount);
 
         return monthlyPayment;
+    }
+
+    calculatePMIAmount(): number {
+        if (this.isPMI()) {
+            // Assume PMI rate of 0.75% of the loan amount annually as an example
+            const annualPMI = this.getLoanAmount() * (this.pmiRate / 100); //  0.0075;
+            const monthlyPMI = annualPMI / 12;
+            return monthlyPMI;
+        }
+        return 0;
     }
 
     calculateTotalCostOfMortgage(): number {
@@ -68,9 +73,18 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
             interestType: this.getInterestType(),
             downPaymentPercentage: this.downPaymentPercentage,
             pmiRate: this.pmiRate,
-            monthlyPropertyTaxAmount: this.monthlyPropertyTaxAmount,
-            monthlyHomeInsuranceAmount: this.monthlyHomeInsuranceAmount,
-            monthlyHOAFeesAmount: this.monthlyHOAFeesAmount,
+            monthlyPropertyTax: {
+                type: ValueType.AMOUNT,
+                amount: this.monthlyPropertyTaxAmount,
+            },
+            monthlyHomeInsuranceAmount: {
+                type: ValueType.AMOUNT,
+                amount: this.monthlyHomeInsuranceAmount,
+            },
+            monthlyHOAFeesAmount: {
+                type: ValueType.AMOUNT,
+                amount: this.monthlyHOAFeesAmount,
+            },
         };
     }
 

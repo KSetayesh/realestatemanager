@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { RealEstateManager } from 'src/db/realestate/realestate.db';
 import {
-    InterestType,
-    InvestmentMetricsDTO,
+    DefaultInvestmentRates,
+    InvestmentMetricsResponseDTO,
     InvestmentScenarioDTO,
     InvestmentScenarioRequestDTO,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
-    Utility
+    Utility,
+    ValueInput
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listingdetails.model';
 import { InvestmentScenario } from '../models/investmentscenario.model';
 import { MortgageDetails } from '../models/mortgagedetails.model';
-import { FinancialProjections } from '../models/financialprojections.model';
+import { GrowthProjections } from '../models/growthprojections.model';
 import { OperatingExpenses } from '../models/operatingexpenses.model';
+import { getAmountFromValueInput, getInterestTypeEnumValue } from 'src/shared/Constants';
 
 @Injectable()
 export class CalcService {
@@ -30,7 +32,7 @@ export class CalcService {
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
         for (const listingDetails of listingDetailsArr) {
             const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
-            const investmentMetricsDTO: InvestmentMetricsDTO = investmentScenario.createInvestmentMetrics();
+            const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
             const listingWithScenariosDTO: ListingWithScenariosDTO = {
                 listingDetails: listingDetails.toDTO(),
                 metrics: [investmentMetricsDTO]
@@ -44,7 +46,7 @@ export class CalcService {
 
         const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
         const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
-        const investmentMetricsDTO: InvestmentMetricsDTO = investmentScenario.createInvestmentMetrics();
+        const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
             metrics: [investmentMetricsDTO]
@@ -69,9 +71,9 @@ export class CalcService {
         const interestType = investmentScenarioRequest.mortgageDetails.interestType;
         const downPaymentPercentage = investmentScenarioRequest.mortgageDetails.downPaymentPercentage;
         const pmiRate = investmentScenarioRequest.mortgageDetails.pmiRate;
-        const monthlyPropertyTaxAmount = investmentScenarioRequest.mortgageDetails.monthlyPropertyTaxAmount;
-        const monthlyHomeInsuranceAmount = investmentScenarioRequest.mortgageDetails.monthlyHomeInsuranceAmount;
-        const monthlyHOAFeesAmount = investmentScenarioRequest.mortgageDetails.monthlyHOAFeesAmount;
+        const monthlyPropertyTaxAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyPropertyTax);
+        const monthlyHomeInsuranceAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyHomeInsuranceAmount);
+        const monthlyHOAFeesAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyHOAFeesAmount);
 
         const mortgageDetails: MortgageDetails = new MortgageDetails(
             loanAmount,
@@ -82,13 +84,14 @@ export class CalcService {
             pmiRate,
             monthlyPropertyTaxAmount,
             monthlyHomeInsuranceAmount,
-            monthlyHOAFeesAmount);
+            monthlyHOAFeesAmount
+        );
 
-        const annualAppreciationRate = investmentScenarioRequest.financialProjections.annualAppreciationRate;
-        const annualTaxIncreaseRate = investmentScenarioRequest.financialProjections.annualTaxIncreaseRate;
-        const annualRentIncreaseRate = investmentScenarioRequest.financialProjections.annualRentIncreaseRate;
+        const annualAppreciationRate = investmentScenarioRequest.growthProjections.annualAppreciationRate;
+        const annualTaxIncreaseRate = investmentScenarioRequest.growthProjections.annualTaxIncreaseRate;
+        const annualRentIncreaseRate = investmentScenarioRequest.growthProjections.annualRentIncreaseRate;
 
-        const financialProjections: FinancialProjections = new FinancialProjections(
+        const growthProjections: GrowthProjections = new GrowthProjections(
             annualAppreciationRate,
             annualTaxIncreaseRate,
             annualRentIncreaseRate
@@ -99,9 +102,9 @@ export class CalcService {
         const maintenanceRate = investmentScenarioRequest.operatingExpenses.maintenanceRate;
         const otherExpensesRate = investmentScenarioRequest.operatingExpenses.otherExpensesRate;
         const capExReserveRate = investmentScenarioRequest.operatingExpenses.capExReserveRate;
-        const legalAndProfessionalFees = investmentScenarioRequest.operatingExpenses.legalAndProfessionalFees;
-        const initialRepairCosts = investmentScenarioRequest.operatingExpenses.initialRepairCosts;
-        const closingCosts = investmentScenarioRequest.operatingExpenses.closingCosts;
+        const legalAndProfessionalFees = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.legalAndProfessionalFees);
+        const initialRepairCosts = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.initialRepairCosts);
+        const closingCosts = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.closingCosts);
 
         const operatingExpenses: OperatingExpenses = new OperatingExpenses(
             propertyManagementRate,
@@ -119,7 +122,7 @@ export class CalcService {
 
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
             mortgageDetails,
-            financialProjections,
+            growthProjections,
             operatingExpenses,
             rentEstimate,
             purchasePrice
@@ -131,15 +134,15 @@ export class CalcService {
     private createDefaultInvestmentScenario(listingDetails: ListingDetails): InvestmentScenario {
         const rentEstimate = listingDetails.getZillowRentEstimate();
         const purchasePrice = listingDetails.getListingPrice();
-        const annualInterestRate = 6.5;
-        const termInYears = 30;
-        const interestType = InterestType.FIXED;
-        const downPaymentPercentage = 20;
+        const annualInterestRate = DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
+        const termInYears = DefaultInvestmentRates.TERM_IN_YEARS;
+        const interestType = getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
+        const downPaymentPercentage = DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE;
 
         // Move this code somewhere else
         const loanAmount = Utility.round(purchasePrice * (1 - (downPaymentPercentage / 100)));
 
-        const pmiRate = 0;
+        const pmiRate = DefaultInvestmentRates.PMI_RATE;
         const monthlyPropertyTaxAmount = listingDetails.getZillowMonthlyPropertyTaxAmount();
         const monthlyHomeInsuranceAmount = listingDetails.getZillowMonthlyHomeInsuranceAmount();
         const monthlyHOAFeesAmount = listingDetails.getZillowMonthlyHOAFeesAmount();
@@ -153,26 +156,27 @@ export class CalcService {
             pmiRate,
             monthlyPropertyTaxAmount,
             monthlyHomeInsuranceAmount,
-            monthlyHOAFeesAmount);
+            monthlyHOAFeesAmount
+        );
 
-        const annualAppreciationRate = 5;
-        const annualTaxIncreaseRate = 5;
-        const annualRentIncreaseRate = 5;
+        const annualAppreciationRate = DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
+        const annualTaxIncreaseRate = DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+        const annualRentIncreaseRate = DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
 
-        const financialProjections: FinancialProjections = new FinancialProjections(
+        const growthProjections: GrowthProjections = new GrowthProjections(
             annualAppreciationRate,
             annualTaxIncreaseRate,
             annualRentIncreaseRate
         );
 
-        const propertyManagementRate = 10;
-        const vacancyRate = 10;
-        const maintenanceRate = 10;
-        const otherExpensesRate = 5;
-        const capExReserveRate = 5;
-        const legalAndProfessionalFees = 5000;
-        const initialRepairCosts = 5000;
-        const closingCosts = 15000;
+        const propertyManagementRate = DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
+        const vacancyRate = DefaultInvestmentRates.VACANCY_RATE;
+        const maintenanceRate = DefaultInvestmentRates.MAINTENANCE_RATE;
+        const otherExpensesRate = DefaultInvestmentRates.OTHER_EXPENSES_RATE;
+        const capExReserveRate = DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
+        const legalAndProfessionalFees = DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
+        const initialRepairCosts = DefaultInvestmentRates.INITIAL_REPAIR_COSTS;
+        const closingCosts = DefaultInvestmentRates.CLOSING_COSTS;
 
         const operatingExpenses: OperatingExpenses = new OperatingExpenses(
             propertyManagementRate,
@@ -187,7 +191,7 @@ export class CalcService {
 
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
             mortgageDetails,
-            financialProjections,
+            growthProjections,
             operatingExpenses,
             rentEstimate,
             purchasePrice

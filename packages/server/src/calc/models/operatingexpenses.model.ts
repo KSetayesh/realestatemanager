@@ -1,4 +1,4 @@
-import { OperatingExpensesDTO } from "@realestatemanager/shared";
+import { OperatingExpensesDTO, ValueInput, ValueType } from "@realestatemanager/shared";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
@@ -45,9 +45,18 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
             maintenanceRate: this.maintenanceRate,
             otherExpensesRate: this.otherExpensesRate,
             capExReserveRate: this.capExReserveRate,
-            legalAndProfessionalFees: this.legalAndProfessionalFees,
-            initialRepairCosts: this.initialRepairCosts,
-            closingCosts: this.closingCosts,
+            legalAndProfessionalFees: {
+                type: ValueType.AMOUNT,
+                amount: this.legalAndProfessionalFees,
+            },
+            initialRepairCosts: {
+                type: ValueType.AMOUNT,
+                amount: this.initialRepairCosts,
+            },
+            closingCosts: {
+                type: ValueType.AMOUNT,
+                amount: this.closingCosts,
+            },
         };
     }
 }

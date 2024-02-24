@@ -82,16 +82,22 @@ export enum ValueType {
 };
 
 export enum DefaultInvestmentRates {
-    PMI_Rate = 0, // PMI rate expressed as a percentage of the loan amount annually.
-    DownPaymentPercentage = 20, // Typical down payment percentage for avoiding PMI.
-    PropertyManagementRate = 10, // Percentage of rental income paid for property management.
-    VacancyRate = 10, // Percentage of the year that the property is expected to be vacant.
-    MaintenanceRate = 1, // Percentage of the property's value allocated annually for maintenance.
-    OtherExpensesRate = 3, // Miscellaneous expenses as a percentage of rental income.
-    CapExReserveRate = 5, // Capital expenditure reserve as a percentage of rental income.
-    LegalAndProfessionalFees = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
-    InitialRepairCosts = 5000, // Estimated initial repair costs in dollars.
-    ClosingCosts = 15000, // Estimated closing costs in dollars.
+    PMI_RATE = 0, // PMI rate expressed as a percentage of the loan amount annually.
+    ANNUAL_INTEREST_RATE = 7, // Annual Interest rate of loan.
+    DOWN_PAYMENT_PERCENTAGE = 20, // Typical down payment percentage for avoiding PMI.
+    PROPERTY_MANAGEMENT_RATE = 10, // Percentage of rental income paid for property management.
+    VACANCY_RATE = 10, // Percentage of the year that the property is expected to be vacant.
+    MAINTENANCE_RATE = 1, // Percentage of the property's value allocated annually for maintenance.
+    OTHER_EXPENSES_RATE = 3, // Miscellaneous expenses as a percentage of rental income.
+    CAP_EX_RESERVE_RATE = 5, // Capital expenditure reserve as a percentage of rental income.
+    LEGAL_AND_PROFESSIONAL_FEES = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
+    INITIAL_REPAIR_COSTS = 5000, // Estimated initial repair costs in dollars.
+    CLOSING_COSTS = 15000, // Estimated closing costs in dollars.
+    TERM_IN_YEARS = 30, // Term length of loan in years.
+    ANNUAL_APPRECIATION_RATE = 4,
+    ANNUAL_TAX_INCREASE_RATE = 4,
+    ANNUAL_RENT_INCREASE_RATE = 4,
+    INTEREST_TYPE = InterestType.FIXED,
 };
 
 //-----------------------------------------------------------------------------------------
@@ -123,14 +129,14 @@ export interface ListingWithScenariosDTO {
 };
 
 export interface InvestmentScenarioRequestDTO {
-    propertyIdentifier: PropertyIdentifier;
+    propertyIdentifier: PropertyIdentifierDTO;
     useDefaultRequest: boolean;
     investmentScenario?: InvestmentScenarioDTO;
 };
 
 export interface InvestmentScenarioDTO {
     mortgageDetails: MortgageDetailsDTO;
-    growthProjections: GrowthProjections;
+    growthProjections: GrowthProjectionsDTO;
     operatingExpenses: OperatingExpensesDTO;
     rentEstimate: number;
     purchasePrice: number;
@@ -169,13 +175,13 @@ export interface OperatingExpensesDTO {
  */
 
 // Identifies a property using its address and a Zillow listing URL.
-export type PropertyIdentifier = {
+export type PropertyIdentifierDTO = {
     fullAddress: string; // Complete physical address of the property.
     zillowURL: string; // URL to the property's Zillow listing for more details.
 };
 
 // Represents additional sources of income from the property besides rent.
-export type AdditionalIncomeStreams = {
+export type AdditionalIncomeStreamsDTO = {
     parkingFees?: number; // Income from parking facilities, if available.
     laundryServices?: number; // Income from on-site laundry services.
     storageUnitFees?: number; // Income from storage units, if available.
@@ -183,13 +189,13 @@ export type AdditionalIncomeStreams = {
 };
 
 // Details about the down payment made on the property.
-export type DownPaymentBreakdown = {
+export type DownPaymentBreakdownDTO = {
     downPaymentAmount: number; // The absolute amount of the down payment.
     downPaymentPercentage: number; // The down payment as a percentage of the purchase price.
 };
 
 // Breakdown of the initial costs incurred when purchasing the property.
-export type InitialCostsBreakdown = {
+export type InitialCostsBreakdownDTO = {
     totalCosts: number; // Sum of all initial costs.
     breakdown: {
         legalAndProfessionalFees: number; // Costs for legal services, inspections, etc.
@@ -201,17 +207,17 @@ export type InitialCostsBreakdown = {
 };
 
 // Combines mortgage details with recurring property expenses for comprehensive cost analysis.
-export type MortgageWithRecurringExpensesBreakdown = {
+export type MortgageWithRecurringExpensesBreakdownDTO = {
     totalCosts: number; // Total of mortgage and recurring expenses.
     breakdown: {
-        mortgageBreakdown: MortgageBreakdown; // Details of the mortgage.
-        fixedMonthlyExpenses: FixedMonthlyExpenses; // Detailed fixed monthly expenses.
-        recurringExpensesBreakdown: RecurringExpensesBreakdown; // Details of recurring expenses.
+        mortgageBreakdown: MortgageBreakdownDTO; // Details of the mortgage.
+        fixedMonthlyExpenses: FixedMonthlyExpensesDTO; // Detailed fixed monthly expenses.
+        recurringExpensesBreakdown: RecurringExpensesBreakdownDTO; // Details of recurring expenses.
     };
 };
 
 // Details about PMI, a necessary cost if the down payment is below a certain threshold.
-export type PMIDetails = {
+export type PMIDetailsDTO = {
     pmiAmount: number; // The monthly PMI payment.
     pmiRate: number; // PMI rate used to calculate the pmiAmount.
     pmiRateFormula: string; // A description on PMIRate is calculated
@@ -219,10 +225,10 @@ export type PMIDetails = {
 };
 
 // Breakdown of the mortgage, including principal and interest, as well as PMI details if applicable.
-export type MortgageBreakdown = {
+export type MortgageBreakdownDTO = {
     mortgageAmount: number; // The total loan amount for the mortgage.
     monthlyPayment: number; // Base monthly mortgage payment, excluding PMI.
-    pmiDetails?: PMIDetails; // Optional PMI details, applicable if LTV ratio warrants.
+    pmiDetails?: PMIDetailsDTO; // Optional PMI details, applicable if LTV ratio warrants.
     breakdown?: {
         principalAmount: number; // Portion of monthly payment going toward the loan principal.
         percentTowardsPrincipal: number; // Percentage of monthly payment applied to the principal.
@@ -231,7 +237,7 @@ export type MortgageBreakdown = {
     };
 };
 
-export type FixedMonthlyExpenses = {
+export type FixedMonthlyExpensesDTO = {
     totalCosts: number; // Total of all recurring expenses.
     breakdown: {
         monthlyPropertyTaxAmount: number; // Fixed monthly amount allocated for property taxes.
@@ -241,7 +247,7 @@ export type FixedMonthlyExpenses = {
 };
 
 // Detailed breakdown of recurring expenses associated with managing and maintaining the property.
-export type RecurringExpensesBreakdown = {
+export type RecurringExpensesBreakdownDTO = {
     totalCosts: number; // Total of all recurring expenses.
     breakdown: {
         propertyManagementRate: number; // Costs associated with property management services.
@@ -253,7 +259,7 @@ export type RecurringExpensesBreakdown = {
 };
 
 // Breakdown of equity in the property, considering different scenarios.
-export type EquityBreakdown = {
+export type EquityBreakdownDTO = {
     equityAmountWithDownPayment: number; // Equity considering the initial down payment.
     equityAmountWithoutDownPayment: number; // Hypothetical equity without the down payment.
     equityAmountWithAppreciation: number; // Equity considering property appreciation.
@@ -261,7 +267,7 @@ export type EquityBreakdown = {
 };
 
 // Implications for taxes, including potential deductions and depreciation benefits.
-export type TaxImplications = {
+export type TaxImplicationsDTO = {
     depreciation: number; // Annual depreciation expense that can be deducted.
     taxDeductions: {
         mortgageInterest?: number; // Deductible mortgage interest expense.
@@ -271,20 +277,20 @@ export type TaxImplications = {
 };
 
 // Projections for growth in rent, property value, and taxes.
-export type GrowthProjections = {
+export type GrowthProjectionsDTO = {
     annualRentIncreaseRate: number; // Expected annual percentage increase in rent.
     annualAppreciationRate: number; // Expected annual percentage increase in property value.
     annualTaxIncreaseRate?: number; // Expected annual percentage increase in property taxes.
 };
 
 // Options for financing the property purchase, including loan terms and conditions.
-export type FinancingOption = {
+export type FinancingOptionDTO = {
     type: FinancingType; // Type of financing (e.g., conventional, FHA).
-    terms: FinancingTerms; // Specific terms of the financing option.
+    terms: FinancingTermsDTO; // Specific terms of the financing option.
 };
 
 // Terms of the financing option, detailing loan amount, interest rate, etc.
-export type FinancingTerms = {
+export type FinancingTermsDTO = {
     loanAmount: number; // Total loan amount.
     rate: number; // Interest rate of the loan.
     interestType: InterestType; // Type of interest, either fixed or variable
@@ -294,7 +300,7 @@ export type FinancingTerms = {
 };
 
 // Details of cash flow from the property, including income, expenses, and net amount.
-export type CashFlowDetails = {
+export type CashFlowDetailsDTO = {
     totalAmount: number; // Net cash flow after accounting for all expenses and income.
     breakdown: {
         totalExpenses: {
@@ -310,27 +316,26 @@ export type CashFlowDetails = {
 };
 
 // Consolidated cash flow information on a monthly and yearly basis.
-export type CashFlow = {
-    monthlyCashFlow: CashFlowDetails;
-    yearlyCashFlow: CashFlowDetails;
+export type CashFlowDTO = {
+    monthlyCashFlow: CashFlowDetailsDTO;
+    yearlyCashFlow: CashFlowDetailsDTO;
 };
 
 // Comprehensive details of the investment metrics for a property.
 export interface InvestmentMetricsResponseDTO {
-    propertyIdentifier: PropertyIdentifier; // Identifies the property.
     principalAmount: number; // Principal amount of the loan.
-    downPaymentAmount: DownPaymentBreakdown; // Details of the down payment.
+    downPaymentAmount: DownPaymentBreakdownDTO; // Details of the down payment.
     initialRentAmount: number; // Starting rent amount.
     ROI: number; // Return on investment percentage.
     capRate: number; // Capitalization rate percentage.
     initialMortgagePayment: number; // Initial mortgage payment amount.
-    cashFlow: CashFlow; // Detailed cash flow information.
-    initialCosts: InitialCostsBreakdown; // Breakdown of initial costs incurred.
-    additionalIncomeStreams: AdditionalIncomeStreams; // Additional income streams from the property.
-    financingOptions: FinancingOption[]; // Available financing options.
-    growthProjections: GrowthProjections; // Growth projections for rent, value, and taxes.
-    recurringExpensesBreakdown: RecurringExpensesBreakdown; // Detailed recurring expenses.
-    fixedMonthlyExpenses: FixedMonthlyExpenses; // Includes fixed monthly expenses directly in the response for easy access.
+    cashFlow: CashFlowDTO; // Detailed cash flow information.
+    initialCosts: InitialCostsBreakdownDTO; // Breakdown of initial costs incurred.
+    additionalIncomeStreams: AdditionalIncomeStreamsDTO; // Additional income streams from the property.
+    financingOptions: FinancingOptionDTO[]; // Available financing options.
+    growthProjections: GrowthProjectionsDTO; // Growth projections for rent, value, and taxes.
+    recurringExpensesBreakdown: RecurringExpensesBreakdownDTO; // Detailed recurring expenses.
+    fixedMonthlyExpenses: FixedMonthlyExpensesDTO; // Includes fixed monthly expenses directly in the response for easy access.
     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
 };
 
@@ -339,9 +344,9 @@ export interface AmortizationDetailsDTO {
     month: number; // Month number of the amortization schedule.
     year: number; // Year of the amortization schedule.
     remainingBalance: number; // Remaining balance of the mortgage.
-    mortgageWithRecurringExpensesBreakdown: MortgageWithRecurringExpensesBreakdown; // Breakdown including mortgage and recurring expenses.
-    cashFlowAmount: CashFlow; // Cash flow details associated with this point in time.
-    equityBreakdown: EquityBreakdown; // Equity breakdown at this point in time.
+    mortgageWithRecurringExpensesBreakdown: MortgageWithRecurringExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
+    cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
+    equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
 };
 
 
