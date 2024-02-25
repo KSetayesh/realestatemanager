@@ -97,6 +97,10 @@ export enum DefaultInvestmentRates {
     ANNUAL_APPRECIATION_RATE = 4,
     ANNUAL_TAX_INCREASE_RATE = 4,
     ANNUAL_RENT_INCREASE_RATE = 4,
+    PARKING_FEES = 0,
+    LAUNDRY_SERVICES = 0,
+    STORAGE_UNIT_FEES = 0,
+    OTHER = 0,
     INTEREST_TYPE = InterestType.FIXED,
 };
 
@@ -138,6 +142,7 @@ export interface InvestmentScenarioDTO {
     mortgageDetails: MortgageDetailsDTO;
     growthProjections: GrowthProjectionsDTO;
     operatingExpenses: OperatingExpensesDTO;
+    additionalIncomeStreams: AdditionalIncomeStreamsDTO;
     rentEstimate: number;
     purchasePrice: number;
 };
@@ -310,6 +315,7 @@ export type CashFlowDetailsDTO = {
         };
         totalIncome: {
             rent: number; // Monthly rental income.
+            additionalIncomeStreams?: AdditionalIncomeStreamsDTO;
             // Additional income streams can be added here for total income calculation.
         };
     };

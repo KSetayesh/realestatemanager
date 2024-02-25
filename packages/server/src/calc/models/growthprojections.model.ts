@@ -32,6 +32,7 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
             annualAppreciationRate: this.annualAppreciationRate,
             annualTaxIncreaseRate: this.annualTaxIncreaseRate,
             annualRentIncreaseRate: this.annualRentIncreaseRate,
-        }
+        };
     }
+
 }

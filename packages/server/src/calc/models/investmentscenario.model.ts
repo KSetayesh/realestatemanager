@@ -1,14 +1,29 @@
-import { AmortizationDetailsDTO, CashFlowDTO, CashFlowDetailsDTO, DownPaymentBreakdownDTO, InitialCostsBreakdownDTO, InvestmentMetricsResponseDTO, InvestmentScenarioDTO, PropertyIdentifierDTO, Utility } from "@realestatemanager/shared";
+import {
+    AdditionalIncomeStreamsDTO,
+    AmortizationDetailsDTO,
+    CashFlowDTO,
+    CashFlowDetailsDTO,
+    DownPaymentBreakdownDTO,
+    FinancingOptionDTO,
+    FixedMonthlyExpensesDTO,
+    InitialCostsBreakdownDTO,
+    InvestmentMetricsResponseDTO,
+    InvestmentScenarioDTO,
+    RecurringExpensesBreakdownDTO,
+    Utility
+} from "@realestatemanager/shared";
 import { AmortizationDetails } from "./amortizationdetails.model";
 import { GrowthProjections } from "./growthprojections.model";
 import { MortgageDetails } from "./mortgagedetails.model";
 import { OperatingExpenses } from "./operatingexpenses.model";
 import { IDTOConvertible } from "./idtoconvertible.model";
+import { AdditionalIncomeStreams } from "./additional.income.streams.model";
 
 export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO>{
     private mortgageDetails: MortgageDetails;
     private growthProjections: GrowthProjections;
     private operatingExpenses: OperatingExpenses;
+    private additionalIncomeStreams: AdditionalIncomeStreams;
     private rentEstimate: number;
     private purchasePrice: number;
 
@@ -16,23 +31,34 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         mortgageDetails: MortgageDetails,
         growthProjections: GrowthProjections,
         operatingExpenses: OperatingExpenses,
+        additionalIncomeStreams: AdditionalIncomeStreams,
         rentEstimate: number,
         purchasePrice: number) {
 
         this.mortgageDetails = mortgageDetails;
         this.growthProjections = growthProjections;
         this.operatingExpenses = operatingExpenses;
+        this.additionalIncomeStreams = additionalIncomeStreams;
         this.rentEstimate = rentEstimate;
         this.purchasePrice = purchasePrice;
     }
 
     toDTO(): InvestmentScenarioDTO {
+
+        // mortgageDetails: MortgageDetailsDTO;
+        // growthProjections: GrowthProjectionsDTO;
+        // operatingExpenses: OperatingExpensesDTO;
+        // additionalIncomeStreams: AdditionalIncomeStreamsDTO;
+        // rentEstimate: number;
+        // purchasePrice: number;
+
         return {
             mortgageDetails: this.mortgageDetails.toDTO(),
             growthProjections: this.growthProjections.toDTO(),
             operatingExpenses: this.operatingExpenses.toDTO(),
+            additionalIncomeStreams: this.additionalIncomeStreams.toDTO(),
             rentEstimate: this.rentEstimate,
-            purchasePrice: this.purchasePrice
+            purchasePrice: this.purchasePrice,
         };
     }
 
@@ -43,7 +69,13 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const ROI: number = this.calculateROI();
         const initialMortgagePayment: number = this.calculateMortgagePayment();
         const cashFlow: CashFlowDTO = this.createCashFlowBreakdownDTO();
-        const initialCosts: InitialCostsBreakdownDTO = undefined;
+        const initialCosts: InitialCostsBreakdownDTO = null;
+        const additionalIncomeStreams: AdditionalIncomeStreamsDTO = this.additionalIncomeStreams.toDTO();
+        const financingOptions: FinancingOptionDTO = null;
+        const growthProjections: GrowthProjections = null;
+        const recurringExpensesBreakdown: RecurringExpensesBreakdownDTO = null;
+        const fixedMonthlyExpenses: FixedMonthlyExpensesDTO = null;
+        const ammortizationDetails: AmortizationDetailsDTO = null;
 
 
         // const loanAmount = this.calculateLoanAmount();
@@ -82,7 +114,6 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             mortgage: Utility.round(mortgage),
             ammortizationDetails: this.calculateAmortizationSchedule()
         };
-
     }
 
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
@@ -134,7 +165,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 equityWithDownPaymentRounded,
                 equityWithoutDownPaymentRounded,
                 equityWithAppreciationRounded,
-                appreciationValueRounded);
+                appreciationValueRounded
+            );
 
             schedule.push(amortizationDetails.toDTO());
         }
@@ -202,6 +234,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
     }
 
     private createCashFlowBreakdownDTO(): CashFlowDTO {
+
         const monthlyCashFlowDetails: CashFlowDetailsDTO = {
             totalAmount: this.calculateMonthlyCashFlow(),
             breakdown: {
@@ -212,9 +245,11 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 },
                 totalIncome: {
                     rent: this.rentEstimate,
+                    additionalIncomeStreams: null,
                 },
             },
         };
+
         const yearlyCashFlowDetails: CashFlowDetailsDTO = {
             totalAmount: this.calculateYearlyCashFlow(),
             breakdown: {
@@ -225,6 +260,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 },
                 totalIncome: {
                     rent: this.rentEstimate * 12,
+                    additionalIncomeStreams: null,
                 },
             },
         };

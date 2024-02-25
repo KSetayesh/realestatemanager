@@ -7,7 +7,11 @@ export abstract class LoanDetails<T> implements IDTOConvertible<T> {
     private termInYears: number;
     private interestType: InterestType;
 
-    constructor(loanAmount: number, annualInterestRate: number, termInYears: number, interestType: InterestType) {
+    constructor(loanAmount: number,
+        annualInterestRate: number,
+        termInYears: number,
+        interestType: InterestType) {
+
         this.loanAmount = loanAmount;
         this.annualInterestRate = annualInterestRate;
         this.termInYears = termInYears;

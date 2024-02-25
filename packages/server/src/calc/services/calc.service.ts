@@ -8,7 +8,6 @@ import {
     ListingDetailsDTO,
     ListingWithScenariosDTO,
     Utility,
-    ValueInput
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listingdetails.model';
 import { InvestmentScenario } from '../models/investmentscenario.model';
@@ -16,6 +15,7 @@ import { MortgageDetails } from '../models/mortgagedetails.model';
 import { GrowthProjections } from '../models/growthprojections.model';
 import { OperatingExpenses } from '../models/operatingexpenses.model';
 import { getAmountFromValueInput, getInterestTypeEnumValue } from 'src/shared/Constants';
+import { AdditionalIncomeStreams } from '../models/additional.income.streams.model';
 
 @Injectable()
 export class CalcService {
@@ -120,10 +120,23 @@ export class CalcService {
         const rentEstimate = investmentScenarioRequest.rentEstimate;
         const purchasePrice = investmentScenarioRequest.purchasePrice;
 
+        const parkingFees = investmentScenarioRequest.additionalIncomeStreams.parkingFees;
+        const laundryServices = investmentScenarioRequest.additionalIncomeStreams.laundryServices;
+        const storageUnitFees = investmentScenarioRequest.additionalIncomeStreams.storageUnitFees;
+        const other = investmentScenarioRequest.additionalIncomeStreams.other;
+
+        const additionalIncomeStreams: AdditionalIncomeStreams = new AdditionalIncomeStreams(
+            parkingFees,
+            laundryServices,
+            storageUnitFees,
+            other
+        );
+
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
             mortgageDetails,
             growthProjections,
             operatingExpenses,
+            additionalIncomeStreams,
             rentEstimate,
             purchasePrice
         );
@@ -189,10 +202,23 @@ export class CalcService {
             closingCosts
         );
 
+        const parkingFees = DefaultInvestmentRates.PARKING_FEES;
+        const laundryServices = DefaultInvestmentRates.LAUNDRY_SERVICES;
+        const storageUnitFees = DefaultInvestmentRates.STORAGE_UNIT_FEES;
+        const other = DefaultInvestmentRates.OTHER;
+
+        const additionalIncomeStreams: AdditionalIncomeStreams = new AdditionalIncomeStreams(
+            parkingFees,
+            laundryServices,
+            storageUnitFees,
+            other
+        );
+
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
             mortgageDetails,
             growthProjections,
             operatingExpenses,
+            additionalIncomeStreams,
             rentEstimate,
             purchasePrice
         );
