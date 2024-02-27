@@ -71,6 +71,7 @@ export class CalcService {
         const interestType = investmentScenarioRequest.mortgageDetails.interestType;
         const downPaymentPercentage = investmentScenarioRequest.mortgageDetails.downPaymentPercentage;
         const pmiRate = investmentScenarioRequest.mortgageDetails.pmiRate;
+        const pmiDropoffPoint = investmentScenarioRequest.mortgageDetails.pmiDropoffPoint;
         const monthlyPropertyTaxAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyPropertyTax);
         const monthlyHomeInsuranceAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyHomeInsuranceAmount);
         const monthlyHOAFeesAmount = getAmountFromValueInput(investmentScenarioRequest.mortgageDetails.monthlyHOAFeesAmount);
@@ -82,6 +83,7 @@ export class CalcService {
             interestType,
             downPaymentPercentage,
             pmiRate,
+            pmiDropoffPoint,
             monthlyPropertyTaxAmount,
             monthlyHomeInsuranceAmount,
             monthlyHOAFeesAmount
@@ -160,6 +162,7 @@ export class CalcService {
         const loanAmount = Utility.round(purchasePrice * (1 - (downPaymentPercentage / 100)));
 
         const pmiRate = DefaultInvestmentRates.PMI_RATE;
+        const pmiDropoffPoint = DefaultInvestmentRates.PMI_DROP_OFF_POINT;
         const monthlyPropertyTaxAmount = listingDetails.getZillowMonthlyPropertyTaxAmount();
         const monthlyHomeInsuranceAmount = listingDetails.getZillowMonthlyHomeInsuranceAmount();
         const monthlyHOAFeesAmount = listingDetails.getZillowMonthlyHOAFeesAmount();
@@ -171,6 +174,7 @@ export class CalcService {
             interestType,
             downPaymentPercentage,
             pmiRate,
+            pmiDropoffPoint,
             monthlyPropertyTaxAmount,
             monthlyHomeInsuranceAmount,
             monthlyHOAFeesAmount

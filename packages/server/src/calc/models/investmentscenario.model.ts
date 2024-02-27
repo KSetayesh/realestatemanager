@@ -13,7 +13,6 @@ import {
     InvestmentMetricsResponseDTO,
     InvestmentScenarioDTO,
     MortgageBreakdownDTO,
-    MortgageDetailsDTO,
     MortgageWithRecurringExpensesBreakdownDTO,
     PMIDetailsDTO,
     RecurringExpensesBreakdownDTO,
@@ -139,7 +138,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             const mortgageBreakdownDTO: MortgageBreakdownDTO = {
                 mortgageAmount: 0,
                 monthlyPayment: monthlyPaymentRounded,
-                pmiDetails: null,
+                pmiDetails: this.createPMIDetailsDTO(),
                 breakdown: {
                     principalAmount: principalPaymentRounded, // Portion of monthly payment going toward the loan principal.
                     percentTowardsPrincipal: Utility.round((principalPayment / monthlyPayment) * 100), // Percentage of monthly payment applied to the principal.
@@ -150,7 +149,9 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
 
             const fixedMonthlyExpensesDTO: FixedMonthlyExpensesDTO = this.createFixedMonthlyExpensesDTO();
             const recurringExpensesDTO: RecurringExpensesBreakdownDTO = this.createRecurringExpensesDTO();
-            const totalCosts = mortgageBreakdownDTO.monthlyPayment + fixedMonthlyExpensesDTO.totalCosts + recurringExpensesDTO.totalCosts;
+            const totalCosts = mortgageBreakdownDTO.monthlyPayment +
+                fixedMonthlyExpensesDTO.totalCosts +
+                recurringExpensesDTO.totalCosts;
 
             const mortgageWithRecurringExpensesBreakdownDTO: MortgageWithRecurringExpensesBreakdownDTO = {
                 totalCosts: totalCosts,
@@ -333,5 +334,13 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         };
     }
 
+    private createPMIDetailsDTO(): PMIDetailsDTO {
+        return {
+            pmiAmount: this.mortgageDetails.calculatePMIAmount(),
+            pmiRate: this.mortgageDetails.getPMIRate(),
+            pmiRateFormula: '',
+            pmiDropoffPoint: this.mortgageDetails.getPMIDropoffPoint(),
+        };
+    }
 
 }

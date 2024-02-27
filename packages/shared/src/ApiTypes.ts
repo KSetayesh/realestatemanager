@@ -142,11 +142,11 @@ export interface InvestmentScenarioRequestDTO {
 
 export interface InvestmentScenarioDTO {
     mortgageDetails: MortgageDetailsDTO;
-    growthProjections: GrowthProjectionsDTO;
     operatingExpenses: OperatingExpensesDTO;
-    additionalIncomeStreams: AdditionalIncomeStreamsDTO;
     rentEstimate: number;
     purchasePrice: number;
+    growthProjections?: GrowthProjectionsDTO;
+    additionalIncomeStreams?: AdditionalIncomeStreamsDTO;
 };
 
 export interface LoanDetailsDTO {
@@ -158,7 +158,8 @@ export interface LoanDetailsDTO {
 
 export interface MortgageDetailsDTO extends LoanDetailsDTO {
     downPaymentPercentage: number;
-    pmiRate: number;
+    pmiRate?: number;
+    pmiDropoffPoint?: number;
     monthlyPropertyTax?: ValueInput; // Now accepts both amount and rate.
     monthlyHomeInsuranceAmount?: ValueInput; // Now accepts both amount and rate.
     monthlyHOAFeesAmount?: ValueInput; // Now accepts both amount and rate.

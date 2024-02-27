@@ -8,7 +8,6 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private propertyDetails: PropertyDetails;
     private zillowMarketEstimates: ZillowMarketEstimates;
     private listingPrice: number;
-    // private priceDetails: PriceDetails;
 
     constructor(zillowURL: string,
         propertyDetails: PropertyDetails,
@@ -18,7 +17,6 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         this.propertyDetails = propertyDetails;
         this.zillowMarketEstimates = zillowMarketEstimates;
         this.listingPrice = listingPrice;
-        // this.priceDetails = priceDetails;
     }
 
     getListingPrice(): number {

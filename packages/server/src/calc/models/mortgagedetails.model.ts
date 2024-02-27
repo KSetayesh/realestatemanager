@@ -3,10 +3,11 @@ import { LoanDetails } from "./loandetails.model";
 
 export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
     private downPaymentPercentage: number;
-    private pmiRate: number;
     private monthlyPropertyTaxAmount?: number;
     private monthlyHomeInsuranceAmount?: number;
     private monthlyHOAFeesAmount?: number;
+    private pmiRate?: number;
+    private pmiDropoffPoint?: number;
 
     constructor(
         loanAmount: number,
@@ -14,7 +15,8 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         termInYears: number,
         interestType: InterestType,
         downPaymentPercentage: number,
-        pmiRate: number,
+        pmiRate?: number,
+        pmiDropoffPoint?: number,
         monthlyPropertyTaxAmount?: number,
         monthlyHomeInsuranceAmount?: number,
         monthlyHOAFeesAmount?: number
@@ -22,6 +24,7 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         super(loanAmount, annualInterestRate, termInYears, interestType);
         this.downPaymentPercentage = downPaymentPercentage;
         this.pmiRate = pmiRate;
+        this.pmiDropoffPoint = pmiDropoffPoint;
         this.monthlyPropertyTaxAmount = monthlyPropertyTaxAmount;
         this.monthlyHomeInsuranceAmount = monthlyHomeInsuranceAmount;
         this.monthlyHOAFeesAmount = monthlyHOAFeesAmount;
@@ -77,6 +80,14 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
 
     getMonthlyHOAFeesAmount(): number {
         return this.monthlyHOAFeesAmount;
+    }
+
+    getPMIRate(): number {
+        return this.pmiRate;
+    }
+
+    getPMIDropoffPoint(): number {
+        return this.pmiDropoffPoint;
     }
 
     calculateFixedMonthlyExpenses(): number {

@@ -42,10 +42,10 @@ export class CalcController {
 
     private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequestDTO): boolean {
         if (investmentScenarioRequest) {
-            if (investmentScenarioRequest.useDefaultRequest && investmentScenarioRequest.investmentScenario) {
-                return false;
+            if (investmentScenarioRequest.useDefaultRequest) {
+                return true;
             }
-            if (!investmentScenarioRequest.useDefaultRequest && !investmentScenarioRequest.investmentScenario) {
+            else if (!investmentScenarioRequest.investmentScenario) {
                 return false;
             }
         }
