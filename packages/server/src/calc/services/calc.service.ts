@@ -104,7 +104,9 @@ export class CalcService {
         const capExReserveRate = investmentScenarioRequest.operatingExpenses.capExReserveRate;
         const legalAndProfessionalFees = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.legalAndProfessionalFees);
         const initialRepairCosts = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.initialRepairCosts);
+        const travelingCosts = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.travelingCosts);
         const closingCosts = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.closingCosts);
+        const otherInitialExpenses = getAmountFromValueInput(investmentScenarioRequest.operatingExpenses.otherInitialExpenses);
 
         const operatingExpenses: OperatingExpenses = new OperatingExpenses(
             propertyManagementRate,
@@ -114,7 +116,9 @@ export class CalcService {
             capExReserveRate,
             legalAndProfessionalFees,
             initialRepairCosts,
-            closingCosts
+            travelingCosts,
+            closingCosts,
+            otherInitialExpenses,
         );
 
         const rentEstimate = investmentScenarioRequest.rentEstimate;
@@ -189,7 +193,9 @@ export class CalcService {
         const capExReserveRate = DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
         const legalAndProfessionalFees = DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
         const initialRepairCosts = DefaultInvestmentRates.INITIAL_REPAIR_COSTS;
+        const travelingCosts = DefaultInvestmentRates.TRAVELING_COSTS;
         const closingCosts = DefaultInvestmentRates.CLOSING_COSTS;
+        const otherInitialExpenses = DefaultInvestmentRates.OTHER_INITIAL_EXPENSES;
 
         const operatingExpenses: OperatingExpenses = new OperatingExpenses(
             propertyManagementRate,
@@ -199,7 +205,9 @@ export class CalcService {
             capExReserveRate,
             legalAndProfessionalFees,
             initialRepairCosts,
-            closingCosts
+            travelingCosts,
+            closingCosts,
+            otherInitialExpenses,
         );
 
         const parkingFees = DefaultInvestmentRates.PARKING_FEES;

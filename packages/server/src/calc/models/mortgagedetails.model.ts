@@ -27,14 +27,16 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         this.monthlyHOAFeesAmount = monthlyHOAFeesAmount;
     }
 
-    calculateMortgagePayment(): number {
+    calculateMortgagePayment(calculateWithPMI: boolean = false): number {
         const monthlyInterestRate = this.getMonthlyInterestRate() / 100;
         const numberOfPayments = this.getNumberOfPayments();
         const loanAmount = this.getLoanAmount(); //this.calculateLoanAmount(mortgage.principal, mortgage.downPaymentPercentage);
         let monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
         // Add PMI calculation if down payment is less than 20%
-        monthlyPayment += this.calculatePMIAmount();
+        if (calculateWithPMI) {
+            monthlyPayment += this.calculatePMIAmount();
+        }
 
         monthlyPayment += (this.monthlyPropertyTaxAmount +
             this.monthlyHomeInsuranceAmount +
@@ -63,6 +65,22 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
 
     getDownPaymentPercentage(): number {
         return this.downPaymentPercentage;
+    }
+
+    getMonthlyPropertyTaxAmount(): number {
+        return this.monthlyPropertyTaxAmount;
+    }
+
+    getMonthlyHomeInsuranceAmount(): number {
+        return this.monthlyHomeInsuranceAmount;
+    }
+
+    getMonthlyHOAFeesAmount(): number {
+        return this.monthlyHOAFeesAmount;
+    }
+
+    calculateFixedMonthlyExpenses(): number {
+        return this.getMonthlyPropertyTaxAmount() + this.getMonthlyHomeInsuranceAmount() + this.getMonthlyHOAFeesAmount();
     }
 
     toDTO(): MortgageDetailsDTO {

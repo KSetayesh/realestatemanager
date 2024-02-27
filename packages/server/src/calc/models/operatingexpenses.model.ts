@@ -9,7 +9,9 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
     private capExReserveRate?: number;
     private legalAndProfessionalFees?: number;
     private initialRepairCosts?: number;
+    private travelingCosts?: number;
     private closingCosts?: number;
+    private otherInitialExpenses?: number;
 
     constructor(propertyManagementRate?: number,
         vacancyRate?: number,
@@ -18,7 +20,9 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
         capExReserveRate?: number,
         legalAndProfessionalFees?: number,
         initialRepairCosts?: number,
-        closingCosts?: number) {
+        travelingCosts?: number,
+        closingCosts?: number,
+        otherInitialExpenses?: number) {
 
         this.propertyManagementRate = propertyManagementRate;
         this.vacancyRate = vacancyRate;
@@ -27,7 +31,49 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
         this.capExReserveRate = capExReserveRate;
         this.legalAndProfessionalFees = legalAndProfessionalFees;
         this.initialRepairCosts = initialRepairCosts;
+        this.travelingCosts = travelingCosts;
         this.closingCosts = closingCosts;
+        this.otherInitialExpenses = otherInitialExpenses;
+    }
+
+    getPropertyManagementRate(): number {
+        return this.propertyManagementRate;
+    }
+
+    getVacancyRate(): number {
+        return this.vacancyRate;
+    }
+
+    getMaintenanceRate(): number {
+        return this.maintenanceRate;
+    }
+
+    getOtherExpensesRate(): number {
+        return this.otherExpensesRate;
+    }
+
+    getCapExReserveRate(): number {
+        return this.capExReserveRate;
+    }
+
+    getLegalAndProfessionalFees(): number {
+        return this.legalAndProfessionalFees;
+    }
+
+    getInitialRepairCosts(): number {
+        return this.initialRepairCosts;
+    }
+
+    getTravelingCosts(): number {
+        return this.travelingCosts;
+    }
+
+    getClosingCosts(): number {
+        return this.closingCosts;
+    }
+
+    getOtherInitialExpenses(): number {
+        return this.otherInitialExpenses;
     }
 
     calculateRecurringExpenses(): number {
@@ -35,7 +81,7 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
     }
 
     calculateOneTimeExpenses(): number {
-        return this.legalAndProfessionalFees + this.initialRepairCosts + this.closingCosts;
+        return this.legalAndProfessionalFees + this.initialRepairCosts + this.travelingCosts + this.closingCosts + this.otherInitialExpenses;
     }
 
     toDTO(): OperatingExpensesDTO {
@@ -53,9 +99,17 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
                 type: ValueType.AMOUNT,
                 amount: this.initialRepairCosts,
             },
+            travelingCosts: {
+                type: ValueType.AMOUNT,
+                amount: this.initialRepairCosts,
+            },
             closingCosts: {
                 type: ValueType.AMOUNT,
                 amount: this.closingCosts,
+            },
+            otherInitialExpenses: {
+                type: ValueType.AMOUNT,
+                amount: this.otherInitialExpenses,
             },
         };
     }

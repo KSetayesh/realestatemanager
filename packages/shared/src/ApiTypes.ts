@@ -92,6 +92,8 @@ export enum DefaultInvestmentRates {
     CAP_EX_RESERVE_RATE = 5, // Capital expenditure reserve as a percentage of rental income.
     LEGAL_AND_PROFESSIONAL_FEES = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
     INITIAL_REPAIR_COSTS = 5000, // Estimated initial repair costs in dollars.
+    TRAVELING_COSTS = 0,
+    OTHER_INITIAL_EXPENSES = 0,
     CLOSING_COSTS = 15000, // Estimated closing costs in dollars.
     TERM_IN_YEARS = 30, // Term length of loan in years.
     ANNUAL_APPRECIATION_RATE = 4,
@@ -170,7 +172,9 @@ export interface OperatingExpensesDTO {
     capExReserveRate?: number;
     legalAndProfessionalFees?: ValueInput;
     initialRepairCosts?: ValueInput;
+    travelingCosts?: ValueInput;
     closingCosts?: ValueInput;
+    otherInitialExpenses?: ValueInput;
 };
 
 //------------------------------ Investment Related Response ------------------------------
