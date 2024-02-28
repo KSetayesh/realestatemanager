@@ -140,7 +140,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
 
             const monthMod12 = ((monthCounter - 1) % 12) + 1;
             const yearCounter = Math.floor((monthCounter - 1) / 12) + 1;
-            const monthlyPaymentRounded = Utility.round(monthlyPayment);
+            const mortgagePaymentRounded = Utility.round(monthlyPayment);
+            const monthlyPaymentRounded = Utility.round(this.calculateMortgagePaymentWithFixedMonthlyExpenses());
             const interestPaymentRounded = Utility.round(interestPayment);
             const principalPaymentRounded = Utility.round(principalPayment);
             const remainingBalanceRounded = Utility.round(remainingBalance);
@@ -150,8 +151,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             const appreciationValueRounded = Utility.round(appreciationValue);
 
             const mortgageBreakdownDTO: MortgageBreakdownDTO = {
-                mortgageAmount: monthlyPaymentRounded,
-                monthlyPayment: monthlyPaymentRounded, // Update this
+                mortgageAmount: mortgagePaymentRounded,
+                monthlyPayment: monthlyPaymentRounded,
                 pmiDetails: this.createPMIDetailsDTO(),
                 breakdown: {
                     principalAmount: principalPaymentRounded, // Portion of monthly payment going toward the loan principal.
@@ -264,9 +265,11 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
     }
 
     private createInitialCostsBreakdownDTO(): InitialCostsBreakdownDTO {
+        const downPaymentAmount = this.calculateDownPaymentAmount();
         return {
-            totalCosts: this.operatingExpenses.calculateOneTimeExpenses(),
+            totalCosts: downPaymentAmount + this.operatingExpenses.calculateOneTimeExpenses(),
             breakdown: {
+                downPaymentAmount: downPaymentAmount,
                 legalAndProfessionalFees: this.operatingExpenses.getLegalAndProfessionalFees(),
                 initialRepairCosts: this.operatingExpenses.getInitialRepairCosts(),
                 closingCosts: this.operatingExpenses.getClosingCosts(),

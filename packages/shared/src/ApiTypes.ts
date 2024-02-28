@@ -209,6 +209,7 @@ export type DownPaymentBreakdownDTO = {
 export type InitialCostsBreakdownDTO = {
     totalCosts: number; // Sum of all initial costs.
     breakdown: {
+        downPaymentAmount: number;
         legalAndProfessionalFees: number; // Costs for legal services, inspections, etc.
         initialRepairCosts: number; // Costs for repairs needed before the property can be rented out.
         closingCosts: number; // Administrative and other fees paid at closing.
