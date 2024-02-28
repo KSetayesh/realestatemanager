@@ -41,9 +41,9 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
             monthlyPayment += this.calculatePMIAmount();
         }
 
-        monthlyPayment += (this.monthlyPropertyTaxAmount +
-            this.monthlyHomeInsuranceAmount +
-            this.monthlyHOAFeesAmount);
+        // monthlyPayment += (this.monthlyPropertyTaxAmount +
+        //     this.monthlyHomeInsuranceAmount +
+        //     this.monthlyHOAFeesAmount);
 
         return monthlyPayment;
     }

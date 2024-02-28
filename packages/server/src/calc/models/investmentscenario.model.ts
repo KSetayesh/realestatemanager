@@ -114,6 +114,9 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const annualAppreciationRate = this.growthProjections.getAnnualAppreciationRate() / 100; //projections.annualAppreciationRate / 100;
         const monthlyAppreciationRate = Math.pow(1 + annualAppreciationRate, 1 / 12) - 1;
 
+        console.log("totalPayments:", totalPayments);
+        console.log("monthlyInterestRate:", monthlyInterestRate);
+
         for (let month = 1; month <= totalPayments; month++) {
             const interestPayment = remainingBalance * monthlyInterestRate;
             const principalPayment = monthlyPayment - interestPayment;
