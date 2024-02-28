@@ -135,7 +135,7 @@ export class CalcService {
             parkingFees,
             laundryServices,
             storageUnitFees,
-            other
+            other,
         );
 
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
@@ -144,7 +144,7 @@ export class CalcService {
             operatingExpenses,
             additionalIncomeStreams,
             rentEstimate,
-            purchasePrice
+            purchasePrice,
         );
 
         return investmentScenario;
@@ -177,7 +177,7 @@ export class CalcService {
             pmiDropoffPoint,
             monthlyPropertyTaxAmount,
             monthlyHomeInsuranceAmount,
-            monthlyHOAFeesAmount
+            monthlyHOAFeesAmount,
         );
 
         const annualAppreciationRate = DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
@@ -187,7 +187,7 @@ export class CalcService {
         const growthProjections: GrowthProjections = new GrowthProjections(
             annualAppreciationRate,
             annualTaxIncreaseRate,
-            annualRentIncreaseRate
+            annualRentIncreaseRate,
         );
 
         const propertyManagementRate = DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
@@ -223,7 +223,7 @@ export class CalcService {
             parkingFees,
             laundryServices,
             storageUnitFees,
-            other
+            other,
         );
 
         const investmentScenario: InvestmentScenario = new InvestmentScenario(
@@ -232,7 +232,7 @@ export class CalcService {
             operatingExpenses,
             additionalIncomeStreams,
             rentEstimate,
-            purchasePrice
+            purchasePrice,
         );
 
         return investmentScenario;

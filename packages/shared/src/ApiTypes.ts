@@ -335,7 +335,8 @@ export type CashFlowDTO = {
 
 // Comprehensive details of the investment metrics for a property.
 export interface InvestmentMetricsResponseDTO {
-    principalAmount: number; // Principal amount of the loan.
+    purchasePrice: number;
+    loanAmount: number; // Principal amount of the loan.
     downPaymentAmount: DownPaymentBreakdownDTO; // Details of the down payment.
     initialRentAmount: number; // Starting rent amount.
     ROI: number; // Return on investment percentage.

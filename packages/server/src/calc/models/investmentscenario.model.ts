@@ -61,7 +61,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
     }
 
     createInvestmentMetrics(): InvestmentMetricsResponseDTO {
-        const principalAmount: number = this.purchasePrice;
+        const purchasePrice: number = this.purchasePrice;
+        const loanAmount: number = this.calculateLoanAmount();
         const downPaymentBreakdown: DownPaymentBreakdownDTO = this.createDownPaymentBreakdownDTO();
         const initialRentAmount: number = this.rentEstimate;
         const ROI: number = this.calculateROI();
@@ -77,7 +78,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
 
         return {
-            principalAmount: principalAmount,
+            purchasePrice: purchasePrice,
+            loanAmount: loanAmount,
             downPaymentAmount: downPaymentBreakdown,
             initialRentAmount: initialRentAmount,
             ROI: ROI,
