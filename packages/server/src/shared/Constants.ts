@@ -13,9 +13,11 @@ export const getAmountFromValueInput = (input: ValueInput, baseValue?: number): 
     throw new Error("Invalid ValueType.");
 };
 
-export const getInterestTypeEnumValue = (inputStr: string): InterestType | undefined => {
-    if (inputStr in InterestType) {
-        return InterestType[inputStr as keyof typeof InterestType];
+export const getInterestTypeEnumValue = (input: string): InterestType => {
+    const matchingKey = Object.keys(InterestType).find(key => InterestType[key as keyof typeof InterestType] === input);
+    if (matchingKey) {
+        return InterestType[matchingKey as keyof typeof InterestType];
     }
-    throw new Error("Input string does not match any enum values.");
+    throw new Error(`${input} does not match any enum values.`);
 };
+
