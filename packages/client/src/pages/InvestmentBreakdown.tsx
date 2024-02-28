@@ -39,6 +39,7 @@ const InvestmentBreakdown: React.FC = () => {
 
     const columnsForInvestmentMetrics: TableColumn[] = [
         { header: "Year", accessor: "year", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
+        { header: "Date", accessor: "date", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
         { header: "Month", accessor: "month", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
         { header: "Mortgage Amount", accessor: "mortgageAmount", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
         { header: "Interest Payment", accessor: "interestPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
@@ -51,8 +52,11 @@ const InvestmentBreakdown: React.FC = () => {
     ];
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
+        console.log(ammortizationDetail.year);
+        console.log(ammortizationDetail.date);
         return {
             year: ammortizationDetail.year,
+            date: ammortizationDetail.date,
             month: ammortizationDetail.month,
             mortgageAmount: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.mortgageAmount,
             interestPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.breakdown?.interestAmount,

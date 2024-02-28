@@ -48,6 +48,10 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
         return monthlyPayment;
     }
 
+    calculateMortgagePaymentWithFixedMonthlyExpenses(calculateWithPMI: boolean = false): number {
+        return this.calculateMortgagePayment(calculateWithPMI) + this.calculateFixedMonthlyExpenses();
+    }
+
     calculatePMIAmount(): number {
         if (this.isPMI()) {
             // Assume PMI rate of 0.75% of the loan amount annually as an example

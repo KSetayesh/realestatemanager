@@ -355,6 +355,7 @@ export interface InvestmentMetricsResponseDTO {
 // Details of amortization for the mortgage, reflecting changes over time.
 export interface AmortizationDetailsDTO {
     month: number; // Month number of the amortization schedule.
+    date: string;
     year: number; // Year of the amortization schedule.
     remainingBalance: number; // Remaining balance of the mortgage.
     mortgageWithRecurringExpensesBreakdown: MortgageWithRecurringExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
