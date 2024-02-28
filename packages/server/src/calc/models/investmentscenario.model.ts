@@ -278,7 +278,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             type: FinancingType.MORTGAGE,
             terms: {
                 loanAmount: this.mortgageDetails.getLoanAmount(),
-                rate: this.mortgageDetails.getAnnualInterestRate(),
+                annualInterstRate: this.mortgageDetails.getAnnualInterestRate(),
                 interestType: this.mortgageDetails.getInterestType(),
                 termInYears: this.mortgageDetails.getTermInYears(),
                 interestOnlyPeriod: 0,

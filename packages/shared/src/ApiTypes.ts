@@ -303,7 +303,7 @@ export type FinancingOptionDTO = {
 // Terms of the financing option, detailing loan amount, interest rate, etc.
 export type FinancingTermsDTO = {
     loanAmount: number; // Total loan amount.
-    rate: number; // Interest rate of the loan.
+    annualInterstRate: number; // Interest rate of the loan.
     interestType: InterestType; // Type of interest, either fixed or variable
     termInYears: number; // Duration of the loan in years.
     interestOnlyPeriod?: number; // Optional period where only interest payments are made.

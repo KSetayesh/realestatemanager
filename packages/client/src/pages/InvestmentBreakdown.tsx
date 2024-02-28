@@ -40,28 +40,28 @@ const InvestmentBreakdown: React.FC = () => {
     const columnsForInvestmentMetrics: TableColumn[] = [
         { header: "Year", accessor: "year", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
         { header: "Month", accessor: "month", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
-        { header: "Monthly Payment", accessor: "monthlyPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        { header: "Mortgage Amount", accessor: "mortgageAmount", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
         { header: "Interest Payment", accessor: "interestPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
         { header: "Principal Payment", accessor: "principalPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
         { header: "Remaining Balance", accessor: "remainingBalance", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity With Down Payment", accessor: "equityWithDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity Without Down Payment", accessor: "equityWithoutDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity With Appreciation", accessor: "equityWithAppreciation", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Appreciation Value", accessor: "appreciationValue", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        { header: "Equity Amount With Down Payment", accessor: "equityAmountWithDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        { header: "Equity Amount Without Down Payment", accessor: "equityAmountWithoutDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        { header: "Equity Amount With Appreciation", accessor: "equityAmountWithAppreciation", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        { header: "Appreciation Amount", accessor: "appreciationAmount", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
     ];
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
         return {
             year: ammortizationDetail.year,
             month: ammortizationDetail.month,
-            monthlyPayment: ammortizationDetail.monthlyPayment,
-            interestPayment: ammortizationDetail.interestPayment,
-            principalPayment: ammortizationDetail.principalPayment,
+            mortgageAmount: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.mortgageAmount,
+            interestPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.breakdown?.interestAmount,
+            principalPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.breakdown?.principalAmount,
             remainingBalance: ammortizationDetail.remainingBalance,
-            equityWithDownPayment: ammortizationDetail.equityWithDownPayment,
-            equityWithoutDownPayment: ammortizationDetail.equityWithoutDownPayment,
-            equityWithAppreciation: ammortizationDetail.equityWithAppreciation,
-            appreciationValue: ammortizationDetail.appreciationValue,
+            equityAmountWithDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithDownPayment,
+            equityAmountWithoutDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithoutDownPayment,
+            equityAmountWithAppreciation: ammortizationDetail.equityBreakdown.equityAmountWithAppreciation,
+            appreciationAmount: ammortizationDetail.equityBreakdown.appreciationAmount,
         };
     };
 
