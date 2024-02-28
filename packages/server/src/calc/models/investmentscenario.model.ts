@@ -138,8 +138,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             const appreciationValueRounded = Utility.round(appreciationValue);
 
             const mortgageBreakdownDTO: MortgageBreakdownDTO = {
-                mortgageAmount: 0,
-                monthlyPayment: monthlyPaymentRounded,
+                mortgageAmount: monthlyPaymentRounded,
+                monthlyPayment: monthlyPaymentRounded, // Update this
                 pmiDetails: this.createPMIDetailsDTO(),
                 breakdown: {
                     principalAmount: principalPaymentRounded, // Portion of monthly payment going toward the loan principal.
@@ -210,7 +210,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
 
     private calculateCapRate(): number {
         const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.calculateMortgagePayment()) * 12;
-        return (annualNetOperatingIncome / this.purchasePrice) * 100;
+        return Utility.round((annualNetOperatingIncome / this.purchasePrice) * 100);
     }
 
     private calculateInitialCosts(): number {
