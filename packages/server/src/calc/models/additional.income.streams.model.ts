@@ -15,6 +15,10 @@ export class AdditionalIncomeStreams implements IDTOConvertible<AdditionalIncome
         this.other = other;
     }
 
+    getTotalIncomeAmount(): number {
+        return this.parkingFees + this.laundryServices + this.storageUnitFees + this.other;
+    }
+
     toDTO(): AdditionalIncomeStreamsDTO {
         return {
             parkingFees: this.parkingFees,

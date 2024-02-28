@@ -297,7 +297,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 },
                 totalIncome: {
                     rent: this.rentEstimate,
-                    additionalIncomeStreams: null,
+                    additionalIncomeStreamsTotal: this.additionalIncomeStreams.getTotalIncomeAmount(),
                 },
             },
         };
@@ -312,7 +312,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 },
                 totalIncome: {
                     rent: this.rentEstimate * 12,
-                    additionalIncomeStreams: null,
+                    additionalIncomeStreamsTotal: this.additionalIncomeStreams.getTotalIncomeAmount() * 12,
                 },
             },
         };
@@ -321,6 +321,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             monthlyCashFlow: monthlyCashFlowDetails,
             yearlyCashFlow: yearlyCashFlowDetails,
         };
+
     }
 
     private createFixedMonthlyExpensesDTO(): FixedMonthlyExpensesDTO {

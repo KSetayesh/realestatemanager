@@ -83,6 +83,7 @@ export enum ValueType {
 
 export enum DefaultInvestmentRates {
     PMI_RATE = 0, // PMI rate expressed as a percentage of the loan amount annually.
+    PMI_DROP_OFF_POINT = 0,
     ANNUAL_INTEREST_RATE = 7, // Annual Interest rate of loan.
     DOWN_PAYMENT_PERCENTAGE = 20, // Typical down payment percentage for avoiding PMI.
     PROPERTY_MANAGEMENT_RATE = 10, // Percentage of rental income paid for property management.
@@ -320,7 +321,7 @@ export type CashFlowDetailsDTO = {
         };
         totalIncome: {
             rent: number; // Monthly rental income.
-            additionalIncomeStreams?: AdditionalIncomeStreamsDTO;
+            additionalIncomeStreamsTotal?: number;
             // Additional income streams can be added here for total income calculation.
         };
     };
