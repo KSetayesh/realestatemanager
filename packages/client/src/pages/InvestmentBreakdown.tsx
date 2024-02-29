@@ -96,6 +96,14 @@ const InvestmentBreakdown: React.FC = () => {
             isSortable: false,
         },
         {
+            header: "Rent Estimate",
+            accessor: "rentEstimate",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
             header: "Mortgage Amount",
             accessor: "mortgageAmount",
             isURL: false,
@@ -174,6 +182,7 @@ const InvestmentBreakdown: React.FC = () => {
             recurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.recurringExpensesBreakdown.totalCosts,
             monthlyPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.totalCosts,
             monthlyPaymentAndRecurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.totalCosts,
+            rentEstimate: ammortizationDetail.cashFlowAmount.monthlyCashFlow.breakdown.totalIncome.rent,
             mortgageAmount: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.monthlyMortgagePayment,
             interestPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.interestAmount,
             principalPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.principalAmount,
