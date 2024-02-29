@@ -1,4 +1,4 @@
-import { OperatingExpensesDTO, ValueInput, ValueType } from "@realestatemanager/shared";
+import { OperatingExpensesDTO, RecurringExpensesBreakdownDTO, ValueInput, ValueType } from "@realestatemanager/shared";
 import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
@@ -76,12 +76,38 @@ export class OperatingExpenses implements IDTOConvertible<OperatingExpensesDTO>{
         return this.otherInitialExpenses;
     }
 
-    calculateRecurringExpenses(): number {
-        return (this.propertyManagementRate + this.vacancyRate + this.maintenanceRate + this.otherExpensesRate + this.capExReserveRate) / 100;
+    calculateRecurringExpenses(rentAmount: number): number {
+        return this.createRecurringExpensesDTO(rentAmount).totalCosts;
     }
 
     calculateOneTimeExpenses(): number {
         return this.legalAndProfessionalFees + this.initialRepairCosts + this.travelingCosts + this.closingCosts + this.otherInitialExpenses;
+    }
+
+    createRecurringExpensesDTO(rentAmount: number): RecurringExpensesBreakdownDTO {
+
+        const getAmount = (rate: number): number => {
+            return rentAmount * (rate / 100);
+        };
+
+        const propertyManagementAmount = getAmount(this.getPropertyManagementRate());
+        const vacancyAmount = getAmount(this.getVacancyRate());
+        const maintenanceAmount = getAmount(this.getMaintenanceRate());
+        const otherExpensesAmount = getAmount(this.getOtherExpensesRate());
+        const capExReserveAmount = getAmount(this.getCapExReserveRate());
+
+        const totalCosts = propertyManagementAmount + vacancyAmount + maintenanceAmount + otherExpensesAmount + capExReserveAmount;
+
+        return {
+            totalCosts: totalCosts,
+            breakdown: {
+                propertyManagementAmount: propertyManagementAmount,
+                vacancyAmount: vacancyAmount,
+                maintenanceAmount: maintenanceAmount,
+                otherExpensesAmount: otherExpensesAmount,
+                capExReserveAmount: capExReserveAmount,
+            },
+        };
     }
 
     toDTO(): OperatingExpensesDTO {

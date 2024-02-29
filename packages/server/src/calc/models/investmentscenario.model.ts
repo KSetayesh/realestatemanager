@@ -13,7 +13,8 @@ import {
     InvestmentMetricsResponseDTO,
     InvestmentScenarioDTO,
     MortgageBreakdownDTO,
-    MortgageWithRecurringExpensesBreakdownDTO,
+    MortgageWithAllExpensesBreakdownDTO,
+    MortgageWithFixedExpensesBreakdownDTO,
     PMIDetailsDTO,
     RecurringExpensesBreakdownDTO,
     Utility
@@ -68,6 +69,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const ROI: number = this.calculateROI();
         const capRate: number = this.calculateCapRate();
         const initialMortgagePayment: number = this.calculateMortgagePayment();
+        const initialMonthlyAmount: number = this.calculateMortgagePaymentWithFixedMonthlyExpenses();
         const cashFlow: CashFlowDTO = this.createCashFlowBreakdownDTO();
         const initialCosts: InitialCostsBreakdownDTO = this.createInitialCostsBreakdownDTO();
         const additionalIncomeStreams: AdditionalIncomeStreamsDTO = this.additionalIncomeStreams.toDTO();
@@ -85,6 +87,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             ROI: ROI,
             capRate: capRate,
             initialMortgagePayment: initialMortgagePayment,
+            initialMonthlyAmount: initialMonthlyAmount,
             cashFlow: cashFlow,
             initialCosts: initialCosts,
             additionalIncomeStreams: additionalIncomeStreams,
@@ -151,8 +154,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             const appreciationValueRounded = Utility.round(appreciationValue);
 
             const mortgageBreakdownDTO: MortgageBreakdownDTO = {
-                mortgageAmount: mortgagePaymentRounded,
-                monthlyPayment: monthlyPaymentRounded,
+                remainingLoanAmount: remainingBalanceRounded, // The total loan amount for the mortgage.
+                monthlyMortgagePayment: mortgagePaymentRounded, // Base monthly mortgage payment, excluding PMI.
                 pmiDetails: this.createPMIDetailsDTO(),
                 breakdown: {
                     principalAmount: principalPaymentRounded, // Portion of monthly payment going toward the loan principal.
@@ -164,15 +167,19 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
 
             const fixedMonthlyExpensesDTO: FixedMonthlyExpensesDTO = this.createFixedMonthlyExpensesDTO();
             const recurringExpensesDTO: RecurringExpensesBreakdownDTO = this.createRecurringExpensesDTO();
-            const totalCosts = mortgageBreakdownDTO.monthlyPayment +
-                fixedMonthlyExpensesDTO.totalCosts +
-                recurringExpensesDTO.totalCosts;
 
-            const mortgageWithRecurringExpensesBreakdownDTO: MortgageWithRecurringExpensesBreakdownDTO = {
-                totalCosts: totalCosts,
+            const mortgageWithFixedExpensesBreakdownDTO: MortgageWithFixedExpensesBreakdownDTO = {
+                totalCosts: mortgageBreakdownDTO.monthlyMortgagePayment + fixedMonthlyExpensesDTO.totalCosts,
                 breakdown: {
                     mortgageBreakdown: mortgageBreakdownDTO,
                     fixedMonthlyExpenses: fixedMonthlyExpensesDTO,
+                },
+            };
+
+            const mortgageWithAllExpensesBreakdownDTO: MortgageWithAllExpensesBreakdownDTO = {
+                totalCosts: mortgageWithFixedExpensesBreakdownDTO.totalCosts + recurringExpensesDTO.totalCosts,
+                breakdown: {
+                    mortgageWithFixedExpenses: mortgageWithFixedExpensesBreakdownDTO,
                     recurringExpensesBreakdown: recurringExpensesDTO,
                 },
             };
@@ -189,7 +196,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 date: dateAsString,
                 year: yearCounter,
                 remainingBalance: remainingBalanceRounded,
-                mortgageWithRecurringExpensesBreakdown: mortgageWithRecurringExpensesBreakdownDTO,
+                mortgageWithAllExpensesBreakdown: mortgageWithAllExpensesBreakdownDTO,
                 cashFlowAmount: this.createCashFlowBreakdownDTO(),
                 equityBreakdown: equityBreakdownDTO,
             };
@@ -217,9 +224,9 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         return this.calculateMonthlyCashFlow() * 12;
     }
 
-    private calculateMonthlyCashFlow(): number {
-        const recurringExpenses = this.calculateRecurringExpenses();
-        return this.rentEstimate - (this.calculateMortgagePaymentWithFixedMonthlyExpenses() + recurringExpenses);
+    private calculateMonthlyCashFlow(rent: number = this.rentEstimate): number {
+        const recurringExpenses = this.calculateRecurringExpenses(rent);
+        return rent - (this.calculateMortgagePaymentWithFixedMonthlyExpenses() + recurringExpenses);
     }
 
     private calculateCapRate(): number {
@@ -229,8 +236,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
 
     private calculateInitialCosts(): number {
         const downPaymentAmount = this.calculateDownPaymentAmount();
-        const initialExpeses = this.operatingExpenses.calculateOneTimeExpenses();
-        return downPaymentAmount + initialExpeses;
+        const initialExpenses = this.operatingExpenses.calculateOneTimeExpenses();
+        return downPaymentAmount + initialExpenses;
     }
 
     private calculateDownPaymentAmount(): number {
@@ -249,8 +256,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         return this.mortgageDetails.calculateMortgagePaymentWithFixedMonthlyExpenses(calculateWithPMI);
     }
 
-    private calculateRecurringExpenses(): number {
-        return this.operatingExpenses.calculateRecurringExpenses();
+    private calculateRecurringExpenses(rent: number = this.rentEstimate): number {
+        return this.operatingExpenses.calculateRecurringExpenses(rent);
     }
 
     private calculatePMIAmount(): number {
@@ -279,18 +286,8 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         };
     }
 
-    private createRecurringExpensesDTO(): RecurringExpensesBreakdownDTO {
-
-        return {
-            totalCosts: this.operatingExpenses.calculateRecurringExpenses(),
-            breakdown: {
-                propertyManagementRate: this.operatingExpenses.getPropertyManagementRate(),
-                vacancyRate: this.operatingExpenses.getVacancyRate(),
-                maintenanceRate: this.operatingExpenses.getMaintenanceRate(),
-                otherExpensesRate: this.operatingExpenses.getOtherExpensesRate(),
-                capExReserveRate: this.operatingExpenses.getCapExReserveRate(),
-            },
-        };
+    private createRecurringExpensesDTO(rent: number = this.rentEstimate): RecurringExpensesBreakdownDTO {
+        return this.operatingExpenses.createRecurringExpensesDTO(rent);
     }
 
     private createFinancingOptionBreakdownDTO(): FinancingOptionDTO[] {
@@ -307,7 +304,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         }];
     }
 
-    private createCashFlowBreakdownDTO(): CashFlowDTO {
+    private createCashFlowBreakdownDTO(rent: number = this.rentEstimate): CashFlowDTO {
 
         const monthlyCashFlowDetails: CashFlowDetailsDTO = {
             totalAmount: this.calculateMonthlyCashFlow(),
@@ -315,7 +312,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 totalExpenses: {
                     mortgagePayment: this.calculateMortgagePaymentWithFixedMonthlyExpenses(),
                     pmi: this.calculatePMIAmount(),
-                    recurringExpensesTotal: this.calculateRecurringExpenses(),
+                    recurringExpensesTotal: this.calculateRecurringExpenses(rent),
                 },
                 totalIncome: {
                     rent: this.rentEstimate,
@@ -330,7 +327,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 totalExpenses: {
                     mortgagePayment: this.calculateMortgagePaymentWithFixedMonthlyExpenses() * 12,
                     pmi: this.calculatePMIAmount() * 12,
-                    recurringExpensesTotal: this.calculateRecurringExpenses() * 12,
+                    recurringExpensesTotal: this.calculateRecurringExpenses(rent) * 12,
                 },
                 totalIncome: {
                     rent: this.rentEstimate * 12,
@@ -347,14 +344,7 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
     }
 
     private createFixedMonthlyExpensesDTO(): FixedMonthlyExpensesDTO {
-        return {
-            totalCosts: this.mortgageDetails.calculateFixedMonthlyExpenses(),
-            breakdown: {
-                monthlyPropertyTaxAmount: this.mortgageDetails.getMonthlyPropertyTaxAmount(),
-                monthlyHomeInsuranceAmount: this.mortgageDetails.getMonthlyHomeInsuranceAmount(),
-                monthlyHOAFeesAmount: this.mortgageDetails.getMonthlyHOAFeesAmount(),
-            },
-        };
+        return this.mortgageDetails.createFixedMonthlyExpensesDTO();
     }
 
     private createPMIDetailsDTO(): PMIDetailsDTO {

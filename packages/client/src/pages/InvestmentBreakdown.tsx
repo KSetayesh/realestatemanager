@@ -38,18 +38,132 @@ const InvestmentBreakdown: React.FC = () => {
     ));
 
     const columnsForInvestmentMetrics: TableColumn[] = [
-        { header: "Year", accessor: "year", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
-        { header: "Month", accessor: "month", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
-        { header: "Date", accessor: "date", isURL: false, showColumn: true, isDollarAmount: false, isSortable: false },
-        { header: "Monthly Payment", accessor: "monthlyPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Mortgage Amount", accessor: "mortgageAmount", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Interest Payment", accessor: "interestPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Principal Payment", accessor: "principalPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Remaining Balance", accessor: "remainingBalance", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity Amount With Down Payment", accessor: "equityAmountWithDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity Amount Without Down Payment", accessor: "equityAmountWithoutDownPayment", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Equity Amount With Appreciation", accessor: "equityAmountWithAppreciation", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
-        { header: "Appreciation Amount", accessor: "appreciationAmount", isURL: false, showColumn: true, isDollarAmount: true, isSortable: false },
+        {
+            header: "Year",
+            accessor: "year",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+        {
+            header: "Month",
+            accessor: "month",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+        {
+            header: "Date",
+            accessor: "date",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+        {
+            header: "Recurring Costs",
+            accessor: "recurringCosts",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: true,
+            detailedDescription: `propertyManagementAmount + 
+                        vacancyAmount +
+                        maintenanceAmount +
+                        otherExpensesAmount +
+                        capExReserveAmount`,
+        },
+        {
+            header: "Monthly Payment",
+            accessor: "monthlyPayment",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+            detailedDescription: ` Mortgage Amount +
+                                Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+        },
+        {
+            header: "Monthly Payment + RecurringCosts",
+            accessor: "monthlyPaymentAndRecurringCosts",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Mortgage Amount",
+            accessor: "mortgageAmount",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Interest Payment",
+            accessor: "interestPayment",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Principal Payment",
+            accessor: "principalPayment",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Remaining Balance",
+            accessor: "remainingBalance",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Equity Amount With Down Payment",
+            accessor: "equityAmountWithDownPayment",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+            detailedDescription: `Equity Amount +
+                                Down Payment Amount`,
+        },
+        {
+            header: "Equity Amount Without Down Payment",
+            accessor: "equityAmountWithoutDownPayment",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Equity Amount With Appreciation",
+            accessor: "equityAmountWithAppreciation",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+            detailedDescription: `Equity Amount +
+                                Down Payment Amount +
+                                Expected Appreciation Amount`,
+        },
+        {
+            header: "Appreciation Amount",
+            accessor: "appreciationAmount",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false
+        },
     ];
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
@@ -57,10 +171,12 @@ const InvestmentBreakdown: React.FC = () => {
             year: ammortizationDetail.year,
             month: ammortizationDetail.month,
             date: ammortizationDetail.date,
-            monthlyPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.monthlyPayment,
-            mortgageAmount: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.mortgageAmount,
-            interestPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.breakdown?.interestAmount,
-            principalPayment: ammortizationDetail.mortgageWithRecurringExpensesBreakdown.breakdown.mortgageBreakdown.breakdown?.principalAmount,
+            recurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.recurringExpensesBreakdown.totalCosts,
+            monthlyPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.totalCosts,
+            monthlyPaymentAndRecurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.totalCosts,
+            mortgageAmount: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.monthlyMortgagePayment,
+            interestPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.interestAmount,
+            principalPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.principalAmount,
             remainingBalance: ammortizationDetail.remainingBalance,
             equityAmountWithDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithDownPayment,
             equityAmountWithoutDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithoutDownPayment,

@@ -1,4 +1,4 @@
-import { InterestType, MortgageDetailsDTO, ValueInput, ValueType } from "@realestatemanager/shared";
+import { FixedMonthlyExpensesDTO, InterestType, MortgageDetailsDTO, ValueInput, ValueType } from "@realestatemanager/shared";
 import { LoanDetails } from "./loandetails.model";
 
 export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
@@ -95,7 +95,23 @@ export class MortgageDetails extends LoanDetails<MortgageDetailsDTO> {
     }
 
     calculateFixedMonthlyExpenses(): number {
-        return this.getMonthlyPropertyTaxAmount() + this.getMonthlyHomeInsuranceAmount() + this.getMonthlyHOAFeesAmount();
+        return this.createFixedMonthlyExpensesDTO().totalCosts;
+    }
+
+    createFixedMonthlyExpensesDTO(): FixedMonthlyExpensesDTO {
+        const monthlyPropertyTaxAmount = this.getMonthlyPropertyTaxAmount();
+        const monthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount();
+        const monthlyHOAFeesAmount = this.getMonthlyHOAFeesAmount();
+        const totalCosts = monthlyPropertyTaxAmount + monthlyHomeInsuranceAmount + monthlyHOAFeesAmount;
+
+        return {
+            totalCosts: totalCosts,
+            breakdown: {
+                monthlyPropertyTaxAmount: monthlyPropertyTaxAmount,
+                monthlyHomeInsuranceAmount: monthlyHomeInsuranceAmount,
+                monthlyHOAFeesAmount: monthlyHOAFeesAmount,
+            },
+        };
     }
 
     toDTO(): MortgageDetailsDTO {

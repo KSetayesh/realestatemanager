@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import './Tooltip.css';
+import '../styles/Tooltip.css';
 
 interface TooltipProps {
     children: ReactNode;
@@ -8,6 +8,14 @@ interface TooltipProps {
 
 const Tooltip: React.FC<TooltipProps> = ({ children, content }) => {
     const [show, setShow] = useState(false);
+
+    // Split content by a specific delimiter, e.g., "\n" for new lines
+    const contentLines = content.split("\n").map((line, index) => (
+        // Render each line, followed by a <br /> except for the last line
+        <React.Fragment key={index}>
+            {line}{index < content.length - 1 && <br />}
+        </React.Fragment>
+    ));
 
     return (
         <div
@@ -18,7 +26,7 @@ const Tooltip: React.FC<TooltipProps> = ({ children, content }) => {
             {children}
             {show && (
                 <div className="tooltip-content">
-                    {content}
+                    {contentLines}
                 </div>
             )}
         </div>

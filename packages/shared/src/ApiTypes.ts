@@ -219,11 +219,18 @@ export type InitialCostsBreakdownDTO = {
 };
 
 // Combines mortgage details with recurring property expenses for comprehensive cost analysis.
-export type MortgageWithRecurringExpensesBreakdownDTO = {
+export type MortgageWithFixedExpensesBreakdownDTO = {
     totalCosts: number; // Total of mortgage and recurring expenses.
     breakdown: {
         mortgageBreakdown: MortgageBreakdownDTO; // Details of the mortgage.
         fixedMonthlyExpenses: FixedMonthlyExpensesDTO; // Detailed fixed monthly expenses.
+    };
+};
+
+export type MortgageWithAllExpensesBreakdownDTO = {
+    totalCosts: number;
+    breakdown: {
+        mortgageWithFixedExpenses: MortgageWithFixedExpensesBreakdownDTO;
         recurringExpensesBreakdown: RecurringExpensesBreakdownDTO; // Details of recurring expenses.
     };
 };
@@ -238,8 +245,8 @@ export type PMIDetailsDTO = {
 
 // Breakdown of the mortgage, including principal and interest, as well as PMI details if applicable.
 export type MortgageBreakdownDTO = {
-    mortgageAmount: number; // The total loan amount for the mortgage.
-    monthlyPayment: number; // Base monthly mortgage payment, excluding PMI.
+    remainingLoanAmount: number; // The total loan amount for the mortgage.
+    monthlyMortgagePayment: number; // Base monthly mortgage payment, excluding PMI.
     pmiDetails?: PMIDetailsDTO; // Optional PMI details, applicable if LTV ratio warrants.
     breakdown?: {
         principalAmount: number; // Portion of monthly payment going toward the loan principal.
@@ -262,11 +269,11 @@ export type FixedMonthlyExpensesDTO = {
 export type RecurringExpensesBreakdownDTO = {
     totalCosts: number; // Total of all recurring expenses.
     breakdown: {
-        propertyManagementRate: number; // Costs associated with property management services.
-        vacancyRate: number; // Costs accounted for potential vacancy periods.
-        maintenanceRate: number; // Regular maintenance and repair costs.
-        otherExpensesRate: number; // Any other recurring expenses not explicitly mentioned.
-        capExReserveRate: number; // Allocation for capital expenditures/reserves.
+        propertyManagementAmount: number; // Costs associated with property management services.
+        vacancyAmount: number; // Costs accounted for potential vacancy periods.
+        maintenanceAmount: number; // Regular maintenance and repair costs.
+        otherExpensesAmount: number; // Any other recurring expenses not explicitly mentioned.
+        capExReserveAmount: number; // Allocation for capital expenditures/reserves.
     };
 };
 
@@ -343,6 +350,7 @@ export interface InvestmentMetricsResponseDTO {
     ROI: number; // Return on investment percentage.
     capRate: number; // Capitalization rate percentage.
     initialMortgagePayment: number; // Initial mortgage payment amount.
+    initialMonthlyAmount: number;
     cashFlow: CashFlowDTO; // Detailed cash flow information.
     initialCosts: InitialCostsBreakdownDTO; // Breakdown of initial costs incurred.
     additionalIncomeStreams: AdditionalIncomeStreamsDTO; // Additional income streams from the property.
@@ -359,7 +367,7 @@ export interface AmortizationDetailsDTO {
     date: string;
     year: number; // Year of the amortization schedule.
     remainingBalance: number; // Remaining balance of the mortgage.
-    mortgageWithRecurringExpensesBreakdown: MortgageWithRecurringExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
+    mortgageWithAllExpensesBreakdown: MortgageWithAllExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
     cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
     equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
 };

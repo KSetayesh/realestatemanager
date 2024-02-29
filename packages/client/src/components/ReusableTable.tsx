@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/PropertiesList.css';
+import '../styles/Tooltip.css';
 import { renderCellData } from '../constants/Constant';
-import Tooltip from '../components/ToolTip';
+import Tooltip from '../components/Tooltip';
 
 enum SortDirection {
     ASCENDING = 'ascending',
@@ -73,9 +74,8 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparat
             <thead>
                 <tr>
                     {columns.filter(column => column.showColumn).map((column) => (
-                        // <Tooltip key={column.accessor} content={column.detailedDescription || "No description"}>
                         <th onClick={() => requestSort(column)}>
-                            <Tooltip key={column.accessor} content={column.detailedDescription || "No description"}>
+                            <Tooltip key={column.accessor} content={column.detailedDescription || column.header}>
                                 {column.header}
                             </Tooltip>
                         </th>
@@ -100,7 +100,8 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparat
                                             View
                                         </a>
                                     );
-                                } else {
+                                }
+                                else {
                                     cellContent = cellData;
                                 }
 
