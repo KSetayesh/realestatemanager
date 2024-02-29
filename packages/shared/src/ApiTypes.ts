@@ -128,6 +128,13 @@ export interface ValueRateInput extends ValueInputBase {
 
 export type ValueInput = ValueAmountInput | ValueRateInput;
 
+//-----------------------------------------------------------------------------------------
+
+export type ValueAndDescription = {
+    description: string;
+    value: string | number;
+};
+
 //------------------------------ Investment Related Requests ------------------------------
 
 export interface ListingWithScenariosDTO {
@@ -343,21 +350,19 @@ export type CashFlowDTO = {
 
 // Comprehensive details of the investment metrics for a property.
 export interface InvestmentMetricsResponseDTO {
-    purchasePrice: number;
-    loanAmount: number; // Principal amount of the loan.
-    downPaymentAmount: DownPaymentBreakdownDTO; // Details of the down payment.
-    initialRentAmount: number; // Starting rent amount.
-    ROI: number; // Return on investment percentage.
-    capRate: number; // Capitalization rate percentage.
-    initialMortgagePayment: number; // Initial mortgage payment amount.
-    initialMonthlyAmount: number;
-    cashFlow: CashFlowDTO; // Detailed cash flow information.
-    initialCosts: InitialCostsBreakdownDTO; // Breakdown of initial costs incurred.
-    additionalIncomeStreams: AdditionalIncomeStreamsDTO; // Additional income streams from the property.
-    financingOptions: FinancingOptionDTO[]; // Available financing options.
-    growthProjections: GrowthProjectionsDTO; // Growth projections for rent, value, and taxes.
-    recurringExpensesBreakdown: RecurringExpensesBreakdownDTO; // Detailed recurring expenses.
-    fixedMonthlyExpenses: FixedMonthlyExpensesDTO; // Includes fixed monthly expenses directly in the response for easy access.
+    purchasePrice: ValueAndDescription;
+    rentEstimate: ValueAndDescription;
+    initialCosts: ValueAndDescription;
+    loanAmount: ValueAndDescription;
+    downPaymentAmount: ValueAndDescription;
+    annualInterestRate: ValueAndDescription;
+    ROI: ValueAndDescription;
+    capRate: ValueAndDescription;
+    recurringCosts: ValueAndDescription;
+    monthlyPayment: ValueAndDescription;
+    mortgageAmount: ValueAndDescription;
+    monthlyCashFlow: ValueAndDescription;
+    yearlyCashFlow: ValueAndDescription;
     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
 };
 

@@ -80,21 +80,74 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
 
         return {
-            purchasePrice: purchasePrice,
-            loanAmount: loanAmount,
-            downPaymentAmount: downPaymentBreakdown,
-            initialRentAmount: initialRentAmount,
-            ROI: ROI,
-            capRate: capRate,
-            initialMortgagePayment: initialMortgagePayment,
-            initialMonthlyAmount: initialMonthlyAmount,
-            cashFlow: cashFlow,
-            initialCosts: initialCosts,
-            additionalIncomeStreams: additionalIncomeStreams,
-            financingOptions: financingOptions,
-            growthProjections: growthProjections,
-            recurringExpensesBreakdown: recurringExpensesBreakdown,
-            fixedMonthlyExpenses: fixedMonthlyExpenses,
+            purchasePrice: {
+                description: 'The total amount paid to acquire the property, not including any additional fees or closing costs.',
+                value: purchasePrice,
+            },
+            rentEstimate: {
+                description: 'An estimated amount a property is expected to earn in rental income per month.',
+                value: initialRentAmount,
+            },
+            initialCosts: {
+                description: `Expenses incurred at the start of the investment,
+                            DownPaymentAmount + 
+                            Legal And Professional Fees + 
+                            Repair Costs + 
+                            Closing Costs + 
+                            Traveling Costs + 
+                            Other Expenses`,
+                value: initialCosts.totalCosts,
+            },
+            loanAmount: {
+                description: 'The amount borrowed from a lender to finance the property purchase.',
+                value: loanAmount,
+            },
+            downPaymentAmount: {
+                description: 'The upfront payment made when purchasing a property.',
+                value: downPaymentBreakdown.downPaymentAmount,
+            },
+            annualInterestRate: {
+                description: 'The yearly rate charged by the lender for borrowing money, expressed as a percentage of the loan amount.',
+                value: financingOptions[0].terms.annualInterstRate,
+            },
+            ROI: {
+                description: '(Return on Investment): A measure of the profitability of the investment, calculated as the net income divided by the initial investment cost.',
+                value: ROI,
+            },
+            capRate: {
+                description: '(Capitalization Rate): A real estate valuation measure used to compare different investments, calculated as the net operating income divided by the property\'s purchase price.',
+                value: capRate,
+            },
+            recurringCosts: {
+                description: `Ongoing expenses related to the property, 
+                            Property Management Amount +
+                            Vacancy Amount +
+                            Maintenance Amount + 
+                            Other Expenses Amount + 
+                            CapEx Reserve Amount`,
+                value: recurringExpensesBreakdown.totalCosts,
+            },
+            monthlyPayment: {
+                description: `The amount paid monthly for the mortgage, 
+                            Mortgage (Principal + Interest) +
+                            Monthly HOA Amount +
+                            Monthly Property Tax Amount +
+                            Monthly Home Owners Insurance Amount`,
+                value: initialMonthlyAmount,
+            },
+            mortgageAmount: {
+                description: `The amount paid monthly for the mortgage, 
+                            Mortgage (Principal + Interest)`,
+                value: initialMortgagePayment,
+            },
+            monthlyCashFlow: {
+                description: 'The net amount of cash generated monthly after all expenses and mortgage payments have been made.',
+                value: cashFlow.monthlyCashFlow.totalAmount,
+            },
+            yearlyCashFlow: {
+                description: 'The net amount of cash generated yearly after all expenses and mortgage payments have been made.',
+                value: cashFlow.yearlyCashFlow.totalAmount,
+            },
             ammortizationDetails: ammortizationDetails,
         };
 
