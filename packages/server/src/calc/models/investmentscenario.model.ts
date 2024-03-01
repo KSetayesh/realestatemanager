@@ -189,7 +189,9 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
             cumulativePrincipalPaid += principalPayment;
 
             // Apply monthly appreciation compounded
-            propertyValue *= (1 + monthlyAppreciationRate);
+            if (monthCounter > 1) {
+                propertyValue *= (1 + monthlyAppreciationRate);
+            }
 
             const equityWithAppreciation = downPaymentAmount + cumulativePrincipalPaid + (propertyValue - principal);
             const appreciationValue = propertyValue - principal; // Total appreciation from the original value
