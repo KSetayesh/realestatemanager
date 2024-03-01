@@ -368,13 +368,28 @@ export interface InvestmentMetricsResponseDTO {
 
 // Details of amortization for the mortgage, reflecting changes over time.
 export interface AmortizationDetailsDTO {
-    month: number; // Month number of the amortization schedule.
-    date: string;
-    year: number; // Year of the amortization schedule.
-    remainingBalance: number; // Remaining balance of the mortgage.
-    mortgageWithAllExpensesBreakdown: MortgageWithAllExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
-    cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
-    equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
+    month: ValueAndDescription;
+    date: ValueAndDescription;
+    year: ValueAndDescription;
+    recurringCosts: ValueAndDescription;
+    monthlyPayment: ValueAndDescription;
+    monthlyPaymentAndRecurringCosts: ValueAndDescription;
+    rentEstimate: ValueAndDescription;
+    mortgageAmount: ValueAndDescription;
+    amountPaidInInterest: ValueAndDescription;
+    amountPaidInPrincipal: ValueAndDescription;
+    remainingBalance: ValueAndDescription;
+    equityWithDownPayment: ValueAndDescription;
+    equityAmountWithoutDownPayment: ValueAndDescription;
+    equityAmountWithAppreciation: ValueAndDescription;
+    appreciationAmount: ValueAndDescription;
+    // month: number; // Month number of the amortization schedule.
+    // date: string;
+    // year: number; // Year of the amortization schedule.
+    // remainingBalance: number; // Remaining balance of the mortgage.
+    // mortgageWithAllExpensesBreakdown: MortgageWithAllExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
+    // cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
+    // equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
 };
 
 

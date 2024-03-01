@@ -244,14 +244,69 @@ export class InvestmentScenario implements IDTOConvertible<InvestmentScenarioDTO
                 appreciationAmount: appreciationValueRounded,
             };
 
+            const cashFlowBreakdownDTO: CashFlowDTO = this.createCashFlowBreakdownDTO();
+
             const amortizationDetailsDTO: AmortizationDetailsDTO = {
-                month: monthMod12,
-                date: dateAsString,
-                year: yearCounter,
-                remainingBalance: remainingBalanceRounded,
-                mortgageWithAllExpensesBreakdown: mortgageWithAllExpensesBreakdownDTO,
-                cashFlowAmount: this.createCashFlowBreakdownDTO(),
-                equityBreakdown: equityBreakdownDTO,
+                month: {
+                    description: '',
+                    value: monthMod12,
+                },
+                date: {
+                    description: '',
+                    value: dateAsString,
+                },
+                year: {
+                    description: '',
+                    value: yearCounter,
+                },
+                recurringCosts: {
+                    description: '',
+                    value: recurringExpensesDTO.totalCosts,
+                },
+                monthlyPayment: {
+                    description: '',
+                    value: mortgageWithFixedExpensesBreakdownDTO.totalCosts,
+                },
+                monthlyPaymentAndRecurringCosts: {
+                    description: '',
+                    value: mortgageWithAllExpensesBreakdownDTO.totalCosts,
+                },
+                rentEstimate: {
+                    description: '',
+                    value: cashFlowBreakdownDTO.monthlyCashFlow.breakdown.totalIncome.rent,
+                },
+                mortgageAmount: {
+                    description: '',
+                    value: mortgagePaymentRounded,
+                },
+                amountPaidInInterest: {
+                    description: '',
+                    value: interestPaymentRounded,
+                },
+                amountPaidInPrincipal: {
+                    description: '',
+                    value: principalPaymentRounded,
+                },
+                remainingBalance: {
+                    description: '',
+                    value: remainingBalanceRounded,
+                },
+                equityWithDownPayment: {
+                    description: '',
+                    value: equityBreakdownDTO.equityAmountWithDownPayment,
+                },
+                equityAmountWithoutDownPayment: {
+                    description: '',
+                    value: equityBreakdownDTO.equityAmountWithoutDownPayment,
+                },
+                equityAmountWithAppreciation: {
+                    description: '',
+                    value: equityBreakdownDTO.equityAmountWithAppreciation,
+                },
+                appreciationAmount: {
+                    description: '',
+                    value: equityBreakdownDTO.appreciationAmount,
+                },
             };
 
             schedule.push(amortizationDetailsDTO);

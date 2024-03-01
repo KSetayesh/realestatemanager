@@ -176,21 +176,21 @@ const InvestmentBreakdown: React.FC = () => {
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
         return {
-            year: ammortizationDetail.year,
-            month: ammortizationDetail.month,
-            date: ammortizationDetail.date,
-            recurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.recurringExpensesBreakdown.totalCosts,
-            monthlyPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.totalCosts,
-            monthlyPaymentAndRecurringCosts: ammortizationDetail.mortgageWithAllExpensesBreakdown.totalCosts,
-            rentEstimate: ammortizationDetail.cashFlowAmount.monthlyCashFlow.breakdown.totalIncome.rent,
-            mortgageAmount: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.monthlyMortgagePayment,
-            interestPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.interestAmount,
-            principalPayment: ammortizationDetail.mortgageWithAllExpensesBreakdown.breakdown.mortgageWithFixedExpenses.breakdown.mortgageBreakdown.breakdown?.principalAmount,
-            remainingBalance: ammortizationDetail.remainingBalance,
-            equityAmountWithDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithDownPayment,
-            equityAmountWithoutDownPayment: ammortizationDetail.equityBreakdown.equityAmountWithoutDownPayment,
-            equityAmountWithAppreciation: ammortizationDetail.equityBreakdown.equityAmountWithAppreciation,
-            appreciationAmount: ammortizationDetail.equityBreakdown.appreciationAmount,
+            year: ammortizationDetail.year.value,
+            month: ammortizationDetail.month.value,
+            date: ammortizationDetail.date.value,
+            recurringCosts: ammortizationDetail.recurringCosts.value,
+            monthlyPayment: ammortizationDetail.monthlyPayment.value,
+            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts.value,
+            rentEstimate: ammortizationDetail.rentEstimate.value,
+            mortgageAmount: ammortizationDetail.mortgageAmount.value,
+            interestPayment: ammortizationDetail.amountPaidInInterest.value,
+            principalPayment: ammortizationDetail.amountPaidInPrincipal.value,
+            remainingBalance: ammortizationDetail.remainingBalance.value,
+            equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment.value,
+            equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment.value,
+            equityAmountWithAppreciation: ammortizationDetail.equityAmountWithAppreciation.value,
+            appreciationAmount: ammortizationDetail.appreciationAmount.value,
         };
     };
 
