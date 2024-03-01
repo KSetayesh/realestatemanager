@@ -19,6 +19,10 @@ export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
         this.pmiDropoffPoint = pmiDropoffPoint;
     }
 
+    getPMIAmount(): number {
+        return this.pmiAmount;
+    }
+
     toDTO(): PMIDetailsDTO {
         return {
             pmiAmount: this.pmiAmount,

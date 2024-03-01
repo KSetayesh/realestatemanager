@@ -138,34 +138,48 @@ export type ValueAndDescription = {
 //------------------------------ Investment Related Requests ------------------------------
 
 // Identifies a property using its address and a Zillow listing URL.
-export type PropertyIdentifierDTO = {
+export type PropertyIdentifier = {
     fullAddress: string; // Complete physical address of the property.
     zillowURL: string; // URL to the property's Zillow listing for more details.
 };
 
-export interface InvestmentScenarioRequestDTO {
-    propertyIdentifier: PropertyIdentifierDTO;
+export interface InvestmentScenarioRequest {
+    propertyIdentifier: PropertyIdentifier;
     useDefaultRequest: boolean;
-    investmentScenario?: InvestmentScenarioDTO;
+    investmentScenario?: InvestmentScenarioRequest;
 };
 
-export interface InvestmentScenarioDTO {
-    mortgageDetails: MortgageDetailsDTO;
-    operatingExpenses: OperatingExpensesDTO;
+export interface InvestmentScenarioRequest {
+    mortgageDetails: MortgageDetailsRequest;
+    operatingExpenses: OperatingExpensesRequest;
     rentEstimate: number;
     purchasePrice: number;
-    growthProjections?: GrowthProjectionsDTO;
-    additionalIncomeStreams?: AdditionalIncomeStreamsDTO;
+    growthProjections?: GrowthProjectionsRequest;
+    additionalIncomeStreams?: AdditionalIncomeStreamsRequest;
 };
 
-export interface LoanDetailsDTO {
+// Represents additional sources of income from the property besides rent.
+export type AdditionalIncomeStreamsRequest = {
+    parkingFees?: number; // Income from parking facilities, if available.
+    laundryServices?: number; // Income from on-site laundry services.
+    storageUnitFees?: number; // Income from storage units, if available.
+    other?: number; // Any other sources of income not covered above.
+};
+
+export type GrowthProjectionsRequest = {
+    annualRentIncreaseRate: number; // Expected annual percentage increase in rent.
+    annualAppreciationRate: number; // Expected annual percentage increase in property value.
+    annualTaxIncreaseRate?: number; // Expected annual percentage increase in property taxes.
+};
+
+export interface LoanDetailsRequest {
     loanAmount: number;
     annualInterestRate: number;
     termInYears: number;
     interestType: InterestType;
 };
 
-export interface MortgageDetailsDTO extends LoanDetailsDTO {
+export interface MortgageDetailsRequest extends LoanDetailsRequest {
     downPaymentPercentage: number;
     pmiRate?: number;
     pmiDropoffPoint?: number;
@@ -174,7 +188,7 @@ export interface MortgageDetailsDTO extends LoanDetailsDTO {
     monthlyHOAFeesAmount?: ValueInput; // Now accepts both amount and rate.
 };
 
-export interface OperatingExpensesDTO {
+export interface OperatingExpensesRequest {
     propertyManagementRate?: number;
     vacancyRate?: number;
     maintenanceRate?: number;

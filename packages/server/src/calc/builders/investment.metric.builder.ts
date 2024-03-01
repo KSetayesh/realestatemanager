@@ -1,70 +1,85 @@
-import { Injectable } from '@nestjs/common';
-import { RealEstateManager } from 'src/db/realestate/realestate.db';
-import {
-    DefaultInvestmentRates,
-    InvestmentMetricsResponseDTO,
-    InvestmentScenarioDTO,
-    InvestmentScenarioRequestDTO,
-    ListingDetailsDTO,
-    ListingWithScenariosDTO,
-    Utility,
-} from '@realestatemanager/shared';
-import { ListingDetails } from '../models/listingdetails.model';
-import { InvestmentScenario } from '../models/investmentscenario.model';
-import { MortgageDetails } from '../models/mortgagedetails.model';
-import { GrowthProjections } from '../models/growthprojections.model';
-import { OperatingExpenses } from '../models/operatingexpenses.model';
-import { getAmountFromValueInput, getInterestTypeEnumValue } from 'src/shared/Constants';
-import { AdditionalIncomeStreams } from '../models/additional.income.streams.model';
+import { AdditionalIncomeStreamsDTO, DefaultInvestmentRates, GrowthProjectionsDTO, InvestmentScenarioDTO, InvestmentScenarioRequestDTO, MortgageDetailsDTO, OperatingExpensesDTO, Utility } from "@realestatemanager/shared";
+import { ListingDetails } from "../models/listingdetails.model";
+import { InvestmentScenario } from "../new_models/investment.scenario.model";
+import { getAmountFromValueInput, getInterestTypeEnumValue } from "src/shared/Constants";
+import { EquityBreakdown } from "../new_models/equity.breakdown.model";
+import { GrowthProjections } from "../models/growthprojections.model";
+import { InitialCostsBreakdown } from "../new_models/initialcosts.model";
+import { MortgageCalculator } from "../new_models/mortgage.calc.model";
+import { TaxImplications } from "../new_models/tax.implications.model";
 
-@Injectable()
-export class CalcService {
+export class InvestmentMetricBuilder {
 
-    private realEstateManager: RealEstateManager;
+    private listingDetails: ListingDetails;
+    private investmentScenarioRequest?: InvestmentScenarioRequestDTO;
 
-    constructor() {
-        this.realEstateManager = new RealEstateManager();
+    constructor(listingDetails: ListingDetails, investmentScenarioRequest?: InvestmentScenarioRequestDTO) {
+        this.listingDetails = listingDetails;
+        this.investmentScenarioRequest = investmentScenarioRequest;
     }
 
-    async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequestDTO): Promise<ListingWithScenariosDTO[]> {
-
-        const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
-        const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
-        for (const listingDetails of listingDetailsArr) {
-            const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
-            const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
-            const listingWithScenariosDTO: ListingWithScenariosDTO = {
-                listingDetails: listingDetails.toDTO(),
-                metrics: [investmentMetricsDTO]
-            };
-            listingWithScenariosArr.push(listingWithScenariosDTO);
+    build(): InvestmentScenario {
+        if (!this.investmentScenarioRequest || this.investmentScenarioRequest.useDefaultRequest) {
+            return this.createDefaultInvestmentScenario();
         }
-        return listingWithScenariosArr;
+        return this.createInvestmentScenario();
     }
 
-    async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequestDTO): Promise<ListingWithScenariosDTO> {
+    private _createInvestmentScenario(): InvestmentScenario {
+        const investmentScenarioRequest: InvestmentScenarioDTO = this.investmentScenarioRequest.investmentScenario;
 
-        const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
-        const investmentScenario: InvestmentScenario = this.determineScenarioRequest(listingDetails, investmentScenarioRequest);
-        const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
-        return {
-            listingDetails: listingDetails.toDTO(),
-            metrics: [investmentMetricsDTO]
-        };
+        const mortgageDetailsDTO: MortgageDetailsDTO = investmentScenarioRequest.mortgageDetails;
+        const loanAmount = mortgageDetailsDTO.loanAmount;
+        const annualInterestRate = mortgageDetailsDTO.annualInterestRate;
+        const termInYears = mortgageDetailsDTO.termInYears;
+        const interestType = mortgageDetailsDTO.interestType;
+        const downPaymentPercentage = mortgageDetailsDTO.downPaymentPercentage;
+        const pmiRate = mortgageDetailsDTO.pmiRate;
+        const pmiDropoffPoint = mortgageDetailsDTO.pmiDropoffPoint;
+        const monthlyPropertyTax = getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+        const monthlyHomeInsuranceAmount = getAmountFromValueInput(mortgageDetailsDTO.monthlyHomeInsuranceAmount);
+        const monthlyHOAFeesAmount = getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);
+
+        const operatingExpensesDTO: OperatingExpensesDTO = investmentScenarioRequest.operatingExpenses;
+        const propertyManagementRate = operatingExpensesDTO.propertyManagementRate;
+        const vacancyRate = operatingExpensesDTO.vacancyRate;
+        const maintenanceRate = operatingExpensesDTO.maintenanceRate;
+        const otherExpensesRate = operatingExpensesDTO.otherExpensesRate;
+        const capExReserveRate = operatingExpensesDTO.capExReserveRate;
+        const legalAndProfessionalFees = getAmountFromValueInput(operatingExpensesDTO.legalAndProfessionalFees);
+        const initialRepairCosts = getAmountFromValueInput(operatingExpensesDTO.initialRepairCosts);
+        const travelingCosts = getAmountFromValueInput(operatingExpensesDTO.travelingCosts);
+        const closingCosts = getAmountFromValueInput(operatingExpensesDTO.closingCosts);
+        const otherInitialExpenses = getAmountFromValueInput(operatingExpensesDTO.otherInitialExpenses);
+
+        const rentEstimate = investmentScenarioRequest.rentEstimate;
+        const purchasePrice = investmentScenarioRequest.purchasePrice;
+
+        const growthProjectionsDTO: GrowthProjectionsDTO = investmentScenarioRequest.growthProjections;
+        const annualRentIncreaseRate = growthProjectionsDTO.annualRentIncreaseRate;
+        const annualAppreciationRate = growthProjectionsDTO.annualAppreciationRate;
+        const annualTaxIncreaseRate = growthProjectionsDTO.annualTaxIncreaseRate;
+
+        const additionalIncomeStreamsDTO: AdditionalIncomeStreamsDTO = investmentScenarioRequest.additionalIncomeStreams;
+        const parkingFees = additionalIncomeStreamsDTO.breakdown.parkingFees;
+        const laundryServices = additionalIncomeStreamsDTO.breakdown.laundryServices;
+        const storageUnitFees = additionalIncomeStreamsDTO.breakdown.storageUnitFees;
+        const other = additionalIncomeStreamsDTO.breakdown.other;
+
+
+        const equityBreakdown: EquityBreakdown = new EquityBreakdown();
+        const growthProjections: GrowthProjections;
+        const initialCostsBreakdown: InitialCostsBreakdown;
+        const mortgageCalculator: MortgageCalculator;
+        const taxImplications: TaxImplications;
+
+
+
+        return null;
     }
 
-    async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
-        this.realEstateManager.insertListingDetails(listingDetailsDTO);
-    }
-
-    private determineScenarioRequest(listingDetails: ListingDetails, investmentScenarioRequest?: InvestmentScenarioRequestDTO): InvestmentScenario {
-        if (!investmentScenarioRequest || investmentScenarioRequest.useDefaultRequest) {
-            return this.createDefaultInvestmentScenario(listingDetails);
-        }
-        return this.createInvestmentScenario(investmentScenarioRequest.investmentScenario);
-    }
-
-    private createInvestmentScenario(investmentScenarioRequest: InvestmentScenarioDTO): InvestmentScenario {
+    private createInvestmentScenario(): InvestmentScenario {
+        const investmentScenarioRequest: InvestmentScenarioDTO = this.investmentScenarioRequest.investmentScenario;
         const loanAmount = investmentScenarioRequest.mortgageDetails.loanAmount;
         const annualInterestRate = investmentScenarioRequest.mortgageDetails.annualInterestRate;
         const termInYears = investmentScenarioRequest.mortgageDetails.termInYears;
@@ -150,9 +165,9 @@ export class CalcService {
         return investmentScenario;
     }
 
-    private createDefaultInvestmentScenario(listingDetails: ListingDetails): InvestmentScenario {
-        const rentEstimate = listingDetails.getZillowRentEstimate();
-        const purchasePrice = listingDetails.getListingPrice();
+    private createDefaultInvestmentScenario(): InvestmentScenario {
+        const rentEstimate = this.listingDetails.getZillowRentEstimate();
+        const purchasePrice = this.listingDetails.getListingPrice();
         const annualInterestRate = DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
         const termInYears = DefaultInvestmentRates.TERM_IN_YEARS;
         const interestType = getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
@@ -163,9 +178,9 @@ export class CalcService {
 
         const pmiRate = DefaultInvestmentRates.PMI_RATE;
         const pmiDropoffPoint = DefaultInvestmentRates.PMI_DROP_OFF_POINT;
-        const monthlyPropertyTaxAmount = listingDetails.getZillowMonthlyPropertyTaxAmount();
-        const monthlyHomeInsuranceAmount = listingDetails.getZillowMonthlyHomeInsuranceAmount();
-        const monthlyHOAFeesAmount = listingDetails.getZillowMonthlyHOAFeesAmount();
+        const monthlyPropertyTaxAmount = this.listingDetails.getZillowMonthlyPropertyTaxAmount();
+        const monthlyHomeInsuranceAmount = this.listingDetails.getZillowMonthlyHomeInsuranceAmount();
+        const monthlyHOAFeesAmount = this.listingDetails.getZillowMonthlyHOAFeesAmount();
 
         const mortgageDetails: MortgageDetails = new MortgageDetails(
             loanAmount,

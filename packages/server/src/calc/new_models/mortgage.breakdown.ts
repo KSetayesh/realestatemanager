@@ -31,6 +31,10 @@ export class MortgageBreakdown implements IDTOConvertible<MortgageBreakdownDTO>{
         return Utility.round((this.principalAmount / this.monthlyMortgagePayment) * 100);
     }
 
+    getMonthlyMortgagePayment(): number {
+        return this.monthlyMortgagePayment;
+    }
+
     toDTO(): MortgageBreakdownDTO {
         return {
             remainingLoanAmount: this.remainingLoanAmount,
