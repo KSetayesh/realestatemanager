@@ -137,9 +137,10 @@ export type ValueAndDescription = {
 
 //------------------------------ Investment Related Requests ------------------------------
 
-export interface ListingWithScenariosDTO {
-    listingDetails: ListingDetailsDTO;
-    metrics: InvestmentMetricsResponseDTO[];
+// Identifies a property using its address and a Zillow listing URL.
+export type PropertyIdentifierDTO = {
+    fullAddress: string; // Complete physical address of the property.
+    zillowURL: string; // URL to the property's Zillow listing for more details.
 };
 
 export interface InvestmentScenarioRequestDTO {
@@ -188,22 +189,24 @@ export interface OperatingExpensesDTO {
 
 //------------------------------ Investment Related Response ------------------------------
 
+export interface ListingWithScenariosDTO {
+    listingDetails: ListingDetailsDTO;
+    metrics: InvestmentMetricsResponseDTO[];
+};
+
 /**
  * Represents the amount and rate of a financial metric.
  */
 
-// Identifies a property using its address and a Zillow listing URL.
-export type PropertyIdentifierDTO = {
-    fullAddress: string; // Complete physical address of the property.
-    zillowURL: string; // URL to the property's Zillow listing for more details.
-};
-
 // Represents additional sources of income from the property besides rent.
 export type AdditionalIncomeStreamsDTO = {
-    parkingFees?: number; // Income from parking facilities, if available.
-    laundryServices?: number; // Income from on-site laundry services.
-    storageUnitFees?: number; // Income from storage units, if available.
-    other?: number; // Any other sources of income not covered above.
+    totalAmount: number;
+    breakdown: {
+        parkingFees?: number; // Income from parking facilities, if available.
+        laundryServices?: number; // Income from on-site laundry services.
+        storageUnitFees?: number; // Income from storage units, if available.
+        other?: number; // Any other sources of income not covered above.
+    }
 };
 
 // Details about the down payment made on the property.
@@ -224,6 +227,7 @@ export type InitialCostsBreakdownDTO = {
         otherExpenses: number; // Any other initial costs not categorized above.
     };
 };
+
 
 // Combines mortgage details with recurring property expenses for comprehensive cost analysis.
 export type MortgageWithFixedExpensesBreakdownDTO = {
@@ -318,11 +322,11 @@ export type FinancingOptionDTO = {
 // Terms of the financing option, detailing loan amount, interest rate, etc.
 export type FinancingTermsDTO = {
     loanAmount: number; // Total loan amount.
-    annualInterstRate: number; // Interest rate of the loan.
+    annualInterestRate: number; // Interest rate of the loan.
     interestType: InterestType; // Type of interest, either fixed or variable
     termInYears: number; // Duration of the loan in years.
     interestOnlyPeriod?: number; // Optional period where only interest payments are made.
-    monthlyPayment: number; // Total monthly payment, including principal and interest.
+    monthlyPayment?: number; // Total monthly payment, including principal and interest.
 };
 
 // Details of cash flow from the property, including income, expenses, and net amount.
