@@ -1,25 +1,21 @@
 import { GrowthProjections } from "./growth.projections.model";
 import { AmortizationDetailsDTO, InvestmentMetricsResponseDTO } from "@realestatemanager/shared";
-import { EquityBreakdown } from "./equity.breakdown.model";
 import { InitialCostsBreakdown } from "./initialcosts.model";
 import { MortgageCalculator } from "./mortgage.calc.model";
 import { TaxImplications } from "./tax.implications.model";
 
 export class InvestmentScenario {
-    private equityBreakdown: EquityBreakdown;
     private growthProjections: GrowthProjections;
     private initialCostsBreakdown: InitialCostsBreakdown;
     private mortgageCalculator: MortgageCalculator;
     private taxImplications: TaxImplications;
 
     constructor(
-        equityBreakdown: EquityBreakdown,
         growthProjections: GrowthProjections,
         initialCostsBreakdown: InitialCostsBreakdown,
         mortgageCalculator: MortgageCalculator,
         taxImplications: TaxImplications,
     ) {
-        this.equityBreakdown = equityBreakdown;
         this.growthProjections = growthProjections;
         this.initialCostsBreakdown = initialCostsBreakdown;
         this.mortgageCalculator = mortgageCalculator;

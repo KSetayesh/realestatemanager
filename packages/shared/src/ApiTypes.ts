@@ -156,6 +156,14 @@ export interface InvestmentScenarioRequest {
     purchasePrice: number;
     growthProjections?: GrowthProjectionsRequest;
     additionalIncomeStreams?: AdditionalIncomeStreamsRequest;
+    taxImplications?: TaxImplicationsRequest;
+};
+
+export interface TaxImplicationsRequest {
+    depreciation: number; // Annual depreciation expense that can be deducted.
+    mortgageInterest?: number; // Deductible mortgage interest expense.
+    operatingExpenses?: number; // Deductible operating expenses.
+    propertyTaxes?: number; // Deductible property tax expense.
 };
 
 // Represents additional sources of income from the property besides rent.

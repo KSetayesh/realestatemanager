@@ -2,7 +2,7 @@ import { MortgageWithAllExpensesBreakdownDTO, MortgageWithFixedExpensesBreakdown
 import { IDTOConvertible } from "./idtoconvertible.model";
 import { MortgageBreakdown } from "./mortgage.breakdown";
 import { FixedMonthlyExpenses } from "./fixed.monthly.expenses.model";
-import { RecurringExpensesBreakdown } from "./recurring.expenses.breakdown.model";
+import { RecurringExpensesBreakdown } from "./recurring.monthly.expenses.model";
 
 export class MonthlyExpenses implements IDTOConvertible<MortgageWithAllExpensesBreakdownDTO> {
 
