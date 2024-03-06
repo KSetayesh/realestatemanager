@@ -6,9 +6,9 @@ export class TaxImplications implements IDTOConvertible<TaxImplicationsDTO> {
     private depreciation: number;
     private mortgageInterest: number;
     private operatingExpenses: number;
-    private propertyTaxes: number;
+    private propertyTaxes?: number;
 
-    constructor(depreciation: number, mortgageInterest: number, operatingExpenses: number, propertyTaxes: number) {
+    constructor(depreciation: number, mortgageInterest: number, operatingExpenses: number, propertyTaxes?: number) {
         this.depreciation = depreciation;
         this.mortgageInterest = mortgageInterest;
         this.operatingExpenses = operatingExpenses;

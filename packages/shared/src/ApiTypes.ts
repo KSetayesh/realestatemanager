@@ -103,7 +103,10 @@ export enum DefaultInvestmentRates {
     PARKING_FEES = 0,
     LAUNDRY_SERVICES = 0,
     STORAGE_UNIT_FEES = 0,
-    OTHER = 0,
+    OTHER_ADDITIONAL_INCOMES = 0,
+    TAX_DEPRECIATION = 0,
+    TAX_MORTGAGE_INTEREST = 0,
+    TAX_OPERATING_EXPENSES = 0,
     INTEREST_TYPE = InterestType.FIXED,
 };
 

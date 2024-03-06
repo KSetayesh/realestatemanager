@@ -1,8 +1,5 @@
-import { InterestType } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
-import { FixedMonthlyExpenses } from "./fixed.monthly.expenses.model";
 import { PMIDetails } from "./pmidetails.model";
-import { RecurringMonthlyExpenses } from "./recurring.monthly.expenses.model";
 import { RecurringFinancialActivity } from "./recurring.monthly.financial.activity.model";
 
 export class MortgageCalculator {
