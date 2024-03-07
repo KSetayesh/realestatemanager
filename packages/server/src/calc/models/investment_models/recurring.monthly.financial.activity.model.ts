@@ -1,28 +1,50 @@
-import { Expenses } from "./expenses.model";
-import { Incomes } from "./incomes.model";
+import { Expenses, Incomes, Transaction } from "./transaction.model";
 
-enum FinancialActivity {
+export enum FinancialActivity {
     RENT_INCOME,
     ADDITIONAL_INCOME,
     RECURRING_EXPENSES,
     FIXED_EXPENSES,
-}
+};
+
+export type FinancialActivityMap = {
+    [key in FinancialActivity]: Transaction;
+};
 
 export class RecurringFinancialActivity {
-    private incomes: { FinancialActivity: Incomes }; // Incomes[];
-    private expenses: { FinancialActivity: Expenses };
 
-    constructor(incomes: { FinancialActivity: Incomes }, expenses: { FinancialActivity: Expenses }) {
-        this.incomes = incomes;
-        this.expenses = expenses;
+    private transactionsMap: FinancialActivityMap;
+
+    constructor(transactionsMap: FinancialActivityMap) {
+        this.transactionsMap = transactionsMap;
+    }
+
+    getTotalIncomes(): number {
+        let total = 0;
+        Object.entries(this.transactionsMap).forEach(([key, transaction]) => {
+            if (transaction.isIncome()) {
+                total += (transaction as Incomes).totalIncomes();
+            }
+        });
+        return total;
+    }
+
+    getTotalExpenses(): number {
+        let total = 0;
+        Object.entries(this.transactionsMap).forEach(([key, transaction]) => {
+            if (transaction.isExpense()) {
+                total += (transaction as Expenses).totalExpenses();
+            }
+        });
+        return total;
     }
 
     getRentalIncome(): number {
-        return this.incomes[FinancialActivity.RENT_INCOME].totalIncomes();
+        return (this.transactionsMap[FinancialActivity.RENT_INCOME] as Incomes).totalIncomes();
     }
 
     getFixedExpenses(): number {
-        return this.expenses[FinancialActivity.FIXED_EXPENSES].totalExpenses();
+        return (this.transactionsMap[FinancialActivity.FIXED_EXPENSES] as Expenses).totalExpenses();
     }
 
     getRecurringExpenses(): number {
@@ -31,18 +53,10 @@ export class RecurringFinancialActivity {
         };
 
         const getRecurringExpenseRates = (): number => {
-            return this.expenses[FinancialActivity.RECURRING_EXPENSES].totalExpenses();
+            return (this.transactionsMap[FinancialActivity.RECURRING_EXPENSES] as Expenses).totalExpenses();
         };
 
         return getAmount(getRecurringExpenseRates());
-
-        // const propertyManagementAmount = getAmount(this.getPropertyManagementRate());
-        // const vacancyAmount = getAmount(this.getVacancyRate());
-        // const maintenanceAmount = getAmount(this.getMaintenanceRate());
-        // const otherExpensesAmount = getAmount(this.getOtherExpensesRate());
-        // const capExReserveAmount = getAmount(this.getCapExReserveRate());
-
-        // const totalCosts = propertyManagementAmount + vacancyAmount + maintenanceAmount + otherExpensesAmount + capExReserveAmount;
 
     }
 

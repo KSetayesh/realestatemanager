@@ -1,6 +1,6 @@
 import { RecurringExpensesBreakdownDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Expenses } from "./expenses.model";
+import { Expenses } from "./transaction.model";
 
 export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<RecurringExpensesBreakdownDTO> {
 
@@ -30,6 +30,14 @@ export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<Recur
             this.maintenanceRate +
             this.otherExpensesRate +
             this.capExReserveRate;
+    }
+
+    isIncome(): boolean {
+        return false;
+    }
+
+    isExpense(): boolean {
+        return true;
     }
 
     toDTO(): RecurringExpensesBreakdownDTO {

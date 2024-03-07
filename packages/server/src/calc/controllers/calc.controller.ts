@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { InvestmentScenarioRequestDTO, ListingDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('calc')
@@ -9,7 +9,7 @@ export class CalcController {
 
     @Get()
     async getAllProperties(
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequestDTO
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
     ): Promise<ListingWithScenariosDTO[]> {
 
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
@@ -21,7 +21,7 @@ export class CalcController {
     @Get('property')
     async getPropertyByZillowUrl(
         @Query('zillowURL') zillowURL: string,
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequestDTO
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
     ): Promise<ListingWithScenariosDTO> {
 
         if (!zillowURL) {
@@ -40,7 +40,7 @@ export class CalcController {
         this.calcService.addNewProperty(listingDetails);
     }
 
-    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequestDTO): boolean {
+    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequest): boolean {
         if (investmentScenarioRequest) {
             if (investmentScenarioRequest.useDefaultRequest) {
                 return true;

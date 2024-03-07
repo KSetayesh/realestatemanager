@@ -1,6 +1,6 @@
 import { FixedMonthlyExpensesDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Expenses } from "./expenses.model";
+import { Expenses } from "./transaction.model";
 
 export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMonthlyExpensesDTO> {
 
@@ -20,6 +20,14 @@ export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMont
 
     totalExpenses(): number {
         return this.monthlyPropertyTaxAmount + this.monthlyHomeInsuranceAmount + this.monthlyHOAFeesAmount;
+    }
+
+    isIncome(): boolean {
+        return false;
+    }
+
+    isExpense(): boolean {
+        return true;
     }
 
     toDTO(): FixedMonthlyExpensesDTO {

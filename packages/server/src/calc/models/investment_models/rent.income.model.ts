@@ -1,4 +1,4 @@
-import { Incomes } from "./incomes.model";
+import { Incomes } from "./transaction.model";
 
 export class RentIncome implements Incomes {
 
@@ -10,6 +10,14 @@ export class RentIncome implements Incomes {
 
     totalIncomes(): number {
         return this.rentEstimate;
+    }
+
+    isIncome(): boolean {
+        return true;
+    }
+
+    isExpense(): boolean {
+        return false;
     }
 
 }

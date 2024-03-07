@@ -4,6 +4,7 @@ import { IDTOConvertible } from "../../models/idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
+
     private zillowURL: string;
     private propertyDetails: PropertyDetails;
     private zillowMarketEstimates: ZillowMarketEstimates;
@@ -13,6 +14,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         propertyDetails: PropertyDetails,
         zillowMarketEstimates: ZillowMarketEstimates,
         listingPrice: number) {
+
         this.zillowURL = zillowURL;
         this.propertyDetails = propertyDetails;
         this.zillowMarketEstimates = zillowMarketEstimates;

@@ -1,4 +1,3 @@
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { InvestmentScenario } from "../models/investment_models/investment.scenario.model";
 import { getAmountFromValueInput, getInterestTypeEnumValue } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
@@ -22,26 +21,28 @@ import { FixedMonthlyExpenses } from "../models/investment_models/fixed.monthly.
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
 import { RecurringMonthlyExpenses } from "../models/investment_models/recurring.monthly.expenses.model";
 import { AdditionalIncomeStreams } from "../models/investment_models/additional.income.streams.model";
-import { RecurringFinancialActivity } from "../models/investment_models/recurring.monthly.financial.activity.model";
-import { Incomes } from "../models/investment_models/incomes.model";
+import { FinancialActivity, FinancialActivityMap, RecurringFinancialActivity } from "../models/investment_models/recurring.monthly.financial.activity.model";
 import { RentIncome } from "../models/investment_models/rent.income.model";
-import { Expenses } from "../models/investment_models/expenses.model";
+import { ListingDetails } from "../models/listing_models/listingdetails.model";
 
 export class InvestmentMetricBuilder {
 
-    // private listingDetails: ListingDetails;
     private investmentScenarioRequest?: InvestmentScenarioRequest;
-
-    // constructor(listingDetails: ListingDetails, investmentScenarioRequest?: InvestmentScenarioRequest) {
-    //     this.listingDetails = listingDetails;
-    //     this.investmentScenarioRequest = investmentScenarioRequest;
-    // }
 
     constructor(investmentScenarioRequest?: InvestmentScenarioRequest) {
         this.investmentScenarioRequest = investmentScenarioRequest;
     }
 
+    // Update this to use listingDetails properties
+    buildWithListingDetails(listingDetails: ListingDetails): InvestmentScenario {
+        return this._build(listingDetails);
+    }
+
     build(): InvestmentScenario {
+        return this._build();
+    }
+
+    private _build(listingDetails?: ListingDetails): InvestmentScenario {
         if (!this.investmentScenarioRequest || this.investmentScenarioRequest.useDefaultRequest) {
             return this.createDefaultInvestmentScenario();
         }
@@ -54,6 +55,7 @@ export class InvestmentMetricBuilder {
     }
 
     private createInvestmentScenario(): InvestmentScenario {
+
         const investmentScenarioRequest: InvestmentScenarioRequest = this.investmentScenarioRequest.investmentScenario;
 
         const mortgageDetailsDTO: MortgageDetailsRequest = investmentScenarioRequest.mortgageDetails;
@@ -198,11 +200,14 @@ export class InvestmentMetricBuilder {
 
         const rentIncome: RentIncome = new RentIncome(rentEstimate);
 
-        const incomes: Incomes[] = [rentIncome, additionalIncomeStreams];
+        const transactions: FinancialActivityMap = {
+            [FinancialActivity.RENT_INCOME]: rentIncome,
+            [FinancialActivity.ADDITIONAL_INCOME]: additionalIncomeStreams,
+            [FinancialActivity.FIXED_EXPENSES]: fixedMonthlyExpenses,
+            [FinancialActivity.RECURRING_EXPENSES]: recurringExpensesBreakdown,
+        };
 
-        const expenses: Expenses[] = [recurringExpensesBreakdown, fixedMonthlyExpenses];
-
-        const recurringFinancialActivity: RecurringFinancialActivity = new RecurringFinancialActivity(incomes, expenses);
+        const recurringFinancialActivity: RecurringFinancialActivity = new RecurringFinancialActivity(transactions);
 
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,

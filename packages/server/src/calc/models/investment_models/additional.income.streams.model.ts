@@ -1,6 +1,6 @@
 import { AdditionalIncomeStreamsDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Incomes } from "./incomes.model";
+import { Incomes } from "./transaction.model";
 
 
 export class AdditionalIncomeStreams implements Incomes, IDTOConvertible<AdditionalIncomeStreamsDTO> {
@@ -24,6 +24,14 @@ export class AdditionalIncomeStreams implements Incomes, IDTOConvertible<Additio
 
     totalIncomes(): number {
         return this.toDTO().totalAmount;
+    }
+
+    isIncome(): boolean {
+        return true;
+    }
+
+    isExpense(): boolean {
+        return false;
     }
 
     toDTO(): AdditionalIncomeStreamsDTO {
