@@ -27,28 +27,25 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakd
     }
 
     getTotalInitialCosts(): number {
-        return this.toDTO().totalCosts;
+        return this.downPaymentAmount +
+            this.legalAndProfessionalFees +
+            this.initialRepairCosts +
+            this.closingCosts +
+            this.travelingCosts +
+            this.otherExpenses;
     }
 
-
     toDTO(): InitialCostsBreakdownDTO {
-        const downPaymentAmount = this.downPaymentAmount;
-        const legalAndProfessionalFees = this.legalAndProfessionalFees;
-        const initialRepairCosts = this.initialRepairCosts;
-        const closingCosts = this.closingCosts;
-        const travelingCosts = this.travelingCosts;
-        const otherExpenses = this.otherExpenses;
-        const totalCosts = downPaymentAmount + legalAndProfessionalFees + initialRepairCosts + closingCosts + travelingCosts + otherExpenses;
 
         return {
-            totalCosts: totalCosts,
+            totalCosts: this.getTotalInitialCosts(),
             breakdown: {
-                downPaymentAmount: downPaymentAmount,
-                legalAndProfessionalFees: legalAndProfessionalFees,
-                initialRepairCosts: initialRepairCosts,
-                closingCosts: closingCosts,
-                travelingCosts: travelingCosts,
-                otherExpenses: otherExpenses,
+                downPaymentAmount: this.downPaymentAmount,
+                legalAndProfessionalFees: this.legalAndProfessionalFees,
+                initialRepairCosts: this.initialRepairCosts,
+                closingCosts: this.closingCosts,
+                travelingCosts: this.travelingCosts,
+                otherExpenses: this.otherExpenses,
             },
         };
     }

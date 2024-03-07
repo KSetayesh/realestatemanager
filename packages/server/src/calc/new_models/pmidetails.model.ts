@@ -3,31 +3,25 @@ import { IDTOConvertible } from "./idtoconvertible.model";
 
 export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
 
-    private pmiAmount: number;
     private pmiRate: number;
-    private pmiRateFormula: string;
     private pmiDropoffPoint: number;
 
-    constructor(pmiAmount: number,
+    constructor(
         pmiRate: number,
-        pmiRateFormula: string,
         pmiDropoffPoint: number) {
-
-        this.pmiAmount = pmiAmount;
         this.pmiRate = pmiRate;
-        this.pmiRateFormula = pmiRateFormula;
         this.pmiDropoffPoint = pmiDropoffPoint;
     }
 
-    getPMIAmount(): number {
-        return this.pmiAmount;
+    getPmiRate(): number {
+        return this.pmiRate;
     }
 
     toDTO(): PMIDetailsDTO {
         return {
-            pmiAmount: this.pmiAmount,
+            pmiAmount: this.getPMIAmount(),
             pmiRate: this.pmiRate,
-            pmiRateFormula: this.pmiRateFormula,
+            pmiRateFormula: 'some formula',
             pmiDropoffPoint: this.pmiDropoffPoint,
         }
     }

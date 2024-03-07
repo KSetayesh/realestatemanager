@@ -25,7 +25,11 @@ export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<Recur
     }
 
     totalExpenses(): number {
-        return this.toDTO().totalCosts;
+        return this.propertyManagementRate +
+            this.vacancyRate +
+            this.maintenanceRate +
+            this.otherExpensesRate +
+            this.capExReserveRate;
     }
 
     toDTO(): RecurringExpensesBreakdownDTO {

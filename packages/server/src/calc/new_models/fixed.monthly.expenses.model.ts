@@ -19,7 +19,7 @@ export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMont
     }
 
     totalExpenses(): number {
-        return this.toDTO().totalCosts;
+        return this.monthlyPropertyTaxAmount + this.monthlyHomeInsuranceAmount + this.monthlyHOAFeesAmount;
     }
 
     toDTO(): FixedMonthlyExpensesDTO {
@@ -28,11 +28,11 @@ export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMont
         const monthlyHOAFeesAmount = this.monthlyHOAFeesAmount;
         const totalCosts = monthlyPropertyTaxAmount + monthlyHomeInsuranceAmount + monthlyHOAFeesAmount;
         return {
-            totalCosts: totalCosts,
+            totalCosts: this.totalExpenses(),
             breakdown: {
-                monthlyPropertyTaxAmount: monthlyPropertyTaxAmount,
-                monthlyHomeInsuranceAmount: monthlyHomeInsuranceAmount,
-                monthlyHOAFeesAmount: monthlyHOAFeesAmount,
+                monthlyPropertyTaxAmount: this.monthlyPropertyTaxAmount,
+                monthlyHomeInsuranceAmount: this.monthlyHomeInsuranceAmount,
+                monthlyHOAFeesAmount: this.monthlyHOAFeesAmount,
             }
         }
 

@@ -25,6 +25,18 @@ export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
         this.interestOnlyPeriod = interestOnlyPeriod;
     }
 
+    getNumberOfPayments(): number {
+        return this.termInYears * 12;
+    }
+
+    getAnnualInterestRate(): number {
+        return this.annualInterestRate;
+    }
+
+    getLoanAmount(): number {
+        return this.loanAmount;
+    }
+
     toDTO(): FinancingTermsDTO {
         return {
             loanAmount: this.loanAmount,

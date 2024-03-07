@@ -275,7 +275,6 @@ export class InvestmentMetricBuilder {
         );
 
         const pmiDetails: PMIDetails = new PMIDetails(
-            0, // pmiAmount
             pmiRate,
             '', // pmiRateFormula
             pmiDropoffPoint
@@ -298,7 +297,7 @@ export class InvestmentMetricBuilder {
 
         const rentIncome: RentIncome = new RentIncome(rentEstimate);
 
-        const incomes: Incomes[] = [additionalIncomeStreams, rentIncome];
+        const incomes: Incomes[] = [rentIncome, additionalIncomeStreams];
 
         const expenses: Expenses[] = [recurringExpensesBreakdown, fixedMonthlyExpenses];
 
