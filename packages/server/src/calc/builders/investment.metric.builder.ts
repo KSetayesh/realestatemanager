@@ -74,11 +74,11 @@ export class InvestmentMetricBuilder {
 
         const pmiDropoffPoint = this.getPMIDropoffPoint(mortgageDetailsDTO);
 
-        const monthlyPropertyTax = getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+        const monthlyPropertyTax = this.getMonthlyPropertyTax(mortgageDetailsDTO);
 
-        const monthlyHomeInsuranceAmount = getAmountFromValueInput(mortgageDetailsDTO.monthlyHomeInsuranceAmount);
+        const monthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount(mortgageDetailsDTO);
 
-        const monthlyHOAFeesAmount = getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);
+        const monthlyHOAFeesAmount = this.getMonthlyHOAFeesAmount(mortgageDetailsDTO);
 
         const operatingExpensesDTO: OperatingExpensesRequest = investmentScenarioRequest.operatingExpenses;
 
@@ -252,6 +252,18 @@ export class InvestmentMetricBuilder {
 
     private getPMIDropoffPoint(mortgageDetailsDTO: MortgageDetailsRequest): number {
         return mortgageDetailsDTO.pmiDropoffPoint | DefaultInvestmentRates.PMI_DROP_OFF_POINT;
+    }
+
+    private getMonthlyPropertyTax(mortgageDetailsDTO: MortgageDetailsRequest): number {
+        return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+    }
+
+    private getMonthlyHomeInsuranceAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
+        return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+    }
+
+    private getMonthlyHOAFeesAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
+        return getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);;
     }
 
     private getPropertyManagementRate(operatingExpensesDTO: OperatingExpensesRequest): number {
