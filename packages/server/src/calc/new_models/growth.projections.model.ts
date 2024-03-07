@@ -13,6 +13,18 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
         this.annualTaxIncreaseRate = annualTaxIncreaseRate;
     }
 
+    getAnnualRentIncreaseRate() {
+        return this.annualRentIncreaseRate
+    }
+
+    getAnnualAppreciationRate() {
+        return this.annualAppreciationRate
+    }
+
+    getAnnualTaxIncreaseRate() {
+        return this.annualTaxIncreaseRate
+    }
+
     toDTO(): GrowthProjectionsDTO {
         return {
             annualRentIncreaseRate: this.annualRentIncreaseRate,

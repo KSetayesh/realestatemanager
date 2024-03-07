@@ -8,13 +8,13 @@ export class InvestmentScenario {
     private growthProjections: GrowthProjections;
     private initialCostsBreakdown: InitialCostsBreakdown;
     private mortgageCalculator: MortgageCalculator;
-    private taxImplications: TaxImplications;
+    private taxImplications?: TaxImplications;
 
     constructor(
         growthProjections: GrowthProjections,
         initialCostsBreakdown: InitialCostsBreakdown,
         mortgageCalculator: MortgageCalculator,
-        taxImplications: TaxImplications,
+        taxImplications?: TaxImplications,
     ) {
         this.growthProjections = growthProjections;
         this.initialCostsBreakdown = initialCostsBreakdown;
@@ -22,50 +22,10 @@ export class InvestmentScenario {
         this.taxImplications = taxImplications;
     }
 
-    // private mortgageDetails: MortgageDetails;
-    // private growthProjections: GrowthProjections;
-    // private operatingExpenses: OperatingExpenses;
-    // private additionalIncomeStreams: AdditionalIncomeStreams;
-    // private rentEstimate: number;
-    // private purchasePrice: number;
-
-    // constructor(
-    //     mortgageDetails: MortgageDetails,
-    //     growthProjections: GrowthProjections,
-    //     operatingExpenses: OperatingExpenses,
-    //     additionalIncomeStreams: AdditionalIncomeStreams,
-    //     rentEstimate: number,
-    //     purchasePrice: number) {
-
-    //     this.mortgageDetails = mortgageDetails;
-    //     this.growthProjections = growthProjections;
-    //     this.operatingExpenses = operatingExpenses;
-    //     this.additionalIncomeStreams = additionalIncomeStreams;
-    //     this.rentEstimate = rentEstimate;
-    //     this.purchasePrice = purchasePrice;
-    // }
-
     createInvestmentMetrics(): InvestmentMetricsResponseDTO {
-        // const purchasePrice: number = this.purchasePrice;
-        // const loanAmount: number = this.calculateLoanAmount();
-        // const downPaymentBreakdown: DownPaymentBreakdownDTO = this.createDownPaymentBreakdownDTO();
-        // const initialRentAmount: number = this.rentEstimate;
-        // const ROI: number = this.calculateROI();
-        // const capRate: number = this.calculateCapRate();
-        // const initialMortgagePayment: number = this.calculateMortgagePayment();
-        // const initialMonthlyAmount: number = this.calculateMortgagePaymentWithFixedMonthlyExpenses();
-        // const cashFlow: CashFlowDTO = this.createCashFlowBreakdownDTO();
-        // const initialCosts: InitialCostsBreakdownDTO = this.createInitialCostsBreakdownDTO();
-        // const additionalIncomeStreams: AdditionalIncomeStreamsDTO = this.additionalIncomeStreams.toDTO();
-        // const financingOptions: FinancingOptionDTO[] = this.createFinancingOptionBreakdownDTO();
-        // const growthProjections: GrowthProjectionsDTO = this.growthProjections.toDTO();
-        // const recurringExpensesBreakdown: RecurringExpensesBreakdownDTO = this.createRecurringExpensesDTO();
-        // const fixedMonthlyExpenses: FixedMonthlyExpensesDTO = this.createFixedMonthlyExpensesDTO();
-        // const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
 
         const purchasePrice: number = this.getPurchasePrice();
         const loanAmount: number = this.getLoanAmount();
-        // const downPaymentBreakdown: DownPaymentBreakdownDTO = this.createDownPaymentBreakdownDTO();
         const annualInterestRate: number = this.getAnnualInterestRate();
         const downPaymentAmount: number = this.getDownPaymentAmount();
         const initialRentAmount: number = this.getRentalAmount();
@@ -77,16 +37,7 @@ export class InvestmentScenario {
         const recurringCosts: number = this.getRecurringExpenses();
         const monthlyCashFlow: number = this.calculateMonthlyCashFlow();
         const yearlyCashFlow: number = this.calculateYearlyCashFlow();
-
-        // const cashFlow: CashFlowDTO = this.createCashFlowBreakdownDTO();
-        // const initialCosts: InitialCostsBreakdownDTO = this.createInitialCostsBreakdownDTO();
-        // const additionalIncomeStreams: AdditionalIncomeStreamsDTO = this.additionalIncomeStreams.toDTO();
-        // const financingOptions: FinancingOptionDTO[] = this.createFinancingOptionBreakdownDTO();
-        // const growthProjections: GrowthProjectionsDTO = this.growthProjections.toDTO();
-        // const recurringExpensesBreakdown: RecurringExpensesBreakdownDTO = this.createRecurringExpensesDTO();
-        // const fixedMonthlyExpenses: FixedMonthlyExpensesDTO = this.createFixedMonthlyExpensesDTO();
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
-
 
         return {
             purchasePrice: {
@@ -182,6 +133,14 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getAnnualInterestRate();
     }
 
+    private getMonthlyInterestRate(): number {
+        return this.mortgageCalculator.getMonthlyInterestRate();
+    }
+
+    private getNumberOfPayments(): number {
+        return this.mortgageCalculator.getNumberOfPayments();
+    }
+
     private getRecurringExpenses(): number {
         return this.mortgageCalculator.getRecurringExpenses();
     }
@@ -224,100 +183,137 @@ export class InvestmentScenario {
         return Utility.round((annualNetOperatingIncome / this.getPurchasePrice()) * 100);
     }
 
-    // createInvestmentMetrics(): InvestmentMetricsResponseDTO {
-    //     const purchasePrice: number = this.purchasePrice;
-    //     const loanAmount: number = this.calculateLoanAmount();
-    //     const downPaymentBreakdown: DownPaymentBreakdownDTO = this.createDownPaymentBreakdownDTO();
-    //     const initialRentAmount: number = this.rentEstimate;
-    //     const ROI: number = this.calculateROI();
-    //     const capRate: number = this.calculateCapRate();
-    //     const initialMortgagePayment: number = this.calculateMortgagePayment();
-    //     const initialMonthlyAmount: number = this.calculateMortgagePaymentWithFixedMonthlyExpenses();
-    //     const cashFlow: CashFlowDTO = this.createCashFlowBreakdownDTO();
-    //     const initialCosts: InitialCostsBreakdownDTO = this.createInitialCostsBreakdownDTO();
-    //     const additionalIncomeStreams: AdditionalIncomeStreamsDTO = this.additionalIncomeStreams.toDTO();
-    //     const financingOptions: FinancingOptionDTO[] = this.createFinancingOptionBreakdownDTO();
-    //     const growthProjections: GrowthProjectionsDTO = this.growthProjections.toDTO();
-    //     const recurringExpensesBreakdown: RecurringExpensesBreakdownDTO = this.createRecurringExpensesDTO();
-    //     const fixedMonthlyExpenses: FixedMonthlyExpensesDTO = this.createFixedMonthlyExpensesDTO();
-    //     const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
-
-    //     return {
-    //         purchasePrice: {
-    //             description: 'The total amount paid to acquire the property, not including any additional fees or closing costs.',
-    //             value: purchasePrice,
-    //         },
-    //         rentEstimate: {
-    //             description: 'An estimated amount a property is expected to earn in rental income per month.',
-    //             value: initialRentAmount,
-    //         },
-    //         initialCosts: {
-    //             description: `Expenses incurred at the start of the investment,
-    //                         DownPaymentAmount + 
-    //                         Legal And Professional Fees + 
-    //                         Repair Costs + 
-    //                         Closing Costs + 
-    //                         Traveling Costs + 
-    //                         Other Expenses`,
-    //             value: initialCosts.totalCosts,
-    //         },
-    //         loanAmount: {
-    //             description: 'The amount borrowed from a lender to finance the property purchase.',
-    //             value: loanAmount,
-    //         },
-    //         downPaymentAmount: {
-    //             description: 'The upfront payment made when purchasing a property.',
-    //             value: downPaymentBreakdown.downPaymentAmount,
-    //         },
-    //         annualInterestRate: {
-    //             description: 'The yearly rate charged by the lender for borrowing money, expressed as a percentage of the loan amount.',
-    //             value: financingOptions[0].terms.annualInterstRate,
-    //         },
-    //         ROI: {
-    //             description: '(Return on Investment): A measure of the profitability of the investment, calculated as the net income divided by the initial investment cost.',
-    //             value: ROI,
-    //         },
-    //         capRate: {
-    //             description: '(Capitalization Rate): A real estate valuation measure used to compare different investments, calculated as the net operating income divided by the property\'s purchase price.',
-    //             value: capRate,
-    //         },
-    //         recurringCosts: {
-    //             description: `Ongoing expenses related to the property, 
-    //                         Property Management Amount +
-    //                         Vacancy Amount +
-    //                         Maintenance Amount + 
-    //                         Other Expenses Amount + 
-    //                         CapEx Reserve Amount`,
-    //             value: recurringExpensesBreakdown.totalCosts,
-    //         },
-    //         monthlyPayment: {
-    //             description: `The amount paid monthly for the mortgage, 
-    //                         Mortgage (Principal + Interest) +
-    //                         Monthly HOA Amount +
-    //                         Monthly Property Tax Amount +
-    //                         Monthly Home Owners Insurance Amount`,
-    //             value: initialMonthlyAmount,
-    //         },
-    //         mortgageAmount: {
-    //             description: `The amount paid monthly for the mortgage, 
-    //                         Mortgage (Principal + Interest)`,
-    //             value: initialMortgagePayment,
-    //         },
-    //         monthlyCashFlow: {
-    //             description: 'The net amount of cash generated monthly after all expenses and mortgage payments have been made.',
-    //             value: cashFlow.monthlyCashFlow.totalAmount,
-    //         },
-    //         yearlyCashFlow: {
-    //             description: 'The net amount of cash generated yearly after all expenses and mortgage payments have been made.',
-    //             value: cashFlow.yearlyCashFlow.totalAmount,
-    //         },
-    //         ammortizationDetails: ammortizationDetails,
-    //     };
-
-    // }
-
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
-        return [];
+
+        const principal = this.getPurchasePrice();
+        const loanAmount = this.getLoanAmount();
+        const downPaymentAmount = this.getDownPaymentAmount();
+        const monthlyInterestRate = this.getMonthlyInterestRate();
+        const totalPayments = this.getNumberOfPayments();
+        const monthlyPayment = this.getMortgageAmount();
+        let schedule: AmortizationDetailsDTO[] = [];
+        let remainingBalance = loanAmount;
+        let cumulativePrincipalPaid = 0;
+        let propertyValue = principal;
+
+        // Calculate the equivalent monthly appreciation rate for a 4% annual rate
+        const annualAppreciationRate = this.growthProjections.getAnnualAppreciationRate() / 100; //projections.annualAppreciationRate / 100;
+        const monthlyAppreciationRate = Math.pow(1 + annualAppreciationRate, 1 / 12) - 1;
+
+
+        const today = new Date();
+
+        // Get the first day of the next month
+        const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
+        const nextMonth = (today.getMonth() + 1) % 12;
+
+        for (let monthCounter = 1; monthCounter <= totalPayments; monthCounter++) {
+            const month = (nextMonth + (monthCounter - 1)) % 12;
+            const yearOffset = Math.floor((nextMonth + (monthCounter - 1)) / 12);
+            const date: Date = new Date(year + yearOffset, month, 1);
+            const dateAsString = date.toLocaleDateString('en-US'); // date.toISOString().split('T')[0];
+
+            const interestPayment = remainingBalance * monthlyInterestRate;
+            const principalPayment = monthlyPayment - interestPayment;
+            remainingBalance -= principalPayment;
+            cumulativePrincipalPaid += principalPayment;
+
+            // Apply monthly appreciation compounded
+            if (monthCounter > 1) {
+                propertyValue *= (1 + monthlyAppreciationRate);
+            }
+
+            const equityWithAppreciation = downPaymentAmount + cumulativePrincipalPaid + (propertyValue - principal);
+            const appreciationValue = propertyValue - principal; // Total appreciation from the original value
+
+            const monthMod12 = ((monthCounter - 1) % 12) + 1;
+            const yearCounter = Math.floor((monthCounter - 1) / 12) + 1;
+            const rentEstimate = Utility.round(this.getRentalAmount());
+            const mortgagePaymentRounded = Utility.round(monthlyPayment);
+            const monthlyPaymentRounded = Utility.round(this.getMortgageAmountWithFixedMonthlyExpenses());
+            const interestPaymentRounded = Utility.round(interestPayment);
+            const principalPaymentRounded = Utility.round(principalPayment);
+            const remainingBalanceRounded = Utility.round(remainingBalance);
+            const equityWithDownPaymentRounded = Utility.round(cumulativePrincipalPaid + downPaymentAmount);
+            const equityWithoutDownPaymentRounded = Utility.round(cumulativePrincipalPaid);
+            const equityWithAppreciationRounded = Utility.round(equityWithAppreciation);
+            const appreciationValueRounded = Utility.round(appreciationValue);
+            const recurringExpensesRounded = Utility.round(this.getRecurringExpenses());
+
+            const getMonthlyPaymentAndRecurringCosts = (): number => {
+                return this.getMortgageAmountWithFixedMonthlyExpenses() + this.getRecurringExpenses();
+            };
+
+            const monthlyPaymentAndRecurringCosts = Utility.round(getMonthlyPaymentAndRecurringCosts());
+
+            const amortizationDetailsDTO: AmortizationDetailsDTO = {
+                month: {
+                    description: '',
+                    value: monthMod12,
+                },
+                date: {
+                    description: '',
+                    value: dateAsString,
+                },
+                year: {
+                    description: '',
+                    value: yearCounter,
+                },
+                recurringCosts: {
+                    description: '',
+                    value: recurringExpensesRounded,
+                },
+                monthlyPayment: {
+                    description: '',
+                    value: monthlyPaymentRounded
+                },
+                monthlyPaymentAndRecurringCosts: {
+                    description: '',
+                    value: monthlyPaymentAndRecurringCosts,
+                },
+                rentEstimate: {
+                    description: '',
+                    value: rentEstimate,
+                },
+                mortgageAmount: {
+                    description: '',
+                    value: mortgagePaymentRounded,
+                },
+                amountPaidInInterest: {
+                    description: '',
+                    value: interestPaymentRounded,
+                },
+                amountPaidInPrincipal: {
+                    description: '',
+                    value: principalPaymentRounded,
+                },
+                remainingBalance: {
+                    description: '',
+                    value: remainingBalanceRounded,
+                },
+                equityWithDownPayment: {
+                    description: '',
+                    value: equityWithDownPaymentRounded,
+                },
+                equityAmountWithoutDownPayment: {
+                    description: '',
+                    value: equityWithoutDownPaymentRounded
+                },
+                equityAmountWithAppreciation: {
+                    description: '',
+                    value: equityWithAppreciationRounded,
+                },
+                appreciationAmount: {
+                    description: '',
+                    value: appreciationValueRounded,
+                },
+            };
+
+            schedule.push(amortizationDetailsDTO);
+
+        }
+
+        return schedule;
     }
 
 }
