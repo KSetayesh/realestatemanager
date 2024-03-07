@@ -1,6 +1,6 @@
 import { HomeType, PropertyDetailsDTO } from "@realestatemanager/shared";
 import { Address } from "./address.model";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../../models/idtoconvertible.model";
 import { SchoolRating } from "./schoolrating.model";
 
 export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{

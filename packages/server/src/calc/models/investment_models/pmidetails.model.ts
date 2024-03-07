@@ -1,5 +1,5 @@
 import { PMIDetailsDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
 

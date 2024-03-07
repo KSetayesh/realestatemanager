@@ -1,5 +1,5 @@
 import { SchoolRatingDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../../models/idtoconvertible.model";
 
 export class SchoolRating implements IDTOConvertible<SchoolRatingDTO> {
     private elementarySchoolRating?: number;

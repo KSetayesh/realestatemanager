@@ -1,5 +1,5 @@
 import { AdditionalIncomeStreamsDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 import { Incomes } from "./incomes.model";
 
 

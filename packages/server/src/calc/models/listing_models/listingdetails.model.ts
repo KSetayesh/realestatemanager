@@ -1,6 +1,6 @@
 import { ListingDetailsDTO } from "@realestatemanager/shared";
 import { PropertyDetails } from "./propertydetails.model";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../../models/idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{

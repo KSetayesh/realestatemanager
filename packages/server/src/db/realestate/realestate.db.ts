@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 import dbConfig from '../../config/dbConfig';
-import { ListingDetails } from 'src/calc/models/listingdetails.model';
-import { Address } from 'src/calc/models/address.model';
-import { PropertyDetails } from 'src/calc/models/propertydetails.model';
-import { ZillowMarketEstimates } from 'src/calc/models/zillowmarketestimates.model';
+import { ListingDetails } from 'src/calc/models/listing_models/listingdetails.model';
+import { Address } from 'src/calc/models/listing_models/address.model';
+import { PropertyDetails } from 'src/calc/models/listing_models/propertydetails.model';
+import { ZillowMarketEstimates } from 'src/calc/models/listing_models/zillowmarketestimates.model';
 import { AddressDTO, Country, HomeType, ListingDetailsDTO, PropertyDetailsDTO, SchoolRatingDTO, State, ZillowMarketEstimatesDTO } from '@realestatemanager/shared';
-import { SchoolRating } from 'src/calc/models/schoolrating.model';
+import { SchoolRating } from 'src/calc/models/listing_models/schoolrating.model';
 
 export class RealEstateManager {
 

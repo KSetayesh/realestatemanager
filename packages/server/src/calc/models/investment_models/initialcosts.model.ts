@@ -1,5 +1,5 @@
 import { InitialCostsBreakdownDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakdownDTO> {
 

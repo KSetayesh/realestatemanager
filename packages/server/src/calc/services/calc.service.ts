@@ -9,7 +9,7 @@ import {
     ListingWithScenariosDTO,
     Utility,
 } from '@realestatemanager/shared';
-import { ListingDetails } from '../models/listingdetails.model';
+import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentScenario } from '../models/investmentscenario.model';
 import { MortgageDetails } from '../models/mortgagedetails.model';
 import { GrowthProjections } from '../models/growthprojections.model';

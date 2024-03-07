@@ -1,5 +1,5 @@
 import { FinancingTermsDTO, InterestType } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
 

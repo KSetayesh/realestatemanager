@@ -1,10 +1,10 @@
-import { ListingDetails } from "../models/listingdetails.model";
-import { InvestmentScenario } from "../new_models/investment.scenario.model";
+import { ListingDetails } from "../models/listing_models/listingdetails.model";
+import { InvestmentScenario } from "../models/investment_models/investment.scenario.model";
 import { getAmountFromValueInput, getInterestTypeEnumValue } from "src/shared/Constants";
-import { GrowthProjections } from "../new_models/growth.projections.model";
-import { InitialCostsBreakdown } from "../new_models/initialcosts.model";
-import { MortgageCalculator } from "../new_models/mortgage.calc.model";
-import { TaxImplications } from "../new_models/tax.implications.model";
+import { GrowthProjections } from "../models/investment_models/growth.projections.model";
+import { InitialCostsBreakdown } from "../models/investment_models/initialcosts.model";
+import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";
+import { TaxImplications } from "../models/investment_models/tax.implications.model";
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
@@ -17,15 +17,15 @@ import {
     TaxImplicationsRequest,
     Utility
 } from "@realestatemanager/shared";
-import { FinancingTerms } from "../new_models/financing.terms.model";
-import { FixedMonthlyExpenses } from "../new_models/fixed.monthly.expenses.model";
-import { PMIDetails } from "../new_models/pmidetails.model";
-import { RecurringMonthlyExpenses } from "../new_models/recurring.monthly.expenses.model";
-import { AdditionalIncomeStreams } from "../new_models/additional.income.streams.model";
-import { RecurringFinancialActivity } from "../new_models/recurring.monthly.financial.activity.model";
-import { Incomes } from "../new_models/incomes.model";
-import { RentIncome } from "../new_models/rent.income.model";
-import { Expenses } from "../new_models/expenses.model";
+import { FinancingTerms } from "../models/investment_models/financing.terms.model";
+import { FixedMonthlyExpenses } from "../models/investment_models/fixed.monthly.expenses.model";
+import { PMIDetails } from "../models/investment_models/pmidetails.model";
+import { RecurringMonthlyExpenses } from "../models/investment_models/recurring.monthly.expenses.model";
+import { AdditionalIncomeStreams } from "../models/investment_models/additional.income.streams.model";
+import { RecurringFinancialActivity } from "../models/investment_models/recurring.monthly.financial.activity.model";
+import { Incomes } from "../models/investment_models/incomes.model";
+import { RentIncome } from "../models/investment_models/rent.income.model";
+import { Expenses } from "../models/investment_models/expenses.model";
 
 export class InvestmentMetricBuilder {
 

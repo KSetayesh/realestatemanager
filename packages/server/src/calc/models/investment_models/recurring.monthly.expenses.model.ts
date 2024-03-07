@@ -1,5 +1,5 @@
 import { RecurringExpensesBreakdownDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 import { Expenses } from "./expenses.model";
 
 export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<RecurringExpensesBreakdownDTO> {

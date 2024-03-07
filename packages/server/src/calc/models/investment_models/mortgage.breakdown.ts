@@ -1,5 +1,5 @@
 import { MortgageBreakdownDTO, Utility } from "@realestatemanager/shared";
-import { IDTOConvertible } from "./idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 import { PMIDetails } from "./pmidetails.model";
 
 export class MortgageBreakdown implements IDTOConvertible<MortgageBreakdownDTO>{
