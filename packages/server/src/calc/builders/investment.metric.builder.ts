@@ -28,34 +28,19 @@ import { ListingDetails } from "../models/listing_models/listingdetails.model";
 export class InvestmentMetricBuilder {
 
     private investmentScenarioRequest?: InvestmentScenarioRequest;
+    private listingDetails: ListingDetails;
+    private useDefaultRequest: boolean;
 
-    constructor(investmentScenarioRequest?: InvestmentScenarioRequest) {
+    constructor(
+        listingDetails: ListingDetails,
+        investmentScenarioRequest?: InvestmentScenarioRequest) {
+            
+        this.listingDetails = listingDetails;
         this.investmentScenarioRequest = investmentScenarioRequest;
-    }
-
-    // Update this to use listingDetails properties
-    buildWithListingDetails(listingDetails: ListingDetails): InvestmentScenario {
-        return this._build(listingDetails);
+        this.useDefaultRequest = !this.investmentScenarioRequest || this.investmentScenarioRequest.useDefaultRequest;
     }
 
     build(): InvestmentScenario {
-        return this._build();
-    }
-
-    private _build(listingDetails?: ListingDetails): InvestmentScenario {
-        if (!this.investmentScenarioRequest || this.investmentScenarioRequest.useDefaultRequest) {
-            return this.createDefaultInvestmentScenario();
-        }
-        return this.createInvestmentScenario();
-    }
-
-    // Come back to this
-    private createDefaultInvestmentScenario(): InvestmentScenario {
-        return this.createInvestmentScenario();
-    }
-
-    private createInvestmentScenario(): InvestmentScenario {
-
         const investmentScenarioRequest: InvestmentScenarioRequest = this.investmentScenarioRequest.investmentScenario;
 
         const mortgageDetailsDTO: MortgageDetailsRequest = investmentScenarioRequest.mortgageDetails;
@@ -102,9 +87,9 @@ export class InvestmentMetricBuilder {
 
         const otherInitialExpenses = this.getOtherInitialExpenses(operatingExpensesDTO);
 
-        const rentEstimate = investmentScenarioRequest.rentEstimate;
+        const rentEstimate = this.getRentEstimate(investmentScenarioRequest);
 
-        const purchasePrice = investmentScenarioRequest.purchasePrice;
+        const purchasePrice = this.getPurchasePrice(investmentScenarioRequest);
 
         const growthProjectionsDTO: GrowthProjectionsRequest = investmentScenarioRequest.growthProjections;
 
@@ -223,9 +208,7 @@ export class InvestmentMetricBuilder {
             mortgageCalculator,
             taxImplications,
         );
-
     }
-
 
     private getAnnualInterestRate(mortgageDetailsDTO: MortgageDetailsRequest): number {
         return mortgageDetailsDTO.annualInterestRate | DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
@@ -255,15 +238,24 @@ export class InvestmentMetricBuilder {
     }
 
     private getMonthlyPropertyTax(mortgageDetailsDTO: MortgageDetailsRequest): number {
+        if (this.useDefaultRequest) {
+            return this.listingDetails.getZillowMonthlyPropertyTaxAmount();
+        }
         return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
     }
 
     private getMonthlyHomeInsuranceAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
+        if (this.useDefaultRequest) {
+            return this.listingDetails.getZillowMonthlyHomeInsuranceAmount();
+        }
         return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
     }
 
     private getMonthlyHOAFeesAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);;
+        if (this.useDefaultRequest) {
+            return this.listingDetails.getZillowMonthlyHOAFeesAmount();
+        }
+        return getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);
     }
 
     private getPropertyManagementRate(operatingExpensesDTO: OperatingExpensesRequest): number {
@@ -304,6 +296,20 @@ export class InvestmentMetricBuilder {
 
     private getOtherInitialExpenses(operatingExpensesDTO: OperatingExpensesRequest): number {
         return getAmountFromValueInput(operatingExpensesDTO.otherInitialExpenses) | DefaultInvestmentRates.OTHER_INITIAL_EXPENSES;
+    }
+
+    private getPurchasePrice(investmentScenarioRequest: InvestmentScenarioRequest): number {
+        if (this.useDefaultRequest) {
+            return this.listingDetails.getListingPrice();
+        }
+        return investmentScenarioRequest.purchasePrice;
+    }
+
+    private getRentEstimate(investmentScenarioRequest: InvestmentScenarioRequest): number {
+        if (this.useDefaultRequest) {
+            return this.listingDetails.getZillowRentEstimate();
+        }
+        return investmentScenarioRequest.rentEstimate;
     }
 
     private getAnnualRentIncreaseRate(growthProjectionsDTO: GrowthProjectionsDTO): number {

@@ -20,11 +20,11 @@ export class CalcService {
     }
 
     async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO[]> {
-        const investmentMetricsBuilder = new InvestmentMetricBuilder(investmentScenarioRequest);
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
         for (const listingDetails of listingDetailsArr) {
-            const investmentScenario: InvestmentScenario = investmentMetricsBuilder.buildWithListingDetails(listingDetails);
+            const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
+            const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
             const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
             const listingWithScenariosDTO: ListingWithScenariosDTO = {
                 listingDetails: listingDetails.toDTO(),
@@ -36,9 +36,9 @@ export class CalcService {
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
-        const investmentMetricsBuilder = new InvestmentMetricBuilder(investmentScenarioRequest);
         const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
-        const investmentScenario: InvestmentScenario = investmentMetricsBuilder.buildWithListingDetails(listingDetails);
+        const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
+        const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
         const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
