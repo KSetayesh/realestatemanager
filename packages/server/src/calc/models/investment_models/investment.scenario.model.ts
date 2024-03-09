@@ -248,63 +248,63 @@ export class InvestmentScenario {
 
             const amortizationDetailsDTO: AmortizationDetailsDTO = {
                 month: {
-                    description: '',
+                    description: 'The current month in the amortization schedule, modulated by 12 to represent a month in a year.',
                     value: monthMod12,
                 },
                 date: {
-                    description: '',
+                    description: 'The specific date on which the payment is calculated or applied.',
                     value: dateAsString,
                 },
                 year: {
-                    description: '',
+                    description: 'The current year in the amortization schedule, indicating the period of the payment.',
                     value: yearCounter,
                 },
                 recurringCosts: {
-                    description: '',
+                    description: 'Monthly recurring costs, such as taxes and insurance, not including the mortgage payment.',
                     value: recurringExpensesRounded,
                 },
                 monthlyPayment: {
-                    description: '',
-                    value: monthlyPaymentRounded
+                    description: 'The total monthly mortgage payment, including both interest and principal components.',
+                    value: monthlyPaymentRounded,
                 },
                 monthlyPaymentAndRecurringCosts: {
-                    description: '',
+                    description: 'The combined total of monthly mortgage payment and recurring costs.',
                     value: monthlyPaymentAndRecurringCosts,
                 },
                 rentEstimate: {
-                    description: '',
+                    description: 'An estimate of the property\'s rental value, for comparison or income projection.',
                     value: rentEstimate,
                 },
                 mortgageAmount: {
-                    description: '',
+                    description: 'The portion of the monthly payment that goes towards the mortgage itself.',
                     value: mortgagePaymentRounded,
                 },
                 amountPaidInInterest: {
-                    description: '',
+                    description: 'The portion of the monthly payment that is allocated towards paying off interest.',
                     value: interestPaymentRounded,
                 },
                 amountPaidInPrincipal: {
-                    description: '',
+                    description: 'The portion of the monthly payment that goes towards reducing the principal balance.',
                     value: principalPaymentRounded,
                 },
                 remainingBalance: {
-                    description: '',
+                    description: 'The remaining balance on the mortgage after the current payment is made.',
                     value: remainingBalanceRounded,
                 },
                 equityWithDownPayment: {
-                    description: '',
+                    description: 'The equity in the property including the initial down payment.',
                     value: equityWithDownPaymentRounded,
                 },
                 equityAmountWithoutDownPayment: {
-                    description: '',
-                    value: equityWithoutDownPaymentRounded
+                    description: 'The equity accumulated through mortgage payments, excluding the down payment.',
+                    value: equityWithoutDownPaymentRounded,
                 },
                 equityAmountWithAppreciation: {
-                    description: '',
+                    description: 'The total equity accounting for both payments made and property appreciation.',
                     value: equityWithAppreciationRounded,
                 },
                 appreciationAmount: {
-                    description: '',
+                    description: 'The increase in property value over time, contributing to overall equity.',
                     value: appreciationValueRounded,
                 },
             };
