@@ -7,9 +7,9 @@ import { TaxImplications } from "../models/investment_models/tax.implications.mo
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
-    GrowthProjectionsDTO,
     GrowthProjectionsRequest,
     InterestType,
+    InvestmentDetailsRequest,
     InvestmentScenarioRequest,
     MortgageDetailsRequest,
     OperatingExpensesRequest,
@@ -27,95 +27,88 @@ import { ListingDetails } from "../models/listing_models/listingdetails.model";
 
 export class InvestmentMetricBuilder {
 
-    private investmentScenarioRequest?: InvestmentScenarioRequest;
     private listingDetails: ListingDetails;
-    private useDefaultRequest: boolean;
+    private investmentScenarioRequest?: InvestmentScenarioRequest;
 
     constructor(
         listingDetails: ListingDetails,
         investmentScenarioRequest?: InvestmentScenarioRequest) {
-            
+
         this.listingDetails = listingDetails;
         this.investmentScenarioRequest = investmentScenarioRequest;
-        this.useDefaultRequest = !this.investmentScenarioRequest || this.investmentScenarioRequest.useDefaultRequest;
+    }
+
+    private _useDefaultRequest(): boolean {
+        return !this.investmentScenarioRequest ||
+            !this.investmentScenarioRequest.investmentDetails ||
+            this.investmentScenarioRequest.useDefaultRequest;
     }
 
     build(): InvestmentScenario {
-        const investmentScenarioRequest: InvestmentScenarioRequest = this.investmentScenarioRequest.investmentScenario;
 
-        const mortgageDetailsDTO: MortgageDetailsRequest = investmentScenarioRequest.mortgageDetails;
+        const loanAmount = this.getLoanAmount();
 
-        const loanAmount = mortgageDetailsDTO.loanAmount;
+        const annualInterestRate = this.getAnnualInterestRate();
 
-        const annualInterestRate = this.getAnnualInterestRate(mortgageDetailsDTO);
+        const termInYears = this.getTermInYears();
 
-        const termInYears = this.getTermInYears(mortgageDetailsDTO);
+        const interestType = this.getInterestType();
 
-        const interestType = this.getInterestType(mortgageDetailsDTO);
+        const downPaymentPercentage = this.getDownPaymentPercentage();
 
-        const downPaymentPercentage = this.getDownPaymentPercentage(mortgageDetailsDTO);
+        const pmiRate = this.getPMIRate();
 
-        const pmiRate = this.getPMIRate(mortgageDetailsDTO);
+        const pmiDropoffPoint = this.getPMIDropoffPoint();
 
-        const pmiDropoffPoint = this.getPMIDropoffPoint(mortgageDetailsDTO);
+        const monthlyPropertyTax = this.getMonthlyPropertyTax();
 
-        const monthlyPropertyTax = this.getMonthlyPropertyTax(mortgageDetailsDTO);
+        const monthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount();
 
-        const monthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount(mortgageDetailsDTO);
+        const monthlyHOAFeesAmount = this.getMonthlyHOAFeesAmount();
 
-        const monthlyHOAFeesAmount = this.getMonthlyHOAFeesAmount(mortgageDetailsDTO);
+        const propertyManagementRate = this.getPropertyManagementRate();
 
-        const operatingExpensesDTO: OperatingExpensesRequest = investmentScenarioRequest.operatingExpenses;
+        const vacancyRate = this.getVacanyRate();
 
-        const propertyManagementRate = this.getPropertyManagementRate(operatingExpensesDTO);
+        const maintenanceRate = this.getMaintenanceRate();
 
-        const vacancyRate = this.getVacanyRate(operatingExpensesDTO);
+        const otherExpensesRate = this.getOtherExpensesRate();
 
-        const maintenanceRate = this.getMaintenanceRate(operatingExpensesDTO);
+        const capExReserveRate = this.getCapExReserveRate();
 
-        const otherExpensesRate = this.getOtherExpensesRate(operatingExpensesDTO);
+        const legalAndProfessionalFees = this.getLegalAndProfessionalFees();
 
-        const capExReserveRate = this.getCapExReserveRate(operatingExpensesDTO);
+        const initialRepairCosts = this.getInitialRepairCosts();
 
-        const legalAndProfessionalFees = this.getLegalAndProfessionalFees(operatingExpensesDTO);
+        const travelingCosts = this.getTravelingCosts();
 
-        const initialRepairCosts = this.getInitialRepairCosts(operatingExpensesDTO);
+        const closingCosts = this.getClosingCosts();
 
-        const travelingCosts = this.getTravelingCosts(operatingExpensesDTO);
+        const otherInitialExpenses = this.getOtherInitialExpenses();
 
-        const closingCosts = this.getClosingCosts(operatingExpensesDTO);
+        const rentEstimate = this.getRentEstimate();
 
-        const otherInitialExpenses = this.getOtherInitialExpenses(operatingExpensesDTO);
+        const purchasePrice = this.getPurchasePrice();
 
-        const rentEstimate = this.getRentEstimate(investmentScenarioRequest);
+        const annualRentIncreaseRate = this.getAnnualRentIncreaseRate();
 
-        const purchasePrice = this.getPurchasePrice(investmentScenarioRequest);
+        const annualAppreciationRate = this.getAnnualAppreciationRate();
 
-        const growthProjectionsDTO: GrowthProjectionsRequest = investmentScenarioRequest.growthProjections;
+        const annualTaxIncreaseRate = this.getAnnualTaxIncreaseRate();
 
-        const annualRentIncreaseRate = this.getAnnualRentIncreaseRate(growthProjectionsDTO);
+        const parkingFees = this.getParkingFees();
 
-        const annualAppreciationRate = this.getAnnualAppreciationRate(growthProjectionsDTO);
+        const laundryServices = this.getLaundryServices();
 
-        const annualTaxIncreaseRate = this.getAnnualTaxIncreaseRate(growthProjectionsDTO);
+        const storageUnitFees = this.getStorageUnitFees();
 
-        const additionalIncomeStreamsDTO: AdditionalIncomeStreamsRequest = investmentScenarioRequest.additionalIncomeStreams;
+        const otherAdditionalIncomeStreams = this.getOtherAdditionalIncomeStreams();
 
-        const parkingFees = this.getParkingFees(additionalIncomeStreamsDTO);
+        const depreciation = this.getTaxDepreciation();
 
-        const laundryServices = this.getLaundryServices(additionalIncomeStreamsDTO);
+        const mortgageInterest = this.getTaxMortgageInterest();
 
-        const storageUnitFees = this.getStorageUnitFees(additionalIncomeStreamsDTO);
-
-        const otherAdditionalIncomeStreams = this.getOtherAdditionalIncomeStreams(additionalIncomeStreamsDTO);
-
-        const taxImplicationsDTO: TaxImplicationsRequest = investmentScenarioRequest.taxImplications;
-
-        const depreciation = this.getTaxDepreciation(taxImplicationsDTO);
-
-        const mortgageInterest = this.getTaxMortgageInterest(taxImplicationsDTO);
-
-        const operatingExpenses = this.getTaxOperatingExpenses(taxImplicationsDTO);
+        const operatingExpenses = this.getTaxOperatingExpenses();
 
         //----------------------------------------------------------------------------------------------------------------
 
@@ -210,146 +203,253 @@ export class InvestmentMetricBuilder {
         );
     }
 
-    private getAnnualInterestRate(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return mortgageDetailsDTO.annualInterestRate | DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
+    private getInvestmentDetails(): InvestmentDetailsRequest {
+        return this.investmentScenarioRequest.investmentDetails;
     }
 
-    private getTermInYears(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return mortgageDetailsDTO.termInYears | DefaultInvestmentRates.TERM_IN_YEARS;
+    private getMortgageDetails(): MortgageDetailsRequest {
+        return this.getInvestmentDetails().mortgageDetails;
     }
 
-    private getInterestType(mortgageDetailsDTO: MortgageDetailsRequest): InterestType {
-        if (mortgageDetailsDTO.interestType) {
-            return mortgageDetailsDTO.interestType;
+    private getOperatingExpenses(): OperatingExpensesRequest {
+        return this.getInvestmentDetails().operatingExpenses;
+    }
+
+    private getGrowthProjections(): GrowthProjectionsRequest {
+        return this.getInvestmentDetails().growthProjections;
+    }
+
+    private getAdditionalIncomeStreams(): AdditionalIncomeStreamsRequest {
+        return this.getInvestmentDetails().additionalIncomeStreams;
+    }
+
+    private getTaxImplications(): TaxImplicationsRequest {
+        return this.getInvestmentDetails().taxImplications;
+    }
+
+    private getLoanAmount(): number {
+        if (this._useDefaultRequest()) {
+            // Move this somewhere
+            return this.listingDetails.getListingPrice() * (1 - (DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE / 100));
         }
-        return getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
+        return this.getMortgageDetails().loanAmount;
     }
 
-    private getDownPaymentPercentage(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return mortgageDetailsDTO.downPaymentPercentage | DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE;
+    private getAnnualInterestRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
+        }
+        return this.getMortgageDetails().annualInterestRate | DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
     }
 
-    private getPMIRate(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return mortgageDetailsDTO.pmiRate | DefaultInvestmentRates.PMI_RATE;
+    private getTermInYears(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.TERM_IN_YEARS;
+        }
+        return this.getMortgageDetails().termInYears | DefaultInvestmentRates.TERM_IN_YEARS;
     }
 
-    private getPMIDropoffPoint(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        return mortgageDetailsDTO.pmiDropoffPoint | DefaultInvestmentRates.PMI_DROP_OFF_POINT;
+    private getInterestType(): InterestType {
+        if (this._useDefaultRequest()) {
+            return getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
+        }
+        return this.getMortgageDetails().interestType || getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
     }
 
-    private getMonthlyPropertyTax(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        if (this.useDefaultRequest) {
+    private getDownPaymentPercentage(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE;
+        }
+        return this.getMortgageDetails().downPaymentPercentage | DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE;
+    }
+
+    private getPMIRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.PMI_RATE;
+        }
+        return this.getMortgageDetails().pmiRate | DefaultInvestmentRates.PMI_RATE;
+    }
+
+    private getPMIDropoffPoint(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.PMI_DROP_OFF_POINT;
+        }
+        return this.getMortgageDetails().pmiDropoffPoint | DefaultInvestmentRates.PMI_DROP_OFF_POINT;
+    }
+
+    private getMonthlyPropertyTax(): number {
+        if (this._useDefaultRequest()) {
             return this.listingDetails.getZillowMonthlyPropertyTaxAmount();
         }
-        return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+        return getAmountFromValueInput(this.getMortgageDetails().monthlyPropertyTax);
     }
 
-    private getMonthlyHomeInsuranceAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        if (this.useDefaultRequest) {
+    private getMonthlyHomeInsuranceAmount(): number {
+        if (this._useDefaultRequest()) {
             return this.listingDetails.getZillowMonthlyHomeInsuranceAmount();
         }
-        return getAmountFromValueInput(mortgageDetailsDTO.monthlyPropertyTax);
+        return getAmountFromValueInput(this.getMortgageDetails().monthlyHomeInsuranceAmount);
     }
 
-    private getMonthlyHOAFeesAmount(mortgageDetailsDTO: MortgageDetailsRequest): number {
-        if (this.useDefaultRequest) {
+    private getMonthlyHOAFeesAmount(): number {
+        if (this._useDefaultRequest()) {
             return this.listingDetails.getZillowMonthlyHOAFeesAmount();
         }
-        return getAmountFromValueInput(mortgageDetailsDTO.monthlyHOAFeesAmount);
+        return getAmountFromValueInput(this.getMortgageDetails().monthlyHOAFeesAmount);
     }
 
-    private getPropertyManagementRate(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return operatingExpensesDTO.propertyManagementRate | DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
+    private getPropertyManagementRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
+        }
+        return this.getOperatingExpenses().propertyManagementRate | DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
     }
 
-    private getVacanyRate(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return operatingExpensesDTO.vacancyRate | DefaultInvestmentRates.VACANCY_RATE;
+    private getVacanyRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.VACANCY_RATE;
+        }
+        return this.getOperatingExpenses().vacancyRate | DefaultInvestmentRates.VACANCY_RATE;
     }
 
-    private getMaintenanceRate(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return operatingExpensesDTO.maintenanceRate | DefaultInvestmentRates.MAINTENANCE_RATE;
+    private getMaintenanceRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.MAINTENANCE_RATE;
+        }
+        return this.getOperatingExpenses().maintenanceRate | DefaultInvestmentRates.MAINTENANCE_RATE;
     }
 
-    private getOtherExpensesRate(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return operatingExpensesDTO.otherExpensesRate | DefaultInvestmentRates.OTHER_EXPENSES_RATE;
+    private getOtherExpensesRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.OTHER_EXPENSES_RATE;
+        }
+        return this.getOperatingExpenses().otherExpensesRate | DefaultInvestmentRates.OTHER_EXPENSES_RATE;
     }
 
-    private getCapExReserveRate(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return operatingExpensesDTO.capExReserveRate | DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
+    private getCapExReserveRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
+        }
+        return this.getOperatingExpenses().capExReserveRate | DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
     }
 
-    private getLegalAndProfessionalFees(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return getAmountFromValueInput(operatingExpensesDTO.legalAndProfessionalFees) | DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
+    private getLegalAndProfessionalFees(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
+        }
+        return getAmountFromValueInput(this.getOperatingExpenses().legalAndProfessionalFees) | DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
     }
 
-    private getInitialRepairCosts(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return getAmountFromValueInput(operatingExpensesDTO.initialRepairCosts) | DefaultInvestmentRates.INITIAL_REPAIR_COSTS;
+    private getInitialRepairCosts(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.INITIAL_REPAIR_COSTS;
+        }
+        return getAmountFromValueInput(this.getOperatingExpenses().initialRepairCosts) | DefaultInvestmentRates.INITIAL_REPAIR_COSTS;
     }
 
-    private getTravelingCosts(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return getAmountFromValueInput(operatingExpensesDTO.travelingCosts) | DefaultInvestmentRates.TRAVELING_COSTS;
+    private getTravelingCosts(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.TRAVELING_COSTS;
+        }
+        return getAmountFromValueInput(this.getOperatingExpenses().travelingCosts) | DefaultInvestmentRates.TRAVELING_COSTS;
     }
 
-    private getClosingCosts(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return getAmountFromValueInput(operatingExpensesDTO.closingCosts) | DefaultInvestmentRates.OTHER_EXPENSES_RATE;
+    private getClosingCosts(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.CLOSING_COSTS;
+        }
+        return getAmountFromValueInput(this.getOperatingExpenses().closingCosts) | DefaultInvestmentRates.CLOSING_COSTS;
     }
 
-    private getOtherInitialExpenses(operatingExpensesDTO: OperatingExpensesRequest): number {
-        return getAmountFromValueInput(operatingExpensesDTO.otherInitialExpenses) | DefaultInvestmentRates.OTHER_INITIAL_EXPENSES;
+    private getOtherInitialExpenses(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.OTHER_INITIAL_EXPENSES;
+        }
+        return getAmountFromValueInput(this.getOperatingExpenses().otherInitialExpenses) | DefaultInvestmentRates.OTHER_INITIAL_EXPENSES;
     }
 
-    private getPurchasePrice(investmentScenarioRequest: InvestmentScenarioRequest): number {
-        if (this.useDefaultRequest) {
+    private getPurchasePrice(): number {
+        if (this._useDefaultRequest()) {
             return this.listingDetails.getListingPrice();
         }
-        return investmentScenarioRequest.purchasePrice;
+        return this.getInvestmentDetails().purchasePrice;
     }
 
-    private getRentEstimate(investmentScenarioRequest: InvestmentScenarioRequest): number {
-        if (this.useDefaultRequest) {
+    private getRentEstimate(): number {
+        if (this._useDefaultRequest()) {
             return this.listingDetails.getZillowRentEstimate();
         }
-        return investmentScenarioRequest.rentEstimate;
+        return this.getInvestmentDetails().purchasePrice;
     }
 
-    private getAnnualRentIncreaseRate(growthProjectionsDTO: GrowthProjectionsDTO): number {
-        return growthProjectionsDTO.annualRentIncreaseRate | DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
+    private getAnnualRentIncreaseRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
+        }
+        return this.getGrowthProjections().annualRentIncreaseRate | DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
     }
 
-    private getAnnualAppreciationRate(growthProjectionsDTO: GrowthProjectionsDTO): number {
-        return growthProjectionsDTO.annualAppreciationRate | DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
+    private getAnnualAppreciationRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
+        }
+        return this.getGrowthProjections().annualAppreciationRate | DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
     }
 
-    private getAnnualTaxIncreaseRate(growthProjectionsDTO: GrowthProjectionsDTO): number {
-        return growthProjectionsDTO.annualTaxIncreaseRate | DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+    private getAnnualTaxIncreaseRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+        }
+        return this.getGrowthProjections().annualTaxIncreaseRate | DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
     }
 
-    private getParkingFees(additionalIncomeStreamsDTO: AdditionalIncomeStreamsRequest): number {
-        return additionalIncomeStreamsDTO.parkingFees | DefaultInvestmentRates.PARKING_FEES;
+    private getParkingFees(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.PARKING_FEES;
+        }
+        return this.getAdditionalIncomeStreams().parkingFees | DefaultInvestmentRates.PARKING_FEES;
     }
 
-    private getLaundryServices(additionalIncomeStreamsDTO: AdditionalIncomeStreamsRequest): number {
-        return additionalIncomeStreamsDTO.laundryServices | DefaultInvestmentRates.LAUNDRY_SERVICES;
+    private getLaundryServices(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.LAUNDRY_SERVICES;
+        }
+        return this.getAdditionalIncomeStreams().laundryServices | DefaultInvestmentRates.LAUNDRY_SERVICES;
     }
 
-    private getStorageUnitFees(additionalIncomeStreamsDTO: AdditionalIncomeStreamsRequest): number {
-        return additionalIncomeStreamsDTO.storageUnitFees | DefaultInvestmentRates.STORAGE_UNIT_FEES;
+    private getStorageUnitFees(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.STORAGE_UNIT_FEES;
+        }
+        return this.getAdditionalIncomeStreams().storageUnitFees | DefaultInvestmentRates.STORAGE_UNIT_FEES;
     }
 
-    private getOtherAdditionalIncomeStreams(additionalIncomeStreamsDTO: AdditionalIncomeStreamsRequest): number {
-        return additionalIncomeStreamsDTO.other | DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES;
+    private getOtherAdditionalIncomeStreams(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES;
+        }
+        return this.getAdditionalIncomeStreams().other | DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES;
     }
 
-    private getTaxDepreciation(taxImplicationsDTO: TaxImplicationsRequest): number {
-        return taxImplicationsDTO.depreciation | DefaultInvestmentRates.TAX_DEPRECIATION;
+    private getTaxDepreciation(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.TAX_DEPRECIATION;
+        }
+        return this.getTaxImplications().depreciation | DefaultInvestmentRates.TAX_DEPRECIATION;
     }
 
-    private getTaxMortgageInterest(taxImplicationsDTO: TaxImplicationsRequest): number {
-        return taxImplicationsDTO.mortgageInterest | DefaultInvestmentRates.TAX_MORTGAGE_INTEREST;
+    private getTaxMortgageInterest(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.TAX_MORTGAGE_INTEREST;
+        }
+        return this.getTaxImplications().mortgageInterest | DefaultInvestmentRates.TAX_MORTGAGE_INTEREST;
     }
 
-    private getTaxOperatingExpenses(taxImplicationsDTO: TaxImplicationsRequest): number {
-        return taxImplicationsDTO.operatingExpenses | DefaultInvestmentRates.TAX_OPERATING_EXPENSES;
+    private getTaxOperatingExpenses(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.TAX_OPERATING_EXPENSES;
+        }
+        return this.getTaxImplications().operatingExpenses | DefaultInvestmentRates.TAX_OPERATING_EXPENSES;
     }
 
 }

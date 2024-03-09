@@ -149,10 +149,10 @@ export type PropertyIdentifier = {
 export interface InvestmentScenarioRequest {
     propertyIdentifier: PropertyIdentifier;
     useDefaultRequest: boolean;
-    investmentScenario?: InvestmentScenarioRequest;
+    investmentDetails?: InvestmentDetailsRequest;
 };
 
-export interface InvestmentScenarioRequest {
+export interface InvestmentDetailsRequest {
     mortgageDetails: MortgageDetailsRequest;
     operatingExpenses: OperatingExpensesRequest;
     rentEstimate: number;

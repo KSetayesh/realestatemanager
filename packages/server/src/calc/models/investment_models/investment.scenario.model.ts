@@ -188,7 +188,7 @@ export class InvestmentScenario {
         const principal = this.getPurchasePrice();
         const loanAmount = this.getLoanAmount();
         const downPaymentAmount = this.getDownPaymentAmount();
-        const monthlyInterestRate = this.getMonthlyInterestRate();
+        const monthlyInterestRate = this.getMonthlyInterestRate() / 100;
         const totalPayments = this.getNumberOfPayments();
         const monthlyPayment = this.getMortgageAmount();
         let schedule: AmortizationDetailsDTO[] = [];

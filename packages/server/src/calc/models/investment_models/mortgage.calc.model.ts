@@ -75,7 +75,7 @@ export class MortgageCalculator {
     }
 
     getAnnualInterestRate(): number {
-        return this.getAnnualInterestRate();
+        return this.financingTerms.getAnnualInterestRate();
     }
 
     getMonthlyInterestRate(): number {

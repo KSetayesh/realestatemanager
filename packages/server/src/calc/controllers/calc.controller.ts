@@ -45,7 +45,7 @@ export class CalcController {
             if (investmentScenarioRequest.useDefaultRequest) {
                 return true;
             }
-            else if (!investmentScenarioRequest.investmentScenario) {
+            else if (!investmentScenarioRequest.investmentDetails) {
                 return false;
             }
         }
