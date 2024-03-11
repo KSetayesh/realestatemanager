@@ -1,5 +1,5 @@
 import { GrowthProjections } from "./growth.projections.model";
-import { AmortizationDetailsDTO, InvestmentMetricsResponseDTO, Utility } from "@realestatemanager/shared";
+import { AmortizationDetailsDTO, AmountAndPercentageDTO, InvestmentMetricsResponseDTO, Utility } from "@realestatemanager/shared";
 import { InitialCostsBreakdown } from "./initialcosts.model";
 import { MortgageCalculator } from "./mortgage.calc.model";
 import { TaxImplications } from "./tax.implications.model";
@@ -26,8 +26,9 @@ export class InvestmentScenario {
 
         const purchasePrice: number = this.getPurchasePrice();
         const loanAmount: number = this.getLoanAmount();
+        const loanPercentage: number = this.getLoanPercentage();
         const annualInterestRate: number = this.getAnnualInterestRate();
-        const downPaymentAmount: number = this.getDownPaymentAmount();
+        const downPayment: AmountAndPercentageDTO = this.getDownpaymentAmountAndPercentage();
         const initialRentAmount: number = this.getRentalAmount();
         const ROI: number = this.calculateROI();
         const capRate: number = this.calculateCapRate();
@@ -60,12 +61,10 @@ export class InvestmentScenario {
             },
             loanAmount: {
                 description: 'The amount borrowed from a lender to finance the property purchase.',
-                value: loanAmount,
+                amount: loanAmount,
+                percentage: loanPercentage,
             },
-            downPaymentAmount: {
-                description: 'The upfront payment made when purchasing a property.',
-                value: downPaymentAmount,
-            },
+            downPayment: downPayment,
             annualInterestRate: {
                 description: 'The yearly rate charged by the lender for borrowing money, expressed as a percentage of the loan amount.',
                 value: annualInterestRate,
@@ -119,6 +118,14 @@ export class InvestmentScenario {
 
     private getLoanAmount(): number {
         return this.mortgageCalculator.getLoanAmount();
+    }
+
+    private getLoanPercentage(): number {
+        return this.mortgageCalculator.getLoanPercentage();
+    }
+
+    private getDownpaymentAmountAndPercentage(): AmountAndPercentageDTO {
+        return this.mortgageCalculator.getDownpaymentAmountAndPercentage();
     }
 
     private getDownPaymentAmount(): number {
@@ -232,7 +239,9 @@ export class InvestmentScenario {
             const mortgagePaymentRounded = Utility.round(monthlyPayment);
             const monthlyPaymentRounded = Utility.round(this.getMortgageAmountWithFixedMonthlyExpenses());
             const interestPaymentRounded = Utility.round(interestPayment);
+            const interestPercentageRounded = Utility.round((interestPaymentRounded / mortgagePaymentRounded) * 100);
             const principalPaymentRounded = Utility.round(principalPayment);
+            const principalPercentageRounded = Utility.round((principalPaymentRounded / mortgagePaymentRounded) * 100);
             const remainingBalanceRounded = Utility.round(remainingBalance);
             const equityWithDownPaymentRounded = Utility.round(cumulativePrincipalPaid + downPaymentAmount);
             const equityWithoutDownPaymentRounded = Utility.round(cumulativePrincipalPaid);
@@ -281,11 +290,13 @@ export class InvestmentScenario {
                 },
                 amountPaidInInterest: {
                     description: 'The portion of the monthly payment that is allocated towards paying off interest.',
-                    value: interestPaymentRounded,
+                    amount: interestPaymentRounded,
+                    percentage: interestPercentageRounded,
                 },
                 amountPaidInPrincipal: {
                     description: 'The portion of the monthly payment that goes towards reducing the principal balance.',
-                    value: principalPaymentRounded,
+                    amount: principalPaymentRounded,
+                    percentage: principalPercentageRounded,
                 },
                 remainingBalance: {
                     description: 'The remaining balance on the mortgage after the current payment is made.',

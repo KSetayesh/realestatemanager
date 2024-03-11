@@ -1,21 +1,21 @@
-import { InitialCostsBreakdownDTO } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO, InitialCostsBreakdownDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakdownDTO> {
 
     private downPaymentAmount: number;
     private legalAndProfessionalFees: number;
-    private initialRepairCosts: number;
-    private closingCosts: number;
+    private initialRepairCosts: AmountAndPercentageDTO;
+    private closingCosts: AmountAndPercentageDTO;
     private travelingCosts: number;
-    private otherExpenses: number;
+    private otherExpenses: AmountAndPercentageDTO;
 
     constructor(downPaymentAmount: number,
         legalAndProfessionalFees: number,
-        initialRepairCosts: number,
-        closingCosts: number,
+        initialRepairCosts: AmountAndPercentageDTO,
+        closingCosts: AmountAndPercentageDTO,
         travelingCosts: number,
-        otherExpenses: number) {
+        otherExpenses: AmountAndPercentageDTO) {
 
         this.downPaymentAmount = downPaymentAmount;
         this.legalAndProfessionalFees = legalAndProfessionalFees;
@@ -26,27 +26,43 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakd
 
     }
 
+    getInitialRepairCostsAmount(): number {
+        return this.initialRepairCosts.amount;
+    }
+
+    getClosingCostsAmount(): number {
+        return this.closingCosts.amount;
+    }
+
+    getOtherExpensesAmount(): number {
+        return this.otherExpenses.amount;
+    }
+
     getTotalInitialCosts(): number {
         return this.downPaymentAmount +
             this.legalAndProfessionalFees +
-            this.initialRepairCosts +
-            this.closingCosts +
+            this.getInitialRepairCostsAmount() +
+            this.getClosingCostsAmount() +
             this.travelingCosts +
-            this.otherExpenses;
+            this.getOtherExpensesAmount();
     }
 
     toDTO(): InitialCostsBreakdownDTO {
-
-        return {
-            totalCosts: this.getTotalInitialCosts(),
-            breakdown: {
-                downPaymentAmount: this.downPaymentAmount,
-                legalAndProfessionalFees: this.legalAndProfessionalFees,
-                initialRepairCosts: this.initialRepairCosts,
-                closingCosts: this.closingCosts,
-                travelingCosts: this.travelingCosts,
-                otherExpenses: this.otherExpenses,
-            },
-        };
+        return;
     }
+
+    // toDTO(): InitialCostsBreakdownDTO {
+
+    //     return {
+    //         totalCosts: this.getTotalInitialCosts(),
+    //         breakdown: {
+    //             downPaymentAmount: this.downPaymentAmount,
+    //             legalAndProfessionalFees: this.legalAndProfessionalFees,
+    //             initialRepairCosts: this.initialRepairCosts,
+    //             closingCosts: this.closingCosts,
+    //             travelingCosts: this.travelingCosts,
+    //             otherExpenses: this.otherExpenses,
+    //         },
+    //     };
+    // }
 }

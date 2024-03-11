@@ -184,8 +184,8 @@ const InvestmentBreakdown: React.FC = () => {
             monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts.value,
             rentEstimate: ammortizationDetail.rentEstimate.value,
             mortgageAmount: ammortizationDetail.mortgageAmount.value,
-            interestPayment: ammortizationDetail.amountPaidInInterest.value,
-            principalPayment: ammortizationDetail.amountPaidInPrincipal.value,
+            interestPayment: ammortizationDetail.amountPaidInInterest.amount,
+            principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,
             remainingBalance: ammortizationDetail.remainingBalance.value,
             equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment.value,
             equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment.value,
@@ -213,7 +213,9 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            <InvestmentForm />
+            <InvestmentForm
+                listing={properties[0]}
+            />
             {properties.length > 0 ? (
                 <>
                     <ReusableTable

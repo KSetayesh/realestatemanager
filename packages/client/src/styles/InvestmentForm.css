@@ -1,5 +1,5 @@
 .investment-form {
-    max-width: 400px;
+    max-width: 900px;
     /* Reduced width for a more compact form */
     margin: 20px auto;
     background: #f7f7f7;
@@ -11,7 +11,7 @@
 
 .form-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     /* Keeps the two-column layout */
     gap: 30px;
     /* Reduced gap for a tighter layout */
@@ -52,3 +52,39 @@
 label {
     font-weight: bold;
 }
+
+/* .additional-inputs {
+    transition: max-height 0.2s ease-out;
+}
+
+.toggle-btn {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+}
+
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    vertical-align: middle;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    border-top: 5px solid #333;
+}
+
+.arrow.up {
+    border-top: none;
+    border-bottom: 5px solid #333;
+}
+
+.arrow.down {
+    border-top: 5px solid #333;
+} */

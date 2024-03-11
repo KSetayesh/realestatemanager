@@ -3,21 +3,21 @@ import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
 
-    private loanAmount: number;
+    //   private loanAmount: number;
     private annualInterestRate: number;
     private interestType: InterestType;
     private termInYears: number;
     private monthlyPayment?: number;
     private interestOnlyPeriod?: number;
 
-    constructor(loanAmount: number,
+    constructor(//loanAmount: number,
         annualInterestRate: number,
         interestType: InterestType,
         termInYears: number,
         monthlyPayment: number,
         interestOnlyPeriod: number) {
 
-        this.loanAmount = loanAmount;
+        //  this.loanAmount = loanAmount;
         this.annualInterestRate = annualInterestRate;
         this.interestType = interestType;
         this.termInYears = termInYears;
@@ -33,19 +33,23 @@ export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
         return this.annualInterestRate;
     }
 
-    getLoanAmount(): number {
-        return this.loanAmount;
-    }
+    // getLoanAmount(): number {
+    //     return this.loanAmount;
+    // }
 
     toDTO(): FinancingTermsDTO {
-        return {
-            loanAmount: this.loanAmount,
-            annualInterestRate: this.annualInterestRate,
-            interestType: this.interestType,
-            termInYears: this.termInYears,
-            monthlyPayment: this.monthlyPayment,
-            interestOnlyPeriod: this.interestOnlyPeriod,
-        };
+        return;
     }
+
+    // toDTO(): FinancingTermsDTO {
+    //     return {
+    //         loanAmount: this.loanAmount,
+    //         annualInterestRate: this.annualInterestRate,
+    //         interestType: this.interestType,
+    //         termInYears: this.termInYears,
+    //         monthlyPayment: this.monthlyPayment,
+    //         interestOnlyPeriod: this.interestOnlyPeriod,
+    //     };
+    // }
 
 } 

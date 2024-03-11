@@ -92,10 +92,10 @@ export enum DefaultInvestmentRates {
     OTHER_EXPENSES_RATE = 3, // Miscellaneous expenses as a percentage of rental income.
     CAP_EX_RESERVE_RATE = 5, // Capital expenditure reserve as a percentage of rental income.
     LEGAL_AND_PROFESSIONAL_FEES = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
-    INITIAL_REPAIR_COSTS = 5000, // Estimated initial repair costs in dollars.
+    INITIAL_REPAIR_COST_RATE = 2, //5000, // Estimated initial repair costs in dollars.
     TRAVELING_COSTS = 0,
-    OTHER_INITIAL_EXPENSES = 0,
-    CLOSING_COSTS = 15000, // Estimated closing costs in dollars.
+    OTHER_INITIAL_EXPENSES_RATE = 0,
+    CLOSING_COST_RATE = 15000, // Estimated closing costs in dollars.
     TERM_IN_YEARS = 30, // Term length of loan in years.
     ANNUAL_APPRECIATION_RATE = 4,
     ANNUAL_TAX_INCREASE_RATE = 4,
@@ -110,7 +110,8 @@ export enum DefaultInvestmentRates {
     INTEREST_TYPE = InterestType.FIXED,
 };
 
-//-----------------------------------------------------------------------------------------
+
+//------------------------------ Investment Related Requests ------------------------------
 
 // Defines the base structure for input that can either be a rate or an amount
 export interface ValueInputBase {
@@ -130,15 +131,6 @@ export interface ValueRateInput extends ValueInputBase {
 }
 
 export type ValueInput = ValueAmountInput | ValueRateInput;
-
-//-----------------------------------------------------------------------------------------
-
-export type ValueAndDescription = {
-    description: string;
-    value: string | number;
-};
-
-//------------------------------ Investment Related Requests ------------------------------
 
 // Identifies a property using its address and a Zillow listing URL.
 export type PropertyIdentifier = {
@@ -191,8 +183,8 @@ export interface LoanDetailsRequest {
 };
 
 export interface MortgageDetailsRequest extends LoanDetailsRequest {
-    downPaymentPercentage: number;
-    pmiRate?: number;
+    downPayment: ValueInput; // Now accepts both amount and rate.
+    pmiRate?: number; // Now accepts both amount and rate.
     pmiDropoffPoint?: number;
     monthlyPropertyTax?: ValueInput; // Now accepts both amount and rate.
     monthlyHomeInsuranceAmount?: ValueInput; // Now accepts both amount and rate.
@@ -377,41 +369,57 @@ export type CashFlowDTO = {
     yearlyCashFlow: CashFlowDetailsDTO;
 };
 
+// export type RateAndValueDTO = {
+//     value?: ValueAmountInput;
+//     percentage?: ValueRateInput;
+// };
+
+export type ValueAndDescriptionDTO = {
+    description: string;
+    value: string | number;
+};
+
+export type AmountAndPercentageDTO = {
+    description: string;
+    amount: number;
+    percentage: number;
+};
+
 // Comprehensive details of the investment metrics for a property.
 export interface InvestmentMetricsResponseDTO {
-    purchasePrice: ValueAndDescription;
-    rentEstimate: ValueAndDescription;
-    initialCosts: ValueAndDescription;
-    loanAmount: ValueAndDescription;
-    downPaymentAmount: ValueAndDescription;
-    annualInterestRate: ValueAndDescription;
-    ROI: ValueAndDescription;
-    capRate: ValueAndDescription;
-    recurringCosts: ValueAndDescription;
-    monthlyPayment: ValueAndDescription;
-    mortgageAmount: ValueAndDescription;
-    monthlyCashFlow: ValueAndDescription;
-    yearlyCashFlow: ValueAndDescription;
+    purchasePrice: ValueAndDescriptionDTO;
+    rentEstimate: ValueAndDescriptionDTO;
+    initialCosts: ValueAndDescriptionDTO;
+    loanAmount: AmountAndPercentageDTO;
+    downPayment: AmountAndPercentageDTO;
+    annualInterestRate: ValueAndDescriptionDTO;
+    ROI: ValueAndDescriptionDTO;
+    capRate: ValueAndDescriptionDTO;
+    recurringCosts: ValueAndDescriptionDTO;
+    monthlyPayment: ValueAndDescriptionDTO;
+    mortgageAmount: ValueAndDescriptionDTO;
+    monthlyCashFlow: ValueAndDescriptionDTO;
+    yearlyCashFlow: ValueAndDescriptionDTO;
     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
 };
 
 // Details of amortization for the mortgage, reflecting changes over time.
 export interface AmortizationDetailsDTO {
-    month: ValueAndDescription;
-    date: ValueAndDescription;
-    year: ValueAndDescription;
-    recurringCosts: ValueAndDescription;
-    monthlyPayment: ValueAndDescription;
-    monthlyPaymentAndRecurringCosts: ValueAndDescription;
-    rentEstimate: ValueAndDescription;
-    mortgageAmount: ValueAndDescription;
-    amountPaidInInterest: ValueAndDescription;
-    amountPaidInPrincipal: ValueAndDescription;
-    remainingBalance: ValueAndDescription;
-    equityWithDownPayment: ValueAndDescription;
-    equityAmountWithoutDownPayment: ValueAndDescription;
-    equityAmountWithAppreciation: ValueAndDescription;
-    appreciationAmount: ValueAndDescription;
+    month: ValueAndDescriptionDTO;
+    date: ValueAndDescriptionDTO;
+    year: ValueAndDescriptionDTO;
+    recurringCosts: ValueAndDescriptionDTO;
+    monthlyPayment: ValueAndDescriptionDTO;
+    monthlyPaymentAndRecurringCosts: ValueAndDescriptionDTO;
+    rentEstimate: ValueAndDescriptionDTO;
+    mortgageAmount: ValueAndDescriptionDTO;
+    amountPaidInInterest: AmountAndPercentageDTO;
+    amountPaidInPrincipal: AmountAndPercentageDTO;
+    remainingBalance: ValueAndDescriptionDTO;
+    equityWithDownPayment: ValueAndDescriptionDTO;
+    equityAmountWithoutDownPayment: ValueAndDescriptionDTO;
+    equityAmountWithAppreciation: ValueAndDescriptionDTO;
+    appreciationAmount: ValueAndDescriptionDTO;
     // month: number; // Month number of the amortization schedule.
     // date: string;
     // year: number; // Year of the amortization schedule.

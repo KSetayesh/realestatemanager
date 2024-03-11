@@ -1,4 +1,4 @@
-import { Utility } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
 import { RecurringFinancialActivity } from "./recurring.monthly.financial.activity.model";
@@ -6,19 +6,19 @@ import { RecurringFinancialActivity } from "./recurring.monthly.financial.activi
 export class MortgageCalculator {
 
     private purchasePrice: number;
-    private downpaymentPercentage: number;
+    private downpayment: AmountAndPercentageDTO;
     private financingTerms: FinancingTerms;
     private recurringFinancialActivity: RecurringFinancialActivity;
     private pmiDetails?: PMIDetails;
 
     constructor(purchasePrice: number,
-        downpaymentPercentage: number,
+        downpayment: AmountAndPercentageDTO,
         financingTerms: FinancingTerms,
         recurringFinancialActivity: RecurringFinancialActivity,
         pmiDetails?: PMIDetails) {
 
         this.purchasePrice = purchasePrice;
-        this.downpaymentPercentage = downpaymentPercentage;
+        this.downpayment = downpayment;
         this.financingTerms = financingTerms;
         this.recurringFinancialActivity = recurringFinancialActivity;
         this.pmiDetails = pmiDetails;
@@ -29,11 +29,24 @@ export class MortgageCalculator {
     }
 
     getLoanAmount(): number {
-        return this.financingTerms.getLoanAmount();
+        return this.purchasePrice - this.getDownPaymentAmount(); // this.financingTerms.getLoanAmount();
+    }
+
+    getDownpaymentAmountAndPercentage(): AmountAndPercentageDTO {
+        return this.downpayment;
     }
 
     getDownPaymentAmount(): number {
-        return Utility.round(this.purchasePrice * (this.downpaymentPercentage / 100));
+        return this.downpayment.amount;
+        //return Utility.round(this.getPurchasePrice() * (this.getDownPaymentPercentage() / 100));
+    }
+
+    getLoanPercentage(): number {
+        return 100 - this.getDownPaymentPercentage();
+    }
+
+    getDownPaymentPercentage(): number {
+        return this.downpayment.percentage;
     }
 
     getRentalIncome(): number {
@@ -84,7 +97,7 @@ export class MortgageCalculator {
 
     getPMIAmount(): number {
         const isPMI = (): boolean => {
-            return this.downpaymentPercentage < 20;
+            return this.getDownPaymentPercentage() < 20;
         };
 
         if (isPMI()) {
