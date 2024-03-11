@@ -1,26 +1,27 @@
-import { AmountAndPercentageDTO } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO, MortgageDetailsDTO } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
-import { RecurringFinancialActivity } from "./recurring.monthly.financial.activity.model";
+import { FinancialTransaction } from "./financial.transaction";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
-export class MortgageCalculator {
+export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
 
     private purchasePrice: number;
     private downpayment: AmountAndPercentageDTO;
     private financingTerms: FinancingTerms;
-    private recurringFinancialActivity: RecurringFinancialActivity;
+    private financialTransaction: FinancialTransaction;
     private pmiDetails?: PMIDetails;
 
     constructor(purchasePrice: number,
         downpayment: AmountAndPercentageDTO,
         financingTerms: FinancingTerms,
-        recurringFinancialActivity: RecurringFinancialActivity,
+        financialTransaction: FinancialTransaction,
         pmiDetails?: PMIDetails) {
 
         this.purchasePrice = purchasePrice;
         this.downpayment = downpayment;
         this.financingTerms = financingTerms;
-        this.recurringFinancialActivity = recurringFinancialActivity;
+        this.financialTransaction = financialTransaction;
         this.pmiDetails = pmiDetails;
     }
 
@@ -50,15 +51,15 @@ export class MortgageCalculator {
     }
 
     getRentalIncome(): number {
-        return this.recurringFinancialActivity.getRentalIncome();
+        return this.financialTransaction.getRentalIncome();
     }
 
     getRecurringExpenses(): number {
-        return this.recurringFinancialActivity.getRecurringExpenses();
+        return this.financialTransaction.getRecurringExpenses();
     }
 
     getFixedExpenses(): number {
-        return this.recurringFinancialActivity.getFixedExpenses();
+        return this.financialTransaction.getFixedExpenses();
     }
 
     getNumberOfPayments(): number {
@@ -111,6 +112,16 @@ export class MortgageCalculator {
 
     private getPmiRate(): number {
         return this.pmiDetails.getPmiRate();
+    }
+
+    toDTO(): MortgageDetailsDTO {
+        return {
+            purchasePrice: this.purchasePrice,
+            downpayment: this.downpayment,
+            financingTerms: this.financingTerms.toDTO(),
+            transactions: this.financialTransaction.toDTO(),
+            pmiDetails: this.pmiDetails.toDTO(),
+        }
     }
 
 }

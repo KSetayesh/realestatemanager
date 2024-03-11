@@ -21,7 +21,7 @@ import { FixedMonthlyExpenses } from "../models/investment_models/fixed.monthly.
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
 import { RecurringMonthlyExpenses } from "../models/investment_models/recurring.monthly.expenses.model";
 import { AdditionalIncomeStreams } from "../models/investment_models/additional.income.streams.model";
-import { FinancialActivity, FinancialActivityMap, RecurringFinancialActivity } from "../models/investment_models/recurring.monthly.financial.activity.model";
+import { FinancialActivity, FinancialActivityMap, RecurringFinancialActivity } from "../models/investment_models/financial.transaction";
 import { RentIncome } from "../models/investment_models/rent.income.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 

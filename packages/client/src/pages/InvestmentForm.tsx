@@ -6,41 +6,43 @@ import { ListingWithScenariosDTO } from '@realestatemanager/shared';
 const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
     if (!data) return null;
 
-    const [formData, setFormData] = useState({
-        downPaymentPercentage: '',
-        pmiRate: '',
-        pmiDropoffPoint: '',
-        monthlyPropertyTax: '',
-        monthlyHomeInsuranceAmount: '',
-        monthlyHOAFeesAmount: '',
-        annualInterestRate: '',
-        termInYears: '',
-        interestType: '',
-        propertyManagementRate: '',
-        vacancyRate: '',
-        maintenanceRate: '',
-        otherExpensesRate: '',
-        capExReserveRate: '',
-        legalAndProfessionalFees: '',
-        initialRepairCosts: '',
-        travelingCosts: '',
-        closingCosts: '',
-        otherInitialExpenses: '',
-        rentEstimate: '',
-        purchasePrice: '',
-        annualRentIncreaseRate: '',
-        annualAppreciationRate: '',
-        annualTaxIncreaseRate: '',
-        parkingFees: '',
-        laundryServices: '',
-        storageUnitFees: '',
-        other: '',
-        depreciation: '',
-        mortgageInterest: '',
-        operatingExpenses: '',
-        propertyTaxes: '',
-        setNewDefaultValues: false,
-    });
+    const [formData, setFormData] = useState(
+        {
+            downPaymentPercentage: data.listing?.metrics[0].downPayment.percentage.toString() ?? '',
+            pmiRate: '',
+            pmiDropoffPoint: '',
+            monthlyPropertyTax: '',
+            monthlyHomeInsuranceAmount: '',
+            monthlyHOAFeesAmount: '',
+            annualInterestRate: '',
+            termInYears: '',
+            interestType: '',
+            propertyManagementRate: '',
+            vacancyRate: '',
+            maintenanceRate: '',
+            otherExpensesRate: '',
+            capExReserveRate: '',
+            legalAndProfessionalFees: '',
+            initialRepairCosts: '',
+            travelingCosts: '',
+            closingCosts: '',
+            otherInitialExpenses: '',
+            rentEstimate: '',
+            purchasePrice: '',
+            annualRentIncreaseRate: '',
+            annualAppreciationRate: '',
+            annualTaxIncreaseRate: '',
+            parkingFees: '',
+            laundryServices: '',
+            storageUnitFees: '',
+            other: '',
+            depreciation: '',
+            mortgageInterest: '',
+            operatingExpenses: '',
+            propertyTaxes: '',
+            setNewDefaultValues: false,
+        }
+    );
 
     type FormPropery = {
         title: string,
@@ -277,19 +279,19 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
     travelingCosts?: ValueInput;
     closingCosts?: ValueInput;
     otherInitialExpenses?: ValueInput;
-
+ 
     rentEstimate: number;
     purchasePrice: number;
-
+ 
     annualRentIncreaseRate: number; // Expected annual percentage increase in rent.
     annualAppreciationRate: number; // Expected annual percentage increase in property value.
     annualTaxIncreaseRate?: number; // Expected annual percentage increase in property taxes.
-
+ 
     parkingFees?: number; // Income from parking facilities, if available.
     laundryServices?: number; // Income from on-site laundry services.
     storageUnitFees?: number; // Income from storage units, if available.
     other?: number; // Any other sources of income not covered above.
-
+ 
     depreciation: number; // Annual depreciation expense that can be deducted.
     mortgageInterest?: number; // Deductible mortgage interest expense.
     operatingExpenses?: number; // Deductible operating expenses.

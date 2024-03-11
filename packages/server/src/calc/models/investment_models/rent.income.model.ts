@@ -1,6 +1,6 @@
-import { Incomes } from "./transaction.model";
+import { Income } from "./transaction.model";
 
-export class RentIncome implements Incomes {
+export class RentIncome implements Income {
 
     private rentEstimate: number;
 

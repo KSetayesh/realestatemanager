@@ -1,12 +1,13 @@
+
 export interface Transaction {
     isIncome(): boolean;
     isExpense(): boolean;
 };
 
-export interface Incomes extends Transaction {
+export interface Income extends Transaction {
     totalIncomes(): number;
 };
 
-export interface Expenses extends Transaction {
+export interface Expense extends Transaction {
     totalExpenses(): number;
 };

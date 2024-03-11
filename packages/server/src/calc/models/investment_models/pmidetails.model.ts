@@ -19,9 +19,9 @@ export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
 
     toDTO(): PMIDetailsDTO {
         return {
-            pmiAmount: 0, // Come back to this
+            // pmiAmount: 0, // Come back to this
             pmiRate: this.pmiRate,
-            pmiRateFormula: 'some formula',
+            // pmiRateFormula: 'some formula',
             pmiDropoffPoint: this.pmiDropoffPoint,
         }
     }

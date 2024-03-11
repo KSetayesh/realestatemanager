@@ -1,29 +1,29 @@
 import { AdditionalIncomeStreamsDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Incomes } from "./transaction.model";
+import { Income } from "./transaction.model";
 
 
-export class AdditionalIncomeStreams implements Incomes, IDTOConvertible<AdditionalIncomeStreamsDTO> {
+export class AdditionalIncomeStreams implements Income, IDTOConvertible<AdditionalIncomeStreamsDTO> {
 
     private parkingFees?: number; // Income from parking facilities, if available.
     private laundryServices?: number; // Income from on-site laundry services.
     private storageUnitFees?: number; // Income from storage units, if available.
-    private other?: number; // Any other sources of income not covered above.
+    private otherAdditionalIncomeStreams?: number; // Any other sources of income not covered above.
 
     constructor(
         parkingFees?: number,
         laundryServices?: number,
         storageUnitFees?: number,
-        other?: number) {
+        otherAdditionalIncomeStreams?: number) {
 
         this.parkingFees = parkingFees;
         this.laundryServices = laundryServices;
         this.storageUnitFees = storageUnitFees;
-        this.other = other;
+        this.otherAdditionalIncomeStreams = otherAdditionalIncomeStreams;
     }
 
     totalIncomes(): number {
-        return this.toDTO().totalAmount;
+        return this.parkingFees + this.laundryServices + this.storageUnitFees + this.otherAdditionalIncomeStreams;
     }
 
     isIncome(): boolean {
@@ -35,20 +35,11 @@ export class AdditionalIncomeStreams implements Incomes, IDTOConvertible<Additio
     }
 
     toDTO(): AdditionalIncomeStreamsDTO {
-        const parkingFees = this.parkingFees;
-        const laundryServices = this.laundryServices;
-        const storageUnitFees = this.storageUnitFees;
-        const other = this.other;
-        const totalAmount = parkingFees + laundryServices + storageUnitFees + other;
-
         return {
-            totalAmount: totalAmount,
-            breakdown: {
-                parkingFees: parkingFees,
-                laundryServices: laundryServices,
-                storageUnitFees: storageUnitFees,
-                other: other,
-            },
+            parkingFees: this.parkingFees,
+            laundryServices: this.laundryServices,
+            storageUnitFees: this.storageUnitFees,
+            otherAdditionalIncomeStreams: this.otherAdditionalIncomeStreams,
         };
     }
 

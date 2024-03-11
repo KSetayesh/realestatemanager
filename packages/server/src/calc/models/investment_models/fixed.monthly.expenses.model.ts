@@ -1,8 +1,8 @@
 import { FixedMonthlyExpensesDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Expenses } from "./transaction.model";
+import { Expense } from "./transaction.model";
 
-export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMonthlyExpensesDTO> {
+export class FixedMonthlyExpenses implements Expense, IDTOConvertible<FixedMonthlyExpensesDTO> {
 
     private monthlyPropertyTaxAmount: number;
     private monthlyHomeInsuranceAmount: number;
@@ -31,18 +31,11 @@ export class FixedMonthlyExpenses implements Expenses, IDTOConvertible<FixedMont
     }
 
     toDTO(): FixedMonthlyExpensesDTO {
-        const monthlyPropertyTaxAmount = this.monthlyPropertyTaxAmount;
-        const monthlyHomeInsuranceAmount = this.monthlyHomeInsuranceAmount;
-        const monthlyHOAFeesAmount = this.monthlyHOAFeesAmount;
-        const totalCosts = monthlyPropertyTaxAmount + monthlyHomeInsuranceAmount + monthlyHOAFeesAmount;
         return {
-            totalCosts: this.totalExpenses(),
-            breakdown: {
-                monthlyPropertyTaxAmount: this.monthlyPropertyTaxAmount,
-                monthlyHomeInsuranceAmount: this.monthlyHomeInsuranceAmount,
-                monthlyHOAFeesAmount: this.monthlyHOAFeesAmount,
-            }
-        }
-
+            monthlyPropertyTax: this.monthlyPropertyTaxAmount,
+            monthlyHomeInsuranceAmount: this.monthlyHomeInsuranceAmount,
+            monthlyHOAFeesAmount: this.monthlyHOAFeesAmount,
+        };
     }
+
 }

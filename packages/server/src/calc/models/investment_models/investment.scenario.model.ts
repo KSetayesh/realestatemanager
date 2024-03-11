@@ -40,6 +40,12 @@ export class InvestmentScenario {
         const yearlyCashFlow: number = this.calculateYearlyCashFlow();
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
 
+        // mortgageDetails: MortgageDetailsDTO;
+        // growthProjections: GrowthProjectionsDTO;
+        // initialCosts: InitialCostsDTO;
+        // taxImplications: TaxImplicationsDTO;
+        // investmentProjections: InvestmentProjectionsDTO;
+
         return {
             purchasePrice: {
                 description: 'The total amount paid to acquire the property, not including any additional fees or closing costs.',

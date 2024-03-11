@@ -1,8 +1,8 @@
-import { RecurringExpensesBreakdownDTO } from "@realestatemanager/shared";
+import { RecurringExpensesDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { Expenses } from "./transaction.model";
+import { Expense } from "./transaction.model";
 
-export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<RecurringExpensesBreakdownDTO> {
+export class RecurringMonthlyExpenses implements Expense, IDTOConvertible<RecurringExpensesDTO> {
 
     private propertyManagementRate: number;
     private vacancyRate: number;
@@ -40,25 +40,13 @@ export class RecurringMonthlyExpenses implements Expenses, IDTOConvertible<Recur
         return true;
     }
 
-    toDTO(): RecurringExpensesBreakdownDTO {
-        return null;
-        // const propertyManagementAmount = this.propertyManagementAmount;
-        // const vacancyAmount = this.vacancyAmount;
-        // const maintenanceAmount = this.maintenanceAmount;
-        // const otherExpensesAmount = this.otherExpensesAmount;
-        // const capExReserveAmount = this.capExReserveAmount;
-
-        // const totalCosts = propertyManagementAmount + vacancyAmount + maintenanceAmount + otherExpensesAmount + capExReserveAmount;
-
-        // return {
-        //     totalCosts: totalCosts,
-        //     breakdown: {
-        //         propertyManagementAmount: propertyManagementAmount,
-        //         vacancyAmount: vacancyAmount,
-        //         maintenanceAmount: maintenanceAmount,
-        //         otherExpensesAmount: otherExpensesAmount,
-        //         capExReserveAmount: capExReserveAmount,
-        //     },
-        // }
+    toDTO(): RecurringExpensesDTO {
+        return {
+            propertyManagementRate: this.propertyManagementRate,
+            vacancyRate: this.vacancyRate,
+            maintenanceRate: this.maintenanceRate,
+            otherExpensesRate: this.otherExpensesRate,
+            capExReserveRate: this.capExReserveRate,
+        };
     }
 }
