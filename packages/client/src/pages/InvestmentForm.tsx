@@ -10,7 +10,7 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
     const [formData, setFormData] = useState(
         {
             downPaymentPercentage: getDownPaymentPercentage(data.listing!),
-            pmiRate: '',
+            pmiRate: '',g
             pmiDropoffPoint: '',
             monthlyPropertyTax: '',
             monthlyHomeInsuranceAmount: '',
