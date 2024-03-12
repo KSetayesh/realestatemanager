@@ -443,19 +443,19 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
 };
 
 export const getHomeType = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.homeType!;
+    return property.listingDetails.propertyDetails.homeType ?? "";
 };
 
 export const getFullAddress = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.fullAddress!;
+    return property.listingDetails.propertyDetails.address?.fullAddress ?? "";
 };
 
 export const getState = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.state!;
+    return property.listingDetails.propertyDetails.address?.state ?? "";
 };
 
 export const getZipCode = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.zipcode!;
+    return property.listingDetails.propertyDetails.address?.zipcode ?? "";
 };
 
 export const getZillowURL = (property: ListingWithScenariosDTO): string => {
@@ -467,7 +467,7 @@ export const getPrice = (property: ListingWithScenariosDTO): string => {
 };
 
 export const getRentEstimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate!.toString();
+    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate?.toString() ?? "";
 };
 
 export const getInitialCosts = (): string => {
@@ -483,6 +483,8 @@ export const getDownPaymentAmount = (property: ListingWithScenariosDTO): string 
 };
 
 export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): string => {
+    console.log("hello");
+    console.log('p1:', property);
     return property.metrics[0].mortgageDetails.downpayment.percentage.toString();
 };
 
@@ -519,75 +521,75 @@ export const getYearlyCashFlow = (property: ListingWithScenariosDTO): string => 
 };
 
 export const getCity = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.city!;
+    return property.listingDetails.propertyDetails.address?.city ?? "";
 };
 
 export const getCounty = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.county!;
+    return property.listingDetails.propertyDetails.address?.county ?? "";
 };
 
 export const getCountry = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.country!;
+    return property.listingDetails.propertyDetails.address?.country ?? "";
 };
 
 export const getStreetAddress = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.streetAddress!;
+    return property.listingDetails.propertyDetails.address?.streetAddress ?? "";
 };
 
 export const getApartmentNumber = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.address!.apartmentNumber!;
+    return property.listingDetails.propertyDetails.address?.apartmentNumber ?? "";
 };
 
 export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfDaysOnMarket!.toString();
+    return property.listingDetails.propertyDetails.numberOfDaysOnMarket?.toString() ?? "";
 };
 
 export const getElementarySchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating!.elementarySchoolRating!.toString();
+    return property.listingDetails.propertyDetails.schoolRating?.elementarySchoolRating?.toString() ?? "";
 };
 
 export const getMiddleSchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating!.middleSchoolRating!.toString();
+    return property.listingDetails.propertyDetails.schoolRating?.middleSchoolRating?.toString() ?? "";
 };
 
 export const getHighSchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating!.highSchoolRating!.toString();
+    return property.listingDetails.propertyDetails.schoolRating?.highSchoolRating?.toString() ?? "";
 };
 
 export const getNumberOfBedrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfBedrooms!.toString();
+    return property.listingDetails.propertyDetails.numberOfBedrooms?.toString() ?? "";
 };
 
 export const getNumberOfFullBathrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfFullBathrooms!.toString();
+    return property.listingDetails.propertyDetails.numberOfFullBathrooms?.toString() ?? "";
 };
 
 export const getNumberOfHalfBathrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfHalfBathrooms!.toString();
+    return property.listingDetails.propertyDetails.numberOfHalfBathrooms?.toString() ?? "";
 };
 
 export const getSquareFeet = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.squareFeet!.toString();
+    return property.listingDetails.propertyDetails.squareFeet?.toString() ?? "";
 };
 
 export const getAcres = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.acres!.toString();
+    return property.listingDetails.propertyDetails.acres?.toString() ?? "";
 };
 
 export const getYearBuilt = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.yearBuilt!.toString();
+    return property.listingDetails.propertyDetails.yearBuilt?.toString() ?? "";
 };
 
 export const hasGarage = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.hasGarage!.toString();
+    return property.listingDetails.propertyDetails.hasGarage?.toString() ?? "";
 };
 
 export const hasPool = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.hasPool!.toString();
+    return property.listingDetails.propertyDetails.hasPool?.toString() ?? "";
 };
 
 export const hasBasement = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.hasBasement!.toString();
+    return property.listingDetails.propertyDetails.hasBasement?.toString() ?? "";
 };
 
 export const getListingPrice = (property: ListingWithScenariosDTO): string => {
@@ -595,35 +597,35 @@ export const getListingPrice = (property: ListingWithScenariosDTO): string => {
 };
 
 export const getZestimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimate!.toString();
+    return property.listingDetails.zillowMarketEstimates.zestimate?.toString() ?? "";
 };
 
 export const getZillowRentEstimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate!.toString();
+    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate?.toString() ?? "";
 };
 
 export const getZestimateRangeLow = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimateRange!.low!.toString();
+    return property.listingDetails.zillowMarketEstimates.zestimateRange?.low?.toString() ?? "";
 };
 
 export const getZestimateRangeHigh = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimateRange!.high!.toString();
+    return property.listingDetails.zillowMarketEstimates.zestimateRange?.high?.toString() ?? "";
 };
 
 export const getZillowMonthlyPropertyTaxAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount!.toString();
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount?.toString() ?? "";
 };
 
 export const getZillowMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount!.toString();
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount?.toString() ?? "";
 };
 
 export const getZillowMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount!.toString();
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount?.toString() ?? "";
 };
 
 export const getDescription = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.description!;
+    return property.listingDetails.propertyDetails.description ?? "";
 };
 
 export const getPMIRate = (property: ListingWithScenariosDTO): string => {

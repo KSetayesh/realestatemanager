@@ -4,13 +4,16 @@ import axios from 'axios';
 import { ListingWithScenariosDTO } from '@realestatemanager/shared';
 import { getDownPaymentPercentage } from '../components/TableColumn';
 
-const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
-    if (!data) return null;
+// const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
+//     if (!data) return null;
+const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = ({ listing }) => {
+    if (!listing) return null; // This will handle the case where listing is null
+
 
     const [formData, setFormData] = useState(
         {
-            downPaymentPercentage: getDownPaymentPercentage(data.listing!),
-            pmiRate: '',g
+            downPaymentPercentage: getDownPaymentPercentage(listing),
+            pmiRate: '',
             pmiDropoffPoint: '',
             monthlyPropertyTax: '',
             monthlyHomeInsuranceAmount: '',
