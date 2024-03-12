@@ -1,5 +1,5 @@
 import { GrowthProjections } from "./growth.projections.model";
-import { AmortizationDetailsDTO, AmountAndPercentageDTO, InvestmentMetricsResponseDTO, Utility } from "@realestatemanager/shared";
+import { AmortizationDetailsDTO, InvestmentMetricsResponseDTO, Utility } from "@realestatemanager/shared";
 import { InitialCostsBreakdown } from "./initialcosts.model";
 import { MortgageCalculator } from "./mortgage.calc.model";
 import { TaxImplications } from "./tax.implications.model";

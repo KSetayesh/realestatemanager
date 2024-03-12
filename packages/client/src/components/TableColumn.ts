@@ -393,51 +393,238 @@ export const defaultColumns: TableColumn[] = [
 
 export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRow => {
     return {
-        homeType: property.listingDetails.propertyDetails.homeType!,
-        fullAddress: property.listingDetails.propertyDetails.address!.fullAddress,
-        state: property.listingDetails.propertyDetails.address!.state,
-        zipcode: property.listingDetails.propertyDetails.address!.zipcode,
-        zillowURL: property.listingDetails.zillowURL,
-        price: property.listingDetails.listingPrice,
-        rentEstimate: property.listingDetails.zillowMarketEstimates.zillowRentEstimate!,
-        initialCosts: property.metrics[0].initialCosts.value,
-        loanAmount: property.metrics[0].loanAmount.amount,
-        downPaymentAmount: property.metrics[0].downPayment.amount,
-        annualInterestRate: property.metrics[0].annualInterestRate.value,
-        ROI: property.metrics[0].ROI.value,
-        capRate: property.metrics[0].capRate.value,
-        recurringCosts: property.metrics[0].recurringCosts.value,
-        initialMonthlyAmount: property.metrics[0].monthlyPayment.value,
-        mortgage: property.metrics[0].mortgageAmount.value,
-        monthlyCashFlow: property.metrics[0].monthlyCashFlow.value,
-        yearlyCashFlow: property.metrics[0].yearlyCashFlow.value,
-        city: property.listingDetails.propertyDetails.address!.city,
-        county: property.listingDetails.propertyDetails.address!.county,
-        country: property.listingDetails.propertyDetails.address!.country,
-        streetAddress: property.listingDetails.propertyDetails.address!.streetAddress,
-        apartmentNumber: property.listingDetails.propertyDetails.address!.apartmentNumber,
-        numberOfDaysOnMarket: property.listingDetails.propertyDetails.numberOfDaysOnMarket!,
-        elementarySchoolRating: property.listingDetails.propertyDetails.schoolRating!.elementarySchoolRating!,
-        middleSchoolRating: property.listingDetails.propertyDetails.schoolRating!.middleSchoolRating!,
-        highSchoolRating: property.listingDetails.propertyDetails.schoolRating!.highSchoolRating!,
-        numberOfBedrooms: property.listingDetails.propertyDetails.numberOfBedrooms!,
-        numberOfFullBathrooms: property.listingDetails.propertyDetails.numberOfFullBathrooms!,
-        numberOfHalfBathrooms: property.listingDetails.propertyDetails.numberOfHalfBathrooms!,
-        squareFeet: property.listingDetails.propertyDetails.squareFeet!,
-        acres: property.listingDetails.propertyDetails.acres!,
-        yearBuilt: property.listingDetails.propertyDetails.yearBuilt!,
-        hasGarage: property.listingDetails.propertyDetails.hasGarage!,
-        hasPool: property.listingDetails.propertyDetails.hasPool!,
-        hasBasement: property.listingDetails.propertyDetails.hasBasement!,
-        listingPrice: property.listingDetails.listingPrice,
-        zestimate: property.listingDetails.zillowMarketEstimates.zestimate!,
-        zillowRentEstimate: property.listingDetails.zillowMarketEstimates.zillowRentEstimate!,
-        zestimateRangeLow: property.listingDetails.zillowMarketEstimates.zestimateRange!.low!,
-        zestimateRangeHigh: property.listingDetails.zillowMarketEstimates.zestimateRange!.high!,
-        zillowMonthlyPropertyTaxAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount!,
-        zillowMonthlyHomeInsuranceAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount!,
-        zillowMonthlyHOAFeesAmount: property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount!,
-        description: property.listingDetails.propertyDetails.description,
+        homeType: getHomeType(property),
+        fullAddress: getFullAddress(property),
+        state: getState(property),
+        zipcode: getZipCode(property),
+        zillowURL: getZillowURL(property),
+        price: getPrice(property),
+        rentEstimate: getRentEstimate(property),
+        initialCosts: getInitialCosts(),
+        loanAmount: getLoanAmount(),
+        downPaymentAmount: getDownPaymentAmount(property),
+        annualInterestRate: getAnnualInterestRate(property),
+        ROI: getROI(property),
+        capRate: getCapRate(property),
+        recurringCosts: getRecurringCosts(property),
+        initialMonthlyAmount: getInitialMonthlyAmount(property),
+        mortgage: getMortgage(property),
+        monthlyCashFlow: getMonthlyCashFlow(property),
+        yearlyCashFlow: getYearlyCashFlow(property),
+        city: getCity(property),
+        county: getCounty(property),
+        country: getCountry(property),
+        streetAddress: getStreetAddress(property),
+        apartmentNumber: getApartmentNumber(property),
+        numberOfDaysOnMarket: getNumberOfDaysOnMarket(property),
+        elementarySchoolRating: getElementarySchoolRating(property),
+        middleSchoolRating: getMiddleSchoolRating(property),
+        highSchoolRating: getHighSchoolRating(property),
+        numberOfBedrooms: getNumberOfBedrooms(property),
+        numberOfFullBathrooms: getNumberOfFullBathrooms(property),
+        numberOfHalfBathrooms: getNumberOfHalfBathrooms(property),
+        squareFeet: getSquareFeet(property),
+        acres: getAcres(property),
+        yearBuilt: getYearBuilt(property),
+        hasGarage: hasGarage(property),
+        hasPool: hasPool(property),
+        hasBasement: hasBasement(property),
+        listingPrice: getListingPrice(property),
+        zestimate: getZestimate(property),
+        zillowRentEstimate: getZillowRentEstimate(property),
+        zestimateRangeLow: getZestimateRangeLow(property),
+        zestimateRangeHigh: getZestimateRangeHigh(property),
+        zillowMonthlyPropertyTaxAmount: getZillowMonthlyPropertyTaxAmount(property),
+        zillowMonthlyHomeInsuranceAmount: getZillowMonthlyHomeInsuranceAmount(property),
+        zillowMonthlyHOAFeesAmount: getZillowMonthlyHOAFeesAmount(property),
+        description: getDescription(property),
         investmentBreakdown: 'View',
     };
 };
+
+export const getHomeType = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.homeType!;
+};
+
+export const getFullAddress = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.fullAddress!;
+};
+
+export const getState = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.state!;
+};
+
+export const getZipCode = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.zipcode!;
+};
+
+export const getZillowURL = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.zillowURL;
+};
+
+export const getPrice = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.listingPrice;
+};
+
+export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate!;
+};
+
+export const getInitialCosts = (): number => {
+    return 0; // property.metrics[0].initialCosts.value;
+};
+
+export const getLoanAmount = (): number => {
+    return 0; // property.metrics[0].loanAmount.amount;
+};
+
+export const getDownPaymentAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.amount;
+};
+
+export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.percentage;
+};
+
+export const getAnnualInterestRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.financingTerms.annualInterestRate;
+};
+
+export const getROI = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.ROI;
+};
+
+export const getCapRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.capRate;
+};
+
+export const getRecurringCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.recurringCosts;
+};
+
+export const getInitialMonthlyAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyPayment;
+};
+
+export const getMortgage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.mortgageAmount;
+};
+
+export const getMonthlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyCashFlow;
+};
+
+export const getYearlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.yearlyCashFlow;
+};
+
+export const getCity = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.city!;
+};
+
+export const getCounty = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.county!;
+};
+
+export const getCountry = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.country!;
+};
+
+export const getStreetAddress = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.streetAddress!;
+};
+
+export const getApartmentNumber = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.address!.apartmentNumber!;
+};
+
+export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfDaysOnMarket!;
+};
+
+export const getElementarySchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating!.elementarySchoolRating!;
+};
+
+export const getMiddleSchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating!.middleSchoolRating!;
+};
+
+export const getHighSchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating!.highSchoolRating!;
+};
+
+export const getNumberOfBedrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfBedrooms!;
+};
+
+export const getNumberOfFullBathrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfFullBathrooms!;
+};
+
+export const getNumberOfHalfBathrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfHalfBathrooms!;
+};
+
+export const getSquareFeet = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.squareFeet!;
+};
+
+export const getAcres = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.acres!;
+};
+
+export const getYearBuilt = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.yearBuilt!;
+};
+
+export const hasGarage = (property: ListingWithScenariosDTO): boolean => {
+    return property.listingDetails.propertyDetails.hasGarage!;
+};
+
+export const hasPool = (property: ListingWithScenariosDTO): boolean => {
+    return property.listingDetails.propertyDetails.hasPool!;
+};
+
+export const hasBasement = (property: ListingWithScenariosDTO): boolean => {
+    return property.listingDetails.propertyDetails.hasBasement!;
+};
+
+export const getListingPrice = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.listingPrice;
+};
+
+export const getZestimate = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimate!;
+};
+
+export const getZillowRentEstimate = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate!;
+};
+
+export const getZestimateRangeLow = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimateRange!.low!;
+};
+
+export const getZestimateRangeHigh = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimateRange!.high!;
+};
+
+export const getZillowMonthlyPropertyTaxAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount!;
+};
+
+export const getZillowMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount!;
+};
+
+export const getZillowMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount!;
+};
+
+export const getDescription = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.propertyDetails.description!;
+};
+
+
+

@@ -1,5 +1,9 @@
 import { InvestmentScenario } from "../models/investment_models/investment.scenario.model";
-import { getAmountFromValueInput, getInterestTypeEnumValue, getRateFromValueInput } from "src/shared/Constants";
+import {
+    getAmountFromValueInput,
+    getInterestTypeEnumValue,
+    getRateFromValueInput
+} from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 import { InitialCostsBreakdown } from "../models/investment_models/initialcosts.model";
 import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";

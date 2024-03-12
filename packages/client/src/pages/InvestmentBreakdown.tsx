@@ -176,21 +176,21 @@ const InvestmentBreakdown: React.FC = () => {
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
         return {
-            year: ammortizationDetail.year.value,
-            month: ammortizationDetail.month.value,
-            date: ammortizationDetail.date.value,
-            recurringCosts: ammortizationDetail.recurringCosts.value,
-            monthlyPayment: ammortizationDetail.monthlyPayment.value,
-            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts.value,
-            rentEstimate: ammortizationDetail.rentEstimate.value,
-            mortgageAmount: ammortizationDetail.mortgageAmount.value,
+            year: ammortizationDetail.year,
+            month: ammortizationDetail.month,
+            date: ammortizationDetail.date,
+            recurringCosts: ammortizationDetail.recurringCosts,
+            monthlyPayment: ammortizationDetail.monthlyPayment,
+            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts,
+            rentEstimate: ammortizationDetail.rentEstimate,
+            mortgageAmount: ammortizationDetail.mortgageAmount,
             interestPayment: ammortizationDetail.amountPaidInInterest.amount,
             principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,
-            remainingBalance: ammortizationDetail.remainingBalance.value,
-            equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment.value,
-            equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment.value,
-            equityAmountWithAppreciation: ammortizationDetail.equityAmountWithAppreciation.value,
-            appreciationAmount: ammortizationDetail.appreciationAmount.value,
+            remainingBalance: ammortizationDetail.remainingBalance,
+            equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment,
+            equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment,
+            equityAmountWithAppreciation: ammortizationDetail.equityAmountWithAppreciation,
+            appreciationAmount: ammortizationDetail.appreciationAmount,
         };
     };
 
@@ -200,7 +200,7 @@ const InvestmentBreakdown: React.FC = () => {
             throw new Error('Property not found on page');
         }
         const property = properties[0];
-        const ammortizationDetails: AmortizationDetailsDTO[] = property.metrics[0].ammortizationDetails!;
+        const ammortizationDetails: AmortizationDetailsDTO[] = property.metrics[0].investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,

@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
 import axios from 'axios';
 import { ListingWithScenariosDTO } from '@realestatemanager/shared';
+import { getDownPaymentPercentage } from '../components/TableColumn';
 
 const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
     if (!data) return null;
 
     const [formData, setFormData] = useState(
         {
-            downPaymentPercentage: data.listing?.metrics[0].downPayment.percentage.toString() ?? '',
+            downPaymentPercentage: getDownPaymentPercentage(data.listing!),
             pmiRate: '',
             pmiDropoffPoint: '',
             monthlyPropertyTax: '',
