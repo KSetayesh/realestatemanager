@@ -24,17 +24,17 @@ export class InvestmentScenario {
 
     createInvestmentMetrics(): InvestmentMetricsResponseDTO {
 
-        const purchasePrice: number = this.getPurchasePrice();
-        const loanAmount: number = this.getLoanAmount();
-        const loanPercentage: number = this.getLoanPercentage();
-        const annualInterestRate: number = this.getAnnualInterestRate();
-        const downPayment: AmountAndPercentageDTO = this.getDownpaymentAmountAndPercentage();
-        const initialRentAmount: number = this.getRentalAmount();
+        // const purchasePrice: number = this.getPurchasePrice();
+        // const loanAmount: number = this.getLoanAmount();
+        // const loanPercentage: number = this.getLoanPercentage();
+        // const annualInterestRate: number = this.getAnnualInterestRate();
+        // const downPayment: AmountAndPercentageDTO = this.getDownpaymentAmountAndPercentage();
+        // const initialRentAmount: number = this.getRentalAmount();
         const ROI: number = this.calculateROI();
         const capRate: number = this.calculateCapRate();
         const initialMortgagePayment: number = this.getMortgageAmount();
         const initialMonthlyAmount: number = this.getMortgageAmountWithFixedMonthlyExpenses();
-        const initialCosts: number = this.getTotalInitialCosts();
+        // const initialCosts: number = this.getTotalInitialCosts();
         const recurringCosts: number = this.getRecurringExpenses();
         const monthlyCashFlow: number = this.calculateMonthlyCashFlow();
         const yearlyCashFlow: number = this.calculateYearlyCashFlow();
@@ -47,74 +47,91 @@ export class InvestmentScenario {
         // investmentProjections: InvestmentProjectionsDTO;
 
         return {
-            purchasePrice: {
-                description: 'The total amount paid to acquire the property, not including any additional fees or closing costs.',
-                value: purchasePrice,
+            mortgageDetails: this.mortgageCalculator.toDTO(),
+            growthProjections: this.growthProjections.toDTO(),
+            initialCosts: this.initialCostsBreakdown.toDTO(),
+            taxImplications: this.taxImplications.toDTO(),
+            investmentProjections: {
+                ROI: ROI,
+                capRate: capRate,
+                recurringCosts: recurringCosts,
+                monthlyPayment: initialMonthlyAmount,
+                mortgageAmount: initialMortgagePayment,
+                monthlyCashFlow: monthlyCashFlow,
+                yearlyCashFlow: yearlyCashFlow,
+                ammortizationDetails: ammortizationDetails,
             },
-            rentEstimate: {
-                description: 'An estimated amount a property is expected to earn in rental income per month.',
-                value: initialRentAmount,
-            },
-            initialCosts: {
-                description: `Expenses incurred at the start of the investment,
-                            DownPaymentAmount + 
-                            Legal And Professional Fees + 
-                            Repair Costs + 
-                            Closing Costs + 
-                            Traveling Costs + 
-                            Other Expenses`,
-                value: initialCosts,
-            },
-            loanAmount: {
-                description: 'The amount borrowed from a lender to finance the property purchase.',
-                amount: loanAmount,
-                percentage: loanPercentage,
-            },
-            downPayment: downPayment,
-            annualInterestRate: {
-                description: 'The yearly rate charged by the lender for borrowing money, expressed as a percentage of the loan amount.',
-                value: annualInterestRate,
-            },
-            ROI: {
-                description: '(Return on Investment): A measure of the profitability of the investment, calculated as the net income divided by the initial investment cost.',
-                value: ROI,
-            },
-            capRate: {
-                description: '(Capitalization Rate): A real estate valuation measure used to compare different investments, calculated as the net operating income divided by the property\'s purchase price.',
-                value: capRate,
-            },
-            recurringCosts: {
-                description: `Ongoing expenses related to the property, 
-                            Property Management Amount +
-                            Vacancy Amount +
-                            Maintenance Amount + 
-                            Other Expenses Amount + 
-                            CapEx Reserve Amount`,
-                value: recurringCosts,
-            },
-            monthlyPayment: {
-                description: `The amount paid monthly for the mortgage, 
-                            Mortgage (Principal + Interest) +
-                            Monthly HOA Amount +
-                            Monthly Property Tax Amount +
-                            Monthly Home Owners Insurance Amount`,
-                value: initialMonthlyAmount,
-            },
-            mortgageAmount: {
-                description: `The amount paid monthly for the mortgage, 
-                            Mortgage (Principal + Interest)`,
-                value: initialMortgagePayment,
-            },
-            monthlyCashFlow: {
-                description: 'The net amount of cash generated monthly after all expenses and mortgage payments have been made.',
-                value: monthlyCashFlow,
-            },
-            yearlyCashFlow: {
-                description: 'The net amount of cash generated yearly after all expenses and mortgage payments have been made.',
-                value: yearlyCashFlow,
-            },
-            ammortizationDetails: ammortizationDetails,
         };
+
+        // return {
+        //     purchasePrice: {
+        //         description: 'The total amount paid to acquire the property, not including any additional fees or closing costs.',
+        //         value: purchasePrice,
+        //     },
+        //     rentEstimate: {
+        //         description: 'An estimated amount a property is expected to earn in rental income per month.',
+        //         value: initialRentAmount,
+        //     },
+        //     initialCosts: {
+        //         description: `Expenses incurred at the start of the investment,
+        //                     DownPaymentAmount + 
+        //                     Legal And Professional Fees + 
+        //                     Repair Costs + 
+        //                     Closing Costs + 
+        //                     Traveling Costs + 
+        //                     Other Expenses`,
+        //         value: initialCosts,
+        //     },
+        //     loanAmount: {
+        //         description: 'The amount borrowed from a lender to finance the property purchase.',
+        //         amount: loanAmount,
+        //         percentage: loanPercentage,
+        //     },
+        //     downPayment: downPayment,
+        //     annualInterestRate: {
+        //         description: 'The yearly rate charged by the lender for borrowing money, expressed as a percentage of the loan amount.',
+        //         value: annualInterestRate,
+        //     },
+        //     ROI: {
+        //         description: '(Return on Investment): A measure of the profitability of the investment, calculated as the net income divided by the initial investment cost.',
+        //         value: ROI,
+        //     },
+        //     capRate: {
+        //         description: '(Capitalization Rate): A real estate valuation measure used to compare different investments, calculated as the net operating income divided by the property\'s purchase price.',
+        //         value: capRate,
+        //     },
+        //     recurringCosts: {
+        //         description: `Ongoing expenses related to the property, 
+        //                     Property Management Amount +
+        //                     Vacancy Amount +
+        //                     Maintenance Amount + 
+        //                     Other Expenses Amount + 
+        //                     CapEx Reserve Amount`,
+        //         value: recurringCosts,
+        //     },
+        //     monthlyPayment: {
+        //         description: `The amount paid monthly for the mortgage, 
+        //                     Mortgage (Principal + Interest) +
+        //                     Monthly HOA Amount +
+        //                     Monthly Property Tax Amount +
+        //                     Monthly Home Owners Insurance Amount`,
+        //         value: initialMonthlyAmount,
+        //     },
+        //     mortgageAmount: {
+        //         description: `The amount paid monthly for the mortgage, 
+        //                     Mortgage (Principal + Interest)`,
+        //         value: initialMortgagePayment,
+        //     },
+        //     monthlyCashFlow: {
+        //         description: 'The net amount of cash generated monthly after all expenses and mortgage payments have been made.',
+        //         value: monthlyCashFlow,
+        //     },
+        //     yearlyCashFlow: {
+        //         description: 'The net amount of cash generated yearly after all expenses and mortgage payments have been made.',
+        //         value: yearlyCashFlow,
+        //     },
+        //     ammortizationDetails: ammortizationDetails,
+        // };
 
     }
 
@@ -126,13 +143,13 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getLoanAmount();
     }
 
-    private getLoanPercentage(): number {
-        return this.mortgageCalculator.getLoanPercentage();
-    }
+    // private getLoanPercentage(): number {
+    //     return this.mortgageCalculator.getLoanPercentage();
+    // }
 
-    private getDownpaymentAmountAndPercentage(): AmountAndPercentageDTO {
-        return this.mortgageCalculator.getDownpaymentAmountAndPercentage();
-    }
+    // private getDownpaymentAmountAndPercentage(): AmountAndPercentageDTO {
+    //     return this.mortgageCalculator.getDownpaymentAmountAndPercentage();
+    // }
 
     private getDownPaymentAmount(): number {
         return this.mortgageCalculator.getDownPaymentAmount();
@@ -142,9 +159,9 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getRentalIncome();
     }
 
-    private getAnnualInterestRate(): number {
-        return this.mortgageCalculator.getAnnualInterestRate();
-    }
+    // private getAnnualInterestRate(): number {
+    //     return this.mortgageCalculator.getAnnualInterestRate();
+    // }
 
     private getMonthlyInterestRate(): number {
         return this.mortgageCalculator.getMonthlyInterestRate();
@@ -262,68 +279,29 @@ export class InvestmentScenario {
             const monthlyPaymentAndRecurringCosts = Utility.round(getMonthlyPaymentAndRecurringCosts());
 
             const amortizationDetailsDTO: AmortizationDetailsDTO = {
-                month: {
-                    description: 'The current month in the amortization schedule, modulated by 12 to represent a month in a year.',
-                    value: monthMod12,
-                },
-                date: {
-                    description: 'The specific date on which the payment is calculated or applied.',
-                    value: dateAsString,
-                },
-                year: {
-                    description: 'The current year in the amortization schedule, indicating the period of the payment.',
-                    value: yearCounter,
-                },
-                recurringCosts: {
-                    description: 'Monthly recurring costs, such as taxes and insurance, not including the mortgage payment.',
-                    value: recurringExpensesRounded,
-                },
-                monthlyPayment: {
-                    description: 'The total monthly mortgage payment, including both interest and principal components.',
-                    value: monthlyPaymentRounded,
-                },
-                monthlyPaymentAndRecurringCosts: {
-                    description: 'The combined total of monthly mortgage payment and recurring costs.',
-                    value: monthlyPaymentAndRecurringCosts,
-                },
-                rentEstimate: {
-                    description: 'An estimate of the property\'s rental value, for comparison or income projection.',
-                    value: rentEstimate,
-                },
-                mortgageAmount: {
-                    description: 'The portion of the monthly payment that goes towards the mortgage itself.',
-                    value: mortgagePaymentRounded,
-                },
+                month: monthMod12,
+                date: dateAsString,
+                year: yearCounter,
+                recurringCosts: recurringExpensesRounded,
+                monthlyPayment: monthlyPaymentRounded,
+                monthlyPaymentAndRecurringCosts: monthlyPaymentAndRecurringCosts,
+                rentEstimate: rentEstimate,
+                mortgageAmount: mortgagePaymentRounded,
                 amountPaidInInterest: {
-                    description: 'The portion of the monthly payment that is allocated towards paying off interest.',
+                    //   description: 'The portion of the monthly payment that is allocated towards paying off interest.',
                     amount: interestPaymentRounded,
                     percentage: interestPercentageRounded,
                 },
                 amountPaidInPrincipal: {
-                    description: 'The portion of the monthly payment that goes towards reducing the principal balance.',
+                    //    description: 'The portion of the monthly payment that goes towards reducing the principal balance.',
                     amount: principalPaymentRounded,
                     percentage: principalPercentageRounded,
                 },
-                remainingBalance: {
-                    description: 'The remaining balance on the mortgage after the current payment is made.',
-                    value: remainingBalanceRounded,
-                },
-                equityWithDownPayment: {
-                    description: 'The equity in the property including the initial down payment.',
-                    value: equityWithDownPaymentRounded,
-                },
-                equityAmountWithoutDownPayment: {
-                    description: 'The equity accumulated through mortgage payments, excluding the down payment.',
-                    value: equityWithoutDownPaymentRounded,
-                },
-                equityAmountWithAppreciation: {
-                    description: 'The total equity accounting for both payments made and property appreciation.',
-                    value: equityWithAppreciationRounded,
-                },
-                appreciationAmount: {
-                    description: 'The increase in property value over time, contributing to overall equity.',
-                    value: appreciationValueRounded,
-                },
+                remainingBalance: remainingBalanceRounded,
+                equityWithDownPayment: equityWithDownPaymentRounded,
+                equityAmountWithoutDownPayment: equityWithoutDownPaymentRounded,
+                equityAmountWithAppreciation: equityWithAppreciationRounded,
+                appreciationAmount: appreciationValueRounded,
             };
 
             schedule.push(amortizationDetailsDTO);

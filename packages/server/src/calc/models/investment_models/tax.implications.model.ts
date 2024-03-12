@@ -18,12 +18,10 @@ export class TaxImplications implements IDTOConvertible<TaxImplicationsDTO> {
     toDTO(): TaxImplicationsDTO {
         return {
             depreciation: this.depreciation,
-            taxDeductions: {
-                mortgageInterest: this.mortgageInterest,
-                operatingExpenses: this.operatingExpenses,
-                propertyTaxes: this.propertyTaxes,
-            },
-        };
+            mortgageInterest: this.mortgageInterest,
+            operatingExpenses: this.operatingExpenses,
+            propertyTaxes: this.propertyTaxes,
+        }
     }
 
 }

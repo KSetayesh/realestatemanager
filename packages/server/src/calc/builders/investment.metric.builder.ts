@@ -21,9 +21,11 @@ import { FixedMonthlyExpenses } from "../models/investment_models/fixed.monthly.
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
 import { RecurringMonthlyExpenses } from "../models/investment_models/recurring.monthly.expenses.model";
 import { AdditionalIncomeStreams } from "../models/investment_models/additional.income.streams.model";
-import { FinancialActivity, FinancialActivityMap, RecurringFinancialActivity } from "../models/investment_models/financial.transaction";
 import { RentIncome } from "../models/investment_models/rent.income.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
+import { FinancialTransaction } from "../models/investment_models/financial.transaction";
+import { Incomes } from "../models/investment_models/incomes.model";
+import { Expenses } from "../models/investment_models/expenses.model";
 
 export class InvestmentMetricBuilder {
 
@@ -178,20 +180,17 @@ export class InvestmentMetricBuilder {
 
         const rentIncome: RentIncome = new RentIncome(rentEstimate);
 
-        const transactions: FinancialActivityMap = {
-            [FinancialActivity.RENT_INCOME]: rentIncome,
-            [FinancialActivity.ADDITIONAL_INCOME]: additionalIncomeStreams,
-            [FinancialActivity.FIXED_EXPENSES]: fixedMonthlyExpenses,
-            [FinancialActivity.RECURRING_EXPENSES]: recurringExpensesBreakdown,
-        };
+        const incomes: Incomes = new Incomes(additionalIncomeStreams, rentIncome);
 
-        const recurringFinancialActivity: RecurringFinancialActivity = new RecurringFinancialActivity(transactions);
+        const expenses: Expenses = new Expenses(fixedMonthlyExpenses, recurringExpensesBreakdown);
+
+        const financialTransaction: FinancialTransaction = new FinancialTransaction(incomes, expenses);
 
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,
             downPayment,
             financingTerms,
-            recurringFinancialActivity,
+            financialTransaction,
             pmiDetails,
         );
 

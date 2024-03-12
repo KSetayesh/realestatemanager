@@ -1,7 +1,7 @@
-import { AmountAndPercentageDTO, InitialCostsBreakdownDTO } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO, InitialCostsDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
-export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakdownDTO> {
+export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO> {
 
     private downPaymentAmount: number;
     private legalAndProfessionalFees: number;
@@ -47,8 +47,15 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsBreakd
             this.getOtherExpensesAmount();
     }
 
-    toDTO(): InitialCostsBreakdownDTO {
-        return;
+    toDTO(): InitialCostsDTO {
+        return {
+            downPaymentAmount: this.downPaymentAmount,
+            legalAndProfessionalFees: this.legalAndProfessionalFees,
+            initialRepairCosts: this.initialRepairCosts,
+            closingCosts: this.closingCosts,
+            travelingCosts: this.travelingCosts,
+            otherExpenses: this.otherExpenses,
+        };
     }
 
     // toDTO(): InitialCostsBreakdownDTO {

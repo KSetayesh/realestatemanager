@@ -374,13 +374,13 @@ export interface ListingWithScenariosDTO {
 //     percentage?: ValueRateInput;
 // };
 
-export type ValueAndDescriptionDTO = {
-    description: string;
-    value: string | number;
-};
+// export type ValueAndDescriptionDTO = {
+//     description: string;
+//     value: string | number;
+// };
 
 export type AmountAndPercentageDTO = {
-    description: string;
+    description?: string;
     amount: number;
     percentage: number;
 };
@@ -465,15 +465,15 @@ export interface MortgageDetailsDTO {
 };
 
 export interface InvestmentProjectionsDTO {
-    ROI: ValueAndDescriptionDTO;
-    capRate: ValueAndDescriptionDTO;
-    recurringCosts: ValueAndDescriptionDTO;
-    monthlyPayment: ValueAndDescriptionDTO;
-    mortgageAmount: ValueAndDescriptionDTO;
-    monthlyCashFlow: ValueAndDescriptionDTO;
-    yearlyCashFlow: ValueAndDescriptionDTO;
+    ROI: number;
+    capRate: number;
+    recurringCosts: number;
+    monthlyPayment: number;
+    mortgageAmount: number;
+    monthlyCashFlow: number;
+    yearlyCashFlow: number;
     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
-}
+};
 
 // Comprehensive details of the investment metrics for a property.
 export interface InvestmentMetricsResponseDTO {
@@ -504,21 +504,21 @@ export interface InvestmentMetricsResponseDTO {
 
 // Details of amortization for the mortgage, reflecting changes over time.
 export interface AmortizationDetailsDTO {
-    month: ValueAndDescriptionDTO;
-    date: ValueAndDescriptionDTO;
-    year: ValueAndDescriptionDTO;
-    recurringCosts: ValueAndDescriptionDTO;
-    monthlyPayment: ValueAndDescriptionDTO;
-    monthlyPaymentAndRecurringCosts: ValueAndDescriptionDTO;
-    rentEstimate: ValueAndDescriptionDTO;
-    mortgageAmount: ValueAndDescriptionDTO;
+    month: number;
+    date: string;
+    year: number;
+    recurringCosts: number;
+    monthlyPayment: number;
+    monthlyPaymentAndRecurringCosts: number;
+    rentEstimate: number;
+    mortgageAmount: number;
     amountPaidInInterest: AmountAndPercentageDTO;
     amountPaidInPrincipal: AmountAndPercentageDTO;
-    remainingBalance: ValueAndDescriptionDTO;
-    equityWithDownPayment: ValueAndDescriptionDTO;
-    equityAmountWithoutDownPayment: ValueAndDescriptionDTO;
-    equityAmountWithAppreciation: ValueAndDescriptionDTO;
-    appreciationAmount: ValueAndDescriptionDTO;
+    remainingBalance: number;
+    equityWithDownPayment: number;
+    equityAmountWithoutDownPayment: number;
+    equityAmountWithAppreciation: number;
+    appreciationAmount: number;
     // month: number; // Month number of the amortization schedule.
     // date: string;
     // year: number; // Year of the amortization schedule.
