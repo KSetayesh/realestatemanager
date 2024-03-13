@@ -95,7 +95,7 @@ export enum DefaultInvestmentRates {
     INITIAL_REPAIR_COST_RATE = 2, //5000, // Estimated initial repair costs in dollars.
     TRAVELING_COSTS = 0,
     OTHER_INITIAL_EXPENSES_RATE = 0,
-    CLOSING_COST_RATE = 15000, // Estimated closing costs in dollars.
+    CLOSING_COST_RATE = 10, // Estimated closing costs in dollars.
     TERM_IN_YEARS = 30, // Term length of loan in years.
     ANNUAL_APPRECIATION_RATE = 4,
     ANNUAL_TAX_INCREASE_RATE = 4,

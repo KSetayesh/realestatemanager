@@ -462,62 +462,60 @@ export const getZillowURL = (property: ListingWithScenariosDTO): string => {
     return property.listingDetails.zillowURL;
 };
 
-export const getPrice = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.listingPrice.toString();
+export const getPrice = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.purchasePrice;
 };
 
-export const getRentEstimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate?.toString() ?? "";
+export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.rentalIncome;
 };
 
-export const getInitialCosts = (): string => {
-    return '0'; // property.metrics[0].initialCosts.value;
+export const getInitialCosts = (): number => {
+    return 0; // property.metrics[0].initialCosts.value;
 };
 
-export const getLoanAmount = (): string => {
-    return '0'; // property.metrics[0].loanAmount.amount;
+export const getLoanAmount = (): number => {
+    return 0; // property.metrics[0].loanAmount.amount;
 };
 
-export const getDownPaymentAmount = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].mortgageDetails.downpayment.amount.toString();
+export const getDownPaymentAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.amount;
 };
 
-export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): string => {
-    console.log("hello");
-    console.log('p1:', property);
-    return property.metrics[0].mortgageDetails.downpayment.percentage.toString();
+export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.percentage;
 };
 
-export const getAnnualInterestRate = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].mortgageDetails.financingTerms.annualInterestRate.toString();
+export const getAnnualInterestRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.financingTerms.annualInterestRate;
 };
 
-export const getROI = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.ROI.toString();
+export const getROI = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.ROI;
 };
 
-export const getCapRate = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.capRate.toString();
+export const getCapRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.capRate;
 };
 
-export const getRecurringCosts = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.recurringCosts.toString();
+export const getRecurringCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.recurringCosts;
 };
 
-export const getInitialMonthlyAmount = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.monthlyPayment.toString();
+export const getInitialMonthlyAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyPayment;
 };
 
-export const getMortgage = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.mortgageAmount.toString();
+export const getMortgage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.mortgageAmount;
 };
 
-export const getMonthlyCashFlow = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.monthlyCashFlow.toString();
+export const getMonthlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyCashFlow;
 };
 
-export const getYearlyCashFlow = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].investmentProjections.yearlyCashFlow.toString();
+export const getYearlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.yearlyCashFlow;
 };
 
 export const getCity = (property: ListingWithScenariosDTO): string => {
@@ -540,44 +538,44 @@ export const getApartmentNumber = (property: ListingWithScenariosDTO): string =>
     return property.listingDetails.propertyDetails.address?.apartmentNumber ?? "";
 };
 
-export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfDaysOnMarket?.toString() ?? "";
+export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfDaysOnMarket ?? -1;
 };
 
-export const getElementarySchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating?.elementarySchoolRating?.toString() ?? "";
+export const getElementarySchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating?.elementarySchoolRating ?? -1;
 };
 
-export const getMiddleSchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating?.middleSchoolRating?.toString() ?? "";
+export const getMiddleSchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating?.middleSchoolRating ?? -1;
 };
 
-export const getHighSchoolRating = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.schoolRating?.highSchoolRating?.toString() ?? "";
+export const getHighSchoolRating = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.schoolRating?.highSchoolRating ?? -1;
 };
 
-export const getNumberOfBedrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfBedrooms?.toString() ?? "";
+export const getNumberOfBedrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfBedrooms ?? -1;
 };
 
-export const getNumberOfFullBathrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfFullBathrooms?.toString() ?? "";
+export const getNumberOfFullBathrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfFullBathrooms ?? -1;
 };
 
-export const getNumberOfHalfBathrooms = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.numberOfHalfBathrooms?.toString() ?? "";
+export const getNumberOfHalfBathrooms = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.numberOfHalfBathrooms ?? -1;
 };
 
-export const getSquareFeet = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.squareFeet?.toString() ?? "";
+export const getSquareFeet = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.squareFeet ?? -1;
 };
 
-export const getAcres = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.acres?.toString() ?? "";
+export const getAcres = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.acres ?? -1;
 };
 
-export const getYearBuilt = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.propertyDetails.yearBuilt?.toString() ?? "";
+export const getYearBuilt = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.propertyDetails.yearBuilt ?? -1;
 };
 
 export const hasGarage = (property: ListingWithScenariosDTO): string => {
@@ -592,45 +590,150 @@ export const hasBasement = (property: ListingWithScenariosDTO): string => {
     return property.listingDetails.propertyDetails.hasBasement?.toString() ?? "";
 };
 
-export const getListingPrice = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.listingPrice.toString();
+export const getListingPrice = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.listingPrice;
 };
 
-export const getZestimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimate?.toString() ?? "";
+export const getZestimate = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimate ?? -1;
 };
 
-export const getZillowRentEstimate = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate?.toString() ?? "";
+export const getZillowRentEstimate = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowRentEstimate ?? -1;
 };
 
-export const getZestimateRangeLow = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimateRange?.low?.toString() ?? "";
+export const getZestimateRangeLow = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimateRange?.low ?? -1;
 };
 
-export const getZestimateRangeHigh = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zestimateRange?.high?.toString() ?? "";
+export const getZestimateRangeHigh = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zestimateRange?.high ?? -1;
 };
 
-export const getZillowMonthlyPropertyTaxAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount?.toString() ?? "";
+export const getZillowMonthlyPropertyTaxAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount ?? -1;
 };
 
-export const getZillowMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount?.toString() ?? "";
+export const getZillowMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount ?? -1;
 };
 
-export const getZillowMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): string => {
-    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount?.toString() ?? "";
+export const getZillowMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): number => {
+    return property.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount ?? -1;
 };
 
 export const getDescription = (property: ListingWithScenariosDTO): string => {
     return property.listingDetails.propertyDetails.description ?? "";
 };
 
-export const getPMIRate = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].mortgageDetails.pmiDetails.pmiRate.toString();
+export const getPMIRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.pmiDetails.pmiRate;
 };
 
+export const getPMIDropoffPoint = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.pmiDetails.pmiDropoffPoint;
+};
 
+export const getMonthlyPropertyTax = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyPropertyTax;
+};
 
+export const getMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyHomeInsuranceAmount;
+};
+
+export const getMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyHOAFeesAmount;
+};
+
+export const getTermInYears = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.financingTerms.termInYears;
+};
+
+export const getInterestType = (property: ListingWithScenariosDTO): string => {
+    return property.metrics[0].mortgageDetails.financingTerms.interestType;
+};
+
+export const getPropertyManagementRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.propertyManagementRate;
+};
+
+export const getVacancyRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.vacancyRate;
+};
+
+export const getMaintenanceRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.maintenanceRate;
+};
+
+export const getOtherExpensesRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.otherExpensesRate;
+};
+
+export const getCapExReserveRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.capExReserveRate;
+};
+
+export const getLegalAndProfessionalFees = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.legalAndProfessionalFees;
+};
+
+export const getInitialRepairCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.initialRepairCosts.amount;
+};
+
+export const getTravelingCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.travelingCosts;
+};
+
+export const getClosingCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.closingCosts.amount;
+};
+
+export const getOtherInitialExpenses = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.otherExpenses.amount;
+};
+
+export const getAnnualRentIncreaseRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].growthProjections.annualRentIncreaseRate;
+};
+
+export const getAnnualAppreciationRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].growthProjections.annualAppreciationRate;
+};
+
+export const getAnnualTaxIncreaseRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].growthProjections.annualTaxIncreaseRate;
+};
+
+export const getParkingFees = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.parkingFees;
+};
+
+export const getLaundryServices = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.laundryServices;
+};
+
+export const getStorageUnitFees = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.storageUnitFees;
+};
+
+export const getOtherAdditionalIncomeStreams = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.otherAdditionalIncomeStreams;
+};
+
+export const getTaxDepreciation = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].taxImplications.depreciation;
+};
+
+export const getMortgageInterest = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].taxImplications.mortgageInterest;
+};
+
+export const getOperatingExpenses = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].taxImplications.operatingExpenses;
+};
+
+export const getPropertyTaxes = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].taxImplications.propertyTaxes ?? -1;
+};

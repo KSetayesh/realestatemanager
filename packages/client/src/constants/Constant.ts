@@ -9,6 +9,11 @@ export enum Country {
     UnitedStates = "US",
 };
 
+export enum InterestType {
+    FIXED = "Fixed",
+    VARIABLE = "Variable",
+};
+
 export enum State {
     AL = "Alabama",
     AK = "Alaska",
