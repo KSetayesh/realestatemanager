@@ -36,6 +36,7 @@ import {
     getTravelingCosts,
     getVacancyRate
 } from '../components/TableColumn';
+import { InputType, InterestType, PercentageAndAmount } from '../constants/Constant';
 
 // const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
 //     if (!data) return null;
@@ -45,11 +46,15 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
 
     const [formData, setFormData] = useState(
         {
-            downPaymentPercentage: getDownPaymentPercentage(listing),
+            downPaymentType: PercentageAndAmount.PERCENTAGE,
+            downPaymentPercentage: getDownPaymentPercentage(listing).toString(),
             pmiRate: getPMIRate(listing),
             pmiDropoffPoint: getPMIDropoffPoint(listing),
+            monthlyPropertyTaxType: PercentageAndAmount.AMOUNT,
             monthlyPropertyTax: getMonthlyPropertyTax(listing),
+            monthlyHomeInsuranceAmountType: PercentageAndAmount.AMOUNT,
             monthlyHomeInsuranceAmount: getMonthlyHomeInsuranceAmount(listing),
+            monthlyHOAFeesAmountType: PercentageAndAmount.AMOUNT,
             monthlyHOAFeesAmount: getMonthlyHOAFeesAmount(listing),
             annualInterestRate: getAnnualInterestRate(listing),
             termInYears: getTermInYears(listing),
@@ -59,10 +64,15 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
             maintenanceRate: getMaintenanceRate(listing),
             otherExpensesRate: getOtherExpensesRate(listing),
             capExReserveRate: getCapExReserveRate(listing),
+            legalAndProfessionalFeesType: PercentageAndAmount.AMOUNT,
             legalAndProfessionalFees: getLegalAndProfessionalFees(listing),
+            initialRepairCostsType: PercentageAndAmount.AMOUNT,
             initialRepairCosts: getInitialRepairCosts(listing),
+            travelingCostsType: PercentageAndAmount.AMOUNT,
             travelingCosts: getTravelingCosts(listing),
+            closingCostsType: PercentageAndAmount.AMOUNT,
             closingCosts: getClosingCosts(listing),
+            otherInitialExpensesType: PercentageAndAmount.AMOUNT,
             otherInitialExpenses: getOtherInitialExpenses(listing),
             rentEstimate: getRentEstimate(listing),
             purchasePrice: getPrice(listing),
@@ -81,206 +91,281 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
         }
     );
 
-    type FormPropery = {
-        title: string,
-        name: string,
-        value: number | string,
-        step?: string,
-    }
+    type FormProperty = {
+        title: string;
+        name: string;
+        value: number | string;
+        type: InputType | 'string';
+        hasRadioOptions?: boolean;
+        radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
+        options?: { value: string; label: string }[]; // Correct structure for select options
+        step?: string;
+    };
 
-    const formDetails: FormPropery[] = [
+
+    const formDetails: FormProperty[] = [
         {
             title: 'Down Payment (%)',
             name: 'downPaymentPercentage',
             value: formData.downPaymentPercentage,
-        },
-        {
-            title: 'PMI Rate (%)',
-            name: 'pmiRate',
-            value: formData.pmiRate,
-        },
-        {
-            title: 'PMI Dropoff Point',
-            name: 'pmiDropoffPoint',
-            value: formData.pmiDropoffPoint,
+            type: "string",
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'downPaymentType',
+                radioValue: formData.downPaymentType,
+            },
         },
         {
             title: 'Monthly Property Tax',
             name: 'monthlyPropertyTax',
             value: formData.monthlyPropertyTax,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'monthlyPropertyTaxType',
+                radioValue: formData.monthlyPropertyTaxType,
+            },
         },
         {
             title: 'Monthly Home Insurance Amount',
             name: 'monthlyHomeInsuranceAmount',
             value: formData.monthlyHomeInsuranceAmount,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'monthlyHomeInsuranceAmountType',
+                radioValue: formData.monthlyHomeInsuranceAmountType,
+            }
         },
         {
             title: 'Monthly HOA Fees Amount',
             name: 'monthlyHOAFeesAmount',
             value: formData.monthlyHOAFeesAmount,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'monthlyHOAFeesAmountType',
+                radioValue: formData.monthlyHOAFeesAmountType,
+            }
+        },
+        {
+            title: 'Legal And Professional Fees (%)',
+            name: 'legalAndProfessionalFees',
+            value: formData.legalAndProfessionalFees,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'legalAndProfessionalFeesType',
+                radioValue: formData.legalAndProfessionalFeesType,
+            }
+        },
+        {
+            title: 'Initial Repair Costs (%)',
+            name: 'initialRepairCosts',
+            value: formData.initialRepairCosts,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'initialRepairCostsType',
+                radioValue: formData.initialRepairCostsType,
+            }
+        },
+        {
+            title: 'Traveling Costs',
+            name: 'travelingCosts',
+            value: formData.travelingCosts,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'travelingCostsType',
+                radioValue: formData.travelingCostsType,
+            }
+        },
+        {
+            title: 'Closing Costs',
+            name: 'closingCosts',
+            value: formData.closingCosts,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'closingCostsType',
+                radioValue: formData.closingCostsType,
+            }
+        },
+        {
+            title: 'Other Initial Expenses (%)',
+            name: 'otherInitialExpenses',
+            value: formData.otherInitialExpenses,
+            type: InputType.NUMBER,
+            hasRadioOptions: true,
+            radioDetails: {
+                name: 'otherInitialExpensesType',
+                radioValue: formData.otherInitialExpensesType,
+            }
+        },
+        {
+            title: 'PMI Rate (%)',
+            name: 'pmiRate',
+            value: formData.pmiRate,
+            type: InputType.NUMBER,
+        },
+        {
+            title: 'PMI Dropoff Point',
+            name: 'pmiDropoffPoint',
+            value: formData.pmiDropoffPoint,
+            type: InputType.NUMBER,
         },
         {
             title: 'Annual Interest Rate (%)',
             name: 'annualInterestRate',
             value: formData.annualInterestRate,
+            type: InputType.NUMBER,
             step: "0.01",
         },
         {
             title: 'Term In Years',
             name: 'termInYears',
             value: formData.termInYears,
+            type: InputType.NUMBER,
         },
         {
             title: 'Interest Type',
             name: 'interestType',
             value: formData.interestType,
+            type: InputType.SELECT,
+            options: Object.values(InterestType).map((enumValue => {
+                return {
+                    value: enumValue,
+                    label: enumValue,
+                };
+            })),
         },
         {
             title: 'Property Management (%)',
             name: 'propertyManagementRate',
             value: formData.propertyManagementRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Vacancy (%)',
             name: 'vacancyRate',
             value: formData.vacancyRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Maintenance (%)',
             name: 'maintenanceRate',
             value: formData.maintenanceRate,
-        },
-        {
-            title: 'Maintenance (%)',
-            name: 'maintenanceRate',
-            value: formData.maintenanceRate,
-        },
-        {
-            title: 'Maintenance (%)',
-            name: 'maintenanceRate',
-            value: formData.maintenanceRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Other Expenses (%)',
             name: 'otherExpensesRate',
             value: formData.otherExpensesRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Cap Ex Reserve (%)',
             name: 'capExReserveRate',
             value: formData.capExReserveRate,
-        },
-        {
-            title: 'Legal And Professional Fees (%)',
-            name: 'legalAndProfessionalFees',
-            value: formData.legalAndProfessionalFees,
-        },
-        {
-            title: 'Initial Repair Costs (%)',
-            name: 'initialRepairCosts',
-            value: formData.initialRepairCosts,
-        },
-        {
-            title: 'Traveling Costs',
-            name: 'travelingCosts',
-            value: formData.travelingCosts,
-        },
-        {
-            title: 'Closing Costs',
-            name: 'closingCosts',
-            value: formData.closingCosts,
-        },
-        {
-            title: 'Other Initial Expenses (%)',
-            name: 'otherInitialExpenses',
-            value: formData.otherInitialExpenses,
+            type: InputType.NUMBER,
         },
         {
             title: 'Rent Estimate',
             name: 'rentEstimate',
             value: formData.rentEstimate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Purchase Price',
             name: 'purchasePrice',
             value: formData.purchasePrice,
+            type: InputType.NUMBER,
         },
         {
             title: 'Annual Rent Increase Rate (%)',
             name: 'annualRentIncreaseRate',
             value: formData.annualRentIncreaseRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Annual Appreciation Rate (%)',
             name: 'annualAppreciationRate',
             value: formData.annualAppreciationRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Annual Tax Increase Rate (%)',
             name: 'annualTaxIncreaseRate',
             value: formData.annualTaxIncreaseRate,
+            type: InputType.NUMBER,
         },
         {
             title: 'Parking Fees',
             name: 'parkingFees',
             value: formData.parkingFees,
+            type: InputType.NUMBER,
         },
         {
             title: 'Laundry Services',
             name: 'laundryServices',
             value: formData.laundryServices,
+            type: InputType.NUMBER,
         },
         {
             title: 'Storage Unit Fees',
             name: 'storageUnitFees',
             value: formData.storageUnitFees,
+            type: InputType.NUMBER,
         },
         {
             title: 'Other',
             name: 'other',
             value: formData.other,
+            type: InputType.NUMBER,
         },
         {
             title: 'Depreciation',
             name: 'depreciation',
             value: formData.depreciation,
+            type: InputType.NUMBER,
         },
         {
             title: 'Mortgage Interest',
             name: 'mortgageInterest',
             value: formData.mortgageInterest,
+            type: InputType.NUMBER,
         },
         {
             title: 'Operating Expenses',
             name: 'operatingExpenses',
             value: formData.operatingExpenses,
+            type: InputType.NUMBER,
         },
         {
             title: 'Property Taxes',
             name: 'propertyTaxes',
             value: formData.propertyTaxes,
+            type: InputType.NUMBER,
         },
     ];
 
-    // const [isExpanded, setIsExpanded] = useState(false);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type } = event.target;
+        if (InputType.RADIO === type) {
+            // Radio buttons have names like "{propertyName}_radio"
+            // Extract the propertyName to update the corresponding state 
 
-    // const toggleExpansion = () => {
-    //     setIsExpanded(!isExpanded);
-    // };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
-        if (type === "checkbox") {
-            // Handle checkbox changes
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: checked
+            const propertyName = name.replace("_radio", "");
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [propertyName]: value,
             }));
         } else {
-            // Handle changes for other inputs
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: value
+            // For number and select inputs, simply update based on name and value
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [name]: value,
             }));
         }
     };
@@ -298,99 +383,84 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
         }
     };
 
-    /*
-    downPaymentPercentage: number;
-    pmiRate ?: number;
-    pmiDropoffPoint ?: number;
-    monthlyPropertyTax ?: ValueInput; // Now accepts both amount and rate.
-    monthlyHomeInsuranceAmount ?: ValueInput; // Now accepts both amount and rate.
-    monthlyHOAFeesAmount ?: ValueInput; // Now accepts both amount and rate.
-    
-    propertyManagementRate?: number;
-    vacancyRate?: number;
-    maintenanceRate?: number;
-    otherExpensesRate?: number;
-    capExReserveRate?: number;
-    legalAndProfessionalFees?: ValueInput;
-    initialRepairCosts?: ValueInput;
-    travelingCosts?: ValueInput;
-    closingCosts?: ValueInput;
-    otherInitialExpenses?: ValueInput;
- 
-    rentEstimate: number;
-    purchasePrice: number;
- 
-    annualRentIncreaseRate: number; // Expected annual percentage increase in rent.
-    annualAppreciationRate: number; // Expected annual percentage increase in property value.
-    annualTaxIncreaseRate?: number; // Expected annual percentage increase in property taxes.
- 
-    parkingFees?: number; // Income from parking facilities, if available.
-    laundryServices?: number; // Income from on-site laundry services.
-    storageUnitFees?: number; // Income from storage units, if available.
-    other?: number; // Any other sources of income not covered above.
- 
-    depreciation: number; // Annual depreciation expense that can be deducted.
-    mortgageInterest?: number; // Deductible mortgage interest expense.
-    operatingExpenses?: number; // Deductible operating expenses.
-    propertyTaxes?: number; // Deductible property tax expense.
-    */
-
     return (
         <form onSubmit={handleSubmit} className="investment-form">
             <div className="form-row">
-
-                {formDetails.map((detail, index) => (
-                    <div className="form-group" key={index}>
-                        <label>{detail.title}</label>
-                        <input
-                            type="number"
-                            name={detail.name}
-                            value={detail.value}
-                            onChange={handleChange}
-                            className="form-control"
-                            step={detail.step || "1"} // Use provided step or default to "1"
-                        />
-                    </div>
-                ))}
-
-                {/* <div className="form-group checkbox-group">
-                    <label>
-                        <input
-                            type="checkbox"
-                            name="setNewDefaultValues"
-                            checked={formData.setNewDefaultValues}
-                            onChange={handleChange}
-                        /> Set New Default Values
-                    </label>
-                </div> */}
-                {/* ... add other new form groups similarly */}
-
-                {/* Button to toggle additional inputs */}
-                {/* <div className="form-group">
-                    <button type="button" onClick={toggleExpansion} className="toggle-btn">
-                        {isExpanded ? 'Less Options ' : 'More Options '}
-                        <span className={`arrow ${isExpanded ? 'up' : 'down'}`}></span>
-                    </button>
-                </div> */}
-
-                {/* Collapsible Section for Additional Inputs */}
-                {/* {isExpanded && (
-                    <div className="additional-inputs">
-                        <div className="form-group">
-                            <label>Test1</label>
-                            <input type="number" name="test1" value={formData.vacancyRate} onChange={handleChange} className="form-control" />
-                        </div>
-                        <div className="form-group">
-                            <label>Test2</label>
-                            <input type="number" name="test2" value={formData.managementFees} onChange={handleChange} className="form-control" />
-                        </div>
-                    </div>
-                )} */}
-
+                {formDetails.map((detail, index) => {
+                    if (detail.type === InputType.NUMBER || detail.type === "string") {
+                        return (
+                            <div className="form-group" key={index}>
+                                <label>{detail.title}</label>
+                                {/* Check if radio options should be included */}
+                                {detail.hasRadioOptions && (
+                                    <div className="radio-group">
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type={InputType.RADIO}
+                                                name={detail.radioDetails!.name + "_radio"}
+                                                id={detail.radioDetails!.name + "_percentage"}
+                                                value={PercentageAndAmount.PERCENTAGE}
+                                                checked={PercentageAndAmount.PERCENTAGE === detail.radioDetails!.radioValue}
+                                                onChange={handleChange} // Update this method to handle radio changes too
+                                            />
+                                            <label className="form-check-label" htmlFor={detail.radioDetails!.name + "_percentage"}>
+                                                Percentage
+                                            </label>
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type={InputType.RADIO}
+                                                name={detail.radioDetails!.name + "_radio"}
+                                                id={detail.radioDetails!.name + "_amount"}
+                                                value={PercentageAndAmount.AMOUNT}
+                                                checked={PercentageAndAmount.AMOUNT === detail.radioDetails!.radioValue}
+                                                onChange={handleChange} // Update this method to handle radio changes too
+                                            />
+                                            <label className="form-check-label" htmlFor={detail.radioDetails!.name + "_amount"}>
+                                                Amount
+                                            </label>
+                                        </div>
+                                    </div>
+                                )}
+                                <input
+                                    type={InputType.NUMBER}
+                                    name={detail.name}
+                                    value={detail.value}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                    step={detail.step || "1"} // Use provided step or default to "1"
+                                />
+                            </div>
+                        );
+                    } else if (detail.type === InputType.SELECT) {
+                        return (
+                            <div className="form-group" key={index}>
+                                <label>{detail.title}</label>
+                                <select
+                                    name={detail.name}
+                                    value={detail.value}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                >
+                                    {detail.options!.map((option, optionIndex) => (
+                                        <option key={optionIndex} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        );
+                    }
+                    // Potentially add more conditionals for other types of inputs
+                    return null; // For items with unsupported or no type specified
+                })}
             </div>
-            <button type="submit" >Calculate</button>
+            <button type="submit">Calculate</button>
         </form>
     );
+
 
 };
 

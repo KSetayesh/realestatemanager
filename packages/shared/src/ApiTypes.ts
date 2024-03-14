@@ -436,12 +436,15 @@ export interface TransactionsDTO {
 };
 
 export interface InitialCostsDTO {
-    downPaymentAmount: number;
-    legalAndProfessionalFees: number;
-    initialRepairCosts: AmountAndPercentageDTO;
-    closingCosts: AmountAndPercentageDTO;
-    travelingCosts: number;
-    otherExpenses: AmountAndPercentageDTO;
+    totalAmount: number;
+    breakdown: {
+        downPaymentAmount: number;
+        legalAndProfessionalFees: number;
+        initialRepairCosts: AmountAndPercentageDTO;
+        closingCosts: AmountAndPercentageDTO;
+        travelingCosts: number;
+        otherExpenses: AmountAndPercentageDTO;
+    },
 };
 
 export interface TaxImplicationsDTO {
@@ -459,6 +462,7 @@ export interface PMIDetailsDTO {
 export interface MortgageDetailsDTO {
     purchasePrice: number;
     downpayment: AmountAndPercentageDTO;
+    loanAmount: AmountAndPercentageDTO;
     financingTerms: FinancingTermsDTO;
     transactions: TransactionsDTO;
     pmiDetails: PMIDetailsDTO;

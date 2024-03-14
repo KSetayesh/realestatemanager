@@ -70,8 +70,14 @@ export enum State {
 export enum InputType {
     TEXT = 'text',
     SELECT = 'select',
-    NUMBER = 'number'
+    NUMBER = 'number',
+    RADIO = 'radio',
 };
+
+export enum PercentageAndAmount {
+    PERCENTAGE = 'Percentage',
+    AMOUNT = 'Amount',
+}
 
 export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

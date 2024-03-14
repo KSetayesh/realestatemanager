@@ -49,12 +49,15 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO> {
 
     toDTO(): InitialCostsDTO {
         return {
-            downPaymentAmount: this.downPaymentAmount,
-            legalAndProfessionalFees: this.legalAndProfessionalFees,
-            initialRepairCosts: this.initialRepairCosts,
-            closingCosts: this.closingCosts,
-            travelingCosts: this.travelingCosts,
-            otherExpenses: this.otherExpenses,
+            totalAmount: this.getTotalInitialCosts(),
+            breakdown: {
+                downPaymentAmount: this.downPaymentAmount,
+                legalAndProfessionalFees: this.legalAndProfessionalFees,
+                initialRepairCosts: this.initialRepairCosts,
+                closingCosts: this.closingCosts,
+                travelingCosts: this.travelingCosts,
+                otherExpenses: this.otherExpenses,
+            },
         };
     }
 

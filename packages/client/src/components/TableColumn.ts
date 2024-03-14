@@ -400,8 +400,8 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
         zillowURL: getZillowURL(property),
         price: getPrice(property),
         rentEstimate: getRentEstimate(property),
-        initialCosts: getInitialCosts(),
-        loanAmount: getLoanAmount(),
+        initialCosts: getInitialCosts(property),
+        loanAmount: getLoanAmount(property),
         downPaymentAmount: getDownPaymentAmount(property),
         annualInterestRate: getAnnualInterestRate(property),
         ROI: getROI(property),
@@ -470,12 +470,12 @@ export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
     return property.metrics[0].mortgageDetails.transactions.incomes.rentalIncome;
 };
 
-export const getInitialCosts = (): number => {
-    return 0; // property.metrics[0].initialCosts.value;
+export const getInitialCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].initialCosts.totalAmount;
 };
 
-export const getLoanAmount = (): number => {
-    return 0; // property.metrics[0].loanAmount.amount;
+export const getLoanAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.loanAmount.amount;
 };
 
 export const getDownPaymentAmount = (property: ListingWithScenariosDTO): number => {
@@ -675,23 +675,23 @@ export const getCapExReserveRate = (property: ListingWithScenariosDTO): number =
 };
 
 export const getLegalAndProfessionalFees = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.legalAndProfessionalFees;
+    return property.metrics[0].initialCosts.breakdown.legalAndProfessionalFees;
 };
 
 export const getInitialRepairCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.initialRepairCosts.amount;
+    return property.metrics[0].initialCosts.breakdown.initialRepairCosts.amount;
 };
 
 export const getTravelingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.travelingCosts;
+    return property.metrics[0].initialCosts.breakdown.travelingCosts;
 };
 
 export const getClosingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.closingCosts.amount;
+    return property.metrics[0].initialCosts.breakdown.closingCosts.amount;
 };
 
 export const getOtherInitialExpenses = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.otherExpenses.amount;
+    return property.metrics[0].initialCosts.breakdown.otherExpenses.amount;
 };
 
 export const getAnnualRentIncreaseRate = (property: ListingWithScenariosDTO): number => {

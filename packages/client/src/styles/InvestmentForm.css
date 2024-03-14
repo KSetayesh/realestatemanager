@@ -53,6 +53,28 @@ label {
     font-weight: bold;
 }
 
+.radio-group {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    /* Adjust the margin as needed */
+}
+
+/* You may want to ensure that labels are aligned with the inputs */
+.form-check-input {
+    margin-top: 0;
+}
+
+/* Adjust label spacing as needed */
+.form-check-label {
+    margin-left: 5px;
+}
+
 /* .additional-inputs {
     transition: max-height 0.2s ease-out;
 }

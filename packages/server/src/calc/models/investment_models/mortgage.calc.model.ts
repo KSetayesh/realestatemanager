@@ -114,10 +114,18 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.pmiDetails.getPmiRate();
     }
 
+    private getLoan(): AmountAndPercentageDTO {
+        return {
+            amount: this.getLoanAmount(),
+            percentage: this.getLoanPercentage(),
+        };
+    }
+
     toDTO(): MortgageDetailsDTO {
         return {
             purchasePrice: this.purchasePrice,
             downpayment: this.downpayment,
+            loanAmount: this.getLoan(),
             financingTerms: this.financingTerms.toDTO(),
             transactions: this.financialTransaction.toDTO(),
             pmiDetails: this.pmiDetails.toDTO(),
