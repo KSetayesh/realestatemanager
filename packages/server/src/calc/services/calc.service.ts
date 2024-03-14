@@ -50,5 +50,17 @@ export class CalcService {
         this.realEstateManager.insertListingDetails(listingDetailsDTO);
     }
 
+    async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
+        const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
+        const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
+        const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
+        const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
+        const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
+        return {
+            listingDetails: listingDetails.toDTO(),
+            metrics: [investmentMetricsDTO]
+        };
+    }
+
 
 }

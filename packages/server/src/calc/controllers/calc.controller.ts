@@ -40,6 +40,13 @@ export class CalcController {
         this.calcService.addNewProperty(listingDetails);
     }
 
+    @Post('calculate')
+    async calculate(
+        @Body() investmentScenarioRequest: InvestmentScenarioRequest,
+    ): Promise<ListingWithScenariosDTO> {
+        return this.calcService.calculate(investmentScenarioRequest);
+    }
+
     private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequest): boolean {
         if (investmentScenarioRequest) {
             if (investmentScenarioRequest.useDefaultRequest) {

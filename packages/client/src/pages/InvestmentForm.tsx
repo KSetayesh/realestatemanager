@@ -374,7 +374,7 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
         e.preventDefault();
         // Replace 'http://localhost:3000/api/calculate' with your actual backend endpoint URL
         try {
-            const response = await axios.post('http://localhost:3000/api/calculate', formData);
+            const response = await axios.post('http://localhost:3000/calc/calculate', formData);
             console.log("Calculation result:", response.data);
             // Handle response data here
         } catch (error) {
