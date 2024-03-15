@@ -23,7 +23,7 @@ export class RealEstateManager {
         JOIN zillow_market_estimates zme ON ld.zillow_market_estimates_id = zme.id 
         JOIN property_details pd ON ld.property_details_id = pd.id
         JOIN address ad ON pd.address_id = ad.id 
-        JOIN school_rating sr ON pd.school_rating_id = sr.id;`;
+        JOIN school_rating sr ON pd.school_rating_id = sr.id`;
 
     private INSERT_LISTING_DETAILS_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
@@ -107,7 +107,8 @@ export class RealEstateManager {
 
     async getPropertyByZillowURL(zillowURL: string): Promise<ListingDetails | null> {
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
-
+        console.log("query:", query);
+        console.log("zillowURL:", zillowURL);
         try {
             const res = await this.pool.query(query, [zillowURL]);
             if (res.rows.length > 0) {

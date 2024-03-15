@@ -74,6 +74,11 @@ export enum InputType {
     RADIO = 'radio',
 };
 
+export enum ValueType {
+    AMOUNT = 'Amount',
+    RATE = 'Rate',
+};
+
 export enum PercentageAndAmount {
     PERCENTAGE = 'Percentage',
     AMOUNT = 'Amount',

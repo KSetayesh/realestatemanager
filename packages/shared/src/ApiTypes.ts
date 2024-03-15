@@ -176,7 +176,6 @@ export type GrowthProjectionsRequest = {
 };
 
 export interface LoanDetailsRequest {
-    loanAmount: number;
     annualInterestRate: number;
     termInYears: number;
     interestType: InterestType;

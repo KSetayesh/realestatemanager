@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
 import axios from 'axios';
-import { ListingWithScenariosDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioRequest, ListingWithScenariosDTO, ValueInput } from '@realestatemanager/shared';
 import {
     getAnnualAppreciationRate,
     getAnnualInterestRate,
@@ -36,7 +36,7 @@ import {
     getTravelingCosts,
     getVacancyRate
 } from '../components/TableColumn';
-import { InputType, InterestType, PercentageAndAmount } from '../constants/Constant';
+import { InputType, InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 
 // const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (data) => {
 //     if (!data) return null;
@@ -372,9 +372,88 @@ const InvestmentForm: React.FC<{ listing: ListingWithScenariosDTO | null; }> = (
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Replace 'http://localhost:3000/api/calculate' with your actual backend endpoint URL
+
+        const convertToValueInput = (type: PercentageAndAmount, value: number): ValueInput | undefined => {
+            if (type === PercentageAndAmount.AMOUNT) {
+                return {
+                    type: ValueType.AMOUNT,
+                    amount: value,
+                };
+            }
+            else if (type === PercentageAndAmount.PERCENTAGE) {
+                return {
+                    type: ValueType.RATE,
+                    rate: value,
+                };
+            }
+        };
+
+        const getInterestType = (interestType: string): InterestType | undefined => {
+            if (InterestType.FIXED === interestType) {
+                return InterestType.FIXED;
+            }
+            else if (InterestType.VARIABLE === interestType) {
+                return InterestType.VARIABLE;
+            }
+        };
+ 
+
+        const dataToSubmit: InvestmentScenarioRequest = {
+            useDefaultRequest: false,
+            propertyIdentifier: {
+                fullAddress: listing.listingDetails.propertyDetails.address?.fullAddress ?? '',
+                zillowURL: listing.listingDetails.zillowURL,
+            },
+            investmentDetails: {
+                mortgageDetails: {
+                    annualInterestRate: formData.annualAppreciationRate,
+                    termInYears: formData.termInYears,
+                    interestType: getInterestType(formData.interestType)!,
+                    downPayment: convertToValueInput(formData.downPaymentType, Number(formData.downPaymentPercentage))!,
+                    pmiRate: formData.pmiRate,
+                    pmiDropoffPoint: formData.pmiDropoffPoint,
+                    monthlyPropertyTax: convertToValueInput(formData.monthlyPropertyTaxType, Number(formData.monthlyPropertyTax))!,
+                    monthlyHomeInsuranceAmount: convertToValueInput(formData.monthlyHomeInsuranceAmountType, Number(formData.monthlyHomeInsuranceAmount))!,
+                    monthlyHOAFeesAmount: convertToValueInput(formData.monthlyHOAFeesAmountType, Number(formData.monthlyHOAFeesAmount))!,
+                },
+                operatingExpenses: {
+                    propertyManagementRate: formData.propertyManagementRate,
+                    vacancyRate: formData.vacancyRate,
+                    maintenanceRate: formData.maintenanceRate,
+                    otherExpensesRate: formData.otherExpensesRate,
+                    capExReserveRate: formData.capExReserveRate,
+                    legalAndProfessionalFees: convertToValueInput(formData.legalAndProfessionalFeesType, Number(formData.legalAndProfessionalFees)),
+                    initialRepairCosts: convertToValueInput(formData.initialRepairCostsType, Number(formData.initialRepairCosts)),
+                    travelingCosts: convertToValueInput(formData.travelingCostsType, Number(formData.travelingCosts)),
+                    closingCosts: convertToValueInput(formData.closingCostsType, Number(formData.closingCosts)),
+                    otherInitialExpenses: convertToValueInput(formData.otherInitialExpensesType, Number(formData.otherInitialExpenses)),
+                },
+                rentEstimate: formData.rentEstimate,
+                purchasePrice: formData.purchasePrice,
+                growthProjections: {
+                    annualRentIncreaseRate: formData.annualRentIncreaseRate,
+                    annualAppreciationRate: formData.annualAppreciationRate,
+                    annualTaxIncreaseRate: formData.annualTaxIncreaseRate,
+                },
+                additionalIncomeStreams: {
+                    parkingFees: formData.parkingFees,
+                    laundryServices: formData.laundryServices,
+                    storageUnitFees: formData.storageUnitFees,
+                    other: formData.other,
+                },
+                taxImplications: {
+                    depreciation: formData.depreciation,
+                    mortgageInterest: formData.mortgageInterest,
+                    operatingExpenses: formData.operatingExpenses,
+                    propertyTaxes: formData.propertyTaxes,
+                },
+            },
+        };
+
         try {
-            const response = await axios.post('http://localhost:3000/calc/calculate', formData);
+            const response = await axios.post('http://localhost:3000/calc/calculate', dataToSubmit, {
+                headers: { 'Content-Type': 'application/json' },
+            });
             console.log("Calculation result:", response.data);
             // Handle response data here
         } catch (error) {
