@@ -86,15 +86,27 @@ type InvestmentFormData = {
     propertyTaxes: number,
 };
 
+type FormProperty = {
+    title: string;
+    name: string;
+    value: number | string;
+    type: InputType | 'string';
+    hasRadioOptions?: boolean;
+    radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
+    options?: { value: string; label: string }[]; // Correct structure for select options
+    step?: string;
+};
+
 const InvestmentBreakdown: React.FC = () => {
 
-    const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
+    const [property, setProperty] = useState<ListingWithScenariosDTO>(
+        useLocation().state.data as ListingWithScenariosDTO
+    );
+
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
-    const location = useLocation();
-    const state = location.state as { data: ListingWithScenariosDTO };
+
     // Create a state to store the form data.
     const getInvestmentFormData = (): InvestmentFormData => {
-        const property: ListingWithScenariosDTO = state.data;
         return {
             downPaymentType: PercentageAndAmount.PERCENTAGE,
             downPaymentPercentage: getDownPaymentPercentage(property).toString(),
@@ -144,12 +156,11 @@ const InvestmentBreakdown: React.FC = () => {
     const [formData, setFormData] = useState<InvestmentFormData>(getInvestmentFormData());
 
     useEffect(() => {
-        if (state && state.data) {
-            console.log("In useEffect");
-            setProperties([state.data]);
+        if (property) {
+            setProperty(property);
             setFormData(getInvestmentFormData());
         }
-    }, [state]); // Ensure useEffect depends on `state`
+    }, [property]);  // Ensure useEffect depends on `property`
 
     const handleRowClick = (property: ListingWithScenariosDTO) => {
         setSelectedProperty(property);
@@ -159,13 +170,13 @@ const InvestmentBreakdown: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const tableData: TableDataItem<ListingWithScenariosDTO>[] = properties.map(property => ({
+    const tableData: TableDataItem<ListingWithScenariosDTO> = {
         objectData: {
             key: property,
         },
         rowData: createDefaultRowData(property),
-    }
-    ));
+    };
+
 
     const columnsForInvestmentMetrics: TableColumn[] = [
         {
@@ -325,11 +336,6 @@ const InvestmentBreakdown: React.FC = () => {
     };
 
     const createTableDataForInvestmentMetrics = (): TableDataItem<AmortizationDetailsDTO>[] => {
-        console.log("In createTableDataForInvestmentMetrics");
-        if (properties.length < 1) {
-            throw new Error('Property not found on page');
-        }
-        const property = properties[0];
         const ammortizationDetails: AmortizationDetailsDTO[] = property.metrics[0].investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
@@ -340,18 +346,6 @@ const InvestmentBreakdown: React.FC = () => {
     };
 
     //-----------------------------------------------------------------------------------------------------------
-
-    type FormProperty = {
-        title: string;
-        name: string;
-        value: number | string;
-        type: InputType | 'string';
-        hasRadioOptions?: boolean;
-        radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
-        options?: { value: string; label: string }[]; // Correct structure for select options
-        step?: string;
-    };
-
 
     const formDetails: FormProperty[] = [
         {
@@ -620,8 +614,7 @@ const InvestmentBreakdown: React.FC = () => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const getCalculateRequest = (): InvestmentScenarioRequest => {
 
         const convertToValueInput = (type: PercentageAndAmount, value: number): ValueInput | undefined => {
             if (type === PercentageAndAmount.AMOUNT) {
@@ -647,9 +640,7 @@ const InvestmentBreakdown: React.FC = () => {
             }
         };
 
-        const property = properties[0];
-
-        const dataToSubmit: InvestmentScenarioRequest = {
+        return {
             useDefaultRequest: false,
             propertyIdentifier: {
                 fullAddress: property.listingDetails.propertyDetails.address?.fullAddress ?? '',
@@ -700,13 +691,19 @@ const InvestmentBreakdown: React.FC = () => {
                 },
             },
         };
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const dataToSubmit: InvestmentScenarioRequest = getCalculateRequest();
 
         try {
             const response = await axios.post('http://localhost:3000/calc/calculate', dataToSubmit, {
                 headers: { 'Content-Type': 'application/json' },
             });
             console.log("Calculation result:", response.data);
-            setProperties([response.data as ListingWithScenariosDTO]);
+            setProperty(response.data as ListingWithScenariosDTO);
             // Handle response data here
         } catch (error) {
             console.error("Error sending form data to backend:", error);
@@ -797,11 +794,11 @@ const InvestmentBreakdown: React.FC = () => {
                     <button type="submit">Calculate</button>
                 </form>
             )}
-            {properties.length > 0 ? (
+            {property ? (
                 <>
                     <ReusableTable
                         columns={defaultColumns.slice(0, defaultColumns.length - 1)}
-                        tableData={tableData}
+                        tableData={[tableData]}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal
@@ -826,7 +823,6 @@ const InvestmentBreakdown: React.FC = () => {
     );
 
 };
-
 
 
 export default InvestmentBreakdown;
