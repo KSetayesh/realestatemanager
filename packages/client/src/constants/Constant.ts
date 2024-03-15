@@ -72,6 +72,7 @@ export enum InputType {
     SELECT = 'select',
     NUMBER = 'number',
     RADIO = 'radio',
+    STRING = 'string',
 };
 
 export enum ValueType {

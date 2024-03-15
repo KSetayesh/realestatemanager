@@ -90,7 +90,7 @@ type FormProperty = {
     title: string;
     name: string;
     value: number | string;
-    type: InputType | 'string';
+    type: InputType;
     hasRadioOptions?: boolean;
     radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
     options?: { value: string; label: string }[]; // Correct structure for select options
@@ -352,7 +352,7 @@ const InvestmentBreakdown: React.FC = () => {
             title: 'Down Payment (%)',
             name: 'downPaymentPercentage',
             value: formData.downPaymentPercentage,
-            type: "string",
+            type: InputType.STRING,
             hasRadioOptions: true,
             radioDetails: {
                 name: 'downPaymentType',
@@ -721,7 +721,7 @@ const InvestmentBreakdown: React.FC = () => {
                 <form onSubmit={handleSubmit} className="investment-form">
                     <div className="form-row">
                         {formDetails.map((detail, index) => {
-                            if (detail.type === InputType.NUMBER || detail.type === "string") {
+                            if (detail.type === InputType.NUMBER || detail.type === InputType.STRING) {
                                 return (
                                     <div className="form-group" key={index}>
                                         <label>{detail.title}</label>
