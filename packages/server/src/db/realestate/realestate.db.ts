@@ -107,8 +107,6 @@ export class RealEstateManager {
 
     async getPropertyByZillowURL(zillowURL: string): Promise<ListingDetails | null> {
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
-        console.log("query:", query);
-        console.log("zillowURL:", zillowURL);
         try {
             const res = await this.pool.query(query, [zillowURL]);
             if (res.rows.length > 0) {
