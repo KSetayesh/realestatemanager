@@ -30,7 +30,7 @@ export class FinancialTransaction implements IDTOConvertible<TransactionsDTO> {
     }
 
     getRecurringExpenses(): number {
-        return this.expenses.getRecurringExpenses();
+        return this.getRentalIncome() * (this.expenses.getRecurringExpenses() / 100);
     }
 
     toDTO(): TransactionsDTO {

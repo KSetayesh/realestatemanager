@@ -52,8 +52,6 @@ export class InvestmentMetricBuilder {
 
     build(): InvestmentScenario {
 
-        // const loanAmount: RateAndValueDTO = this.getLoanAmount();
-
         const annualInterestRate: number = this.getAnnualInterestRate();
 
         const termInYears: number = this.getTermInYears();
@@ -231,32 +229,6 @@ export class InvestmentMetricBuilder {
     }
 
     //----------------------------------------------------------------------------------------------------
-
-    // private createRateAndValueDTO(amount: number, rate: number): RateAndValueDTO {
-    //     return {
-    //         value: {
-    //             type: ValueType.AMOUNT,
-    //             amount: amount,
-    //         },
-    //         percentage: {
-    //             type: ValueType.RATE,
-    //             rate: rate,
-    //         },
-    //     };
-    // }
-
-    // private getLoanAmount(): RateAndValueDTO {
-    //     if (this._useDefaultRequest()) {
-    //         // Move this somewhere
-    //         const loanPercentage = 100 - DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE;
-    //         const loanAmount = this.listingDetails.getListingPrice() * (loanPercentage / 100);
-    //         return this.createRateAndValueDTO(loanAmount, loanPercentage);
-    //     }
-
-    //     const loanPercentage = 100 - (this.getMortgageDetails().downPaymentPercentage ?? DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE);
-    //     const loanAmount = this.getInvestmentDetails().purchasePrice * (loanPercentage / 100);
-    //     return this.createRateAndValueDTO(loanAmount, loanPercentage);
-    // }
 
     private getAnnualInterestRate(): number {
         if (this._useDefaultRequest()) {

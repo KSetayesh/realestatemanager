@@ -648,7 +648,7 @@ const InvestmentBreakdown: React.FC = () => {
             },
             investmentDetails: {
                 mortgageDetails: {
-                    annualInterestRate: formData.annualAppreciationRate,
+                    annualInterestRate: formData.annualInterestRate,
                     termInYears: formData.termInYears,
                     interestType: getInterestType(formData.interestType)!,
                     downPayment: convertToValueInput(formData.downPaymentType, Number(formData.downPaymentPercentage))!,
