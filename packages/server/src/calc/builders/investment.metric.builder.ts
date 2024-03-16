@@ -473,7 +473,7 @@ export class InvestmentMetricBuilder {
         if (this._useDefaultRequest()) {
             return this.listingDetails.getZillowRentEstimate();
         }
-        return this.getInvestmentDetails().purchasePrice;
+        return this.getInvestmentDetails().rentEstimate;
     }
 
     private getAnnualRentIncreaseRate(): number {
