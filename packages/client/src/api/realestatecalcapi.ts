@@ -1,29 +1,27 @@
 import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO } from "@realestatemanager/shared";
 import axios from "axios";
+import { CalcApi } from "./calcapi";
 
-export class RealEstateCalcApi {
-
-    private baseURL = 'http://localhost:3000/realestatecalc';
-    private headers = { 'Content-Type': 'application/json' };
+export class RealEstateCalcApi extends CalcApi {
 
     async getAllProperties(): Promise<ListingWithScenariosDTO[]> {
 
         try {
-            const response = await axios.get(this.baseURL);
-            return response.data; 
+            const response = await axios.get(this.getURL());
+            return response.data;
         } catch (error) {
             const message = `Error fetching properties:, ${error}`;
             console.error(message);
             throw new Error(message);
-        } 
+        }
 
     }
 
     async realEstateCalculator(dataToSubmit: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
 
         try {
-            const response = await axios.post(`${this.baseURL}/calculate`, dataToSubmit, {
-                headers: this.headers,
+            const response = await axios.post(`${this.getURL()}/calculate`, dataToSubmit, {
+                headers: this.getHeaders(),
             });
 
             return response.data;
@@ -37,8 +35,8 @@ export class RealEstateCalcApi {
     async addNewProperty(dataToSubmit: ListingDetailsDTO): Promise<boolean> {
 
         try {
-            await axios.post(`${this.baseURL}/addNewProperty`, dataToSubmit, {
-                headers: this.headers,
+            await axios.post(`${this.getURL()}/addNewProperty`, dataToSubmit, {
+                headers: this.getHeaders(),
             });
         } catch (error) {
             console.error('There was an error submitting the form:', error);
@@ -46,6 +44,10 @@ export class RealEstateCalcApi {
         }
 
         return true;
+    }
+
+    protected getURL(): string {
+        return `${this.getBaseURL()}/realestatecalc`;
     }
 
 
