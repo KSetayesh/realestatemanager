@@ -1,4 +1,4 @@
-import { IncomesDTO } from "@realestatemanager/shared";
+import { IncomesDTO, Utility } from "@realestatemanager/shared";
 import { AdditionalIncomeStreams } from "./additional.income.streams.model";
 import { RentIncome } from "./rent.income.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
@@ -22,7 +22,7 @@ export class Incomes implements IDTOConvertible<IncomesDTO> {
 
     toDTO(): IncomesDTO {
         return {
-            rentalIncome: this.rentIncome.totalIncomes(),
+            rentalIncome: Utility.round(this.rentIncome.totalIncomes()),
             additionalIncomeStreams: this.additionalIncomeStreams.toDTO(),
         }
     }

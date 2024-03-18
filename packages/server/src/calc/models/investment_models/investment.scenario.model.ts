@@ -1,5 +1,9 @@
 import { GrowthProjections } from "./growth.projections.model";
-import { AmortizationDetailsDTO, InvestmentMetricsResponseDTO, Utility } from "@realestatemanager/shared";
+import {
+    AmortizationDetailsDTO,
+    InvestmentMetricsResponseDTO,
+    Utility
+} from "@realestatemanager/shared";
 import { InitialCostsBreakdown } from "./initialcosts.model";
 import { MortgageCalculator } from "./mortgage.calc.model";
 import { TaxImplications } from "./tax.implications.model";
@@ -39,13 +43,13 @@ export class InvestmentScenario {
             initialCosts: this.initialCostsBreakdown.toDTO(),
             taxImplications: this.taxImplications.toDTO(),
             investmentProjections: {
-                ROI: ROI,
-                capRate: capRate,
-                recurringCosts: recurringCosts,
-                monthlyPayment: initialMonthlyAmount,
-                mortgageAmount: initialMortgagePayment,
-                monthlyCashFlow: monthlyCashFlow,
-                yearlyCashFlow: yearlyCashFlow,
+                ROI: Utility.round(ROI),
+                capRate: Utility.round(capRate),
+                recurringCosts: Utility.round(recurringCosts),
+                monthlyPayment: Utility.round(initialMonthlyAmount),
+                mortgageAmount: Utility.round(initialMortgagePayment),
+                monthlyCashFlow: Utility.round(monthlyCashFlow),
+                yearlyCashFlow: Utility.round(yearlyCashFlow),
                 ammortizationDetails: ammortizationDetails,
             },
         };
@@ -101,7 +105,7 @@ export class InvestmentScenario {
         const yearlyReturn = this.calculateYearlyCashFlow();
         const initialExpeses = this.getTotalInitialCosts();
 
-        return Utility.round((yearlyReturn / initialExpeses) * 100);
+        return (yearlyReturn / initialExpeses) * 100;
     }
 
     private calculateYearlyCashFlow(): number {
@@ -115,7 +119,7 @@ export class InvestmentScenario {
 
     private calculateCapRate(): number {
         const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.getMortgageAmount()) * 12;
-        return Utility.round((annualNetOperatingIncome / this.getPurchasePrice()) * 100);
+        return (annualNetOperatingIncome / this.getPurchasePrice()) * 100;
     }
 
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
@@ -161,6 +165,10 @@ export class InvestmentScenario {
             const equityWithAppreciation = downPaymentAmount + cumulativePrincipalPaid + (propertyValue - principal);
             const appreciationValue = propertyValue - principal; // Total appreciation from the original value
 
+            const getMonthlyPaymentAndRecurringCosts = (): number => {
+                return this.getMortgageAmountWithFixedMonthlyExpenses() + this.getRecurringExpenses();
+            };
+
             const monthMod12 = ((monthCounter - 1) % 12) + 1;
             const yearCounter = Math.floor((monthCounter - 1) / 12) + 1;
             const rentEstimate = Utility.round(this.getRentalAmount());
@@ -176,12 +184,7 @@ export class InvestmentScenario {
             const equityWithAppreciationRounded = Utility.round(equityWithAppreciation);
             const appreciationValueRounded = Utility.round(appreciationValue);
             const recurringExpensesRounded = Utility.round(this.getRecurringExpenses());
-
-            const getMonthlyPaymentAndRecurringCosts = (): number => {
-                return this.getMortgageAmountWithFixedMonthlyExpenses() + this.getRecurringExpenses();
-            };
-
-            const monthlyPaymentAndRecurringCosts = Utility.round(getMonthlyPaymentAndRecurringCosts());
+            const monthlyPaymentAndRecurringCostsRounded = Utility.round(getMonthlyPaymentAndRecurringCosts());
 
             const amortizationDetailsDTO: AmortizationDetailsDTO = {
                 month: monthMod12,
@@ -189,7 +192,7 @@ export class InvestmentScenario {
                 year: yearCounter,
                 recurringCosts: recurringExpensesRounded,
                 monthlyPayment: monthlyPaymentRounded,
-                monthlyPaymentAndRecurringCosts: monthlyPaymentAndRecurringCosts,
+                monthlyPaymentAndRecurringCosts: monthlyPaymentAndRecurringCostsRounded,
                 rentEstimate: rentEstimate,
                 mortgageAmount: mortgagePaymentRounded,
                 amountPaidInInterest: {

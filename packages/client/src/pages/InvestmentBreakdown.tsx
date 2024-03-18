@@ -720,7 +720,7 @@ const InvestmentBreakdown: React.FC = () => {
             {formData && (
                 <form onSubmit={handleSubmit} className="investment-form">
                     <div className="form-row">
-                        {formDetails.map((detail, index) => {
+                        {formDetails.map((detail: FormProperty, index) => {
                             if (detail.type === InputType.NUMBER || detail.type === InputType.STRING) {
                                 return (
                                     <div className="form-group" key={index}>

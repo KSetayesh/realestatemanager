@@ -1,4 +1,4 @@
-import { AmountAndPercentageDTO, MortgageDetailsDTO } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO, MortgageDetailsDTO, Utility } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
 import { FinancialTransaction } from "./financial.transaction";
@@ -33,13 +33,8 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.purchasePrice - this.getDownPaymentAmount(); // this.financingTerms.getLoanAmount();
     }
 
-    getDownpaymentAmountAndPercentage(): AmountAndPercentageDTO {
-        return this.downpayment;
-    }
-
     getDownPaymentAmount(): number {
         return this.downpayment.amount;
-        //return Utility.round(this.getPurchasePrice() * (this.getDownPaymentPercentage() / 100));
     }
 
     getLoanPercentage(): number {
@@ -114,18 +109,17 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.pmiDetails.getPmiRate();
     }
 
-    private getLoan(): AmountAndPercentageDTO {
-        return {
-            amount: this.getLoanAmount(),
-            percentage: this.getLoanPercentage(),
-        };
-    }
-
     toDTO(): MortgageDetailsDTO {
         return {
             purchasePrice: this.purchasePrice,
-            downpayment: this.downpayment,
-            loanAmount: this.getLoan(),
+            downpayment: {
+                percentage: Utility.round(this.getDownPaymentPercentage()),
+                amount: Utility.round(this.getDownPaymentAmount()),
+            },
+            loanAmount: {
+                amount: Utility.round(this.getLoanAmount()),
+                percentage: Utility.round(this.getLoanPercentage()),
+            },
             financingTerms: this.financingTerms.toDTO(),
             transactions: this.financialTransaction.toDTO(),
             pmiDetails: this.pmiDetails.toDTO(),

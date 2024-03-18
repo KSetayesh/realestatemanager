@@ -1,4 +1,4 @@
-import { FinancingTermsDTO, InterestType } from "@realestatemanager/shared";
+import { FinancingTermsDTO, InterestType, Utility } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
@@ -39,10 +39,10 @@ export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
 
     toDTO(): FinancingTermsDTO {
         return {
-            annualInterestRate: this.annualInterestRate,
+            annualInterestRate: Utility.round(this.annualInterestRate),
             interestType: this.interestType,
             termInYears: this.termInYears,
-            monthlyPayment: this.monthlyPayment,
+            monthlyPayment: Utility.round(this.monthlyPayment),
             interestOnlyPeriod: this.interestOnlyPeriod,
         };
     }

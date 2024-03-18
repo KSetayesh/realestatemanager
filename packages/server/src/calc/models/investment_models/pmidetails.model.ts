@@ -1,4 +1,4 @@
-import { PMIDetailsDTO } from "@realestatemanager/shared";
+import { PMIDetailsDTO, Utility } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
@@ -20,10 +20,10 @@ export class PMIDetails implements IDTOConvertible<PMIDetailsDTO> {
     toDTO(): PMIDetailsDTO {
         return {
             // pmiAmount: 0, // Come back to this
-            pmiRate: this.pmiRate,
+            pmiRate: Utility.round(this.pmiRate),
             // pmiRateFormula: 'some formula',
             pmiDropoffPoint: this.pmiDropoffPoint,
-        }
+        };
     }
 
 }
