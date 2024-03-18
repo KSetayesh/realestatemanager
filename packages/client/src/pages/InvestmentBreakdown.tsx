@@ -5,7 +5,6 @@ import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../componen
 import PropertyDetailsModal from './PropertyDetailsModal';
 import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
 import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
-import axios from 'axios';
 import {
     getAnnualAppreciationRate,
     getAnnualInterestRate,
@@ -41,6 +40,7 @@ import {
     getVacancyRate
 } from '../components/TableColumn';
 import { InputType, InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
+import { RealEstateCalcApi } from '../api/realestatecalcapi';
 
 type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
@@ -695,20 +695,10 @@ const InvestmentBreakdown: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const dataToSubmit: InvestmentScenarioRequest = getCalculateRequest();
-
-        try {
-            const response = await axios.post('http://localhost:3000/calc/calculate', dataToSubmit, {
-                headers: { 'Content-Type': 'application/json' },
-            });
-            console.log("Calculation result:", response.data);
-            setProperty(response.data as ListingWithScenariosDTO);
-            // Handle response data here
-        } catch (error) {
-            console.error("Error sending form data to backend:", error);
-            // Handle errors as needed
-        }
+        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        const data: ListingWithScenariosDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
+        console.log("Calculation result:", data);
+        setProperty(data);
     };
 
     //-----------------------------------------------------------------------------------------------------------

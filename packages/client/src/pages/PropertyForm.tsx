@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Country, HomeType, State, InputType, ratingSelections } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { ListingDetailsDTO } from '@realestatemanager/shared';
+import { RealEstateCalcApi } from '../api/realestatecalcapi';
 
 const PropertyForm: React.FC = () => {
 
@@ -237,9 +237,8 @@ const PropertyForm: React.FC = () => {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const dataToSubmit: ListingDetailsDTO = {
+    const getRequestData = (): ListingDetailsDTO => {
+        return {
             zillowURL: formData.zillowURL,
             listingPrice: formData.listingPrice,
             propertyDetails: {
@@ -283,15 +282,19 @@ const PropertyForm: React.FC = () => {
                 zillowMonthlyHOAFeesAmount: parseFloat(formData.zillowMonthlyHOAFeesAmount),
             },
         };
+    }
 
-        try {
-            await axios.post('http://localhost:3000/calc/addNewProperty', dataToSubmit, {
-                headers: { 'Content-Type': 'application/json' },
-            });
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const dataToSubmit: ListingDetailsDTO = getRequestData();
+
+        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        const postSuccess = await realEstateCalcApi.addNewProperty(dataToSubmit);
+        if (postSuccess) {
             alert('Data submitted successfully!');
             window.location.reload();
-        } catch (error) {
-            console.error('There was an error submitting the form:', error);
+        }
+        else {
             alert('Failed to submit data.');
         }
     };

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CalcService } from '../../src/calc/services/calc.service';
+import { CalcService } from '../../src/realestatecalc/services/calc.service';
 
 describe('CalcService', () => {
     let service: CalcService;

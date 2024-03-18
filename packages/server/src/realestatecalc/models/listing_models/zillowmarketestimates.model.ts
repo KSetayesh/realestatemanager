@@ -1,5 +1,5 @@
 import { ZillowMarketEstimatesDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../../models/idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class ZillowMarketEstimates implements IDTOConvertible<ZillowMarketEstimatesDTO>{
     private zestimate?: number; // Estimated market value

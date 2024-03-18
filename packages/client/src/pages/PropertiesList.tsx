@@ -4,25 +4,29 @@ import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import ReusableTable, { TableDataItem } from '../components/ReusableTable';
 import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
+import { RealEstateCalcApi } from '../api/realestatecalcapi';
 
 const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
+    const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     useEffect(() => {
-        fetch('http://localhost:3000/calc')
-            .then(response => response.json())
-            .then((data: ListingWithScenariosDTO[]) => {
-                setProperties(data);
-                console.log("data:", data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching properties:', error);
-                setIsLoading(false);
-            });
-    }, []);
+        (async () => {
+            try {
+                setIsLoading(true); // Set loading state to true before fetching data
+                const propertiesData: ListingWithScenariosDTO[] = await realEstateCalcApi.getAllProperties();
+                setProperties(propertiesData); // Update state with fetched data
+                console.log("Fetched data:", propertiesData);
+            } catch (error) {
+                // Error handling if fetchProperties fails
+                console.error('Failed to fetch properties:', error);
+            } finally {
+                setIsLoading(false); // Ensure loading state is updated regardless of success or failure
+            }
+        })();
+    }, []); // Empty dependency array means this effect runs once on mount
 
     const handleRowClick = (property: ListingWithScenariosDTO) => {
         setSelectedProperty(property);

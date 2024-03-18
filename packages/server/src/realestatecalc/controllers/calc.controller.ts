@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
-@Controller('calc')
+@Controller('realestatecalc')
 export class CalcController {
 
     constructor(private readonly calcService: CalcService) { }

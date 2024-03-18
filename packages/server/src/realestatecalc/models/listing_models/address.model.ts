@@ -1,5 +1,5 @@
 import { AddressDTO, Country, State } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../../models/idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class Address implements IDTOConvertible<AddressDTO> {
     private fullAddress: string;
