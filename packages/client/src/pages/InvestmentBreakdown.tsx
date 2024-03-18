@@ -44,7 +44,7 @@ import { InputType, InterestType, PercentageAndAmount, ValueType } from '../cons
 
 type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
-    downPaymentPercentage: string,
+    downPaymentPercentage: number,
     pmiRate: number,
     pmiDropoffPoint: number,
     monthlyPropertyTaxType: PercentageAndAmount,
@@ -109,7 +109,7 @@ const InvestmentBreakdown: React.FC = () => {
     const getInvestmentFormData = (): InvestmentFormData => {
         return {
             downPaymentType: PercentageAndAmount.PERCENTAGE,
-            downPaymentPercentage: getDownPaymentPercentage(property).toString(),
+            downPaymentPercentage: getDownPaymentPercentage(property),
             pmiRate: getPMIRate(property),
             pmiDropoffPoint: getPMIDropoffPoint(property),
             monthlyPropertyTaxType: PercentageAndAmount.AMOUNT,
@@ -352,7 +352,7 @@ const InvestmentBreakdown: React.FC = () => {
             title: 'Down Payment (%)',
             name: 'downPaymentPercentage',
             value: formData.downPaymentPercentage,
-            type: InputType.STRING,
+            type: InputType.NUMBER,
             hasRadioOptions: true,
             radioDetails: {
                 name: 'downPaymentType',
@@ -721,7 +721,7 @@ const InvestmentBreakdown: React.FC = () => {
                 <form onSubmit={handleSubmit} className="investment-form">
                     <div className="form-row">
                         {formDetails.map((detail: FormProperty, index) => {
-                            if (detail.type === InputType.NUMBER || detail.type === InputType.STRING) {
+                            if (InputType.NUMBER === detail.type) {
                                 return (
                                     <div className="form-group" key={index}>
                                         <label>{detail.title}</label>
