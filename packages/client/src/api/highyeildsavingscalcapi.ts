@@ -4,11 +4,9 @@ import { CalcApi } from "./calcapi";
 
 export class HighYieldSavingsCalcApi extends CalcApi {
 
-    // private baseURL = 'http://localhost:3000/highyieldsavingscalc';
-    // private headers = { 'Content-Type': 'application/json' };
-
     async highYieldSavingsCalculator(dataToSubmit: HighYeildSavingsRequest): Promise<HighYeildSavingsDTO> {
-
+        console.log(dataToSubmit);
+        console.log("url:", `${this.getURL()}/calculate`);
         try {
             const response = await axios.post(`${this.getURL()}/calculate`, dataToSubmit, {
                 headers: this.getHeaders(),
