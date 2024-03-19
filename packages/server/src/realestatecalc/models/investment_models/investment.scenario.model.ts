@@ -133,6 +133,7 @@ export class InvestmentScenario {
         let schedule: AmortizationDetailsDTO[] = [];
         let remainingBalance = loanAmount;
         let cumulativePrincipalPaid = 0;
+        let totalInterestPaid = 0;
         let propertyValue = principal;
 
         // Calculate the equivalent monthly appreciation rate for a 4% annual rate
@@ -156,6 +157,7 @@ export class InvestmentScenario {
             const principalPayment = mortgagePayment - interestPayment;
             remainingBalance -= principalPayment;
             cumulativePrincipalPaid += principalPayment;
+            totalInterestPaid += interestPayment;
 
             // Apply monthly appreciation compounded
             if (monthCounter > 1) {
@@ -176,6 +178,7 @@ export class InvestmentScenario {
             const monthlyPaymentRounded = Utility.round(this.getMortgageAmountWithFixedMonthlyExpenses());
             const interestPaymentRounded = Utility.round(interestPayment);
             const interestPercentageRounded = Utility.round((interestPaymentRounded / mortgagePaymentRounded) * 100);
+            const totalInterestPaidRounded = Utility.round(totalInterestPaid);
             const principalPaymentRounded = Utility.round(principalPayment);
             const principalPercentageRounded = Utility.round((principalPaymentRounded / mortgagePaymentRounded) * 100);
             const remainingBalanceRounded = Utility.round(remainingBalance);
@@ -205,6 +208,7 @@ export class InvestmentScenario {
                     amount: principalPaymentRounded,
                     percentage: principalPercentageRounded,
                 },
+                totalInterestPaid: totalInterestPaidRounded,
                 remainingBalance: remainingBalanceRounded,
                 equityWithDownPayment: equityWithDownPaymentRounded,
                 equityAmountWithoutDownPayment: equityWithoutDownPaymentRounded,

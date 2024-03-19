@@ -517,6 +517,7 @@ export interface AmortizationDetailsDTO {
     mortgageAmount: number;
     amountPaidInInterest: AmountAndPercentageDTO;
     amountPaidInPrincipal: AmountAndPercentageDTO;
+    totalInterestPaid: number;
     remainingBalance: number;
     equityWithDownPayment: number;
     equityAmountWithoutDownPayment: number;

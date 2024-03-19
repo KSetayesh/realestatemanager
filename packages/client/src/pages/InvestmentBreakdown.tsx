@@ -259,6 +259,14 @@ const InvestmentBreakdown: React.FC = () => {
             isSortable: false,
         },
         {
+            header: "Total Interest Paid",
+            accessor: "totalInterestPaid",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
             header: "Remaining Balance",
             accessor: "remainingBalance",
             isURL: false,
@@ -317,6 +325,7 @@ const InvestmentBreakdown: React.FC = () => {
             mortgageAmount: ammortizationDetail.mortgageAmount,
             interestPayment: ammortizationDetail.amountPaidInInterest.amount,
             principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,
+            totalInterestPaid: ammortizationDetail.totalInterestPaid,
             remainingBalance: ammortizationDetail.remainingBalance,
             equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment,
             equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment,
