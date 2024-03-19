@@ -21,21 +21,6 @@ export class FinancialTransaction implements IDTOConvertible<TransactionsDTO> {
         return this.incomes.getFutureDatedTotalIncomes(annualIncreaseRate, numberOfYearsFromNow);
     }
 
-    getTotalExpenses(): number {
-        return this.expenses.getTotalExpenses();
-    }
-
-    getFutureDatedTotalExpenses(annualPropertyTaxIncreaseRate: number = 0,
-        annualHomeInsuranceIncreaseRate: number = 0,
-        annualHOAFeesIncreaseRate: number = 0,
-        numberOfYearsFromNow: number): number {
-        return this.expenses.getFutureDatedTotalExpenses(
-            annualPropertyTaxIncreaseRate,
-            annualHomeInsuranceIncreaseRate,
-            annualHOAFeesIncreaseRate,
-            numberOfYearsFromNow);
-    }
-
     getRentalIncome(): number {
         return this.incomes.getRentalIncome();
     }
