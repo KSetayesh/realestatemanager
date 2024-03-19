@@ -12,9 +12,9 @@ export class RealEstateManager {
     private pool = new Pool(dbConfig);
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, 
+            ld.zillow_url, ld.listing_price, ld.date_listed, ld.created_at, ld.updated_at, 
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
-            pd.number_of_days_on_market, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
+            sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
             pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd._description,
             zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
@@ -29,7 +29,8 @@ export class RealEstateManager {
             (zillow_url, 
             property_details_id, 
             zillow_market_estimates_id, 
-            listing_price)`;
+            listing_price,
+            date_listed)`;
 
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
             (elementary_school_rating, 
@@ -48,8 +49,7 @@ export class RealEstateManager {
 
     private INSERT_PROPERTY_DETAILS_QUERY = `INSERT INTO property_details 
                 (address_id, 
-                school_rating_id, 
-                number_of_days_on_market, 
+                school_rating_id,
                 number_of_bedrooms, 
                 number_of_full_bathrooms, 
                 number_of_half_bathrooms, 
@@ -141,7 +141,6 @@ export class RealEstateManager {
                 streetAddress,
                 apartmentNumber);
 
-        const numberOfDaysOnMarket: number = row.number_of_days_on_market;
         const elementarySchoolRating: number = row.elementary_school_rating;
         const middleSchoolRating: number = row.middle_school_rating;
         const highSchoolRating: number = row.high_school_rating;
@@ -162,7 +161,6 @@ export class RealEstateManager {
             new PropertyDetails(
                 address,
                 schoolRating,
-                numberOfDaysOnMarket,
                 numberOfBedrooms,
                 numberOfFullBathrooms,
                 numberOfHalfBathrooms,
@@ -195,8 +193,11 @@ export class RealEstateManager {
 
         const zillowURL: string = row.zillow_url;
         const listingPrice: number = row.listing_price;
+        const dateListed: Date = new Date(row.date_listed);
+        const dateCreated: Date = new Date(row.created_at);
+        const dateUpdated: Date = new Date(row.updated_at);
 
-        return new ListingDetails(zillowURL, propertyDetails, zillowMarketEstimates, listingPrice);
+        return new ListingDetails(zillowURL, propertyDetails, zillowMarketEstimates, listingPrice, dateListed, dateCreated, dateUpdated);
 
     }
 
@@ -210,7 +211,7 @@ export class RealEstateManager {
                 zillowMarketEstimatesId = await this.insertZillowMarketEstimates(listingDetails.zillowMarketEstimates);
             }
 
-            const values: any[] = [listingDetails.zillowURL, propertyDetailsId, zillowMarketEstimatesId, listingDetails.listingPrice];
+            const values: any[] = [listingDetails.zillowURL, propertyDetailsId, zillowMarketEstimatesId, listingDetails.listingPrice, listingDetails.dateListed];
             this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
 
             console.log('Listing information inserted successfully');
@@ -250,7 +251,6 @@ export class RealEstateManager {
         const values: any[] = [
             addressId,
             schoolRatingId,
-            propertyDetails.numberOfDaysOnMarket,
             propertyDetails.numberOfBedrooms,
             propertyDetails.numberOfFullBathrooms,
             propertyDetails.numberOfHalfBathrooms,

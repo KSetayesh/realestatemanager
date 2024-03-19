@@ -543,6 +543,10 @@ export interface ListingDetailsDTO {
     propertyDetails: PropertyDetailsDTO;
     zillowMarketEstimates: ZillowMarketEstimatesDTO;
     listingPrice: number;
+    dateListed?: string;
+    dateCreated?: string;
+    dateUpdated?: string;
+    numberOfDaysOnMarket?: number;
 };
 
 export type AddressDTO = {
@@ -559,7 +563,7 @@ export type AddressDTO = {
 export interface PropertyDetailsDTO {
     address?: AddressDTO;
     schoolRating?: SchoolRatingDTO;
-    numberOfDaysOnMarket?: number;
+    // numberOfDaysOnMarket?: number;
     numberOfBedrooms?: number;
     numberOfFullBathrooms?: number;
     numberOfHalfBathrooms?: number;

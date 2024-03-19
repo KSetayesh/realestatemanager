@@ -165,6 +165,30 @@ export const defaultColumns: TableColumn[] = [
         isSortable: true,
     },
     {
+        header: "Number of Days On Market",
+        accessor: "numberOfDaysOnMarket",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: true,
+    },
+    {
+        header: "Date Listed",
+        accessor: "dateListed",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: true,
+    },
+    {
+        header: "Date Created",
+        accessor: "dateCreated",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: true,
+    },
+    {
         header: "City",
         accessor: "city",
         isURL: false,
@@ -417,6 +441,8 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
         streetAddress: getStreetAddress(property),
         apartmentNumber: getApartmentNumber(property),
         numberOfDaysOnMarket: getNumberOfDaysOnMarket(property),
+        dateListed: getDateListed(property),
+        dateCreated: getDateCreated(property),
         elementarySchoolRating: getElementarySchoolRating(property),
         middleSchoolRating: getMiddleSchoolRating(property),
         highSchoolRating: getHighSchoolRating(property),
@@ -539,7 +565,15 @@ export const getApartmentNumber = (property: ListingWithScenariosDTO): string =>
 };
 
 export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): number => {
-    return property.listingDetails.propertyDetails.numberOfDaysOnMarket ?? -1;
+    return property.listingDetails.numberOfDaysOnMarket ?? -1; //propertyDetails.numberOfDaysOnMarket ?? -1;
+};
+
+export const getDateListed = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.dateListed ?? new Date(0).toLocaleDateString('en-US');
+};
+
+export const getDateCreated = (property: ListingWithScenariosDTO): string => {
+    return property.listingDetails.dateCreated ?? new Date(0).toLocaleDateString('en-US');
 };
 
 export const getElementarySchoolRating = (property: ListingWithScenariosDTO): number => {

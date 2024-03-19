@@ -238,9 +238,18 @@ const PropertyForm: React.FC = () => {
     };
 
     const getRequestData = (): ListingDetailsDTO => {
+
+        const getDateNDaysAgo = (daysAgo: number): string => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Remove time component
+            today.setDate(today.getDate() - daysAgo);
+            return today.toISOString();
+        }
+
         return {
             zillowURL: formData.zillowURL,
             listingPrice: formData.listingPrice,
+            dateListed: getDateNDaysAgo(parseInt(formData.numberOfDaysOnMarket)),
             propertyDetails: {
                 address: {
                     fullAddress: formData.fullAddress,
@@ -257,7 +266,6 @@ const PropertyForm: React.FC = () => {
                     middleSchoolRating: parseInt(formData.middleSchoolRating),
                     highSchoolRating: parseInt(formData.highSchoolRating),
                 },
-                numberOfDaysOnMarket: parseInt(formData.numberOfDaysOnMarket),
                 numberOfBedrooms: parseInt(formData.numberOfBedrooms),
                 numberOfFullBathrooms: parseInt(formData.numberOfFullBathrooms),
                 numberOfHalfBathrooms: parseInt(formData.numberOfHalfBathrooms),

@@ -1,4 +1,4 @@
-import { AmountAndPercentageDTO, InitialCostsDTO } from "@realestatemanager/shared";
+import { AmountAndPercentageDTO, InitialCostsDTO, Utility } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO> {
@@ -26,16 +26,28 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO> {
 
     }
 
-    getInitialRepairCostsAmount(): number {
+    private getInitialRepairCostsAmount(): number {
         return this.initialRepairCosts.amount;
     }
 
-    getClosingCostsAmount(): number {
+    private getInitialRepairCostsPercentage(): number {
+        return this.initialRepairCosts.percentage;
+    }
+
+    private getClosingCostsAmount(): number {
         return this.closingCosts.amount;
     }
 
-    getOtherExpensesAmount(): number {
+    private getClosingCostsPercentage(): number {
+        return this.closingCosts.percentage;
+    }
+
+    private getOtherExpensesAmount(): number {
         return this.otherExpenses.amount;
+    }
+
+    private getOtherExpensesPercentage(): number {
+        return this.otherExpenses.percentage;
     }
 
     getTotalInitialCosts(): number {
@@ -53,10 +65,19 @@ export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO> {
             breakdown: {
                 downPaymentAmount: this.downPaymentAmount,
                 legalAndProfessionalFees: this.legalAndProfessionalFees,
-                initialRepairCosts: this.initialRepairCosts,
-                closingCosts: this.closingCosts,
+                initialRepairCosts: {
+                    percentage: Utility.round(this.getInitialRepairCostsPercentage()),
+                    amount: Utility.round(this.getInitialRepairCostsAmount()),
+                },
+                closingCosts: {
+                    percentage: Utility.round(this.getClosingCostsPercentage()),
+                    amount: Utility.round(this.getClosingCostsAmount()),
+                },
                 travelingCosts: this.travelingCosts,
-                otherExpenses: this.otherExpenses,
+                otherExpenses: {
+                    percentage: Utility.round(this.getOtherExpensesPercentage()),
+                    amount: Utility.round(this.getOtherExpensesAmount()),
+                },
             },
         };
     }
