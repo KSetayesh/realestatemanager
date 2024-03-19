@@ -41,8 +41,9 @@ import {
 } from '../components/TableColumn';
 import { InputType, InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
+import CalculateForm, { FormProperty } from '../components/CalculateForm';
 
-type InvestmentFormData = {
+export type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
     downPaymentPercentage: number,
     pmiRate: number,
@@ -84,17 +85,6 @@ type InvestmentFormData = {
     mortgageInterest: number,
     operatingExpenses: number,
     propertyTaxes: number,
-};
-
-type FormProperty = {
-    title: string;
-    name: string;
-    value: number | string;
-    type: InputType;
-    hasRadioOptions?: boolean;
-    radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
-    options?: { value: string; label: string }[]; // Correct structure for select options
-    step?: string;
 };
 
 const InvestmentBreakdown: React.FC = () => {
@@ -707,83 +697,13 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && (
-                <form onSubmit={handleSubmit} className="investment-form">
-                    <div className="form-row">
-                        {formDetails.map((detail: FormProperty, index) => {
-                            if (InputType.NUMBER === detail.type) {
-                                return (
-                                    <div className="form-group" key={index}>
-                                        <label>{detail.title}</label>
-                                        {/* Check if radio options should be included */}
-                                        {detail.hasRadioOptions && (
-                                            <div className="radio-group">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type={InputType.RADIO}
-                                                        name={detail.radioDetails!.name + "_radio"}
-                                                        id={detail.radioDetails!.name + "_percentage"}
-                                                        value={PercentageAndAmount.PERCENTAGE}
-                                                        checked={PercentageAndAmount.PERCENTAGE === detail.radioDetails!.radioValue}
-                                                        onChange={handleChange} // Update this method to handle radio changes too
-                                                    />
-                                                    <label className="form-check-label" htmlFor={detail.radioDetails!.name + "_percentage"}>
-                                                        Percentage
-                                                    </label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type={InputType.RADIO}
-                                                        name={detail.radioDetails!.name + "_radio"}
-                                                        id={detail.radioDetails!.name + "_amount"}
-                                                        value={PercentageAndAmount.AMOUNT}
-                                                        checked={PercentageAndAmount.AMOUNT === detail.radioDetails!.radioValue}
-                                                        onChange={handleChange} // Update this method to handle radio changes too
-                                                    />
-                                                    <label className="form-check-label" htmlFor={detail.radioDetails!.name + "_amount"}>
-                                                        Amount
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        )}
-                                        <input
-                                            type={InputType.NUMBER}
-                                            name={detail.name}
-                                            value={detail.value}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                            step={detail.step || "1"} // Use provided step or default to "1"
-                                        />
-                                    </div>
-                                );
-                            } else if (detail.type === InputType.SELECT) {
-                                return (
-                                    <div className="form-group" key={index}>
-                                        <label>{detail.title}</label>
-                                        <select
-                                            name={detail.name}
-                                            value={detail.value}
-                                            onChange={handleChange}
-                                            className="form-control"
-                                        >
-                                            {detail.options!.map((option, optionIndex) => (
-                                                <option key={optionIndex} value={option.value}>
-                                                    {option.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                );
-                            }
-                            // Potentially add more conditionals for other types of inputs
-                            return null; // For items with unsupported or no type specified
-                        })}
-                    </div>
-                    <button type="submit">Calculate</button>
-                </form>
-            )}
+            {formData && <CalculateForm
+                formDetails={formDetails}
+                // formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
+            }
             {property ? (
                 <>
                     <ReusableTable
