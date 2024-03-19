@@ -3,7 +3,7 @@ import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
 import { HighYeildSavingsDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
 import CalculateForm, { FormProperty } from '../components/CalculateForm';
 import { InputType } from '../constants/Constant';
-// import { Link } from 'react-router-dom';
+import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 
 type HighYieldSavingsFormData = {
     initialDeposit: number;
@@ -26,6 +26,8 @@ const HighYieldSavings: React.FC = () => {
 
     const [formData, setFormData] = useState<HighYieldSavingsFormData>(getHighYieldSavingsFormData());
 
+    const [metrics, setMetrics] = useState<HighYeildSavingsDTO[]>();
+
     const getCalculateRequest = (): HighYeildSavingsRequest => {
         return {
             initialDeposit: formData.initialDeposit,
@@ -38,17 +40,11 @@ const HighYieldSavings: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
-        const data: HighYeildSavingsDTO = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
+        const data: HighYeildSavingsDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
         console.log("Calculation result:", data);
-        // setProperty(data);
+        setMetrics(data);
     };
 
-    // useEffect(() => {
-    //     if (property) {
-    //         setProperty(property);
-    //         setFormData(getInvestmentFormData());
-    //     }
-    // }, [property]);  // Ensure useEffect depends on `property`
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = event.target;
@@ -97,6 +93,100 @@ const HighYieldSavings: React.FC = () => {
         },
     ];
 
+    const columnsForMetrics: TableColumn[] = [
+        {
+            header: "Year",
+            accessor: "year",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+        {
+            header: "Month",
+            accessor: "month",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+        {
+            header: "Date",
+            accessor: "date",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: false,
+        },
+
+        {
+            header: "Start Principal",
+            accessor: "startPrincipal",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Start Balance",
+            accessor: "startBalance",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "Interest",
+            accessor: "interest",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "End Balance",
+            accessor: "endBalance",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
+            header: "End Principal",
+            accessor: "endPrincipal",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+    ];
+
+    const createRowDataForMetrics = (highYeildSavingsData: HighYeildSavingsDTO): TableRow => {
+        return {
+            year: highYeildSavingsData.year,
+            month: highYeildSavingsData.month,
+            date: highYeildSavingsData.date,
+            startPrincipal: highYeildSavingsData.startPrincipal,
+            startBalance: highYeildSavingsData.startBalance,
+            interest: highYeildSavingsData.interest,
+            endBalance: highYeildSavingsData.endBalance,
+            endPrincipal: highYeildSavingsData.endPrincipal,
+        };
+    };
+
+    const createTableDataForMetrics = (): TableDataItem<HighYeildSavingsDTO>[] => {
+        if (!metrics) {
+            return [];
+        }
+        const highYeildSavings: HighYeildSavingsDTO[] = metrics;
+        return highYeildSavings.map(metrics => ({
+            objectData: {
+                key: metrics,
+            },
+            rowData: createRowDataForMetrics(metrics),
+        }));
+    };
+
     return (
         <div>
             <h2> Investment Breakdown </h2>
@@ -107,6 +197,14 @@ const HighYieldSavings: React.FC = () => {
                 handleSubmit={handleSubmit}
             />
             }
+            <br />
+            <hr />
+            <br />
+            <ReusableTable
+                columns={columnsForMetrics} // Adjust based on your needs
+                tableData={createTableDataForMetrics()}
+                includeTableSeparator={true}
+            />
         </div>
     );
 };
