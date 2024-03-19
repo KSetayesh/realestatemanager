@@ -9,13 +9,13 @@ export class HighYieldSavingsCalcService {
 
     calculateFutureValueByMonth(highYeildSavingsRequest: HighYeildSavingsRequest): HighYeildSavingsDTO[] {
 
-        const annualInterestRate = highYeildSavingsRequest.annualInterestRate;
-        const years = highYeildSavingsRequest.years;
-        const initialDeposit = highYeildSavingsRequest.initialDeposit;
-        const monthlyDeposit = highYeildSavingsRequest.monthlyDeposit ? highYeildSavingsRequest.monthlyDeposit : 0;
+        const annualInterestRate = Number(highYeildSavingsRequest.annualInterestRate);
+        const years = Number(highYeildSavingsRequest.years);
+        const initialDeposit = Number(highYeildSavingsRequest.initialDeposit);
+        const monthlyDeposit = Number(highYeildSavingsRequest.monthlyDeposit ?? 0);
 
         // Convert the annual interest rate from a percentage to a decimal and adjust for monthly compounding
-        const monthlyInterestRate = Math.pow(1 + annualInterestRate / 100, 1 / 12) - 1;
+        const monthlyInterestRate = this.getMonthlyInterestRate(annualInterestRate);
         const totalMonths = years * 12;
 
         // Array to hold the future value at the end of each month
@@ -68,6 +68,10 @@ export class HighYieldSavingsCalcService {
         }
 
         return futureValueByMonth;
+    }
+
+    private getMonthlyInterestRate(annualInterestRate: number): number {
+        return Math.pow(1 + annualInterestRate / 100, 1 / 12) - 1;
     }
 
 }
