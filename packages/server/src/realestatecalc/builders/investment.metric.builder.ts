@@ -293,21 +293,21 @@ export class InvestmentMetricBuilder {
 
     private getMonthlyPropertyTax(): number {
         if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyPropertyTaxAmount();
+            return this.listingDetails.getZillowMonthlyPropertyTaxAmount() ?? 0;
         }
         return getAmountFromValueInput(this.getMortgageDetails().monthlyPropertyTax);
     }
 
     private getMonthlyHomeInsuranceAmount(): number {
         if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyHomeInsuranceAmount();
+            return this.listingDetails.getZillowMonthlyHomeInsuranceAmount() ?? 0;
         }
         return getAmountFromValueInput(this.getMortgageDetails().monthlyHomeInsuranceAmount);
     }
 
     private getMonthlyHOAFeesAmount(): number {
         if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyHOAFeesAmount();
+            return this.listingDetails.getZillowMonthlyHOAFeesAmount() ?? 0;
         }
         return getAmountFromValueInput(this.getMortgageDetails().monthlyHOAFeesAmount);
     }
