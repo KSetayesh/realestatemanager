@@ -49,16 +49,50 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.financialTransaction.getRentalIncome();
     }
 
+    getFutureDatedRentalIncome(annualIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
+        return this.financialTransaction.getFutureDatedRentalIncome(annualIncreaseRate, numberOfYearsFromNow);
+    }
+
     getRecurringExpenses(): number {
         return this.financialTransaction.getRecurringExpenses();
+    }
+
+    getFutureDatedRecurringExpenses(annualRentalIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
+        return this.financialTransaction.getFutureDatedRecurringExpenses(annualRentalIncreaseRate, numberOfYearsFromNow);
     }
 
     getFixedExpenses(): number {
         return this.financialTransaction.getFixedExpenses();
     }
 
+    getFutureDatedFixedExpenses(
+        annualPropertyTaxIncreaseRate: number = 0,
+        annualHomeInsuranceIncreaseRate: number = 0,
+        annualHOAFeesIncreaseRate: number = 0,
+        numberOfYearsFromNow: number): number {
+
+        return this.financialTransaction.getFutureDatedFixedExpenses(
+            annualPropertyTaxIncreaseRate,
+            annualHomeInsuranceIncreaseRate,
+            annualHOAFeesIncreaseRate,
+            numberOfYearsFromNow);
+    }
+
     getNumberOfPayments(): number {
         return this.financingTerms.getNumberOfPayments();
+    }
+
+    getFutureDatedMortgageAmountWithFixedMonthlyExpenses(
+        annualPropertyTaxIncreaseRate: number = 0,
+        annualHomeInsuranceIncreaseRate: number = 0,
+        annualHOAFeesIncreaseRate: number = 0,
+        numberOfYearsFromNow: number): number {
+
+        return this.calculateMortgagePayment() + this.getFutureDatedFixedExpenses(
+            annualPropertyTaxIncreaseRate,
+            annualHomeInsuranceIncreaseRate,
+            annualHOAFeesIncreaseRate,
+            numberOfYearsFromNow);
     }
 
     getMortgageAmountWithFixedMonthlyExpenses(): number {

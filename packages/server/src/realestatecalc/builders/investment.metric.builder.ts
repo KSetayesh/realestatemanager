@@ -117,9 +117,9 @@ export class InvestmentMetricBuilder {
         //----------------------------------------------------------------------------------------------------------------
 
         const growthProjections: GrowthProjections = new GrowthProjections(
+            annualRentIncreaseRate,
             annualAppreciationRate,
             annualTaxIncreaseRate,
-            annualRentIncreaseRate
         );
 
         // Move this somewhere else

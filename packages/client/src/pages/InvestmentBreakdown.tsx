@@ -200,11 +200,22 @@ const InvestmentBreakdown: React.FC = () => {
             showColumn: true,
             isDollarAmount: true,
             isSortable: true,
-            detailedDescription: `propertyManagementAmount + 
-                        vacancyAmount +
-                        maintenanceAmount +
-                        otherExpensesAmount +
-                        capExReserveAmount`,
+            detailedDescription: `Property Management Amount + 
+                        Vacancy Amount +
+                        Maintenance Amount +
+                        Other Expenses Amount +
+                        CapEx Reserve Amount`,
+        },
+        {
+            header: "Fixed Costs",
+            accessor: "fixedCosts",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: true,
+            detailedDescription: `Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
         },
         {
             header: "Monthly Payment",
@@ -213,7 +224,7 @@ const InvestmentBreakdown: React.FC = () => {
             showColumn: true,
             isDollarAmount: true,
             isSortable: false,
-            detailedDescription: ` Mortgage Amount +
+            detailedDescription: `Mortgage Amount +
                                 Property Tax Amount +
                                 Monthly Home Insurance Amount +
                                 Monthly HOA Fees Amount`,
@@ -233,6 +244,15 @@ const InvestmentBreakdown: React.FC = () => {
             showColumn: true,
             isDollarAmount: true,
             isSortable: false,
+        },
+        {
+            header: "Monthly Cash Flow",
+            accessor: "monthlyCashFlow",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+            detailedDescription: `Rent Estimate - (Monthly Payment + RecurringCosts)`,
         },
         {
             header: "Mortgage Amount",
@@ -319,9 +339,11 @@ const InvestmentBreakdown: React.FC = () => {
             month: ammortizationDetail.month,
             date: ammortizationDetail.date,
             recurringCosts: ammortizationDetail.recurringCosts,
+            fixedCosts: ammortizationDetail.fixedCosts,
             monthlyPayment: ammortizationDetail.monthlyPayment,
             monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts,
             rentEstimate: ammortizationDetail.rentEstimate,
+            monthlyCashFlow: ammortizationDetail.monthlyCashFlow,
             mortgageAmount: ammortizationDetail.mortgageAmount,
             interestPayment: ammortizationDetail.amountPaidInInterest.amount,
             principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,

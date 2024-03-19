@@ -22,6 +22,23 @@ export class FixedMonthlyExpenses implements Expense, IDTOConvertible<FixedMonth
         return this.monthlyPropertyTaxAmount + this.monthlyHomeInsuranceAmount + this.monthlyHOAFeesAmount;
     }
 
+    getFutureDatedTotalExpenses(
+        annualPropertyTaxIncreaseRate: number = 0,
+        annualHomeInsuranceIncreaseRate: number = 0,
+        annualHOAFeesIncreaseRate: number = 0,
+        numberOfYearsFromNow: number): number {
+
+        const futureDatedAmount = (principal: number, annualIncreaseRate: number): number => {
+            return principal * Math.pow(1 + (annualIncreaseRate / 100), numberOfYearsFromNow);
+        };
+
+        const monthlyPropertyTaxAmount = futureDatedAmount(this.monthlyPropertyTaxAmount, annualPropertyTaxIncreaseRate);
+        const monthlyHomeInsuranceAmount = futureDatedAmount(this.monthlyHomeInsuranceAmount, annualHomeInsuranceIncreaseRate);
+        const monthlyHOAFeesAmount = futureDatedAmount(this.monthlyHOAFeesAmount, annualHOAFeesIncreaseRate);
+
+        return monthlyPropertyTaxAmount + monthlyHomeInsuranceAmount + monthlyHOAFeesAmount;
+    }
+
     isIncome(): boolean {
         return false;
     }

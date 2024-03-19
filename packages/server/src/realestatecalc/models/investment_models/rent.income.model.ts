@@ -8,6 +8,10 @@ export class RentIncome implements Income {
         this.rentEstimate = rentEstimate;
     }
 
+    getFutureDatedRentalIncome(annualIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
+        return this.totalIncomes() * Math.pow(1 + (annualIncreaseRate / 100), numberOfYearsFromNow);
+    }
+
     totalIncomes(): number {
         return this.rentEstimate;
     }

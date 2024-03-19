@@ -13,11 +13,24 @@ export class Incomes implements IDTOConvertible<IncomesDTO> {
     }
 
     getTotalIncomes(): number {
-        return this.additionalIncomeStreams.totalIncomes() + this.rentIncome.totalIncomes();
+        return this.getAdditionalIncomeStreams() + this.getRentalIncome();
+    }
+
+    getAdditionalIncomeStreams(): number {
+        return this.additionalIncomeStreams.totalIncomes();
+    }
+
+    getFutureDatedTotalIncomes(annualIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
+        return this.getAdditionalIncomeStreams() +
+            this.getFutureDatedRentalIncome(annualIncreaseRate, numberOfYearsFromNow);
     }
 
     getRentalIncome(): number {
         return this.rentIncome.totalIncomes();
+    }
+
+    getFutureDatedRentalIncome(annualIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
+        return this.rentIncome.getFutureDatedRentalIncome(annualIncreaseRate, numberOfYearsFromNow);
     }
 
     toDTO(): IncomesDTO {
