@@ -699,7 +699,6 @@ const InvestmentBreakdown: React.FC = () => {
             <h2> Investment Breakdown </h2>
             {formData && <CalculateForm
                 formDetails={formDetails}
-                // formData={formData}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
             />

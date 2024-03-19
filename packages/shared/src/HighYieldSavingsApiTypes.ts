@@ -12,6 +12,7 @@ export interface HighYeildSavingsDTO {
     startPrincipal: number;
     startBalance: number;
     interest: number;
+    accumulatedInterest: number;
     endBalance: number;
     endPrincipal: number;
 };

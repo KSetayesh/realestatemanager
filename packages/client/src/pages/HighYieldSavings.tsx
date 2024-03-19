@@ -144,6 +144,14 @@ const HighYieldSavings: React.FC = () => {
             isSortable: false,
         },
         {
+            header: "Accumulated Interest",
+            accessor: "accumulatedInterest",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
+        },
+        {
             header: "End Balance",
             accessor: "endBalance",
             isURL: false,
@@ -169,6 +177,7 @@ const HighYieldSavings: React.FC = () => {
             startPrincipal: highYeildSavingsData.startPrincipal,
             startBalance: highYeildSavingsData.startBalance,
             interest: highYeildSavingsData.interest,
+            accumulatedInterest: highYeildSavingsData.accumulatedInterest,
             endBalance: highYeildSavingsData.endBalance,
             endPrincipal: highYeildSavingsData.endPrincipal,
         };
@@ -192,7 +201,6 @@ const HighYieldSavings: React.FC = () => {
             <h2> Investment Breakdown </h2>
             {formData && <CalculateForm
                 formDetails={formDetails}
-                // formData={formData}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
             />

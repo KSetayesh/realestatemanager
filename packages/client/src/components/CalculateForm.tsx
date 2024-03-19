@@ -16,7 +16,7 @@ interface InvestmentFormProps {
     formDetails: FormProperty[];
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-}
+};
 
 const CalculateForm: React.FC<InvestmentFormProps> = ({ formDetails, handleChange, handleSubmit }) => {
     return (

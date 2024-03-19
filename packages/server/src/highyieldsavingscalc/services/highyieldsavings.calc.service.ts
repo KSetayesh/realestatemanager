@@ -31,6 +31,8 @@ export class HighYieldSavingsCalcService {
         const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
         const nextMonth = (today.getMonth() + 1) % 12;
 
+        let accumulatedInterest = 0;
+
         for (let monthCounter = 1; monthCounter <= totalMonths; monthCounter++) {
             const month = (nextMonth + (monthCounter - 1)) % 12;
             const yearOffset = Math.floor((nextMonth + (monthCounter - 1)) / 12);
@@ -50,6 +52,7 @@ export class HighYieldSavingsCalcService {
             }
 
             const interest = endBalance - startBalance - monthlyDeposit;
+            accumulatedInterest += interest;
 
             futureValueByMonth.push({
                 date: dateAsString,
@@ -58,6 +61,7 @@ export class HighYieldSavingsCalcService {
                 startPrincipal: Utility.round(startPrincipal), // Use the correct principal amount at the start of the month
                 startBalance: Utility.round(startBalance),
                 interest: Utility.round(interest),
+                accumulatedInterest: Utility.round(accumulatedInterest),
                 endBalance: Utility.round(endBalance),
                 endPrincipal: Utility.round(principal), // Principal at the end of the month after the deposit
             });
