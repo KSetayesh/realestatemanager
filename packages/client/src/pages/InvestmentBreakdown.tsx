@@ -230,7 +230,7 @@ const InvestmentBreakdown: React.FC = () => {
                                 Monthly HOA Fees Amount`,
         },
         {
-            header: "Monthly Payment + RecurringCosts",
+            header: "Monthly Payment + Recurring Costs",
             accessor: "monthlyPaymentAndRecurringCosts",
             isURL: false,
             showColumn: true,
@@ -253,6 +253,14 @@ const InvestmentBreakdown: React.FC = () => {
             isDollarAmount: true,
             isSortable: false,
             detailedDescription: `Rent Estimate - (Monthly Payment + RecurringCosts)`,
+        },
+        {
+            header: "Accumulated Cash Flow",
+            accessor: "accumulatedCashFlow",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: true,
+            isSortable: false,
         },
         {
             header: "Mortgage Amount",
@@ -295,7 +303,7 @@ const InvestmentBreakdown: React.FC = () => {
             isSortable: false,
         },
         {
-            header: "Equity Amount With Down Payment",
+            header: "Equity Amount w/ Down Payment",
             accessor: "equityAmountWithDownPayment",
             isURL: false,
             showColumn: true,
@@ -305,7 +313,7 @@ const InvestmentBreakdown: React.FC = () => {
                                 Down Payment Amount`,
         },
         {
-            header: "Equity Amount Without Down Payment",
+            header: "Equity Amount w/ out Down Payment",
             accessor: "equityAmountWithoutDownPayment",
             isURL: false,
             showColumn: true,
@@ -313,7 +321,7 @@ const InvestmentBreakdown: React.FC = () => {
             isSortable: false,
         },
         {
-            header: "Equity Amount With Appreciation",
+            header: "Equity Amount w/ Appreciation",
             accessor: "equityAmountWithAppreciation",
             isURL: false,
             showColumn: true,
@@ -344,6 +352,7 @@ const InvestmentBreakdown: React.FC = () => {
             monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts,
             rentEstimate: ammortizationDetail.rentEstimate,
             monthlyCashFlow: ammortizationDetail.monthlyCashFlow,
+            accumulatedCashFlow: ammortizationDetail.accumulatedCashFlow,
             mortgageAmount: ammortizationDetail.mortgageAmount,
             interestPayment: ammortizationDetail.amountPaidInInterest.amount,
             principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,

@@ -516,6 +516,7 @@ export interface AmortizationDetailsDTO {
     monthlyPaymentAndRecurringCosts: number;
     rentEstimate: number;
     monthlyCashFlow: number;
+    accumulatedCashFlow: number;
     mortgageAmount: number;
     amountPaidInInterest: AmountAndPercentageDTO;
     amountPaidInPrincipal: AmountAndPercentageDTO;

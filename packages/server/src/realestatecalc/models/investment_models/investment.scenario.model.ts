@@ -196,6 +196,7 @@ export class InvestmentScenario {
         let recurringExpenses = this.getRecurringExpenses();
         let fixedCosts = this.getFixedExpenses();
         let monthlyCashFlow = this.calculateMonthlyCashFlow();
+        let accumulatedCashFlow = 0;
 
         const getMonthlyPaymentAndRecurringCosts = (numberOfYearsFromNow?: number): number => {
             if (!numberOfYearsFromNow) {
@@ -249,6 +250,8 @@ export class InvestmentScenario {
                 }
             }
 
+            accumulatedCashFlow += monthlyCashFlow;
+
             const equityWithAppreciation = downPaymentAmount + cumulativePrincipalPaid + (propertyValue - principal);
             const appreciationValue = propertyValue - principal; // Total appreciation from the original value
             const rentEstimate = Utility.round(rentalAmount);
@@ -268,6 +271,7 @@ export class InvestmentScenario {
             const fixedCostsRounded = Utility.round(fixedCosts);
             const monthlyPaymentAndRecurringCostsRounded = Utility.round(monthlyPaymentAndRecurringCosts);
             const monthlyCashFlowRounded = Utility.round(monthlyCashFlow);
+            const accumulatedCashFlowRounded = Utility.round(accumulatedCashFlow);
 
             const amortizationDetailsDTO: AmortizationDetailsDTO = {
                 month: monthMod12,
@@ -279,6 +283,7 @@ export class InvestmentScenario {
                 monthlyPaymentAndRecurringCosts: monthlyPaymentAndRecurringCostsRounded,
                 rentEstimate: rentEstimate,
                 monthlyCashFlow: monthlyCashFlowRounded,
+                accumulatedCashFlow: accumulatedCashFlowRounded,
                 mortgageAmount: mortgagePaymentRounded,
                 amountPaidInInterest: {
                     //   description: 'The portion of the monthly payment that is allocated towards paying off interest.',
