@@ -79,3 +79,18 @@ CREATE TABLE IF NOT EXISTS listing_details (
     FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
 );
 -- EndQuery
+
+-- Query: CreateAgentsTable
+CREATE TABLE IF NOT EXISTS agent (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    companyName VARCHAR(250),
+    phone_number VARCHAR(15),
+    state VARCHAR(50),
+    country VARCHAR(50),
+    agent_type VARCHAR(50),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+-- EndQuery

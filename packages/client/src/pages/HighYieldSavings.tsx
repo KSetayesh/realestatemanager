@@ -203,6 +203,7 @@ const HighYieldSavings: React.FC = () => {
                 formDetails={formDetails}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                buttonTitle='Calculate'
             />
             }
             <br />

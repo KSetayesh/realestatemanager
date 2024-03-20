@@ -37,7 +37,7 @@ export class CalcController {
     async addNewProperty(
         @Body() listingDetails: ListingDetailsDTO,
     ): Promise<void> {
-        this.calcService.addNewProperty(listingDetails);
+        await this.calcService.addNewProperty(listingDetails);
     }
 
     @Post('calculate')

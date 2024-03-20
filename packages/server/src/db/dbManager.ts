@@ -5,13 +5,13 @@ import fs from 'fs';
 
 export const pool = new Pool(dbConfig);
 
-
 enum SQLTable {
     CREATE_SCHOOL_RATING_TABLE = 'CreateSchoolRatingTable',
     CREATE_ADDRESS_TABLE = 'CreateAddressTable',
     CREATE_PROPERTY_DETAILS_TABLE = 'CreatePropertyDetailsTable',
     CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
     CREATE_LISTING_DETAILS_TABLE = 'CreateListingDetailsTable',
+    CREATE_AGENTS_TABLE = 'CreateAgentsTable',
 };
 
 const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;

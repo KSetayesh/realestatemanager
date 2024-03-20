@@ -741,6 +741,7 @@ const InvestmentBreakdown: React.FC = () => {
                 formDetails={formDetails}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                buttonTitle='Calculate'
             />
             }
             {property ? (

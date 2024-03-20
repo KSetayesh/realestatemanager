@@ -14,6 +14,13 @@ export enum InterestType {
     VARIABLE = "Variable",
 };
 
+export enum AgentType {
+    REAL_ESTATE_AGENT = "Real Estate Agent",
+    LENDER = "Lender",
+    PROPERTY_MANAGER = "Property Manager",
+    CONTRACTOR = "Contractor",
+};
+
 export enum State {
     AL = "Alabama",
     AK = "Alaska",
