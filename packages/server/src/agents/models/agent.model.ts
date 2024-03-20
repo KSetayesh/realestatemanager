@@ -14,6 +14,7 @@ export class Agent implements IDTOConvertible<AgentsDTO> {
     constructor(
         firstName: string,
         lastName: string,
+        companyName: string,
         phoneNumber: string,
         state: State,
         country: Country,
@@ -21,6 +22,7 @@ export class Agent implements IDTOConvertible<AgentsDTO> {
 
         this.firstName = firstName;
         this.lastName = lastName;
+        this.companyName = companyName;
         this.phoneNumber = phoneNumber;
         this.state = state;
         this.country = country;
@@ -28,7 +30,7 @@ export class Agent implements IDTOConvertible<AgentsDTO> {
     }
 
     getFullName(): string {
-        return `${this.firstName}' '${this.lastName}`;
+        return `${this.firstName} ${this.lastName}`;
     }
 
     toDTO(): AgentsDTO {

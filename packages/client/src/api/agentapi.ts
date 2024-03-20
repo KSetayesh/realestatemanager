@@ -7,7 +7,7 @@ export class AgentApi extends CalcApi {
     async getAllAgents(): Promise<AgentsDTO[]> {
 
         try {
-            const response = await axios.post(this.getURL());
+            const response = await axios.get(this.getURL());
             return response.data;
         } catch (error) {
             const message = `Error sending form data to backend:", ${error}`;

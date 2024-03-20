@@ -27,7 +27,7 @@ export class RealEstateManager {
         JOIN school_rating sr ON pd.school_rating_id = sr.id`;
 
     private GET_AGENTS_QUERY = `SELECT
-        first_name, last_name, phone_number, state, country, agent_type 
+        first_name, last_name, company_name, phone_number, state, country, agent_type 
         FROM agent;
     `;
 
@@ -194,12 +194,13 @@ export class RealEstateManager {
     private mapRowToAgent(row: any): Agent {
         const firstName: string = row.first_name;
         const lastName: string = row.last_name;
+        const companyName: string = row.company_name;
         const phoneNumber: string = row.phone_number;
         const state: State = row.state;
         const country: Country = row.country;
         const agentType: AgentType = row.agent_type;
 
-        return new Agent(firstName, lastName, phoneNumber, state, country, agentType);
+        return new Agent(firstName, lastName, companyName, phoneNumber, state, country, agentType);
     }
 
     private mapRowToListingDetails(row: any): ListingDetails {
