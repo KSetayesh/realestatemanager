@@ -1,27 +1,27 @@
 import { AmountAndPercentageDTO, MortgageDetailsDTO, Utility } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
-import { FinancialTransaction } from "./financial.transaction";
 import { IDTOConvertible } from "../idtoconvertible.model";
+import { FinancialTransactions } from "./transaction_models/financial.transactions";
 
 export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
 
     private purchasePrice: number;
     private downpayment: AmountAndPercentageDTO;
     private financingTerms: FinancingTerms;
-    private financialTransaction: FinancialTransaction;
+    private financialTransactions: FinancialTransactions;
     private pmiDetails?: PMIDetails;
 
     constructor(purchasePrice: number,
         downpayment: AmountAndPercentageDTO,
         financingTerms: FinancingTerms,
-        financialTransaction: FinancialTransaction,
+        financialTransactions: FinancialTransactions,
         pmiDetails?: PMIDetails) {
 
         this.purchasePrice = purchasePrice;
         this.downpayment = downpayment;
         this.financingTerms = financingTerms;
-        this.financialTransaction = financialTransaction;
+        this.financialTransactions = financialTransactions;
         this.pmiDetails = pmiDetails;
     }
 
@@ -45,36 +45,16 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.downpayment.percentage;
     }
 
-    getRentalIncome(): number {
-        return this.financialTransaction.getRentalIncome();
+    getRentalIncome(numberOfYearsFromNow: number = 0): number {
+        return this.financialTransactions.getRentalIncome(numberOfYearsFromNow);
     }
 
-    getFutureDatedRentalIncome(annualIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
-        return this.financialTransaction.getFutureDatedRentalIncome(annualIncreaseRate, numberOfYearsFromNow);
+    getRecurringExpenses(numberOfYearsFromNow: number = 0): number {
+        return this.financialTransactions.getTotalRecurringExpenses(numberOfYearsFromNow);
     }
 
-    getRecurringExpenses(): number {
-        return this.financialTransaction.getRecurringExpenses();
-    }
-
-    getFutureDatedRecurringExpenses(annualRentalIncreaseRate: number = 0, numberOfYearsFromNow: number): number {
-        return this.financialTransaction.getFutureDatedRecurringExpenses(annualRentalIncreaseRate, numberOfYearsFromNow);
-    }
-
-    getFixedExpenses(): number {
-        return this.financialTransaction.getFixedExpenses();
-    }
-
-    getFutureDatedFixedExpenses(
-        annualPropertyTaxIncreaseRate: number = 0,
-        annualHomeInsuranceIncreaseRate: number = 0,
-        annualHOAFeesIncreaseRate: number = 0,
-        numberOfYearsFromNow: number): number {
-
-        return this.financialTransaction.getFutureDatedFixedExpenses(
-            annualPropertyTaxIncreaseRate,
-            annualHomeInsuranceIncreaseRate,
-            annualHOAFeesIncreaseRate,
+    getFixedExpenses(numberOfYearsFromNow: number = 0): number {
+        return this.financialTransactions.getTotalFixedExpenses(
             numberOfYearsFromNow);
     }
 
@@ -82,27 +62,16 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.financingTerms.getNumberOfPayments();
     }
 
-    getFutureDatedMortgageAmountWithFixedMonthlyExpenses(
-        annualPropertyTaxIncreaseRate: number = 0,
-        annualHomeInsuranceIncreaseRate: number = 0,
-        annualHOAFeesIncreaseRate: number = 0,
-        numberOfYearsFromNow: number): number {
-
-        return this.calculateMortgagePayment() + this.getFutureDatedFixedExpenses(
-            annualPropertyTaxIncreaseRate,
-            annualHomeInsuranceIncreaseRate,
-            annualHOAFeesIncreaseRate,
-            numberOfYearsFromNow);
-    }
-
-    getMortgageAmountWithFixedMonthlyExpenses(): number {
-        return this.calculateMortgagePayment() + this.getFixedExpenses();
+    getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow: number = 0): number {
+        const mortgagePayment = this.calculateMortgagePayment();
+        const fixedExpenses = this.getFixedExpenses(numberOfYearsFromNow);
+        return mortgagePayment + fixedExpenses;
     }
 
     calculateMortgagePayment(calculateWithPMI: boolean = false): number {
         const monthlyInterestRate = this.getMonthlyInterestRate() / 100;
         const numberOfPayments = this.getNumberOfPayments();
-        const loanAmount = this.getLoanAmount(); //this.calculateLoanAmount(mortgage.principal, mortgage.downPaymentPercentage);
+        const loanAmount = this.getLoanAmount();
         let monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
 
         // Add PMI calculation if down payment is less than 20%
@@ -155,7 +124,7 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
                 percentage: Utility.round(this.getLoanPercentage()),
             },
             financingTerms: this.financingTerms.toDTO(),
-            transactions: this.financialTransaction.toDTO(),
+            transactions: this.financialTransactions.toDTO(),
             pmiDetails: this.pmiDetails.toDTO(),
         }
     }

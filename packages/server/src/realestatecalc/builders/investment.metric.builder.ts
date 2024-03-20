@@ -21,15 +21,24 @@ import {
     TaxImplicationsRequest,
 } from "@realestatemanager/shared";
 import { FinancingTerms } from "../models/investment_models/financing.terms.model";
-import { FixedMonthlyExpenses } from "../models/investment_models/fixed.monthly.expenses.model";
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
-import { RecurringMonthlyExpenses } from "../models/investment_models/recurring.monthly.expenses.model";
-import { AdditionalIncomeStreams } from "../models/investment_models/additional.income.streams.model";
-import { RentIncome } from "../models/investment_models/rent.income.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { FinancialTransaction } from "../models/investment_models/financial.transaction";
-import { Incomes } from "../models/investment_models/incomes.model";
-import { Expenses } from "../models/investment_models/expenses.model";
+import { FinancialTransactions } from "../models/investment_models/transaction_models/financial.transactions";
+import { MonthlyPropertyTaxAmount } from "../models/investment_models/transaction_models/monthly.property.tax.expenses.model";
+import { MonthlyHomeInsuranceAmount } from "../models/investment_models/transaction_models/monthly.home.insurance.expenses.model";
+import { MonthlyHOAFeesAmount } from "../models/investment_models/transaction_models/monthly.hoa.fees.expenses.model";
+import { RentalIncome } from "../models/investment_models/transaction_models/rental.income.model";
+import { ParkingFeesIncome } from "../models/investment_models/transaction_models/parking.fees.income.model";
+import { TransactionBuilder } from "./transaction.builder";
+import { LaundryServiceIncome } from "../models/investment_models/transaction_models/laundry.service.income.model";
+import { StorageUnitFees } from "../models/investment_models/transaction_models/storage.unit.fees.model";
+import { OtherAdditionalIncomeStreams } from "../models/investment_models/transaction_models/other.additional.streams.income.model";
+import { PropertyManagementExpense } from "../models/investment_models/transaction_models/property.management.expense.model";
+import { VacancyExpense } from "../models/investment_models/transaction_models/vacany.expense.model";
+import { MaintenanceExpense } from "../models/investment_models/transaction_models/maintenance.expense.model";
+import { OtherExpenses } from "../models/investment_models/transaction_models/other.expenses.model";
+import { CapitalExpenditureReserveExpenses } from "../models/investment_models/transaction_models/capex.expenses.model";
+import { Transaction } from "../models/investment_models/transaction_models/transaction.model";
 
 export class InvestmentMetricBuilder {
 
@@ -100,6 +109,10 @@ export class InvestmentMetricBuilder {
 
         const annualTaxIncreaseRate: number = this.getAnnualTaxIncreaseRate();
 
+        const annualHomeInsuranceIncreaseRate: number = this.getAnnualHomeInsuranceIncreaseRate();
+
+        const annualHOAFeesIncreaseRate: number = this.getAnnualHOAFeesIncreaseRate();
+
         const parkingFees: number = this.getParkingFees();
 
         const laundryServices: number = this.getLaundryServices();
@@ -120,6 +133,8 @@ export class InvestmentMetricBuilder {
             annualRentIncreaseRate,
             annualAppreciationRate,
             annualTaxIncreaseRate,
+            annualHomeInsuranceIncreaseRate,
+            annualHOAFeesIncreaseRate,
         );
 
         // Move this somewhere else
@@ -141,10 +156,6 @@ export class InvestmentMetricBuilder {
             0, // property taxes
         );
 
-        // private financingTerms: FinancingTerms;
-        // private fixedMonthlyExpenses: FixedMonthlyExpenses;
-        // private pmiDetails?: PMIDetails;
-
         const financingTerms: FinancingTerms = new FinancingTerms(
             // loanAmount,
             annualInterestRate,
@@ -154,45 +165,107 @@ export class InvestmentMetricBuilder {
             0, // interestOnlyPeriod
         );
 
-        const fixedMonthlyExpenses: FixedMonthlyExpenses = new FixedMonthlyExpenses(
-            monthlyPropertyTax,
-            monthlyHomeInsuranceAmount,
-            monthlyHOAFeesAmount
-        );
-
         const pmiDetails: PMIDetails = new PMIDetails(
             pmiRate,
             pmiDropoffPoint
         );
 
-        const recurringExpensesBreakdown: RecurringMonthlyExpenses = new RecurringMonthlyExpenses(
-            propertyManagementRate,
-            vacancyRate,
-            maintenanceRate,
-            otherExpensesRate,
-            capExReserveRate,
-        );
+        // const fixedMonthlyExpenses: FixedMonthlyExpenses = new FixedMonthlyExpenses(
+        //     monthlyPropertyTax,
+        //     monthlyHomeInsuranceAmount,
+        //     monthlyHOAFeesAmount
+        // );
 
-        const additionalIncomeStreams: AdditionalIncomeStreams = new AdditionalIncomeStreams(
-            parkingFees,
-            laundryServices,
-            storageUnitFees,
-            otherAdditionalIncomeStreams,
-        );
+        const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
 
-        const rentIncome: RentIncome = new RentIncome(rentEstimate);
+        const rentalIncomeObj: RentalIncome =
+            txnBuilder.createRentalIncomeObj(rentEstimate);
 
-        const incomes: Incomes = new Incomes(additionalIncomeStreams, rentIncome);
+        const parkingFeesObj: ParkingFeesIncome =
+            txnBuilder.createParkingFeesObj(parkingFees);
 
-        const expenses: Expenses = new Expenses(fixedMonthlyExpenses, recurringExpensesBreakdown);
+        const laundryServicesObj: LaundryServiceIncome =
+            txnBuilder.createLaundryServiceObj(laundryServices);
 
-        const financialTransaction: FinancialTransaction = new FinancialTransaction(incomes, expenses);
+        const storageUnitFeesObj: StorageUnitFees =
+            txnBuilder.createStorageUnitFeesObj(storageUnitFees);
+
+        const otherAdditionalIncomeStreamsObj: OtherAdditionalIncomeStreams =
+            txnBuilder.createOtherAdditionalIncomeStreamsObj(otherAdditionalIncomeStreams);
+
+        const monthlyPropertyTaxObj: MonthlyPropertyTaxAmount =
+            txnBuilder.createMonthlyPropertyTaxObj(monthlyPropertyTax);
+
+        const monthlyHomeInsuranceAmountObj: MonthlyHomeInsuranceAmount =
+            txnBuilder.createMonthlyHomeInsuranceAmountObj(monthlyHomeInsuranceAmount);
+
+        const monthlyHOAFeesAmountObj: MonthlyHOAFeesAmount =
+            txnBuilder.createMonthlyHOAFeesAmountObj(monthlyHOAFeesAmount);
+
+        const propertyManagementRateObj: PropertyManagementExpense =
+            txnBuilder.createPropertyManagementRateObj(propertyManagementRate, rentalIncomeObj);
+
+        const vacancyRateObj: VacancyExpense =
+            txnBuilder.createVacancyRateObj(vacancyRate, rentalIncomeObj);
+
+        const maintenanceRateObj: MaintenanceExpense =
+            txnBuilder.createMaintenanceRateObj(maintenanceRate, rentalIncomeObj);
+
+        const otherExpensesRateObj: OtherExpenses =
+            txnBuilder.createOtherExpensesRateObj(otherExpensesRate, rentalIncomeObj);
+
+        const capExReserveRateObj: CapitalExpenditureReserveExpenses =
+            txnBuilder.createCapExReserveRateObj(capExReserveRate, rentalIncomeObj);
+
+        const transactionsList: Transaction[] = [
+            rentalIncomeObj,
+            parkingFeesObj,
+            laundryServicesObj,
+            storageUnitFeesObj,
+            otherAdditionalIncomeStreamsObj,
+            monthlyPropertyTaxObj,
+            monthlyHomeInsuranceAmountObj,
+            monthlyHOAFeesAmountObj,
+            propertyManagementRateObj,
+            vacancyRateObj,
+            maintenanceRateObj,
+            otherExpensesRateObj,
+            capExReserveRateObj,
+        ];
+
+        const financialTransactions: FinancialTransactions =
+            new FinancialTransactions(transactionsList);
+
+        // const recurringExpensesBreakdown: RecurringMonthlyExpenses = new RecurringMonthlyExpenses(
+        //     propertyManagementRate,
+        //     vacancyRate,
+        //     maintenanceRate,
+        //     otherExpensesRate,
+        //     capExReserveRate,
+        // );
+
+        // const additionalIncomeStreams: AdditionalIncomeStreams = new AdditionalIncomeStreams(
+        //     parkingFees,
+        //     laundryServices,
+        //     storageUnitFees,
+        //     otherAdditionalIncomeStreams,
+        // );
+
+        // const rentIncome: RentIncome = new RentIncome(rentEstimate);
+
+        // const incomes: Incomes = new Incomes(additionalIncomeStreams, rentIncome);
+
+        // const expenses: Expenses = new Expenses(fixedMonthlyExpenses, recurringExpensesBreakdown);
+
+        // const financialTransactions: FinancialTransactions = this.createFinancialTransactions();
+
+        // const financialTransaction: FinancialTransaction = new FinancialTransaction(incomes, expenses);
 
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,
             downPayment,
             financingTerms,
-            financialTransaction,
+            financialTransactions,
             pmiDetails,
         );
 
@@ -467,6 +540,20 @@ export class InvestmentMetricBuilder {
             return DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
         }
         return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+    }
+
+    private getAnnualHomeInsuranceIncreaseRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
+        }
+        return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
+    }
+
+    private getAnnualHOAFeesIncreaseRate(): number {
+        if (this._useDefaultRequest()) {
+            return DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
+        }
+        return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
     }
 
     private getParkingFees(): number {

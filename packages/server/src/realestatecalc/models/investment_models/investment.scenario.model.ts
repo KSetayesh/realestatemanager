@@ -68,10 +68,6 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getDownPaymentAmount();
     }
 
-    private getRentalAmount(): number {
-        return this.mortgageCalculator.getRentalIncome();
-    }
-
     private getMonthlyInterestRate(): number {
         return this.mortgageCalculator.getMonthlyInterestRate();
     }
@@ -80,26 +76,12 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getNumberOfPayments();
     }
 
-    private getRecurringExpenses(): number {
-        return this.mortgageCalculator.getRecurringExpenses();
+    private getRecurringExpenses(numberOfYearsFromNow: number = 0): number {
+        return this.mortgageCalculator.getRecurringExpenses(numberOfYearsFromNow);
     }
 
-    private getFixedExpenses(): number {
-        return this.mortgageCalculator.getFixedExpenses();
-    }
-
-    private getFutureDatedRecurringExpenses(numberOfYearsFromNow: number): number {
-        return this.mortgageCalculator.getFutureDatedRecurringExpenses(this.getAnnualRentIncreaseRate(), numberOfYearsFromNow);
-    }
-
-    private getFutureDatedFixedExpenses(numberOfYearsFromNow: number): number {
-        const annualPropertyTaxIncreaseRate = this.getAnnualTaxIncreaseRate();
-        const annualHomeInsuranceIncreaseRate = 0;
-        const annualHOAFeesIncreaseRate = 0;
-        return this.mortgageCalculator.getFutureDatedFixedExpenses(annualPropertyTaxIncreaseRate,
-            annualHomeInsuranceIncreaseRate,
-            annualHOAFeesIncreaseRate,
-            numberOfYearsFromNow);
+    private getFixedExpenses(numberOfYearsFromNow: number = 0): number {
+        return this.mortgageCalculator.getFixedExpenses(numberOfYearsFromNow);
     }
 
     private getTotalInitialCosts(): number {
@@ -110,23 +92,8 @@ export class InvestmentScenario {
         return this.mortgageCalculator.calculateMortgagePayment();
     }
 
-    private getMortgageAmountWithFixedMonthlyExpenses(): number {
-        return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses();
-    }
-
-    private getFutureDatedMortgageAmountWithFixedMonthlyExpenses(
-        numberOfYearsFromNow: number
-    ): number {
-
-        const annualPropertyTaxIncreaseRate = this.getAnnualTaxIncreaseRate();
-        const annualHomeInsuranceIncreaseRate = 0;
-        const annualHOAFeesIncreaseRate = 0;
-
-        return this.mortgageCalculator.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(
-            annualPropertyTaxIncreaseRate,
-            annualHomeInsuranceIncreaseRate,
-            annualHOAFeesIncreaseRate,
-            numberOfYearsFromNow);
+    private getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow: number = 0): number {
+        return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
     }
 
     private calculateROI(): number {
@@ -138,6 +105,9 @@ export class InvestmentScenario {
         const yearlyReturn = this.calculateYearlyCashFlow();
         const initialExpeses = this.getTotalInitialCosts();
 
+        console.log("yearlyReturn:", yearlyReturn);
+        console.log("initialExpeses:", initialExpeses);
+
         return (yearlyReturn / initialExpeses) * 100;
     }
 
@@ -145,15 +115,10 @@ export class InvestmentScenario {
         return this.calculateMonthlyCashFlow() * 12;
     }
 
-    private calculateMonthlyCashFlow(rent: number = this.getRentalAmount()): number {
-        const recurringExpenses = this.getRecurringExpenses();
-        return rent - (this.getMortgageAmountWithFixedMonthlyExpenses() + recurringExpenses);
-    }
-
-    private calculateFutureDatedMonthlyCashFlow(numberOfYearsFromNow: number): number {
-        const futureDatedRecurringExpenses = this.getFutureDatedRecurringExpenses(numberOfYearsFromNow);
-        const futureDatedRentAmount = this.getFutureDatedRentalIncome(numberOfYearsFromNow);
-        const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
+    private calculateMonthlyCashFlow(numberOfYearsFromNow: number = 0): number {
+        const futureDatedRecurringExpenses = this.getRecurringExpenses(numberOfYearsFromNow);
+        const futureDatedRentAmount = this.getRentalAmount(numberOfYearsFromNow);
+        const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
         return futureDatedRentAmount - (futureDatedMortgageAmountWithFixedMonthlyExpenses + futureDatedRecurringExpenses);
     }
 
@@ -166,16 +131,8 @@ export class InvestmentScenario {
         return this.growthProjections.getAnnualAppreciationRate();
     }
 
-    private getAnnualRentIncreaseRate(): number {
-        return this.growthProjections.getAnnualRentIncreaseRate();
-    }
-
-    private getAnnualTaxIncreaseRate(): number {
-        return this.growthProjections.getAnnualTaxIncreaseRate();
-    }
-
-    private getFutureDatedRentalIncome(numberOfYearsFromNow: number): number {
-        return this.mortgageCalculator.getFutureDatedRentalIncome(this.getAnnualRentIncreaseRate(), numberOfYearsFromNow);
+    private getRentalAmount(numberOfYearsFromNow: number = 0): number {
+        return this.mortgageCalculator.getRentalIncome(numberOfYearsFromNow);
     }
 
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
@@ -198,12 +155,9 @@ export class InvestmentScenario {
         let monthlyCashFlow = this.calculateMonthlyCashFlow();
         let accumulatedCashFlow = 0;
 
-        const getMonthlyPaymentAndRecurringCosts = (numberOfYearsFromNow?: number): number => {
-            if (!numberOfYearsFromNow) {
-                return this.getMortgageAmountWithFixedMonthlyExpenses() + this.getRecurringExpenses();
-            }
-            return this.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow) +
-                this.getFutureDatedRecurringExpenses(numberOfYearsFromNow);
+        const getMonthlyPaymentAndRecurringCosts = (numberOfYearsFromNow: number = 0): number => {
+            return this.getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow) +
+                this.getRecurringExpenses(numberOfYearsFromNow);
         };
 
         let monthlyPaymentAndRecurringCosts = getMonthlyPaymentAndRecurringCosts();
@@ -241,12 +195,12 @@ export class InvestmentScenario {
             if (monthCounter > 1) {
                 propertyValue *= (1 + monthlyAppreciationRate);
                 if (monthMod12 - 1 === 0) {
-                    rentalAmount = this.getFutureDatedRentalIncome(yearCounter - 1);
-                    fixedCosts = this.getFutureDatedFixedExpenses(yearCounter - 1);
-                    recurringExpenses = this.getFutureDatedRecurringExpenses(yearCounter - 1);
+                    rentalAmount = this.getRentalAmount(yearCounter - 1);
+                    fixedCosts = this.getFixedExpenses(yearCounter - 1);
+                    recurringExpenses = this.getRecurringExpenses(yearCounter - 1);
                     monthlyPaymentAndRecurringCosts = getMonthlyPaymentAndRecurringCosts(yearCounter - 1);
-                    monthlyPayment = this.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(yearCounter - 1);
-                    monthlyCashFlow = this.calculateFutureDatedMonthlyCashFlow(yearCounter - 1);
+                    monthlyPayment = this.getMortgageAmountWithFixedMonthlyExpenses(yearCounter - 1);
+                    monthlyCashFlow = this.calculateMonthlyCashFlow(yearCounter - 1);
                 }
             }
 

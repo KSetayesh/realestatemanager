@@ -97,9 +97,11 @@ export enum DefaultInvestmentRates {
     OTHER_INITIAL_EXPENSES_RATE = 0,
     CLOSING_COST_RATE = 10, // Estimated closing costs in dollars.
     TERM_IN_YEARS = 30, // Term length of loan in years.
-    ANNUAL_APPRECIATION_RATE = 4,
-    ANNUAL_TAX_INCREASE_RATE = 4,
-    ANNUAL_RENT_INCREASE_RATE = 4,
+    ANNUAL_APPRECIATION_RATE = 2,
+    ANNUAL_TAX_INCREASE_RATE = 2,
+    ANNUAL_RENT_INCREASE_RATE = 2,
+    ANNUAL_HOME_INSURANCE_INCREASE_RATE = 2,
+    ANNUAL_HOA_FEES_INCREASE_RATE = 2,
     PARKING_FEES = 0,
     LAUNDRY_SERVICES = 0,
     STORAGE_UNIT_FEES = 0,
@@ -388,6 +390,8 @@ export interface GrowthProjectionsDTO {
     annualRentIncreaseRate: number;
     annualAppreciationRate: number;
     annualTaxIncreaseRate: number;
+    annualHomeInsuranceIncreaseRate: number;
+    annualHOAFeesIncreaseRate: number;
 };
 
 export interface FinancingTermsDTO {

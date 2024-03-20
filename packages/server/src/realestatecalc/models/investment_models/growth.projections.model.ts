@@ -6,23 +6,41 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
     private annualRentIncreaseRate: number;
     private annualAppreciationRate: number;
     private annualTaxIncreaseRate: number;
+    private annualHomeInsuranceIncreaseRate: number;
+    private annualHOAFeesIncreaseRate: number;
 
-    constructor(annualRentIncreaseRate: number, annualAppreciationRate: number, annualTaxIncreaseRate: number) {
+    constructor(
+        annualRentIncreaseRate: number,
+        annualAppreciationRate: number,
+        annualTaxIncreaseRate: number,
+        annualHomeInsuranceIncreaseRate: number,
+        annualHOAFeesIncreaseRate: number) {
+
         this.annualRentIncreaseRate = annualRentIncreaseRate;
         this.annualAppreciationRate = annualAppreciationRate;
         this.annualTaxIncreaseRate = annualTaxIncreaseRate;
+        this.annualHomeInsuranceIncreaseRate = annualHomeInsuranceIncreaseRate;
+        this.annualHOAFeesIncreaseRate = annualHOAFeesIncreaseRate;
     }
 
-    getAnnualRentIncreaseRate() {
-        return this.annualRentIncreaseRate
+    getAnnualRentIncreaseRate(): number {
+        return this.annualRentIncreaseRate;
     }
 
-    getAnnualAppreciationRate() {
-        return this.annualAppreciationRate
+    getAnnualAppreciationRate(): number {
+        return this.annualAppreciationRate;
     }
 
-    getAnnualTaxIncreaseRate() {
-        return this.annualTaxIncreaseRate
+    getAnnualTaxIncreaseRate(): number {
+        return this.annualTaxIncreaseRate;
+    }
+
+    getAnnualHomeInsuranceIncreaseRate(): number {
+        return this.annualHomeInsuranceIncreaseRate;
+    }
+
+    getAnnualHOAFeesIncreaseRate(): number {
+        return this.annualHOAFeesIncreaseRate;
     }
 
     toDTO(): GrowthProjectionsDTO {
@@ -30,6 +48,8 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
             annualRentIncreaseRate: this.annualRentIncreaseRate,
             annualAppreciationRate: this.annualAppreciationRate,
             annualTaxIncreaseRate: this.annualTaxIncreaseRate,
-        }
+            annualHomeInsuranceIncreaseRate: this.annualHomeInsuranceIncreaseRate,
+            annualHOAFeesIncreaseRate: this.annualHOAFeesIncreaseRate,
+        };
     }
 }
