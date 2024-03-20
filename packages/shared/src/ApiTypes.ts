@@ -98,10 +98,10 @@ export enum DefaultInvestmentRates {
     CLOSING_COST_RATE = 10, // Estimated closing costs in dollars.
     TERM_IN_YEARS = 30, // Term length of loan in years.
     ANNUAL_APPRECIATION_RATE = 2,
-    ANNUAL_TAX_INCREASE_RATE = 2,
+    ANNUAL_TAX_INCREASE_RATE = 1,
     ANNUAL_RENT_INCREASE_RATE = 2,
-    ANNUAL_HOME_INSURANCE_INCREASE_RATE = 2,
-    ANNUAL_HOA_FEES_INCREASE_RATE = 2,
+    ANNUAL_HOME_INSURANCE_INCREASE_RATE = 1,
+    ANNUAL_HOA_FEES_INCREASE_RATE = 1,
     PARKING_FEES = 0,
     LAUNDRY_SERVICES = 0,
     STORAGE_UNIT_FEES = 0,
@@ -172,9 +172,11 @@ export type AdditionalIncomeStreamsRequest = {
 };
 
 export type GrowthProjectionsRequest = {
-    annualRentIncreaseRate: number; // Expected annual percentage increase in rent.
-    annualAppreciationRate: number; // Expected annual percentage increase in property value.
-    annualTaxIncreaseRate?: number; // Expected annual percentage increase in property taxes.
+    annualRentIncreaseRate: number;
+    annualAppreciationRate: number;
+    annualTaxIncreaseRate?: number;
+    annualHomeInsuranceIncreaseRate?: number;
+    annualHOAFeesIncreaseRate?: number;
 };
 
 export interface LoanDetailsRequest {

@@ -736,8 +736,16 @@ export const getAnnualAppreciationRate = (property: ListingWithScenariosDTO): nu
     return property.metrics[0].growthProjections.annualAppreciationRate;
 };
 
+export const getAnnualHOAFeesIncreaseRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].growthProjections.annualHOAFeesIncreaseRate;
+};
+
 export const getAnnualTaxIncreaseRate = (property: ListingWithScenariosDTO): number => {
     return property.metrics[0].growthProjections.annualTaxIncreaseRate;
+};
+
+export const getAnnualHomeInsuranceIncreaseRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].growthProjections.annualHomeInsuranceIncreaseRate;
 };
 
 export const getParkingFees = (property: ListingWithScenariosDTO): number => {

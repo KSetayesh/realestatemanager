@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 import PropertyDetailsModal from './PropertyDetailsModal';
-import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
+import { createDefaultRowData, defaultColumns, getAnnualHOAFeesIncreaseRate, getAnnualHomeInsuranceIncreaseRate } from '../components/TableColumn';
 import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
 import {
     getAnnualAppreciationRate,
@@ -77,6 +77,8 @@ export type InvestmentFormData = {
     annualRentIncreaseRate: number,
     annualAppreciationRate: number,
     annualTaxIncreaseRate: number,
+    annualHomeInsuranceIncreaseRate: number,
+    annualHOAFeesIncreaseRate: number,
     parkingFees: number,
     laundryServices: number,
     storageUnitFees: number,
@@ -131,6 +133,8 @@ const InvestmentBreakdown: React.FC = () => {
             annualRentIncreaseRate: getAnnualRentIncreaseRate(property),
             annualAppreciationRate: getAnnualAppreciationRate(property),
             annualTaxIncreaseRate: getAnnualTaxIncreaseRate(property),
+            annualHomeInsuranceIncreaseRate: getAnnualHomeInsuranceIncreaseRate(property),
+            annualHOAFeesIncreaseRate: getAnnualHOAFeesIncreaseRate(property),
             parkingFees: getParkingFees(property),
             laundryServices: getLaundryServices(property),
             storageUnitFees: getStorageUnitFees(property),
@@ -575,6 +579,18 @@ const InvestmentBreakdown: React.FC = () => {
             type: InputType.NUMBER,
         },
         {
+            title: 'Annual Home Insurance Increase Rate (%)',
+            name: 'annualHomeInsuranceIncreaseRate',
+            value: formData.annualHomeInsuranceIncreaseRate,
+            type: InputType.NUMBER,
+        },
+        {
+            title: 'Annual HOA Fees Increase Rate (%)',
+            name: 'annualHOAFeesIncreaseRate',
+            value: formData.annualHOAFeesIncreaseRate,
+            type: InputType.NUMBER,
+        },
+        {
             title: 'Parking Fees',
             name: 'parkingFees',
             value: formData.parkingFees,
@@ -706,6 +722,8 @@ const InvestmentBreakdown: React.FC = () => {
                     annualRentIncreaseRate: Number(formData.annualRentIncreaseRate),
                     annualAppreciationRate: Number(formData.annualAppreciationRate),
                     annualTaxIncreaseRate: Number(formData.annualTaxIncreaseRate),
+                    annualHomeInsuranceIncreaseRate: Number(formData.annualHomeInsuranceIncreaseRate),
+                    annualHOAFeesIncreaseRate: Number(formData.annualHOAFeesIncreaseRate),
                 },
                 additionalIncomeStreams: {
                     parkingFees: Number(formData.parkingFees),

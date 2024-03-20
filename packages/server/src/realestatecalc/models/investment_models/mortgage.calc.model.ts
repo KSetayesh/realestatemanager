@@ -54,8 +54,7 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
     }
 
     getFixedExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.financialTransactions.getTotalFixedExpenses(
-            numberOfYearsFromNow);
+        return this.financialTransactions.getTotalFixedExpenses(numberOfYearsFromNow);
     }
 
     getNumberOfPayments(): number {

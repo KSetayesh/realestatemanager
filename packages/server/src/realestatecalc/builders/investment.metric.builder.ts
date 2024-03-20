@@ -137,9 +137,6 @@ export class InvestmentMetricBuilder {
             annualHOAFeesIncreaseRate,
         );
 
-        // Move this somewhere else
-        // const downPaymentAmount = Utility.round(purchasePrice * (downPaymentPercentage / 100));
-
         const initialCostsBreakdown: InitialCostsBreakdown = new InitialCostsBreakdown(
             downPayment.amount,
             legalAndProfessionalFees,
@@ -169,12 +166,6 @@ export class InvestmentMetricBuilder {
             pmiRate,
             pmiDropoffPoint
         );
-
-        // const fixedMonthlyExpenses: FixedMonthlyExpenses = new FixedMonthlyExpenses(
-        //     monthlyPropertyTax,
-        //     monthlyHomeInsuranceAmount,
-        //     monthlyHOAFeesAmount
-        // );
 
         const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
 
@@ -235,31 +226,6 @@ export class InvestmentMetricBuilder {
 
         const financialTransactions: FinancialTransactions =
             new FinancialTransactions(transactionsList);
-
-        // const recurringExpensesBreakdown: RecurringMonthlyExpenses = new RecurringMonthlyExpenses(
-        //     propertyManagementRate,
-        //     vacancyRate,
-        //     maintenanceRate,
-        //     otherExpensesRate,
-        //     capExReserveRate,
-        // );
-
-        // const additionalIncomeStreams: AdditionalIncomeStreams = new AdditionalIncomeStreams(
-        //     parkingFees,
-        //     laundryServices,
-        //     storageUnitFees,
-        //     otherAdditionalIncomeStreams,
-        // );
-
-        // const rentIncome: RentIncome = new RentIncome(rentEstimate);
-
-        // const incomes: Incomes = new Incomes(additionalIncomeStreams, rentIncome);
-
-        // const expenses: Expenses = new Expenses(fixedMonthlyExpenses, recurringExpensesBreakdown);
-
-        // const financialTransactions: FinancialTransactions = this.createFinancialTransactions();
-
-        // const financialTransaction: FinancialTransaction = new FinancialTransaction(incomes, expenses);
 
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,
@@ -546,14 +512,14 @@ export class InvestmentMetricBuilder {
         if (this._useDefaultRequest()) {
             return DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
         }
-        return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
+        return this.getGrowthProjections().annualHomeInsuranceIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
     }
 
     private getAnnualHOAFeesIncreaseRate(): number {
         if (this._useDefaultRequest()) {
             return DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
         }
-        return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
+        return this.getGrowthProjections().annualHOAFeesIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
     }
 
     private getParkingFees(): number {
