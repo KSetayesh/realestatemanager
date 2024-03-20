@@ -16,6 +16,7 @@ export class AgentController {
     async addNewAgent(
         @Body() agent: AgentsDTO
     ): Promise<void> {
+        console.log('agent:', agent);
         await this.calcService.addNewAgent(agent);
     }
 

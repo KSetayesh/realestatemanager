@@ -31,7 +31,7 @@ const PropertyForm: React.FC = () => {
             name: 'state',
             label: 'State',
             type: InputType.SELECT,
-            defaultValue: '',
+            defaultValue: State.AL,
             selections: Object.values(State)
         },
         {

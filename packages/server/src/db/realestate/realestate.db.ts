@@ -77,9 +77,10 @@ export class RealEstateManager {
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
 
-    private INSERT_AGENT_QUERY = `INSERT INTO agents
+    private INSERT_AGENT_QUERY = `INSERT INTO agent
             (first_name,
             last_name,
+            company_name,
             phone_number,
             state,
             country,
@@ -107,6 +108,7 @@ export class RealEstateManager {
             const values: any[] = [
                 agent.firstName,
                 agent.lastName,
+                agent.companyName,
                 agent.phoneNumber,
                 agent.state,
                 agent.country,

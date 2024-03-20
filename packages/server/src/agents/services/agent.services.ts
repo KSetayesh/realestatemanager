@@ -19,7 +19,7 @@ export class AgentService {
         });
     }
 
-    async addNewAgent(agent: AgentsDTO) {
+    async addNewAgent(agent: AgentsDTO): Promise<void> {
         await this.realEstateManager.insertAgent(agent);
     }
 }

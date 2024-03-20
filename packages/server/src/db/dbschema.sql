@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS agent (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    companyName VARCHAR(250),
+    company_name VARCHAR(250),
     phone_number VARCHAR(15),
     state VARCHAR(50),
     country VARCHAR(50),

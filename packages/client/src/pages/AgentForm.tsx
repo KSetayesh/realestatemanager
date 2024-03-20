@@ -14,7 +14,7 @@ type AgentFormData = {
     agentType: string;
 };
 
-const Agents: React.FC = () => {
+const AgentForm: React.FC = () => {
 
     const agentApi: AgentApi = new AgentApi();
 
@@ -25,9 +25,9 @@ const Agents: React.FC = () => {
             lastName: '',
             companyName: '',
             phoneNumber: '',
-            country: '',
-            state: '',
-            agentType: '',
+            country: Country.UnitedStates,
+            state: State.AL,
+            agentType: AgentType.REAL_ESTATE_AGENT,
         };
     };
 
@@ -47,12 +47,13 @@ const Agents: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const added: boolean = await agentApi.addNewAgent(getAgentRequest());
-        if (added) {
-            console.log("Agent has been successfully added!");
+        const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
+        if (postSuccess) {
+            alert('Agent has been successfully added!');
+            window.location.reload();
         }
         else {
-            console.log("There was an error adding agent");
+            alert('Failed to submit data.');
         }
     };
 
@@ -128,7 +129,7 @@ const Agents: React.FC = () => {
         },
         {
             title: 'Agent Type',
-            name: 'agent',
+            name: 'agentType',
             value: formData.agentType,
             type: InputType.SELECT,
             options: Object.values(AgentType).map((enumValue => {
@@ -142,7 +143,7 @@ const Agents: React.FC = () => {
 
     return (
         <div>
-            <h2> Add new Agent </h2>
+            <h2> Add New Agent </h2>
             {formData && (
                 <CalculateForm
                     formDetails={formDetails}
@@ -157,4 +158,4 @@ const Agents: React.FC = () => {
 };
 
 
-export default Agents;
+export default AgentForm;
