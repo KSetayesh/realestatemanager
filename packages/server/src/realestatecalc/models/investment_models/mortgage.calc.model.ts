@@ -1,27 +1,28 @@
-import { AmountAndPercentageDTO, MortgageDetailsDTO, Utility } from "@realestatemanager/shared";
+import { MortgageDetailsDTO, Utility } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { FinancialTransactions } from "./transaction_models/financial.transactions";
+import { FinancialTransaction } from "./transaction_models/financial.transaction";
+import { Transaction } from "./transaction_models/transaction.model";
 
 export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
 
     private purchasePrice: number;
-    private downpayment: AmountAndPercentageDTO;
+    private downpayment: Transaction;
     private financingTerms: FinancingTerms;
-    private financialTransactions: FinancialTransactions;
+    private financialTransaction: FinancialTransaction;
     private pmiDetails?: PMIDetails;
 
     constructor(purchasePrice: number,
-        downpayment: AmountAndPercentageDTO,
+        downpayment: Transaction,
         financingTerms: FinancingTerms,
-        financialTransactions: FinancialTransactions,
+        financialTransaction: FinancialTransaction,
         pmiDetails?: PMIDetails) {
 
         this.purchasePrice = purchasePrice;
         this.downpayment = downpayment;
         this.financingTerms = financingTerms;
-        this.financialTransactions = financialTransactions;
+        this.financialTransaction = financialTransaction;
         this.pmiDetails = pmiDetails;
     }
 
@@ -34,7 +35,7 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
     }
 
     getDownPaymentAmount(): number {
-        return this.downpayment.amount;
+        return this.downpayment.getProjectedValue();
     }
 
     getLoanPercentage(): number {
@@ -42,28 +43,32 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
     }
 
     getDownPaymentPercentage(): number {
-        return this.downpayment.percentage;
+        return this.downpayment.getRate();
     }
 
-    getRentalIncome(numberOfYearsFromNow: number = 0): number {
-        return this.financialTransactions.getRentalIncome(numberOfYearsFromNow);
+    getRentalIncome(numberOfYears: number = 0): number {
+        return this.financialTransaction.getRentalIncome(numberOfYears);
     }
 
-    getRecurringExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.financialTransactions.getTotalRecurringExpenses(numberOfYearsFromNow);
+    getRecurringExpenses(numberOfYears: number = 0): number {
+        return this.financialTransaction.getRecurringExpenses(numberOfYears);
     }
 
-    getFixedExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.financialTransactions.getTotalFixedExpenses(numberOfYearsFromNow);
+    getFixedExpenses(numberOfYears: number = 0): number {
+        return this.financialTransaction.getFixedExpenses(numberOfYears);
+    }
+
+    getInitialCosts(): number {
+        return this.financialTransaction.getInitialCosts();
     }
 
     getNumberOfPayments(): number {
         return this.financingTerms.getNumberOfPayments();
     }
 
-    getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow: number = 0): number {
+    getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
         const mortgagePayment = this.calculateMortgagePayment();
-        const fixedExpenses = this.getFixedExpenses(numberOfYearsFromNow);
+        const fixedExpenses = this.getFixedExpenses(numberOfYears);
         return mortgagePayment + fixedExpenses;
     }
 
@@ -123,7 +128,7 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
                 percentage: Utility.round(this.getLoanPercentage()),
             },
             financingTerms: this.financingTerms.toDTO(),
-            transactions: this.financialTransactions.toDTO(),
+            transactions: this.financialTransaction.toDTO(),
             pmiDetails: this.pmiDetails.toDTO(),
         }
     }

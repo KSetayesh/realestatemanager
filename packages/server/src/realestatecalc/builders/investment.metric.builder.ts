@@ -5,7 +5,6 @@ import {
     getRateFromValueInput
 } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
-import { InitialCostsBreakdown } from "../models/investment_models/initialcosts.model";
 import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";
 import { TaxImplications } from "../models/investment_models/tax.implications.model";
 import {
@@ -19,26 +18,17 @@ import {
     MortgageDetailsRequest,
     OperatingExpensesRequest,
     TaxImplicationsRequest,
+    ValueAmountInput,
+    ValueInput,
+    ValueRateInput,
+    ValueType,
 } from "@realestatemanager/shared";
 import { FinancingTerms } from "../models/investment_models/financing.terms.model";
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { FinancialTransactions } from "../models/investment_models/transaction_models/financial.transactions";
-import { MonthlyPropertyTaxAmount } from "../models/investment_models/transaction_models/monthly.property.tax.expenses.model";
-import { MonthlyHomeInsuranceAmount } from "../models/investment_models/transaction_models/monthly.home.insurance.expenses.model";
-import { MonthlyHOAFeesAmount } from "../models/investment_models/transaction_models/monthly.hoa.fees.expenses.model";
-import { RentalIncome } from "../models/investment_models/transaction_models/rental.income.model";
-import { ParkingFeesIncome } from "../models/investment_models/transaction_models/parking.fees.income.model";
 import { TransactionBuilder } from "./transaction.builder";
-import { LaundryServiceIncome } from "../models/investment_models/transaction_models/laundry.service.income.model";
-import { StorageUnitFees } from "../models/investment_models/transaction_models/storage.unit.fees.model";
-import { OtherAdditionalIncomeStreams } from "../models/investment_models/transaction_models/other.additional.streams.income.model";
-import { PropertyManagementExpense } from "../models/investment_models/transaction_models/property.management.expense.model";
-import { VacancyExpense } from "../models/investment_models/transaction_models/vacany.expense.model";
-import { MaintenanceExpense } from "../models/investment_models/transaction_models/maintenance.expense.model";
-import { OtherExpenses } from "../models/investment_models/transaction_models/other.expenses.model";
-import { CapitalExpenditureReserveExpenses } from "../models/investment_models/transaction_models/capex.expenses.model";
-import { Transaction } from "../models/investment_models/transaction_models/transaction.model";
+import { InitialCostsBreakdown } from "../models/investment_models/breakdown_models/initial.costs.breakdown.model";
+import { AmountTransaction } from "../models/investment_models/transaction_models/amount.transaction.model";
 
 export class InvestmentMetricBuilder {
 
@@ -67,59 +57,59 @@ export class InvestmentMetricBuilder {
 
         const interestType: InterestType = this.getInterestType();
 
-        const downPayment: AmountAndPercentageDTO = this.getDownPayment();
+        const downPayment: ValueInput = this.getDownPayment();
 
         const pmiRate: number = this.getPMIRate();
 
         const pmiDropoffPoint: number = this.getPMIDropoffPoint();
 
-        const monthlyPropertyTax: number = this.getMonthlyPropertyTax();
+        const monthlyPropertyTax: ValueInput = this.getMonthlyPropertyTax();
 
-        const monthlyHomeInsuranceAmount: number = this.getMonthlyHomeInsuranceAmount();
+        const monthlyHomeInsuranceAmount: ValueInput = this.getMonthlyHomeInsuranceAmount();
 
-        const monthlyHOAFeesAmount: number = this.getMonthlyHOAFeesAmount();
+        const monthlyHOAFeesAmount: ValueInput = this.getMonthlyHOAFeesAmount();
 
-        const propertyManagementRate: number = this.getPropertyManagementRate();
+        const propertyManagementRate: ValueInput = this.getPropertyManagementRate();
 
-        const vacancyRate: number = this.getVacanyRate();
+        const vacancyRate: ValueRateInput = this.getVacanyRate();
 
-        const maintenanceRate: number = this.getMaintenanceRate();
+        const maintenanceRate: ValueRateInput = this.getMaintenanceRate();
 
-        const otherExpensesRate: number = this.getOtherExpensesRate();
+        const otherExpensesRate: ValueRateInput = this.getOtherExpensesRate();
 
-        const capExReserveRate: number = this.getCapExReserveRate();
+        const capExReserveRate: ValueRateInput = this.getCapExReserveRate();
 
-        const legalAndProfessionalFees: number = this.getLegalAndProfessionalFees();
+        const legalAndProfessionalFees: ValueInput = this.getLegalAndProfessionalFees();
 
-        const initialRepairCosts: AmountAndPercentageDTO = this.getInitialRepairCosts();
+        const initialRepairCosts: ValueInput = this.getInitialRepairCosts();
 
-        const travelingCosts: number = this.getTravelingCosts();
+        const travelingCosts: ValueInput = this.getTravelingCosts();
 
-        const closingCosts: AmountAndPercentageDTO = this.getClosingCosts();
+        const closingCosts: ValueInput = this.getClosingCosts();
 
-        const otherInitialExpenses: AmountAndPercentageDTO = this.getOtherInitialExpenses();
+        const otherInitialExpenses: ValueInput = this.getOtherInitialExpenses();
 
-        const rentEstimate: number = this.getRentEstimate();
+        const rentEstimate: ValueAmountInput = this.getRentEstimate();
 
         const purchasePrice: number = this.getPurchasePrice();
 
-        const annualRentIncreaseRate: number = this.getAnnualRentIncreaseRate();
+        const annualRentIncreaseRate: ValueRateInput = this.getAnnualRentIncreaseRate();
 
-        const annualAppreciationRate: number = this.getAnnualAppreciationRate();
+        const annualAppreciationRate: ValueRateInput = this.getAnnualAppreciationRate();
 
-        const annualTaxIncreaseRate: number = this.getAnnualTaxIncreaseRate();
+        const annualTaxIncreaseRate: ValueRateInput = this.getAnnualTaxIncreaseRate();
 
-        const annualHomeInsuranceIncreaseRate: number = this.getAnnualHomeInsuranceIncreaseRate();
+        const annualHomeInsuranceIncreaseRate: ValueRateInput = this.getAnnualHomeInsuranceIncreaseRate();
 
-        const annualHOAFeesIncreaseRate: number = this.getAnnualHOAFeesIncreaseRate();
+        const annualHOAFeesIncreaseRate: ValueRateInput = this.getAnnualHOAFeesIncreaseRate();
 
-        const parkingFees: number = this.getParkingFees();
+        const parkingFees: ValueAmountInput = this.getParkingFees();
 
-        const laundryServices: number = this.getLaundryServices();
+        const laundryServices: ValueAmountInput = this.getLaundryServices();
 
-        const storageUnitFees: number = this.getStorageUnitFees();
+        const storageUnitFees: ValueAmountInput = this.getStorageUnitFees();
 
-        const otherAdditionalIncomeStreams: number = this.getOtherAdditionalIncomeStreams();
+        const otherAdditionalIncomeStreams: ValueAmountInput = this.getOtherAdditionalIncomeStreams();
 
         const depreciation: number = this.getTaxDepreciation();
 
@@ -137,14 +127,42 @@ export class InvestmentMetricBuilder {
             annualHOAFeesIncreaseRate,
         );
 
-        const initialCostsBreakdown: InitialCostsBreakdown = new InitialCostsBreakdown(
-            downPayment.amount,
-            legalAndProfessionalFees,
-            initialRepairCosts,
-            closingCosts,
-            travelingCosts,
-            otherInitialExpenses,
-        );
+        const txnBuilder: TransactionBuilder = new TransactionBuilder({
+            growthProjections: growthProjections,
+            downPayment: downPayment,
+            monthlyPropertyTax: monthlyPropertyTax,
+            monthlyHomeInsuranceAmount: monthlyHomeInsuranceAmount,
+            monthlyHOAFeesAmount: monthlyHOAFeesAmount,
+            propertyManagementRate: propertyManagementRate,
+            vacancyRate: vacancyRate,
+            maintenanceRate: maintenanceRate,
+            otherExpensesRate: otherExpensesRate,
+            capExReserveRate: capExReserveRate,
+            rentEstimate: rentEstimate,
+            parkingFees: parkingFees,
+            laundryServices: laundryServices,
+            storageUnitFees: storageUnitFees,
+            otherAdditionalIncomeStreams: otherAdditionalIncomeStreams,
+            legalAndProfessionalFees: legalAndProfessionalFees,
+            initialRepairCosts: initialRepairCosts,
+            travelingCosts: travelingCosts,
+            closingCosts: closingCosts,
+            otherInitialExpenses: otherInitialExpenses,
+        });
+
+        // amountValue: ValueAmountInput,
+        //     amountComparedTo: ValueAmountInput,
+        //         growthRate: ValueRateInput = { type: ValueType.RATE, rate: 0 },
+        //             description: string = ''
+
+        // const initialCostsBreakdown: InitialCostsBreakdown = new InitialCostsBreakdown(
+        //     new AmountTransaction(downPayment.amount),
+        //     legalAndProfessionalFees,
+        //     initialRepairCosts,
+        //     closingCosts,
+        //     travelingCosts,
+        //     otherInitialExpenses,
+        // );
 
         const taxImplications: TaxImplications = new TaxImplications(
             depreciation,
@@ -167,77 +185,18 @@ export class InvestmentMetricBuilder {
             pmiDropoffPoint
         );
 
-        const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
-
-        const rentalIncomeObj: RentalIncome =
-            txnBuilder.createRentalIncomeObj(rentEstimate);
-
-        const parkingFeesObj: ParkingFeesIncome =
-            txnBuilder.createParkingFeesObj(parkingFees);
-
-        const laundryServicesObj: LaundryServiceIncome =
-            txnBuilder.createLaundryServiceObj(laundryServices);
-
-        const storageUnitFeesObj: StorageUnitFees =
-            txnBuilder.createStorageUnitFeesObj(storageUnitFees);
-
-        const otherAdditionalIncomeStreamsObj: OtherAdditionalIncomeStreams =
-            txnBuilder.createOtherAdditionalIncomeStreamsObj(otherAdditionalIncomeStreams);
-
-        const monthlyPropertyTaxObj: MonthlyPropertyTaxAmount =
-            txnBuilder.createMonthlyPropertyTaxObj(monthlyPropertyTax);
-
-        const monthlyHomeInsuranceAmountObj: MonthlyHomeInsuranceAmount =
-            txnBuilder.createMonthlyHomeInsuranceAmountObj(monthlyHomeInsuranceAmount);
-
-        const monthlyHOAFeesAmountObj: MonthlyHOAFeesAmount =
-            txnBuilder.createMonthlyHOAFeesAmountObj(monthlyHOAFeesAmount);
-
-        const propertyManagementRateObj: PropertyManagementExpense =
-            txnBuilder.createPropertyManagementRateObj(propertyManagementRate, rentalIncomeObj);
-
-        const vacancyRateObj: VacancyExpense =
-            txnBuilder.createVacancyRateObj(vacancyRate, rentalIncomeObj);
-
-        const maintenanceRateObj: MaintenanceExpense =
-            txnBuilder.createMaintenanceRateObj(maintenanceRate, rentalIncomeObj);
-
-        const otherExpensesRateObj: OtherExpenses =
-            txnBuilder.createOtherExpensesRateObj(otherExpensesRate, rentalIncomeObj);
-
-        const capExReserveRateObj: CapitalExpenditureReserveExpenses =
-            txnBuilder.createCapExReserveRateObj(capExReserveRate, rentalIncomeObj);
-
-        const transactionsList: Transaction[] = [
-            rentalIncomeObj,
-            parkingFeesObj,
-            laundryServicesObj,
-            storageUnitFeesObj,
-            otherAdditionalIncomeStreamsObj,
-            monthlyPropertyTaxObj,
-            monthlyHomeInsuranceAmountObj,
-            monthlyHOAFeesAmountObj,
-            propertyManagementRateObj,
-            vacancyRateObj,
-            maintenanceRateObj,
-            otherExpensesRateObj,
-            capExReserveRateObj,
-        ];
-
-        const financialTransactions: FinancialTransactions =
-            new FinancialTransactions(transactionsList);
-
+        // const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
+        
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,
-            downPayment,
+            txnBuilder.createDownPaymentAmount(purchasePrice),
             financingTerms,
-            financialTransactions,
+            txnBuilder.build(purchasePrice),
             pmiDetails,
         );
 
         return new InvestmentScenario(
             growthProjections,
-            initialCostsBreakdown,
             mortgageCalculator,
             taxImplications,
         );
@@ -290,30 +249,16 @@ export class InvestmentMetricBuilder {
         return this.getMortgageDetails().interestType ?? getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
     }
 
-    private getDownPayment(): AmountAndPercentageDTO {
-        const description = '';
+    private getDownPayment(): ValueInput {
+        const defaultDownPayment: ValueRateInput = {
+            rate: DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            // Move this somewhere
-            const purchasePrice = this.listingDetails.getListingPrice();
-            const downPaymentPercentage = DefaultInvestmentRates.DOWN_PAYMENT_PERCENTAGE.valueOf();
-            const downPaymentAmount = purchasePrice * (downPaymentPercentage / 100);
-            return {
-                description: description,
-                amount: downPaymentAmount,
-                percentage: downPaymentPercentage,
-            };
+            return defaultDownPayment;
         }
 
-        const purchasePrice = this.getInvestmentDetails().purchasePrice;
-        const downPayment = this.getMortgageDetails().downPayment;
-        const downPaymentPercentage = getRateFromValueInput(downPayment, purchasePrice);
-        const downPaymentAmount = getAmountFromValueInput(downPayment, purchasePrice);
-
-        return {
-            description: description,
-            amount: downPaymentAmount,
-            percentage: downPaymentPercentage,
-        };
+        return this.getMortgageDetails().downPayment ?? defaultDownPayment;
     }
 
     private getPMIRate(): number {
@@ -330,147 +275,149 @@ export class InvestmentMetricBuilder {
         return this.getMortgageDetails().pmiDropoffPoint ?? DefaultInvestmentRates.PMI_DROP_OFF_POINT;
     }
 
-    private getMonthlyPropertyTax(): number {
-        if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyPropertyTaxAmount() ?? 0;
-        }
-        return getAmountFromValueInput(this.getMortgageDetails().monthlyPropertyTax);
-    }
-
-    private getMonthlyHomeInsuranceAmount(): number {
-        if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyHomeInsuranceAmount() ?? 0;
-        }
-        return getAmountFromValueInput(this.getMortgageDetails().monthlyHomeInsuranceAmount);
-    }
-
-    private getMonthlyHOAFeesAmount(): number {
-        if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowMonthlyHOAFeesAmount() ?? 0;
-        }
-        return getAmountFromValueInput(this.getMortgageDetails().monthlyHOAFeesAmount);
-    }
-
-    private getPropertyManagementRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
-        }
-        return this.getOperatingExpenses().propertyManagementRate ?? DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE;
-    }
-
-    private getVacanyRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.VACANCY_RATE;
-        }
-        return this.getOperatingExpenses().vacancyRate ?? DefaultInvestmentRates.VACANCY_RATE;
-    }
-
-    private getMaintenanceRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.MAINTENANCE_RATE;
-        }
-        return this.getOperatingExpenses().maintenanceRate ?? DefaultInvestmentRates.MAINTENANCE_RATE;
-    }
-
-    private getOtherExpensesRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.OTHER_EXPENSES_RATE;
-        }
-        return this.getOperatingExpenses().otherExpensesRate ?? DefaultInvestmentRates.OTHER_EXPENSES_RATE;
-    }
-
-    private getCapExReserveRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
-        }
-        return this.getOperatingExpenses().capExReserveRate ?? DefaultInvestmentRates.CAP_EX_RESERVE_RATE;
-    }
-
-    private getLegalAndProfessionalFees(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
-        }
-        return getAmountFromValueInput(this.getOperatingExpenses().legalAndProfessionalFees) ?? DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES;
-    }
-
-    private getInitialRepairCosts(): AmountAndPercentageDTO {
-        const description = '';
-        if (this._useDefaultRequest()) {
-            const purchasePrice = this.listingDetails.getListingPrice();
-            const initialRepairCostsRate = DefaultInvestmentRates.INITIAL_REPAIR_COST_RATE.valueOf();
-            const initialRepairCostsAmount = purchasePrice * (initialRepairCostsRate / 100);
-            return {
-                description: description,
-                amount: initialRepairCostsAmount,
-                percentage: initialRepairCostsRate,
-            };
-        }
-
-        const purchasePrice = this.getInvestmentDetails().purchasePrice;
-        const initialRepairCosts = this.getOperatingExpenses().initialRepairCosts;
-        const initialRepairCostsPercentage = getRateFromValueInput(initialRepairCosts, purchasePrice);
-        const initialRepairCostsAmount = getAmountFromValueInput(initialRepairCosts, purchasePrice);
-
-        return {
-            description: description,
-            amount: initialRepairCostsAmount,
-            percentage: initialRepairCostsPercentage,
+    private getMonthlyPropertyTax(): ValueInput {
+        const defaultMonthlyPropertyTax: ValueAmountInput = {
+            amount: this.listingDetails.getZillowMonthlyPropertyTaxAmount() ?? 0,
+            type: ValueType.AMOUNT,
         };
+        if (this._useDefaultRequest()) {
+            return defaultMonthlyPropertyTax;
+        }
+        return this.getMortgageDetails().monthlyPropertyTax ?? defaultMonthlyPropertyTax;
     }
 
-    private getTravelingCosts(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.TRAVELING_COSTS;
-        }
-        return getAmountFromValueInput(this.getOperatingExpenses().travelingCosts) ?? DefaultInvestmentRates.TRAVELING_COSTS;
-    }
-
-    private getClosingCosts(): AmountAndPercentageDTO {
-        const description = '';
-        if (this._useDefaultRequest()) {
-            const purchasePrice = this.listingDetails.getListingPrice();
-            const closingCostsRate = DefaultInvestmentRates.CLOSING_COST_RATE.valueOf();
-            const closingCostsAmount = purchasePrice * (closingCostsRate / 100);
-            return {
-                description: description,
-                amount: closingCostsAmount,
-                percentage: closingCostsRate,
-            };
-        }
-
-        const purchasePrice = this.getInvestmentDetails().purchasePrice;
-        const closingCosts = this.getOperatingExpenses().closingCosts;
-        const closingCostsRate = getRateFromValueInput(closingCosts, purchasePrice);
-        const closingCostsAmount = getAmountFromValueInput(closingCosts, purchasePrice)
-        return {
-            description: description,
-            amount: closingCostsAmount,
-            percentage: closingCostsRate,
+    private getMonthlyHomeInsuranceAmount(): ValueInput {
+        const defaultMonthlyHomeInsuranceAmount: ValueAmountInput = {
+            amount: this.listingDetails.getZillowMonthlyHomeInsuranceAmount() ?? 0,
+            type: ValueType.AMOUNT,
         };
+        if (this._useDefaultRequest()) {
+            return defaultMonthlyHomeInsuranceAmount;
+        }
+        return this.getMortgageDetails().monthlyHomeInsuranceAmount ?? defaultMonthlyHomeInsuranceAmount;
     }
 
-    private getOtherInitialExpenses(): AmountAndPercentageDTO {
-        const description = '';
+    private getMonthlyHOAFeesAmount(): ValueInput {
+        const defaultMonthlyHOAFeesAmount: ValueAmountInput = {
+            amount: this.listingDetails.getZillowMonthlyHOAFeesAmount() ?? 0,
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            const purchasePrice = this.listingDetails.getListingPrice();
-            const otherInitialExpensesRate = DefaultInvestmentRates.OTHER_INITIAL_EXPENSES_RATE.valueOf();
-            const otherInitialExpensesAmount = purchasePrice * (otherInitialExpensesRate / 100);
-            return {
-                description: description,
-                amount: otherInitialExpensesAmount,
-                percentage: otherInitialExpensesRate,
-            };
+            return defaultMonthlyHOAFeesAmount;
+        }
+        return this.getMortgageDetails().monthlyHOAFeesAmount ?? defaultMonthlyHOAFeesAmount;
+    }
+
+    private getPropertyManagementRate(): ValueRateInput {
+        const defaultPropertyManagementRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.PROPERTY_MANAGEMENT_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultPropertyManagementRate;
+        }
+        return this.getOperatingExpenses().propertyManagementRate ?? defaultPropertyManagementRate;
+    }
+
+    private getVacanyRate(): ValueRateInput {
+        const defaultVacancyRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.VACANCY_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultVacancyRate;
+        }
+        return this.getOperatingExpenses().vacancyRate ?? defaultVacancyRate;
+    }
+
+    private getMaintenanceRate(): ValueRateInput {
+        const defaultMaintenanceRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.MAINTENANCE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultMaintenanceRate;
+        }
+        return this.getOperatingExpenses().maintenanceRate ?? defaultMaintenanceRate;
+    }
+
+    private getOtherExpensesRate(): ValueRateInput {
+        const defaultOtherExpensesRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.OTHER_EXPENSES_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultOtherExpensesRate;
+        }
+        return this.getOperatingExpenses().otherExpensesRate ?? defaultOtherExpensesRate;
+    }
+
+    private getCapExReserveRate(): ValueRateInput {
+        const defaultCapExReserveRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.CAP_EX_RESERVE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultCapExReserveRate;
+        }
+        return this.getOperatingExpenses().capExReserveRate ?? defaultCapExReserveRate;
+    }
+
+    private getLegalAndProfessionalFees(): ValueInput {
+        const defaultLegalAndProfessionalFees: ValueAmountInput = {
+            amount: DefaultInvestmentRates.LEGAL_AND_PROFESSIONAL_FEES.valueOf(),
+            type: ValueType.AMOUNT,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultLegalAndProfessionalFees;
+        }
+        return this.getOperatingExpenses().legalAndProfessionalFees ?? defaultLegalAndProfessionalFees;
+    }
+
+    private getInitialRepairCosts(): ValueInput {
+        const defaultInitialRepairCosts: ValueRateInput = {
+            rate: DefaultInvestmentRates.INITIAL_REPAIR_COST_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultInitialRepairCosts;
+        }
+        return this.getOperatingExpenses().initialRepairCosts ?? defaultInitialRepairCosts;
+    }
+
+    private getTravelingCosts(): ValueInput {
+        const defaultTravelingCosts: ValueAmountInput = {
+            amount: DefaultInvestmentRates.TRAVELING_COSTS.valueOf(),
+            type: ValueType.AMOUNT,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultTravelingCosts;
+        }
+        return this.getOperatingExpenses().travelingCosts ?? defaultTravelingCosts;
+    }
+
+    private getClosingCosts(): ValueInput {
+        const defaultClosingCosts: ValueRateInput = {
+            rate: DefaultInvestmentRates.CLOSING_COST_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultClosingCosts;
         }
 
-        const purchasePrice = this.getInvestmentDetails().purchasePrice;
-        const otherInitialExpenses = this.getOperatingExpenses().otherInitialExpenses;
-        const otherInitialExpensesRate = getRateFromValueInput(otherInitialExpenses, purchasePrice);
-        const otherInitialExpensesAmount = getAmountFromValueInput(otherInitialExpenses, purchasePrice)
-        return {
-            description: description,
-            amount: otherInitialExpensesAmount,
-            percentage: otherInitialExpensesRate,
+        return this.getOperatingExpenses().closingCosts ?? defaultClosingCosts;
+    }
+
+    private getOtherInitialExpenses(): ValueInput {
+        const defaultOtherInitialExpenses: ValueRateInput = {
+            rate: DefaultInvestmentRates.OTHER_INITIAL_EXPENSES_RATE.valueOf(),
+            type: ValueType.RATE,
         };
+        if (this._useDefaultRequest()) {
+            return defaultOtherInitialExpenses;
+        }
+
+        return this.getOperatingExpenses().otherInitialExpenses ?? defaultOtherInitialExpenses;
     }
 
     private getPurchasePrice(): number {
@@ -480,74 +427,114 @@ export class InvestmentMetricBuilder {
         return this.getInvestmentDetails().purchasePrice;
     }
 
-    private getRentEstimate(): number {
+    private getRentEstimate(): ValueAmountInput {
+        const defaultRentEstimate: ValueAmountInput = {
+            amount: this.listingDetails.getZillowRentEstimate() ?? 0,
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            return this.listingDetails.getZillowRentEstimate();
+            return defaultRentEstimate;
         }
-        return this.getInvestmentDetails().rentEstimate;
+        return this.getInvestmentDetails().rentEstimate ?? defaultRentEstimate;
     }
 
-    private getAnnualRentIncreaseRate(): number {
+    private getAnnualRentIncreaseRate(): ValueRateInput {
+        const defaultAnnualRentIncreaseRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
+            return defaultAnnualRentIncreaseRate;
         }
-        return this.getGrowthProjections().annualRentIncreaseRate ?? DefaultInvestmentRates.ANNUAL_RENT_INCREASE_RATE;
+        return this.getGrowthProjections().annualRentIncreaseRate ?? defaultAnnualRentIncreaseRate;
     }
 
-    private getAnnualAppreciationRate(): number {
+    private getAnnualAppreciationRate(): ValueRateInput {
+        const defaultAnnualAppreciationRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
+            return defaultAnnualAppreciationRate;
         }
-        return this.getGrowthProjections().annualAppreciationRate ?? DefaultInvestmentRates.ANNUAL_APPRECIATION_RATE;
+        return this.getGrowthProjections().annualAppreciationRate ?? defaultAnnualAppreciationRate;
     }
 
-    private getAnnualTaxIncreaseRate(): number {
+    private getAnnualTaxIncreaseRate(): ValueRateInput {
+        const defaultAnnualTaxIncreaseRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+            return defaultAnnualTaxIncreaseRate;
         }
-        return this.getGrowthProjections().annualTaxIncreaseRate ?? DefaultInvestmentRates.ANNUAL_TAX_INCREASE_RATE;
+        return this.getGrowthProjections().annualTaxIncreaseRate ?? defaultAnnualTaxIncreaseRate;
     }
 
-    private getAnnualHomeInsuranceIncreaseRate(): number {
+    private getAnnualHomeInsuranceIncreaseRate(): ValueRateInput {
+        const defaultAnnualHomeInsuranceIncreaseRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
+            return defaultAnnualHomeInsuranceIncreaseRate;
         }
-        return this.getGrowthProjections().annualHomeInsuranceIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOME_INSURANCE_INCREASE_RATE;
+        return this.getGrowthProjections().annualHomeInsuranceIncreaseRate ?? defaultAnnualHomeInsuranceIncreaseRate;
     }
 
-    private getAnnualHOAFeesIncreaseRate(): number {
+    private getAnnualHOAFeesIncreaseRate(): ValueRateInput {
+        const defaultAnnualHOAFeesIncreaseRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
+            return defaultAnnualHOAFeesIncreaseRate;
         }
-        return this.getGrowthProjections().annualHOAFeesIncreaseRate ?? DefaultInvestmentRates.ANNUAL_HOA_FEES_INCREASE_RATE;
+        return this.getGrowthProjections().annualHOAFeesIncreaseRate ?? defaultAnnualHOAFeesIncreaseRate;
     }
 
-    private getParkingFees(): number {
+    private getParkingFees(): ValueAmountInput {
+        const defaultParkingFees: ValueAmountInput = {
+            amount: DefaultInvestmentRates.PARKING_FEES.valueOf(),
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.PARKING_FEES;
+            return defaultParkingFees;
         }
-        return this.getAdditionalIncomeStreams().parkingFees ?? DefaultInvestmentRates.PARKING_FEES;
+        return this.getAdditionalIncomeStreams().parkingFees ?? defaultParkingFees;
     }
 
-    private getLaundryServices(): number {
+    private getLaundryServices(): ValueAmountInput {
+        const defaultLaundryServices: ValueAmountInput = {
+            amount: DefaultInvestmentRates.LAUNDRY_SERVICES.valueOf(),
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.LAUNDRY_SERVICES;
+            return defaultLaundryServices;
         }
-        return this.getAdditionalIncomeStreams().laundryServices ?? DefaultInvestmentRates.LAUNDRY_SERVICES;
+        return this.getAdditionalIncomeStreams().laundryServices ?? defaultLaundryServices;
     }
 
-    private getStorageUnitFees(): number {
+    private getStorageUnitFees(): ValueAmountInput {
+        const defaultStorageUnitFees: ValueAmountInput = {
+            amount: DefaultInvestmentRates.STORAGE_UNIT_FEES.valueOf(),
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.STORAGE_UNIT_FEES;
+            return defaultStorageUnitFees;
         }
-        return this.getAdditionalIncomeStreams().storageUnitFees ?? DefaultInvestmentRates.STORAGE_UNIT_FEES;
+        return this.getAdditionalIncomeStreams().storageUnitFees ?? defaultStorageUnitFees;
     }
 
-    private getOtherAdditionalIncomeStreams(): number {
+    private getOtherAdditionalIncomeStreams(): ValueAmountInput {
+        const defaultOtherAdditionalIncomeStreams: ValueAmountInput = {
+            amount: DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES.valueOf(),
+            type: ValueType.AMOUNT,
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES;
+            return defaultOtherAdditionalIncomeStreams;
         }
-        return this.getAdditionalIncomeStreams().other ?? DefaultInvestmentRates.OTHER_ADDITIONAL_INCOMES;
+        return this.getAdditionalIncomeStreams().other ?? defaultOtherAdditionalIncomeStreams;
     }
 
     private getTaxDepreciation(): number {

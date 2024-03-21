@@ -4,24 +4,23 @@ import {
     InvestmentMetricsResponseDTO,
     Utility
 } from "@realestatemanager/shared";
-import { InitialCostsBreakdown } from "./initialcosts.model";
 import { MortgageCalculator } from "./mortgage.calc.model";
 import { TaxImplications } from "./tax.implications.model";
 
 export class InvestmentScenario {
     private growthProjections: GrowthProjections;
-    private initialCostsBreakdown: InitialCostsBreakdown;
+    // private initialCostsBreakdown: InitialCostsBreakdown;
     private mortgageCalculator: MortgageCalculator;
     private taxImplications?: TaxImplications;
 
     constructor(
         growthProjections: GrowthProjections,
-        initialCostsBreakdown: InitialCostsBreakdown,
+        // initialCostsBreakdown: InitialCostsBreakdown,
         mortgageCalculator: MortgageCalculator,
         taxImplications?: TaxImplications,
     ) {
         this.growthProjections = growthProjections;
-        this.initialCostsBreakdown = initialCostsBreakdown;
+        // this.initialCostsBreakdown = initialCostsBreakdown;
         this.mortgageCalculator = mortgageCalculator;
         this.taxImplications = taxImplications;
     }
@@ -29,7 +28,7 @@ export class InvestmentScenario {
     createInvestmentMetrics(): InvestmentMetricsResponseDTO {
 
         const ROI: number = this.calculateROI();
-        const capRate: number = this.calculateCapRate();
+        const capRate: number = this.calculateInitialCapRate();
         const initialMortgagePayment: number = this.getMortgageAmount();
         const initialMonthlyAmount: number = this.getMortgageAmountWithFixedMonthlyExpenses();
         const recurringCosts: number = this.getRecurringExpenses();
@@ -40,7 +39,6 @@ export class InvestmentScenario {
         return {
             mortgageDetails: this.mortgageCalculator.toDTO(),
             growthProjections: this.growthProjections.toDTO(),
-            initialCosts: this.initialCostsBreakdown.toDTO(),
             taxImplications: this.taxImplications.toDTO(),
             investmentProjections: {
                 ROI: Utility.round(ROI),
@@ -76,24 +74,24 @@ export class InvestmentScenario {
         return this.mortgageCalculator.getNumberOfPayments();
     }
 
-    private getRecurringExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.mortgageCalculator.getRecurringExpenses(numberOfYearsFromNow);
+    private getRecurringExpenses(numberOfYears: number = 0): number {
+        return this.mortgageCalculator.getRecurringExpenses(numberOfYears);
     }
 
-    private getFixedExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.mortgageCalculator.getFixedExpenses(numberOfYearsFromNow);
+    private getFixedExpenses(numberOfYears: number = 0): number {
+        return this.mortgageCalculator.getFixedExpenses(numberOfYears);
     }
 
-    private getTotalInitialCosts(): number {
-        return this.initialCostsBreakdown.getTotalInitialCosts();
+    private getInitialCosts(): number {
+        return this.mortgageCalculator.getInitialCosts();
     }
 
     private getMortgageAmount(): number {
         return this.mortgageCalculator.calculateMortgagePayment();
     }
 
-    private getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow: number = 0): number {
-        return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
+    private getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
+        return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses(numberOfYears);
     }
 
     private calculateROI(): number {
@@ -103,7 +101,7 @@ export class InvestmentScenario {
             throw new Error("Down payment cannot be zero for rate of return calculations.");
         }
         const yearlyReturn = this.calculateYearlyCashFlow();
-        const initialExpeses = this.getTotalInitialCosts();
+        const initialExpeses = this.getInitialCosts();
 
         console.log("yearlyReturn:", yearlyReturn);
         console.log("initialExpeses:", initialExpeses);
@@ -115,14 +113,14 @@ export class InvestmentScenario {
         return this.calculateMonthlyCashFlow() * 12;
     }
 
-    private calculateMonthlyCashFlow(numberOfYearsFromNow: number = 0): number {
-        const futureDatedRecurringExpenses = this.getRecurringExpenses(numberOfYearsFromNow);
-        const futureDatedRentAmount = this.getRentalAmount(numberOfYearsFromNow);
-        const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
+    private calculateMonthlyCashFlow(numberOfYears: number = 0): number {
+        const futureDatedRecurringExpenses = this.getRecurringExpenses(numberOfYears);
+        const futureDatedRentAmount = this.getRentalAmount(numberOfYears);
+        const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getMortgageAmountWithFixedMonthlyExpenses(numberOfYears);
         return futureDatedRentAmount - (futureDatedMortgageAmountWithFixedMonthlyExpenses + futureDatedRecurringExpenses);
     }
 
-    private calculateCapRate(): number {
+    private calculateInitialCapRate(): number {
         const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.getMortgageAmount()) * 12;
         return (annualNetOperatingIncome / this.getPurchasePrice()) * 100;
     }
@@ -131,8 +129,8 @@ export class InvestmentScenario {
         return this.growthProjections.getAnnualAppreciationRate();
     }
 
-    private getRentalAmount(numberOfYearsFromNow: number = 0): number {
-        return this.mortgageCalculator.getRentalIncome(numberOfYearsFromNow);
+    private getRentalAmount(numberOfYears: number = 0): number {
+        return this.mortgageCalculator.getRentalIncome(numberOfYears);
     }
 
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {

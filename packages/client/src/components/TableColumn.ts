@@ -497,7 +497,7 @@ export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
 };
 
 export const getInitialCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.totalAmount;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.totalAmount;
 };
 
 export const getLoanAmount = (property: ListingWithScenariosDTO): number => {
@@ -709,23 +709,23 @@ export const getCapExReserveRate = (property: ListingWithScenariosDTO): number =
 };
 
 export const getLegalAndProfessionalFees = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.breakdown.legalAndProfessionalFees;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.legalAndProfessionalFees;
 };
 
 export const getInitialRepairCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.breakdown.initialRepairCosts.amount;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.initialRepairCosts.amount;
 };
 
 export const getTravelingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.breakdown.travelingCosts;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.travelingCosts;
 };
 
 export const getClosingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.breakdown.closingCosts.amount;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.closingCosts.amount;
 };
 
 export const getOtherInitialExpenses = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].initialCosts.breakdown.otherExpenses.amount;
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.otherExpenses.amount;
 };
 
 export const getAnnualRentIncreaseRate = (property: ListingWithScenariosDTO): number => {

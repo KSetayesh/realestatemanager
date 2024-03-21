@@ -149,7 +149,7 @@ export interface InvestmentScenarioRequest {
 export interface InvestmentDetailsRequest {
     mortgageDetails: MortgageDetailsRequest;
     operatingExpenses: OperatingExpensesRequest;
-    rentEstimate: number;
+    rentEstimate: ValueAmountInput;
     purchasePrice: number;
     growthProjections?: GrowthProjectionsRequest;
     additionalIncomeStreams?: AdditionalIncomeStreamsRequest;
@@ -165,18 +165,18 @@ export interface TaxImplicationsRequest {
 
 // Represents additional sources of income from the property besides rent.
 export type AdditionalIncomeStreamsRequest = {
-    parkingFees?: number; // Income from parking facilities, if available.
-    laundryServices?: number; // Income from on-site laundry services.
-    storageUnitFees?: number; // Income from storage units, if available.
-    other?: number; // Any other sources of income not covered above.
+    parkingFees?: ValueAmountInput; // Income from parking facilities, if available.
+    laundryServices?: ValueAmountInput; // Income from on-site laundry services.
+    storageUnitFees?: ValueAmountInput; // Income from storage units, if available.
+    other?: ValueAmountInput; // Any other sources of income not covered above.
 };
 
 export type GrowthProjectionsRequest = {
-    annualRentIncreaseRate: number;
-    annualAppreciationRate: number;
-    annualTaxIncreaseRate?: number;
-    annualHomeInsuranceIncreaseRate?: number;
-    annualHOAFeesIncreaseRate?: number;
+    annualRentIncreaseRate: ValueRateInput;
+    annualAppreciationRate: ValueRateInput;
+    annualTaxIncreaseRate?: ValueRateInput;
+    annualHomeInsuranceIncreaseRate?: ValueRateInput;
+    annualHOAFeesIncreaseRate?: ValueRateInput;
 };
 
 export interface LoanDetailsRequest {
@@ -195,11 +195,11 @@ export interface MortgageDetailsRequest extends LoanDetailsRequest {
 };
 
 export interface OperatingExpensesRequest {
-    propertyManagementRate?: number;
-    vacancyRate?: number;
-    maintenanceRate?: number;
-    otherExpensesRate?: number;
-    capExReserveRate?: number;
+    propertyManagementRate?: ValueRateInput;
+    vacancyRate?: ValueRateInput;
+    maintenanceRate?: ValueRateInput;
+    otherExpensesRate?: ValueRateInput;
+    capExReserveRate?: ValueRateInput;
     legalAndProfessionalFees?: ValueInput;
     initialRepairCosts?: ValueInput;
     travelingCosts?: ValueInput;
@@ -433,6 +433,7 @@ export interface IncomesDTO {
 export interface ExpensesDTO {
     fixedMonthlyExpenses: FixedMonthlyExpensesDTO;
     recurringExpenses: RecurringExpensesDTO;
+    initialCosts: InitialCostsDTO;
 };
 
 export interface TransactionsDTO {
@@ -489,7 +490,6 @@ export interface InvestmentMetricsResponseDTO {
 
     mortgageDetails: MortgageDetailsDTO;
     growthProjections: GrowthProjectionsDTO;
-    initialCosts: InitialCostsDTO;
     taxImplications: TaxImplicationsDTO;
     investmentProjections: InvestmentProjectionsDTO;
 

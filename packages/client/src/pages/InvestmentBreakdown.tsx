@@ -705,31 +705,76 @@ const InvestmentBreakdown: React.FC = () => {
                     monthlyHOAFeesAmount: convertToValueInput(formData.monthlyHOAFeesAmountType, Number(formData.monthlyHOAFeesAmount))!,
                 },
                 operatingExpenses: {
-                    propertyManagementRate: Number(formData.propertyManagementRate),
-                    vacancyRate: Number(formData.vacancyRate),
-                    maintenanceRate: Number(formData.maintenanceRate),
-                    otherExpensesRate: Number(formData.otherExpensesRate),
-                    capExReserveRate: Number(formData.capExReserveRate),
+                    propertyManagementRate: {
+                        rate: Number(formData.propertyManagementRate),
+                        type: ValueType.RATE
+                    },
+                    vacancyRate: {
+                        rate: Number(formData.vacancyRate),
+                        type: ValueType.RATE,
+                    },
+                    maintenanceRate: {
+                        rate: Number(formData.maintenanceRate),
+                        type: ValueType.RATE,
+                    },
+                    otherExpensesRate: {
+                        rate: Number(formData.otherExpensesRate),
+                        type: ValueType.RATE,
+                    },
+                    capExReserveRate: {
+                        rate: Number(formData.capExReserveRate),
+                        type: ValueType.RATE,
+                    },
                     legalAndProfessionalFees: convertToValueInput(formData.legalAndProfessionalFeesType, Number(formData.legalAndProfessionalFees)),
                     initialRepairCosts: convertToValueInput(formData.initialRepairCostsType, Number(formData.initialRepairCosts)),
                     travelingCosts: convertToValueInput(formData.travelingCostsType, Number(formData.travelingCosts)),
                     closingCosts: convertToValueInput(formData.closingCostsType, Number(formData.closingCosts)),
                     otherInitialExpenses: convertToValueInput(formData.otherInitialExpensesType, Number(formData.otherInitialExpenses)),
                 },
-                rentEstimate: Number(formData.rentEstimate),
+                rentEstimate: {
+                    amount: Number(formData.rentEstimate),
+                    type: ValueType.AMOUNT,
+                },
                 purchasePrice: Number(formData.purchasePrice),
                 growthProjections: {
-                    annualRentIncreaseRate: Number(formData.annualRentIncreaseRate),
-                    annualAppreciationRate: Number(formData.annualAppreciationRate),
-                    annualTaxIncreaseRate: Number(formData.annualTaxIncreaseRate),
-                    annualHomeInsuranceIncreaseRate: Number(formData.annualHomeInsuranceIncreaseRate),
-                    annualHOAFeesIncreaseRate: Number(formData.annualHOAFeesIncreaseRate),
+                    annualRentIncreaseRate: {
+                        rate: Number(formData.annualRentIncreaseRate),
+                        type: ValueType.RATE,
+                    },
+                    annualAppreciationRate: {
+                        rate: Number(formData.annualAppreciationRate),
+                        type: ValueType.RATE,
+                    },
+                    annualTaxIncreaseRate: {
+                        rate: Number(formData.annualTaxIncreaseRate),
+                        type: ValueType.RATE,
+                    },
+                    annualHomeInsuranceIncreaseRate: {
+                        rate: Number(formData.annualHomeInsuranceIncreaseRate),
+                        type: ValueType.RATE,
+                    },
+                    annualHOAFeesIncreaseRate: {
+                        rate: Number(formData.annualHOAFeesIncreaseRate),
+                        type: ValueType.RATE,
+                    },
                 },
                 additionalIncomeStreams: {
-                    parkingFees: Number(formData.parkingFees),
-                    laundryServices: Number(formData.laundryServices),
-                    storageUnitFees: Number(formData.storageUnitFees),
-                    other: Number(formData.other),
+                    parkingFees: {
+                        amount: Number(formData.parkingFees),
+                        type: ValueType.AMOUNT,
+                    },
+                    laundryServices: {
+                        amount: Number(formData.laundryServices),
+                        type: ValueType.AMOUNT,
+                    },
+                    storageUnitFees: {
+                        amount: Number(formData.storageUnitFees),
+                        type: ValueType.AMOUNT,
+                    },
+                    other: {
+                        amount: Number(formData.other),
+                        type: ValueType.AMOUNT,
+                    },
                 },
                 taxImplications: {
                     depreciation: Number(formData.depreciation),

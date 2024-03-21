@@ -1,44 +1,34 @@
-import { ValueType } from "@realestatemanager/shared";
+import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 
 export abstract class Transaction {
-
-    private value: number;
-    private valueType: ValueType;
-    private growthRate: number;
+    private amountComparedTo: ValueAmountInput;
+    private growthRate: ValueRateInput;
+    private description: string;
 
     constructor(
-        value: number,
-        valueType = ValueType.AMOUNT,
-        growthRate: number = 0,
+        amountComparedTo: ValueAmountInput,
+        growthRate: ValueRateInput,
+        description: string
     ) {
-        this.value = value;
-        this.valueType = valueType;
+        this.amountComparedTo = amountComparedTo;
         this.growthRate = growthRate;
+        this.description = description;
     }
 
-    abstract isExpense(): boolean;
+    abstract getProjectedValue(numberOfYears?: number): number;
 
-    abstract getType(): string;
+    abstract getRate(numberOfYears?: number): number;
 
-    isRentalIncome(): boolean {
-        return false;
+    protected getGrowthRate(): number {
+        return this.growthRate.rate;
     }
 
-    isRecurringExpense(): boolean {
-        return false;
+    protected getAmountComparedTo(): number {
+        return this.amountComparedTo.amount;
     }
 
-    isFixedExpense(): boolean {
-        return false;
-    }
-
-    isAdditionalIncome(): boolean {
-        return false;
-    }
-
-    getProjectedAmount(numberOfYears: number = 0): number {
-        return this.value * (Math.pow((1 + (this.growthRate / 100)), numberOfYears));
+    getDescription(): string {
+        return this.description;
     }
 
 }
-
