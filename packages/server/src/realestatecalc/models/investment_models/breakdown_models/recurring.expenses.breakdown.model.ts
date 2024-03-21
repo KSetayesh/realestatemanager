@@ -1,6 +1,5 @@
 import { RecurringExpensesDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../../idtoconvertible.model";
-import { RateTransaction } from "../transaction_models/rate.transaction.model";
 import { Breakdown } from "./breakdown.model";
 import { Transaction } from "../transaction_models/transaction.model";
 

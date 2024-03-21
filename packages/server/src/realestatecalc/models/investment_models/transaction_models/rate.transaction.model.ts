@@ -1,7 +1,6 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { Transaction } from "./transaction.model";
 
-
 export class RateTransaction extends Transaction {
     private rate: number;
 

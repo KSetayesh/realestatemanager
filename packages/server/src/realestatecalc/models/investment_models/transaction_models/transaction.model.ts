@@ -1,4 +1,4 @@
-import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 
 export abstract class Transaction {
     private amountComparedTo: ValueAmountInput;

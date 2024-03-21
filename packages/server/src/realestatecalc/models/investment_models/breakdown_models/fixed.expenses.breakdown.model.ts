@@ -1,5 +1,4 @@
 import { FixedMonthlyExpensesDTO } from "@realestatemanager/shared";
-import { AmountTransaction } from "../transaction_models/amount.transaction.model";
 import { Breakdown } from "./breakdown.model";
 import { IDTOConvertible } from "../../idtoconvertible.model";
 import { Transaction } from "../transaction_models/transaction.model";

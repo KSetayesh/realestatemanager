@@ -9,18 +9,15 @@ import { TaxImplications } from "./tax.implications.model";
 
 export class InvestmentScenario {
     private growthProjections: GrowthProjections;
-    // private initialCostsBreakdown: InitialCostsBreakdown;
     private mortgageCalculator: MortgageCalculator;
     private taxImplications?: TaxImplications;
 
     constructor(
         growthProjections: GrowthProjections,
-        // initialCostsBreakdown: InitialCostsBreakdown,
         mortgageCalculator: MortgageCalculator,
         taxImplications?: TaxImplications,
     ) {
         this.growthProjections = growthProjections;
-        // this.initialCostsBreakdown = initialCostsBreakdown;
         this.mortgageCalculator = mortgageCalculator;
         this.taxImplications = taxImplications;
     }
@@ -102,9 +99,6 @@ export class InvestmentScenario {
         }
         const yearlyReturn = this.calculateYearlyCashFlow();
         const initialExpeses = this.getInitialCosts();
-
-        console.log("yearlyReturn:", yearlyReturn);
-        console.log("initialExpeses:", initialExpeses);
 
         return (yearlyReturn / initialExpeses) * 100;
     }

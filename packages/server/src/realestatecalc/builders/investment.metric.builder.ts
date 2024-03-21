@@ -1,15 +1,12 @@
 import { InvestmentScenario } from "../models/investment_models/investment.scenario.model";
 import {
-    getAmountFromValueInput,
     getInterestTypeEnumValue,
-    getRateFromValueInput
 } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";
 import { TaxImplications } from "../models/investment_models/tax.implications.model";
 import {
     AdditionalIncomeStreamsRequest,
-    AmountAndPercentageDTO,
     DefaultInvestmentRates,
     GrowthProjectionsRequest,
     InterestType,
@@ -27,8 +24,6 @@ import { FinancingTerms } from "../models/investment_models/financing.terms.mode
 import { PMIDetails } from "../models/investment_models/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
-import { InitialCostsBreakdown } from "../models/investment_models/breakdown_models/initial.costs.breakdown.model";
-import { AmountTransaction } from "../models/investment_models/transaction_models/amount.transaction.model";
 
 export class InvestmentMetricBuilder {
 
@@ -150,20 +145,6 @@ export class InvestmentMetricBuilder {
             otherInitialExpenses: otherInitialExpenses,
         });
 
-        // amountValue: ValueAmountInput,
-        //     amountComparedTo: ValueAmountInput,
-        //         growthRate: ValueRateInput = { type: ValueType.RATE, rate: 0 },
-        //             description: string = ''
-
-        // const initialCostsBreakdown: InitialCostsBreakdown = new InitialCostsBreakdown(
-        //     new AmountTransaction(downPayment.amount),
-        //     legalAndProfessionalFees,
-        //     initialRepairCosts,
-        //     closingCosts,
-        //     travelingCosts,
-        //     otherInitialExpenses,
-        // );
-
         const taxImplications: TaxImplications = new TaxImplications(
             depreciation,
             mortgageInterest,
@@ -186,7 +167,7 @@ export class InvestmentMetricBuilder {
         );
 
         // const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
-        
+
         const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
             purchasePrice,
             txnBuilder.createDownPaymentAmount(purchasePrice),

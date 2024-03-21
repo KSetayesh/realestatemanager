@@ -1,4 +1,3 @@
-import { AmountTransaction } from "../transaction_models/amount.transaction.model";
 import { Transaction } from "../transaction_models/transaction.model";
 import { Breakdown } from "./breakdown.model";
 
