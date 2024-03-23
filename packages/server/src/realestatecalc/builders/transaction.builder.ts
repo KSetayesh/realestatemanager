@@ -1,16 +1,16 @@
-import { ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { GrowthFrequency, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 import { InitialCostsBreakdown } from "../models/investment_models/breakdown_models/initial.costs.breakdown.model";
 import { AmountTransaction } from "../models/investment_models/transaction_models/amount.transaction.model";
-import { Transaction } from "../models/investment_models/transaction_models/transaction.model";
+import { AmountAndRate, Transaction } from "../models/investment_models/transaction_models/transaction.model";
 import { RateTransaction } from "../models/investment_models/transaction_models/rate.transaction.model";
 import { AdditionalIncomeStreamsBreakdown } from "../models/investment_models/breakdown_models/additional.income.streams.breakdown.model";
 import { RecurringExpensesBreakdown } from "../models/investment_models/breakdown_models/recurring.expenses.breakdown.model";
 import { RentalIncomeBreakdown } from "../models/investment_models/breakdown_models/rental.income.breakdown.model";
 import { FixedExpensesBreakdown } from "../models/investment_models/breakdown_models/fixed.expenses.breakdown.model";
-import { FinancialTransaction } from "../models/investment_models/transaction_models/financial.transaction";
-import { Incomes } from "../models/investment_models/transaction_models/incomes.model";
-import { Expenses } from "../models/investment_models/transaction_models/expenses.model";
+import { FinancialTransaction } from "../models/investment_models/transaction_models/financial.transaction.breakdown.model";
+import { Incomes } from "../models/investment_models/transaction_models/incomes.breakdown.model";
+import { Expenses } from "../models/investment_models/transaction_models/expenses.breakdown.model";
 
 export type TransactionBuilderRequest = {
     growthProjections: GrowthProjections;
@@ -51,13 +51,19 @@ export class TransactionBuilder {
     }
 
     createDownPaymentAmount(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.downPayment, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.downPayment,
+            0,
+            purchasePrice,
+            0,
+        );
+        // this.txnBuilderReq.growthProjections.getAnnualAppreciationRate());
     }
 
     private createIncomes(purchasePrice: number): Incomes {
         return new Incomes(
             this.createAdditionalIncomesStreamsBreakdown(purchasePrice),
-            this.createRentalIncomeBreakdown(purchasePrice),
+            this.createRentalIncomeBreakdown(),
         );
     }
 
@@ -69,22 +75,24 @@ export class TransactionBuilder {
         );
     }
 
-    private createRentalIncomeBreakdown(purchasePrice: number): RentalIncomeBreakdown {
+    private createRentalIncomeBreakdown(): RentalIncomeBreakdown {
         return new RentalIncomeBreakdown(
             this.createTransaction(
                 this.txnBuilderReq.rentEstimate,
-                purchasePrice,
-                this.txnBuilderReq.growthProjections.getAnnualRentIncreaseValueType()),
+                this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
+                0,
+                0,
+            )
         );
     }
 
     private createAdditionalIncomesStreamsBreakdown(purchasePrice: number): AdditionalIncomeStreamsBreakdown {
 
         return new AdditionalIncomeStreamsBreakdown(
-            this.createParkingFees(purchasePrice),
-            this.createLaundryServices(purchasePrice),
-            this.createStorageUnitFees(purchasePrice),
-            this.createOtherAdditionalIncomeStreams(purchasePrice),
+            this.createParkingFees(),
+            this.createLaundryServices(),
+            this.createStorageUnitFees(),
+            this.createOtherAdditionalIncomeStreams(),
         );
     }
 
@@ -121,116 +129,194 @@ export class TransactionBuilder {
     private createMonthlyPropertyTaxAmount(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.monthlyPropertyTax,
-            rentalAmount
+            this.txnBuilderReq.growthProjections.getAnnualTaxIncreaseRate(),
+            rentalAmount,
+            0,
         );
     }
 
     private createMonthlyHOAFeesAmount(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.monthlyHOAFeesAmount,
-            rentalAmount
+            this.txnBuilderReq.growthProjections.getAnnualHOAFeesIncreaseRate(),
+            rentalAmount,
+            0,
         );
     }
 
     private createMonthlyHomeInsuranceAmount(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.monthlyHomeInsuranceAmount,
-            rentalAmount
+            this.txnBuilderReq.growthProjections.getAnnualHomeInsuranceIncreaseRate(),
+            rentalAmount,
+            0,
         );
     }
 
     private createPropertyManagementRate(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.propertyManagementRate,
-            rentalAmount
+            0,
+            rentalAmount,
+            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
         );
     }
 
     private createVacancyRate(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.vacancyRate,
-            rentalAmount
+            0,
+            rentalAmount,
+            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
         );
     }
 
     private createMaintenanceRate(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.maintenanceRate,
-            rentalAmount
+            0,
+            rentalAmount,
+            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
         );
     }
 
     private createOtherExpensesRate(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.otherExpensesRate,
-            rentalAmount
+            0,
+            rentalAmount,
+            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
         );
     }
 
     private createCapExReserveRate(rentalAmount: number): Transaction {
         return this.createTransaction(
             this.txnBuilderReq.capExReserveRate,
-            rentalAmount
+            0,
+            rentalAmount,
+            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
         );
     }
 
     private createLegalAndProfessionalFees(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.legalAndProfessionalFees, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.legalAndProfessionalFees,
+            0,
+            purchasePrice,
+            0,
+        );
     }
 
     private createInitialRepairCosts(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.initialRepairCosts, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.initialRepairCosts,
+            0,
+            purchasePrice,
+            0,
+        );
     }
 
     private createClosingCosts(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.closingCosts, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.closingCosts,
+            0,
+            purchasePrice,
+            0);
     }
 
     private createTravelingCosts(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.travelingCosts, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.travelingCosts,
+            0,
+            purchasePrice,
+            0,
+        );
     }
 
     private createOtherInitialExpenses(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.otherInitialExpenses, purchasePrice);
+        return this.createTransaction(
+            this.txnBuilderReq.otherInitialExpenses,
+            0,
+            purchasePrice,
+            0
+        );
     }
 
-    private createParkingFees(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.parkingFees, purchasePrice);
+    private createParkingFees(): Transaction {
+        return this.createTransaction(
+            this.txnBuilderReq.parkingFees,
+            0,
+            0,
+            0
+        );
     }
 
-    private createLaundryServices(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.laundryServices, purchasePrice);
+    private createLaundryServices(): Transaction {
+        return this.createTransaction(
+            this.txnBuilderReq.laundryServices,
+            0,
+            0,
+            0
+        );
     }
 
-    private createStorageUnitFees(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.storageUnitFees, purchasePrice);
+    private createStorageUnitFees(): Transaction {
+        return this.createTransaction(
+            this.txnBuilderReq.storageUnitFees,
+            0,
+            0,
+            0,
+        );
     }
 
-    private createOtherAdditionalIncomeStreams(purchasePrice: number): Transaction {
-        return this.createTransaction(this.txnBuilderReq.otherAdditionalIncomeStreams, purchasePrice);
+    private createOtherAdditionalIncomeStreams(): Transaction {
+        return this.createTransaction(
+            this.txnBuilderReq.otherAdditionalIncomeStreams,
+            0,
+            0,
+            0,
+        );
     }
-
 
     private createTransaction(
         valueInput: ValueInput,
+        growthRate: number,
         amountComparedTo: number,
-        growthRate?: ValueRateInput
+        rateComparedTo: number,
+        valueGrowthFrequency?: GrowthFrequency,
+        amountComparedToGrowthFrequency?: GrowthFrequency,
     ): Transaction {
 
-        const createValueTypeAmount = (amount: number): ValueAmountInput => {
+        const createRateType = (rate: number, growthFrequency?: GrowthFrequency): ValueRateInput => {
             return {
-                amount: amount,
-                type: ValueType.AMOUNT,
+                rate: rate,
+                type: ValueType.RATE,
+                growthFrequency: growthFrequency,
+            }
+        }
+
+        const createValueTypeAmount = (
+            amount: number,
+            rate: number,
+            growthFrequency?: GrowthFrequency
+        ): AmountAndRate => {
+            return {
+                amountValue: {
+                    amount: amount,
+                    type: ValueType.AMOUNT,
+                },
+                rateValue: createRateType(rate, growthFrequency),
             };
         };
 
-        const amountComparedToValueType = createValueTypeAmount(amountComparedTo);
+        const amountComparedToValueType = createValueTypeAmount(amountComparedTo, rateComparedTo, amountComparedToGrowthFrequency);
+        const growthRateValue = createRateType(growthRate, valueGrowthFrequency);
 
         if (ValueType.AMOUNT === valueInput.type) {
-            return new AmountTransaction(valueInput, amountComparedToValueType, growthRate);
+            return new AmountTransaction(valueInput, growthRateValue, amountComparedToValueType);
         }
         else if (ValueType.RATE === valueInput.type) {
-            return new RateTransaction(valueInput, amountComparedToValueType, growthRate);
+            return new RateTransaction(valueInput, growthRateValue, amountComparedToValueType);
         }
     }
 

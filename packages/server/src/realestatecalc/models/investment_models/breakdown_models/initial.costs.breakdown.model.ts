@@ -1,102 +1,144 @@
-import { InitialCostsDTO, Utility } from "@realestatemanager/shared";
+import { InitialCostsDTO, Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../../idtoconvertible.model";
 import { Breakdown } from "./breakdown.model";
 import { Transaction } from "../transaction_models/transaction.model";
+import { InititalCostsAmountCalculator, InititalCostsRateCalculator } from "../new_calculators/transaction.calculator";
+
+export class InitialCostsDetail {
+    private initialCostsBreakdown: InitialCostsBreakdown;
+    private purchasePrice: ValueAmountInput;
+
+    constructor(
+        initialCostsBreakdown: InitialCostsBreakdown,
+        purchasePrice: ValueAmountInput,
+    ) {
+        this.initialCostsBreakdown = initialCostsBreakdown;
+        this.purchasePrice = purchasePrice;
+    }
+
+}
 
 export class InitialCostsBreakdown implements IDTOConvertible<InitialCostsDTO>, Breakdown {
 
-    private downPaymentAmount: Transaction;
-    private legalAndProfessionalFees: Transaction;
-    private initialRepairCosts: Transaction; // Can be RateTransaction or AmountTransaction
-    private closingCosts: Transaction; // Can be RateTransaction or AmountTransaction
-    private travelingCosts: Transaction;
-    private otherExpenses: Transaction; // Can be RateTransaction or AmountTransaction
+    private downPayment: ValueInput;
+    private legalAndProfessionalFees: ValueInput;
+    private initialRepairCosts: ValueInput; // Can be RateTransaction or AmountTransaction
+    private closingCosts: ValueInput; // Can be RateTransaction or AmountTransaction
+    private travelingCosts: ValueInput;
+    private otherInitialExpenses: ValueInput; // Can be RateTransaction or AmountTransaction
 
-    constructor(downPaymentAmount: Transaction,
-        legalAndProfessionalFees: Transaction,
-        initialRepairCosts: Transaction,
-        closingCosts: Transaction,
-        travelingCosts: Transaction,
-        otherExpenses: Transaction) {
+    constructor(downPayment: ValueInput,
+        legalAndProfessionalFees: ValueInput,
+        initialRepairCosts: ValueInput,
+        closingCosts: ValueInput,
+        travelingCosts: ValueInput,
+        otherInitialExpenses: ValueInput) {
 
-        this.downPaymentAmount = downPaymentAmount;
+        this.downPayment = downPayment;
         this.legalAndProfessionalFees = legalAndProfessionalFees;
         this.initialRepairCosts = initialRepairCosts;
         this.closingCosts = closingCosts;
         this.travelingCosts = travelingCosts;
-        this.otherExpenses = otherExpenses;
+        this.otherInitialExpenses = otherInitialExpenses;
     }
 
-    /* 
-        Don't want to pass numberOfYears into the function.
-        Since there isn't any "projections" or "growth" to any initial costs
-    */
-    getTotalAmount(): number {
-        return this.getDownPaymentAmount() +
-            this.getLegalAndProfessionalFees() +
-            this.getInitialRepairCosts() +
-            this.getClosingCosts() +
-            this.getTravelingCosts() +
-            this.getOtherExpenses();
+    calculateDownPaymentAmount(purchasePrice: number): number {
+        return this.calculate(this.downPayment, purchasePrice);
     }
 
-    toDTO(): InitialCostsDTO {
-        return {
-            totalAmount: this.getTotalAmount(),
-            breakdown: {
-                downPaymentAmount: this.getDownPaymentAmount(),
-                legalAndProfessionalFees: this.getLegalAndProfessionalFees(),
-                initialRepairCosts: {
-                    percentage: Utility.round(this.initialRepairCostsRate()),
-                    amount: Utility.round(this.getInitialRepairCosts()),
-                },
-                closingCosts: {
-                    percentage: Utility.round(this.getClosingCostsRate()),
-                    amount: Utility.round(this.getClosingCosts()),
-                },
-                travelingCosts: this.getTravelingCosts(),
-                otherExpenses: {
-                    percentage: Utility.round(this.getOtherExpensesRate()),
-                    amount: Utility.round(this.getOtherExpenses()),
-                },
-            },
-        };
+    calculateLegalAndProfessionalFeesAmount(purchasePrice: number): number {
+        return this.calculate(this.legalAndProfessionalFees, purchasePrice);
     }
 
-    private getDownPaymentAmount(): number {
-        return this.downPaymentAmount.getProjectedValue();
+    calculateInitialRepairCostsAmount(purchasePrice: number): number {
+        return this.calculate(this.initialRepairCosts, purchasePrice);
     }
 
-    private getLegalAndProfessionalFees(): number {
-        return this.legalAndProfessionalFees.getProjectedValue();
+    calculateClosingCostsAmount(purchasePrice: number): number {
+        return this.calculate(this.closingCosts, purchasePrice);
     }
 
-    private getInitialRepairCosts(): number {
-        return this.initialRepairCosts.getProjectedValue();
+    calculateTravelingCostsAmount(purchasePrice: number): number {
+        return this.calculate(this.travelingCosts, purchasePrice);
     }
 
-    private initialRepairCostsRate(): number {
-        return this.initialRepairCosts.getRate();
+    calculateOtherInitialExpensesAmount(purchasePrice: number): number {
+        return this.calculate(this.otherInitialExpenses, purchasePrice);
     }
 
-    private getClosingCosts(): number {
-        return this.closingCosts.getProjectedValue();
+    private calculate(
+        valueType: ValueInput,
+        purchasePrice: number,
+    ): number {
+
+        if (valueType.type === ValueType.AMOUNT) {
+            const calc: InititalCostsAmountCalculator = new InititalCostsAmountCalculator();
+            return calc.getAmount(valueType);
+        }
+        else if (valueType.type === ValueType.RATE) {
+            const calc: InititalCostsRateCalculator = new InititalCostsRateCalculator();
+            return calc.getAmount(valueType, purchasePrice);
+        }
+
     }
 
-    private getClosingCostsRate(): number {
-        return this.closingCosts.getRate();
-    }
+    // toDTO(): InitialCostsDTO {
+    //     return {
+    //         totalAmount: this.getTotalAmount(),
+    //         breakdown: {
+    //             downPaymentAmount: this.getDownPaymentAmount(),
+    //             legalAndProfessionalFees: this.getLegalAndProfessionalFees(),
+    //             initialRepairCosts: {
+    //                 percentage: Utility.round(this.initialRepairCostsRate()),
+    //                 amount: Utility.round(this.getInitialRepairCosts()),
+    //             },
+    //             closingCosts: {
+    //                 percentage: Utility.round(this.getClosingCostsRate()),
+    //                 amount: Utility.round(this.getClosingCosts()),
+    //             },
+    //             travelingCosts: this.getTravelingCosts(),
+    //             otherExpenses: {
+    //                 percentage: Utility.round(this.getOtherExpensesRate()),
+    //                 amount: Utility.round(this.getOtherExpenses()),
+    //             },
+    //         },
+    //     };
+    // }
 
-    private getTravelingCosts(): number {
-        return this.travelingCosts.getProjectedValue();
-    }
+    // private getDownPaymentAmount(): number {
+    //     return this.downPaymentAmount.getProjectedValue();
+    // }
 
-    private getOtherExpenses(): number {
-        return this.otherExpenses.getProjectedValue();
-    }
+    // private getLegalAndProfessionalFees(): number {
+    //     return this.legalAndProfessionalFees.getProjectedValue();
+    // }
 
-    private getOtherExpensesRate(): number {
-        return this.otherExpenses.getRate();
-    }
+    // private getInitialRepairCosts(): number {
+    //     return this.initialRepairCosts.getProjectedValue();
+    // }
+
+    // private initialRepairCostsRate(): number {
+    //     return this.initialRepairCosts.getRate();
+    // }
+
+    // private getClosingCosts(): number {
+    //     return this.closingCosts.getProjectedValue();
+    // }
+
+    // private getClosingCostsRate(): number {
+    //     return this.closingCosts.getRate();
+    // }
+
+    // private getTravelingCosts(): number {
+    //     return this.travelingCosts.getProjectedValue();
+    // }
+
+    // private getOtherExpenses(): number {
+    //     return this.otherExpenses.getProjectedValue();
+    // }
+
+    // private getOtherExpensesRate(): number {
+    //     return this.otherExpenses.getRate();
+    // }
 
 }

@@ -2,27 +2,26 @@ import { MortgageDetailsDTO, Utility } from "@realestatemanager/shared";
 import { FinancingTerms } from "./financing.terms.model";
 import { PMIDetails } from "./pmidetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
-import { FinancialTransaction } from "./transaction_models/financial.transaction";
+import { FinancialTransaction } from "./transaction_models/financial.transaction.breakdown.model";
 import { Transaction } from "./transaction_models/transaction.model";
 
 export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
 
     private purchasePrice: number;
     private downpayment: Transaction;
-    private financingTerms: FinancingTerms;
-    private financialTransaction: FinancialTransaction;
+    private financingTerms: FinancingTerms; 
     private pmiDetails?: PMIDetails;
 
     constructor(purchasePrice: number,
         downpayment: Transaction,
         financingTerms: FinancingTerms,
-        financialTransaction: FinancialTransaction,
+        // financialTransaction: FinancialTransaction,
         pmiDetails?: PMIDetails) {
 
         this.purchasePrice = purchasePrice;
         this.downpayment = downpayment;
         this.financingTerms = financingTerms;
-        this.financialTransaction = financialTransaction;
+        // this.financialTransaction = financialTransaction;
         this.pmiDetails = pmiDetails;
     }
 
@@ -46,31 +45,31 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return this.downpayment.getRate();
     }
 
-    getRentalIncome(numberOfYears: number = 0): number {
-        return this.financialTransaction.getRentalIncome(numberOfYears);
-    }
+    // getRentalIncome(numberOfYears: number = 0): number {
+    //     return this.financialTransaction.getRentalIncome(numberOfYears);
+    // }
 
-    getRecurringExpenses(numberOfYears: number = 0): number {
-        return this.financialTransaction.getRecurringExpenses(numberOfYears);
-    }
+    // getRecurringExpenses(numberOfYears: number = 0): number {
+    //     return this.financialTransaction.getRecurringExpenses(numberOfYears);
+    // }
 
-    getFixedExpenses(numberOfYears: number = 0): number {
-        return this.financialTransaction.getFixedExpenses(numberOfYears);
-    }
+    // getFixedExpenses(numberOfYears: number = 0): number {
+    //     return this.financialTransaction.getFixedExpenses(numberOfYears);
+    // }
 
-    getInitialCosts(): number {
-        return this.financialTransaction.getInitialCosts();
-    }
+    // getInitialCosts(): number {
+    //     return this.financialTransaction.getInitialCosts();
+    // }
 
     getNumberOfPayments(): number {
         return this.financingTerms.getNumberOfPayments();
     }
 
-    getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
-        const mortgagePayment = this.calculateMortgagePayment();
-        const fixedExpenses = this.getFixedExpenses(numberOfYears);
-        return mortgagePayment + fixedExpenses;
-    }
+    // getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
+    //     const mortgagePayment = this.calculateMortgagePayment();
+    //     const fixedExpenses = this.getFixedExpenses(numberOfYears);
+    //     return mortgagePayment + fixedExpenses;
+    // }
 
     calculateMortgagePayment(calculateWithPMI: boolean = false): number {
         const monthlyInterestRate = this.getMonthlyInterestRate() / 100;
@@ -90,14 +89,6 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
         return monthlyPayment;
     }
 
-    getAnnualInterestRate(): number {
-        return this.financingTerms.getAnnualInterestRate();
-    }
-
-    getMonthlyInterestRate(): number {
-        return this.getAnnualInterestRate() / 12;
-    }
-
     getPMIAmount(): number {
         const isPMI = (): boolean => {
             return this.getDownPaymentPercentage() < 20;
@@ -110,6 +101,14 @@ export class MortgageCalculator implements IDTOConvertible<MortgageDetailsDTO> {
             return monthlyPMI;
         }
         return 0;
+    }
+
+    getAnnualInterestRate(): number {
+        return this.financingTerms.getAnnualInterestRate();
+    }
+
+    getMonthlyInterestRate(): number {
+        return this.getAnnualInterestRate() / 12;
     }
 
     private getPmiRate(): number {

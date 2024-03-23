@@ -8,6 +8,7 @@ import { TaxImplications } from "../models/investment_models/tax.implications.mo
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
+    GrowthFrequency,
     GrowthProjectionsRequest,
     InterestType,
     InvestmentDetailsRequest,
@@ -64,7 +65,7 @@ export class InvestmentMetricBuilder {
 
         const monthlyHOAFeesAmount: ValueInput = this.getMonthlyHOAFeesAmount();
 
-        const propertyManagementRate: ValueInput = this.getPropertyManagementRate();
+        const propertyManagementRate: ValueRateInput = this.getPropertyManagementRate();
 
         const vacancyRate: ValueRateInput = this.getVacanyRate();
 

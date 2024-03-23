@@ -112,6 +112,12 @@ export enum DefaultInvestmentRates {
     INTEREST_TYPE = InterestType.FIXED,
 };
 
+export enum GrowthFrequency {
+    YEARLY,
+    MONTHLY,
+    NONE,
+}
+
 
 //------------------------------ Investment Related Requests ------------------------------
 
@@ -128,11 +134,21 @@ export interface ValueAmountInput extends ValueInputBase {
 
 // Structure for specifying a rate (as a percentage)
 export interface ValueRateInput extends ValueInputBase {
+    // growthFrequency: GrowthFrequency;
     type: ValueType.RATE;
     rate: number; // The rate as a percentage of some base value
 }
 
 export type ValueInput = ValueAmountInput | ValueRateInput;
+
+export function isValueAmountInput(value: ValueInput): value is ValueAmountInput {
+    return value.type === ValueType.AMOUNT;
+}
+
+export function isValueRateInput(value: ValueInput): value is ValueRateInput {
+    return value.type === ValueType.RATE;
+}
+
 
 // Identifies a property using its address and a Zillow listing URL.
 export type PropertyIdentifier = {
@@ -172,11 +188,15 @@ export type AdditionalIncomeStreamsRequest = {
 };
 
 export type GrowthProjectionsRequest = {
-    annualRentIncreaseRate: ValueRateInput;
     annualAppreciationRate: ValueRateInput;
     annualTaxIncreaseRate?: ValueRateInput;
     annualHomeInsuranceIncreaseRate?: ValueRateInput;
     annualHOAFeesIncreaseRate?: ValueRateInput;
+    annualRentIncreaseRate: ValueRateInput;
+    parkingFeesIncreaseRate?: ValueRateInput; // ValueAmountInput; // Income from parking facilities, if available.
+    laundryServicesIncreaseRate?: ValueRateInput; //ValueAmountInput; // Income from on-site laundry services.
+    storageUnitFeesIncreaseRate?: ValueRateInput; //ValueAmountInput; // Income from storage units, if available.
+    otherAdditionalIncomeStreamsIncreaseRate?: ValueRateInput;
 };
 
 export interface LoanDetailsRequest {
@@ -389,11 +409,15 @@ export type AmountAndPercentageDTO = {
 };
 
 export interface GrowthProjectionsDTO {
-    annualRentIncreaseRate: number;
     annualAppreciationRate: number;
     annualTaxIncreaseRate: number;
     annualHomeInsuranceIncreaseRate: number;
     annualHOAFeesIncreaseRate: number;
+    annualRentIncreaseRate: number;
+    parkingFeesIncreaseRate: number; // ValueAmountInput; // Income from parking facilities, if available.
+    laundryServicesIncreaseRate: number; //ValueAmountInput; // Income from on-site laundry services.
+    storageUnitFeesIncreaseRate: number; //ValueAmountInput; // Income from storage units, if available.
+    otherAdditionalIncomeStreamsIncreaseRate: number;
 };
 
 export interface FinancingTermsDTO {

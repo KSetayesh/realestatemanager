@@ -4,59 +4,122 @@ import {
     InvestmentMetricsResponseDTO,
     Utility,
     ValueAmountInput,
-    ValueRateInput
+    ValueRateInput,
+    ValueType
 } from "@realestatemanager/shared";
-import { MortgageCalculator } from "./mortgage.calc.model";
+import { MortgageCalculator, MortgagePayment } from "./mortgage.calc.model";
+import { FinancialTransaction } from "../new_breakdown_models.ts/financial.transaction.model";
 import { TaxImplications } from "./tax.implications.model";
-import { FinancialTransaction } from "./transaction_models/financial.transaction.breakdown.model";
-import { InititalCostsAmountCalculator, InititalCostsRateCalculator, RecurringExpensesCalculator } from "./new_calculators/transaction.calculator";
+import { InitialCostsDetail, PurchaseDetail } from "../new_breakdown_models.ts/purchase.detail.model";
+import { IncomeStreamsDetail } from "../new_breakdown_models.ts/income.streams.detail.model";
+import { RecurringExpensesDetail } from "../new_breakdown_models.ts/recurring.expenses.detail.model";
+import { FixedExpensesDetail } from "../new_breakdown_models.ts/fixed.expenses.detail.model";
 
 export class InvestmentScenario {
 
     private growthProjections: GrowthProjections;
     private mortgageCalculator: MortgageCalculator;
-    private financialTransaction: FinancialTransaction;
+    private initialCostsDetail: InitialCostsDetail;
+    private purchaseDetail: PurchaseDetail;
+    private incomeStreamsDetail: IncomeStreamsDetail;
+    private recurringExpensesDetail: RecurringExpensesDetail;
+    private fixedExpensesDetail: FixedExpensesDetail;
     private taxImplications?: TaxImplications;
 
     constructor(
         growthProjections: GrowthProjections,
         mortgageCalculator: MortgageCalculator,
-        financialTransaction: FinancialTransaction,
+        initialCostsDetail: InitialCostsDetail,
+        purchaseDetail: PurchaseDetail,
+        incomeStreamsDetail: IncomeStreamsDetail,
+        recurringExpensesDetail: RecurringExpensesDetail,
+        fixedExpensesDetail: FixedExpensesDetail,
         taxImplications?: TaxImplications,
     ) {
         this.growthProjections = growthProjections;
         this.mortgageCalculator = mortgageCalculator;
-        this.financialTransaction = financialTransaction;
+        this.initialCostsDetail = initialCostsDetail;
+        this.purchaseDetail = purchaseDetail;
+        this.incomeStreamsDetail = incomeStreamsDetail;
+        this.recurringExpensesDetail = recurringExpensesDetail;
+        this.fixedExpensesDetail = fixedExpensesDetail;
         this.taxImplications = taxImplications;
     }
 
-    calculateRecurringExpenses(numberOfYears: number = 0): number {
-        return this.financialTransaction.calculateRecurringExpenses(this.getRentalGrowthRate(), numberOfYears);
+    private getPurchasePrice(): ValueAmountInput {
+        return {
+            type: ValueType.AMOUNT,
+            amount: this.mortgageCalculator.getPurchasePrice()
+        };
     }
 
-    calculateInititalCosts(numberOfYears: number = 0): number {
-        const calculator = new InititalCostsAmountCalculator();
+    private getLoanAmount(): ValueAmountInput {
+        return {
+            type: ValueType.AMOUNT,
+            amount: this.getPurchasePrice().amount - this.getDownPaymentAmount().amount,
+        };
     }
 
-    getRentalAmount(): ValueAmountInput {
-        return this.financialTransaction.getRentalIncome();
+    private getRentalAmount(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransaction.getRentalAmount(numberOfYears);
     }
 
-    getRentalGrowthRate(): ValueRateInput {
-        return this.growthProjections.getAnnualRentIncreaseRate();
+    private getDownPaymentAmount(): ValueAmountInput {
+        return this.financialTransaction.getDownPaymentAmount();
     }
 
-    getRecurringExpensesList(): ValueRateInput[] {
-        return this.financialTransaction.getRecurringExpensesList();
+    private getMortgageAmount(
+        totalPrincipalPaid: number,
+        appreciatedPropertyValue?: ValueAmountInput): MortgagePayment {
+        return this.mortgageCalculator.calculateMortgagePayment(
+            {
+                type: ValueType.AMOUNT,
+                amount: totalPrincipalPaid
+            },
+            this.getDownPaymentAmount(),
+            appreciatedPropertyValue,
+        );
     }
+
+    private getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
+        return this.getMortgageAmount() + this.getFixedExpenses(numberOfYears);
+    }
+
+    private getRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransaction.getTotalRecurringExpenses(numberOfYears);
+    }
+
+    private getFixedExpenses(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransaction.getTotalFixedExpenses(numberOfYears);
+    }
+
+    private getInitialCosts(): ValueAmountInput {
+        return this.financialTransaction.getTotalInitialCosts();
+    }
+
+    private getMonthlyInterestRate(): ValueRateInput {
+        return this.mortgageCalculator.getMonthlyInterestRate();
+    }
+
+    private getNumberOfPayments(): number {
+        return this.mortgageCalculator.getNumberOfPayments();
+    }
+
+    // getRentalGrowthRate(): ValueRateInput {
+    //     return this.growthProjections.getAnnualRentIncreaseRate();
+    // }
+
+    // getRecurringExpensesList(): ValueRateInput[] {
+    //     return this.financialTransaction.getRecurringExpensesList();
+    // }
 
     createInvestmentMetrics(): InvestmentMetricsResponseDTO {
 
         const ROI: number = this.calculateROI();
         const capRate: number = this.calculateInitialCapRate();
-        const initialMortgagePayment: number = this.getMortgageAmount();
+        const initialMortgagePayment: MortgagePayment = this.getMortgageAmount(0);
         const initialMonthlyAmount: number = this.getMortgageAmountWithFixedMonthlyExpenses();
-        const recurringCosts: number = this.getRecurringExpenses();
+        const recurringCosts: ValueAmountInput = this.getRecurringExpenses();
         const monthlyCashFlow: number = this.calculateMonthlyCashFlow();
         const yearlyCashFlow: number = this.calculateYearlyCashFlow();
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
@@ -70,7 +133,7 @@ export class InvestmentScenario {
                 capRate: Utility.round(capRate),
                 recurringCosts: Utility.round(recurringCosts),
                 monthlyPayment: Utility.round(initialMonthlyAmount),
-                mortgageAmount: Utility.round(initialMortgagePayment),
+                mortgageAmount: Utility.round(initialMortgagePayment.mortgageAmount.amount),
                 monthlyCashFlow: Utility.round(monthlyCashFlow),
                 yearlyCashFlow: Utility.round(yearlyCashFlow),
                 ammortizationDetails: ammortizationDetails,
@@ -79,45 +142,25 @@ export class InvestmentScenario {
 
     }
 
-    private getPurchasePrice(): number {
-        return this.mortgageCalculator.getPurchasePrice();
-    }
+    // private getRecurringExpenses(numberOfYears: number = 0): number {
+    //     return this.mortgageCalculator.getRecurringExpenses(numberOfYears);
+    // }
 
-    private getLoanAmount(): number {
-        return this.mortgageCalculator.getLoanAmount();
-    }
+    // private getFixedExpenses(numberOfYears: number = 0): number {
+    //     return this.mortgageCalculator.getFixedExpenses(numberOfYears);
+    // }
 
-    private getDownPaymentAmount(): number {
-        return this.mortgageCalculator.getDownPaymentAmount();
-    }
+    // private getInitialCosts(): number {
+    //     return this.mortgageCalculator.getInitialCosts();
+    // }
 
-    private getMonthlyInterestRate(): number {
-        return this.mortgageCalculator.getMonthlyInterestRate();
-    }
+    // private getMortgageAmount(): number {
+    //     return this.mortgageCalculator.calculateMortgagePayment();
+    // }
 
-    private getNumberOfPayments(): number {
-        return this.mortgageCalculator.getNumberOfPayments();
-    }
-
-    private getRecurringExpenses(numberOfYears: number = 0): number {
-        return this.mortgageCalculator.getRecurringExpenses(numberOfYears);
-    }
-
-    private getFixedExpenses(numberOfYears: number = 0): number {
-        return this.mortgageCalculator.getFixedExpenses(numberOfYears);
-    }
-
-    private getInitialCosts(): number {
-        return this.mortgageCalculator.getInitialCosts();
-    }
-
-    private getMortgageAmount(): number {
-        return this.mortgageCalculator.calculateMortgagePayment();
-    }
-
-    private getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
-        return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses(numberOfYears);
-    }
+    // private getMortgageAmountWithFixedMonthlyExpenses(numberOfYears: number = 0): number {
+    //     return this.mortgageCalculator.getMortgageAmountWithFixedMonthlyExpenses(numberOfYears);
+    // }
 
     private calculateROI(): number {
         const downPaymentAmount = this.getDownPaymentAmount();
@@ -151,16 +194,12 @@ export class InvestmentScenario {
         return this.growthProjections.getAnnualAppreciationRate();
     }
 
-    private getRentalAmount(numberOfYears: number = 0): number {
-        return this.mortgageCalculator.getRentalIncome(numberOfYears);
-    }
-
     private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
 
         const principal = this.getPurchasePrice();
         const loanAmount = this.getLoanAmount();
         const downPaymentAmount = this.getDownPaymentAmount();
-        const monthlyInterestRate = this.getMonthlyInterestRate() / 100;
+        const monthlyInterestRate = this.getMonthlyInterestRate().rate / 100;
         const totalPayments = this.getNumberOfPayments();
         const mortgagePayment = this.getMortgageAmount();
         let monthlyPayment = this.getMortgageAmountWithFixedMonthlyExpenses();

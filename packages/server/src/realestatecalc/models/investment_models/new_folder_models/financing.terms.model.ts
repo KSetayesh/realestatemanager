@@ -1,21 +1,21 @@
-import { FinancingTermsDTO, InterestType, Utility } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../idtoconvertible.model";
+import { FinancingTermsDTO, InterestType, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
+import { IDTOConvertible } from "../../idtoconvertible.model";
 
 export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
 
     //   private loanAmount: number;
-    private annualInterestRate: number;
+    private annualInterestRate: ValueRateInput;
     private interestType: InterestType;
     private termInYears: number;
-    private monthlyPayment?: number;
-    private interestOnlyPeriod?: number;
+    private monthlyPayment?: ValueAmountInput;
+    private interestOnlyPeriod?: ValueAmountInput;
 
     constructor(//loanAmount: number,
-        annualInterestRate: number,
+        annualInterestRate: ValueRateInput,
         interestType: InterestType,
         termInYears: number,
-        monthlyPayment: number,
-        interestOnlyPeriod: number) {
+        monthlyPayment?: ValueAmountInput,
+        interestOnlyPeriod?: ValueAmountInput) {
 
         //  this.loanAmount = loanAmount;
         this.annualInterestRate = annualInterestRate;
@@ -29,7 +29,7 @@ export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
         return this.termInYears * 12;
     }
 
-    getAnnualInterestRate(): number {
+    getAnnualInterestRate(): ValueRateInput {
         return this.annualInterestRate;
     }
 
@@ -39,11 +39,11 @@ export class FinancingTerms implements IDTOConvertible<FinancingTermsDTO> {
 
     toDTO(): FinancingTermsDTO {
         return {
-            annualInterestRate: Utility.round(this.annualInterestRate),
+            annualInterestRate: Utility.round(this.annualInterestRate.rate),
             interestType: this.interestType,
             termInYears: this.termInYears,
-            monthlyPayment: Utility.round(this.monthlyPayment),
-            interestOnlyPeriod: this.interestOnlyPeriod,
+            monthlyPayment: Utility.round(this.monthlyPayment.amount),
+            interestOnlyPeriod: this.interestOnlyPeriod.amount,
         };
     }
 
