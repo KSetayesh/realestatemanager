@@ -1,6 +1,6 @@
 import { Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { TransactionKey, TransactionType } from "./financial.transaction.breakdown";
 import { TransactionCalculator } from "../new_calculators/transaction.calculator";
+import { TransactionKey, TransactionType } from "./transaction.detail";
 
 export type TransactionDTO = {
     txnKey: TransactionKey;

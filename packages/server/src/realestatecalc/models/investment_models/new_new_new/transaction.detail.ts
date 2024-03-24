@@ -4,10 +4,11 @@ import { Transaction } from "./transaction";
 
 export enum TransactionType {
     INITIAL_EXPENSE,
-    MORTGAGE_RELATED_EXPENSE,
-    RECURRING_EXPENSE,
-    INCOME,
-    PURCHASE_RELATED,
+    // MORTGAGE_RELATED_EXPENSE,
+    FIXED_RECURRING_EXPENSE,
+    OPERATIONAL_RECURRING_EXPENSE,
+    INCOME_STREAMS,
+    FINANCING,
 };
 
 export enum TransactionKey {
@@ -93,47 +94,47 @@ export class TransactionDetail {
                 percentage: 0,
             },
         },
-        [TransactionType.RECURRING_EXPENSE]: {
+        [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
             [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: {
                 key: TransactionKey.PROPERTY_MANAGEMENT_EXPENSE,
-                type: TransactionType.RECURRING_EXPENSE,
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
             },
             [TransactionKey.VACANCY_EXPENSE]: {
                 key: TransactionKey.VACANCY_EXPENSE,
-                type: TransactionType.RECURRING_EXPENSE,
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
             },
             [TransactionKey.MAINTENANCE_EXPENSE]: {
                 key: TransactionKey.MAINTENANCE_EXPENSE,
-                type: TransactionType.RECURRING_EXPENSE,
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
             },
             [TransactionKey.OTHER_EXPENSES]: {
                 key: TransactionKey.OTHER_EXPENSES,
-                type: TransactionType.RECURRING_EXPENSE,
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
             },
             [TransactionKey.CAP_EX_RESERVE_EXPENSE]: {
                 key: TransactionKey.CAP_EX_RESERVE_EXPENSE,
-                type: TransactionType.RECURRING_EXPENSE,
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
             },
         },
-        [TransactionType.INCOME]: {
+        [TransactionType.INCOME_STREAMS]: {
             [TransactionKey.RENTAL_INCOME]: {
                 key: TransactionKey.RENTAL_INCOME,
-                type: TransactionType.INCOME,
+                type: TransactionType.INCOME_STREAMS,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -141,7 +142,7 @@ export class TransactionDetail {
             },
             [TransactionKey.PARKING_FEES]: {
                 key: TransactionKey.PARKING_FEES,
-                type: TransactionType.INCOME,
+                type: TransactionType.INCOME_STREAMS,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -149,7 +150,7 @@ export class TransactionDetail {
             },
             [TransactionKey.LAUNDRY_SERVICES]: {
                 key: TransactionKey.LAUNDRY_SERVICES,
-                type: TransactionType.INCOME,
+                type: TransactionType.INCOME_STREAMS,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -157,7 +158,7 @@ export class TransactionDetail {
             },
             [TransactionKey.STORAGE_UNIT_FEES]: {
                 key: TransactionKey.STORAGE_UNIT_FEES,
-                type: TransactionType.INCOME,
+                type: TransactionType.INCOME_STREAMS,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -165,17 +166,17 @@ export class TransactionDetail {
             },
             [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: {
                 key: TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS,
-                type: TransactionType.INCOME,
+                type: TransactionType.INCOME_STREAMS,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
                 rateOfGrowth: 0,
             },
         },
-        [TransactionType.MORTGAGE_RELATED_EXPENSE]: {
+        [TransactionType.FIXED_RECURRING_EXPENSE]: {
             [TransactionKey.PROPERTY_TAX]: {
                 key: TransactionKey.PROPERTY_TAX,
-                type: TransactionType.MORTGAGE_RELATED_EXPENSE,
+                type: TransactionType.FIXED_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -183,7 +184,7 @@ export class TransactionDetail {
             },
             [TransactionKey.HOA_FEE]: {
                 key: TransactionKey.HOA_FEE,
-                type: TransactionType.MORTGAGE_RELATED_EXPENSE,
+                type: TransactionType.FIXED_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
@@ -191,23 +192,23 @@ export class TransactionDetail {
             },
             [TransactionKey.HOME_INSURANCE]: {
                 key: TransactionKey.HOME_INSURANCE,
-                type: TransactionType.MORTGAGE_RELATED_EXPENSE,
+                type: TransactionType.FIXED_RECURRING_EXPENSE,
                 amount: 0,
                 percentage: 0,
                 cumulativeAmount: 0,
                 rateOfGrowth: 0,
             },
         },
-        [TransactionType.PURCHASE_RELATED]: {
+        [TransactionType.FINANCING]: {
             [TransactionKey.PURCHASE_PRICE]: {
                 key: TransactionKey.PURCHASE_PRICE,
-                type: TransactionType.PURCHASE_RELATED,
+                type: TransactionType.FINANCING,
                 amount: 0,
                 rateOfGrowth: 0,
             },
             [TransactionKey.LOAN_AMOUNT]: {
                 key: TransactionKey.LOAN_AMOUNT,
-                type: TransactionType.PURCHASE_RELATED,
+                type: TransactionType.FINANCING,
                 amount: 0,
                 percentage: 0,
             },
@@ -215,41 +216,38 @@ export class TransactionDetail {
     };
 
     setAmortizationYearData(yearNumber: number) {
-        const yearData = {
-            yearNumber: yearNumber,
-            transactionData: {
-                [TransactionType.INITIAL_EXPENSE]: {
-                    [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
-                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
-                    [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
-                    [TransactionKey.CLOSING_COST]: this.getClosingCost(),
-                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
-                },
-                [TransactionType.RECURRING_EXPENSE]: {
-                    [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(),
-                    [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(),
-                    [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceExpense(),
-                    [TransactionKey.OTHER_EXPENSES]: this.getOtherExpense(),
-                    [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveExpense(),
-                },
-                [TransactionType.INCOME]: {
-                    [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(),
-                    [TransactionKey.PARKING_FEES]: this.getParkingFees(),
-                    [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryService(),
-                    [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFees(),
-                    [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreams(),
-                },
-                [TransactionType.MORTGAGE_RELATED_EXPENSE]: {
-                    [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(),
-                    [TransactionKey.HOA_FEE]: this.getHOAFee(),
-                    [TransactionKey.HOME_INSURANCE]: this.getHomeInsurance(),
-                },
-                [TransactionType.PURCHASE_RELATED]: {
-                    [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(),
-                    [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
-                }
+        return {
+            [TransactionType.INITIAL_EXPENSE]: {
+                [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
+                [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
+                [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
+                [TransactionKey.CLOSING_COST]: this.getClosingCost(),
+                [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
+            },
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
+                [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(yearNumber),
+                [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(yearNumber),
+                [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceExpense(yearNumber),
+                [TransactionKey.OTHER_EXPENSES]: this.getOtherExpense(yearNumber),
+                [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveExpense(yearNumber),
+            },
+            [TransactionType.INCOME_STREAMS]: {
+                [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(yearNumber),
+                [TransactionKey.PARKING_FEES]: this.getParkingFees(yearNumber),
+                [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryService(yearNumber),
+                [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFees(yearNumber),
+                [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreams(yearNumber),
+            },
+            [TransactionType.FIXED_RECURRING_EXPENSE]: {
+                [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(yearNumber),
+                [TransactionKey.HOA_FEE]: this.getHOAFee(yearNumber),
+                [TransactionKey.HOME_INSURANCE]: this.getHomeInsurance(yearNumber),
+            },
+            [TransactionType.FINANCING]: {
+                [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(yearNumber),
+                [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
             }
-        }
+        };
     }
 
     getDownPayment(): BaseTransactionDetail {
@@ -347,9 +345,9 @@ export class TransactionDetail {
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    getLoan(numberOfYears: number = 0): BaseTransactionDetail {
+    getLoan(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getLoanTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.getTransactionInMap(txn);
     }
 
     // private getIncome(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0): BaseTransactionDetail {
