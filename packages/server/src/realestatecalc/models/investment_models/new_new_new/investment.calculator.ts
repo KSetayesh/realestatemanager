@@ -2,7 +2,7 @@ import { AmortizationDetailsDTO, Utility } from "@realestatemanager/shared";
 import { PMIDetails } from "../pmidetails.model";
 import { FinancialTransactionBreakdown } from "./financial.transaction.breakdown";
 import { FinancingTerms } from "./financing.terms";
-import { Transaction } from "./transaction";
+
 
 export class InvestmentCalculator {
     private financialTransactionBreakdown: FinancialTransactionBreakdown;
@@ -24,16 +24,16 @@ export class InvestmentCalculator {
         const ROI: number = this.calculateROI();
         const capRate: number = this.calculateInitialCapRate();
         const initialMortgagePayment: number = this.calculateMortgagePayment(true);
-        const mortgageRelatedCosts: number = this.getTransactionAmount(this.getMortgageRelatedTransactions());
+        const mortgageRelatedCosts: number = this.getTotalMortgageRelatedExpenses();
         const initialMonthlyAmount: number = initialMortgagePayment + mortgageRelatedCosts;
-        const recurringCosts: number = this.getTransactionAmount(this.getRecurringExpenseTransactions());
+        const recurringCosts: number = this.getTotalRecurringExpenses();
         const monthlyCashFlow: number = this.calculateMonthlyCashFlow();
         const yearlyCashFlow: number = this.calculateYearlyCashFlow();
         const ammortizationDetails: AmortizationDetailsDTO[] = this.calculateAmortizationSchedule();
 
     }
 
-    private calculateAmortizationSchedule(): AmortizationDetailsDTO[] {
+    private calculateAmortizationSchedule() {// AmortizationDetailsDTO[] {
 
         const schedule: AmortizationDetailsDTO[] = [];
         const principal: number = this.getPurchasePrice();
@@ -42,8 +42,6 @@ export class InvestmentCalculator {
         const monthlyInterestRate: number = this.getMonthlyInterestRate() / 100;
         const totalPayments: number = this.getNumberOfPayments();
         const mortgagePayment: number = this.calculateMortgagePayment(true);
-        const mortgageRelatedTxns: Transaction[] = this.getMortgageRelatedTransactions();
-        const recurringExpenseTxns: Transaction[] = this.getRecurringExpenseTransactions();
         let remainingBalance: number = loanAmount;
         let cumulativePrincipalPaid: number = 0;
         let totalInterestPaid: number = 0;
@@ -51,9 +49,8 @@ export class InvestmentCalculator {
         let rentalAmount: number = this.getRentalAmount();
         let monthlyCashFlow: number = this.calculateMonthlyCashFlow();
         let accumulatedCashFlow: number = 0;
-
-        let mortgageRelatedCosts: number = this.getTransactionAmount(mortgageRelatedTxns);
-        let recurringExpenses: number = this.getTransactionAmount(recurringExpenseTxns);
+        let mortgageRelatedCosts: number = this.getTotalMortgageRelatedExpenses();
+        let recurringExpenses: number = this.getTotalRecurringExpenses();
         let monthlyPayment: number = mortgagePayment + mortgageRelatedCosts
         let monthlyPaymentAndRecurringCosts: number = monthlyPayment + recurringExpenses;
 
@@ -96,8 +93,8 @@ export class InvestmentCalculator {
                 propertyValue = this.getFutureDatedHomeValue(monthCounter);
                 if (monthMod12 - 1 === 0) {
                     rentalAmount = this.getRentalAmount(yearCounter - 1);
-                    mortgageRelatedCosts = this.getTransactionAmount(mortgageRelatedTxns, yearCounter - 1);
-                    recurringExpenses = this.getTransactionAmount(recurringExpenseTxns, yearCounter - 1);
+                    mortgageRelatedCosts = this.getTotalMortgageRelatedExpenses(yearCounter - 1);
+                    recurringExpenses = this.getTotalRecurringExpenses(yearCounter - 1);
                     monthlyPayment = mortgagePayment + mortgageRelatedCosts;
                     monthlyPaymentAndRecurringCosts = monthlyPayment + recurringExpenses;
                     // monthlyPaymentAndRecurringCosts =  //getMonthlyPaymentAndRecurringCosts(yearCounter - 1);
@@ -129,7 +126,7 @@ export class InvestmentCalculator {
             const monthlyCashFlowRounded = Utility.round(monthlyCashFlow);
             const accumulatedCashFlowRounded = Utility.round(accumulatedCashFlow);
 
-            const amortizationDetailsDTO: AmortizationDetailsDTO = {
+            const amortizationDetailsDTO = { // AmortizationDetailsDTO = {
                 month: monthMod12,
                 date: dateAsString,
                 year: yearCounter,
@@ -164,18 +161,6 @@ export class InvestmentCalculator {
         }
 
         return schedule;
-    }
-
-    private getTransactionAmount(transactions: Transaction | Transaction[], numberOfYears: number = 0): number {
-        if (Array.isArray(transactions)) {
-            return transactions.reduce((total, txn) => total + txn.getAmount(numberOfYears).amount, 0);
-        } else {
-            return transactions.getAmount(numberOfYears).amount;
-        }
-    }
-
-    private getTransactionRate(transactions: Transaction, numberOfYears?: number): number {
-        return transactions.getRate(numberOfYears).rate;
     }
 
     private calculateMortgagePayment(calculateWithPMI: boolean = false): number {
@@ -213,13 +198,9 @@ export class InvestmentCalculator {
             throw new Error("Down payment cannot be zero for rate of return calculations.");
         }
         const yearlyReturn = this.calculateYearlyCashFlow(numberOfYears);
-        const initialExpeses = this.getTransactionAmount(this.getInitialExpenseTransactions(), numberOfYears);
+        const initialExpeses = this.getTotalInitialExpenses(numberOfYears);
 
         return (yearlyReturn / initialExpeses) * 100;
-    }
-
-    private getFutureDatedHomeValue(numberOfYears: number = 0): number {
-        return this.financialTransactionBreakdown.getFutureDatedPrice(numberOfYears).amount;
     }
 
     private calculateYearlyCashFlow(numberOfYears: number = 0): number {
@@ -228,8 +209,8 @@ export class InvestmentCalculator {
 
     private calculateMonthlyCashFlow(numberOfYears: number = 0): number {
         const mortgageAmount = this.calculateMortgagePayment(true);
-        const monthlyPayment = mortgageAmount + this.getTransactionAmount(this.getMortgageRelatedTransactions(), numberOfYears);
-        const futureDatedRecurringExpenses = this.getTransactionAmount(this.getRecurringExpenseTransactions(), numberOfYears);
+        const monthlyPayment = mortgageAmount + this.getTotalMortgageRelatedExpenses(numberOfYears);
+        const futureDatedRecurringExpenses = this.getTotalRecurringExpenses(numberOfYears);
         const futureDatedRentAmount = this.getRentalAmount(numberOfYears);
         return futureDatedRentAmount - (monthlyPayment + futureDatedRecurringExpenses);
     }
@@ -237,22 +218,6 @@ export class InvestmentCalculator {
     private calculateInitialCapRate(): number {
         const annualNetOperatingIncome = (this.calculateMonthlyCashFlow() + this.calculateMortgagePayment()) * 12;
         return (annualNetOperatingIncome / this.getPurchasePrice()) * 100;
-    }
-
-    private getInitialExpenseTransactions(): Transaction[] {
-        return this.financialTransactionBreakdown.getInititalExpenseTransactions();
-    }
-
-    private getRecurringExpenseTransactions(): Transaction[] {
-        return this.financialTransactionBreakdown.getRecurringExpenseTransactions();
-    }
-
-    private getMortgageRelatedTransactions(): Transaction[] {
-        return this.financialTransactionBreakdown.getMortgageRelatedExpenseTransactions();
-    }
-
-    private getPurchasePrice(): number {
-        return this.financialTransactionBreakdown.getPurchasePrice().amount;
     }
 
     private getPmiRate(): number {
@@ -265,6 +230,26 @@ export class InvestmentCalculator {
 
     private getMonthlyInterestRate(): number {
         return this.financingTerms.getMonthlyInterestRate();
+    }
+
+    private getFutureDatedHomeValue(numberOfYears: number = 0): number {
+        return this.financialTransactionBreakdown.getFutureDatedPrice(numberOfYears).amount;
+    }
+
+    private getTotalMortgageRelatedExpenses(numberOfYears: number = 0): number {
+        return this.financialTransactionBreakdown.getTotalMortgageRelatedExpenses(numberOfYears).amount;
+    }
+
+    private getTotalRecurringExpenses(numberOfYears: number = 0): number {
+        return this.financialTransactionBreakdown.getTotalRecurringExpenses(numberOfYears).amount;
+    }
+
+    private getTotalInitialExpenses(numberOfYears: number = 0): number {
+        return this.financialTransactionBreakdown.getTotalInitialExpenses(numberOfYears).amount;
+    }
+
+    private getPurchasePrice(): number {
+        return this.financialTransactionBreakdown.getPurchasePrice().amount;
     }
 
     private getLoanAmount(): number {

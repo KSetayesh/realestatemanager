@@ -1,10 +1,20 @@
-import { Utility, ValueAmountInput, ValueInput, ValueRateInput } from "@realestatemanager/shared";
-import { TransactionDTO, TransactionKey, TransactionType } from "./financial.transaction.breakdown";
+import { Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType } from "./financial.transaction.breakdown";
 import { TransactionCalculator } from "../new_calculators/transaction.calculator";
+
+export type TransactionDTO = {
+    txnKey: TransactionKey;
+    txnType: TransactionType;
+    amount: number;
+    cumulativeAmount: number;
+    rate: number;
+    projectedGrowthRate: number;
+};
 
 export class Transaction {
     private transactionKey: TransactionKey;
     private amount: ValueInput;
+    private cumulativeAmount: ValueAmountInput;
     private calculator: TransactionCalculator;
     private txnType: TransactionType;
     private growthRate?: ValueRateInput;
@@ -21,6 +31,14 @@ export class Transaction {
         this.calculator = calculator;
         this.txnType = txnType;
         this.growthRate = growthRate;
+        this.cumulativeAmount = {
+            type: ValueType.AMOUNT,
+            amount: 0
+        };
+    }
+
+    setCumulativeAmount(amount: ValueAmountInput) {
+        this.cumulativeAmount.amount += amount.amount;
     }
 
     getTransactionKey(): TransactionKey {
@@ -48,6 +66,7 @@ export class Transaction {
             txnKey: this.getTransactionKey(),
             txnType: this.getTransactionType(),
             amount: Utility.round(this.getAmount(numberOfYears).amount),
+            cumulativeAmount: Utility.round(this.cumulativeAmount.amount),
             rate: Utility.round(this.getRate(numberOfYears).rate),
             projectedGrowthRate: Utility.round(this.growthRate.rate),
         };
