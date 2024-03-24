@@ -360,83 +360,83 @@ export class FinancialTransactionBreakdown {
         return txns;
     }
 
-    private getPurchasePriceTxn(): Transaction {
+    getPurchasePriceTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
     }
 
-    private getPropertyTaxTxn(): Transaction {
+    getPropertyTaxTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
     }
 
-    private getHOAFeesTxn(): Transaction {
+    getHOAFeesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.HOA_FEE);
     }
 
-    private getHomeInsuranceTxn(): Transaction {
+    getHomeInsuranceTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.HOME_INSURANCE);
     }
 
-    private getRentalIncomeTxn(): Transaction {
+    getRentalIncomeTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.RENTAL_INCOME);
     }
 
-    private getParkingFeesTxn(): Transaction {
+    getParkingFeesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.PARKING_FEES);
     }
 
-    private getLaundryServicesTxn(): Transaction {
+    getLaundryServicesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.LAUNDRY_SERVICES);
     }
 
-    private getStorageUnitFeesTxn(): Transaction {
+    getStorageUnitFeesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.STORAGE_UNIT_FEES);
     }
 
-    private getOtherAdditionalIncomesStreamsTxn(): Transaction {
+    getOtherAdditionalIncomesStreamsTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS);
     }
 
-    private getPropertyManagementRateTxn(): Transaction {
+    getPropertyManagementRateTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.PROPERTY_MANAGEMENT_EXPENSE);
     }
 
-    private getVacancyRateTxn(): Transaction {
+    getVacancyRateTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.VACANCY_EXPENSE);
     }
 
-    private getMaintenanceRateTxn(): Transaction {
+    getMaintenanceRateTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.MAINTENANCE_EXPENSE);
     }
 
-    private getOtherExpensesRateTxn(): Transaction {
+    getOtherExpensesRateTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.OTHER_EXPENSES);
     }
 
-    private getCapExReserveRateTxn(): Transaction {
+    getCapExReserveRateTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.CAP_EX_RESERVE_EXPENSE);
     }
 
-    private getDownPaymentTxn(): Transaction {
+    getDownPaymentTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.DOWN_PAYMENT);
     }
 
-    private getLegalAndProfessionalFeesTxn(): Transaction {
+    getLegalAndProfessionalFeesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.LEGAL_AND_PROFESSIONAL_FEES);
     }
 
-    private getInitialRepairCostsTxn(): Transaction {
+    getInitialRepairCostsTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.INITIAL_REPAIR_COST);
     }
 
-    private getClosingCostsTxn(): Transaction {
+    getClosingCostsTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.CLOSING_COST);
     }
 
-    private getTravelingCostsTxn(): Transaction {
+    getTravelingCostsTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.TRAVELING_COST);
     }
 
-    private getOtherInitialExpensesTxn(): Transaction {
+    getOtherInitialExpensesTxn(): Transaction {
         return this.getTransactionByKey(TransactionKey.OTHER_INITIAL_EXPENSES);
     }
 

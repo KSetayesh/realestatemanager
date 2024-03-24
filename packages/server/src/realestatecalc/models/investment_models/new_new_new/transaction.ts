@@ -17,6 +17,9 @@ export class Transaction {
     private cumulativeAmount: ValueAmountInput;
     private calculator: TransactionCalculator;
     private txnType: TransactionType;
+    private _canBeCumulated: boolean;
+    private _canBePercetage: boolean;
+    private _hasRateOfGrowth: boolean;
     private growthRate?: ValueRateInput;
 
     constructor(
@@ -24,6 +27,9 @@ export class Transaction {
         amount: ValueInput,
         calculator: TransactionCalculator,
         txnType: TransactionType,
+        canBeCumulated: boolean,
+        canBePercetage: boolean,
+        hasRateOfGrowth: boolean,
         growthRate?: ValueRateInput
     ) {
         this.transactionKey = transactionKey;
@@ -31,6 +37,9 @@ export class Transaction {
         this.calculator = calculator;
         this.txnType = txnType;
         this.growthRate = growthRate;
+        this._canBeCumulated = canBeCumulated;
+        this._canBePercetage = canBePercetage;
+        this._hasRateOfGrowth = hasRateOfGrowth;
         this.cumulativeAmount = {
             type: ValueType.AMOUNT,
             amount: 0
@@ -59,6 +68,22 @@ export class Transaction {
         // Similar to getAmount, getRate's behavior will depend on the current calculator strategy.
         // This can handle different calculations based on the calculator being used.
         return this.calculator.getRate(this.amount, this.growthRate.rate, numberOfYears);
+    }
+
+    getProjectedGrowthRate(): ValueRateInput {
+        return this.growthRate;
+    }
+
+    canBeCumulated(): boolean {
+        return this._canBeCumulated;
+    }
+
+    canBePercetage(): boolean {
+        return this._canBePercetage;
+    }
+
+    hasRateOfGrowth(): boolean {
+        return this._hasRateOfGrowth;
     }
 
     toDTO(numberOfYears: number = 0): TransactionDTO {
