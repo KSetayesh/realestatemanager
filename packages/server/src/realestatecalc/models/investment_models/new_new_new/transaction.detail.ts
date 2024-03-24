@@ -350,39 +350,20 @@ export class TransactionDetail {
         return this.getTransactionInMap(txn);
     }
 
-    // private getIncome(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0): BaseTransactionDetail {
-    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.INCOME, numberOfYears);
-    // }
-
-    // private getRecurringExpense(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0): BaseTransactionDetail {
-    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.RECURRING_EXPENSE, numberOfYears);
-    // }
-
-    // private getInitialExpense(transaction: Transaction, txnKey: TransactionKey): BaseTransactionDetail {
-    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.INITIAL_EXPENSE);
-    // }
-
     private getTransactionInMap(
         transaction: Transaction,
         numberOfYears: number = 0,
     ): BaseTransactionDetail {
 
-        // if (!this.txnMap.has(txnKey)) {
-        //     this.txnMap.set(txnKey, []);
-        // }
-        // Explicitly assert that the return value is not undefined.
-        // const listOfTxns: BaseTransactionDetail[] = this.txnMap.get(txnKey)!;
         const txnAmount = transaction.getAmount(numberOfYears).amount;
         const txnPercentage = transaction.getRate(numberOfYears).rate;
         const rateOfGrowth = transaction.getProjectedGrowthRate().rate
         let cumulativeAmount = txnAmount;
         if (this.txnList.length > 1) {
-            const previousTransactions = this.txnList[this.txnList.length - 1];
-
+            const previousIndexData = this.txnList[this.txnList.length - 1];
+            const previous: BaseTransactionDetail = previousIndexData[transaction.getTransactionType()][transaction.getTransactionKey()];
+            cumulativeAmount += previous.cumulativeAmount ?? 0;
         }
-        // if (listOfTxns.length > 1) {
-        //     cumulativeAmount += listOfTxns[listOfTxns.length - 1].cumulativeAmount ?? 0;
-        // }
 
         const transactionDetail: BaseTransactionDetail = {
             key: transaction.getTransactionKey(),
@@ -393,7 +374,6 @@ export class TransactionDetail {
             ...(transaction.hasRateOfGrowth() && { rateOfGrowth: rateOfGrowth }),
         };
         return transactionDetail;
-        // listOfTxns.push(transactionDetail);
     }
 
 }
