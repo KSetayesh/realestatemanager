@@ -1,7 +1,8 @@
 import { ValueAmountInput, ValueRateInput, GrowthFrequency } from "@realestatemanager/shared";
 import { TransactionCalculator } from "./transaction.calculator";
 
-export class AppreciationCalculator extends TransactionCalculator {
+// export class AppreciationCalculator extends TransactionCalculator {
+export class MonthlyAppreciationCalculator extends TransactionCalculator {
 
     constructor() {
         super(GrowthFrequency.MONTHLY);

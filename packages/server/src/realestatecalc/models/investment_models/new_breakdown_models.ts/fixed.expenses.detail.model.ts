@@ -2,7 +2,7 @@ import { FixedMonthlyExpensesDTO, ValueAmountInput, ValueInput, ValueRateInput, 
 import { Breakdown, FixedExpensesBreakdown } from "./fixed.expenses.breakdown.model";
 import { Calculate } from "./calculate.model";
 import { IDTOConvertible } from "../../idtoconvertible.model";
-import { FixedExpensesAmountCalculator } from "../new_calculators/fixed.expenses.calculator";
+import { FixedExpensesAmountCalculator } from "../new_calculators/dynamic.growth.calculator";
 import { FixedExpensesRateCalculator } from "../new_calculators/fixed.expenses.rate.calculator";
 
 export class FixedExpensesDetail implements Calculate, IDTOConvertible<FixedMonthlyExpensesDTO> {

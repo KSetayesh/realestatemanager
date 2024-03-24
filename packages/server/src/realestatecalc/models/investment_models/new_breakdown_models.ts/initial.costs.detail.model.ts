@@ -4,7 +4,7 @@ import { Breakdown } from "./fixed.expenses.breakdown.model";
 import { Calculate } from "./calculate.model";
 import { IDTOConvertible } from "../../idtoconvertible.model";
 import { InititalCostsRateCalculator } from "../new_calculators/initital.costs.rate.calculator";
-import { InititalCostsAmountCalculator } from "../new_calculators/initital.costs.calculator";
+import { InititalCostsAmountCalculator } from "../new_calculators/direct.value.calculator";
 
 export class InitialCostsDetail implements Calculate, IDTOConvertible<InitialCostsDTO> {
 

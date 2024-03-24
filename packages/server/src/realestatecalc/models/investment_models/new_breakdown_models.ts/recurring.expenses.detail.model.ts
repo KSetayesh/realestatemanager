@@ -3,7 +3,7 @@ import { RecurringExpensesBreakdown } from "./recurring.expenses.breakdown.model
 import { Breakdown } from "./fixed.expenses.breakdown.model";
 import { Calculate } from "./calculate.model";
 import { IDTOConvertible } from "../../idtoconvertible.model";
-import { RecurringExpensesCalculator } from "../new_calculators/recurring.expenses.calculator";
+import { RecurringExpensesCalculator } from "../new_calculators/recurring.expense.projection.calculator";
 
 export class RecurringExpensesDetail implements Calculate, IDTOConvertible<RecurringExpensesDTO> {
 

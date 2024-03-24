@@ -3,7 +3,7 @@ import { IncomeStreamsBreakdown } from "./income.streams.breakdown.model";
 import { Breakdown } from "./fixed.expenses.breakdown.model";
 import { Calculate } from "./calculate.model";
 import { IDTOConvertible } from "../../idtoconvertible.model";
-import { IncomeCalculator } from "../new_calculators/income.calculator";
+import { IncomeCalculator } from "../new_calculators/appreciation.and.income.projection.calculator";
 
 export class IncomeStreamsDetail implements Calculate, IDTOConvertible<IncomesDTO> {
 

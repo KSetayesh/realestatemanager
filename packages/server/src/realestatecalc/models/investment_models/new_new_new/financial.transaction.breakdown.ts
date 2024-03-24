@@ -1,6 +1,6 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { Transaction, TransactionDTO } from "./transaction";
-import { InititalCostsCalculator } from "../new_calculators/initital.costs.calculator";
+import { DirectValueCalculator } from "../new_calculators/direct.value.calculator";
 
 export enum TransactionType {
     INITIAL_EXPENSE,
@@ -59,7 +59,7 @@ export class FinancialTransactionBreakdown {
         const loanTxn: Transaction = new Transaction(
             TransactionKey.LOAN_AMOUNT,
             this.getLoanAmount(),
-            new InititalCostsCalculator(this.getPurchasePrice()),
+            new DirectValueCalculator(this.getPurchasePrice()),
             TransactionType.PURCHASE_RELATED,
             false,
             true,

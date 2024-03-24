@@ -5,7 +5,7 @@ import { PMIDetails } from "./pmi.details.model";
 import { RecurringExpense } from "../transaction_models/financial.transaction.breakdown.model";
 import { Expenses } from "../new_breakdown_models.ts/expenses.model";
 import { Breakdown } from "../new_breakdown_models.ts/fixed.expenses.breakdown.model";
-import { AppreciationCalculator } from "../new_calculators/appreciation.calculator";
+import { AppreciationCalculator } from "../new_calculators/monthly.appreciation.calculator";
 
 export class MortgagePaymentCalculator {
 
@@ -51,7 +51,7 @@ export class MortgagePaymentCalculator {
             const mortgageAmount: ValueAmountInput = this.mortgageCalculator.calculateMortgagePaymentWithoutPMI();
             const currentBalance: number = this.getCurrentBalance(downPaymentAmount, totalPrincipalPaid);
             const pmiAmount: ValueAmountInput = this.mortgageCalculator.getPMIAmount(currentBalance, homeAppreciationValue);
-            
+
         }
 
 

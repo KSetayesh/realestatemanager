@@ -1,7 +1,7 @@
 import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { Calculate } from "./calculate.model"; import { Breakdown } from "./fixed.expenses.breakdown.model";
-import { IncomeCalculator } from "../new_calculators/income.calculator";
-import { AppreciationCalculator } from "../new_calculators/appreciation.calculator";
+import { IncomeCalculator } from "../new_calculators/appreciation.and.income.projection.calculator";
+import { AppreciationCalculator } from "../new_calculators/monthly.appreciation.calculator";
 
 export class PurchaseDetail implements Calculate {
 

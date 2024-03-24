@@ -1,7 +1,8 @@
 import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { TransactionCalculator } from "./transaction.calculator";
 
-export class FixedExpensesCalculator extends TransactionCalculator {
+// export class FixedExpensesCalculator extends TransactionCalculator {
+export class DynamicGrowthCalculator extends TransactionCalculator {
 
     private rentalGrowthRate: ValueRateInput;
     private inititalRentalAmount: ValueAmountInput;
@@ -38,7 +39,7 @@ export class FixedExpensesCalculator extends TransactionCalculator {
         else if (isValueRateInput(initialValue)) {
             return initialValue;
         }
-      
+
     }
 
 }

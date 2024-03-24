@@ -1,7 +1,8 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { TransactionCalculator } from "./transaction.calculator";
 
-export class IncomeCalculator extends TransactionCalculator {
+// export class IncomeCalculator extends TransactionCalculator {
+export class AppreciationAndIncomeProjectionCalculator extends TransactionCalculator {
 
     // private incomeGrowthRate: ValueRateInput;
     private appreciationGrowthRate: ValueRateInput;
