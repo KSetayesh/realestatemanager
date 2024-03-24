@@ -47,16 +47,16 @@ interface BaseTransactionDetail {
     rateOfGrowth?: number;
 }
 
-interface PurchaseRelatedTransactionDetail extends Omit<BaseTransactionDetail, 'percentage' | 'cumulativeAmount'> { }
+interface PurchaseRelatedTransactionDetail extends Omit<BaseTransactionDetail, 'percentage' | 'cumulativeAmount' | 'rateOfGrowth'> { };
 
 
 export class TransactionDetail {
 
-    private txnMap: Map<TransactionKey, BaseTransactionDetail[]>;
+    //private txnMap: Map<TransactionKey, BaseTransactionDetail[]>;
     private financialTransactionBreakdown: FinancialTransactionBreakdown;
-
+    private txnList: [] = [];
     constructor(financialTransactionBreakdown: FinancialTransactionBreakdown) {
-        this.txnMap = new Map();
+        // this.txnMap = new Map();
         this.financialTransactionBreakdown = financialTransactionBreakdown;
     }
 
@@ -214,120 +214,188 @@ export class TransactionDetail {
         }
     };
 
-    setAmortizationYearData(yearNumber: number, isInitial: boolean = false) {
-        if (isInitial) {
-            this.setDownPayment();
-            this.setLegalAndProfessionalFees();
-            this.setInititalRepairCostsFees();
-            this.setClosingCost();
-            this.setOtherInitialExpenses();
-        }
-        else {
-            this.setPropertyManagementExpense(yearNumber);
-            this.setVacancyExpense(yearNumber);
-            this.setMaintenanceExpense(yearNumber);
-            this.setOtherExpense(yearNumber);
-            this.setCapExReserveExpense(yearNumber); 
+    setAmortizationYearData(yearNumber: number) {
+        const yearData = {
+            yearNumber: yearNumber,
+            transactionData: {
+                [TransactionType.INITIAL_EXPENSE]: {
+                    [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
+                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
+                    [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
+                    [TransactionKey.CLOSING_COST]: this.getClosingCost(),
+                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
+                },
+                [TransactionType.RECURRING_EXPENSE]: {
+                    [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(),
+                    [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(),
+                    [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceExpense(),
+                    [TransactionKey.OTHER_EXPENSES]: this.getOtherExpense(),
+                    [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveExpense(),
+                },
+                [TransactionType.INCOME]: {
+                    [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(),
+                    [TransactionKey.PARKING_FEES]: this.getParkingFees(),
+                    [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryService(),
+                    [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFees(),
+                    [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreams(),
+                },
+                [TransactionType.MORTGAGE_RELATED_EXPENSE]: {
+                    [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(),
+                    [TransactionKey.HOA_FEE]: this.getHOAFee(),
+                    [TransactionKey.HOME_INSURANCE]: this.getHomeInsurance(),
+                },
+                [TransactionType.PURCHASE_RELATED]: {
+                    [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(),
+                    [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
+                }
+            }
         }
     }
 
-    setDownPayment() {
+    getDownPayment(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getDownPaymentTxn();
-        return this.setInitialExpense(txn, TransactionKey.DOWN_PAYMENT);
+        return this.getTransactionInMap(txn);
     }
 
-    setLegalAndProfessionalFees() {
+    getLegalAndProfessionalFees(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getLegalAndProfessionalFeesTxn();
-        return this.setInitialExpense(txn, TransactionKey.LEGAL_AND_PROFESSIONAL_FEES);
+        return this.getTransactionInMap(txn);
     }
 
-    setInititalRepairCostsFees() {
+    getInititalRepairCostsFees(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getLegalAndProfessionalFeesTxn();
-        return this.setInitialExpense(txn, TransactionKey.INITIAL_REPAIR_COST);
+        return this.getTransactionInMap(txn);
     }
 
-    setClosingCost() {
+    getClosingCost(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getClosingCostsTxn();
-        return this.setInitialExpense(txn, TransactionKey.CLOSING_COST);
+        return this.getTransactionInMap(txn);
     }
 
-    setOtherInitialExpenses() {
+    getOtherInitialExpenses(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getOtherInitialExpensesTxn();
-        return this.setInitialExpense(txn, TransactionKey.OTHER_INITIAL_EXPENSES);
+        return this.getTransactionInMap(txn);
     }
 
-    setPropertyManagementExpense(numberOfYears: number = 0) {
+    getPropertyManagementExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getPropertyManagementRateTxn();
-        return this.setRecurringExpense(txn, TransactionKey.PROPERTY_MANAGEMENT_EXPENSE, numberOfYears);
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    setVacancyExpense(numberOfYears: number = 0) {
+    getVacancyExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getVacancyRateTxn();
-        return this.setRecurringExpense(txn, TransactionKey.VACANCY_EXPENSE, numberOfYears);
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    setMaintenanceExpense(numberOfYears: number = 0) {
+    getMaintenanceExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getMaintenanceRateTxn();
-        return this.setRecurringExpense(txn, TransactionKey.MAINTENANCE_EXPENSE, numberOfYears);
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    setOtherExpense(numberOfYears: number = 0) {
+    getOtherExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getOtherExpensesRateTxn();
-        return this.setRecurringExpense(txn, TransactionKey.OTHER_EXPENSES, numberOfYears);
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    setRentalIncome(numberOfYears: number = 0) {
-        const txn: Transaction = this.financialTransactionBreakdown.getRentalIncomeTxn();
-        return this.setIncome(txn, TransactionKey.RENTAL_INCOME, numberOfYears);
-    }
-
-    setCapExReserveExpense(numberOfYears: number = 0) {
+    getCapExReserveExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getCapExReserveRateTxn();
-        return this.setRecurringExpense(txn, TransactionKey.CAP_EX_RESERVE_EXPENSE, numberOfYears);
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    private setIncome(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0) {
-        this.setTransactionInMap(transaction, txnKey, TransactionType.INCOME, numberOfYears);
+    getRentalIncome(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getRentalIncomeTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    private setRecurringExpense(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0) {
-        this.setTransactionInMap(transaction, txnKey, TransactionType.RECURRING_EXPENSE, numberOfYears);
+    getParkingFees(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getParkingFeesTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    private setInitialExpense(transaction: Transaction, txnKey: TransactionKey) {
-        this.setTransactionInMap(transaction, txnKey, TransactionType.INITIAL_EXPENSE);
+    getLaundryService(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getLaundryServicesTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    private setTransactionInMap(
+    getStorageUnitFees(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getStorageUnitFeesTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getOtherAdditionalIncomeStreams(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getStorageUnitFeesTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getPropertyTax(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getPropertyTaxTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getHOAFee(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getHOAFeesTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getHomeInsurance(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getHomeInsuranceTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getPurchasePrice(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getPurchasePriceTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    getLoan(numberOfYears: number = 0): BaseTransactionDetail {
+        const txn: Transaction = this.financialTransactionBreakdown.getLoanTxn();
+        return this.getTransactionInMap(txn, numberOfYears);
+    }
+
+    // private getIncome(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0): BaseTransactionDetail {
+    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.INCOME, numberOfYears);
+    // }
+
+    // private getRecurringExpense(transaction: Transaction, txnKey: TransactionKey, numberOfYears: number = 0): BaseTransactionDetail {
+    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.RECURRING_EXPENSE, numberOfYears);
+    // }
+
+    // private getInitialExpense(transaction: Transaction, txnKey: TransactionKey): BaseTransactionDetail {
+    //     return this.getTransactionInMap(transaction, txnKey, TransactionType.INITIAL_EXPENSE);
+    // }
+
+    private getTransactionInMap(
         transaction: Transaction,
-        txnKey: TransactionKey,
-        txnType: TransactionType,
         numberOfYears: number = 0,
-    ) {
+    ): BaseTransactionDetail {
 
-        if (!this.txnMap.has(txnKey)) {
-            this.txnMap.set(txnKey, []);
-        }
+        // if (!this.txnMap.has(txnKey)) {
+        //     this.txnMap.set(txnKey, []);
+        // }
         // Explicitly assert that the return value is not undefined.
-        const listOfTxns: BaseTransactionDetail[] = this.txnMap.get(txnKey)!;
+        // const listOfTxns: BaseTransactionDetail[] = this.txnMap.get(txnKey)!;
         const txnAmount = transaction.getAmount(numberOfYears).amount;
         const txnPercentage = transaction.getRate(numberOfYears).rate;
         const rateOfGrowth = transaction.getProjectedGrowthRate().rate
         let cumulativeAmount = txnAmount;
-        if (listOfTxns.length > 1) {
-            cumulativeAmount += listOfTxns[listOfTxns.length - 1].cumulativeAmount ?? 0;
+        if (this.txnList.length > 1) {
+            const previousTransactions = this.txnList[this.txnList.length - 1];
+
         }
+        // if (listOfTxns.length > 1) {
+        //     cumulativeAmount += listOfTxns[listOfTxns.length - 1].cumulativeAmount ?? 0;
+        // }
 
         const transactionDetail: BaseTransactionDetail = {
-            key: txnKey,
-            type: txnType,
+            key: transaction.getTransactionKey(),
+            type: transaction.getTransactionType(),
             amount: txnAmount,
             ...(transaction.canBePercetage() && { percentage: txnPercentage }),
             ...(transaction.canBeCumulated() && { cumulativeAmount: cumulativeAmount }),
             ...(transaction.hasRateOfGrowth() && { rateOfGrowth: rateOfGrowth }),
         };
-
-        listOfTxns.push(transactionDetail);
+        return transactionDetail;
+        // listOfTxns.push(transactionDetail);
     }
 
 }

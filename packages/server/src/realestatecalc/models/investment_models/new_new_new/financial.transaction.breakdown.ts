@@ -1,5 +1,6 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { Transaction, TransactionDTO } from "./transaction";
+import { InititalCostsCalculator } from "../new_calculators/initital.costs.calculator";
 
 export enum TransactionType {
     INITIAL_EXPENSE,
@@ -51,6 +52,20 @@ export class FinancialTransactionBreakdown {
 
     constructor(txnMap: Map<TransactionKey, Transaction>) {
         this.txnMap = txnMap;
+        this.createLoanTransaction();
+    }
+
+    private createLoanTransaction() {
+        const loanTxn: Transaction = new Transaction(
+            TransactionKey.LOAN_AMOUNT,
+            this.getLoanAmount(),
+            new InititalCostsCalculator(this.getPurchasePrice()),
+            TransactionType.PURCHASE_RELATED,
+            false,
+            true,
+            false,
+        );
+        this.txnMap.set(TransactionKey.LOAN_AMOUNT, loanTxn);
     }
 
     // private purchasePrice: Transaction;
@@ -273,6 +288,91 @@ export class FinancialTransactionBreakdown {
         return this.getOtherInitialExpensesTxn().getRate();
     }
 
+    //------------------------------------------------------------------------------------------------
+
+    getPurchasePriceTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
+    }
+
+    getPropertyTaxTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.PROPERTY_TAX);
+    }
+
+    getHOAFeesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.HOA_FEE);
+    }
+
+    getHomeInsuranceTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.HOME_INSURANCE);
+    }
+
+    getRentalIncomeTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.RENTAL_INCOME);
+    }
+
+    getParkingFeesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.PARKING_FEES);
+    }
+
+    getLaundryServicesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.LAUNDRY_SERVICES);
+    }
+
+    getStorageUnitFeesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.STORAGE_UNIT_FEES);
+    }
+
+    getOtherAdditionalIncomesStreamsTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS);
+    }
+
+    getPropertyManagementRateTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.PROPERTY_MANAGEMENT_EXPENSE);
+    }
+
+    getVacancyRateTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.VACANCY_EXPENSE);
+    }
+
+    getMaintenanceRateTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.MAINTENANCE_EXPENSE);
+    }
+
+    getOtherExpensesRateTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.OTHER_EXPENSES);
+    }
+
+    getCapExReserveRateTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.CAP_EX_RESERVE_EXPENSE);
+    }
+
+    getDownPaymentTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.DOWN_PAYMENT);
+    }
+
+    getLoanTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.LOAN_AMOUNT);
+    }
+
+    getLegalAndProfessionalFeesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.LEGAL_AND_PROFESSIONAL_FEES);
+    }
+
+    getInitialRepairCostsTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.INITIAL_REPAIR_COST);
+    }
+
+    getClosingCostsTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.CLOSING_COST);
+    }
+
+    getTravelingCostsTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.TRAVELING_COST);
+    }
+
+    getOtherInitialExpensesTxn(): Transaction {
+        return this.getTransactionByKey(TransactionKey.OTHER_INITIAL_EXPENSES);
+    }
 
     //------------------------------------------------------------------------------------------------
 
@@ -358,86 +458,6 @@ export class FinancialTransactionBreakdown {
             }
         });
         return txns;
-    }
-
-    getPurchasePriceTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
-    }
-
-    getPropertyTaxTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
-    }
-
-    getHOAFeesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.HOA_FEE);
-    }
-
-    getHomeInsuranceTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.HOME_INSURANCE);
-    }
-
-    getRentalIncomeTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.RENTAL_INCOME);
-    }
-
-    getParkingFeesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.PARKING_FEES);
-    }
-
-    getLaundryServicesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.LAUNDRY_SERVICES);
-    }
-
-    getStorageUnitFeesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.STORAGE_UNIT_FEES);
-    }
-
-    getOtherAdditionalIncomesStreamsTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS);
-    }
-
-    getPropertyManagementRateTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.PROPERTY_MANAGEMENT_EXPENSE);
-    }
-
-    getVacancyRateTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.VACANCY_EXPENSE);
-    }
-
-    getMaintenanceRateTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.MAINTENANCE_EXPENSE);
-    }
-
-    getOtherExpensesRateTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.OTHER_EXPENSES);
-    }
-
-    getCapExReserveRateTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.CAP_EX_RESERVE_EXPENSE);
-    }
-
-    getDownPaymentTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.DOWN_PAYMENT);
-    }
-
-    getLegalAndProfessionalFeesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.LEGAL_AND_PROFESSIONAL_FEES);
-    }
-
-    getInitialRepairCostsTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.INITIAL_REPAIR_COST);
-    }
-
-    getClosingCostsTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.CLOSING_COST);
-    }
-
-    getTravelingCostsTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.TRAVELING_COST);
-    }
-
-    getOtherInitialExpensesTxn(): Transaction {
-        return this.getTransactionByKey(TransactionKey.OTHER_INITIAL_EXPENSES);
     }
 
     private getTransactionByKey(key: TransactionKey): Transaction {
