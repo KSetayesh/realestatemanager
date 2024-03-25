@@ -1,25 +1,20 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { TransactionCalculator } from "./transaction.calculator";
+import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 
 // export class RecurringExpensesCalculator extends TransactionCalculator {
-export class RecurringExpenseProjectionCalculator extends TransactionCalculator {
-
-    private rentalGrowthRate: ValueRateInput;
-    private initialRentalAmount: ValueAmountInput;
+export class RecurringExpenseProjectionCalculator extends ValueDependentTransactionCalculator {
 
     constructor(
-        rentalGrowthRate: ValueRateInput,
         initialRentalAmount: ValueAmountInput,
+        rentalGrowthRate: ValueRateInput,
     ) {
-        super();
-        this.rentalGrowthRate = rentalGrowthRate;
-        this.initialRentalAmount = initialRentalAmount;
+        super(initialRentalAmount, rentalGrowthRate);
     }
 
     getAmount(rateValue: ValueRateInput, numberOfYears: number = 0): ValueAmountInput {
         const futureRentalAmount = this.getFutureDatedAmount(
-            this.initialRentalAmount.amount,
-            this.rentalGrowthRate.rate,
+            this.baseValue.amount,
+            this.growthRate.rate,
             numberOfYears
         ).amount;
         return {

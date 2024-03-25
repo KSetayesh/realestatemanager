@@ -1,19 +1,24 @@
+import { ValueAmountInput } from "@realestatemanager/shared";
 import { FinancialTransactionBreakdown } from "./financial.transaction.breakdown";
 import { Transaction } from "./transaction";
 
 
 export enum TransactionType {
     INITIAL_EXPENSE,
-    // MORTGAGE_RELATED_EXPENSE,
     FIXED_RECURRING_EXPENSE,
     OPERATIONAL_RECURRING_EXPENSE,
     INCOME_STREAMS,
     FINANCING,
+    MORTGAGE,
 };
 
 export enum TransactionKey {
     LOAN_AMOUNT = 'Loan Amount',
     PURCHASE_PRICE = 'Purchase Price',
+    MORTGAGE_INTEREST = 'Mortgage Interest',
+    MORTGAGE_PRINCIPAL = 'Mortgage Principal',
+    MORTGAGE_AMOUNT = 'Mortgage Amount',
+    PMI = 'PMI',
 
     PROPERTY_TAX = 'Property Tax',
     HOA_FEE = 'Monthly HOA Fee',
@@ -39,6 +44,7 @@ export enum TransactionKey {
     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
 };
 
+
 interface BaseTransactionDetail {
     key: TransactionKey;
     type: TransactionType;
@@ -46,209 +52,185 @@ interface BaseTransactionDetail {
     percentage?: number;
     cumulativeAmount?: number;
     rateOfGrowth?: number;
-}
+};
 
-interface PurchaseRelatedTransactionDetail extends Omit<BaseTransactionDetail, 'percentage' | 'cumulativeAmount' | 'rateOfGrowth'> { };
+// interface MortgageRelatedDetail extends BaseTransactionDetail { // Omit<BaseTransactionDetail, 'interestAmount'> {
+//     // interestAmount: number; // Assuming you are adding this to differentiate mortgage interest payments
+
+//     interestAmount: number;
+// };
+
+interface TransactionCategoryDetail {
+    totalAmount: number;
+    description: string;
+    breakdown: { [key in TransactionKey]?: BaseTransactionDetail }; // breakdown: Record<TransactionKey, BaseTransactionDetail>; // | MortgageRelatedDetail>;
+};
+
+// interface FinancingCategoryDetail extends Omit<TransactionCategoryDetail, 'breakdown'> {
+//     breakdown: {
+//         [key in TransactionKey]?: BaseTransactionDetail; // Existing transaction keys
+//     } & {
+//         mortgageInterest: BaseTransactionDetail; // Interest part of mortgage payments
+//         mortgagePrincipal: BaseTransactionDetail; // Principal part of mortgage payments
+//         mortgageAmount: BaseTransactionDetail; // Total mortgage amount
+//         pmiAmount: BaseTransactionDetail; // Total mortgage amount
+//     };
+// };
+
+type AmortizationYearData = {
+    [P in TransactionType]: TransactionCategoryDetail;
+};
+
+//interface PurchaseRelatedTransactionDetail extends Omit<BaseTransactionDetail, 'percentage' | 'cumulativeAmount' | 'rateOfGrowth'> { };
 
 
 export class TransactionDetail {
 
-    //private txnMap: Map<TransactionKey, BaseTransactionDetail[]>;
-    private financialTransactionBreakdown: FinancialTransactionBreakdown;
+    private initialExpenseDescription = `Down Payment Amount + \n 
+                                    Legal And Professional Fees + \n 
+                                    Initial Repair Costs + \n 
+                                    Closing Costs + \n 
+                                    Other Initial Expenses \n`;
+    private operationalRecurringExpenseDescription = `Property Management Expensive + \n
+                                                Vacancy Expense + \n
+                                                Maintenance Expense + \n
+                                                Other Expenses + \n
+                                                Cap Ex Reserve Expense \n`;
+    private incomeStreamsDescription = `Rental Income + \n
+                                    Parking Fees + \n
+                                    Laundry Services + \n
+                                    Storage Unit Fees + \n
+                                    Other Additional Income Streams \n`;
+    private fixedRecurringExpenseDescription = `Property Tax + \n
+                                            HOA Fee + \n
+                                            Home Insurance \n`;
+    private financingDescription = `Purchase Price + \n
+                                Loan Amount \n`;
+
     private txnList: [] = [];
+    private financialTransactionBreakdown: FinancialTransactionBreakdown;
+
     constructor(financialTransactionBreakdown: FinancialTransactionBreakdown) {
-        // this.txnMap = new Map();
         this.financialTransactionBreakdown = financialTransactionBreakdown;
     }
 
-    private txns = {
-        [TransactionType.INITIAL_EXPENSE]: {
-            [TransactionKey.DOWN_PAYMENT]: {
-                key: TransactionKey.DOWN_PAYMENT,
-                type: TransactionType.INITIAL_EXPENSE,
-                amount: 0,
-                percentage: 0,
-            },
-            [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: {
-                key: TransactionKey.LEGAL_AND_PROFESSIONAL_FEES,
-                type: TransactionType.INITIAL_EXPENSE,
-                amount: 0,
-                percentage: 0,
-            },
-            [TransactionKey.INITIAL_REPAIR_COST]: {
-                key: TransactionKey.LEGAL_AND_PROFESSIONAL_FEES,
-                type: TransactionType.INITIAL_EXPENSE,
-                amount: 0,
-                percentage: 0,
-            },
-            [TransactionKey.CLOSING_COST]: {
-                key: TransactionKey.CLOSING_COST,
-                type: TransactionType.INITIAL_EXPENSE,
-                amount: 0,
-                percentage: 0,
-            },
-            [TransactionKey.OTHER_INITIAL_EXPENSES]: {
-                key: TransactionKey.OTHER_INITIAL_EXPENSES,
-                type: TransactionType.INITIAL_EXPENSE,
-                amount: 0,
-                percentage: 0,
-            },
-        },
-        [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
-            [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: {
-                key: TransactionKey.PROPERTY_MANAGEMENT_EXPENSE,
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-            },
-            [TransactionKey.VACANCY_EXPENSE]: {
-                key: TransactionKey.VACANCY_EXPENSE,
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-            },
-            [TransactionKey.MAINTENANCE_EXPENSE]: {
-                key: TransactionKey.MAINTENANCE_EXPENSE,
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-            },
-            [TransactionKey.OTHER_EXPENSES]: {
-                key: TransactionKey.OTHER_EXPENSES,
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-            },
-            [TransactionKey.CAP_EX_RESERVE_EXPENSE]: {
-                key: TransactionKey.CAP_EX_RESERVE_EXPENSE,
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-            },
-        },
-        [TransactionType.INCOME_STREAMS]: {
-            [TransactionKey.RENTAL_INCOME]: {
-                key: TransactionKey.RENTAL_INCOME,
-                type: TransactionType.INCOME_STREAMS,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.PARKING_FEES]: {
-                key: TransactionKey.PARKING_FEES,
-                type: TransactionType.INCOME_STREAMS,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.LAUNDRY_SERVICES]: {
-                key: TransactionKey.LAUNDRY_SERVICES,
-                type: TransactionType.INCOME_STREAMS,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.STORAGE_UNIT_FEES]: {
-                key: TransactionKey.STORAGE_UNIT_FEES,
-                type: TransactionType.INCOME_STREAMS,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: {
-                key: TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS,
-                type: TransactionType.INCOME_STREAMS,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-        },
-        [TransactionType.FIXED_RECURRING_EXPENSE]: {
-            [TransactionKey.PROPERTY_TAX]: {
-                key: TransactionKey.PROPERTY_TAX,
-                type: TransactionType.FIXED_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.HOA_FEE]: {
-                key: TransactionKey.HOA_FEE,
-                type: TransactionType.FIXED_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.HOME_INSURANCE]: {
-                key: TransactionKey.HOME_INSURANCE,
-                type: TransactionType.FIXED_RECURRING_EXPENSE,
-                amount: 0,
-                percentage: 0,
-                cumulativeAmount: 0,
-                rateOfGrowth: 0,
-            },
-        },
-        [TransactionType.FINANCING]: {
-            [TransactionKey.PURCHASE_PRICE]: {
-                key: TransactionKey.PURCHASE_PRICE,
-                type: TransactionType.FINANCING,
-                amount: 0,
-                rateOfGrowth: 0,
-            },
-            [TransactionKey.LOAN_AMOUNT]: {
-                key: TransactionKey.LOAN_AMOUNT,
-                type: TransactionType.FINANCING,
-                amount: 0,
-                percentage: 0,
-            },
-        }
-    };
-
-    setAmortizationYearData(yearNumber: number) {
+    getAmortizationYearData(yearNumber: number): AmortizationYearData {
         return {
             [TransactionType.INITIAL_EXPENSE]: {
-                [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
-                [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
-                [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
-                [TransactionKey.CLOSING_COST]: this.getClosingCost(),
-                [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
+                totalAmount: this.getTotalInitialExpenses().amount,
+                description: this.initialExpenseDescription,
+                breakdown: {
+                    [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
+                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
+                    [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
+                    [TransactionKey.CLOSING_COST]: this.getClosingCost(),
+                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
+                },
             },
             [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
-                [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(yearNumber),
-                [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(yearNumber),
-                [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceExpense(yearNumber),
-                [TransactionKey.OTHER_EXPENSES]: this.getOtherExpense(yearNumber),
-                [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveExpense(yearNumber),
+                totalAmount: this.getTotalOperationalRecurringExpenses(yearNumber).amount,
+                description: this.operationalRecurringExpenseDescription,
+                breakdown: {
+                    [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(yearNumber),
+                    [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(yearNumber),
+                    [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceExpense(yearNumber),
+                    [TransactionKey.OTHER_EXPENSES]: this.getOtherExpense(yearNumber),
+                    [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveExpense(yearNumber),
+                },
             },
             [TransactionType.INCOME_STREAMS]: {
-                [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(yearNumber),
-                [TransactionKey.PARKING_FEES]: this.getParkingFees(yearNumber),
-                [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryService(yearNumber),
-                [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFees(yearNumber),
-                [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreams(yearNumber),
+                totalAmount: this.getTotalIncomesAmount(yearNumber).amount,
+                description: this.incomeStreamsDescription,
+                breakdown: {
+                    [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(yearNumber),
+                    [TransactionKey.PARKING_FEES]: this.getParkingFees(yearNumber),
+                    [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryService(yearNumber),
+                    [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFees(yearNumber),
+                    [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreams(yearNumber),
+                },
             },
             [TransactionType.FIXED_RECURRING_EXPENSE]: {
-                [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(yearNumber),
-                [TransactionKey.HOA_FEE]: this.getHOAFee(yearNumber),
-                [TransactionKey.HOME_INSURANCE]: this.getHomeInsurance(yearNumber),
+                totalAmount: this.getTotalFixedRecurringExpenses(yearNumber).amount,
+                description: this.fixedRecurringExpenseDescription,
+                breakdown: {
+                    [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(yearNumber),
+                    [TransactionKey.HOA_FEE]: this.getHOAFee(yearNumber),
+                    [TransactionKey.HOME_INSURANCE]: this.getHomeInsurance(yearNumber),
+                },
+            },
+            [TransactionType.MORTGAGE]: {
+                totalAmount: this.getTotalFinancingAmount(yearNumber).amount,
+                description: this.financingDescription,
+                breakdown: {
+                    [TransactionKey.MORTGAGE_AMOUNT]: this.getMortgageAmount(),
+                    [TransactionKey.MORTGAGE_PRINCIPAL]: this.getMortgagePrincipal(),
+                    [TransactionKey.MORTGAGE_INTEREST]: this.getMortgageInterest(),
+                    [TransactionKey.PMI]: this.getPMI(),
+                },
             },
             [TransactionType.FINANCING]: {
-                [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(yearNumber),
-                [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
-            }
+                totalAmount: this.getTotalFinancingAmount(yearNumber).amount,
+                description: this.financingDescription,
+                breakdown: {
+                    [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
+                    [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(yearNumber),
+                },
+            },
         };
     }
+
+    getTotalFinancingAmount(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransactionBreakdown.getTotalFinancingAmount(numberOfYears);
+    }
+
+    getTotalFixedRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransactionBreakdown.getTotalFixedRecurringExpenses(numberOfYears);
+    }
+
+    getTotalIncomesAmount(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransactionBreakdown.getTotalIncomesAmount(numberOfYears);
+    }
+
+    getTotalInitialExpenses(): ValueAmountInput {
+        return this.financialTransactionBreakdown.getTotalInitialExpenses();
+    }
+
+    getTotalOperationalRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
+        return this.financialTransactionBreakdown.getTotalOperationalRecurringExpenses(numberOfYears);
+    }
+
+    getMortgageAmount() {
+        return {
+            key: TransactionKey.MORTGAGE_AMOUNT,
+            type: TransactionType.FINANCING,
+            amount: 0,
+        };
+    };
+
+    getMortgagePrincipal() {
+        return {
+            key: TransactionKey.MORTGAGE_PRINCIPAL,
+            type: TransactionType.FINANCING,
+            amount: 0,
+        };
+    };
+
+    getMortgageInterest(): BaseTransactionDetail {
+        return {
+            key: TransactionKey.MORTGAGE_INTEREST,
+            type: TransactionType.FINANCING,
+            amount: 0,
+            percentage: 0,
+        };
+    }
+
+    getPMI() {
+        return {
+            key: TransactionKey.PMI,
+            type: TransactionType.FINANCING,
+            amount: 0,
+        };
+    };
 
     getDownPayment(): BaseTransactionDetail {
         const txn: Transaction = this.financialTransactionBreakdown.getDownPaymentTxn();

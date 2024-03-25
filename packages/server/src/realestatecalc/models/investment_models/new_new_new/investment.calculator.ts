@@ -198,7 +198,7 @@ export class InvestmentCalculator {
             throw new Error("Down payment cannot be zero for rate of return calculations.");
         }
         const yearlyReturn = this.calculateYearlyCashFlow(numberOfYears);
-        const initialExpeses = this.getTotalInitialExpenses(numberOfYears);
+        const initialExpeses = this.getTotalInitialExpenses();
 
         return (yearlyReturn / initialExpeses) * 100;
     }
@@ -237,15 +237,15 @@ export class InvestmentCalculator {
     }
 
     private getTotalMortgageRelatedExpenses(numberOfYears: number = 0): number {
-        return this.financialTransactionBreakdown.getTotalMortgageRelatedExpenses(numberOfYears).amount;
+        return this.financialTransactionBreakdown.getTotalFixedRecurringExpenses(numberOfYears).amount;
     }
 
     private getTotalRecurringExpenses(numberOfYears: number = 0): number {
-        return this.financialTransactionBreakdown.getTotalRecurringExpenses(numberOfYears).amount;
+        return this.financialTransactionBreakdown.getTotalOperationalRecurringExpenses(numberOfYears).amount;
     }
 
-    private getTotalInitialExpenses(numberOfYears: number = 0): number {
-        return this.financialTransactionBreakdown.getTotalInitialExpenses(numberOfYears).amount;
+    private getTotalInitialExpenses(): number {
+        return this.financialTransactionBreakdown.getTotalInitialExpenses().amount;
     }
 
     private getPurchasePrice(): number {

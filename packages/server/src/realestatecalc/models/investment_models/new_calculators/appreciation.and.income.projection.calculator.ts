@@ -1,21 +1,14 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { TransactionCalculator } from "./transaction.calculator";
+import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 
 // export class IncomeCalculator extends TransactionCalculator {
-export class AppreciationAndIncomeProjectionCalculator extends TransactionCalculator {
-
-    // private incomeGrowthRate: ValueRateInput;
-    private appreciationGrowthRate: ValueRateInput;
-    private inititalPurchasePrice: ValueAmountInput;
+export class AppreciationAndIncomeProjectionCalculator extends ValueDependentTransactionCalculator {
 
     constructor(
-        appreciationGrowthRate: ValueRateInput,
         inititalPurchasePrice: ValueAmountInput,
+        appreciationGrowthRate: ValueRateInput,
     ) {
-        super();
-        // this.incomeGrowthRate = incomeGrowthRate;
-        this.appreciationGrowthRate = appreciationGrowthRate;
-        this.inititalPurchasePrice = inititalPurchasePrice;
+        super(inititalPurchasePrice, appreciationGrowthRate);
     }
 
     getAmount(incomeAmount: ValueAmountInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueAmountInput {
@@ -23,7 +16,7 @@ export class AppreciationAndIncomeProjectionCalculator extends TransactionCalcul
     }
 
     getRate(incomeAmount: ValueAmountInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueRateInput {
-        const appreciationAmount = this.getFutureDatedAmount(this.inititalPurchasePrice.amount, this.appreciationGrowthRate.rate, numberOfYears).amount;
+        const appreciationAmount = this.getFutureDatedAmount(this.baseValue.amount, this.growthRate.rate, numberOfYears).amount;
         const futureDatedRentalAmount = this.getFutureDatedAmount(incomeAmount.amount, incomeGrowthRate, numberOfYears).amount;
         return {
             type: ValueType.RATE,

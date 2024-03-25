@@ -3,38 +3,6 @@ import { Transaction, TransactionDTO } from "./transaction";
 import { DirectValueCalculator } from "../new_calculators/direct.value.calculator";
 import { TransactionKey, TransactionType } from "./transaction.detail";
 
-// export enum TransactionType {
-//     INITIAL_EXPENSE,
-//     MORTGAGE_RELATED_EXPENSE,
-//     RECURRING_EXPENSE,
-//     INCOME,
-//     FINANCING,
-// };
-
-// export enum TransactionKey {
-//     LOAN_AMOUNT = 'Loan Amount',
-//     PURCHASE_PRICE = 'Purchase Price',
-//     PROPERTY_TAX = 'Property Tax',
-//     HOA_FEE = 'Monthly HOA Fee',
-//     HOME_INSURANCE = 'Monthly Home Insurance',
-//     RENTAL_INCOME = 'Rental Income',
-//     PARKING_FEES = 'Parking Fees',
-//     LAUNDRY_SERVICES = 'Laundry Service',
-//     STORAGE_UNIT_FEES = 'Storage Unit Fees',
-//     OTHER_ADDITIONAL_INCOME_STREAMS = 'Other Additional Incomes Streams',
-//     PROPERTY_MANAGEMENT_EXPENSE = 'Property Management Expense',
-//     VACANCY_EXPENSE = 'Vacancy Expense',
-//     MAINTENANCE_EXPENSE = 'Maintenance Expense',
-//     OTHER_EXPENSES = 'Other Expeneses',
-//     CAP_EX_RESERVE_EXPENSE = 'Cap Ex Reserve Expense',
-//     DOWN_PAYMENT = 'Down Payment',
-//     LEGAL_AND_PROFESSIONAL_FEES = 'Legal And Professional Fees',
-//     INITIAL_REPAIR_COST = 'Initial Repair Costs',
-//     CLOSING_COST = 'Closing Costs',
-//     TRAVELING_COST = 'Traveling Costs',
-//     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
-// };
-
 export type TransactionBreakdownDTO = {
     totalAmount: number;
     breakdown: Record<TransactionKey, TransactionDTO>;
@@ -56,57 +24,25 @@ export class FinancialTransactionBreakdown {
         this.createLoanTransaction();
     }
 
-    // private purchasePrice: Transaction;
-
-    // private monthlyPropertyTaxAmount: Transaction;
-    // private monthlyHOAFeesAmount: Transaction;
-    // private monthlyHomeInsuranceAmount: Transaction;
-
-    // private rentalIncome: Transaction;
-    // private parkingFees: Transaction;
-    // private laundryServices: Transaction;
-    // private storageUnitFees: Transaction;
-    // private otherAdditionalIncomeStreams: Transaction;
-
-    // private propertyManagementRate: Transaction;
-    // private vacancyRate: Transaction;
-    // private maintenanceRate: Transaction;
-    // private otherExpensesRate: Transaction;
-    // private capExReserveRate: Transaction;
-
-    // private downPayment: Transaction;
-    // private legalAndProfessionalFees: Transaction;
-    // private initialRepairCosts: Transaction;
-    // private closingCosts: Transaction;
-    // private travelingCosts: Transaction;
-    // private otherInitialExpenses: Transaction;
-
-
-    toDTO(numberOfYears: number = 0): TransactionRecordDTO {
-        return [
-            this.getPurchaseRelatedDTO(numberOfYears),
-            this.getIncomesDTO(numberOfYears),
-            this.getMortgageRelatedExpensesDTO(numberOfYears),
-            this.getRecurringExpensesDTO(numberOfYears),
-            this.getInitialExpensesDTO(numberOfYears),
-        ];
+    //Come back to this function
+    getTotalFinancingAmount(numberOfYears: number = 0): ValueAmountInput {
+        return this.getTransactionAmount(this.getFinancingTransactions(), numberOfYears);
     }
-
 
     getTotalIncomesAmount(numberOfYears: number = 0): ValueAmountInput {
         return this.getTransactionAmount(this.getIncomeTransactions(), numberOfYears);
     }
 
-    getTotalMortgageRelatedExpenses(numberOfYears: number = 0): ValueAmountInput {
+    getTotalFixedRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
         return this.getTransactionAmount(this.getMortgageRelatedExpenseTransactions(), numberOfYears);
     }
 
-    getTotalRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
+    getTotalOperationalRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
         return this.getTransactionAmount(this.getRecurringExpenseTransactions(), numberOfYears);
     }
 
-    getTotalInitialExpenses(numberOfYears: number = 0): ValueAmountInput {
-        return this.getTransactionAmount(this.getInititalExpenseTransactions(), numberOfYears);
+    getTotalInitialExpenses(): ValueAmountInput {
+        return this.getTransactionAmount(this.getInititalExpenseTransactions());
     }
 
     getLoanAmount(): ValueAmountInput {
@@ -393,54 +329,8 @@ export class FinancialTransactionBreakdown {
         return this.getGroupOfTransactions(TransactionType.FIXED_RECURRING_EXPENSE);
     }
 
-    private getPurchaseRelatedDTO(numberOfYears: number = 0): TransactionByTypeDTO {
-        const txnType: TransactionType = TransactionType.FINANCING;
-        const txns: Transaction[] = this.getIncomeTransactions();
-        return this.createTransactionTypeDTO(txnType, txns, numberOfYears);
-    }
-
-    private getIncomesDTO(numberOfYears: number = 0): TransactionByTypeDTO {
-        const txnType: TransactionType = TransactionType.INCOME_STREAMS;
-        const txns: Transaction[] = this.getIncomeTransactions();
-        return this.createTransactionTypeDTO(txnType, txns, numberOfYears);
-    }
-
-    private getMortgageRelatedExpensesDTO(numberOfYears: number = 0): TransactionByTypeDTO {
-        const txnType: TransactionType = TransactionType.FIXED_RECURRING_EXPENSE;
-        const txns: Transaction[] = this.getMortgageRelatedExpenseTransactions();
-        return this.createTransactionTypeDTO(txnType, txns, numberOfYears);
-    }
-
-    private getRecurringExpensesDTO(numberOfYears: number = 0): TransactionByTypeDTO {
-        const txnType: TransactionType = TransactionType.OPERATIONAL_RECURRING_EXPENSE;
-        const txns: Transaction[] = this.getRecurringExpenseTransactions();
-        return this.createTransactionTypeDTO(txnType, txns, numberOfYears);
-    }
-
-    private getInitialExpensesDTO(numberOfYears: number = 0): TransactionByTypeDTO {
-        const txnType: TransactionType = TransactionType.INITIAL_EXPENSE;
-        const txns: Transaction[] = this.getInititalExpenseTransactions();
-        return this.createTransactionTypeDTO(txnType, txns, numberOfYears);
-    }
-
-    private createTransactionTypeDTO(txnType: TransactionType, txns: Transaction[], numberOfYears: number = 0): TransactionByTypeDTO {
-        const totalInitialExpenses: number = this.getTransactionAmount(txns).amount;
-        let result = {
-            totalAmount: totalInitialExpenses,
-            breakdown: {},
-        };
-        txns.forEach((txn) => {
-            const txnAmount: ValueAmountInput = txn.getAmount(numberOfYears);
-            txn.setCumulativeAmount(txnAmount);
-            const txnDTO: TransactionDTO = txn.toDTO(numberOfYears);
-            const txnKey: TransactionKey = txn.getTransactionKey();
-            result.breakdown[txnKey] = txnDTO;
-        });
-
-        return {
-            [txnType]: result,
-        };
-
+    private getFinancingTransactions(): Transaction[] {
+        return this.getGroupOfTransactions(TransactionType.FINANCING);
     }
 
     private getTransactionAmount(transactions: Transaction[], numberOfYears: number = 0): ValueAmountInput {
