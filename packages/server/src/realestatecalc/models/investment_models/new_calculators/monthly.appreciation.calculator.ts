@@ -1,7 +1,9 @@
 import { ValueAmountInput, ValueRateInput, GrowthFrequency } from "@realestatemanager/shared";
 import { TransactionCalculator } from "./transaction.calculator";
+import { Injectable } from "@nestjs/common";
 
 // export class AppreciationCalculator extends TransactionCalculator {
+@Injectable()
 export class MonthlyAppreciationCalculator extends TransactionCalculator {
 
     constructor() {

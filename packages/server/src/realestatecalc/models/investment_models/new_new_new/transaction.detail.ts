@@ -329,7 +329,7 @@ export class TransactionDetail {
     }
 
     private getTransactionInMap(
-        transaction: Transaction<TransactionCalculator>,
+        transaction: BaseTransaction,
         numberOfYears: number = 0,
     ): BaseTransactionDetail {
         return transaction.createBaseTransactionDetail(this.txnList, numberOfYears);

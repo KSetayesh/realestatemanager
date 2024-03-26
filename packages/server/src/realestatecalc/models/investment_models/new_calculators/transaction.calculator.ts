@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import {
     GrowthFrequency,
     ValueAmountInput,
@@ -21,6 +22,7 @@ export interface MortgageCalculatorInterface extends TransactionCalculatorInterf
     getPMIRate(pmiRate: ValueRateInput): ValueRateInput
 };
 
+@Injectable()
 export abstract class TransactionCalculator implements TransactionCalculatorInterface {
 
     protected growthFrequency: GrowthFrequency;

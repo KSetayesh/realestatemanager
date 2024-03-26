@@ -7,6 +7,7 @@ import { MonthlyAppreciationCalculator } from "./monthly.appreciation.calculator
 import { RecurringExpenseProjectionCalculator } from "./recurring.expense.projection.calculator";
 import { PMIDetails } from "../new_new_new/pmidetails.model";
 import { MortgageCalculator } from "./mortgage.calculator";
+import { Injectable } from "@nestjs/common";
 
 export enum CalculatorTxnType {
     APPRECIATION_AND_INCOME_PROJECTIONS,
@@ -28,6 +29,7 @@ export interface TransactionCalculatorRequest {
     pmiDetails?: PMIDetails;
 };
 
+@Injectable()
 export class CalculatorFactory {
 
     static createCalculator(

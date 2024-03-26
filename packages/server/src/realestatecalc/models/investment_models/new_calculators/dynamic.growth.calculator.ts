@@ -1,7 +1,9 @@
 import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
+import { Injectable } from "@nestjs/common";
 
 // export class FixedExpensesCalculator extends TransactionCalculator {
+@Injectable()
 export class DynamicGrowthCalculator extends ValueDependentTransactionCalculator {
 
     constructor(

@@ -1,6 +1,7 @@
 import { GrowthFrequency, InterestType, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 import { MortgageCalculatorInterface } from "./transaction.calculator";
+import { Injectable } from "@nestjs/common";
 
 export interface MortgageCalcRequst {
     loanAmount: number;
@@ -8,6 +9,7 @@ export interface MortgageCalcRequst {
     interestType: InterestType;
 };
 
+@Injectable()
 export class MortgageCalculator extends ValueDependentTransactionCalculator implements MortgageCalculatorInterface {
 
     private loanAmount: number;
