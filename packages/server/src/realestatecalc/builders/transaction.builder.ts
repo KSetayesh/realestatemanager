@@ -40,20 +40,21 @@ export type TransactionBuilderRequest = {
     otherInitialExpenses: ValueInput;
 };
 
-type TransactionsByKey = { [key in TransactionKey]: BaseTransaction }
 
 export class TransactionBuilder {
 
     private txnBuilderReq: TransactionBuilderRequest;
-    private txnMap: Map<TransactionKey, BaseTransaction>;
 
     constructor(txnBuilderReq: TransactionBuilderRequest) {
         this.txnBuilderReq = txnBuilderReq;
-        this.txnMap = new Map();
     }
 
-    build() {
+    build(): Map<TransactionKey, BaseTransaction> {
+
+        const txnMap: Map<TransactionKey, BaseTransaction> = new Map();
+
         const downPaymentTxn: BaseTransaction = this.createDownPaymentTxn();
+
         const listOfTxns: BaseTransaction[] = [
             this.createCapExReserveTxn(),
             this.createPropertyManagementExpenseTxn(),
@@ -76,9 +77,12 @@ export class TransactionBuilder {
             this.createHomeAppreciationTxn(),
             this.createMortgageTxn(downPaymentTxn),
         ];
+
         listOfTxns.forEach(txn => {
-            this.txnMap.set(txn.getTransactionKey(), txn);
+            txnMap.set(txn.getTransactionKey(), txn);
         });
+
+        return txnMap;
 
     }
 

@@ -22,6 +22,9 @@ import {
 import { PMIDetails } from "../models/investment_models/new_new_new/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
+import { BaseTransaction, TransactionBreakdown } from "../models/investment_models/new_new_new/financial.transaction.breakdown";
+import { TransactionKey } from "../models/investment_models/new_new_new/transaction.detail";
+import { TransactionCalculator } from "../models/investment_models/new_calculators/transaction.calculator";
 
 export class InvestmentMetricBuilder {
 
@@ -160,6 +163,10 @@ export class InvestmentMetricBuilder {
             closingCosts: closingCosts,
             otherInitialExpenses: otherInitialExpenses,
         });
+
+        const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();
+        const txnBreakdown: TransactionBreakdown<TransactionCalculator> = new TransactionBreakdown(txnMap);
+
 
         // const taxImplications: TaxImplications = new TaxImplications(
         //     depreciation,
