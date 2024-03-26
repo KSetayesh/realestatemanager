@@ -76,8 +76,8 @@ export class CalculatorFactory {
             case CalculatorTxnType.RECURRING_EXPENSE:
                 return new RecurringExpenseProjectionCalculator(initialRentalAmountValue, initialRentalRateValue);
 
-            case CalculatorTxnType.MORTGAGE:
-                return new MortgageCalculator(initialPurchasePriceValue, loanAmount, loanTermYears, interestType);
+            // case CalculatorTxnType.MORTGAGE:
+            //     return new MortgageCalculator(initialPurchasePriceValue, loanAmount, loanTermYears, interestType);
 
             default:
                 throw new Error('Notification type not supported.');

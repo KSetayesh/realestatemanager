@@ -40,15 +40,45 @@ export type TransactionBuilderRequest = {
     otherInitialExpenses: ValueInput;
 };
 
+type TransactionsByKey = { [key in TransactionKey]: BaseTransaction }
+
 export class TransactionBuilder {
 
     private txnBuilderReq: TransactionBuilderRequest;
+    private txnMap: Map<TransactionKey, BaseTransaction>;
 
     constructor(txnBuilderReq: TransactionBuilderRequest) {
         this.txnBuilderReq = txnBuilderReq;
+        this.txnMap = new Map();
     }
 
     build() {
+        const downPaymentTxn: BaseTransaction = this.createDownPaymentTxn();
+        const listOfTxns: BaseTransaction[] = [
+            this.createCapExReserveTxn(),
+            this.createPropertyManagementExpenseTxn(),
+            this.createVacancyTxn(),
+            this.createMaintenanceTxn(),
+            this.createOtherExpenseTxn(),
+            downPaymentTxn,
+            this.createLegalAndProfessionalFeesTxn(),
+            this.createInititalRepairCostsTxn(),
+            this.createClosingCostsTxn(),
+            this.createOtherInititalExpensesTxn(),
+            this.createRentalIncomeTxn(),
+            this.createParkingFeesTxn(),
+            this.createLaundryServiceTxn(),
+            this.createStorageUnitFeesTxn(),
+            this.createOtherAdditionalIncomeStreamsTxn(),
+            this.createPropertyTaxTxn(),
+            this.createHOAFeeTxn(),
+            this.createHomeInsuranceTxn(),
+            this.createHomeAppreciationTxn(),
+            this.createMortgageTxn(downPaymentTxn),
+        ];
+        listOfTxns.forEach(txn => {
+            this.txnMap.set(txn.getTransactionKey(), txn);
+        });
 
     }
 
@@ -272,8 +302,6 @@ export class TransactionBuilder {
 
     //---------------------------------------------------------------------------------------------------------------------
 
-    // Need to create Loan Transaction as well
-
     private createHomeAppreciationTxn(): BaseTransaction {
         return this.createFinancingTxn(
             TransactionKey.PURCHASE_PRICE,
@@ -303,11 +331,8 @@ export class TransactionBuilder {
 
     //---------------------------------------------------------------------------------------------------------------------
 
-    private createMortgageTxn(): BaseMortgageTransaction {
+    private createMortgageTxn(downPaymentTxn: BaseTransaction): BaseMortgageTransaction {
         const initialPurchasePrice = this.txnBuilderReq.purchasePrice;
-
-        // Come back to this
-        const loanAmount = 0;
         const termInYears = this.txnBuilderReq.termInYears;
         const interestType = this.txnBuilderReq.interestType;
         const annualInterestRate = this.txnBuilderReq.annualInterestRate;
@@ -321,7 +346,7 @@ export class TransactionBuilder {
             !this.hasRateOfGrowth,
         );
         const calc: MortgageCalculator =
-            new MortgageCalculator(initialPurchasePrice, loanAmount, termInYears, interestType);
+            new MortgageCalculator(initialPurchasePrice, downPaymentTxn, termInYears, interestType);
         txn.setTransactionCalculator(calc);
         return txn;
     }

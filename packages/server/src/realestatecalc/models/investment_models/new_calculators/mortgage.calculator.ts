@@ -1,7 +1,9 @@
 import { DefaultInvestmentRates, GrowthFrequency, InterestType, ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueRateInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
-import { MortgageCalculatorInterface } from "./transaction.calculator";
+import { MortgageCalculatorInterface, TransactionCalculator } from "./transaction.calculator";
 import { Injectable } from "@nestjs/common";
+import { Transaction } from "../new_new_new/transaction";
+import { BaseTransaction } from "../new_new_new/financial.transaction.breakdown";
 
 export interface MortgageCalcRequst {
     loanAmount: number;
@@ -12,7 +14,7 @@ export interface MortgageCalcRequst {
 @Injectable()
 export class MortgageCalculator extends ValueDependentTransactionCalculator implements MortgageCalculatorInterface {
 
-    private loanAmount: number;
+    private downPaymentTxn: BaseTransaction;
     private loanTermYears: number;
     private interestType: InterestType;
     private pmiDropOffRatio: number; // Commonly 78% LTV ratio for PMI drop-off
@@ -22,13 +24,13 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
 
     constructor(
         inititalPurchasePrice: ValueAmountInput,
-        loanAmount: number,
+        downPaymentTxn: BaseTransaction,
         loanTermYears: number,
         interestType: InterestType,
         pmiDropOffRatio: number = DefaultInvestmentRates.PMI_DROP_OFF_POINT) {
 
         super(inititalPurchasePrice, undefined, GrowthFrequency.MONTHLY);
-        this.loanAmount = loanAmount;
+        this.downPaymentTxn = downPaymentTxn;
         this.loanTermYears = loanTermYears;
         this.interestType = interestType;
         this.pmiDropOffRatio = pmiDropOffRatio;
@@ -38,7 +40,7 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
         if (isValueRateInput(annualInterestRate)) {
             const monthlyInterestRate = annualInterestRate.rate / 100 / 12;
             const totalPayments = this.loanTermYears * 12;
-            const monthlyPayment = this.loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+            const monthlyPayment = this.getLoanAmount().amount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
 
             return {
                 type: ValueType.AMOUNT,
@@ -52,11 +54,18 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
         return annualInterestRate;
     }
 
+    getLoanAmount(): ValueAmountInput {
+        return {
+            type: ValueType.AMOUNT,
+            amount: this.baseValue.amount - this.downPaymentTxn.getAmount().amount,
+        }
+    }
+
     calculateBalanceAfterPayment(annualInterestRate: ValueInput, paymentNumber: number): ValueAmountInput {
         if (isValueRateInput(annualInterestRate)) {
             const monthlyInterestRate = annualInterestRate.rate / 100 / 12;
             const monthlyPayment = this.getAmount(annualInterestRate).amount;
-            let balance = this.loanAmount;
+            let balance = this.getLoanAmount().amount;
 
             for (let i = 1; i <= paymentNumber; i++) {
                 const interestForThisMonth = balance * monthlyInterestRate;
@@ -140,7 +149,7 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
                 };
             }
 
-            const annualPMI = (this.loanAmount * (pmiRate.rate / 100)) / 12; // Monthly PMI amount
+            const annualPMI = (this.getLoanAmount().amount * (pmiRate.rate / 100)) / 12; // Monthly PMI amount
             return {
                 type: ValueType.AMOUNT,
                 amount: annualPMI,
@@ -155,5 +164,6 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
         }
         throw new Error('Cannot be amount for MortgageCalculator');
     }
+
 
 }
