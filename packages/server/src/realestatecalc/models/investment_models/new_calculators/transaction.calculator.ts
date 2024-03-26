@@ -8,8 +8,8 @@ import {
 } from "@realestatemanager/shared";
 
 export interface TransactionCalculatorInterface {
-    getAmount(annualInterestRate: ValueRateInput, ...args: number[]): ValueAmountInput;
-    getRate(annualInterestRate: ValueRateInput): ValueRateInput
+    getAmount(valueInput: ValueInput, ...args: number[]): ValueAmountInput;
+    getRate(valueInput: ValueInput, ...args: number[]): ValueRateInput;
 };
 
 export interface MortgageCalculatorInterface extends TransactionCalculatorInterface {
