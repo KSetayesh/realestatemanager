@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { RealEstateManager } from 'src/db/realestate/realestate.db';
 import {
-    InvestmentMetricsResponseDTO,
     InvestmentScenarioRequest,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
+import { InvestmentCalculator } from '../models/investment_models/new_new_new/new.investment.calculator';
 
 @Injectable()
 export class CalcService {
@@ -23,26 +23,30 @@ export class CalcService {
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
-            const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
-            const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
-            const listingWithScenariosDTO: ListingWithScenariosDTO = {
-                listingDetails: listingDetails.toDTO(),
-                metrics: [investmentMetricsDTO]
-            };
-            listingWithScenariosArr.push(listingWithScenariosDTO);
+            const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
+            investmentCalc.createInvestmentMetrics();
+            // const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentCalc.createInvestmentMetrics();
+            // const listingWithScenariosDTO: ListingWithScenariosDTO = {
+            //     listingDetails: listingDetails.toDTO(),
+            //     metrics: [investmentMetricsDTO]
+            // };
+            // listingWithScenariosArr.push(listingWithScenariosDTO);
         }
-        return listingWithScenariosArr;
+        // return listingWithScenariosArr;
+        return;
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
         const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
-        const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
-        const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
-        return {
-            listingDetails: listingDetails.toDTO(),
-            metrics: [investmentMetricsDTO]
-        };
+        const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
+        investmentCalc.createInvestmentMetrics();
+        return;
+        // const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
+        // return {
+        //     listingDetails: listingDetails.toDTO(),
+        //     metrics: [investmentMetricsDTO]
+        // };
     }
 
     async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
@@ -53,12 +57,15 @@ export class CalcService {
         const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
         const listingDetails: ListingDetails = await this.realEstateManager.getPropertyByZillowURL(zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
-        const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
-        const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
-        return {
-            listingDetails: listingDetails.toDTO(),
-            metrics: [investmentMetricsDTO]
-        };
+        const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
+        investmentCalc.createInvestmentMetrics();
+        return;
+        // const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
+        // const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
+        // return {
+        //     listingDetails: listingDetails.toDTO(),
+        //     metrics: [investmentMetricsDTO]
+        // };
     }
 
 

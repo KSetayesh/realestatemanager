@@ -2,11 +2,9 @@ import {
     getInterestTypeEnumValue,
 } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
-import { TaxImplications } from "../models/investment_models/new_new_new/tax.implications.model";
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
-    GrowthFrequency,
     GrowthProjectionsRequest,
     InterestType,
     InvestmentDetailsRequest,
@@ -19,12 +17,12 @@ import {
     ValueRateInput,
     ValueType,
 } from "@realestatemanager/shared";
-import { PMIDetails } from "../models/investment_models/new_new_new/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
 import { BaseTransaction, TransactionBreakdown } from "../models/investment_models/new_new_new/financial.transaction.breakdown";
-import { TransactionKey } from "../models/investment_models/new_new_new/transaction.detail";
+import { TransactionDetail, TransactionKey } from "../models/investment_models/new_new_new/transaction.detail";
 import { TransactionCalculator } from "../models/investment_models/new_calculators/transaction.calculator";
+import { InvestmentCalculator } from "../models/investment_models/new_new_new/new.investment.calculator";
 
 export class InvestmentMetricBuilder {
 
@@ -45,7 +43,7 @@ export class InvestmentMetricBuilder {
             this.investmentScenarioRequest.useDefaultRequest;
     }
 
-    build(): InvestmentScenario {
+    build(): InvestmentCalculator {
 
         const annualInterestRate: ValueRateInput = this.getAnnualInterestRate();
 
@@ -166,8 +164,10 @@ export class InvestmentMetricBuilder {
 
         const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();
         const txnBreakdown: TransactionBreakdown<TransactionCalculator> = new TransactionBreakdown(txnMap);
+        const txnDetail: TransactionDetail = new TransactionDetail(txnBreakdown);
+        return new InvestmentCalculator(txnDetail);
 
-
+        // return new InvestmentCalculator(txnBreakdown);
         // const taxImplications: TaxImplications = new TaxImplications(
         //     depreciation,
         //     mortgageInterest,

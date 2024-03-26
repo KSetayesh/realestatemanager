@@ -112,16 +112,16 @@ export class TransactionDetail {
 
     private txnList: [] = [];
     // private financialTransactionBreakdown: FinancialTransactionBreakdown;
-    private financialTransactionBreakdown: TransactionBreakdown<TransactionCalculator>;
-    private mortgageTransactionBreakdown: MortgageTransactionBreakdown;
+    private txnBreakdown: TransactionBreakdown<TransactionCalculator>;
+    // private mortgageTransactionBreakdown: MortgageTransactionBreakdown;
 
 
     constructor(
-        financialTransactionBreakdown: TransactionBreakdown<TransactionCalculator>,
-        mortgageTransactionBreakdown: MortgageTransactionBreakdown
+        txnBreakdown: TransactionBreakdown<TransactionCalculator>,
+        // mortgageTransactionBreakdown: MortgageTransactionBreakdown
     ) {
-        this.financialTransactionBreakdown = financialTransactionBreakdown;
-        this.mortgageTransactionBreakdown = mortgageTransactionBreakdown;
+        this.txnBreakdown = txnBreakdown;
+        // this.mortgageTransactionBreakdown = mortgageTransactionBreakdown;
     }
 
     getAmortizationYearData(yearNumber: number): AmortizationYearData {
@@ -190,144 +190,148 @@ export class TransactionDetail {
     }
 
     getTotalFinancingAmount(numberOfYears: number = 0): ValueAmountInput {
-        return this.financialTransactionBreakdown.getTotalFinancingAmount(numberOfYears);
+        return this.txnBreakdown.getTotalFinancingAmount(numberOfYears);
     }
 
     getTotalFixedRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
-        return this.financialTransactionBreakdown.getTotalFixedRecurringExpenses(numberOfYears);
+        return this.txnBreakdown.getTotalFixedRecurringExpenses(numberOfYears);
     }
 
     getTotalIncomesAmount(numberOfYears: number = 0): ValueAmountInput {
-        return this.financialTransactionBreakdown.getTotalIncomesAmount(numberOfYears);
+        return this.txnBreakdown.getTotalIncomesAmount(numberOfYears);
     }
 
     getTotalInitialExpenses(): ValueAmountInput {
-        return this.financialTransactionBreakdown.getTotalInitialExpenses();
+        return this.txnBreakdown.getTotalInitialExpenses();
     }
 
     getTotalOperationalRecurringExpenses(numberOfYears: number = 0): ValueAmountInput {
-        return this.financialTransactionBreakdown.getTotalOperationalRecurringExpenses(numberOfYears);
+        return this.txnBreakdown.getTotalOperationalRecurringExpenses(numberOfYears);
     }
-
-    getMortgageAmount(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction = this.mortgageTransactionBreakdown.getMortgageAmountTxn();
-        return this.getTransactionInMap(txn);
-    };
-
-    getMortgagePrincipal(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction = this.mortgageTransactionBreakdown.getMortgagePrincipalTxn();
-        return this.getTransactionInMap(txn);
-    };
-
-    getMortgageInterest(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction = this.mortgageTransactionBreakdown.getMortgageInterestTxn();
-        return this.getTransactionInMap(txn);
-    }
-
-    getPMI(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction = this.mortgageTransactionBreakdown.getPMITxn();
-        return this.getTransactionInMap(txn);
-    };
 
     getDownPayment(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getDownPaymentTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getDownPaymentTxn();
         return this.getTransactionInMap(txn);
     }
 
     getLegalAndProfessionalFees(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getLegalAndProfessionalFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getLegalAndProfessionalFeesTxn();
         return this.getTransactionInMap(txn);
     }
 
     getInititalRepairCostsFees(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getLegalAndProfessionalFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getLegalAndProfessionalFeesTxn();
         return this.getTransactionInMap(txn);
     }
 
     getClosingCost(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getClosingCostsTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getClosingCostsTxn();
         return this.getTransactionInMap(txn);
     }
 
     getOtherInitialExpenses(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getOtherInitialExpensesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getOtherInitialExpensesTxn();
         return this.getTransactionInMap(txn);
     }
 
     getPropertyManagementExpense(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getPropertyManagementRateTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getPropertyManagementRateTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getVacancyExpense(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getVacancyRateTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getVacancyRateTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getMaintenanceExpense(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getMaintenanceRateTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getMaintenanceRateTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getOtherExpense(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getOtherExpensesRateTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getOtherExpensesRateTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getCapExReserveExpense(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getCapExReserveRateTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getCapExReserveRateTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getRentalIncome(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getRentalIncomeTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getRentalIncomeTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getParkingFees(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getParkingFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getParkingFeesTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getLaundryService(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getLaundryServicesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getLaundryServicesTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getStorageUnitFees(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getStorageUnitFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getStorageUnitFeesTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getOtherAdditionalIncomeStreams(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getStorageUnitFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getStorageUnitFeesTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getPropertyTax(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getPropertyTaxTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getPropertyTaxTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getHOAFee(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getHOAFeesTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getHOAFeesTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getHomeInsurance(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getHomeInsuranceTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getHomeInsuranceTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getPurchasePrice(numberOfYears: number = 0): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getPurchasePriceTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getPurchasePriceTxn();
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
     getLoan(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.financialTransactionBreakdown.getLoanTxn();
+        const txn: BaseTransaction = this.txnBreakdown.getLoanTxn();
         return this.getTransactionInMap(txn);
     }
+
+    getMortgageAmount(): BaseTransactionDetail {
+        const txn: BaseMortgageTransaction =
+            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgageAmountTxn();
+        return this.getTransactionInMap(txn);
+    };
+
+    getMortgagePrincipal(): BaseTransactionDetail {
+        const txn: BaseMortgageTransaction =
+            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgagePrincipalTxn();
+        return this.getTransactionInMap(txn);
+    };
+
+    getMortgageInterest(): BaseTransactionDetail {
+        const txn: BaseMortgageTransaction =
+            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgageInterestTxn();
+        return this.getTransactionInMap(txn);
+    }
+
+    getPMI(): BaseTransactionDetail {
+        const txn: BaseMortgageTransaction =
+            (this.txnBreakdown as MortgageTransactionBreakdown).getPMITxn();
+        return this.getTransactionInMap(txn);
+    };
 
     private getTransactionInMap(
         transaction: BaseTransaction,
