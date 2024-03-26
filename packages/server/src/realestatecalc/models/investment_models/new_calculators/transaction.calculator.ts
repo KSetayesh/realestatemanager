@@ -6,7 +6,22 @@ import {
     ValueType
 } from "@realestatemanager/shared";
 
-export abstract class TransactionCalculator {
+export interface TransactionCalculatorInterface {
+    getAmount(annualInterestRate: ValueRateInput, ...args: number[]): ValueAmountInput;
+    getRate(annualInterestRate: ValueRateInput): ValueRateInput
+};
+
+export interface MortgageCalculatorInterface extends TransactionCalculatorInterface {
+    calculateBalanceAfterPayment(annualInterestRate: ValueRateInput, paymentNumber: number): ValueAmountInput;
+    getPrincipalAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number): ValueAmountInput;
+    getInterestAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number): ValueAmountInput;
+    getPercentageOfInterest(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput;
+    getPercentageOfPrincipal(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput;
+    getPMIAmount(pmiRate: ValueRateInput, annualInterestRate: number, paymentNumber: number): ValueAmountInput;
+    getPMIRate(pmiRate: ValueRateInput): ValueRateInput
+};
+
+export abstract class TransactionCalculator implements TransactionCalculatorInterface {
 
     protected growthFrequency: GrowthFrequency;
 

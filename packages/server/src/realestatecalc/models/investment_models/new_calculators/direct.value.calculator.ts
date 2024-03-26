@@ -4,8 +4,6 @@ import { ValueDependentTransactionCalculator } from "./value.dependent.transacti
 // export class InititalCostsCalculator extends TransactionCalculator {
 export class DirectValueCalculator extends ValueDependentTransactionCalculator {
 
-    private initialPurchasePrice: ValueAmountInput;
-
     constructor(initialPurchasePrice: ValueAmountInput) {
         super(initialPurchasePrice, undefined, GrowthFrequency.NONE);
     }
@@ -17,7 +15,7 @@ export class DirectValueCalculator extends ValueDependentTransactionCalculator {
         else if (isValueRateInput(inititalValue)) {
             return {
                 type: ValueType.AMOUNT,
-                amount: this.initialPurchasePrice.amount * (inititalValue.rate / 100),
+                amount: this.baseValue.amount * (inititalValue.rate / 100),
             };
         }
 
@@ -27,7 +25,7 @@ export class DirectValueCalculator extends ValueDependentTransactionCalculator {
         if (isValueAmountInput(initialValue)) {
             return {
                 type: ValueType.RATE,
-                rate: (initialValue.amount / this.initialPurchasePrice.amount) * 100,
+                rate: (initialValue.amount / this.baseValue.amount) * 100,
             };
         }
         else if (isValueRateInput(initialValue)) {

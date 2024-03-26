@@ -1,5 +1,5 @@
 import { GrowthFrequency, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { GrowthProjections } from "../models/investment_models/growth.projections.model";
+import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
 import { InitialCostsBreakdown } from "../models/investment_models/breakdown_models/initial.costs.breakdown.model";
 import { AmountTransaction } from "../models/investment_models/transaction_models/amount.transaction.model";
 import { AmountAndRate, Transaction } from "../models/investment_models/transaction_models/transaction.model";

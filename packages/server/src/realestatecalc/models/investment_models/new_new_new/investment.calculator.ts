@@ -1,5 +1,5 @@
 import { AmortizationDetailsDTO, Utility } from "@realestatemanager/shared";
-import { PMIDetails } from "../pmidetails.model";
+import { PMIDetails } from "./pmidetails.model";
 import { FinancialTransactionBreakdown } from "./financial.transaction.breakdown";
 import { FinancingTerms } from "./financing.terms";
 

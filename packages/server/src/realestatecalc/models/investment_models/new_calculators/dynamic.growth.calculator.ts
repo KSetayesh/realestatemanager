@@ -4,7 +4,6 @@ import { ValueDependentTransactionCalculator } from "./value.dependent.transacti
 // export class FixedExpensesCalculator extends TransactionCalculator {
 export class DynamicGrowthCalculator extends ValueDependentTransactionCalculator {
 
-
     constructor(
         initialRentalAmount: ValueAmountInput,
         rentalGrowthRate: ValueRateInput,

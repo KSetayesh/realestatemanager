@@ -2,9 +2,9 @@ import { InvestmentScenario } from "../models/investment_models/investment.scena
 import {
     getInterestTypeEnumValue,
 } from "src/shared/Constants";
-import { GrowthProjections } from "../models/investment_models/growth.projections.model";
+import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
 import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";
-import { TaxImplications } from "../models/investment_models/tax.implications.model";
+import { TaxImplications } from "../models/investment_models/new_new_new/tax.implications.model";
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
@@ -22,7 +22,7 @@ import {
     ValueType,
 } from "@realestatemanager/shared";
 import { FinancingTerms } from "../models/investment_models/financing.terms.model";
-import { PMIDetails } from "../models/investment_models/pmidetails.model";
+import { PMIDetails } from "../models/investment_models/new_new_new/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
 

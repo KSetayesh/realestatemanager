@@ -1,6 +1,7 @@
 import { Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { TransactionCalculator } from "../new_calculators/transaction.calculator";
-import { TransactionKey, TransactionType } from "./transaction.detail";
+import { MortgageCalculatorInterface, TransactionCalculator } from "../new_calculators/transaction.calculator";
+import { BaseTransactionDetail, TransactionKey, TransactionType } from "./transaction.detail";
+import { MortgageCalculator } from "../new_calculators/mortgage.calculator";
 
 export type TransactionDTO = {
     txnKey: TransactionKey;
@@ -11,12 +12,12 @@ export type TransactionDTO = {
     projectedGrowthRate: number;
 };
 
-export class Transaction {
+export class Transaction<T extends TransactionCalculator> {
     private transactionKey: TransactionKey;
     private amount: ValueInput;
     private cumulativeAmount: ValueAmountInput;
-    private calculator: TransactionCalculator;
     private txnType: TransactionType;
+    private calculator: T;
     private _canBeCumulated: boolean;
     private _canBePercetage: boolean;
     private _hasRateOfGrowth: boolean;
@@ -25,7 +26,6 @@ export class Transaction {
     constructor(
         transactionKey: TransactionKey,
         amount: ValueInput,
-        calculator: TransactionCalculator,
         txnType: TransactionType,
         canBeCumulated: boolean,
         canBePercetage: boolean,
@@ -34,7 +34,6 @@ export class Transaction {
     ) {
         this.transactionKey = transactionKey;
         this.amount = amount;
-        this.calculator = calculator;
         this.txnType = txnType;
         this.growthRate = growthRate;
         this._canBeCumulated = canBeCumulated;
@@ -44,6 +43,14 @@ export class Transaction {
             type: ValueType.AMOUNT,
             amount: 0
         };
+    }
+
+    protected getCalculator(): T {
+        return this.calculator;
+    }
+
+    setTransactionCalculator(calculator: T) {
+        this.calculator = calculator;
     }
 
     setCumulativeAmount(amount: ValueAmountInput) {
@@ -86,15 +93,79 @@ export class Transaction {
         return this._hasRateOfGrowth;
     }
 
-    toDTO(numberOfYears: number = 0): TransactionDTO {
+    createBaseTransactionDetail(
+        txnList: [],
+        numberOfYears: number = 0,
+    ): BaseTransactionDetail {
+
+        const txnAmount = this.getAmount(numberOfYears).amount;
+        const txnPercentage = this.getRate(numberOfYears).rate;
+        const rateOfGrowth = this.getProjectedGrowthRate().rate
+        let cumulativeAmount = txnAmount;
+        if (txnList.length > 1) {
+            const previousIndexData = txnList[txnList.length - 1];
+            const previous: BaseTransactionDetail = previousIndexData[this.getTransactionType()][this.getTransactionKey()];
+            cumulativeAmount += previous.cumulativeAmount ?? 0;
+        }
+
+        const transactionDetail: BaseTransactionDetail = {
+            key: this.getTransactionKey(),
+            type: this.getTransactionType(),
+            amount: txnAmount,
+            ...(this.canBePercetage() && { percentage: txnPercentage }),
+            ...(this.canBeCumulated() && { cumulativeAmount: cumulativeAmount }),
+            ...(this.hasRateOfGrowth() && { rateOfGrowth: rateOfGrowth }),
+        };
+        return transactionDetail;
+    }
+
+}
+
+export class MortgageTransaction extends Transaction<MortgageCalculator> {
+
+    // Use generics to restrict calculator type
+    setTransactionCalculator(calculator: MortgageCalculator) {
+        super.setTransactionCalculator(calculator);
+    }
+
+    calculateBalanceAfterPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().calculateBalanceAfterPayment(annualInterestRate, paymentNumber);
+    }
+
+    getPrincipalAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().getPrincipalAmountForPayment(annualInterestRate, paymentNumber);
+    }
+
+    getInterestAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().getInterestAmountForPayment(annualInterestRate, paymentNumber);
+    }
+
+    getPercentageOfInterest(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueRateInput {
+        return this.getCalculator().getPercentageOfInterest(annualInterestRate, paymentNumber);
+    }
+
+    getPercentageOfPrincipal(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput {
+        return this.getCalculator().getPercentageOfPrincipal(annualInterestRate, paymentNumber);
+    }
+
+    getPMIAmount(pmiRate: ValueRateInput, annualInterestRate: number, paymentNumber: number): ValueAmountInput {
+        return this.getCalculator().getPMIAmount(pmiRate, annualInterestRate, paymentNumber);
+    }
+
+    getPMIRate(pmiRate: ValueRateInput): ValueRateInput {
+        return this.getCalculator().getPMIRate(pmiRate);
+    }
+
+    createBaseTransactionDetail(
+        txnList: [],
+        numberOfYears: number = 0,
+    ): BaseTransactionDetail {
         return {
-            txnKey: this.getTransactionKey(),
-            txnType: this.getTransactionType(),
-            amount: Utility.round(this.getAmount(numberOfYears).amount),
-            cumulativeAmount: Utility.round(this.cumulativeAmount.amount),
-            rate: Utility.round(this.getRate(numberOfYears).rate),
-            projectedGrowthRate: Utility.round(this.growthRate.rate),
+            key: undefined,
+            type: undefined,
+            amount: 0,
         };
     }
+
 
 }

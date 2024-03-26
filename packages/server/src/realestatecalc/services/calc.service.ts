@@ -7,7 +7,6 @@ import {
     ListingWithScenariosDTO,
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
-import { InvestmentScenario } from '../models/investment_models/investment.scenario.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
 
 @Injectable()
@@ -64,3 +63,4 @@ export class CalcService {
 
 
 }
+
