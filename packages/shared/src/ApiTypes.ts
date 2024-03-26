@@ -102,6 +102,10 @@ export enum DefaultInvestmentRates {
     ANNUAL_RENT_INCREASE_RATE = 2,
     ANNUAL_HOME_INSURANCE_INCREASE_RATE = 1,
     ANNUAL_HOA_FEES_INCREASE_RATE = 1,
+    ANNUAL_PARKING_FEES_INCREASE_RATE = 0,
+    ANNUAL_LAUNDRY_SERVICE_INCREASE_RATE = 0,
+    ANNUAL_STORAGE_UNIT_FEES_INCREASE_RATE = 0,
+    ANNUAL_OTHER_ADDITIONAL_INCOME_STREAMS_INCREASE_RATE = 0,
     PARKING_FEES = 0,
     LAUNDRY_SERVICES = 0,
     STORAGE_UNIT_FEES = 0,
@@ -166,7 +170,7 @@ export interface InvestmentDetailsRequest {
     mortgageDetails: MortgageDetailsRequest;
     operatingExpenses: OperatingExpensesRequest;
     rentEstimate: ValueAmountInput;
-    purchasePrice: number;
+    purchasePrice: ValueAmountInput;
     growthProjections?: GrowthProjectionsRequest;
     additionalIncomeStreams?: AdditionalIncomeStreamsRequest;
     taxImplications?: TaxImplicationsRequest;
@@ -200,14 +204,14 @@ export type GrowthProjectionsRequest = {
 };
 
 export interface LoanDetailsRequest {
-    annualInterestRate: number;
+    annualInterestRate: ValueRateInput;
     termInYears: number;
     interestType: InterestType;
 };
 
 export interface MortgageDetailsRequest extends LoanDetailsRequest {
     downPayment: ValueInput; // Now accepts both amount and rate.
-    pmiRate?: number; // Now accepts both amount and rate.
+    pmiRate?: ValueRateInput; // Now accepts both amount and rate.
     pmiDropoffPoint?: number;
     monthlyPropertyTax?: ValueInput; // Now accepts both amount and rate.
     monthlyHomeInsuranceAmount?: ValueInput; // Now accepts both amount and rate.

@@ -17,6 +17,7 @@ export enum TransactionKey {
     LOAN_AMOUNT = 'Loan Amount',
     PURCHASE_PRICE = 'Purchase Price',
 
+    MORTGAGE = 'Mortgage',
     MORTGAGE_INTEREST = 'Mortgage Interest',
     MORTGAGE_PRINCIPAL = 'Mortgage Principal',
     MORTGAGE_AMOUNT = 'Mortgage Amount',

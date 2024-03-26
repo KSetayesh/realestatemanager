@@ -1,9 +1,7 @@
-import { InvestmentScenario } from "../models/investment_models/investment.scenario.model";
 import {
     getInterestTypeEnumValue,
 } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
-import { MortgageCalculator } from "../models/investment_models/mortgage.calc.model";
 import { TaxImplications } from "../models/investment_models/new_new_new/tax.implications.model";
 import {
     AdditionalIncomeStreamsRequest,
@@ -21,7 +19,6 @@ import {
     ValueRateInput,
     ValueType,
 } from "@realestatemanager/shared";
-import { FinancingTerms } from "../models/investment_models/financing.terms.model";
 import { PMIDetails } from "../models/investment_models/new_new_new/pmidetails.model";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
@@ -47,7 +44,7 @@ export class InvestmentMetricBuilder {
 
     build(): InvestmentScenario {
 
-        const annualInterestRate: number = this.getAnnualInterestRate();
+        const annualInterestRate: ValueRateInput = this.getAnnualInterestRate();
 
         const termInYears: number = this.getTermInYears();
 
@@ -55,7 +52,7 @@ export class InvestmentMetricBuilder {
 
         const downPayment: ValueInput = this.getDownPayment();
 
-        const pmiRate: number = this.getPMIRate();
+        const pmiRate: ValueRateInput = this.getPMIRate();
 
         const pmiDropoffPoint: number = this.getPMIDropoffPoint();
 
@@ -87,7 +84,7 @@ export class InvestmentMetricBuilder {
 
         const rentEstimate: ValueAmountInput = this.getRentEstimate();
 
-        const purchasePrice: number = this.getPurchasePrice();
+        const purchasePrice: ValueAmountInput = this.getPurchasePrice();
 
         const annualRentIncreaseRate: ValueRateInput = this.getAnnualRentIncreaseRate();
 
@@ -98,6 +95,14 @@ export class InvestmentMetricBuilder {
         const annualHomeInsuranceIncreaseRate: ValueRateInput = this.getAnnualHomeInsuranceIncreaseRate();
 
         const annualHOAFeesIncreaseRate: ValueRateInput = this.getAnnualHOAFeesIncreaseRate();
+
+        const parkingFeesIncreaseRate: ValueRateInput = this.getParkingFeesIncreaseRate();
+
+        const laundryServicesIncreaseRate: ValueRateInput = this.getLaundryServicesIncreaseRate();
+
+        const storageUnitFeesIncreaseRate: ValueRateInput = this.getStorageUnitFeesIncreaseRate();
+
+        const otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput = this.getOtherAdditionalIncomeStreamsIncreaseRate();
 
         const parkingFees: ValueAmountInput = this.getParkingFees();
 
@@ -116,15 +121,23 @@ export class InvestmentMetricBuilder {
         //----------------------------------------------------------------------------------------------------------------
 
         const growthProjections: GrowthProjections = new GrowthProjections(
-            annualRentIncreaseRate,
             annualAppreciationRate,
             annualTaxIncreaseRate,
             annualHomeInsuranceIncreaseRate,
             annualHOAFeesIncreaseRate,
+            annualRentIncreaseRate,
+            parkingFeesIncreaseRate,
+            laundryServicesIncreaseRate,
+            storageUnitFeesIncreaseRate,
+            otherAdditionalIncomeStreamsIncreaseRate,
         );
 
         const txnBuilder: TransactionBuilder = new TransactionBuilder({
             growthProjections: growthProjections,
+            purchasePrice: purchasePrice,
+            annualInterestRate: annualInterestRate,
+            termInYears: termInYears,
+            interestType: interestType,
             downPayment: downPayment,
             monthlyPropertyTax: monthlyPropertyTax,
             monthlyHomeInsuranceAmount: monthlyHomeInsuranceAmount,
@@ -146,42 +159,42 @@ export class InvestmentMetricBuilder {
             otherInitialExpenses: otherInitialExpenses,
         });
 
-        const taxImplications: TaxImplications = new TaxImplications(
-            depreciation,
-            mortgageInterest,
-            operatingExpenses,
-            0, // property taxes
-        );
+        // const taxImplications: TaxImplications = new TaxImplications(
+        //     depreciation,
+        //     mortgageInterest,
+        //     operatingExpenses,
+        //     0, // property taxes
+        // );
 
-        const financingTerms: FinancingTerms = new FinancingTerms(
-            // loanAmount,
-            annualInterestRate,
-            interestType,
-            termInYears,
-            0,  // monthlyPayment
-            0, // interestOnlyPeriod
-        );
+        // const financingTerms: FinancingTerms = new FinancingTerms(
+        //     // loanAmount,
+        //     annualInterestRate,
+        //     interestType,
+        //     termInYears,
+        //     0,  // monthlyPayment
+        //     0, // interestOnlyPeriod
+        // );
 
-        const pmiDetails: PMIDetails = new PMIDetails(
-            pmiRate,
-            pmiDropoffPoint
-        );
+        // const pmiDetails: PMIDetails = new PMIDetails(
+        //     pmiRate,
+        //     pmiDropoffPoint
+        // );
 
-        // const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
+        // // const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
 
-        const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
-            purchasePrice,
-            txnBuilder.createDownPaymentAmount(purchasePrice),
-            financingTerms,
-            txnBuilder.build(purchasePrice),
-            pmiDetails,
-        );
+        // const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
+        //     purchasePrice,
+        //     txnBuilder.createDownPaymentAmount(purchasePrice),
+        //     financingTerms,
+        //     txnBuilder.build(purchasePrice),
+        //     pmiDetails,
+        // );
 
-        return new InvestmentScenario(
-            growthProjections,
-            mortgageCalculator,
-            taxImplications,
-        );
+        // return new InvestmentScenario(
+        //     growthProjections,
+        //     mortgageCalculator,
+        //     taxImplications,
+        // );
     }
 
     private getInvestmentDetails(): InvestmentDetailsRequest {
@@ -210,11 +223,15 @@ export class InvestmentMetricBuilder {
 
     //----------------------------------------------------------------------------------------------------
 
-    private getAnnualInterestRate(): number {
-        if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
+    private getAnnualInterestRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            type: ValueType.RATE,
+            rate: DefaultInvestmentRates.ANNUAL_INTEREST_RATE.valueOf(),
         }
-        return this.getMortgageDetails().annualInterestRate ?? DefaultInvestmentRates.ANNUAL_INTEREST_RATE;
+        if (this._useDefaultRequest()) {
+            return defaultRate;
+        }
+        return this.getMortgageDetails().annualInterestRate ?? defaultRate;
     }
 
     private getTermInYears(): number {
@@ -243,11 +260,15 @@ export class InvestmentMetricBuilder {
         return this.getMortgageDetails().downPayment ?? defaultDownPayment;
     }
 
-    private getPMIRate(): number {
+    private getPMIRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            type: ValueType.RATE,
+            rate: DefaultInvestmentRates.PMI_RATE.valueOf(),
+        };
         if (this._useDefaultRequest()) {
-            return DefaultInvestmentRates.PMI_RATE;
+            return defaultRate;
         }
-        return this.getMortgageDetails().pmiRate ?? DefaultInvestmentRates.PMI_RATE;
+        return this.getMortgageDetails().pmiRate ?? defaultRate;
     }
 
     private getPMIDropoffPoint(): number {
@@ -402,11 +423,15 @@ export class InvestmentMetricBuilder {
         return this.getOperatingExpenses().otherInitialExpenses ?? defaultOtherInitialExpenses;
     }
 
-    private getPurchasePrice(): number {
+    private getPurchasePrice(): ValueAmountInput {
+        const defaultAmount: ValueAmountInput = {
+            type: ValueType.AMOUNT,
+            amount: this.listingDetails.getListingPrice(),
+        };
         if (this._useDefaultRequest()) {
-            return this.listingDetails.getListingPrice();
+            return defaultAmount
         }
-        return this.getInvestmentDetails().purchasePrice;
+        return this.getInvestmentDetails().purchasePrice ?? defaultAmount;
     }
 
     private getRentEstimate(): ValueAmountInput {
@@ -473,6 +498,50 @@ export class InvestmentMetricBuilder {
             return defaultAnnualHOAFeesIncreaseRate;
         }
         return this.getGrowthProjections().annualHOAFeesIncreaseRate ?? defaultAnnualHOAFeesIncreaseRate;
+    }
+
+    private getParkingFeesIncreaseRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_PARKING_FEES_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultRate;
+        }
+        return this.getGrowthProjections().parkingFeesIncreaseRate ?? defaultRate;
+    }
+
+    private getLaundryServicesIncreaseRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_LAUNDRY_SERVICE_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultRate;
+        }
+        return this.getGrowthProjections().laundryServicesIncreaseRate ?? defaultRate;
+    }
+
+    private getStorageUnitFeesIncreaseRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_STORAGE_UNIT_FEES_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultRate;
+        }
+        return this.getGrowthProjections().storageUnitFeesIncreaseRate ?? defaultRate;
+    }
+
+    private getOtherAdditionalIncomeStreamsIncreaseRate(): ValueRateInput {
+        const defaultRate: ValueRateInput = {
+            rate: DefaultInvestmentRates.ANNUAL_OTHER_ADDITIONAL_INCOME_STREAMS_INCREASE_RATE.valueOf(),
+            type: ValueType.RATE,
+        };
+        if (this._useDefaultRequest()) {
+            return defaultRate;
+        }
+        return this.getGrowthProjections().otherAdditionalIncomeStreamsIncreaseRate ?? defaultRate;
     }
 
     private getParkingFees(): ValueAmountInput {

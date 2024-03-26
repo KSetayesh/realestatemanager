@@ -1,15 +1,17 @@
 import { AmortizationDetailsDTO, Utility } from "@realestatemanager/shared";
 import { PMIDetails } from "./pmidetails.model";
 import { FinancingTerms } from "./financing.terms";
+import { TransactionBreakdown } from "./financial.transaction.breakdown";
+import { TransactionCalculator } from "../new_calculators/transaction.calculator";
 
 
 export class InvestmentCalculator {
-    private financialTransactionBreakdown: FinancialTransactionBreakdown;
+    private financialTransactionBreakdown: TransactionBreakdown<TransactionCalculator>;
     private financingTerms: FinancingTerms;
     private pmiDetails?: PMIDetails;
 
     constructor(
-        financialTransactionBreakdown: FinancialTransactionBreakdown,
+        financialTransactionBreakdown: TransactionBreakdown<TransactionCalculator>,
         financingTerms: FinancingTerms,
         pmiDetails?: PMIDetails) {
 

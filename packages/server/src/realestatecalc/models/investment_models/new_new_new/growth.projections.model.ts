@@ -38,45 +38,44 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
         this.otherAdditionalIncomeStreamsIncreaseRate = otherAdditionalIncomeStreamsIncreaseRate;
     }
 
-    // getAnnualRentIncreaseRate(): ValueRateInput {
-    //     return this.annualRentIncreaseRate;
-    // }
+    // Getter functions for expenses
+    getAnnualAppreciationRate(): ValueRateInput {
+        return this.annualAppreciationRate;
+    }
 
-    // getAnnualRentIncreaseValueType(): ValueRateInput {
-    //     return this.annualRentIncreaseRate;
-    // }
+    getAnnualTaxIncreaseRate(): ValueRateInput {
+        return this.annualTaxIncreaseRate;
+    }
 
-    // getAnnualAppreciationRate(): ValueRateInput {
-    //     return this.annualAppreciationRate;
-    // }
+    getAnnualHomeInsuranceIncreaseRate(): ValueRateInput {
+        return this.annualHomeInsuranceIncreaseRate;
+    }
 
-    // getAnnualAppreciationValueType(): ValueRateInput {
-    //     return this.annualRentIncreaseRate;
-    // }
+    getAnnualHOAFeesIncreaseRate(): ValueRateInput {
+        return this.annualHOAFeesIncreaseRate;
+    }
 
-    // getAnnualTaxIncreaseRate(): ValueRateInput {
-    //     return this.annualTaxIncreaseRate;
-    // }
+    // Getter functions for incomes
+    getAnnualRentIncreaseRate(): ValueRateInput {
+        return this.annualRentIncreaseRate;
+    }
 
-    // getAnnualTaxIncreaseValueType(): ValueRateInput {
-    //     return this.annualTaxIncreaseRate;
-    // }
+    getParkingFeesIncreaseRate(): ValueRateInput {
+        return this.parkingFeesIncreaseRate;
+    }
 
-    // getAnnualHomeInsuranceIncreaseRate(): ValueRateInput {
-    //     return this.annualHomeInsuranceIncreaseRate;
-    // }
+    getLaundryServicesIncreaseRate(): ValueRateInput {
+        return this.laundryServicesIncreaseRate;
+    }
 
-    // getAnnualHomeInsuranceIncreaseValueType(): ValueRateInput {
-    //     return this.annualHomeInsuranceIncreaseRate;
-    // }
+    getStorageUnitFeesIncreaseRate(): ValueRateInput {
+        return this.storageUnitFeesIncreaseRate;
+    }
 
-    // getAnnualHOAFeesIncreaseRate(): ValueRateInput {
-    //     return this.annualHOAFeesIncreaseRate;
-    // }
+    getOtherAdditionalIncomeStreamsIncreaseRate(): ValueRateInput {
+        return this.otherAdditionalIncomeStreamsIncreaseRate;
+    }
 
-    // getAnnualHOAFeesIncreaseValueType(): ValueRateInput {
-    //     return this.annualHOAFeesIncreaseRate;
-    // }
 
     toDTO(): GrowthProjectionsDTO {
         return {
