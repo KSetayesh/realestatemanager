@@ -15,8 +15,10 @@ export type TransactionBuilderRequest = {
     growthProjections: GrowthProjections;
     purchasePrice: ValueAmountInput;
     annualInterestRate: ValueRateInput;
-    termInYears: number,
-    interestType: InterestType
+    termInYears: number;
+    interestType: InterestType;
+    pmiRate: ValueRateInput;
+    pmiDropoffPoint: number;
     downPayment: ValueInput;
     monthlyPropertyTax: ValueInput;
     monthlyHomeInsuranceAmount: ValueInput;

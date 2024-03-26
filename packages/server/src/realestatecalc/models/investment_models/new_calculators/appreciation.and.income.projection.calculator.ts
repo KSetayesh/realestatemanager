@@ -1,4 +1,4 @@
-import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 import { Injectable } from "@nestjs/common";
 
@@ -13,17 +13,23 @@ export class AppreciationAndIncomeProjectionCalculator extends ValueDependentTra
         super(inititalPurchasePrice, appreciationGrowthRate);
     }
 
-    getAmount(incomeAmount: ValueAmountInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueAmountInput {
-        return this.getFutureDatedAmount(incomeAmount.amount, incomeGrowthRate, numberOfYears);
+    getAmount(incomeAmount: ValueInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueAmountInput {
+        if (isValueAmountInput(incomeAmount)) {
+            return this.getFutureDatedAmount(incomeAmount.amount, incomeGrowthRate, numberOfYears);
+        }
+        throw new Error('Cannot be rate for AppreciationAndIncomeProjectionCalculator');
     }
 
-    getRate(incomeAmount: ValueAmountInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueRateInput {
-        const appreciationAmount = this.getFutureDatedAmount(this.baseValue.amount, this.growthRate.rate, numberOfYears).amount;
-        const futureDatedRentalAmount = this.getFutureDatedAmount(incomeAmount.amount, incomeGrowthRate, numberOfYears).amount;
-        return {
-            type: ValueType.RATE,
-            rate: (futureDatedRentalAmount / appreciationAmount) * 100
-        };
+    getRate(incomeAmount: ValueInput, incomeGrowthRate: number, numberOfYears: number = 0): ValueRateInput {
+        if (isValueAmountInput(incomeAmount)) {
+            const appreciationAmount = this.getFutureDatedAmount(this.baseValue.amount, this.growthRate.rate, numberOfYears).amount;
+            const futureDatedRentalAmount = this.getFutureDatedAmount(incomeAmount.amount, incomeGrowthRate, numberOfYears).amount;
+            return {
+                type: ValueType.RATE,
+                rate: (futureDatedRentalAmount / appreciationAmount) * 100
+            };
+        }
+        throw new Error('Cannot be rate for AppreciationAndIncomeProjectionCalculator');
     }
 
 }

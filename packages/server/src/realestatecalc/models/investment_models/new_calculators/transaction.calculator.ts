@@ -18,7 +18,7 @@ export interface MortgageCalculatorInterface extends TransactionCalculatorInterf
     getInterestAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number): ValueAmountInput;
     getPercentageOfInterest(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput;
     getPercentageOfPrincipal(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput;
-    getPMIAmount(pmiRate: ValueRateInput, annualInterestRate: number, paymentNumber: number): ValueAmountInput;
+    getPMIAmount(pmiRate: ValueRateInput, annualInterestRate: ValueRateInput, paymentNumber: number): ValueAmountInput;
     getPMIRate(pmiRate: ValueRateInput): ValueRateInput
 };
 

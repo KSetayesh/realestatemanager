@@ -14,7 +14,7 @@ export type TransactionDTO = {
 
 export class Transaction<T extends TransactionCalculator> {
     private transactionKey: TransactionKey;
-    private amount: ValueInput;
+    private amountOrRate: ValueInput;
     private cumulativeAmount: ValueAmountInput;
     private txnType: TransactionType;
     private calculator: T;
@@ -25,7 +25,7 @@ export class Transaction<T extends TransactionCalculator> {
 
     constructor(
         transactionKey: TransactionKey,
-        amount: ValueInput,
+        amountOrRate: ValueInput,
         txnType: TransactionType,
         canBeCumulated: boolean,
         canBePercetage: boolean,
@@ -33,7 +33,7 @@ export class Transaction<T extends TransactionCalculator> {
         growthRate?: ValueRateInput
     ) {
         this.transactionKey = transactionKey;
-        this.amount = amount;
+        this.amountOrRate = amountOrRate;
         this.txnType = txnType;
         this.growthRate = growthRate;
         this._canBeCumulated = canBeCumulated;
@@ -68,13 +68,13 @@ export class Transaction<T extends TransactionCalculator> {
     getAmount(numberOfYears: number = 0): ValueAmountInput {
         // The implementation of getAmount will depend on the type of calculator currently set.
         // Additional arguments can be passed if needed, based on the calculator's requirement.
-        return this.calculator.getAmount(this.amount, this.growthRate.rate, numberOfYears);
+        return this.calculator.getAmount(this.amountOrRate, this.growthRate.rate, numberOfYears);
     }
 
     getRate(numberOfYears: number = 0): ValueRateInput {
         // Similar to getAmount, getRate's behavior will depend on the current calculator strategy.
         // This can handle different calculations based on the calculator being used.
-        return this.calculator.getRate(this.amount, this.growthRate.rate, numberOfYears);
+        return this.calculator.getRate(this.amountOrRate, this.growthRate.rate, numberOfYears);
     }
 
     getProjectedGrowthRate(): ValueRateInput {
@@ -91,6 +91,10 @@ export class Transaction<T extends TransactionCalculator> {
 
     hasRateOfGrowth(): boolean {
         return this._hasRateOfGrowth;
+    }
+
+    getAmountOrRate(): ValueInput {
+        return this.amountOrRate;
     }
 
     createBaseTransactionDetail(
@@ -123,37 +127,61 @@ export class Transaction<T extends TransactionCalculator> {
 
 export class MortgageTransaction extends Transaction<MortgageCalculator> {
 
+    private pmiRate: ValueRateInput;
+
+    constructor(
+        transactionKey: TransactionKey,
+        amountOrRate: ValueInput,
+        txnType: TransactionType,
+        canBeCumulated: boolean,
+        canBePercetage: boolean,
+        hasRateOfGrowth: boolean,
+        growthRate?: ValueRateInput,
+        pmiRate?: ValueRateInput) {
+
+        super(
+            transactionKey,
+            amountOrRate,
+            txnType,
+            canBeCumulated,
+            canBePercetage,
+            hasRateOfGrowth,
+            growthRate
+        );
+        this.pmiRate = pmiRate;
+    }
+
     // Use generics to restrict calculator type
     setTransactionCalculator(calculator: MortgageCalculator) {
         super.setTransactionCalculator(calculator);
     }
 
-    calculateBalanceAfterPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
-        return this.getCalculator().calculateBalanceAfterPayment(annualInterestRate, paymentNumber);
+    calculateBalanceAfterPayment(paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().calculateBalanceAfterPayment(this.getAmountOrRate(), paymentNumber);
     }
 
-    getPrincipalAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
-        return this.getCalculator().getPrincipalAmountForPayment(annualInterestRate, paymentNumber);
+    getPrincipalAmountForPayment(paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().getPrincipalAmountForPayment(this.getAmountOrRate(), paymentNumber);
     }
 
-    getInterestAmountForPayment(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueAmountInput {
-        return this.getCalculator().getInterestAmountForPayment(annualInterestRate, paymentNumber);
+    getInterestAmountForPayment(paymentNumber: number = 0): ValueAmountInput {
+        return this.getCalculator().getInterestAmountForPayment(this.getAmountOrRate(), paymentNumber);
     }
 
-    getPercentageOfInterest(annualInterestRate: ValueRateInput, paymentNumber: number = 0): ValueRateInput {
-        return this.getCalculator().getPercentageOfInterest(annualInterestRate, paymentNumber);
+    getPercentageOfInterest(paymentNumber: number = 0): ValueRateInput {
+        return this.getCalculator().getPercentageOfInterest(this.getAmountOrRate(), paymentNumber);
     }
 
-    getPercentageOfPrincipal(annualInterestRate: ValueRateInput, paymentNumber: number): ValueRateInput {
-        return this.getCalculator().getPercentageOfPrincipal(annualInterestRate, paymentNumber);
+    getPercentageOfPrincipal(paymentNumber: number): ValueRateInput {
+        return this.getCalculator().getPercentageOfPrincipal(this.getAmountOrRate(), paymentNumber);
     }
 
-    getPMIAmount(pmiRate: ValueRateInput, annualInterestRate: number, paymentNumber: number): ValueAmountInput {
-        return this.getCalculator().getPMIAmount(pmiRate, annualInterestRate, paymentNumber);
+    getPMIAmount(paymentNumber: number): ValueAmountInput {
+        return this.getCalculator().getPMIAmount(this.pmiRate, this.getAmountOrRate(), paymentNumber);
     }
 
-    getPMIRate(pmiRate: ValueRateInput): ValueRateInput {
-        return this.getCalculator().getPMIRate(pmiRate);
+    getPMIRate(): ValueRateInput {
+        return this.getCalculator().getPMIRate(this.pmiRate);
     }
 
     createBaseTransactionDetail(

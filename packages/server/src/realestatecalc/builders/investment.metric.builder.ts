@@ -138,6 +138,8 @@ export class InvestmentMetricBuilder {
             annualInterestRate: annualInterestRate,
             termInYears: termInYears,
             interestType: interestType,
+            pmiRate: pmiRate,
+            pmiDropoffPoint: pmiDropoffPoint,
             downPayment: downPayment,
             monthlyPropertyTax: monthlyPropertyTax,
             monthlyHomeInsuranceAmount: monthlyHomeInsuranceAmount,
