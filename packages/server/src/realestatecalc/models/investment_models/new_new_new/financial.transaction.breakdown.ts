@@ -17,6 +17,10 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
         console.log("txnMap", this.txnMap);
     }
 
+    getTotalMortgageAmount(numberOfYears: number = 0): ValueAmountInput {
+        return this.getTransactionAmount([this.getMortgageTxn()], numberOfYears);
+    }
+
     //Come back to this function
     getTotalFinancingAmount(numberOfYears: number = 0): ValueAmountInput {
         return this.getTransactionAmount(this.getFinancingTransactions(), numberOfYears);
@@ -314,6 +318,7 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
     private getFinancingTransactions(): BaseTransaction[] {
         return this.getGroupOfTransactions(TransactionType.FINANCING);
     }
+
 
     private getTransactionAmount(transactions: BaseTransaction[], numberOfYears: number = 0): ValueAmountInput {
         return {

@@ -50,24 +50,34 @@ export enum TransactionKey {
 
 export interface BaseTransactionDetail {
     key: TransactionKey;
-    type: TransactionType;
+    // type: TransactionType;
     amount: number;
     percentage?: number;
     cumulativeAmount?: number;
     rateOfGrowth?: number;
 };
 
-export interface BaseMortgageTransactionDetail extends BaseTransactionDetail {
+export interface InitialBaseMortgageTransactionDetail extends BaseTransactionDetail {
+    // balanceAfterPayment: number;
+    loanAmount: number;
+    hasPMI: boolean;
+    pmiAmount?: number;
+    pmiRate?: number;
+};
+
+export interface BaseMortgageTransactionDetail extends InitialBaseMortgageTransactionDetail {
     balanceAfterPayment: number;
     principalAmountForPayment: number;
     interestAmountForPayment: number;
     percentageOfInterest: number;
     percentageOfPrincipal: number;
-    hasPMI: boolean;
-    pmiAmount: number;
-    pmiRate: number;
-    loanAmount: number;
+    // hasPMI: boolean;
+    // pmiAmount?: number;
+    // pmiRate?: number;
+    // loanAmount: number;
 };
+
+
 
 // interface MortgageRelatedDetail extends BaseTransactionDetail { // Omit<BaseTransactionDetail, 'interestAmount'> {
 //     // interestAmount: number; // Assuming you are adding this to differentiate mortgage interest payments
@@ -77,7 +87,8 @@ export interface BaseMortgageTransactionDetail extends BaseTransactionDetail {
 
 interface TransactionCategoryDetail {
     totalAmount: number;
-    description: string;
+    // description: string;
+    type: TransactionType;
     breakdown: { [key in TransactionKey]?: BaseTransactionDetail }; // breakdown: Record<TransactionKey, BaseTransactionDetail>; // | MortgageRelatedDetail>;
 };
 
@@ -92,7 +103,7 @@ interface TransactionCategoryDetail {
 //     };
 // };
 
-type AmortizationYearData = {
+export type AmortizationYearData = {
     [P in TransactionType]: TransactionCategoryDetail;
 };
 
@@ -140,11 +151,27 @@ export class TransactionDetail {
         // this.mortgageTransactionBreakdown = mortgageTransactionBreakdown;
     }
 
-    getAmortizationYearData(yearNumber: number): AmortizationYearData {
+
+
+    getPurchaseData(): any {
         return {
+            [TransactionType.FINANCING]: {
+                type: TransactionType.FINANCING,
+                totalAmount: Utility.round(this.getTotalFinancingAmount().amount),
+                breakdown: {
+                    [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(),
+                },
+            },
+            [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
+                totalAmount: Utility.round(this.getTotalFinancingAmount().amount),
+                breakdown: {
+                    [TransactionKey.MORTGAGE]: this.getInitialMortgage(),
+                },
+            },
             [TransactionType.INITIAL_EXPENSE]: {
+                type: TransactionType.INITIAL_EXPENSE,
                 totalAmount: Utility.round(this.getTotalInitialExpenses().amount),
-                description: this.initialExpenseDescription,
                 breakdown: {
                     [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
                     [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
@@ -153,9 +180,26 @@ export class TransactionDetail {
                     [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
                 },
             },
+        };
+    }
+
+    getAmortizationYearData(yearNumber: number): any { //AmortizationYearData {
+        return {
+            // [TransactionType.INITIAL_EXPENSE]: {
+            //     totalAmount: Utility.round(this.getTotalInitialExpenses().amount),
+            //     description: this.initialExpenseDescription,
+            //     breakdown: {
+            //         [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
+            //         [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFees(),
+            //         [TransactionKey.INITIAL_REPAIR_COST]: this.getInititalRepairCostsFees(),
+            //         [TransactionKey.CLOSING_COST]: this.getClosingCost(),
+            //         [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpenses(),
+            //     },
+            // },
             [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
                 totalAmount: Utility.round(this.getTotalOperationalRecurringExpenses(yearNumber).amount),
-                description: this.operationalRecurringExpenseDescription,
+                // description: this.operationalRecurringExpenseDescription,
                 breakdown: {
                     [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(yearNumber),
                     [TransactionKey.VACANCY_EXPENSE]: this.getVacancyExpense(yearNumber),
@@ -165,8 +209,9 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.INCOME_STREAMS]: {
+                type: TransactionType.INCOME_STREAMS,
                 totalAmount: Utility.round(this.getTotalIncomesAmount(yearNumber).amount),
-                description: this.incomeStreamsDescription,
+                // description: this.incomeStreamsDescription,
                 breakdown: {
                     [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(yearNumber),
                     [TransactionKey.PARKING_FEES]: this.getParkingFees(yearNumber),
@@ -176,8 +221,9 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.FIXED_RECURRING_EXPENSE]: {
+                type: TransactionType.FIXED_RECURRING_EXPENSE,
                 totalAmount: Utility.round(this.getTotalFixedRecurringExpenses(yearNumber).amount),
-                description: this.fixedRecurringExpenseDescription,
+                // description: this.fixedRecurringExpenseDescription,
                 breakdown: {
                     [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(yearNumber),
                     [TransactionKey.HOA_FEE]: this.getHOAFee(yearNumber),
@@ -185,8 +231,9 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
                 totalAmount: Utility.round(this.getTotalFinancingAmount(yearNumber).amount),
-                description: this.financingDescription,
+                // description: this.financingDescription,
                 breakdown: {
                     [TransactionKey.MORTGAGE]: this.getMortgage(yearNumber)
                     // [TransactionKey.MORTGAGE_AMOUNT]: this.getMortgageAmount(),
@@ -196,8 +243,9 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.FINANCING]: {
+                type: TransactionType.FINANCING,
                 totalAmount: Utility.round(this.getTotalFinancingAmount(yearNumber).amount),
-                description: this.financingDescription,
+                // description: this.financingDescription,
                 breakdown: {
                     // [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
                     [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(yearNumber),
@@ -228,97 +276,97 @@ export class TransactionDetail {
 
     getDownPayment(): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getDownPaymentTxn();
-        return this.getTransactionInMap(txn);
+        return this.createBaseTransactionDetail(txn);
     }
 
     getLegalAndProfessionalFees(): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getLegalAndProfessionalFeesTxn();
-        return this.getTransactionInMap(txn);
+        return this.createBaseTransactionDetail(txn);
     }
 
     getInititalRepairCostsFees(): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getLegalAndProfessionalFeesTxn();
-        return this.getTransactionInMap(txn);
+        return this.createBaseTransactionDetail(txn);
     }
 
     getClosingCost(): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getClosingCostsTxn();
-        return this.getTransactionInMap(txn);
+        return this.createBaseTransactionDetail(txn);
     }
 
     getOtherInitialExpenses(): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getOtherInitialExpensesTxn();
-        return this.getTransactionInMap(txn);
+        return this.createBaseTransactionDetail(txn);
     }
 
     getPropertyManagementExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getPropertyManagementRateTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getVacancyExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getVacancyRateTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getMaintenanceExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getMaintenanceRateTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getOtherExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getOtherExpensesRateTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getCapExReserveExpense(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getCapExReserveRateTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getRentalIncome(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getRentalIncomeTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getParkingFees(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getParkingFeesTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getLaundryService(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getLaundryServicesTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getStorageUnitFees(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getStorageUnitFeesTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getOtherAdditionalIncomeStreams(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getStorageUnitFeesTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getPropertyTax(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getPropertyTaxTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getHOAFee(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getHOAFeesTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getHomeInsurance(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getHomeInsuranceTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     getPurchasePrice(numberOfYears: number = 0): BaseTransactionDetail {
         const txn: BaseTransaction = this.txnBreakdown.getPurchasePriceTxn();
-        return this.getTransactionInMap(txn, numberOfYears);
+        return this.createBaseTransactionDetail(txn, numberOfYears);
     }
 
     // getLoan(): BaseTransactionDetail {
@@ -326,26 +374,26 @@ export class TransactionDetail {
     //     return this.getTransactionInMap(txn);
     // }
 
+    getInitialMortgage(): InitialBaseMortgageTransactionDetail {
+        const txn: BaseMortgageTransaction = this.txnBreakdown.getMortgageTxn();
+        if (txn instanceof MortgageTransaction) {
+            return txn.createInitialBaseTransactionDetail(this.txnList);
+        }
+        throw Error('Txn is not a Mortgage txn');
+    }
+
     getMortgage(numberOfYears: number = 0): BaseMortgageTransactionDetail {
         const txn: BaseMortgageTransaction = this.txnBreakdown.getMortgageTxn();
         if (txn instanceof MortgageTransaction) {
-            const baseMortgageTxnDetail: BaseMortgageTransactionDetail = this.getMortgageTransactionInMap(txn, numberOfYears);
-            return baseMortgageTxnDetail;
+            return txn.createBaseTransactionDetail(this.txnList, numberOfYears);
         }
         throw Error('Txn is not a Mortgage txn');
     };
 
-    private getTransactionInMap(
+    private createBaseTransactionDetail(
         transaction: BaseTransaction,
         numberOfYears: number = 0,
     ): BaseTransactionDetail {
-        return transaction.createBaseTransactionDetail(this.txnList, numberOfYears);
-    }
-
-    private getMortgageTransactionInMap(
-        transaction: MortgageTransaction,
-        numberOfYears: number = 0,
-    ): BaseMortgageTransactionDetail {
         return transaction.createBaseTransactionDetail(this.txnList, numberOfYears);
     }
 

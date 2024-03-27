@@ -1,6 +1,6 @@
 import { Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalculatorType, TransactionCalculator } from "../new_calculators/transaction.calculator";
-import { BaseMortgageTransactionDetail, BaseTransactionDetail, TransactionKey, TransactionType } from "./transaction.detail";
+import { BaseMortgageTransactionDetail, BaseTransactionDetail, InitialBaseMortgageTransactionDetail, TransactionKey, TransactionType } from "./transaction.detail";
 import { MortgageCalculator } from "../new_calculators/mortgage.calculator";
 import { BaseMortgageTransaction } from "./financial.transaction.breakdown";
 
@@ -129,7 +129,7 @@ export class Transaction<T extends TransactionCalculator> {
 
         const transactionDetail: BaseTransactionDetail = {
             key: this.getTransactionKey(),
-            type: this.getTransactionType(),
+            // type: this.getTransactionType(),
             amount: Utility.round(txnAmount),
             ...(this.canBePercetage() && { percentage: Utility.round(this.getRate(numberOfYears).rate) }),
             ...(this.canBeCumulated() && { cumulativeAmount: Utility.round(cumulativeAmount) }),
@@ -206,6 +206,24 @@ export class MortgageTransaction extends Transaction<MortgageCalculator> {
     getLoanAmount(): ValueAmountInput {
         return this.getCalculator().getLoanAmount();
     }
+
+    createInitialBaseTransactionDetail(
+        txnList: [],
+        numberOfYears: number = 0,
+    ): InitialBaseMortgageTransactionDetail {
+        const hasPMI: boolean = this.hasPMI();
+        const baseTransactionDetail: BaseTransactionDetail = super.createBaseTransactionDetail(txnList, numberOfYears);
+        const mortgageTransactionDetail: InitialBaseMortgageTransactionDetail = {
+            ...baseTransactionDetail,
+            loanAmount: Utility.round(this.getLoanAmount().amount),
+            hasPMI: hasPMI,
+            ...(hasPMI && { pmiAmount: Utility.round(this.getPMIAmount(numberOfYears).amount) }),
+            ...(hasPMI && { pmiRate: Utility.round(this.getPMIRate().rate) }),
+        };
+        return mortgageTransactionDetail;
+
+    }
+
 
     createBaseTransactionDetail(
         txnList: [],

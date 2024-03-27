@@ -7,16 +7,28 @@ export class CalcController {
 
     constructor(private readonly calcService: CalcService) { }
 
+
     @Get()
     async getAllProperties(
         @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
-    ): Promise<ListingWithScenariosDTO[]> {
+    ): Promise<any> {//ListingWithScenariosDTO[]> {
 
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
         }
         return this.calcService.getAllProperties(investmentScenarioRequest);
     }
+
+    // @Get()
+    // async getAllProperties(
+    //     @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
+    // ): Promise<ListingWithScenariosDTO[]> {
+
+    //     if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+    //         throw new Error('Not a valid Investment Scenario Request');
+    //     }
+    //     return this.calcService.getAllProperties(investmentScenarioRequest);
+    // }
 
     @Get('property')
     async getPropertyByZillowUrl(

@@ -18,13 +18,15 @@ export class CalcService {
         this.realEstateManager = new RealEstateManager();
     }
 
-    async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO[]> {
+    async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<any> { //<ListingWithScenariosDTO[]> {
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
+        let data = []
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-            investmentCalc.createInvestmentMetrics();
+            data = investmentCalc.createInvestmentMetrics();
+            break;
             // const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentCalc.createInvestmentMetrics();
             // const listingWithScenariosDTO: ListingWithScenariosDTO = {
             //     listingDetails: listingDetails.toDTO(),
@@ -33,7 +35,7 @@ export class CalcService {
             // listingWithScenariosArr.push(listingWithScenariosDTO);
         }
         // return listingWithScenariosArr;
-        return;
+        return data;
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
