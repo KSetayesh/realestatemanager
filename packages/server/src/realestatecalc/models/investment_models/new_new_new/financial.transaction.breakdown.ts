@@ -1,19 +1,8 @@
 import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { Transaction, TransactionDTO } from "./transaction";
+import { MortgageTransaction, Transaction, TransactionDTO } from "./transaction";
 import { TransactionKey, TransactionType } from "./transaction.detail";
 import { TransactionCalculator } from "../new_calculators/transaction.calculator";
 import { MortgageCalculator } from "../new_calculators/mortgage.calculator";
-
-export type TransactionBreakdownDTO = {
-    totalAmount: number;
-    breakdown: Record<TransactionKey, TransactionDTO>;
-};
-
-export type TransactionByTypeDTO = {
-    [key in TransactionType]?: TransactionBreakdownDTO;
-};
-
-export type TransactionRecordDTO = Record<TransactionType, TransactionByTypeDTO>;
 
 export type BaseTransaction = Transaction<TransactionCalculator>;
 
@@ -25,6 +14,7 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
 
     constructor(txnMap: Map<TransactionKey, Transaction<T>>) {
         this.txnMap = txnMap;
+        console.log("txnMap", this.txnMap);
     }
 
     //Come back to this function
@@ -48,12 +38,12 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
         return this.getTransactionAmount(this.getInititalExpenseTransactions());
     }
 
-    getLoanAmount(): ValueAmountInput {
-        return {
-            type: ValueType.AMOUNT,
-            amount: this.getPurchasePrice().amount * (this.getDownPaymentRate().rate / 100),
-        }
-    }
+    // getLoanAmount(): ValueAmountInput {
+    //     return {
+    //         type: ValueType.AMOUNT,
+    //         amount: this.getPurchasePrice().amount * (this.getDownPaymentRate().rate / 100),
+    //     }
+    // }
 
     getPurchasePrice(): ValueAmountInput {
         return this.getPurchasePriceTxn().getAmount();
@@ -217,7 +207,7 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
 
     //------------------------------------------------------------------------------------------------
 
-    getPurchasePriceTxn(): Transaction<TransactionCalculator> {
+    getPurchasePriceTxn(): BaseTransaction {
         return this.getTransactionByKey(TransactionKey.PURCHASE_PRICE);
     }
 
@@ -277,9 +267,9 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
         return this.getTransactionByKey(TransactionKey.DOWN_PAYMENT);
     }
 
-    getLoanTxn(): BaseTransaction {
-        return this.getTransactionByKey(TransactionKey.LOAN_AMOUNT);
-    }
+    // getLoanTxn(): BaseTransaction {
+    //     return this.getTransactionByKey(TransactionKey.LOAN_AMOUNT);
+    // }
 
     getLegalAndProfessionalFeesTxn(): BaseTransaction {
         return this.getTransactionByKey(TransactionKey.LEGAL_AND_PROFESSIONAL_FEES);
@@ -301,37 +291,9 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
         return this.getTransactionByKey(TransactionKey.OTHER_INITIAL_EXPENSES);
     }
 
-    // getMortgageAmountTxn(): Transaction<MortgageCalculator> {
-    //     return this.getTransactionByKey(TransactionKey.MORTGAGE_AMOUNT);
-    // }
-
-    // getMortgageInterestTxn(): Transaction<MortgageCalculator> {
-    //     return this.getTransactionByKey(TransactionKey.MORTGAGE_INTEREST);
-    // }
-
-    // getMortgagePrincipalTxn(): Transaction<MortgageCalculator> {
-    //     return this.getTransactionByKey(TransactionKey.MORTGAGE_PRINCIPAL);
-    // }
-
-    // getPMITxn(): Transaction<MortgageCalculator> {
-    //     return this.getTransactionByKey(TransactionKey.PMI);
-    // }
-
-    //------------------------------------------------------------------------------------------------
-
-    // Try and get rid off this, also needs the calculator set
-    // private createLoanTransaction() {
-    //     const loanTxn: Transaction = new Transaction(
-    //         TransactionKey.LOAN_AMOUNT,
-    //         this.getLoanAmount(),
-    //         new DirectValueCalculator(this.getPurchasePrice()),
-    //         TransactionType.FINANCING,
-    //         false,
-    //         true,
-    //         false,
-    //     );
-    //     this.txnMap.set(TransactionKey.LOAN_AMOUNT, loanTxn);
-    // }
+    getMortgageTxn(): BaseMortgageTransaction {
+        return this.getMortgageTransactionByKey(TransactionKey.MORTGAGE);
+    }
 
     private getIncomeTransactions(): BaseTransaction[] {
         return this.getGroupOfTransactions(TransactionType.INCOME_STREAMS);
@@ -352,10 +314,6 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
     private getFinancingTransactions(): BaseTransaction[] {
         return this.getGroupOfTransactions(TransactionType.FINANCING);
     }
-
-    // private getMortgageTransactions(): Transaction<MortgageCalculator>[] {
-    //     return this.getGroupOfTransactions(TransactionType.MORTGAGE);
-    // }
 
     private getTransactionAmount(transactions: BaseTransaction[], numberOfYears: number = 0): ValueAmountInput {
         return {
@@ -383,29 +341,16 @@ export class TransactionBreakdown<T extends TransactionCalculator> {
         return transaction;
     }
 
-}
-
-
-export class MortgageTransactionBreakdown extends TransactionBreakdown<MortgageCalculator> {
-
-    constructor(txnMap: Map<TransactionKey, BaseMortgageTransaction>) {
-        super(txnMap);
-    }
-
-    getMortgageAmountTxn(): BaseMortgageTransaction {
-        return this.getTransactionByKey(TransactionKey.MORTGAGE_AMOUNT);
-    }
-
-    getMortgageInterestTxn(): BaseMortgageTransaction {
-        return this.getTransactionByKey(TransactionKey.MORTGAGE_INTEREST);
-    }
-
-    getMortgagePrincipalTxn(): BaseMortgageTransaction {
-        return this.getTransactionByKey(TransactionKey.MORTGAGE_PRINCIPAL);
-    }
-
-    getPMITxn(): BaseMortgageTransaction {
-        return this.getTransactionByKey(TransactionKey.PMI);
+    protected getMortgageTransactionByKey(key: TransactionKey): BaseMortgageTransaction {
+        const transaction = this.txnMap.get(key);
+        if (!transaction) {
+            throw new Error(`Transaction with key ${key} not found.`);
+        }
+        if (transaction.isMortgageCalculator()) {
+            return transaction;
+        }
+        throw new Error(`Not a MortgageTransaction`);
     }
 
 }
+

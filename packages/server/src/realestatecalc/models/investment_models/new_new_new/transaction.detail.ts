@@ -1,27 +1,27 @@
-import { ValueAmountInput } from "@realestatemanager/shared";
-import { Transaction } from "./transaction";
+import { Utility, ValueAmountInput } from "@realestatemanager/shared";
+import { MortgageTransaction, Transaction } from "./transaction";
 import { TransactionCalculator } from "../new_calculators/transaction.calculator";
-import { BaseMortgageTransaction, BaseTransaction, MortgageTransactionBreakdown, TransactionBreakdown } from "./financial.transaction.breakdown";
+import { BaseMortgageTransaction, BaseTransaction, TransactionBreakdown } from "./financial.transaction.breakdown";
 
 
 export enum TransactionType {
-    INITIAL_EXPENSE,
-    FIXED_RECURRING_EXPENSE,
-    OPERATIONAL_RECURRING_EXPENSE,
-    INCOME_STREAMS,
-    FINANCING,
-    MORTGAGE,
+    INITIAL_EXPENSE = 'Initial Expense',
+    FIXED_RECURRING_EXPENSE = 'Fixed Recurring Expense',
+    OPERATIONAL_RECURRING_EXPENSE = 'Operational Recurring Expense',
+    INCOME_STREAMS = 'Income Streams',
+    FINANCING = 'Financing',
+    MORTGAGE = 'Mortgage',
 };
 
 export enum TransactionKey {
-    LOAN_AMOUNT = 'Loan Amount',
+    // LOAN_AMOUNT = 'Loan Amount',
     PURCHASE_PRICE = 'Purchase Price',
 
     MORTGAGE = 'Mortgage',
-    MORTGAGE_INTEREST = 'Mortgage Interest',
-    MORTGAGE_PRINCIPAL = 'Mortgage Principal',
-    MORTGAGE_AMOUNT = 'Mortgage Amount',
-    PMI = 'PMI',
+    // MORTGAGE_INTEREST = 'Mortgage Interest',
+    // MORTGAGE_PRINCIPAL = 'Mortgage Principal',
+    // MORTGAGE_AMOUNT = 'Mortgage Amount',
+    // PMI = 'PMI',
 
     PROPERTY_TAX = 'Property Tax',
     HOA_FEE = 'Monthly HOA Fee',
@@ -55,6 +55,18 @@ export interface BaseTransactionDetail {
     percentage?: number;
     cumulativeAmount?: number;
     rateOfGrowth?: number;
+};
+
+export interface BaseMortgageTransactionDetail extends BaseTransactionDetail {
+    balanceAfterPayment: number;
+    principalAmountForPayment: number;
+    interestAmountForPayment: number;
+    percentageOfInterest: number;
+    percentageOfPrincipal: number;
+    hasPMI: boolean;
+    pmiAmount: number;
+    pmiRate: number;
+    loanAmount: number;
 };
 
 // interface MortgageRelatedDetail extends BaseTransactionDetail { // Omit<BaseTransactionDetail, 'interestAmount'> {
@@ -94,19 +106,23 @@ export class TransactionDetail {
                                     Initial Repair Costs + \n 
                                     Closing Costs + \n 
                                     Other Initial Expenses \n`;
+
     private operationalRecurringExpenseDescription = `Property Management Expensive + \n
                                                 Vacancy Expense + \n
                                                 Maintenance Expense + \n
                                                 Other Expenses + \n
                                                 Cap Ex Reserve Expense \n`;
+
     private incomeStreamsDescription = `Rental Income + \n
                                     Parking Fees + \n
                                     Laundry Services + \n
                                     Storage Unit Fees + \n
                                     Other Additional Income Streams \n`;
+
     private fixedRecurringExpenseDescription = `Property Tax + \n
                                             HOA Fee + \n
                                             Home Insurance \n`;
+
     private financingDescription = `Purchase Price + \n
                                 Loan Amount \n`;
 
@@ -127,7 +143,7 @@ export class TransactionDetail {
     getAmortizationYearData(yearNumber: number): AmortizationYearData {
         return {
             [TransactionType.INITIAL_EXPENSE]: {
-                totalAmount: this.getTotalInitialExpenses().amount,
+                totalAmount: Utility.round(this.getTotalInitialExpenses().amount),
                 description: this.initialExpenseDescription,
                 breakdown: {
                     [TransactionKey.DOWN_PAYMENT]: this.getDownPayment(),
@@ -138,7 +154,7 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
-                totalAmount: this.getTotalOperationalRecurringExpenses(yearNumber).amount,
+                totalAmount: Utility.round(this.getTotalOperationalRecurringExpenses(yearNumber).amount),
                 description: this.operationalRecurringExpenseDescription,
                 breakdown: {
                     [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementExpense(yearNumber),
@@ -149,7 +165,7 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.INCOME_STREAMS]: {
-                totalAmount: this.getTotalIncomesAmount(yearNumber).amount,
+                totalAmount: Utility.round(this.getTotalIncomesAmount(yearNumber).amount),
                 description: this.incomeStreamsDescription,
                 breakdown: {
                     [TransactionKey.RENTAL_INCOME]: this.getRentalIncome(yearNumber),
@@ -160,7 +176,7 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.FIXED_RECURRING_EXPENSE]: {
-                totalAmount: this.getTotalFixedRecurringExpenses(yearNumber).amount,
+                totalAmount: Utility.round(this.getTotalFixedRecurringExpenses(yearNumber).amount),
                 description: this.fixedRecurringExpenseDescription,
                 breakdown: {
                     [TransactionKey.PROPERTY_TAX]: this.getPropertyTax(yearNumber),
@@ -169,20 +185,21 @@ export class TransactionDetail {
                 },
             },
             [TransactionType.MORTGAGE]: {
-                totalAmount: this.getTotalFinancingAmount(yearNumber).amount,
+                totalAmount: Utility.round(this.getTotalFinancingAmount(yearNumber).amount),
                 description: this.financingDescription,
                 breakdown: {
-                    [TransactionKey.MORTGAGE_AMOUNT]: this.getMortgageAmount(),
-                    [TransactionKey.MORTGAGE_PRINCIPAL]: this.getMortgagePrincipal(),
-                    [TransactionKey.MORTGAGE_INTEREST]: this.getMortgageInterest(),
-                    [TransactionKey.PMI]: this.getPMI(),
+                    [TransactionKey.MORTGAGE]: this.getMortgage(yearNumber)
+                    // [TransactionKey.MORTGAGE_AMOUNT]: this.getMortgageAmount(),
+                    // [TransactionKey.MORTGAGE_PRINCIPAL]: this.getMortgagePrincipal(),
+                    // [TransactionKey.MORTGAGE_INTEREST]: this.getMortgageInterest(),
+                    // [TransactionKey.PMI]: this.getPMI(),
                 },
             },
             [TransactionType.FINANCING]: {
-                totalAmount: this.getTotalFinancingAmount(yearNumber).amount,
+                totalAmount: Utility.round(this.getTotalFinancingAmount(yearNumber).amount),
                 description: this.financingDescription,
                 breakdown: {
-                    [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
+                    // [TransactionKey.LOAN_AMOUNT]: this.getLoan(),
                     [TransactionKey.PURCHASE_PRICE]: this.getPurchasePrice(yearNumber),
                 },
             },
@@ -304,33 +321,18 @@ export class TransactionDetail {
         return this.getTransactionInMap(txn, numberOfYears);
     }
 
-    getLoan(): BaseTransactionDetail {
-        const txn: BaseTransaction = this.txnBreakdown.getLoanTxn();
-        return this.getTransactionInMap(txn);
-    }
+    // getLoan(): BaseTransactionDetail {
+    //     const txn: BaseTransaction = this.txnBreakdown.getLoanTxn();
+    //     return this.getTransactionInMap(txn);
+    // }
 
-    getMortgageAmount(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction =
-            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgageAmountTxn();
-        return this.getTransactionInMap(txn);
-    };
-
-    getMortgagePrincipal(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction =
-            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgagePrincipalTxn();
-        return this.getTransactionInMap(txn);
-    };
-
-    getMortgageInterest(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction =
-            (this.txnBreakdown as MortgageTransactionBreakdown).getMortgageInterestTxn();
-        return this.getTransactionInMap(txn);
-    }
-
-    getPMI(): BaseTransactionDetail {
-        const txn: BaseMortgageTransaction =
-            (this.txnBreakdown as MortgageTransactionBreakdown).getPMITxn();
-        return this.getTransactionInMap(txn);
+    getMortgage(numberOfYears: number = 0): BaseMortgageTransactionDetail {
+        const txn: BaseMortgageTransaction = this.txnBreakdown.getMortgageTxn();
+        if (txn instanceof MortgageTransaction) {
+            const baseMortgageTxnDetail: BaseMortgageTransactionDetail = this.getMortgageTransactionInMap(txn, numberOfYears);
+            return baseMortgageTxnDetail;
+        }
+        throw Error('Txn is not a Mortgage txn');
     };
 
     private getTransactionInMap(
@@ -340,30 +342,12 @@ export class TransactionDetail {
         return transaction.createBaseTransactionDetail(this.txnList, numberOfYears);
     }
 
-    // private _getTransactionInMap(
-    //     transaction: Transaction<TransactionCalculator>,
-    //     numberOfYears: number = 0,
-    // ): BaseTransactionDetail {
+    private getMortgageTransactionInMap(
+        transaction: MortgageTransaction,
+        numberOfYears: number = 0,
+    ): BaseMortgageTransactionDetail {
+        return transaction.createBaseTransactionDetail(this.txnList, numberOfYears);
+    }
 
-    //     const txnAmount = transaction.getAmount(numberOfYears).amount;
-    //     const txnPercentage = transaction.getRate(numberOfYears).rate;
-    //     const rateOfGrowth = transaction.getProjectedGrowthRate().rate
-    //     let cumulativeAmount = txnAmount;
-    //     if (this.txnList.length > 1) {
-    //         const previousIndexData = this.txnList[this.txnList.length - 1];
-    //         const previous: BaseTransactionDetail = previousIndexData[transaction.getTransactionType()][transaction.getTransactionKey()];
-    //         cumulativeAmount += previous.cumulativeAmount ?? 0;
-    //     }
-
-    //     const transactionDetail: BaseTransactionDetail = {
-    //         key: transaction.getTransactionKey(),
-    //         type: transaction.getTransactionType(),
-    //         amount: txnAmount,
-    //         ...(transaction.canBePercetage() && { percentage: txnPercentage }),
-    //         ...(transaction.canBeCumulated() && { cumulativeAmount: cumulativeAmount }),
-    //         ...(transaction.hasRateOfGrowth() && { rateOfGrowth: rateOfGrowth }),
-    //     };
-    //     return transactionDetail;
-    // }
 
 }

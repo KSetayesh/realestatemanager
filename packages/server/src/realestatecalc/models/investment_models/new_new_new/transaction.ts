@@ -1,7 +1,8 @@
 import { Utility, ValueAmountInput, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { MortgageCalculatorInterface, TransactionCalculator } from "../new_calculators/transaction.calculator";
-import { BaseTransactionDetail, TransactionKey, TransactionType } from "./transaction.detail";
+import { CalculatorType, TransactionCalculator } from "../new_calculators/transaction.calculator";
+import { BaseMortgageTransactionDetail, BaseTransactionDetail, TransactionKey, TransactionType } from "./transaction.detail";
 import { MortgageCalculator } from "../new_calculators/mortgage.calculator";
+import { BaseMortgageTransaction } from "./financial.transaction.breakdown";
 
 export type TransactionDTO = {
     txnKey: TransactionKey;
@@ -30,7 +31,10 @@ export class Transaction<T extends TransactionCalculator> {
         canBeCumulated: boolean,
         canBePercetage: boolean,
         hasRateOfGrowth: boolean,
-        growthRate?: ValueRateInput
+        growthRate: ValueRateInput = {
+            type: ValueType.RATE,
+            rate: 0,
+        }
     ) {
         this.transactionKey = transactionKey;
         this.amountOrRate = amountOrRate;
@@ -47,6 +51,10 @@ export class Transaction<T extends TransactionCalculator> {
 
     protected getCalculator(): T {
         return this.calculator;
+    }
+
+    getCalculatorType(): CalculatorType {
+        return this.calculator.getCalculatorType();
     }
 
     setTransactionCalculator(calculator: T) {
@@ -97,14 +105,21 @@ export class Transaction<T extends TransactionCalculator> {
         return this.amountOrRate;
     }
 
+    isMortgageCalculator(): this is BaseMortgageTransaction {
+        // Assuming there's a distinctive property or method in MortgageCalculator,
+        // like 'mortgageSpecificMethod'. This is just an illustrative example.
+        return this.calculator.getCalculatorType() === CalculatorType.MORTGAGE;
+        // return (this.calculator as any).mortgageSpecificMethod !== undefined;
+    }
+
     createBaseTransactionDetail(
         txnList: [],
         numberOfYears: number = 0,
     ): BaseTransactionDetail {
 
         const txnAmount = this.getAmount(numberOfYears).amount;
-        const txnPercentage = this.getRate(numberOfYears).rate;
-        const rateOfGrowth = this.getProjectedGrowthRate().rate
+        // const txnPercentage = this.getRate(numberOfYears).rate;
+        // const rateOfGrowth = this.getProjectedGrowthRate().rate;
         let cumulativeAmount = txnAmount;
         if (txnList.length > 1) {
             const previousIndexData = txnList[txnList.length - 1];
@@ -115,10 +130,10 @@ export class Transaction<T extends TransactionCalculator> {
         const transactionDetail: BaseTransactionDetail = {
             key: this.getTransactionKey(),
             type: this.getTransactionType(),
-            amount: txnAmount,
-            ...(this.canBePercetage() && { percentage: txnPercentage }),
-            ...(this.canBeCumulated() && { cumulativeAmount: cumulativeAmount }),
-            ...(this.hasRateOfGrowth() && { rateOfGrowth: rateOfGrowth }),
+            amount: Utility.round(txnAmount),
+            ...(this.canBePercetage() && { percentage: Utility.round(this.getRate(numberOfYears).rate) }),
+            ...(this.canBeCumulated() && { cumulativeAmount: Utility.round(cumulativeAmount) }),
+            ...(this.hasRateOfGrowth() && { rateOfGrowth: Utility.round(this.getProjectedGrowthRate().rate) }),
         };
         return transactionDetail;
     }
@@ -184,15 +199,34 @@ export class MortgageTransaction extends Transaction<MortgageCalculator> {
         return this.getCalculator().getPMIRate(this.pmiRate);
     }
 
+    hasPMI(): boolean {
+        return this.getCalculator().hasPMI();
+    }
+
+    getLoanAmount(): ValueAmountInput {
+        return this.getCalculator().getLoanAmount();
+    }
+
     createBaseTransactionDetail(
         txnList: [],
         numberOfYears: number = 0,
-    ): BaseTransactionDetail {
-        return {
-            key: undefined,
-            type: undefined,
-            amount: 0,
+    ): BaseMortgageTransactionDetail {
+        const hasPMI: boolean = this.hasPMI();
+        const baseTransactionDetail: BaseTransactionDetail = super.createBaseTransactionDetail(txnList, numberOfYears);
+        const mortgageTransactionDetail: BaseMortgageTransactionDetail = {
+            ...baseTransactionDetail,
+            loanAmount: Utility.round(this.getLoanAmount().amount),
+            balanceAfterPayment: Utility.round(this.calculateBalanceAfterPayment(numberOfYears).amount),
+            principalAmountForPayment: Utility.round(this.getPrincipalAmountForPayment(numberOfYears).amount),
+            interestAmountForPayment: Utility.round(this.getInterestAmountForPayment(numberOfYears).amount),
+            percentageOfInterest: Utility.round(this.getPercentageOfInterest(numberOfYears).rate),
+            percentageOfPrincipal: Utility.round(this.getPercentageOfPrincipal(numberOfYears).rate),
+            hasPMI: hasPMI,
+            ...(hasPMI && { pmiAmount: Utility.round(this.getPMIAmount(numberOfYears).amount) }),
+            ...(hasPMI && { pmiRate: Utility.round(this.getPMIRate().rate) }),
         };
+        return mortgageTransactionDetail;
+
     }
 
 

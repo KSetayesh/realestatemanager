@@ -1,8 +1,7 @@
 import { DefaultInvestmentRates, GrowthFrequency, InterestType, ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueRateInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
-import { MortgageCalculatorInterface, TransactionCalculator } from "./transaction.calculator";
+import { CalculatorType, MortgageCalculatorInterface, TransactionCalculator } from "./transaction.calculator";
 import { Injectable } from "@nestjs/common";
-import { Transaction } from "../new_new_new/transaction";
 import { BaseTransaction } from "../new_new_new/financial.transaction.breakdown";
 
 export interface MortgageCalcRequst {
@@ -36,6 +35,7 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
         this.pmiDropOffRatio = pmiDropOffRatio;
     }
 
+
     getAmount(annualInterestRate: ValueInput, ...args: number[]): ValueAmountInput {
         if (isValueRateInput(annualInterestRate)) {
             const monthlyInterestRate = annualInterestRate.rate / 100 / 12;
@@ -52,6 +52,10 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
 
     getRate(annualInterestRate: ValueRateInput): ValueRateInput {
         return annualInterestRate;
+    }
+
+    getCalculatorType(): CalculatorType {
+        return CalculatorType.MORTGAGE;
     }
 
     getLoanAmount(): ValueAmountInput {
@@ -131,10 +135,17 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
         throw new Error('Cannot be amount for MortgageCalculator');
     }
 
+    hasPMI(): boolean {
+        return this.downPaymentTxn.getRate().rate < 20;
+    }
+
     getPMIAmount(pmiRate: ValueInput, annualInterestRate: ValueInput, paymentNumber: number = 0): ValueAmountInput {
-        // if (!pmiRate.rate) {
-        //     return 0; // No PMI rate provided, return 0
-        // }
+        if (!this.hasPMI()) {
+            return {
+                type: ValueType.AMOUNT,
+                amount: 0,
+            };
+        }
         if (isValueRateInput(pmiRate) && isValueRateInput(annualInterestRate)) {
 
             // Calculate the balance after the given payment number to see if PMI still applies
@@ -159,6 +170,12 @@ export class MortgageCalculator extends ValueDependentTransactionCalculator impl
     }
 
     getPMIRate(pmiRate: ValueInput): ValueRateInput {
+        if (!this.hasPMI()) {
+            return {
+                type: ValueType.RATE,
+                rate: 0,
+            };
+        }
         if (isValueRateInput(pmiRate)) {
             return pmiRate;
         }

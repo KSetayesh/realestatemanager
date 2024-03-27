@@ -1,6 +1,7 @@
 import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueRateInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 import { Injectable } from "@nestjs/common";
+import { CalculatorType } from "./transaction.calculator";
 
 // export class RecurringExpensesCalculator extends TransactionCalculator {
 @Injectable()
@@ -34,4 +35,9 @@ export class RecurringExpenseProjectionCalculator extends ValueDependentTransact
         }
         throw new Error('Cannot be amount for RecurringExpenseProjectionCalculator');
     }
+
+    getCalculatorType(): CalculatorType {
+        return CalculatorType.RECURRING_EXPENSE;
+    }
+
 }

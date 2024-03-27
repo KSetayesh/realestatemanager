@@ -1,6 +1,7 @@
 import { ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 import { Injectable } from "@nestjs/common";
+import { CalculatorType } from "./transaction.calculator";
 
 // export class IncomeCalculator extends TransactionCalculator {
 @Injectable()
@@ -30,6 +31,10 @@ export class AppreciationAndIncomeProjectionCalculator extends ValueDependentTra
             };
         }
         throw new Error('Cannot be rate for AppreciationAndIncomeProjectionCalculator');
+    }
+
+    getCalculatorType(): CalculatorType {
+        return CalculatorType.APPRECIATION_AND_INCOME_PROJECTIONS;
     }
 
 }

@@ -1,5 +1,5 @@
 import { ValueAmountInput, ValueRateInput, GrowthFrequency, isValueAmountInput, ValueInput } from "@realestatemanager/shared";
-import { TransactionCalculator } from "./transaction.calculator";
+import { CalculatorType, TransactionCalculator } from "./transaction.calculator";
 import { Injectable } from "@nestjs/common";
 
 // export class AppreciationCalculator extends TransactionCalculator {
@@ -27,5 +27,10 @@ export class MonthlyAppreciationCalculator extends TransactionCalculator {
         // return rateValue;
         throw new Error('Cannot get rate for MonthlyAppreciationCalculator');
     }
+
+    getCalculatorType(): CalculatorType {
+        return CalculatorType.MONTHLY_APPRECIATION;
+    }
+
 
 }

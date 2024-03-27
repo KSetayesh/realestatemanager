@@ -9,14 +9,14 @@ import { PMIDetails } from "../new_new_new/pmidetails.model";
 import { MortgageCalculator } from "./mortgage.calculator";
 import { Injectable } from "@nestjs/common";
 
-export enum CalculatorTxnType {
-    APPRECIATION_AND_INCOME_PROJECTIONS,
-    DIRECT_VALUE,
-    DYNAMIC_GROWTH,
-    MONTHLY_APPRECIATION,
-    RECURRING_EXPENSE,
-    MORTGAGE,
-};
+// export enum CalculatorTxnType {
+//     APPRECIATION_AND_INCOME_PROJECTIONS,
+//     DIRECT_VALUE,
+//     DYNAMIC_GROWTH,
+//     MONTHLY_APPRECIATION,
+//     RECURRING_EXPENSE,
+//     MORTGAGE,
+// };
 
 export interface TransactionCalculatorRequest {
     initialPurchasePrice: number,
@@ -32,56 +32,56 @@ export interface TransactionCalculatorRequest {
 @Injectable()
 export class CalculatorFactory {
 
-    static createCalculator(
-        type: CalculatorTxnType,
-        txnCalcReq: TransactionCalculatorRequest): TransactionCalculator {
+    // static createCalculator(
+    //     type: CalculatorTxnType,
+    //     txnCalcReq: TransactionCalculatorRequest): TransactionCalculator {
 
-        const initialPurchasePriceValue: ValueAmountInput = {
-            type: ValueType.AMOUNT,
-            amount: txnCalcReq.initialPurchasePrice
-        };
+    //     const initialPurchasePriceValue: ValueAmountInput = {
+    //         type: ValueType.AMOUNT,
+    //         amount: txnCalcReq.initialPurchasePrice
+    //     };
 
-        const appreciationGrowthRateValue: ValueRateInput = {
-            type: ValueType.RATE,
-            rate: txnCalcReq.appreciationGrowthRate
-        };
+    //     const appreciationGrowthRateValue: ValueRateInput = {
+    //         type: ValueType.RATE,
+    //         rate: txnCalcReq.appreciationGrowthRate
+    //     };
 
-        const initialRentalAmountValue: ValueAmountInput = {
-            type: ValueType.AMOUNT,
-            amount: txnCalcReq.initialRentalAmount,
-        };
+    //     const initialRentalAmountValue: ValueAmountInput = {
+    //         type: ValueType.AMOUNT,
+    //         amount: txnCalcReq.initialRentalAmount,
+    //     };
 
-        const initialRentalRateValue: ValueRateInput = {
-            type: ValueType.RATE,
-            rate: txnCalcReq.rentalGrowthRate,
-        };
+    //     const initialRentalRateValue: ValueRateInput = {
+    //         type: ValueType.RATE,
+    //         rate: txnCalcReq.rentalGrowthRate,
+    //     };
 
-        const loanAmount = txnCalcReq.loanAmount;
-        const loanTermYears = txnCalcReq.loanTermYears;
-        const interestType = txnCalcReq.interestType;
+    //     const loanAmount = txnCalcReq.loanAmount;
+    //     const loanTermYears = txnCalcReq.loanTermYears;
+    //     const interestType = txnCalcReq.interestType;
 
-        switch (type) {
-            case CalculatorTxnType.APPRECIATION_AND_INCOME_PROJECTIONS:
-                return new AppreciationAndIncomeProjectionCalculator(initialPurchasePriceValue, appreciationGrowthRateValue);
+    //     switch (type) {
+    //         case CalculatorTxnType.APPRECIATION_AND_INCOME_PROJECTIONS:
+    //             return new AppreciationAndIncomeProjectionCalculator(initialPurchasePriceValue, appreciationGrowthRateValue);
 
-            case CalculatorTxnType.DIRECT_VALUE:
-                return new DirectValueCalculator(initialPurchasePriceValue);
+    //         case CalculatorTxnType.DIRECT_VALUE:
+    //             return new DirectValueCalculator(initialPurchasePriceValue);
 
-            case CalculatorTxnType.DYNAMIC_GROWTH:
-                return new DynamicGrowthCalculator(initialRentalAmountValue, initialRentalRateValue);
+    //         case CalculatorTxnType.DYNAMIC_GROWTH:
+    //             return new DynamicGrowthCalculator(initialRentalAmountValue, initialRentalRateValue);
 
-            case CalculatorTxnType.MONTHLY_APPRECIATION:
-                return new MonthlyAppreciationCalculator();
+    //         case CalculatorTxnType.MONTHLY_APPRECIATION:
+    //             return new MonthlyAppreciationCalculator();
 
-            case CalculatorTxnType.RECURRING_EXPENSE:
-                return new RecurringExpenseProjectionCalculator(initialRentalAmountValue, initialRentalRateValue);
+    //         case CalculatorTxnType.RECURRING_EXPENSE:
+    //             return new RecurringExpenseProjectionCalculator(initialRentalAmountValue, initialRentalRateValue);
 
-            // case CalculatorTxnType.MORTGAGE:
-            //     return new MortgageCalculator(initialPurchasePriceValue, loanAmount, loanTermYears, interestType);
+    //         // case CalculatorTxnType.MORTGAGE:
+    //         //     return new MortgageCalculator(initialPurchasePriceValue, loanAmount, loanTermYears, interestType);
 
-            default:
-                throw new Error('Notification type not supported.');
-        }
-    }
+    //         default:
+    //             throw new Error('Notification type not supported.');
+    //     }
+    // }
 
 }

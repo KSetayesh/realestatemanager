@@ -323,7 +323,7 @@ export class TransactionBuilder {
             amountOrRate,
             TransactionType.FINANCING,
             !this.canBeCumulated,
-            this.canBePercentage,
+            !this.canBePercentage,
             this.hasRateOfGrowth,
             rateOfGrowth,
         );

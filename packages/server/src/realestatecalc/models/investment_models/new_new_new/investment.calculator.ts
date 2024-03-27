@@ -254,7 +254,7 @@ export class InvestmentCalculator {
     }
 
     private getLoanAmount(): number {
-        return this.financialTransactionBreakdown.getLoanAmount().amount;
+        return 0;//this.financialTransactionBreakdown.getLoanAmount().amount;
     }
 
     private getDownPaymentAmount(): number {

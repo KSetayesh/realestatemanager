@@ -1,6 +1,7 @@
 import { GrowthFrequency, ValueAmountInput, ValueInput, ValueRateInput, ValueType, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { ValueDependentTransactionCalculator } from "./value.dependent.transaction.calculator";
 import { Injectable } from "@nestjs/common";
+import { CalculatorType } from "./transaction.calculator";
 
 // export class InititalCostsCalculator extends TransactionCalculator {
 @Injectable()
@@ -10,14 +11,14 @@ export class DirectValueCalculator extends ValueDependentTransactionCalculator {
         super(initialPurchasePrice, undefined, GrowthFrequency.NONE);
     }
 
-    getAmount(inititalValue: ValueInput): ValueAmountInput {
-        if (isValueAmountInput(inititalValue)) {
-            return inititalValue;
+    getAmount(initialValue: ValueInput): ValueAmountInput {
+        if (isValueAmountInput(initialValue)) {
+            return initialValue;
         }
-        else if (isValueRateInput(inititalValue)) {
+        else if (isValueRateInput(initialValue)) {
             return {
                 type: ValueType.AMOUNT,
-                amount: this.baseValue.amount * (inititalValue.rate / 100),
+                amount: this.baseValue.amount * (initialValue.rate / 100),
             };
         }
 
@@ -35,6 +36,11 @@ export class DirectValueCalculator extends ValueDependentTransactionCalculator {
         }
 
     }
+
+    getCalculatorType(): CalculatorType {
+        return CalculatorType.DIRECT_VALUE;
+    }
+
 
 }
 
