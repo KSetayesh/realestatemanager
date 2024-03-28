@@ -1,7 +1,7 @@
 import { Utility, ValueRateInput } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
-import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class MaintenanceRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
@@ -46,7 +46,7 @@ export class MaintenanceRate implements CalculateTxnInterface<ValueRateInput, Re
         return this.baseValue.rate;
     }
 
-    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): any {
+    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): TxnDTO {
         const txnAmount = this.getAmount(rentalTxn, numberOfYears);
         const cumulativeAmount = txnAmount + previousTotalAmount;
 

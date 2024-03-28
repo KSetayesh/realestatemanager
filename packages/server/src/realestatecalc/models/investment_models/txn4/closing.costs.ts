@@ -1,7 +1,7 @@
 import { Utility, ValueInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
 import { PurchasePrice } from "./purchase.price";
-import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class ClosingCosts implements CalculateTxnInterface<ValueInput, PurchasePrice> {
@@ -49,7 +49,7 @@ export class ClosingCosts implements CalculateTxnInterface<ValueInput, PurchaseP
         );
     }
 
-    toDTO(purchaseTxn: PurchasePrice, previousTotalAmount: number = 0): any {
+    toDTO(purchaseTxn: PurchasePrice, previousTotalAmount: number = 0): TxnDTO {
         const txnAmount = this.getAmount(purchaseTxn);
         const cumulativeAmount = txnAmount + previousTotalAmount;
 
