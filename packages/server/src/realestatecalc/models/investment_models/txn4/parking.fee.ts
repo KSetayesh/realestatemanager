@@ -5,6 +5,8 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class ParkingFee implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.PARKING_FEES;
@@ -13,6 +15,7 @@ export class ParkingFee implements CalculateTxnInterface<ValueAmountInput, RentE
     constructor(parkingFee: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = parkingFee;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueAmountInput {
@@ -40,7 +43,7 @@ export class ParkingFee implements CalculateTxnInterface<ValueAmountInput, RentE
     }
 
     private getParkingFeeIncome(numberOfYears: number = 0): number {
-        return new CalcHelper().getFutureDatedAmount(
+        return this.calcHelper.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
             numberOfYears
@@ -48,7 +51,7 @@ export class ParkingFee implements CalculateTxnInterface<ValueAmountInput, RentE
     }
 
     private getParkingFeePercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper = new CalcHelper();
+
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
 
         const laundryServiceAmount: ValueAmountInput = {
@@ -56,7 +59,7 @@ export class ParkingFee implements CalculateTxnInterface<ValueAmountInput, RentE
             amount: this.getParkingFeeIncome(numberOfYears),
         };
 
-        return calcHelper.getTransactionPercent(laundryServiceAmount, futureDatedRentalAmount);
+        return this.calcHelper.getTransactionPercent(laundryServiceAmount, futureDatedRentalAmount);
 
     }
 

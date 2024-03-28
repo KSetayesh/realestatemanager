@@ -6,6 +6,7 @@ import { TransactionKey } from "./calc/calculate";
 
 export class LaundryService implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 
+    private calcHelper: CalcHelper;
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.LAUNDRY_SERVICES;
@@ -14,6 +15,7 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
     constructor(laundryServiceFee: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = laundryServiceFee;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueAmountInput {
@@ -41,7 +43,7 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
     }
 
     private getLaundryServiceIncome(numberOfYears: number = 0): number {
-        return new CalcHelper().getFutureDatedAmount(
+        return this.calcHelper.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
             numberOfYears
@@ -49,7 +51,6 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
     }
 
     private getLaundryServicePercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper = new CalcHelper();
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
 
         const laundryServiceAmount: ValueAmountInput = {
@@ -57,7 +58,7 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
             amount: this.getLaundryServiceIncome(numberOfYears),
         };
 
-        return calcHelper.getTransactionPercent(laundryServiceAmount, futureDatedRentalAmount);
+        return this.calcHelper.getTransactionPercent(laundryServiceAmount, futureDatedRentalAmount);
 
     }
 

@@ -5,6 +5,8 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class OtherAdditionalIncomeStreams implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS;
@@ -13,6 +15,7 @@ export class OtherAdditionalIncomeStreams implements CalculateTxnInterface<Value
     constructor(additionalIncomeStreams: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = additionalIncomeStreams;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueAmountInput {
@@ -40,7 +43,7 @@ export class OtherAdditionalIncomeStreams implements CalculateTxnInterface<Value
     }
 
     private getOtherAdditionalIncomeStreamsAmount(numberOfYears: number = 0): number {
-        return new CalcHelper().getFutureDatedAmount(
+        return this.calcHelper.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
             numberOfYears
@@ -48,7 +51,7 @@ export class OtherAdditionalIncomeStreams implements CalculateTxnInterface<Value
     }
 
     private getOtherAdditionalIncomeStreamsPercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper = new CalcHelper();
+
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
 
         const otherAdditionalIncomeStreamsAmount: ValueAmountInput = {
@@ -56,7 +59,7 @@ export class OtherAdditionalIncomeStreams implements CalculateTxnInterface<Value
             amount: this.getOtherAdditionalIncomeStreamsAmount(numberOfYears),
         };
 
-        return calcHelper.getTransactionPercent(otherAdditionalIncomeStreamsAmount, futureDatedRentalAmount);
+        return this.calcHelper.getTransactionPercent(otherAdditionalIncomeStreamsAmount, futureDatedRentalAmount);
 
     }
 

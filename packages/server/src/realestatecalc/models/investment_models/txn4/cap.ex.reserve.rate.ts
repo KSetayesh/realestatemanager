@@ -6,6 +6,7 @@ import { TransactionKey } from "./calc/calculate";
 
 export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
 
+    private calcHelper: CalcHelper;
     private _baseValue: ValueRateInput;
     private _txnKey: TransactionKey.CAP_EX_RESERVE_EXPENSE;
     private _canBeCumulated: boolean = true;
@@ -13,6 +14,7 @@ export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, R
 
     constructor(capExReserveRate: ValueRateInput) {
         this._baseValue = capExReserveRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueRateInput {
@@ -35,10 +37,9 @@ export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, R
         return this.getCapExReserveRate();
     }
 
-
     private getCapExReserveAmount(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
         );

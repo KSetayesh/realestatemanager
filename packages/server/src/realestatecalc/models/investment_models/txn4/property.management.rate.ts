@@ -5,12 +5,15 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class PropertyManagementRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueRateInput;
     private _txnKey: TransactionKey.PROPERTY_MANAGEMENT_EXPENSE;
     private _canBeCumulated: boolean = true;
 
     constructor(propertyManagementRate: ValueRateInput) {
         this._baseValue = propertyManagementRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueRateInput {
@@ -35,7 +38,7 @@ export class PropertyManagementRate implements CalculateTxnInterface<ValueRateIn
 
     private getPropertyManagementAmount(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
         );

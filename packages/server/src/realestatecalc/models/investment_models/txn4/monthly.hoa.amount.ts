@@ -6,6 +6,7 @@ import { TransactionKey } from "./calc/calculate";
 
 export class MonthlyHOAFeesAmount implements CalculateTxnInterface<ValueInput, RentEstimate> {
 
+    private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.HOA_FEE;
@@ -14,6 +15,7 @@ export class MonthlyHOAFeesAmount implements CalculateTxnInterface<ValueInput, R
     constructor(monthlyHOAFeesAmount: ValueInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = monthlyHOAFeesAmount;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueInput {
@@ -41,20 +43,18 @@ export class MonthlyHOAFeesAmount implements CalculateTxnInterface<ValueInput, R
     }
 
     private getMonthlyHOAFeesAmount(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper: CalcHelper = new CalcHelper();
-
-        const monthlyHOAFeesAmount = calcHelper.getTransactionAmount(
+        const monthlyHOAFeesAmount = this.calcHelper.getTransactionAmount(
             this.baseValue,
             rentalAmount.getInitialRentalAmount()
         );
 
-        return calcHelper.getFutureDatedAmount(monthlyHOAFeesAmount, this.rateOfGrowth.rate, numberOfYears);
+        return this.calcHelper.getFutureDatedAmount(monthlyHOAFeesAmount, this.rateOfGrowth.rate, numberOfYears);
     }
 
     private getMonthlyHOAFeesPercentage(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = rentalAmount.getFutureDatedRentalAmount(numberOfYears);
         const futureDatedMonthlyHOAFeesAmount = this.getMonthlyHOAFeesAmount(rentalAmount, numberOfYears);
-        return new CalcHelper().getTransactionPercent(
+        return this.calcHelper.getTransactionPercent(
             {
                 type: ValueType.AMOUNT,
                 amount: futureDatedMonthlyHOAFeesAmount

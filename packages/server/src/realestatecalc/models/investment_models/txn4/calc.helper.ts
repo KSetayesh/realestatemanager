@@ -5,10 +5,10 @@ export class CalcHelper {
     getFutureDatedAmount(
         principal: number,
         growthRate: number,
-        numberOfYears: number = 0
+        monthCounter: number = 0
     ): number {
         const rateOfGrowth = 1 + (growthRate / 100);
-        return principal * (Math.pow(rateOfGrowth, numberOfYears));
+        return principal * (Math.pow(rateOfGrowth, monthCounter));
     }
 
     getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {
@@ -28,4 +28,8 @@ export class CalcHelper {
             return valueInput.rate;
         }
     }
+
+    // getYear(monthCounter: number): number {
+    //     return Math.floor((monthCounter - 1) / 12) + 1;
+    // }
 }

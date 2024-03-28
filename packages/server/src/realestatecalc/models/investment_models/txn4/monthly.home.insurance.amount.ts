@@ -5,6 +5,8 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class MonthlyHomeInsuranceAmount implements CalculateTxnInterface<ValueInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.HOME_INSURANCE;
@@ -13,6 +15,7 @@ export class MonthlyHomeInsuranceAmount implements CalculateTxnInterface<ValueIn
     constructor(monthlyHomeInsuranceAmount: ValueInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = monthlyHomeInsuranceAmount;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueInput {
@@ -40,20 +43,19 @@ export class MonthlyHomeInsuranceAmount implements CalculateTxnInterface<ValueIn
     }
 
     private getMonthlyHomeInsuranceAmount(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper: CalcHelper = new CalcHelper();
 
-        const monthlyHomeInsuranceAmount = calcHelper.getTransactionAmount(
+        const monthlyHomeInsuranceAmount = this.calcHelper.getTransactionAmount(
             this.baseValue,
             rentalAmount.getInitialRentalAmount()
         );
 
-        return calcHelper.getFutureDatedAmount(monthlyHomeInsuranceAmount, this.rateOfGrowth.rate, numberOfYears);
+        return this.calcHelper.getFutureDatedAmount(monthlyHomeInsuranceAmount, this.rateOfGrowth.rate, numberOfYears);
     }
 
     private getmonthlyHomeInsurancePercentage(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = rentalAmount.getFutureDatedRentalAmount(numberOfYears);
         const futureDatedMonthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount(rentalAmount, numberOfYears);
-        return new CalcHelper().getTransactionPercent(
+        return this.calcHelper.getTransactionPercent(
             {
                 type: ValueType.AMOUNT,
                 amount: futureDatedMonthlyHomeInsuranceAmount

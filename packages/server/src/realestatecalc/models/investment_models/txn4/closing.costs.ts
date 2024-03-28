@@ -6,6 +6,7 @@ import { TransactionKey } from "./calc/calculate";
 
 export class ClosingCosts implements CalculateTxnInterface<ValueInput, PurchasePrice> {
 
+    private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
     private _txnKey: TransactionKey.CLOSING_COST;
     private _canBeCumulated: boolean = false;
@@ -13,6 +14,7 @@ export class ClosingCosts implements CalculateTxnInterface<ValueInput, PurchaseP
 
     constructor(closingCosts: ValueInput) {
         this._baseValue = closingCosts;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueInput {
@@ -36,28 +38,26 @@ export class ClosingCosts implements CalculateTxnInterface<ValueInput, PurchaseP
     }
 
     private getClosingCostsAmount(purchasePrice: PurchasePrice): number {
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             purchasePrice.getInitialPurchasePrice()
         );
-    }
+    };
 
     private getClosingCostsPercentage(purchasePrice: PurchasePrice): number {
-        return new CalcHelper().getTransactionPercent(
+        return this.calcHelper.getTransactionPercent(
             this.baseValue,
             purchasePrice.getInitialPurchasePrice()
         );
-    }
+    };
 
-    toDTO(purchaseTxn: PurchasePrice, previousTotalAmount: number = 0): TxnDTO {
+    toDTO(purchaseTxn: PurchasePrice): TxnDTO {
         const txnAmount = this.getAmount(purchaseTxn);
-        const cumulativeAmount = txnAmount + previousTotalAmount;
 
         return {
             key: this.txnKey,
             amount: Utility.round(txnAmount),
             percentage: Utility.round(this.getRate(purchaseTxn)),
-            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
         };
     }
 }

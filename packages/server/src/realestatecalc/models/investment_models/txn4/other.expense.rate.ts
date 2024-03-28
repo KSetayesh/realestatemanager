@@ -5,12 +5,15 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class OtherExpenseRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueRateInput;
     private _txnKey: TransactionKey.OTHER_EXPENSES;
     private _canBeCumulated: boolean = true;
 
     constructor(otherExpenseRate: ValueRateInput) {
         this._baseValue = otherExpenseRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueRateInput {
@@ -35,7 +38,7 @@ export class OtherExpenseRate implements CalculateTxnInterface<ValueRateInput, R
 
     private getOtherExpenseAmount(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
         );

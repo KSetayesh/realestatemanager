@@ -6,12 +6,14 @@ import { TransactionKey } from "./calc/calculate";
 
 export class MaintenanceRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
 
+    private calcHelper: CalcHelper;
     private _baseValue: ValueRateInput;
     private _txnKey: TransactionKey.MAINTENANCE_EXPENSE;
     private _canBeCumulated: boolean = true;
 
     constructor(maintenanceRate: ValueRateInput) {
         this._baseValue = maintenanceRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueRateInput {
@@ -36,7 +38,7 @@ export class MaintenanceRate implements CalculateTxnInterface<ValueRateInput, Re
 
     private getMaintenanceExpenses(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
         );

@@ -1,3 +1,4 @@
+import { Utility } from "@realestatemanager/shared";
 import { CapExReserveRate } from "../cap.ex.reserve.rate";
 import { ClosingCosts } from "../closing.costs";
 import { InititalRepairCosts } from "../initital.repair.costs";
@@ -17,6 +18,7 @@ import { RentEstimate } from "../rent.estimate";
 import { StorageUnitFees } from "../storage.unit.fees";
 import { TravelingCosts } from "../traveling.costs";
 import { VacancyRate } from "../vacancy.rate";
+import { DownPayment } from "../downpayment";
 
 export enum TransactionType {
     INITIAL_EXPENSE = 'Initial Expense',
@@ -79,6 +81,7 @@ export class Calculate {
     private otherAdditionalIncomeStreams: OtherAdditionalIncomeStreams;
 
     // Initial Expenses
+    private downPayment: DownPayment;
     private closingCosts: ClosingCosts;
     private initialRepairCosts: InititalRepairCosts;
     private legalAndProfessionalFees: LegalAndProfessionalFee;
@@ -92,23 +95,45 @@ export class Calculate {
     private propertyManagementRate: PropertyManagementRate;
     private vacancyRate: VacancyRate;
 
+    build(monthCounter: number = 0) {
+        const yearCounter = this.getYear(monthCounter);
+        const result = this.getInitialValues();
 
+    }
 
-    // private createOperationalExpenseTxn(txnKey: TransactionKey, amountOrRate: ValueInput): BaseTransaction {
-    //     const initialRentalAmount = this.txnBuilderReq.rentEstimate;
-    //     const rentalGrowthRate = this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate();
-    //     const txn = new Transaction(
-    //         txnKey,
-    //         amountOrRate,
-    //         TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-    //         this.canBeCumulated,
-    //         this.canBePercentage,
-    //         !this.hasRateOfGrowth
-    //     );
-    //     const calc: RecurringExpenseProjectionCalculator =
-    //         new RecurringExpenseProjectionCalculator(initialRentalAmount, rentalGrowthRate);
-    //     txn.setTransactionCalculator(calc);
-    //     return txn;
-    // }
+    private getInitialValues() {
+        return {
+            [TransactionType.FINANCING]: {
+                type: TransactionType.FINANCING,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.getInitialPurchasePrice(),
+                },
+            },
+            [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.MORTGAGE]: {},
+                },
+            },
+            [TransactionType.INITIAL_EXPENSE]: {
+                type: TransactionType.INITIAL_EXPENSE,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.DOWN_PAYMENT]: this.downPayment.toDTO(this.purchasePrice),
+                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.legalAndProfessionalFees.toDTO(this.purchasePrice),
+                    [TransactionKey.INITIAL_REPAIR_COST]: this.initialRepairCosts.toDTO(this.purchasePrice),
+                    [TransactionKey.CLOSING_COST]: this.closingCosts.toDTO(this.purchasePrice),
+                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.otherInitialExpenses.toDTO(this.purchasePrice),
+                },
+            },
+        };
+    }
+
+    private getYear(monthCounter: number): number {
+        return Math.floor((monthCounter - 1) / 12) + 1;
+    }
+
 
 }

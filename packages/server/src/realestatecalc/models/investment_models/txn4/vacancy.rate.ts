@@ -5,12 +5,15 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class VacancyRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueRateInput;
     private _txnKey: TransactionKey.VACANCY_EXPENSE;
     private _canBeCumulated: boolean = true;
 
     constructor(vacancyRate: ValueRateInput) {
         this._baseValue = vacancyRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueRateInput {
@@ -35,7 +38,7 @@ export class VacancyRate implements CalculateTxnInterface<ValueRateInput, RentEs
 
     private getVacancyAmount(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
-        return new CalcHelper().getTransactionAmount(
+        return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
         );

@@ -5,6 +5,8 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey.STORAGE_UNIT_FEES;
@@ -13,6 +15,7 @@ export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, 
     constructor(storageUnitFees: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = storageUnitFees;
         this._rateOfGrowth = expectedGrowthRate;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueAmountInput {
@@ -40,7 +43,7 @@ export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, 
     }
 
     private getStorageUnitFeesAmount(numberOfYears: number = 0): number {
-        return new CalcHelper().getFutureDatedAmount(
+        return this.calcHelper.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
             numberOfYears
@@ -48,7 +51,7 @@ export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, 
     }
 
     private getStorageUnitFeesPercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
-        const calcHelper = new CalcHelper();
+    
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
 
         const storageUnitFees: ValueAmountInput = {
@@ -56,7 +59,7 @@ export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, 
             amount: this.getStorageUnitFeesAmount(numberOfYears),
         };
 
-        return calcHelper.getTransactionPercent(storageUnitFees, futureDatedRentalAmount);
+        return this.calcHelper.getTransactionPercent(storageUnitFees, futureDatedRentalAmount);
 
     }
 

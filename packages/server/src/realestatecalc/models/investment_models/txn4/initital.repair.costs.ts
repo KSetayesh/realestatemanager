@@ -5,6 +5,8 @@ import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey } from "./calc/calculate";
 
 export class InititalRepairCosts implements CalculateTxnInterface<ValueInput, PurchasePrice> {
+
+    private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
     private _txnKey: TransactionKey.INITIAL_REPAIR_COST;
     private _canBeCumulated: boolean = false;
@@ -12,6 +14,7 @@ export class InititalRepairCosts implements CalculateTxnInterface<ValueInput, Pu
 
     constructor(inititalRepairCosts: ValueInput) {
         this._baseValue = inititalRepairCosts;
+        this.calcHelper = new CalcHelper();
     }
 
     get baseValue(): ValueInput {
@@ -34,29 +37,27 @@ export class InititalRepairCosts implements CalculateTxnInterface<ValueInput, Pu
         return this.getInitialRepairCostsPercentage(purchaseTxn);
     }
 
-    private getInitialRepairCostsAmount(purchasePrice: PurchasePrice): number {
-        return new CalcHelper().getTransactionAmount(
-            this.baseValue,
-            purchasePrice.getInitialPurchasePrice()
-        );
-    }
-
     private getInitialRepairCostsPercentage(purchasePrice: PurchasePrice): number {
-        return new CalcHelper().getTransactionPercent(
+        return this.calcHelper.getTransactionPercent(
             this.baseValue,
             purchasePrice.getInitialPurchasePrice()
         );
     }
 
-    toDTO(purchaseTxn: PurchasePrice, previousTotalAmount: number = 0): TxnDTO {
+    private getInitialRepairCostsAmount(purchasePrice: PurchasePrice): number {
+        return this.calcHelper.getTransactionAmount(
+            this.baseValue,
+            purchasePrice.getInitialPurchasePrice()
+        );
+    };
+
+    toDTO(purchaseTxn: PurchasePrice): TxnDTO {
         const txnAmount = this.getAmount(purchaseTxn);
-        const cumulativeAmount = txnAmount + previousTotalAmount;
 
         return {
             key: this.txnKey,
             amount: Utility.round(txnAmount),
             percentage: Utility.round(this.getRate(purchaseTxn)),
-            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
         };
     }
 
