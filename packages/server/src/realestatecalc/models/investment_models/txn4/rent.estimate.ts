@@ -1,5 +1,7 @@
 import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
+import { TransactionKey } from "../new_new_new/transaction.detail";
+import { TxnDTO } from "./calculate.txn.interface";
 
 export class RentEstimate {
     private rentEstimate: ValueAmountInput;
@@ -21,7 +23,13 @@ export class RentEstimate {
         );
     }
 
-    toDTO() {
-
+    toDTO(yearCounter: number = 0): TxnDTO {
+        return {
+            key: TransactionKey.RENTAL_INCOME,
+            amount: this.getFutureDatedRentalAmount(yearCounter),
+            percentage: -1, // come back to this
+            rateOfGrowth: this.getExpectedGrowthRate(),
+            cumulatedAmount: -1, // come back to this
+        };
     }
 }
