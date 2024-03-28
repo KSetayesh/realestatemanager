@@ -1,19 +1,20 @@
 import { Utility, ValueInput } from "@realestatemanager/shared";
+import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { PurchasePrice } from "./purchase.price";
 import { CalcHelper } from "./calc.helper";
-import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
-import { TransactionKey } from "./calc/calculate";
+import { TransactionKey, TransactionType } from "./calc/calculate";
 
-export class DownPayment implements CalculateTxnInterface<ValueInput, PurchasePrice> {
+export class InitialCost implements CalculateTxnInterface<ValueInput, PurchasePrice> {
 
     private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
-    private _txnKey: TransactionKey.DOWN_PAYMENT;
-    private _canBeCumulated: boolean = false;
-    // rateOfGrowth implementation omitted for brevity
+    private _txnKey: TransactionKey;
+    private _txnType: TransactionType;
 
-    constructor(downPayment: ValueInput) {
-        this._baseValue = downPayment;
+    constructor(txnKey: TransactionKey, baseValue: ValueInput) {
+        this._txnKey = txnKey;
+        this._txnType = TransactionType.INITIAL_EXPENSE;
+        this._baseValue = baseValue;
         this.calcHelper = new CalcHelper();
     }
 
@@ -25,31 +26,24 @@ export class DownPayment implements CalculateTxnInterface<ValueInput, PurchasePr
         return this._txnKey;
     }
 
-    get canBeCumulated(): boolean {
-        return this._canBeCumulated;
+    get txnType(): TransactionType {
+        return this._txnType;
     }
 
     getAmount(purchaseTxn: PurchasePrice): number {
-        return this.getDownPaymentAmount(purchaseTxn);
+        return this.calcHelper.getTransactionAmount(
+            this.baseValue,
+            purchaseTxn.getInitialPurchasePrice()
+        );
     }
 
     getRate(purchaseTxn: PurchasePrice): number {
-        return this.getDownPaymentPercentage(purchaseTxn);
-    }
-
-    private getDownPaymentAmount(purchasePrice: PurchasePrice): number {
-        return this.calcHelper.getTransactionAmount(
-            this.baseValue,
-            purchasePrice.getInitialPurchasePrice()
-        );
-    }
-
-    private getDownPaymentPercentage(purchasePrice: PurchasePrice): number {
         return this.calcHelper.getTransactionPercent(
             this.baseValue,
-            purchasePrice.getInitialPurchasePrice()
+            purchaseTxn.getInitialPurchasePrice()
         );
-    };
+    }
+
 
     toDTO(purchaseTxn: PurchasePrice): TxnDTO {
         const txnAmount = this.getAmount(purchaseTxn);

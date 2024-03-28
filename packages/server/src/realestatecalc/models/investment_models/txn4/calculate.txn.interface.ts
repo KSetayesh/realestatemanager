@@ -1,22 +1,22 @@
 import { ValueInput, ValueRateInput } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { PurchasePrice } from "./purchase.price";
-import { TransactionKey } from "./calc/calculate";
-import { CalcHelper } from "./calc.helper";
+import { TransactionKey, TransactionType } from "./calc/calculate";
 
 export type TxnDTO = {
     key: TransactionKey,
     amount: number,
     percentage: number,
     rateOfGrowth?: number,
-    canBeCumulated?: number,
+    cumulatedAmount?: number,
 };
 
 export interface CalculateTxnInterface<T extends ValueInput, Z extends RentEstimate | PurchasePrice> {
     baseValue: T;
+    txnType: TransactionType;
     txnKey: TransactionKey;
-    canBeCumulated: boolean;
     rateOfGrowth?: ValueRateInput;
+    cumulatedAmount?: number;
 
     getAmount(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number): number;
 
