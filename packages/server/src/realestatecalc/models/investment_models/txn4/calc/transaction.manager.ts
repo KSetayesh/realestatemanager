@@ -147,11 +147,11 @@ export class TransactionManager {
     }
 
     private getTotalIncomeStreams(rentEstimate: RentEstimate, yearCounter: number): number {
-        let totalAmount = 0;
+        let totalAmount = rentEstimate.getFutureDatedRentalAmount(yearCounter);
         this.incomeMap.forEach((income: Income) => {
             totalAmount += income.getAmount(rentEstimate, yearCounter);
         });
-        return totalAmount + rentEstimate.getFutureDatedRentalAmount(yearCounter);
+        return totalAmount;
     }
 
     private getTotalRecurringOperationalCosts(rentEstimate: RentEstimate, yearCounter: number): number {

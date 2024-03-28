@@ -1,10 +1,6 @@
 import { PurchasePrice } from "../purchase.price";
 import { RentEstimate } from "../rent.estimate";
-import { CalculateTxnInterface, TxnDTO } from "../calculate.txn.interface";
-import { RecurringFixedCost } from "../recurring.fixed.cost";
-import { Income } from "../income";
-import { InitialCost } from "../initial.cost";
-import { RecurringOperationalCost } from "../recurring.operational.cost";
+import { TransactionManager } from "./transaction.manager";
 
 export enum TransactionType {
     INITIAL_EXPENSE = 'Initial Expense',
@@ -51,58 +47,65 @@ export enum TransactionKey {
 
 export class Calculate {
 
+    private transactionManager: TransactionManager;
+
     // Financing
     private purchasePrice: PurchasePrice;
 
-    // Fixed Recurring Expenses
-    private monthlyHOAFeesAmount: RecurringFixedCost;
-    private monthlyHomeInsuranceAmount: RecurringFixedCost;
-    private monthlyPropertyTax: RecurringFixedCost;
+    private rentalEstimate: RentEstimate;
 
-    // Income Streams
-    private rentEstimate: RentEstimate;
-    private storageUnitFees: Income;
-    private parkingFee: Income;
-    private laundryService: Income;
-    private otherAdditionalIncomeStreams: Income;
+    // // Fixed Recurring Expenses
+    // private monthlyHOAFeesAmount: RecurringFixedCost;
+    // private monthlyHomeInsuranceAmount: RecurringFixedCost;
+    // private monthlyPropertyTax: RecurringFixedCost;
 
-    // Initial Expenses
-    private downPayment: InitialCost;
-    private closingCosts: InitialCost;
-    private initialRepairCosts: InitialCost;
-    private legalAndProfessionalFees: InitialCost;
-    private travelingCosts: InitialCost;
-    private otherInitialExpenses: InitialCost;
+    // // Income Streams
+    // private rentEstimate: RentEstimate;
+    // private storageUnitFees: Income;
+    // private parkingFee: Income;
+    // private laundryService: Income;
+    // private otherAdditionalIncomeStreams: Income;
 
-    // Recurring Operational Expenses
-    private capExReserveRate: RecurringOperationalCost;
-    private maintenanceRate: RecurringOperationalCost;
-    private otherExpenseRate: RecurringOperationalCost;
-    private propertyManagementRate: RecurringOperationalCost;
-    private vacancyRate: RecurringOperationalCost;
+    // // Initial Expenses
+    // private downPayment: InitialCost;
+    // private closingCosts: InitialCost;
+    // private initialRepairCosts: InitialCost;
+    // private legalAndProfessionalFees: InitialCost;
+    // private travelingCosts: InitialCost;
+    // private otherInitialExpenses: InitialCost;
+
+    // // Recurring Operational Expenses
+    // private capExReserveRate: RecurringOperationalCost;
+    // private maintenanceRate: RecurringOperationalCost;
+    // private otherExpenseRate: RecurringOperationalCost;
+    // private propertyManagementRate: RecurringOperationalCost;
+    // private vacancyRate: RecurringOperationalCost;
 
 
-    private recurringFixedCostMap: Map<TransactionKey, RecurringFixedCost>;
-    private incomeMap: Map<TransactionKey, Income>;
-    private initialExpenseMap: Map<TransactionKey, InitialCost>;
-    private recurringOperationalCostMap: Map<TransactionKey, RecurringOperationalCost>;
+    // private recurringFixedCostMap: Map<TransactionKey, RecurringFixedCost>;
+    // private incomeMap: Map<TransactionKey, Income>;
+    // private initialExpenseMap: Map<TransactionKey, InitialCost>;
+    // private recurringOperationalCostMap: Map<TransactionKey, RecurringOperationalCost>;
 
     constructor(
-        recurringFixedCostMap: Map<TransactionKey, RecurringFixedCost>,
-        incomeMap: Map<TransactionKey, Income>,
-        initialExpenseMap: Map<TransactionKey, InitialCost>,
-        recurringOperationalCostMap: Map<TransactionKey, RecurringOperationalCost>,
+        transactionManager: TransactionManager,
+        purchasePrice: PurchasePrice,
+        rentalEstimate: RentEstimate,
     ) {
-        this.recurringFixedCostMap = recurringFixedCostMap;
-        this.incomeMap = incomeMap;
-        this.initialExpenseMap = initialExpenseMap;
-        this.recurringOperationalCostMap = recurringOperationalCostMap;
+        this.transactionManager = transactionManager;
+        this.purchasePrice = purchasePrice;
+        this.rentalEstimate = rentalEstimate;
     }
 
-    build(monthCounter: number = 0) {
+    createInvestmentMetrics(monthCounter: number = 0) {
         const initialValues = this.getInitialValues();
-        const ammortizationYearData = this.getAmortizationYearData(monthCounter);
+        const ammortizationYearData = this.getMonthlyTransactionData(monthCounter);
     }
+
+    // build(monthCounter: number = 0) {
+    //     const initialValues = this.getInitialValues();
+    //     const ammortizationYearData = this.getMonthlyTransactionData(monthCounter);
+    // }
 
     private getInitialValues() {
         return {
@@ -120,69 +123,33 @@ export class Calculate {
                     [TransactionKey.MORTGAGE]: {},
                 },
             },
-            [TransactionType.INITIAL_EXPENSE]: {
-                type: TransactionType.INITIAL_EXPENSE,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.DOWN_PAYMENT]: this.getDownPaymentDTO(),
-                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFeesDTO(),
-                    [TransactionKey.INITIAL_REPAIR_COST]: this.getInitialRepairCostsDTO(),
-                    [TransactionKey.CLOSING_COST]: this.getClosingCostsDTO(),
-                    [TransactionKey.TRAVELING_COST]: this.getTravelingCostsDTO(),
-                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpensesDTO(),
-                },
-            },
+            [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
         };
     }
 
-    getAmortizationYearData(monthCounter: number): any { //AmortizationYearData {
+    getMonthlyTransactionData(monthCounter: number): any { //AmortizationYearData {
         const yearCounter = this.getYear(monthCounter);
         return {
-            [TransactionType.FINANCING]: {
-                type: TransactionType.FINANCING,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(), //come back to this
-                },
-            },
-            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
-                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementRateDTO(yearCounter),
-                    [TransactionKey.VACANCY_EXPENSE]: this.getVacancyRateDTO(yearCounter),
-                    [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceRateDTO(yearCounter),
-                    [TransactionKey.OTHER_EXPENSES]: this.getOtherExpenseRateDTO(yearCounter),
-                    [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveRateDTO(yearCounter),
-                },
-            },
-            [TransactionType.INCOME_STREAMS]: {
-                type: TransactionType.INCOME_STREAMS,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.RENTAL_INCOME]: this.getRentEstimateDTO().toDTO(), // come back to this
-                    [TransactionKey.PARKING_FEES]: this.getParkingFeeDTO(yearCounter),
-                    [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryServiceDTO(yearCounter),
-                    [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFeesDTO(yearCounter),
-                    [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreamsDTO(yearCounter),
-                },
-            },
-            [TransactionType.FIXED_RECURRING_EXPENSE]: {
-                type: TransactionType.FIXED_RECURRING_EXPENSE,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.PROPERTY_TAX]: this.getMonthlyPropertyTaxDTO(yearCounter),
-                    [TransactionKey.HOA_FEE]: this.getMonthlyHOAFeesAmountDTO(yearCounter),
-                    [TransactionKey.HOME_INSURANCE]: this.getMonthlyHomeInsuranceAmountDTO(yearCounter),
-                },
-            },
-            [TransactionType.MORTGAGE]: {
-                type: TransactionType.MORTGAGE,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.MORTGAGE]: {},
-                },
-            },
+            // [TransactionType.FINANCING]: {
+            //     type: TransactionType.FINANCING,
+            //     totalAmount: 0,
+            //     breakdown: {
+            //         [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(), //come back to this
+            //     },
+            // },
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, yearCounter),
+            [TransactionType.INCOME_STREAMS]:
+                this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, yearCounter),
+            [TransactionType.FIXED_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, yearCounter),
+            // [TransactionType.MORTGAGE]: {
+            //     type: TransactionType.MORTGAGE,
+            //     totalAmount: 0,
+            //     breakdown: {
+            //         [TransactionKey.MORTGAGE]: {},
+            //     },
+            // },
         };
 
     }
@@ -191,86 +158,6 @@ export class Calculate {
         return Math.floor((monthCounter - 1) / 12) + 1;
     }
 
-    // Fixed Recurring Expenses
-    private getMonthlyHOAFeesAmountDTO(numberOfYears: number): TxnDTO {
-        return this.monthlyHOAFeesAmount.toDTO(this.rentEstimate, numberOfYears);
-    }
 
-    private getMonthlyHomeInsuranceAmountDTO(numberOfYears: number): TxnDTO {
-        return this.monthlyHomeInsuranceAmount.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getMonthlyPropertyTaxDTO(numberOfYears: number): TxnDTO {
-        return this.monthlyPropertyTax.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    // Income Streams
-
-    // come back this
-    private getRentEstimateDTO(): any {
-        return this.rentEstimate.toDTO();
-    }
-
-    private getStorageUnitFeesDTO(numberOfYears: number): TxnDTO {
-        return this.storageUnitFees.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getParkingFeeDTO(numberOfYears: number): TxnDTO {
-        return this.parkingFee.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getLaundryServiceDTO(numberOfYears: number): TxnDTO {
-        return this.laundryService.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getOtherAdditionalIncomeStreamsDTO(numberOfYears: number): TxnDTO {
-        return this.otherAdditionalIncomeStreams.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    // Initial Expenses
-    private getDownPaymentDTO(): TxnDTO {
-        return this.downPayment.toDTO(this.purchasePrice);
-    }
-
-    private getClosingCostsDTO(): TxnDTO {
-        return this.closingCosts.toDTO(this.purchasePrice);
-    }
-
-    private getInitialRepairCostsDTO(): TxnDTO {
-        return this.initialRepairCosts.toDTO(this.purchasePrice);
-    }
-
-    private getLegalAndProfessionalFeesDTO(): TxnDTO {
-        return this.legalAndProfessionalFees.toDTO(this.purchasePrice);
-    }
-
-    private getTravelingCostsDTO(): TxnDTO {
-        return this.travelingCosts.toDTO(this.purchasePrice);
-    }
-
-    private getOtherInitialExpensesDTO(): TxnDTO {
-        return this.otherInitialExpenses.toDTO(this.purchasePrice);
-    }
-
-    // Recurring Operational Expenses
-    private getCapExReserveRateDTO(numberOfYears: number): TxnDTO {
-        return this.capExReserveRate.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getMaintenanceRateDTO(numberOfYears: number): TxnDTO {
-        return this.maintenanceRate.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getOtherExpenseRateDTO(numberOfYears: number): TxnDTO {
-        return this.otherExpenseRate.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getPropertyManagementRateDTO(numberOfYears: number): TxnDTO {
-        return this.propertyManagementRate.toDTO(this.rentEstimate, numberOfYears);
-    }
-
-    private getVacancyRateDTO(numberOfYears: number): TxnDTO {
-        return this.vacancyRate.toDTO(this.rentEstimate, numberOfYears);
-    }
 
 }
