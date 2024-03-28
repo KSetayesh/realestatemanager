@@ -19,6 +19,7 @@ import { StorageUnitFees } from "../storage.unit.fees";
 import { TravelingCosts } from "../traveling.costs";
 import { VacancyRate } from "../vacancy.rate";
 import { DownPayment } from "../downpayment";
+import { TxnDTO } from "../calculate.txn.interface";
 
 export enum TransactionType {
     INITIAL_EXPENSE = 'Initial Expense',
@@ -96,9 +97,8 @@ export class Calculate {
     private vacancyRate: VacancyRate;
 
     build(monthCounter: number = 0) {
-        const yearCounter = this.getYear(monthCounter);
-        const result = this.getInitialValues();
-
+        const initialValues = this.getInitialValues();
+        const ammortizationYearData = this.getAmortizationYearData(monthCounter);
     }
 
     private getInitialValues() {
@@ -121,19 +121,153 @@ export class Calculate {
                 type: TransactionType.INITIAL_EXPENSE,
                 totalAmount: 0,
                 breakdown: {
-                    [TransactionKey.DOWN_PAYMENT]: this.downPayment.toDTO(this.purchasePrice),
-                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.legalAndProfessionalFees.toDTO(this.purchasePrice),
-                    [TransactionKey.INITIAL_REPAIR_COST]: this.initialRepairCosts.toDTO(this.purchasePrice),
-                    [TransactionKey.CLOSING_COST]: this.closingCosts.toDTO(this.purchasePrice),
-                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.otherInitialExpenses.toDTO(this.purchasePrice),
+                    [TransactionKey.DOWN_PAYMENT]: this.getDownPaymentDTO(),
+                    [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFeesDTO(),
+                    [TransactionKey.INITIAL_REPAIR_COST]: this.getInitialRepairCostsDTO(),
+                    [TransactionKey.CLOSING_COST]: this.getClosingCostsDTO(),
+                    [TransactionKey.TRAVELING_COST]: this.getTravelingCostsDTO(),
+                    [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInitialExpensesDTO(),
                 },
             },
         };
+    }
+
+    getAmortizationYearData(monthCounter: number): any { //AmortizationYearData {
+        const yearCounter = this.getYear(monthCounter);
+        return {
+            [TransactionType.FINANCING]: {
+                type: TransactionType.FINANCING,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(), //come back to this
+                },
+            },
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: {
+                type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: this.getPropertyManagementRateDTO(yearCounter, 0),
+                    [TransactionKey.VACANCY_EXPENSE]: this.getVacancyRateDTO(yearCounter, 0),
+                    [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceRateDTO(yearCounter, 0),
+                    [TransactionKey.OTHER_EXPENSES]: this.getOtherExpenseRateDTO(yearCounter, 0),
+                    [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveRateDTO(yearCounter, 0),
+                },
+            },
+            [TransactionType.INCOME_STREAMS]: {
+                type: TransactionType.INCOME_STREAMS,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.RENTAL_INCOME]: this.getRentEstimateDTO().toDTO(), // come back to this
+                    [TransactionKey.PARKING_FEES]: this.getParkingFeeDTO(yearCounter, 0),
+                    [TransactionKey.LAUNDRY_SERVICES]: this.getLaundryServiceDTO(yearCounter, 0),
+                    [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFeesDTO(yearCounter, 0),
+                    [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: this.getOtherAdditionalIncomeStreamsDTO(yearCounter, 0),
+                },
+            },
+            [TransactionType.FIXED_RECURRING_EXPENSE]: {
+                type: TransactionType.FIXED_RECURRING_EXPENSE,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.PROPERTY_TAX]: this.getMonthlyPropertyTaxDTO(yearCounter, 0),
+                    [TransactionKey.HOA_FEE]: this.getMonthlyHOAFeesAmountDTO(yearCounter, 0),
+                    [TransactionKey.HOME_INSURANCE]: this.getMonthlyHomeInsuranceAmountDTO(yearCounter, 0),
+                },
+            },
+            [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.MORTGAGE]: {},
+                },
+            },
+        };
+
     }
 
     private getYear(monthCounter: number): number {
         return Math.floor((monthCounter - 1) / 12) + 1;
     }
 
+    // Fixed Recurring Expenses
+    private getMonthlyHOAFeesAmountDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.monthlyHOAFeesAmount.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getMonthlyHomeInsuranceAmountDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.monthlyHomeInsuranceAmount.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getMonthlyPropertyTaxDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.monthlyPropertyTax.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    // Income Streams
+
+    // come back this
+    private getRentEstimateDTO(): any {
+        return this.rentEstimate.toDTO();
+    }
+
+    private getStorageUnitFeesDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.storageUnitFees.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getParkingFeeDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.parkingFee.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getLaundryServiceDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.laundryService.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getOtherAdditionalIncomeStreamsDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.otherAdditionalIncomeStreams.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    // Initial Expenses
+    private getDownPaymentDTO(): TxnDTO {
+        return this.downPayment.toDTO(this.purchasePrice);
+    }
+
+    private getClosingCostsDTO(): TxnDTO {
+        return this.closingCosts.toDTO(this.purchasePrice);
+    }
+
+    private getInitialRepairCostsDTO(): TxnDTO {
+        return this.initialRepairCosts.toDTO(this.purchasePrice);
+    }
+
+    private getLegalAndProfessionalFeesDTO(): TxnDTO {
+        return this.legalAndProfessionalFees.toDTO(this.purchasePrice);
+    }
+
+    private getTravelingCostsDTO(): TxnDTO {
+        return this.travelingCosts.toDTO(this.purchasePrice);
+    }
+
+    private getOtherInitialExpensesDTO(): TxnDTO {
+        return this.otherInitialExpenses.toDTO(this.purchasePrice);
+    }
+
+    // Recurring Operational Expenses
+    private getCapExReserveRateDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.capExReserveRate.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getMaintenanceRateDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.maintenanceRate.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getOtherExpenseRateDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.otherExpenseRate.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getPropertyManagementRateDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.propertyManagementRate.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
+
+    private getVacancyRateDTO(numberOfYears: number, previousTotalAmount: number): TxnDTO {
+        return this.vacancyRate.toDTO(this.rentEstimate, numberOfYears, previousTotalAmount);
+    }
 
 }
