@@ -18,42 +18,51 @@ import { StorageUnitFees } from "../storage.unit.fees";
 import { TravelingCosts } from "../traveling.costs";
 import { VacancyRate } from "../vacancy.rate";
 
-// export enum TransactionKey {
-//     // LOAN_AMOUNT = 'Loan Amount',
-//     PURCHASE_PRICE = 'Purchase Price',
+export enum TransactionType {
+    INITIAL_EXPENSE = 'Initial Expense',
+    FIXED_RECURRING_EXPENSE = 'Fixed Recurring Expense',
+    OPERATIONAL_RECURRING_EXPENSE = 'Operational Recurring Expense',
+    INCOME_STREAMS = 'Income Streams',
+    FINANCING = 'Financing',
+    MORTGAGE = 'Mortgage',
+};
 
-//     MORTGAGE = 'Mortgage',
-//     // MORTGAGE_INTEREST = 'Mortgage Interest',
-//     // MORTGAGE_PRINCIPAL = 'Mortgage Principal',
-//     // MORTGAGE_AMOUNT = 'Mortgage Amount',
-//     // PMI = 'PMI',
+export enum TransactionKey {
+    // LOAN_AMOUNT = 'Loan Amount',
+    PURCHASE_PRICE = 'Purchase Price',
 
-//     PROPERTY_TAX = 'Property Tax',
-//     HOA_FEE = 'Monthly HOA Fee',
-//     HOME_INSURANCE = 'Monthly Home Insurance',
+    MORTGAGE = 'Mortgage',
+    // MORTGAGE_INTEREST = 'Mortgage Interest',
+    // MORTGAGE_PRINCIPAL = 'Mortgage Principal',
+    // MORTGAGE_AMOUNT = 'Mortgage Amount',
+    // PMI = 'PMI',
 
-//     RENTAL_INCOME = 'Rental Income',
-//     PARKING_FEES = 'Parking Fees',
-//     LAUNDRY_SERVICES = 'Laundry Service',
-//     STORAGE_UNIT_FEES = 'Storage Unit Fees',
-//     OTHER_ADDITIONAL_INCOME_STREAMS = 'Other Additional Incomes Streams',
+    PROPERTY_TAX = 'Property Tax',
+    HOA_FEE = 'Monthly HOA Fee',
+    HOME_INSURANCE = 'Monthly Home Insurance',
 
-//     PROPERTY_MANAGEMENT_EXPENSE = 'Property Management Expense',
-//     VACANCY_EXPENSE = 'Vacancy Expense',
-//     MAINTENANCE_EXPENSE = 'Maintenance Expense',
-//     OTHER_EXPENSES = 'Other Expeneses',
-//     CAP_EX_RESERVE_EXPENSE = 'Cap Ex Reserve Expense',
+    RENTAL_INCOME = 'Rental Income',
+    PARKING_FEES = 'Parking Fees',
+    LAUNDRY_SERVICES = 'Laundry Service',
+    STORAGE_UNIT_FEES = 'Storage Unit Fees',
+    OTHER_ADDITIONAL_INCOME_STREAMS = 'Other Additional Incomes Streams',
 
-//     DOWN_PAYMENT = 'Down Payment',
-//     LEGAL_AND_PROFESSIONAL_FEES = 'Legal And Professional Fees',
-//     INITIAL_REPAIR_COST = 'Initial Repair Costs',
-//     CLOSING_COST = 'Closing Costs',
-//     TRAVELING_COST = 'Traveling Costs',
-//     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
-// };
+    PROPERTY_MANAGEMENT_EXPENSE = 'Property Management Expense',
+    VACANCY_EXPENSE = 'Vacancy Expense',
+    MAINTENANCE_EXPENSE = 'Maintenance Expense',
+    OTHER_EXPENSES = 'Other Expeneses',
+    CAP_EX_RESERVE_EXPENSE = 'Cap Ex Reserve Expense',
+
+    DOWN_PAYMENT = 'Down Payment',
+    LEGAL_AND_PROFESSIONAL_FEES = 'Legal And Professional Fees',
+    INITIAL_REPAIR_COST = 'Initial Repair Costs',
+    CLOSING_COST = 'Closing Costs',
+    TRAVELING_COST = 'Traveling Costs',
+    OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
+};
 
 export class Calculate {
-    
+
     // Financing
     private purchasePrice: PurchasePrice;
 

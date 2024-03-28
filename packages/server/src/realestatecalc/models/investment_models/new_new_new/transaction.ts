@@ -224,7 +224,6 @@ export class MortgageTransaction extends Transaction<MortgageCalculator> {
 
     }
 
-
     createBaseTransactionDetail(
         txnList: [],
         numberOfYears: number = 0,

@@ -1,13 +1,15 @@
-import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { Transaction } from "./transaction";
+import { Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
 import { RentEstimate } from "./rent.estimate";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { TransactionKey } from "./calc/calculate";
 
 export class LaundryService implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
+    private _txnKey: TransactionKey.LAUNDRY_SERVICES;
+    private _canBeCumulated: boolean = true;
 
     constructor(laundryServiceFee: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._baseValue = laundryServiceFee;
@@ -20,6 +22,14 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
 
     get rateOfGrowth(): ValueRateInput {
         return this._rateOfGrowth;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get canBeCumulated(): boolean {
+        return this._canBeCumulated;
     }
 
     getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
@@ -51,7 +61,17 @@ export class LaundryService implements CalculateTxnInterface<ValueAmountInput, R
 
     }
 
-    toDTO() {
+    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): any {
+        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+        const cumulativeAmount = txnAmount + previousTotalAmount;
 
+        return {
+            key: this.txnKey,
+            amount: Utility.round(txnAmount),
+            percentage: Utility.round(this.getRate(rentalTxn, numberOfYears)),
+            rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
+            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
+        };
     }
+
 }

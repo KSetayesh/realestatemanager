@@ -1,24 +1,56 @@
-import { ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { Transaction } from "./transaction";
+import { Utility, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
+import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { TransactionKey } from "./calc/calculate";
 
-export class MonthlyHomeInsuranceAmount implements Transaction {
-    private monthlyHomeInsuranceAmount: ValueInput;
-    private expectedGrowthRate: ValueRateInput;
+export class MonthlyHomeInsuranceAmount implements CalculateTxnInterface<ValueInput, RentEstimate> {
+    private _baseValue: ValueInput;
+    private _rateOfGrowth: ValueRateInput;
+    private _txnKey: TransactionKey.HOME_INSURANCE;
+    private _canBeCumulated: boolean = true;
 
-    getMonthlyHomeInsuranceAmount(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
+    constructor(monthlyHomeInsuranceAmount: ValueInput, expectedGrowthRate: ValueRateInput) {
+        this._baseValue = monthlyHomeInsuranceAmount;
+        this._rateOfGrowth = expectedGrowthRate;
+    }
+
+    get baseValue(): ValueInput {
+        return this._baseValue;
+    }
+
+    get rateOfGrowth(): ValueRateInput {
+        return this._rateOfGrowth;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get canBeCumulated(): boolean {
+        return this._canBeCumulated;
+    }
+
+    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+        return this.getMonthlyHomeInsuranceAmount(rentalTxn, numberOfYears);
+    }
+
+    getRate(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+        return this.getmonthlyHomeInsurancePercentage(rentalTxn, numberOfYears);
+    }
+
+    private getMonthlyHomeInsuranceAmount(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
         const calcHelper: CalcHelper = new CalcHelper();
 
         const monthlyHomeInsuranceAmount = calcHelper.getTransactionAmount(
-            this.monthlyHomeInsuranceAmount,
+            this.baseValue,
             rentalAmount.getInitialRentalAmount()
         );
 
-        return calcHelper.getFutureDatedAmount(monthlyHomeInsuranceAmount, this.expectedGrowthRate.rate, numberOfYears);
+        return calcHelper.getFutureDatedAmount(monthlyHomeInsuranceAmount, this.rateOfGrowth.rate, numberOfYears);
     }
 
-    getmonthlyHomeInsurancePercentage(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
+    private getmonthlyHomeInsurancePercentage(rentalAmount: RentEstimate, numberOfYears: number = 0): number {
         const futureDatedRentalAmount = rentalAmount.getFutureDatedRentalAmount(numberOfYears);
         const futureDatedMonthlyHomeInsuranceAmount = this.getMonthlyHomeInsuranceAmount(rentalAmount, numberOfYears);
         return new CalcHelper().getTransactionPercent(
@@ -30,7 +62,16 @@ export class MonthlyHomeInsuranceAmount implements Transaction {
         );
     }
 
-    toDTO() {
+    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): any {
+        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+        const cumulativeAmount = txnAmount + previousTotalAmount;
 
+        return {
+            key: this.txnKey,
+            amount: Utility.round(txnAmount),
+            rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
+            percentage: Utility.round(this.getRate(rentalTxn, numberOfYears)),
+            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
+        };
     }
 }

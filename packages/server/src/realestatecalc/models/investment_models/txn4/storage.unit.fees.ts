@@ -1,21 +1,53 @@
-import { ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { Transaction } from "./transaction";
+import { Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
 import { RentEstimate } from "./rent.estimate";
+import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { TransactionKey } from "./calc/calculate";
 
-export class StorageUnitFees implements Transaction {
-    private storageUnitFees: ValueAmountInput;
-    private expectedGrowthRate: ValueRateInput;
+export class StorageUnitFees implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
+    private _baseValue: ValueAmountInput;
+    private _rateOfGrowth: ValueRateInput;
+    private _txnKey: TransactionKey.STORAGE_UNIT_FEES;
+    private _canBeCumulated: boolean = true;
 
-    getStorageUnitFeesAmount(numberOfYears: number = 0): number {
+    constructor(storageUnitFees: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
+        this._baseValue = storageUnitFees;
+        this._rateOfGrowth = expectedGrowthRate;
+    }
+
+    get baseValue(): ValueAmountInput {
+        return this._baseValue;
+    }
+
+    get rateOfGrowth(): ValueRateInput {
+        return this._rateOfGrowth;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get canBeCumulated(): boolean {
+        return this._canBeCumulated;
+    }
+
+    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+        return this.getStorageUnitFeesAmount(numberOfYears);
+    }
+
+    getRate(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+        return this.getStorageUnitFeesPercentage(rentalTxn, numberOfYears);
+    }
+
+    private getStorageUnitFeesAmount(numberOfYears: number = 0): number {
         return new CalcHelper().getFutureDatedAmount(
-            this.storageUnitFees.amount,
-            this.expectedGrowthRate.rate,
+            this.baseValue.amount,
+            this.rateOfGrowth.rate,
             numberOfYears
         );
     }
 
-    getStorageUnitFeesPercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
+    private getStorageUnitFeesPercentage(initialRentalEstimate: RentEstimate, numberOfYears: number = 0): number {
         const calcHelper = new CalcHelper();
         const futureDatedRentalAmount = initialRentalEstimate.getFutureDatedRentalAmount(numberOfYears);
 
@@ -28,7 +60,16 @@ export class StorageUnitFees implements Transaction {
 
     }
 
-    toDTO() {
+    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): any {
+        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+        const cumulativeAmount = txnAmount + previousTotalAmount;
 
+        return {
+            key: this.txnKey,
+            amount: Utility.round(txnAmount),
+            percentage: Utility.round(this.getRate(rentalTxn, numberOfYears)),
+            rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
+            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
+        };
     }
 }

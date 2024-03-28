@@ -1,8 +1,7 @@
 import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
-import { Transaction } from "./transaction";
 import { CalcHelper } from "./calc.helper";
 
-export class RentEstimate implements Transaction {
+export class RentEstimate {
     private rentEstimate: ValueAmountInput;
     private expectedGrowthRate: ValueRateInput;
 

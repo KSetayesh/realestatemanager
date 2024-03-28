@@ -1,11 +1,14 @@
-import { ValueRateInput } from "@realestatemanager/shared";
+import { Utility, ValueRateInput } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
+import { TransactionKey } from "./calc/calculate";
 
 export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
 
     private _baseValue: ValueRateInput;
+    private _txnKey: TransactionKey.CAP_EX_RESERVE_EXPENSE;
+    private _canBeCumulated: boolean = true;
     // rateOfGrowth implementation omitted for brevity
 
     constructor(capExReserveRate: ValueRateInput) {
@@ -16,7 +19,15 @@ export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, R
         return this._baseValue;
     }
 
-    getAmount(rentalTxn: RentEstimate, numberOfYears?: number): number {
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get canBeCumulated(): boolean {
+        return this._canBeCumulated;
+    }
+
+    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
         return this.getCapExReserveAmount(rentalTxn, numberOfYears);
     }
 
@@ -37,8 +48,16 @@ export class CapExReserveRate implements CalculateTxnInterface<ValueRateInput, R
         return this.baseValue.rate;
     }
 
-    toDTO() {
+    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0, previousTotalAmount: number = 0): any {
+        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+        const cumulativeAmount = txnAmount + previousTotalAmount;
 
+        return {
+            key: this.txnKey,
+            amount: Utility.round(txnAmount),
+            percentage: Utility.round(this.getRate()),
+            ...(this.canBeCumulated && { cumulativeAmount: Utility.round(cumulativeAmount) }),
+        };
     }
 
 }
