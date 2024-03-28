@@ -1,6 +1,6 @@
 import { PurchasePrice } from "../purchase.price";
 import { RentEstimate } from "../rent.estimate";
-import { TxnDTO } from "../calculate.txn.interface";
+import { CalculateTxnInterface, TxnDTO } from "../calculate.txn.interface";
 import { RecurringFixedCost } from "../recurring.fixed.cost";
 import { Income } from "../income";
 import { InitialCost } from "../initial.cost";
@@ -80,6 +80,24 @@ export class Calculate {
     private otherExpenseRate: RecurringOperationalCost;
     private propertyManagementRate: RecurringOperationalCost;
     private vacancyRate: RecurringOperationalCost;
+
+
+    private recurringFixedCostMap: Map<TransactionKey, RecurringFixedCost>;
+    private incomeMap: Map<TransactionKey, Income>;
+    private initialExpenseMap: Map<TransactionKey, InitialCost>;
+    private recurringOperationalCostMap: Map<TransactionKey, RecurringOperationalCost>;
+
+    constructor(
+        recurringFixedCostMap: Map<TransactionKey, RecurringFixedCost>,
+        incomeMap: Map<TransactionKey, Income>,
+        initialExpenseMap: Map<TransactionKey, InitialCost>,
+        recurringOperationalCostMap: Map<TransactionKey, RecurringOperationalCost>,
+    ) {
+        this.recurringFixedCostMap = recurringFixedCostMap;
+        this.incomeMap = incomeMap;
+        this.initialExpenseMap = initialExpenseMap;
+        this.recurringOperationalCostMap = recurringOperationalCostMap;
+    }
 
     build(monthCounter: number = 0) {
         const initialValues = this.getInitialValues();
