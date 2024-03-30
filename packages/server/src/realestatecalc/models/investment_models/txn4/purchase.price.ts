@@ -1,4 +1,4 @@
-import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
+import { Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
 import { TxnDTO } from "./calculate.txn.interface";
 import { TransactionKey, TransactionType } from "./calc/calculate";
@@ -55,9 +55,9 @@ export class PurchasePrice {
     toDTO(yearCounter: number = 0): TxnDTO {
         return {
             key: TransactionKey.PURCHASE_PRICE,
-            amount: this.getFutureDatedHomeValue(yearCounter),
+            amount: Utility.round(this.getFutureDatedHomeValue(yearCounter)),
             percentage: -1, // come back to this
-            rateOfGrowth: this.getExpectedAppreciationRate(),
+            rateOfGrowth: Utility.round(this.getExpectedAppreciationRate()),
         };
     }
 }

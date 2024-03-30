@@ -61,8 +61,8 @@ export class MortgageCalculator {
         return this.mortgageAmount;
     }
 
-    getRate(): ValueRateInput {
-        return this.annualInterestRate;
+    getRate(): number {
+        return this.annualInterestRate.rate;
     }
 
     getLoanAmount(): number {

@@ -34,3 +34,7 @@ export const getInterestTypeEnumValue = (input: string): InterestType => {
     throw new Error(`${input} does not match any enum values.`);
 };
 
+export const getYear = (monthCounter: number): number => {
+    return Math.floor((monthCounter - 1) / 12) + 1;
+};
+

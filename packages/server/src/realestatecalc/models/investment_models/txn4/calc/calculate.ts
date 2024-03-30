@@ -1,7 +1,9 @@
+import { Utility } from "@realestatemanager/shared";
 import { MortgageCalculator } from "../mortgage.calc";
 import { PurchasePrice } from "../purchase.price";
 import { RentEstimate } from "../rent.estimate";
 import { TransactionManager } from "./transaction.manager";
+import { getYear } from "src/shared/Constants";
 
 export enum TransactionType {
     INITIAL_EXPENSE = 'Initial Expense',
@@ -112,14 +114,14 @@ export class Calculate {
     //     const ammortizationYearData = this.getMonthlyTransactionData(monthCounter);
     // }
 
-    private getInitialValues() {
+    getInitialValues() {
         return {
             [TransactionType.FINANCING]: {
                 type: TransactionType.FINANCING,
                 totalAmount: 0,
                 breakdown: {
-                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.getInitialPurchasePrice(),
-                    [TransactionKey.LOAN_AMOUNT]: this.mortgageCalc.getLoanAmount(),
+                    [TransactionKey.PURCHASE_PRICE]: Utility.round(this.purchasePrice.getInitialPurchasePrice()),
+                    [TransactionKey.LOAN_AMOUNT]: Utility.round(this.mortgageCalc.getLoanAmount()),
 
                 },
             },
@@ -134,16 +136,16 @@ export class Calculate {
         };
     }
 
-    getMonthlyTransactionData(monthCounter: number): any { //AmortizationYearData {
-        const yearCounter = this.getYear(monthCounter);
+    private getMonthlyTransactionData(monthCounter: number): any { //AmortizationYearData {
+        const yearCounter = getYear(monthCounter);
         return {
 
             [TransactionType.FINANCING]: {
                 type: TransactionType.FINANCING,
                 totalAmount: 0,
                 breakdown: {
-                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.getFutureDatedHomeValue(yearCounter),
-                    [TransactionKey.LOAN_AMOUNT]: this.mortgageCalc.getLoanAmount(),
+                    [TransactionKey.PURCHASE_PRICE]: Utility.round(this.purchasePrice.getFutureDatedHomeValue(yearCounter)),
+                    [TransactionKey.LOAN_AMOUNT]: Utility.round(this.mortgageCalc.getLoanAmount()),
                 },
             },
 
@@ -158,27 +160,21 @@ export class Calculate {
 
             [TransactionType.MORTGAGE]: {
                 type: TransactionType.MORTGAGE,
-                mortgage: this.mortgageCalc.getAmount(),
+                mortgage: Utility.round(this.mortgageCalc.getAmount()),
                 breakdown: {
-                    annualInterestRate: this.mortgageCalc.getRate(),
-                    mortgageWithPMI: this.mortgageCalc.getMortgagePlusPMIAmount(monthCounter),
-                    pmiAmount: this.mortgageCalc.getPMIAmount(monthCounter),
-                    interestPaid: this.mortgageCalc.getInterestAmountForPayment(monthCounter),
-                    principalPaid: this.mortgageCalc.getPrincipalAmountForPayment(monthCounter),
-                    percentPaidInInterest: this.mortgageCalc.getPercentageOfInterest(monthCounter),
-                    percentPaidInPrincipal: this.mortgageCalc.getPercentageOfPrincipal(monthCounter),
-                    remainingLoanBalance: this.mortgageCalc.calculateBalanceAfterPayment(monthCounter),
+                    annualInterestRate: Utility.round(this.mortgageCalc.getRate()),
+                    mortgageWithPMI: Utility.round(this.mortgageCalc.getMortgagePlusPMIAmount(monthCounter)),
+                    pmiAmount: Utility.round(this.mortgageCalc.getPMIAmount(monthCounter)),
+                    interestPaid: Utility.round(this.mortgageCalc.getInterestAmountForPayment(monthCounter)),
+                    principalPaid: Utility.round(this.mortgageCalc.getPrincipalAmountForPayment(monthCounter)),
+                    percentPaidInInterest: Utility.round(this.mortgageCalc.getPercentageOfInterest(monthCounter)),
+                    percentPaidInPrincipal: Utility.round(this.mortgageCalc.getPercentageOfPrincipal(monthCounter)),
+                    remainingLoanBalance: Utility.round(this.mortgageCalc.calculateBalanceAfterPayment(monthCounter)),
                 },
             },
 
         };
 
     }
-
-    private getYear(monthCounter: number): number {
-        return Math.floor((monthCounter - 1) / 12) + 1;
-    }
-
-
 
 }

@@ -1,3 +1,4 @@
+import { Utility } from "@realestatemanager/shared";
 import { TxnDTO } from "../calculate.txn.interface";
 import { Income } from "../income";
 import { InitialCost } from "../initial.cost";
@@ -75,7 +76,7 @@ export class TransactionManager {
     getRecurringFixedExpensesDTO(rentEstimate: RentEstimate, yearCounter: number): RecurringFixedExpensesDTO {
         return {
             type: TransactionType.FIXED_RECURRING_EXPENSE,
-            totalAmount: this.getTotalAmountOfRecurringExpenses(rentEstimate, yearCounter),
+            totalAmount: Utility.round(this.getTotalAmountOfRecurringExpenses(rentEstimate, yearCounter)),
             breakdown: {
                 [TransactionKey.PROPERTY_TAX]: this.getMonthlyPropertyTaxDTO(rentEstimate, yearCounter),
                 [TransactionKey.HOA_FEE]: this.getMonthlyHOAFeesAmountDTO(rentEstimate, yearCounter),
@@ -87,7 +88,7 @@ export class TransactionManager {
     getInitialCostsDTO(purchasePrice: PurchasePrice): InitialCostsExpensesDTO {
         return {
             type: TransactionType.INITIAL_EXPENSE,
-            totalAmount: this.getTotalInitialCosts(purchasePrice),
+            totalAmount: Utility.round(this.getTotalInitialCosts(purchasePrice)),
             breakdown: {
                 [TransactionKey.DOWN_PAYMENT]: this.getDownPaymentDTO(purchasePrice),
                 [TransactionKey.CLOSING_COST]: this.getClosingCostsDTO(purchasePrice),
@@ -95,7 +96,6 @@ export class TransactionManager {
                 [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: this.getLegalAndProfessionalFeesDTO(purchasePrice),
                 [TransactionKey.TRAVELING_COST]: this.getTravelingCostsDTO(purchasePrice),
                 [TransactionKey.OTHER_INITIAL_EXPENSES]: this.getOtherInititalExpensesDTO(purchasePrice),
-
             },
         };
     }
@@ -103,7 +103,7 @@ export class TransactionManager {
     getIncomeStreamsDTO(rentEstimate: RentEstimate, yearCounter: number): IncomeStreamsDTO {
         return {
             type: TransactionType.INCOME_STREAMS,
-            totalAmount: this.getTotalIncomeStreams(rentEstimate, yearCounter),
+            totalAmount: Utility.round(this.getTotalIncomeStreams(rentEstimate, yearCounter)),
             breakdown: {
                 [TransactionKey.RENTAL_INCOME]: rentEstimate.toDTO(),
                 [TransactionKey.STORAGE_UNIT_FEES]: this.getStorageUnitFeesDTO(rentEstimate, yearCounter),
@@ -117,7 +117,7 @@ export class TransactionManager {
     getRecurringOperationalCostsDTO(rentEstimate: RentEstimate, yearCounter: number): RecurringOperationalCostsDTO {
         return {
             type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
-            totalAmount: this.getTotalRecurringOperationalCosts(rentEstimate, yearCounter),
+            totalAmount: Utility.round(this.getTotalRecurringOperationalCosts(rentEstimate, yearCounter)),
             breakdown: {
                 [TransactionKey.CAP_EX_RESERVE_EXPENSE]: this.getCapExReserveRateDTO(rentEstimate, yearCounter),
                 [TransactionKey.MAINTENANCE_EXPENSE]: this.getMaintenanceRateDTO(rentEstimate, yearCounter),
