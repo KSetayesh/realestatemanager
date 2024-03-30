@@ -1,3 +1,4 @@
+import { MortgageCalculator } from "../mortgage.calc";
 import { PurchasePrice } from "../purchase.price";
 import { RentEstimate } from "../rent.estimate";
 import { TransactionManager } from "./transaction.manager";
@@ -12,7 +13,7 @@ export enum TransactionType {
 };
 
 export enum TransactionKey {
-    // LOAN_AMOUNT = 'Loan Amount',
+    LOAN_AMOUNT = 'Loan Amount',
     PURCHASE_PRICE = 'Purchase Price',
 
     MORTGAGE = 'Mortgage',
@@ -48,11 +49,12 @@ export enum TransactionKey {
 export class Calculate {
 
     private transactionManager: TransactionManager;
+    private mortgageCalc: MortgageCalculator;
 
     // Financing
     private purchasePrice: PurchasePrice;
-
     private rentalEstimate: RentEstimate;
+
 
     // // Fixed Recurring Expenses
     // private monthlyHOAFeesAmount: RecurringFixedCost;
@@ -89,17 +91,20 @@ export class Calculate {
 
     constructor(
         transactionManager: TransactionManager,
+        mortgageCalc: MortgageCalculator,
         purchasePrice: PurchasePrice,
         rentalEstimate: RentEstimate,
     ) {
         this.transactionManager = transactionManager;
+        this.mortgageCalc = mortgageCalc;
         this.purchasePrice = purchasePrice;
         this.rentalEstimate = rentalEstimate;
     }
 
     createInvestmentMetrics(monthCounter: number = 0) {
-        const initialValues = this.getInitialValues();
-        const ammortizationYearData = this.getMonthlyTransactionData(monthCounter);
+
+        //const initialValues = this.getInitialValues();
+        return this.getMonthlyTransactionData(monthCounter);
     }
 
     // build(monthCounter: number = 0) {
@@ -114,35 +119,10 @@ export class Calculate {
                 totalAmount: 0,
                 breakdown: {
                     [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.getInitialPurchasePrice(),
-                },
-            },
-            [TransactionType.MORTGAGE]: {
-                type: TransactionType.MORTGAGE,
-                totalAmount: 0,
-                breakdown: {
-                    [TransactionKey.MORTGAGE]: {},
-                },
-            },
-            [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
-        };
-    }
+                    [TransactionKey.LOAN_AMOUNT]: this.mortgageCalc.getLoanAmount(),
 
-    getMonthlyTransactionData(monthCounter: number): any { //AmortizationYearData {
-        const yearCounter = this.getYear(monthCounter);
-        return {
-            // [TransactionType.FINANCING]: {
-            //     type: TransactionType.FINANCING,
-            //     totalAmount: 0,
-            //     breakdown: {
-            //         [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(), //come back to this
-            //     },
-            // },
-            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
-                this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, yearCounter),
-            [TransactionType.INCOME_STREAMS]:
-                this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, yearCounter),
-            [TransactionType.FIXED_RECURRING_EXPENSE]:
-                this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, yearCounter),
+                },
+            },
             // [TransactionType.MORTGAGE]: {
             //     type: TransactionType.MORTGAGE,
             //     totalAmount: 0,
@@ -150,6 +130,47 @@ export class Calculate {
             //         [TransactionKey.MORTGAGE]: {},
             //     },
             // },
+            [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
+        };
+    }
+
+    getMonthlyTransactionData(monthCounter: number): any { //AmortizationYearData {
+        const yearCounter = this.getYear(monthCounter);
+        return {
+
+            [TransactionType.FINANCING]: {
+                type: TransactionType.FINANCING,
+                totalAmount: 0,
+                breakdown: {
+                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.getFutureDatedHomeValue(yearCounter),
+                    [TransactionKey.LOAN_AMOUNT]: this.mortgageCalc.getLoanAmount(),
+                },
+            },
+
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, yearCounter),
+
+            [TransactionType.INCOME_STREAMS]:
+                this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, yearCounter),
+
+            [TransactionType.FIXED_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, yearCounter),
+
+            [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
+                mortgage: this.mortgageCalc.getAmount(),
+                breakdown: {
+                    annualInterestRate: this.mortgageCalc.getRate(),
+                    mortgageWithPMI: this.mortgageCalc.getMortgagePlusPMIAmount(monthCounter),
+                    pmiAmount: this.mortgageCalc.getPMIAmount(monthCounter),
+                    interestPaid: this.mortgageCalc.getInterestAmountForPayment(monthCounter),
+                    principalPaid: this.mortgageCalc.getPrincipalAmountForPayment(monthCounter),
+                    percentPaidInInterest: this.mortgageCalc.getPercentageOfInterest(monthCounter),
+                    percentPaidInPrincipal: this.mortgageCalc.getPercentageOfPrincipal(monthCounter),
+                    remainingLoanBalance: this.mortgageCalc.calculateBalanceAfterPayment(monthCounter),
+                },
+            },
+
         };
 
     }

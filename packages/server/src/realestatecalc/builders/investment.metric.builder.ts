@@ -19,10 +19,13 @@ import {
 } from "@realestatemanager/shared";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
-import { BaseTransaction, TransactionBreakdown } from "../models/investment_models/new_new_new/financial.transaction.breakdown";
-import { TransactionDetail, TransactionKey } from "../models/investment_models/new_new_new/transaction.detail";
-import { TransactionCalculator } from "../models/investment_models/new_calculators/transaction.calculator";
-import { InvestmentCalculator } from "../models/investment_models/new_new_new/new.investment.calculator";
+import { TransactionManager } from "../models/investment_models/txn4/calc/transaction.manager";
+import { MortgageCalculator } from "../models/investment_models/txn4/mortgage.calc";
+import { PurchasePrice } from "../models/investment_models/txn4/purchase.price";
+import { InitialCost } from "../models/investment_models/txn4/initial.cost";
+import { Calculate } from "../models/investment_models/txn4/calc/calculate";
+import { RentEstimate } from "../models/investment_models/txn4/rent.estimate";
+import { InvestmentCalculator } from "../models/investment_models/txn4/calc/investment.calculator";
 
 export class InvestmentMetricBuilder {
 
@@ -162,10 +165,38 @@ export class InvestmentMetricBuilder {
             otherInitialExpenses: otherInitialExpenses,
         });
 
-        const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();
-        const txnBreakdown: TransactionBreakdown<TransactionCalculator> = new TransactionBreakdown(txnMap);
-        const txnDetail: TransactionDetail = new TransactionDetail(txnBreakdown);
-        return new InvestmentCalculator(txnDetail);
+        const txnManager: TransactionManager = txnBuilder.build();
+
+        const purchasePriceObj: PurchasePrice = txnBuilder.purchasePrice;
+
+        const downPaymentObj: InitialCost = txnBuilder.downPayment;
+
+        const rentEstimateObj: RentEstimate = txnBuilder.rentEstimate;
+
+        const mortgageCalc: MortgageCalculator = new MortgageCalculator(
+            purchasePriceObj,
+            downPaymentObj,
+            termInYears,
+            interestType,
+            annualInterestRate,
+            pmiDropoffPoint,
+            pmiRate,
+        );
+
+        const calculate = new Calculate(
+            txnManager,
+            mortgageCalc,
+            purchasePriceObj,
+            rentEstimateObj,
+        );
+
+        return new InvestmentCalculator(calculate);
+
+
+        // const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();
+        // const txnBreakdown: TransactionBreakdown<TransactionCalculator> = new TransactionBreakdown(txnMap);
+        // const txnDetail: TransactionDetail = new TransactionDetail(txnBreakdown);
+        // return new InvestmentCalculator(txnDetail);
 
         // return new InvestmentCalculator(txnBreakdown);
         // const taxImplications: TaxImplications = new TaxImplications(

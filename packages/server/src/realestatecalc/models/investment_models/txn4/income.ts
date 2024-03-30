@@ -2,8 +2,7 @@ import { Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestat
 import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
-import { TransactionKey } from "../new_new_new/transaction.detail";
-import { TransactionType } from "./calc/calculate";
+import { TransactionKey, TransactionType } from "./calc/calculate";
 
 export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 
@@ -14,10 +13,10 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
     private _txnKey: TransactionKey;
     private _cumulatedAmount: number;
 
-    constructor(txnKey: TransactionKey, storageUnitFees: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
+    constructor(txnKey: TransactionKey, baseValue: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
         this._txnKey = txnKey;
         this._txnType = TransactionType.INCOME_STREAMS;
-        this._baseValue = storageUnitFees;
+        this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
         this.calcHelper = new CalcHelper();
         this._cumulatedAmount = 0;
@@ -66,7 +65,6 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
         return this.calcHelper.getTransactionPercent(income, futureDatedRentalAmount);
 
     }
-
 
     toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0): TxnDTO {
         const txnAmount = this.getAmount(rentalTxn, numberOfYears);

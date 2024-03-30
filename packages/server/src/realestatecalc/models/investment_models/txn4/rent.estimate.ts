@@ -2,10 +2,28 @@ import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
 import { TransactionKey } from "../new_new_new/transaction.detail";
 import { TxnDTO } from "./calculate.txn.interface";
+import { TransactionType } from "./calc/calculate";
 
 export class RentEstimate {
     private rentEstimate: ValueAmountInput;
     private expectedGrowthRate: ValueRateInput;
+    private _txnType: TransactionType;
+    private _txnKey: TransactionKey;
+
+    constructor(rentEstimate: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
+        this._txnType = TransactionType.INCOME_STREAMS;
+        this._txnKey = TransactionKey.RENTAL_INCOME;
+        this.rentEstimate = rentEstimate;
+        this.expectedGrowthRate = expectedGrowthRate;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get txnType(): TransactionType {
+        return this._txnType;
+    }
 
     getInitialRentalAmount(): number {
         return this.rentEstimate.amount;

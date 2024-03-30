@@ -1,0 +1,182 @@
+import { Injectable } from "@nestjs/common";
+import { InitialCost } from "./initial.cost";
+import {
+    DefaultInvestmentRates,
+    InterestType,
+    ValueInput,
+    ValueRateInput,
+    isValueAmountInput,
+    isValueRateInput
+} from "@realestatemanager/shared";
+import { PurchasePrice } from "./purchase.price";
+
+
+@Injectable()
+export class MortgageCalculator {
+
+    private purchasePrice: PurchasePrice;
+    private downPaymentTxn: InitialCost;
+    private loanTermYears: number;
+    private interestType: InterestType;
+    private annualInterestRate: ValueRateInput;
+    private pmiDropOffRatio: number; // Commonly 78% LTV ratio for PMI drop-off
+    private pmiValue: ValueInput;
+    private mortgageAmount: number;
+    // private pmiRate?: number; // Optional PMI rate as a percentage
+    // private pmiDropOffRatio: number = 0.78; // Commonly 78% LTV ratio for PMI drop-off
+
+    constructor(
+        purchasePrice: PurchasePrice,
+        downPaymentTxn: InitialCost,
+        loanTermYears: number,
+        interestType: InterestType,
+        annualInterestRate: ValueRateInput,
+        pmiDropOffRatio: number = DefaultInvestmentRates.PMI_DROP_OFF_POINT,
+        pmiValue: ValueInput) {
+
+        this.purchasePrice = purchasePrice;
+        this.downPaymentTxn = downPaymentTxn;
+        this.loanTermYears = loanTermYears;
+        this.interestType = interestType;
+        this.annualInterestRate = annualInterestRate;
+        this.pmiDropOffRatio = pmiDropOffRatio;
+        this.pmiValue = pmiValue;
+
+        const calculateMortgage = (): number => {
+            if (isValueRateInput(this.annualInterestRate)) {
+                const monthlyInterestRate = this.annualInterestRate.rate / 100 / 12;
+                const totalPayments = this.loanTermYears * 12;
+                const loanAmount = this.getLoanAmount();
+                const monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+
+                return monthlyPayment;
+            }
+            throw new Error('Cannot be amount for MortgageCalculator');
+        };
+        this.mortgageAmount = calculateMortgage();
+
+    }
+
+    getAmount(): number {
+        return this.mortgageAmount;
+    }
+
+    getRate(): ValueRateInput {
+        return this.annualInterestRate;
+    }
+
+    getLoanAmount(): number {
+        return this.purchasePrice.getInitialPurchasePrice() - this.downPaymentTxn.getAmount(this.purchasePrice);
+    }
+
+    getMortgagePlusPMIAmount(paymentNumber: number): number {
+        let mortgageAmount = this.getAmount();
+        if (this.hasPMI()) {
+            if (isValueAmountInput(this.pmiValue)) {
+                mortgageAmount += this.pmiValue.amount;
+            }
+            else if (isValueRateInput(this.pmiValue)) {
+                mortgageAmount += this.getPMIAmount(paymentNumber);
+            }
+        }
+        return mortgageAmount;
+    }
+
+    calculateBalanceAfterPayment(paymentNumber: number): number {
+        if (isValueRateInput(this.annualInterestRate)) {
+            const monthlyInterestRate = this.annualInterestRate.rate / 100 / 12;
+            const monthlyPayment = this.getAmount();
+            let balance = this.getLoanAmount();
+
+            for (let i = 1; i <= paymentNumber; i++) {
+                const interestForThisMonth = balance * monthlyInterestRate;
+                const principalForThisMonth = monthlyPayment - interestForThisMonth;
+                balance -= principalForThisMonth;
+            }
+
+            return balance;
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    getPrincipalAmountForPayment(paymentNumber: number): number {
+        if (isValueRateInput(this.annualInterestRate)) {
+            const monthlyPayment = this.getAmount();
+            const interestForThisPayment = this.getInterestAmountForPayment(paymentNumber);
+            const amountTowardsPrincipal = monthlyPayment - interestForThisPayment;
+            return amountTowardsPrincipal;
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    getInterestAmountForPayment(paymentNumber: number): number {
+        if (isValueRateInput(this.annualInterestRate)) {
+            const monthlyInterestRate = this.annualInterestRate.rate / 100 / 12;
+            const balanceBeforePayment = this.calculateBalanceAfterPayment(paymentNumber - 1);
+            return balanceBeforePayment * monthlyInterestRate;
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    getPercentageOfInterest(paymentNumber: number): number {
+        if (isValueRateInput(this.annualInterestRate)) {
+            //const amountInInterest = this.getAmount();
+            let amountInInterest = this.getInterestAmountForPayment(paymentNumber);
+            const percentageOfMortgage = (amountInInterest / this.getAmount()) * 100;
+            return percentageOfMortgage;
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    getPercentageOfPrincipal(paymentNumber: number): number {
+        if (isValueRateInput(this.annualInterestRate)) {
+            const percentageInInterest = this.getPercentageOfInterest(paymentNumber);
+            const principalPercentage = 100 - percentageInInterest;
+            return principalPercentage;
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    hasPMI(): boolean {
+        return this.downPaymentTxn.getRate(this.purchasePrice) < 20;
+    }
+
+    getPMIAmount(paymentNumber: number): number {
+        if (!this.hasPMI()) {
+            return 0;
+        }
+        if (isValueRateInput(this.annualInterestRate)) {
+            // Calculate the balance after the given payment number to see if PMI still applies
+            const balanceAfterPayment = this.calculateBalanceAfterPayment(paymentNumber);
+            const ltvAfterPayment = balanceAfterPayment / this.purchasePrice.getInitialPurchasePrice();
+            // If the LTV ratio is less than the drop-off ratio, PMI no longer applies
+            if (ltvAfterPayment <= this.pmiDropOffRatio) {
+                return 0;
+            }
+            if (isValueAmountInput(this.pmiValue)) {
+                return this.pmiValue.amount;
+            }
+            else if (isValueRateInput(this.pmiValue)) {
+                const annualPMI = (this.getLoanAmount() * (this.pmiValue.rate / 100)) / 12; // Monthly PMI amount
+                return annualPMI;
+            }
+            throw new Error('PMI needs to be an amount or rate');
+        }
+        throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    getPMIRate(): number {
+        if (!this.hasPMI()) {
+            return 0;
+        }
+        if (isValueRateInput(this.pmiValue)) {
+            return this.pmiValue.rate;
+        }
+        else if (isValueAmountInput(this.pmiValue)) {
+            return (this.pmiValue.amount / this.getLoanAmount()) * 100;
+        }
+        // throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+
+}

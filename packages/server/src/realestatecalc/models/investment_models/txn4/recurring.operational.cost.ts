@@ -12,10 +12,10 @@ export class RecurringOperationalCost implements CalculateTxnInterface<ValueRate
     private _txnType: TransactionType;
     private _cumulatedAmount: number;
 
-    constructor(txnKey: TransactionKey, vacancyRate: ValueRateInput) {
+    constructor(txnKey: TransactionKey, baseValue: ValueRateInput) {
         this._txnKey = txnKey;
         this._txnType = TransactionType.OPERATIONAL_RECURRING_EXPENSE;
-        this._baseValue = vacancyRate;
+        this._baseValue = baseValue;
         this.calcHelper = new CalcHelper();
     }
 

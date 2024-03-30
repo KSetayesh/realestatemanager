@@ -1,9 +1,33 @@
 import { ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
+import { TxnDTO } from "./calculate.txn.interface";
+import { TransactionKey, TransactionType } from "./calc/calculate";
 
 export class PurchasePrice {
+    private calcHelper: CalcHelper;
     private initialPurchasePrice: ValueAmountInput;
     private expectedAppreciationRate: ValueRateInput;
+    private _txnKey: TransactionKey;
+    private _txnType: TransactionType;
+
+    constructor(
+        initialPurchasePrice: ValueAmountInput,
+        expectedAppreciationRate: ValueRateInput
+    ) {
+        this.calcHelper = new CalcHelper();
+        this._txnKey = TransactionKey.PURCHASE_PRICE;
+        this._txnType = TransactionType.FINANCING;
+        this.initialPurchasePrice = initialPurchasePrice;
+        this.expectedAppreciationRate = expectedAppreciationRate;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get txnType(): TransactionType {
+        return this._txnType;
+    }
 
     getInitialPurchasePrice(): number {
         return this.initialPurchasePrice.amount;
@@ -20,7 +44,7 @@ export class PurchasePrice {
             return Math.pow(1 + annualAppreciationRate, 1 / 12) - 1;
         };
 
-        return new CalcHelper().getFutureDatedAmount(
+        return this.calcHelper.getFutureDatedAmount(
             this.getInitialPurchasePrice(),
             getMonthlyAppreciationRate(this.getExpectedAppreciationRate()),
             numberOfYears
@@ -28,7 +52,12 @@ export class PurchasePrice {
 
     }
 
-    toDTO() {
-
+    toDTO(yearCounter: number = 0): TxnDTO {
+        return {
+            key: TransactionKey.PURCHASE_PRICE,
+            amount: this.getFutureDatedHomeValue(yearCounter),
+            percentage: -1, // come back to this
+            rateOfGrowth: this.getExpectedAppreciationRate(),
+        };
     }
 }

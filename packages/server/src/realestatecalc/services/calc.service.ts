@@ -7,7 +7,7 @@ import {
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
-import { InvestmentCalculator } from '../models/investment_models/new_new_new/new.investment.calculator';
+import { InvestmentCalculator } from '../models/investment_models/txn4/calc/investment.calculator';
 
 @Injectable()
 export class CalcService {
@@ -21,7 +21,7 @@ export class CalcService {
     async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<any> { //<ListingWithScenariosDTO[]> {
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
-        let data = []
+        let data = [];
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();

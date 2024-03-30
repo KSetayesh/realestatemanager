@@ -13,10 +13,10 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
     private _txnType: TransactionType;
     private _cumulatedAmount: number;
 
-    constructor(txnKey: TransactionKey, monthlyHOAFeesAmount: ValueInput, expectedGrowthRate: ValueRateInput) {
+    constructor(txnKey: TransactionKey, baseValue: ValueInput, expectedGrowthRate: ValueRateInput) {
         this._txnKey = txnKey;
         this._txnType = TransactionType.FIXED_RECURRING_EXPENSE;
-        this._baseValue = monthlyHOAFeesAmount;
+        this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
         this.calcHelper = new CalcHelper();
         this._cumulatedAmount = 0;
