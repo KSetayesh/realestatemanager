@@ -2,7 +2,7 @@ import { Utility, ValueInput, ValueRateInput, ValueType } from "@realestatemanag
 import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
-import { TransactionKey, TransactionType } from "./calc/calculate";
+import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 
 export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, RentEstimate> {
 
@@ -12,6 +12,7 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
     private _txnKey: TransactionKey;
     private _txnType: TransactionType;
     private _cumulatedAmount: number;
+    private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueInput, expectedGrowthRate: ValueRateInput) {
         this._txnKey = txnKey;
@@ -20,6 +21,7 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
         this._rateOfGrowth = expectedGrowthRate;
         this.calcHelper = new CalcHelper();
         this._cumulatedAmount = 0;
+        this._isExpense = true;
     }
 
     get baseValue(): ValueInput {
@@ -40,6 +42,10 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
 
     get cumulatedAmount(): number {
         return this._cumulatedAmount;
+    }
+
+    get isExpense(): boolean {
+        return this._isExpense;
     }
 
     set cumulatedAmount(amount: number) {

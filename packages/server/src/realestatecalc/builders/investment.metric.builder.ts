@@ -23,7 +23,6 @@ import { TransactionManager } from "../models/investment_models/txn4/calc/transa
 import { MortgageCalculator } from "../models/investment_models/txn4/mortgage.calc";
 import { PurchasePrice } from "../models/investment_models/txn4/purchase.price";
 import { InitialCost } from "../models/investment_models/txn4/initial.cost";
-import { Calculate } from "../models/investment_models/txn4/calc/calculate";
 import { RentEstimate } from "../models/investment_models/txn4/rent.estimate";
 import { InvestmentCalculator } from "../models/investment_models/txn4/calc/investment.calculator";
 
@@ -183,14 +182,11 @@ export class InvestmentMetricBuilder {
             pmiRate,
         );
 
-        const calculate = new Calculate(
-            txnManager,
+        return new InvestmentCalculator(txnManager,
             mortgageCalc,
             purchasePriceObj,
-            rentEstimateObj,
+            rentEstimateObj
         );
-
-        return new InvestmentCalculator(calculate);
 
 
         // const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();

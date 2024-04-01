@@ -1,8 +1,7 @@
 import { Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
-import { TransactionKey } from "../new_new_new/transaction.detail";
 import { TxnDTO } from "./calculate.txn.interface";
-import { TransactionType } from "./calc/calculate";
+import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 
 export class RentEstimate {
     private rentEstimate: ValueAmountInput;

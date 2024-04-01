@@ -1,7 +1,7 @@
 import { Utility, ValueRateInput } from "@realestatemanager/shared";
 import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
-import { TransactionKey, TransactionType } from "./calc/calculate";
+import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 import { CalcHelper } from "./calc.helper";
 
 export class RecurringOperationalCost implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
@@ -11,12 +11,14 @@ export class RecurringOperationalCost implements CalculateTxnInterface<ValueRate
     private _txnKey: TransactionKey;
     private _txnType: TransactionType;
     private _cumulatedAmount: number;
+    private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueRateInput) {
         this._txnKey = txnKey;
         this._txnType = TransactionType.OPERATIONAL_RECURRING_EXPENSE;
         this._baseValue = baseValue;
         this.calcHelper = new CalcHelper();
+        this._isExpense = true;
     }
 
     get baseValue(): ValueRateInput {
@@ -33,6 +35,10 @@ export class RecurringOperationalCost implements CalculateTxnInterface<ValueRate
 
     get cumulatedAmount(): number {
         return this._cumulatedAmount;
+    }
+
+    get isExpense(): boolean {
+        return this.isExpense;
     }
 
     set cumulatedAmount(amount: number) {

@@ -12,7 +12,7 @@ import { PurchasePrice } from "./purchase.price";
 
 
 @Injectable()
-export class MortgageCalculator {
+export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
 
     private purchasePrice: PurchasePrice;
     private downPaymentTxn: InitialCost;
@@ -57,20 +57,9 @@ export class MortgageCalculator {
 
     }
 
-    getAmount(): number {
-        return this.mortgageAmount;
-    }
-
-    getRate(): number {
-        return this.annualInterestRate.rate;
-    }
-
-    getLoanAmount(): number {
-        return this.purchasePrice.getInitialPurchasePrice() - this.downPaymentTxn.getAmount(this.purchasePrice);
-    }
-
-    getMortgagePlusPMIAmount(paymentNumber: number): number {
-        let mortgageAmount = this.getAmount();
+    getAmount(paymentNumber: number): number {
+        // return this.mortgageAmount;
+        let mortgageAmount = this.getMortgageAmount();
         if (this.hasPMI()) {
             if (isValueAmountInput(this.pmiValue)) {
                 mortgageAmount += this.pmiValue.amount;
@@ -82,10 +71,22 @@ export class MortgageCalculator {
         return mortgageAmount;
     }
 
+    getRate(): number {
+        return this.annualInterestRate.rate;
+    }
+
+    getMortgageAmount(): number {
+        return this.mortgageAmount;
+    }
+
+    getLoanAmount(): number {
+        return this.purchasePrice.getInitialPurchasePrice() - this.downPaymentTxn.getAmount(this.purchasePrice);
+    }
+
     calculateBalanceAfterPayment(paymentNumber: number): number {
         if (isValueRateInput(this.annualInterestRate)) {
             const monthlyInterestRate = this.annualInterestRate.rate / 100 / 12;
-            const monthlyPayment = this.getAmount();
+            const monthlyPayment = this.getMortgageAmount();
             let balance = this.getLoanAmount();
 
             for (let i = 1; i <= paymentNumber; i++) {
@@ -101,7 +102,7 @@ export class MortgageCalculator {
 
     getPrincipalAmountForPayment(paymentNumber: number): number {
         if (isValueRateInput(this.annualInterestRate)) {
-            const monthlyPayment = this.getAmount();
+            const monthlyPayment = this.getMortgageAmount();
             const interestForThisPayment = this.getInterestAmountForPayment(paymentNumber);
             const amountTowardsPrincipal = monthlyPayment - interestForThisPayment;
             return amountTowardsPrincipal;
@@ -122,7 +123,7 @@ export class MortgageCalculator {
         if (isValueRateInput(this.annualInterestRate)) {
             //const amountInInterest = this.getAmount();
             let amountInInterest = this.getInterestAmountForPayment(paymentNumber);
-            const percentageOfMortgage = (amountInInterest / this.getAmount()) * 100;
+            const percentageOfMortgage = (amountInInterest / this.getMortgageAmount()) * 100;
             return percentageOfMortgage;
         }
         throw new Error('Cannot be amount for MortgageCalculator');

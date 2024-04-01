@@ -6,7 +6,7 @@ import { PurchasePrice } from "../purchase.price";
 import { RecurringFixedCost } from "../recurring.fixed.cost";
 import { RecurringOperationalCost } from "../recurring.operational.cost";
 import { RentEstimate } from "../rent.estimate";
-import { TransactionKey, TransactionType } from "./calculate";
+import { TransactionKey, TransactionType } from "./investment.calculator";
 
 export interface RecurringFixedExpensesDTO {
     type: TransactionType.FIXED_RECURRING_EXPENSE;
@@ -130,6 +130,19 @@ export class TransactionManager {
 
     // Total Amounts
 
+    getTotalRecurringExpenseAmount(rentEstimate: RentEstimate, yearCounter: number): number {
+        return this.getTotalAmountOfRecurringExpenses(rentEstimate, yearCounter) +
+            this.getTotalRecurringOperationalCosts(rentEstimate, yearCounter);
+    }
+
+    getTotalIncomeStreams(rentEstimate: RentEstimate, yearCounter: number): number {
+        let totalAmount = rentEstimate.getFutureDatedRentalAmount(yearCounter);
+        this.incomeMap.forEach((income: Income) => {
+            totalAmount += income.getAmount(rentEstimate, yearCounter);
+        });
+        return totalAmount;
+    }
+
     private getTotalAmountOfRecurringExpenses(rentEstimate: RentEstimate, yearCounter: number): number {
         let totalAmount = 0;
         this.recurringFixedCostMap.forEach((recurringFixedCost: RecurringFixedCost) => {
@@ -142,14 +155,6 @@ export class TransactionManager {
         let totalAmount = 0;
         this.initialExpenseMap.forEach((inialExpense: InitialCost) => {
             totalAmount += inialExpense.getAmount(purchasePrice);
-        });
-        return totalAmount;
-    }
-
-    private getTotalIncomeStreams(rentEstimate: RentEstimate, yearCounter: number): number {
-        let totalAmount = rentEstimate.getFutureDatedRentalAmount(yearCounter);
-        this.incomeMap.forEach((income: Income) => {
-            totalAmount += income.getAmount(rentEstimate, yearCounter);
         });
         return totalAmount;
     }

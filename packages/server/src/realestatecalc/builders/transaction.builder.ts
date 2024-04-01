@@ -1,7 +1,6 @@
 import { InterestType, ValueAmountInput, ValueInput, ValueRateInput } from "@realestatemanager/shared";
 import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
 import { PurchasePrice } from "../models/investment_models/txn4/purchase.price";
-import { TransactionKey } from "../models/investment_models/txn4/calc/calculate";
 import { RentEstimate } from "../models/investment_models/txn4/rent.estimate";
 import { RecurringFixedCost } from "../models/investment_models/txn4/recurring.fixed.cost";
 import { Income } from "../models/investment_models/txn4/income";
@@ -9,6 +8,7 @@ import { InitialCost } from "../models/investment_models/txn4/initial.cost";
 import { RecurringOperationalCost } from "../models/investment_models/txn4/recurring.operational.cost";
 import { TransactionManager } from "../models/investment_models/txn4/calc/transaction.manager";
 import { MortgageCalculator } from "../models/investment_models/txn4/mortgage.calc";
+import { TransactionKey } from "../models/investment_models/txn4/calc/investment.calculator";
 
 export type TransactionBuilderRequest = {
     growthProjections: GrowthProjections;
