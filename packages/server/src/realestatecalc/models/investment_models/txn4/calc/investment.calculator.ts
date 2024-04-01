@@ -78,7 +78,7 @@ export class InvestmentCalculator {
     createInvestmentMetrics(): any {
         let ammortizationList: any[] = [];
 
-        const totalPayments = 12 * 30;
+        const totalPayments = this.mortgageCalc.numberOfPayments;
         const today = new Date();
         const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
         const nextMonth = (today.getMonth() + 1) % 12;

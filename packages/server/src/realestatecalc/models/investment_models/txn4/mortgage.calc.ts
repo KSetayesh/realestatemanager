@@ -16,12 +16,12 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
 
     private purchasePrice: PurchasePrice;
     private downPaymentTxn: InitialCost;
-    private loanTermYears: number;
     private interestType: InterestType;
     private annualInterestRate: ValueRateInput;
     private pmiDropOffRatio: number; // Commonly 78% LTV ratio for PMI drop-off
     private pmiValue: ValueInput;
     private mortgageAmount: number;
+    private _loanTermYears: number;
     // private pmiRate?: number; // Optional PMI rate as a percentage
     // private pmiDropOffRatio: number = 0.78; // Commonly 78% LTV ratio for PMI drop-off
 
@@ -36,7 +36,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
 
         this.purchasePrice = purchasePrice;
         this.downPaymentTxn = downPaymentTxn;
-        this.loanTermYears = loanTermYears;
+        this._loanTermYears = loanTermYears;
         this.interestType = interestType;
         this.annualInterestRate = annualInterestRate;
         this.pmiDropOffRatio = pmiDropOffRatio;
@@ -55,6 +55,14 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
         };
         this.mortgageAmount = calculateMortgage();
 
+    }
+
+    get loanTermYears(): number {
+        return this.loanTermYears;
+    }
+
+    get numberOfPayments(): number {
+        return this.loanTermYears * 12;
     }
 
     getAmount(paymentNumber: number): number {
