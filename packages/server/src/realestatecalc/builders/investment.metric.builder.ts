@@ -182,7 +182,8 @@ export class InvestmentMetricBuilder {
             pmiRate,
         );
 
-        return new InvestmentCalculator(txnManager,
+        return new InvestmentCalculator(
+            txnManager,
             mortgageCalc,
             purchasePriceObj,
             rentEstimateObj

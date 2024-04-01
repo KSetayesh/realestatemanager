@@ -109,10 +109,27 @@ export class InvestmentCalculator {
             [TransactionType.FINANCING]: {
                 type: TransactionType.FINANCING,
                 breakdown: {
-                    [TransactionKey.PURCHASE_PRICE]: Utility.round(this.purchasePrice.getInitialPurchasePrice()),
+                    [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(),
                     [TransactionKey.LOAN_AMOUNT]: Utility.round(this.mortgageCalc.getLoanAmount()),
                 },
             },
+
+            [TransactionType.MORTGAGE]: {
+                type: TransactionType.MORTGAGE,
+                mortgagePlusPMI: Utility.round(this.mortgageCalc.getAmount(0)),
+                breakdown: {
+                    annualInterestRate: Utility.round(this.mortgageCalc.getRate()),
+                    mortgageAmount: Utility.round(this.mortgageCalc.getMortgageAmount()),
+                    pmiAmount: Utility.round(this.mortgageCalc.getPMIAmount(0)),
+                },
+            },
+
+            [TransactionType.INCOME_STREAMS]:
+                this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, 0),
+
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, 0),
+
             [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
         };
     }
