@@ -1,129 +1,7 @@
-//-----Enums----
-
-export enum HomeType {
-    Condo = "Condo",
-    SingleFamilyHome = "Single Family Home",
-    TownHome = "Town Home",
-    MultiFamilyHome = "Multi Family Home",
-};
-
-export enum Country {
-    UnitedStates = "US",
-};
-
-export enum State {
-    AL = "Alabama",
-    AK = "Alaska",
-    AZ = "Arizona",
-    AR = "Arkansas",
-    CA = "California",
-    CO = "Colorado",
-    CT = "Connecticut",
-    DE = "Delaware",
-    FL = "Florida",
-    GA = "Georgia",
-    HI = "Hawaii",
-    ID = "Idaho",
-    IL = "Illinois",
-    IN = "Indiana",
-    IA = "Iowa",
-    KS = "Kansas",
-    KY = "Kentucky",
-    LA = "Louisiana",
-    ME = "Maine",
-    MD = "Maryland",
-    MA = "Massachusetts",
-    MI = "Michigan",
-    MN = "Minnesota",
-    MS = "Mississippi",
-    MO = "Missouri",
-    MT = "Montana",
-    NE = "Nebraska",
-    NV = "Nevada",
-    NH = "New Hampshire",
-    NJ = "New Jersey",
-    NM = "New Mexico",
-    NY = "New York",
-    NC = "North Carolina",
-    ND = "North Dakota",
-    OH = "Ohio",
-    OK = "Oklahoma",
-    OR = "Oregon",
-    PA = "Pennsylvania",
-    RI = "Rhode Island",
-    SC = "South Carolina",
-    SD = "South Dakota",
-    TN = "Tennessee",
-    TX = "Texas",
-    UT = "Utah",
-    VT = "Vermont",
-    VA = "Virginia",
-    WA = "Washington",
-    WV = "West Virginia",
-    WI = "Wisconsin",
-    WY = "Wyoming",
-};
-
-export enum InterestType {
-    FIXED = "Fixed",
-    VARIABLE = "Variable",
-};
-
-export enum FinancingType {
-    MORTGAGE = 'Mortgage',
-    SELLER_FINANCING = 'SellerFinancing',
-    PRIVATE_LOAN = 'PrivateLoan',
-    OTHER = 'Other',
-};
-
-export enum ValueType {
-    AMOUNT = 'Amount',
-    RATE = 'Rate',
-};
-
-export enum DefaultInvestmentRates {
-    PMI_RATE = 0, // PMI rate expressed as a percentage of the loan amount annually.
-    PMI_DROP_OFF_POINT = 0.78,
-    ANNUAL_INTEREST_RATE = 7, // Annual Interest rate of loan.
-    DOWN_PAYMENT_PERCENTAGE = 20, // Typical down payment percentage for avoiding PMI.
-    PROPERTY_MANAGEMENT_RATE = 10, // Percentage of rental income paid for property management.
-    VACANCY_RATE = 10, // Percentage of the year that the property is expected to be vacant.
-    MAINTENANCE_RATE = 1, // Percentage of the property's value allocated annually for maintenance.
-    OTHER_EXPENSES_RATE = 3, // Miscellaneous expenses as a percentage of rental income.
-    CAP_EX_RESERVE_RATE = 5, // Capital expenditure reserve as a percentage of rental income.
-    LEGAL_AND_PROFESSIONAL_FEES = 1500, // Flat rate for legal and professional fees during purchase, in dollars.
-    INITIAL_REPAIR_COST_RATE = 2, //5000, // Estimated initial repair costs in dollars.
-    TRAVELING_COSTS = 0,
-    OTHER_INITIAL_EXPENSES_RATE = 0,
-    CLOSING_COST_RATE = 10, // Estimated closing costs in dollars.
-    TERM_IN_YEARS = 30, // Term length of loan in years.
-    ANNUAL_APPRECIATION_RATE = 2,
-    ANNUAL_TAX_INCREASE_RATE = 1,
-    ANNUAL_RENT_INCREASE_RATE = 2,
-    ANNUAL_HOME_INSURANCE_INCREASE_RATE = 1,
-    ANNUAL_HOA_FEES_INCREASE_RATE = 1,
-    ANNUAL_PARKING_FEES_INCREASE_RATE = 0,
-    ANNUAL_LAUNDRY_SERVICE_INCREASE_RATE = 0,
-    ANNUAL_STORAGE_UNIT_FEES_INCREASE_RATE = 0,
-    ANNUAL_OTHER_ADDITIONAL_INCOME_STREAMS_INCREASE_RATE = 0,
-    PARKING_FEES = 0,
-    LAUNDRY_SERVICES = 0,
-    STORAGE_UNIT_FEES = 0,
-    OTHER_ADDITIONAL_INCOMES = 0,
-    TAX_DEPRECIATION = 0,
-    TAX_MORTGAGE_INTEREST = 0,
-    TAX_OPERATING_EXPENSES = 0,
-    INTEREST_TYPE = InterestType.FIXED,
-};
-
-export enum GrowthFrequency {
-    YEARLY,
-    MONTHLY,
-    NONE,
-}
-
 
 //------------------------------ Investment Related Requests ------------------------------
+
+import { Country, HomeType, InterestType, State, TransactionKey, TransactionType, ValueType } from "./Constants";
 
 // Defines the base structure for input that can either be a rate or an amount
 export interface ValueInputBase {
@@ -235,7 +113,143 @@ export interface OperatingExpensesRequest {
 
 export interface ListingWithScenariosDTO {
     listingDetails: ListingDetailsDTO;
-    metrics: InvestmentMetricsResponseDTO[];
+    metrics: AmortizationBreakdownDTO[];
+};
+
+export interface TaxImplicationsDTO {
+    depreciation: number;
+    mortgageInterest: number;
+    operatingExpenses: number;
+    propertyTaxes?: number;
+};
+
+export type TotalAmount = {
+    amount: number;
+    description: string;
+};
+
+export interface TxnDTO {
+    key: TransactionKey;
+    amount: number;
+    percentage: number;
+    rateOfGrowth?: number;
+    cumulatedAmount?: number;
+};
+
+export interface MortgageTxnDTO extends TxnDTO {
+    mortgageAmount: number;
+    loanAmount: number;
+    balanceAfterPayment: number;
+    principalAmountForPayment: number;
+    interestAmountForPayment: number;
+    percentageOfInterest: number;
+    percentageOfPrincipal: number;
+    hasPMI: boolean;
+    pmiAmount: number;
+    pmiRate: number;
+};
+
+export interface RecurringFixedExpensesDTO {
+    type: TransactionType.FIXED_RECURRING_EXPENSE;
+    totalAmount: TotalAmount;
+    breakdown: {
+        [TransactionKey.PROPERTY_TAX]: TxnDTO;
+        [TransactionKey.HOA_FEE]: TxnDTO;
+        [TransactionKey.HOME_INSURANCE]: TxnDTO;
+    };
+};
+
+export interface InitialCostsExpensesDTO {
+    type: TransactionType.INITIAL_EXPENSE;
+    totalAmount: TotalAmount;
+    breakdown: {
+        [TransactionKey.DOWN_PAYMENT]: TxnDTO,
+        [TransactionKey.CLOSING_COST]: TxnDTO,
+        [TransactionKey.INITIAL_REPAIR_COST]: TxnDTO,
+        [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: TxnDTO,
+        [TransactionKey.TRAVELING_COST]: TxnDTO,
+        [TransactionKey.OTHER_INITIAL_EXPENSES]: TxnDTO,
+    };
+};
+
+export interface IncomeStreamsDTO {
+    type: TransactionType.INCOME_STREAMS;
+    totalAmount: TotalAmount;
+    breakdown: {
+        [TransactionKey.RENTAL_INCOME]: TxnDTO,
+        [TransactionKey.STORAGE_UNIT_FEES]: TxnDTO,
+        [TransactionKey.PARKING_FEES]: TxnDTO,
+        [TransactionKey.LAUNDRY_SERVICES]: TxnDTO,
+        [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: TxnDTO,
+    };
+}
+
+export interface RecurringOperationalCostsDTO {
+    type: TransactionType.OPERATIONAL_RECURRING_EXPENSE;
+    totalAmount: TotalAmount;
+    breakdown: {
+        [TransactionKey.CAP_EX_RESERVE_EXPENSE]: TxnDTO,
+        [TransactionKey.MAINTENANCE_EXPENSE]: TxnDTO,
+        [TransactionKey.OTHER_EXPENSES]: TxnDTO,
+        [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: TxnDTO,
+        [TransactionKey.VACANCY_EXPENSE]: TxnDTO,
+    };
+};
+
+export type MonthlyDateData = {
+    dateAsString: string;
+    monthMod12: number;
+    yearCounter: number;
+};
+
+export interface MortgageDTO {
+    type: TransactionType.MORTGAGE;
+    totalAmount: TotalAmount;
+    breakdown: MortgageTxnDTO;
+};
+
+export interface FinancingDTO {
+    type: TransactionType;
+    breakdown: {
+        [TransactionKey.PURCHASE_PRICE]: TxnDTO;
+        [TransactionKey.LOAN_AMOUNT]: number;
+    },
+};
+
+export interface MonthlyInvestmentBreakdownDTO {
+    appreciation: {
+        appreciationRate: number;
+        homeValue: number;
+    },
+    transactions: {
+        expenseAmount: number;
+        incomeAmount: number;
+        netIncome: number;
+        breakdown: {
+            [TransactionType.MORTGAGE]: MortgageDTO;
+            [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
+            [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+        }
+    }
+};
+
+export interface MonthlyInvestmentDetailsDTO {
+    monthlyDateData: MonthlyDateData;
+    monthlyBreakdown: MonthlyInvestmentBreakdownDTO;
+}
+
+export interface InitialInvestmentBreakdownDTO {
+    [TransactionType.FINANCING]: FinancingDTO;
+    [TransactionType.MORTGAGE]: MortgageDTO;
+    [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesDTO;
+    [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
+    [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+};
+
+export interface AmortizationBreakdownDTO {
+    initialInvestmenDetails: InitialInvestmentBreakdownDTO;
+    amortizationData: MonthlyInvestmentDetailsDTO[];
 };
 
 /**
@@ -406,168 +420,168 @@ export interface ListingWithScenariosDTO {
 //     value: string | number;
 // };
 
-export type AmountAndPercentageDTO = {
-    description?: string;
-    amount: number;
-    percentage: number;
-};
+// export type AmountAndPercentageDTO = {
+//     description?: string;
+//     amount: number;
+//     percentage: number;
+// };
 
-export interface GrowthProjectionsDTO {
-    annualAppreciationRate: number;
-    annualTaxIncreaseRate: number;
-    annualHomeInsuranceIncreaseRate: number;
-    annualHOAFeesIncreaseRate: number;
-    annualRentIncreaseRate: number;
-    parkingFeesIncreaseRate: number; // ValueAmountInput; // Income from parking facilities, if available.
-    laundryServicesIncreaseRate: number; //ValueAmountInput; // Income from on-site laundry services.
-    storageUnitFeesIncreaseRate: number; //ValueAmountInput; // Income from storage units, if available.
-    otherAdditionalIncomeStreamsIncreaseRate: number;
-};
+// export interface GrowthProjectionsDTO {
+//     annualAppreciationRate: number;
+//     annualTaxIncreaseRate: number;
+//     annualHomeInsuranceIncreaseRate: number;
+//     annualHOAFeesIncreaseRate: number;
+//     annualRentIncreaseRate: number;
+//     parkingFeesIncreaseRate: number; // ValueAmountInput; // Income from parking facilities, if available.
+//     laundryServicesIncreaseRate: number; //ValueAmountInput; // Income from on-site laundry services.
+//     storageUnitFeesIncreaseRate: number; //ValueAmountInput; // Income from storage units, if available.
+//     otherAdditionalIncomeStreamsIncreaseRate: number;
+// };
 
-export interface FinancingTermsDTO {
-    annualInterestRate: number;
-    interestType: InterestType;
-    termInYears: number;
-    monthlyPayment?: number;
-    interestOnlyPeriod?: number;
-};
+// export interface FinancingTermsDTO {
+//     annualInterestRate: number;
+//     interestType: InterestType;
+//     termInYears: number;
+//     monthlyPayment?: number;
+//     interestOnlyPeriod?: number;
+// };
 
-export interface AdditionalIncomeStreamsDTO {
-    parkingFees: number;
-    laundryServices: number;
-    storageUnitFees: number;
-    otherAdditionalIncomeStreams: number;
-};
+// export interface AdditionalIncomeStreamsDTO {
+//     parkingFees: number;
+//     laundryServices: number;
+//     storageUnitFees: number;
+//     otherAdditionalIncomeStreams: number;
+// };
 
-export interface FixedMonthlyExpensesDTO {
-    monthlyPropertyTax: number;
-    monthlyHomeInsuranceAmount: number;
-    monthlyHOAFeesAmount: number;
-};
+// export interface FixedMonthlyExpensesDTO {
+//     monthlyPropertyTax: number;
+//     monthlyHomeInsuranceAmount: number;
+//     monthlyHOAFeesAmount: number;
+// };
 
-export interface RecurringExpensesDTO {
-    propertyManagementRate: number;
-    vacancyRate: number;
-    maintenanceRate: number;
-    otherExpensesRate: number;
-    capExReserveRate: number;
-};
+// export interface RecurringExpensesDTO {
+//     propertyManagementRate: number;
+//     vacancyRate: number;
+//     maintenanceRate: number;
+//     otherExpensesRate: number;
+//     capExReserveRate: number;
+// };
 
-export interface IncomesDTO {
-    rentalIncome: number;
-    additionalIncomeStreams: AdditionalIncomeStreamsDTO;
-};
+// export interface IncomesDTO {
+//     rentalIncome: number;
+//     additionalIncomeStreams: AdditionalIncomeStreamsDTO;
+// };
 
-export interface ExpensesDTO {
-    fixedMonthlyExpenses: FixedMonthlyExpensesDTO;
-    recurringExpenses: RecurringExpensesDTO;
-    initialCosts: InitialCostsDTO;
-};
+// export interface ExpensesDTO {
+//     fixedMonthlyExpenses: FixedMonthlyExpensesDTO;
+//     recurringExpenses: RecurringExpensesDTO;
+//     initialCosts: InitialCostsDTO;
+// };
 
-export interface TransactionsDTO {
-    incomes: IncomesDTO;
-    expenses: ExpensesDTO;
-};
+// export interface TransactionsDTO {
+//     incomes: IncomesDTO;
+//     expenses: ExpensesDTO;
+// };
 
-export interface InitialCostsDTO {
-    totalAmount: number;
-    breakdown: {
-        downPaymentAmount: number;
-        legalAndProfessionalFees: number;
-        initialRepairCosts: AmountAndPercentageDTO;
-        closingCosts: AmountAndPercentageDTO;
-        travelingCosts: number;
-        otherExpenses: AmountAndPercentageDTO;
-    },
-};
+// export interface InitialCostsDTO {
+//     totalAmount: number;
+//     breakdown: {
+//         downPaymentAmount: number;
+//         legalAndProfessionalFees: number;
+//         initialRepairCosts: AmountAndPercentageDTO;
+//         closingCosts: AmountAndPercentageDTO;
+//         travelingCosts: number;
+//         otherExpenses: AmountAndPercentageDTO;
+//     },
+// };
 
-export interface TaxImplicationsDTO {
-    depreciation: number;
-    mortgageInterest: number;
-    operatingExpenses: number;
-    propertyTaxes?: number;
-};
+// export interface TaxImplicationsDTO {
+//     depreciation: number;
+//     mortgageInterest: number;
+//     operatingExpenses: number;
+//     propertyTaxes?: number;
+// };
 
-export interface PMIDetailsDTO {
-    pmiRate: number;
-    pmiDropoffPoint: number;
-};
+// export interface PMIDetailsDTO {
+//     pmiRate: number;
+//     pmiDropoffPoint: number;
+// };
 
-export interface MortgageDetailsDTO {
-    purchasePrice: number;
-    downpayment: AmountAndPercentageDTO;
-    loanAmount: AmountAndPercentageDTO;
-    financingTerms: FinancingTermsDTO;
-    transactions: TransactionsDTO;
-    pmiDetails: PMIDetailsDTO;
-};
+// export interface MortgageDetailsDTO {
+//     purchasePrice: number;
+//     downpayment: AmountAndPercentageDTO;
+//     loanAmount: AmountAndPercentageDTO;
+//     financingTerms: FinancingTermsDTO;
+//     transactions: TransactionsDTO;
+//     pmiDetails: PMIDetailsDTO;
+// };
 
-export interface InvestmentProjectionsDTO {
-    ROI: number;
-    capRate: number;
-    recurringCosts: number;
-    monthlyPayment: number;
-    mortgageAmount: number;
-    monthlyCashFlow: number;
-    yearlyCashFlow: number;
-    ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
-};
+// export interface InvestmentProjectionsDTO {
+//     ROI: number;
+//     capRate: number;
+//     recurringCosts: number;
+//     monthlyPayment: number;
+//     mortgageAmount: number;
+//     monthlyCashFlow: number;
+//     yearlyCashFlow: number;
+//     ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
+// };
 
-// Comprehensive details of the investment metrics for a property.
-export interface InvestmentMetricsResponseDTO {
+// // Comprehensive details of the investment metrics for a property.
+// export interface InvestmentMetricsResponseDTO {
 
-    mortgageDetails: MortgageDetailsDTO;
-    growthProjections: GrowthProjectionsDTO;
-    taxImplications: TaxImplicationsDTO;
-    investmentProjections: InvestmentProjectionsDTO;
+//     mortgageDetails: MortgageDetailsDTO;
+//     growthProjections: GrowthProjectionsDTO;
+//     taxImplications: TaxImplicationsDTO;
+//     investmentProjections: InvestmentProjectionsDTO;
 
-    // purchasePrice: ValueAndDescriptionDTO;
-    // rentEstimate: ValueAndDescriptionDTO;
-    // // initialCosts: ValueAndDescriptionDTO;
-    // loanAmount: AmountAndPercentageDTO;
-    // downPayment: AmountAndPercentageDTO;
-    // annualInterestRate: ValueAndDescriptionDTO;
-    // //--------------------------------------------------------------------------------
+//     // purchasePrice: ValueAndDescriptionDTO;
+//     // rentEstimate: ValueAndDescriptionDTO;
+//     // // initialCosts: ValueAndDescriptionDTO;
+//     // loanAmount: AmountAndPercentageDTO;
+//     // downPayment: AmountAndPercentageDTO;
+//     // annualInterestRate: ValueAndDescriptionDTO;
+//     // //--------------------------------------------------------------------------------
 
-    // ROI: ValueAndDescriptionDTO;
-    // capRate: ValueAndDescriptionDTO;
-    // recurringCosts: ValueAndDescriptionDTO;
-    // monthlyPayment: ValueAndDescriptionDTO;
-    // mortgageAmount: ValueAndDescriptionDTO;
-    // monthlyCashFlow: ValueAndDescriptionDTO;
-    // yearlyCashFlow: ValueAndDescriptionDTO;
-    // ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
-};
+//     // ROI: ValueAndDescriptionDTO;
+//     // capRate: ValueAndDescriptionDTO;
+//     // recurringCosts: ValueAndDescriptionDTO;
+//     // monthlyPayment: ValueAndDescriptionDTO;
+//     // mortgageAmount: ValueAndDescriptionDTO;
+//     // monthlyCashFlow: ValueAndDescriptionDTO;
+//     // yearlyCashFlow: ValueAndDescriptionDTO;
+//     // ammortizationDetails?: AmortizationDetailsDTO[]; // Optional amortization details over time.
+// };
 
-// Details of amortization for the mortgage, reflecting changes over time.
-export interface AmortizationDetailsDTO {
-    month: number;
-    date: string;
-    year: number;
-    recurringCosts: number;
-    fixedCosts: number;
-    monthlyPayment: number;
-    monthlyPaymentAndRecurringCosts: number;
-    rentEstimate: number;
-    monthlyCashFlow: number;
-    accumulatedCashFlow: number;
-    mortgageAmount: number;
-    amountPaidInInterest: AmountAndPercentageDTO;
-    amountPaidInPrincipal: AmountAndPercentageDTO;
-    totalInterestPaid: number;
-    remainingBalance: number;
-    equityWithDownPayment: number;
-    equityAmountWithoutDownPayment: number;
-    equityAmountWithAppreciation: number;
-    appreciationAmount: number;
-    // month: number; // Month number of the amortization schedule.
-    // date: string;
-    // year: number; // Year of the amortization schedule.
-    // remainingBalance: number; // Remaining balance of the mortgage.
-    // mortgageWithAllExpensesBreakdown: MortgageWithAllExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
-    // cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
-    // equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
-};
+// // Details of amortization for the mortgage, reflecting changes over time.
+// export interface AmortizationDetailsDTO {
+//     month: number;
+//     date: string;
+//     year: number;
+//     recurringCosts: number;
+//     fixedCosts: number;
+//     monthlyPayment: number;
+//     monthlyPaymentAndRecurringCosts: number;
+//     rentEstimate: number;
+//     monthlyCashFlow: number;
+//     accumulatedCashFlow: number;
+//     mortgageAmount: number;
+//     amountPaidInInterest: AmountAndPercentageDTO;
+//     amountPaidInPrincipal: AmountAndPercentageDTO;
+//     totalInterestPaid: number;
+//     remainingBalance: number;
+//     equityWithDownPayment: number;
+//     equityAmountWithoutDownPayment: number;
+//     equityAmountWithAppreciation: number;
+//     appreciationAmount: number;
+//     // month: number; // Month number of the amortization schedule.
+//     // date: string;
+//     // year: number; // Year of the amortization schedule.
+//     // remainingBalance: number; // Remaining balance of the mortgage.
+//     // mortgageWithAllExpensesBreakdown: MortgageWithAllExpensesBreakdownDTO; // Breakdown including mortgage and recurring expenses.
+//     // cashFlowAmount: CashFlowDTO; // Cash flow details associated with this point in time.
+//     // equityBreakdown: EquityBreakdownDTO; // Equity breakdown at this point in time.
+// };
 
 
 //------------------------------ ListingDetails related models ------------------------------

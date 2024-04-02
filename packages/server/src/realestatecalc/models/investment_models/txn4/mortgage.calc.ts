@@ -3,6 +3,9 @@ import { InitialCost } from "./initial.cost";
 import {
     DefaultInvestmentRates,
     InterestType,
+    MortgageTxnDTO,
+    TransactionKey,
+    Utility,
     ValueInput,
     ValueRateInput,
     isValueAmountInput,
@@ -58,7 +61,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
     }
 
     get loanTermYears(): number {
-        return this.loanTermYears;
+        return this._loanTermYears;
     }
 
     get numberOfPayments(): number {
@@ -185,6 +188,24 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
             return (this.pmiValue.amount / this.getLoanAmount()) * 100;
         }
         // throw new Error('Cannot be amount for MortgageCalculator');
+    }
+
+    toDTO(monthCounter: number = 0): MortgageTxnDTO {
+        return {
+            key: TransactionKey.MORTGAGE,
+            amount: Utility.round(this.getAmount(monthCounter)),
+            percentage: Utility.round(this.getRate()),
+            mortgageAmount: Utility.round(this.getMortgageAmount()),
+            loanAmount: Utility.round(this.getLoanAmount()),
+            balanceAfterPayment: Utility.round(this.calculateBalanceAfterPayment(monthCounter)),
+            principalAmountForPayment: Utility.round(this.getPrincipalAmountForPayment(monthCounter)),
+            interestAmountForPayment: Utility.round(this.getInterestAmountForPayment(monthCounter)),
+            percentageOfInterest: Utility.round(this.getPercentageOfInterest(monthCounter)),
+            percentageOfPrincipal: Utility.round(this.getPercentageOfPrincipal(monthCounter)),
+            hasPMI: this.hasPMI(),
+            pmiAmount: Utility.round(this.getPMIAmount(monthCounter)),
+            pmiRate: Utility.round(this.getPMIRate()),
+        };
     }
 
 

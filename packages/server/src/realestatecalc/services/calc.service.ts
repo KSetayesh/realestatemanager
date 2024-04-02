@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RealEstateManager } from 'src/db/realestate/realestate.db';
 import {
+    AmortizationBreakdownDTO,
     InvestmentScenarioRequest,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
@@ -21,7 +22,7 @@ export class CalcService {
     async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<any> { //<ListingWithScenariosDTO[]> {
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.realEstateManager.getAllListings();
-        let data = [];
+        let data: AmortizationBreakdownDTO;
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();

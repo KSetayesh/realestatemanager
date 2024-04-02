@@ -1,8 +1,7 @@
-import { Utility, ValueInput } from "@realestatemanager/shared";
-import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
+import { TransactionKey, TransactionType, TxnDTO, Utility, ValueInput } from "@realestatemanager/shared";
+import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { PurchasePrice } from "./purchase.price";
 import { CalcHelper } from "./calc.helper";
-import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 
 export class InitialCost implements CalculateTxnInterface<ValueInput, PurchasePrice> {
 
@@ -13,10 +12,10 @@ export class InitialCost implements CalculateTxnInterface<ValueInput, PurchasePr
     private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueInput) {
+        this.calcHelper = new CalcHelper();
         this._txnKey = txnKey;
         this._txnType = TransactionType.INITIAL_EXPENSE;
         this._baseValue = baseValue;
-        this.calcHelper = new CalcHelper();
         this._isExpense = true;
     }
 

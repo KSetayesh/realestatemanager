@@ -1,8 +1,7 @@
-import { Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
-import { CalculateTxnInterface, TxnDTO } from "./calculate.txn.interface";
+import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { CalcHelper } from "./calc.helper";
-import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 
 export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 

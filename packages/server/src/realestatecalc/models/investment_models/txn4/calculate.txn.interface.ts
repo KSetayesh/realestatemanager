@@ -1,15 +1,7 @@
-import { ValueInput, ValueRateInput } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnDTO, ValueInput, ValueRateInput } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { PurchasePrice } from "./purchase.price";
-import { TransactionKey, TransactionType } from "./calc/investment.calculator";
 
-export type TxnDTO = {
-    key: TransactionKey,
-    amount: number,
-    percentage: number,
-    rateOfGrowth?: number,
-    cumulatedAmount?: number,
-};
 
 export interface CalculateTxnInterface<T extends ValueInput, Z extends RentEstimate | PurchasePrice> {
     baseValue: T;
@@ -26,27 +18,7 @@ export interface CalculateTxnInterface<T extends ValueInput, Z extends RentEstim
     // Update return value from any to something else
     toDTO(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number, previousTotalAmount?: number): TxnDTO;
 
-}
+};
 
-export interface MortgageCalculateTxnInterface extends CalculateTxnInterface<ValueRateInput, PurchasePrice> {
-    getMortgageAmount(): number;
 
-    getLoanAmount(): number;
-
-    calculateBalanceAfterPayment(paymentNumber: number): number;
-
-    getPrincipalAmountForPayment(paymentNumber: number): number;
-
-    getInterestAmountForPayment(paymentNumber: number): number;
-
-    getPercentageOfInterest(paymentNumber: number): number;
-
-    getPercentageOfPrincipal(paymentNumber: number): number;
-
-    hasPMI(): boolean;
-
-    getPMIAmount(paymentNumber: number): number;
-
-    getPMIRate(): number;
-}
 
