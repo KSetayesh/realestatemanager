@@ -1,10 +1,10 @@
 import { IncomeStreamsDTO, InitialCostsExpensesDTO, RecurringFixedExpensesDTO, RecurringOperationalCostsDTO, TransactionKey, TransactionType, TxnDTO, Utility } from "@realestatemanager/shared";
-import { Income } from "../income";
-import { InitialCost } from "../initial.cost";
-import { PurchasePrice } from "../purchase.price";
-import { RecurringFixedCost } from "../recurring.fixed.cost";
-import { RecurringOperationalCost } from "../recurring.operational.cost";
-import { RentEstimate } from "../rent.estimate";
+import { Income } from "./income";
+import { InitialCost } from "./initial.cost";
+import { PurchasePrice } from "./purchase.price";
+import { RecurringFixedCost } from "./recurring.fixed.cost";
+import { RecurringOperationalCost } from "./recurring.operational.cost";
+import { RentEstimate } from "./rent.estimate";
 
 
 export class TransactionManager {

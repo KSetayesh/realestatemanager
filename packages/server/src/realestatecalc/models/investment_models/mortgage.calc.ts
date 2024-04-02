@@ -195,6 +195,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
             key: TransactionKey.MORTGAGE,
             amount: Utility.round(this.getAmount(monthCounter)),
             percentage: Utility.round(this.getRate()),
+            interestType: this.interestType,
             mortgageAmount: Utility.round(this.getMortgageAmount()),
             loanAmount: Utility.round(this.getLoanAmount()),
             balanceAfterPayment: Utility.round(this.calculateBalanceAfterPayment(monthCounter)),

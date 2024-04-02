@@ -111,11 +111,6 @@ export interface OperatingExpensesRequest {
 
 //------------------------------ Investment Related Response ------------------------------
 
-export interface ListingWithScenariosDTO {
-    listingDetails: ListingDetailsDTO;
-    metrics: AmortizationBreakdownDTO[];
-};
-
 export interface TaxImplicationsDTO {
     depreciation: number;
     mortgageInterest: number;
@@ -137,6 +132,7 @@ export interface TxnDTO {
 };
 
 export interface MortgageTxnDTO extends TxnDTO {
+    interestType: InterestType;
     mortgageAmount: number;
     loanAmount: number;
     balanceAfterPayment: number;
@@ -247,9 +243,26 @@ export interface InitialInvestmentBreakdownDTO {
     [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
 };
 
+export type GrowthProjectionsDTO = {
+    annualAppreciationRate: number;
+    annualTaxIncreaseRate?: number;
+    annualHomeInsuranceIncreaseRate?: number;
+    annualHOAFeesIncreaseRate?: number;
+    annualRentIncreaseRate: number;
+    parkingFeesIncreaseRate?: number; // ValueAmountInput; // Income from parking facilities, if available.
+    laundryServicesIncreaseRate?: number; //ValueAmountInput; // Income from on-site laundry services.
+    storageUnitFeesIncreaseRate?: number; //ValueAmountInput; // Income from storage units, if available.
+    otherAdditionalIncomeStreamsIncreaseRate?: number;
+};
+
 export interface AmortizationBreakdownDTO {
     initialInvestmenDetails: InitialInvestmentBreakdownDTO;
     amortizationData: MonthlyInvestmentDetailsDTO[];
+};
+
+export interface ListingWithScenariosDTO {
+    listingDetails: ListingDetailsDTO;
+    metrics: AmortizationBreakdownDTO;
 };
 
 /**

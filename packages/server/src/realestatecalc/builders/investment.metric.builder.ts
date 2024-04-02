@@ -1,7 +1,7 @@
 import {
     getInterestTypeEnumValue,
 } from "src/shared/Constants";
-import { GrowthProjections } from "../models/investment_models/new_new_new/growth.projections.model";
+import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 import {
     AdditionalIncomeStreamsRequest,
     DefaultInvestmentRates,
@@ -19,12 +19,12 @@ import {
 } from "@realestatemanager/shared";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
-import { TransactionManager } from "../models/investment_models/txn4/calc/transaction.manager";
-import { MortgageCalculator } from "../models/investment_models/txn4/mortgage.calc";
-import { PurchasePrice } from "../models/investment_models/txn4/purchase.price";
-import { InitialCost } from "../models/investment_models/txn4/initial.cost";
-import { RentEstimate } from "../models/investment_models/txn4/rent.estimate";
-import { InvestmentCalculator } from "../models/investment_models/txn4/calc/investment.calculator";
+import { TransactionManager } from "../models/investment_models/transaction.manager";
+import { MortgageCalculator } from "../models/investment_models/mortgage.calc";
+import { PurchasePrice } from "../models/investment_models/purchase.price";
+import { InitialCost } from "../models/investment_models/initial.cost";
+import { RentEstimate } from "../models/investment_models/rent.estimate";
+import { InvestmentCalculator } from "../models/investment_models/investment.calculator";
 
 export class InvestmentMetricBuilder {
 

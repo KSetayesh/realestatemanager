@@ -1,5 +1,5 @@
 import { GrowthProjectionsDTO, ValueRateInput } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../../idtoconvertible.model";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
 export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> {
 
@@ -11,10 +11,10 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
 
     // Incomes
     private annualRentIncreaseRate: ValueRateInput;
-    private parkingFeesIncreaseRate: ValueRateInput; // ValueAmountInput; // Income from parking facilities, if available.
-    private laundryServicesIncreaseRate: ValueRateInput; //ValueAmountInput; // Income from on-site laundry services.
-    private storageUnitFeesIncreaseRate: ValueRateInput; //ValueAmountInput; // Income from storage units, if available.
-    private otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput;//ValueAmountInput; // Any other sources of income not covered above.
+    private parkingFeesIncreaseRate: ValueRateInput;
+    private laundryServicesIncreaseRate: ValueRateInput;
+    private storageUnitFeesIncreaseRate: ValueRateInput;
+    private otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput;
 
     constructor(
         annualAppreciationRate: ValueRateInput,
