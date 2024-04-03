@@ -1,11 +1,12 @@
 import { ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
+import { getYear } from "src/shared/Constants";
 
 export class CalcHelper {
 
     getFutureDatedAmount(
         principal: number,
         growthRate: number,
-        monthCounter: number = 0
+        monthCounter: number,
     ): number {
         const rateOfGrowth = 1 + (growthRate / 100);
         return principal * (Math.pow(rateOfGrowth, monthCounter));

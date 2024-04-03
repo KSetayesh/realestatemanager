@@ -1,5 +1,6 @@
 import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { CalcHelper } from "./calc.helper";
+import { getYear } from "src/shared/Constants";
 
 export class PurchasePrice {
     private calcHelper: CalcHelper;
@@ -35,7 +36,7 @@ export class PurchasePrice {
         return this.expectedAppreciationRate.rate;
     }
 
-    getFutureDatedHomeValue(numberOfYears: number = 0): number {
+    getFutureDatedHomeValue(monthCounter: number): number {
         const getMonthlyAppreciationRate = (growthRate: number): number => {
             // Calculate the equivalent monthly appreciation rate for a 4% annual rate
             const annualAppreciationRate = growthRate / 100;
@@ -45,15 +46,15 @@ export class PurchasePrice {
         return this.calcHelper.getFutureDatedAmount(
             this.getInitialPurchasePrice(),
             getMonthlyAppreciationRate(this.getExpectedAppreciationRate()),
-            numberOfYears
+            getYear(monthCounter),
         );
 
     }
 
-    toDTO(yearCounter: number = 0): TxnDTO {
+    toDTO(monthCounter: number): TxnDTO {
         return {
             key: TransactionKey.PURCHASE_PRICE,
-            amount: Utility.round(this.getFutureDatedHomeValue(yearCounter)),
+            amount: Utility.round(this.getFutureDatedHomeValue(monthCounter)),
             percentage: -1, // come back to this
             rateOfGrowth: Utility.round(this.getExpectedAppreciationRate()),
         };

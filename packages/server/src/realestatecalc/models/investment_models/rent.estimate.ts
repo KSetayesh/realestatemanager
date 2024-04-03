@@ -30,18 +30,18 @@ export class RentEstimate {
         return this.expectedGrowthRate.rate;
     }
 
-    getFutureDatedRentalAmount(numberOfYears: number = 0): number {
+    getFutureDatedRentalAmount(monthCounter: number): number {
         return new CalcHelper().getFutureDatedAmount(
             this.getInitialRentalAmount(),
             this.expectedGrowthRate.rate,
-            numberOfYears
+            monthCounter
         );
     }
 
-    toDTO(yearCounter: number = 0): TxnDTO {
+    toDTO(monthCounter: number): TxnDTO {
         return {
             key: TransactionKey.RENTAL_INCOME,
-            amount: Utility.round(this.getFutureDatedRentalAmount(yearCounter)),
+            amount: Utility.round(this.getFutureDatedRentalAmount(monthCounter)),
             percentage: -1, // come back to this
             rateOfGrowth: Utility.round(this.getExpectedGrowthRate()),
             cumulatedAmount: -1, // come back to this

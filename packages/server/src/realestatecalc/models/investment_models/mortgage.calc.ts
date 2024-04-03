@@ -190,7 +190,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
         // throw new Error('Cannot be amount for MortgageCalculator');
     }
 
-    toDTO(monthCounter: number = 0): MortgageTxnDTO {
+    toDTO(monthCounter: number): MortgageTxnDTO {
         return {
             key: TransactionKey.MORTGAGE,
             amount: Utility.round(this.getAmount(monthCounter)),

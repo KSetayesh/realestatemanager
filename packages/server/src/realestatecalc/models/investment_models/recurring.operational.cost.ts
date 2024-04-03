@@ -44,8 +44,8 @@ export class RecurringOperationalCost implements CalculateTxnInterface<ValueRate
         this._cumulatedAmount = amount;
     }
 
-    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
-        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(numberOfYears);
+    getAmount(rentalTxn: RentEstimate, monthCounter: number): number {
+        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(monthCounter);
         return this.calcHelper.getTransactionAmount(
             this.baseValue,
             futureDatedRentalAmount
@@ -57,8 +57,8 @@ export class RecurringOperationalCost implements CalculateTxnInterface<ValueRate
     }
 
 
-    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0): TxnDTO {
-        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
+        const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
         return {
             key: this.txnKey,

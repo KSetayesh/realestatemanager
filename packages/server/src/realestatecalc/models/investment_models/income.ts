@@ -51,33 +51,33 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
         this._cumulatedAmount = amount;
     }
 
-    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+    getAmount(rentalTxn: RentEstimate, monthCounter: number): number {
         return this.calcHelper.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
-            numberOfYears
+            monthCounter
         );
     }
 
-    getRate(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
-        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(numberOfYears);
+    getRate(rentalTxn: RentEstimate, monthCounter: number): number {
+        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(monthCounter);
 
         const income: ValueAmountInput = {
             type: ValueType.AMOUNT,
-            amount: this.getAmount(rentalTxn, numberOfYears),
+            amount: this.getAmount(rentalTxn, monthCounter),
         };
 
         return this.calcHelper.getTransactionPercent(income, futureDatedRentalAmount);
 
     }
 
-    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0): TxnDTO {
-        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
+        const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
         return {
             key: this.txnKey,
             amount: Utility.round(txnAmount),
-            percentage: Utility.round(this.getRate(rentalTxn, numberOfYears)),
+            percentage: Utility.round(this.getRate(rentalTxn, monthCounter)),
             rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
             cumulatedAmount: Utility.round(this.cumulatedAmount),
         };

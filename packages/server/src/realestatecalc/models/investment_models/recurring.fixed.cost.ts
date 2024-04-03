@@ -51,19 +51,19 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
         this._cumulatedAmount = amount;
     }
 
-    getAmount(rentalTxn: RentEstimate, numberOfYears: number = 0): number {
+    getAmount(rentalTxn: RentEstimate, monthCounter: number): number {
         const amount = this.calcHelper.getTransactionAmount(
             this.baseValue,
             rentalTxn.getInitialRentalAmount()
         );
 
-        return this.calcHelper.getFutureDatedAmount(amount, this.rateOfGrowth.rate, numberOfYears);
+        return this.calcHelper.getFutureDatedAmount(amount, this.rateOfGrowth.rate, monthCounter);
 
     }
 
-    getRate(rentalTxn: RentEstimate, numberOfYears: number): number {
-        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(numberOfYears);
-        const futureDatedTxnAmount = this.getAmount(rentalTxn, numberOfYears);
+    getRate(rentalTxn: RentEstimate, monthCounter: number): number {
+        const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(monthCounter);
+        const futureDatedTxnAmount = this.getAmount(rentalTxn, monthCounter);
         return this.calcHelper.getTransactionPercent(
             {
                 type: ValueType.AMOUNT,
@@ -74,14 +74,14 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
     }
 
 
-    toDTO(rentalTxn: RentEstimate, numberOfYears: number = 0): TxnDTO {
-        const txnAmount = this.getAmount(rentalTxn, numberOfYears);
+    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
+        const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
         return {
             key: this.txnKey,
             amount: Utility.round(txnAmount),
             rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
-            percentage: Utility.round(this.getRate(rentalTxn, numberOfYears)),
+            percentage: Utility.round(this.getRate(rentalTxn, monthCounter)),
             cumulatedAmount: Utility.round(this.cumulatedAmount),
         };
     }

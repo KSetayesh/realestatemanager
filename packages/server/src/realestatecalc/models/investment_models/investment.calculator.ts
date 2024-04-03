@@ -83,27 +83,27 @@ export class InvestmentCalculator {
     }
 
     private getMonthlyTransactionData(monthCounter: number): MonthlyInvestmentBreakdownDTO { //AmortizationYearData {
-        const yearCounter = getYear(monthCounter);
+        // const yearCounter = getYear(monthCounter);
         return {
             appreciation: {
                 appreciationRate: this.purchasePrice.getExpectedAppreciationRate(),
-                homeValue: Utility.round(this.purchasePrice.getFutureDatedHomeValue(yearCounter)),
+                homeValue: Utility.round(this.purchasePrice.getFutureDatedHomeValue(monthCounter)),
             },
             transactions: {
-                expenseAmount: Utility.round(this.getTotalRecurringExpenseAmount(this.rentalEstimate, yearCounter)),
-                incomeAmount: Utility.round(this.getTotalIncomeStreams(this.rentalEstimate, yearCounter)),
-                netIncome: Utility.round(this.getNetIncome(this.rentalEstimate, yearCounter)),
+                expenseAmount: Utility.round(this.getTotalRecurringExpenseAmount(this.rentalEstimate, monthCounter)),
+                incomeAmount: Utility.round(this.getTotalIncomeStreams(this.rentalEstimate, monthCounter)),
+                netIncome: Utility.round(this.getNetIncome(this.rentalEstimate, monthCounter)),
                 breakdown: {
                     [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
-                        this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, yearCounter),
+                        this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, monthCounter),
 
                     [TransactionType.INCOME_STREAMS]:
-                        this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, yearCounter),
+                        this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, monthCounter),
 
                     [TransactionType.FIXED_RECURRING_EXPENSE]:
-                        this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, yearCounter),
+                        this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, monthCounter),
 
-                    [TransactionType.MORTGAGE]: this.getMortgageDTO(yearCounter),
+                    [TransactionType.MORTGAGE]: this.getMortgageDTO(monthCounter),
                 },
             },
         };
@@ -114,15 +114,15 @@ export class InvestmentCalculator {
         return {
             type: TransactionType.FINANCING,
             breakdown: {
-                [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(),
+                [TransactionKey.PURCHASE_PRICE]: this.purchasePrice.toDTO(0),
                 [TransactionKey.LOAN_AMOUNT]: Utility.round(this.mortgageCalc.getLoanAmount()),
             },
         };
     }
 
-    private getMortgageDTO(monthCounter: number = 0): MortgageDTO {
+    private getMortgageDTO(monthCounter: number): MortgageDTO {
 
-        const mortgageTxnDTO = (monthCounter: number = 0): MortgageTxnDTO => {
+        const mortgageTxnDTO = (monthCounter: number): MortgageTxnDTO => {
             return this.mortgageCalc.toDTO(monthCounter);
         }
 
@@ -136,18 +136,18 @@ export class InvestmentCalculator {
         };
     }
 
-    private getNetIncome(rentEstimate: RentEstimate, yearCounter: number): number {
-        return this.transactionManager.getTotalIncomeStreams(rentEstimate, yearCounter) -
-            this.getTotalRecurringExpenseAmount(rentEstimate, yearCounter);
+    private getNetIncome(rentEstimate: RentEstimate, monthCounter: number): number {
+        return this.transactionManager.getTotalIncomeStreams(rentEstimate, monthCounter) -
+            this.getTotalRecurringExpenseAmount(rentEstimate, monthCounter);
     }
 
-    private getTotalRecurringExpenseAmount(rentEstimate: RentEstimate, yearCounter: number): number {
-        return this.transactionManager.getTotalRecurringExpenseAmount(rentEstimate, yearCounter) +
-            this.mortgageCalc.getAmount(yearCounter);
+    private getTotalRecurringExpenseAmount(rentEstimate: RentEstimate, monthCounter: number): number {
+        return this.transactionManager.getTotalRecurringExpenseAmount(rentEstimate, monthCounter) +
+            this.mortgageCalc.getAmount(monthCounter);
     }
 
-    private getTotalIncomeStreams(rentEstimate: RentEstimate, yearCounter: number): number {
-        return this.transactionManager.getTotalIncomeStreams(rentEstimate, yearCounter);
+    private getTotalIncomeStreams(rentEstimate: RentEstimate, monthCounter: number): number {
+        return this.transactionManager.getTotalIncomeStreams(rentEstimate, monthCounter);
     }
 
     private getDateData(year: number, nextMonth: number, monthCounter: number): MonthlyDateData {
@@ -164,6 +164,60 @@ export class InvestmentCalculator {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------------
 
+    private calculateROI(monthCounter: number): number {
+        const downPaymentAmount = this.downPaymentAmount;
+        // Ensure downPaymentAmount is non-zero to avoid division by zero
+        if (downPaymentAmount === 0) {
+            throw new Error("Down payment cannot be zero for rate of return calculations.");
+        }
+        const yearlyReturn = this.calculateYearlyCashFlow(monthCounter);
+        const initialExpeses = this.totalInitialCosts;
+
+        return (yearlyReturn / initialExpeses) * 100;
+    }
+
+    private calculateYearlyCashFlow(monthCounter: number): number {
+        return this.calculateMonthlyCashFlow(monthCounter) * 12;
+    }
+
+    private calculateMonthlyCashFlow(monthCounter: number): number {
+        return this.getNetIncome(this.rentalEstimate, monthCounter);
+        // const recurringExpenses = this.getRecurringExpenses();
+        // return rent - (this.getMortgageAmountWithFixedMonthlyExpenses() + recurringExpenses);
+    }
+
+    // private calculateFutureDatedMonthlyCashFlow(numberOfYearsFromNow: number): number {
+    //     const futureDatedRecurringExpenses = this.getFutureDatedRecurringExpenses(numberOfYearsFromNow);
+    //     const futureDatedRentAmount = this.getFutureDatedRentalIncome(numberOfYearsFromNow);
+    //     const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
+    //     return futureDatedRentAmount - (futureDatedMortgageAmountWithFixedMonthlyExpenses + futureDatedRecurringExpenses);
+    // }
+
+    private calculateCapRate(monthCounter: number): number {
+        const annualNetOperatingIncome = (this.calculateMonthlyCashFlow(monthCounter) + this.mortgageCalc.getAmount(0)) * 12;
+        return (annualNetOperatingIncome / this.initialPurchasePrice) * 100;
+    }
+
+    private get downPaymentAmount(): number {
+        return this.transactionManager.downPaymentTxn.getAmount(this.purchasePrice);
+    }
+
+    private get initialPurchasePrice(): number {
+        return this.purchasePrice.getInitialPurchasePrice();
+    }
+
+    private get initialRentalAmount(): number {
+        return this.rentalEstimate.getInitialRentalAmount();
+    }
+
+    private get totalInitialCosts(): number {
+        return this.transactionManager.getTotalInitialCosts(this.purchasePrice);
+    }
+
+    // private get recurringExpenses(): number {
+    //     return this.transactionManager.getTotalRecurringExpenseAmount(this.rentalEstimate, 0);
+    // }
 
 }
