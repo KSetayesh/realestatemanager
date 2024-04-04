@@ -133,6 +133,7 @@ export interface TxnDTO {
 
 export interface MortgageTxnDTO extends TxnDTO {
     interestType: InterestType;
+    termLength: number;
     mortgageAmount: number;
     loanAmount: number;
     balanceAfterPayment: number;
@@ -143,6 +144,7 @@ export interface MortgageTxnDTO extends TxnDTO {
     hasPMI: boolean;
     pmiAmount: number;
     pmiRate: number;
+    pmiDropOffPoint: number;
 };
 
 export interface RecurringFixedExpensesDTO {
@@ -245,6 +247,7 @@ export interface MonthlyInvestmentDetailsDTO {
 export interface InitialInvestmentBreakdownDTO {
     [TransactionType.FINANCING]: FinancingDTO;
     [TransactionType.MORTGAGE]: MortgageDTO;
+    [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
     [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesDTO;
     [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
     [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;

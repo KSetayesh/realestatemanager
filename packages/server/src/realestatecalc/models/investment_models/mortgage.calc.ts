@@ -196,6 +196,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
             amount: Utility.round(this.getAmount(monthCounter)),
             percentage: Utility.round(this.getRate()),
             interestType: this.interestType,
+            termLength: this.loanTermYears,
             mortgageAmount: Utility.round(this.getMortgageAmount()),
             loanAmount: Utility.round(this.getLoanAmount()),
             balanceAfterPayment: Utility.round(this.calculateBalanceAfterPayment(monthCounter)),
@@ -206,6 +207,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
             hasPMI: this.hasPMI(),
             pmiAmount: Utility.round(this.getPMIAmount(monthCounter)),
             pmiRate: Utility.round(this.getPMIRate()),
+            pmiDropOffPoint: this.pmiDropOffRatio,
         };
     }
 

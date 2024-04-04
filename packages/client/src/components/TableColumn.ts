@@ -488,62 +488,6 @@ export const getZillowURL = (property: ListingWithScenariosDTO): string => {
     return property.listingDetails.zillowURL;
 };
 
-export const getPrice = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.purchasePrice;
-};
-
-export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.incomes.rentalIncome;
-};
-
-export const getInitialCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.totalAmount;
-};
-
-export const getLoanAmount = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.loanAmount.amount;
-};
-
-export const getDownPaymentAmount = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.downpayment.amount;
-};
-
-export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.downpayment.percentage;
-};
-
-export const getAnnualInterestRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.financingTerms.annualInterestRate;
-};
-
-export const getROI = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.ROI;
-};
-
-export const getCapRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.capRate;
-};
-
-export const getRecurringCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.recurringCosts;
-};
-
-export const getInitialMonthlyAmount = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.monthlyPayment;
-};
-
-export const getMortgage = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.mortgageAmount;
-};
-
-export const getMonthlyCashFlow = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.monthlyCashFlow;
-};
-
-export const getYearlyCashFlow = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].investmentProjections.yearlyCashFlow;
-};
-
 export const getCity = (property: ListingWithScenariosDTO): string => {
     return property.listingDetails.propertyDetails.address?.city ?? "";
 };
@@ -661,31 +605,31 @@ export const getDescription = (property: ListingWithScenariosDTO): string => {
 };
 
 export const getPMIRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.pmiDetails.pmiRate;
+    return property.metrics.initialInvestmenDetails.Mortgage.breakdown.pmiRate;
 };
 
 export const getPMIDropoffPoint = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.pmiDetails.pmiDropoffPoint;
+    return property.metrics.initialInvestmenDetails.Mortgage.breakdown.pmiDropOffPoint;
 };
 
 export const getMonthlyPropertyTax = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyPropertyTax;
+    return property.metrics.initialInvestmenDetails["Fixed Recurring Expense"].breakdown["Property Tax"].amount;
 };
 
 export const getMonthlyHomeInsuranceAmount = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyHomeInsuranceAmount;
+    return property.metrics.initialInvestmenDetails["Fixed Recurring Expense"].breakdown["Monthly Home Insurance"].amount;
 };
 
 export const getMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.fixedMonthlyExpenses.monthlyHOAFeesAmount;
+    return property.metrics.initialInvestmenDetails["Fixed Recurring Expense"].breakdown["Monthly HOA Fee"].amount;
 };
 
 export const getTermInYears = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.financingTerms.termInYears;
+    return property.metrics.initialInvestmenDetails.Mortgage.breakdown.termLength;
 };
 
 export const getInterestType = (property: ListingWithScenariosDTO): string => {
-    return property.metrics[0].mortgageDetails.financingTerms.interestType;
+    return property.metrics.initialInvestmenDetails.Mortgage.breakdown.interestType;
 };
 
 export const getPropertyManagementRate = (property: ListingWithScenariosDTO): number => {
@@ -778,4 +722,60 @@ export const getOperatingExpenses = (property: ListingWithScenariosDTO): number 
 
 export const getPropertyTaxes = (property: ListingWithScenariosDTO): number => {
     return property.metrics[0].taxImplications.propertyTaxes ?? -1;
+};
+
+export const getPrice = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.purchasePrice;
+};
+
+export const getRentEstimate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.incomes.rentalIncome;
+};
+
+export const getInitialCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.totalAmount;
+};
+
+export const getLoanAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.loanAmount.amount;
+};
+
+export const getDownPaymentAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.amount;
+};
+
+export const getDownPaymentPercentage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.downpayment.percentage;
+};
+
+export const getAnnualInterestRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].mortgageDetails.financingTerms.annualInterestRate;
+};
+
+export const getROI = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.ROI;
+};
+
+export const getCapRate = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.capRate;
+};
+
+export const getRecurringCosts = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.recurringCosts;
+};
+
+export const getInitialMonthlyAmount = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyPayment;
+};
+
+export const getMortgage = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.mortgageAmount;
+};
+
+export const getMonthlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.monthlyCashFlow;
+};
+
+export const getYearlyCashFlow = (property: ListingWithScenariosDTO): number => {
+    return property.metrics[0].investmentProjections.yearlyCashFlow;
 };

@@ -72,6 +72,9 @@ export class InvestmentCalculator {
 
             [TransactionType.MORTGAGE]: this.getMortgageDTO(0),
 
+            [TransactionType.FIXED_RECURRING_EXPENSE]:
+                this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, 0),
+
             [TransactionType.INCOME_STREAMS]:
                 this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, 0),
 
