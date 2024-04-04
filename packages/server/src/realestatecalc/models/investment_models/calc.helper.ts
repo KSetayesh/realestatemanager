@@ -9,7 +9,7 @@ export class CalcHelper {
         monthCounter: number,
     ): number {
         const rateOfGrowth = 1 + (growthRate / 100);
-        return principal * (Math.pow(rateOfGrowth, monthCounter));
+        return principal * (Math.pow(rateOfGrowth, getYear(monthCounter)));
     }
 
     getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {

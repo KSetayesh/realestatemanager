@@ -46,7 +46,7 @@ export class PurchasePrice {
         return this.calcHelper.getFutureDatedAmount(
             this.getInitialPurchasePrice(),
             getMonthlyAppreciationRate(this.getExpectedAppreciationRate()),
-            getYear(monthCounter),
+            monthCounter,
         );
 
     }

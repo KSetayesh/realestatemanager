@@ -58,7 +58,7 @@ export class InvestmentCalculator {
             ammortizationList.push(monthlyInvestmentDetailsDTO);
         }
 
-        let returnData: AmortizationBreakdownDTO = {
+        const returnData: AmortizationBreakdownDTO = {
             initialInvestmenDetails: this.getInitialValues(),
             amortizationData: ammortizationList,
         }
@@ -184,16 +184,7 @@ export class InvestmentCalculator {
 
     private calculateMonthlyCashFlow(monthCounter: number): number {
         return this.getNetIncome(this.rentalEstimate, monthCounter);
-        // const recurringExpenses = this.getRecurringExpenses();
-        // return rent - (this.getMortgageAmountWithFixedMonthlyExpenses() + recurringExpenses);
     }
-
-    // private calculateFutureDatedMonthlyCashFlow(numberOfYearsFromNow: number): number {
-    //     const futureDatedRecurringExpenses = this.getFutureDatedRecurringExpenses(numberOfYearsFromNow);
-    //     const futureDatedRentAmount = this.getFutureDatedRentalIncome(numberOfYearsFromNow);
-    //     const futureDatedMortgageAmountWithFixedMonthlyExpenses = this.getFutureDatedMortgageAmountWithFixedMonthlyExpenses(numberOfYearsFromNow);
-    //     return futureDatedRentAmount - (futureDatedMortgageAmountWithFixedMonthlyExpenses + futureDatedRecurringExpenses);
-    // }
 
     private calculateCapRate(monthCounter: number): number {
         const annualNetOperatingIncome = (this.calculateMonthlyCashFlow(monthCounter) + this.mortgageCalc.getAmount(0)) * 12;
@@ -208,16 +199,8 @@ export class InvestmentCalculator {
         return this.purchasePrice.getInitialPurchasePrice();
     }
 
-    private get initialRentalAmount(): number {
-        return this.rentalEstimate.getInitialRentalAmount();
-    }
-
     private get totalInitialCosts(): number {
         return this.transactionManager.getTotalInitialCosts(this.purchasePrice);
     }
-
-    // private get recurringExpenses(): number {
-    //     return this.transactionManager.getTotalRecurringExpenseAmount(this.rentalEstimate, 0);
-    // }
 
 }
