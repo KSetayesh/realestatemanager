@@ -222,6 +222,7 @@ export interface MonthlyInvestmentBreakdownDTO {
         ROI: number;
         monthlyCashFlow: number;
         yearlyCashFlow: number;
+        equityAmount: number;
     },
     transactions: {
         expenseAmount: number;

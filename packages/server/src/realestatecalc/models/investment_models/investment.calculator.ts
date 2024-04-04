@@ -95,6 +95,7 @@ export class InvestmentCalculator {
                 ROI: Utility.round(this.calculateROI(monthCounter)),
                 monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(monthCounter)),
                 yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(monthCounter)),
+                equityAmount: Utility.round(this.calculateEquityAmount(monthCounter)),
             },
             transactions: {
                 expenseAmount: Utility.round(this.getTotalRecurringExpenseAmount(this.rentalEstimate, monthCounter)),
@@ -172,6 +173,11 @@ export class InvestmentCalculator {
     }
 
     //--------------------------------------------------------------------------------------------------------
+
+    // come back to this
+    private calculateEquityAmount(monthCounter: number): number {
+        return 0;
+    }
 
     private calculateROI(monthCounter: number): number {
         const downPaymentAmount = this.downPaymentAmount;
