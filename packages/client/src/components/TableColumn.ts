@@ -633,43 +633,52 @@ export const getInterestType = (property: ListingWithScenariosDTO): string => {
 };
 
 export const getPropertyManagementRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.propertyManagementRate;
+    return property.metrics.initialInvestmenDetails["Operational Recurring Expense"].breakdown["Property Management Expense"].percentage;
 };
 
 export const getVacancyRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.vacancyRate;
+    return property.metrics.initialInvestmenDetails["Operational Recurring Expense"].breakdown["Vacancy Expense"].percentage;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.vacancyRate;
 };
 
 export const getMaintenanceRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.maintenanceRate;
+    return property.metrics.initialInvestmenDetails["Operational Recurring Expense"].breakdown["Maintenance Expense"].percentage;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.maintenanceRate;
 };
 
 export const getOtherExpensesRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.otherExpensesRate;
+    return property.metrics.initialInvestmenDetails["Operational Recurring Expense"].breakdown["Other Expeneses"].percentage;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.otherExpensesRate;
 };
 
 export const getCapExReserveRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.capExReserveRate;
+    return property.metrics.initialInvestmenDetails["Operational Recurring Expense"].breakdown["Cap Ex Reserve Expense"].percentage;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.recurringExpenses.capExReserveRate;
 };
 
 export const getLegalAndProfessionalFees = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.legalAndProfessionalFees;
+    return property.metrics.initialInvestmenDetails["Initial Expense"].breakdown["Legal And Professional Fees"].amount;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.legalAndProfessionalFees;
 };
 
 export const getInitialRepairCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.initialRepairCosts.amount;
+    return property.metrics.initialInvestmenDetails["Initial Expense"].breakdown["Initial Repair Costs"].amount;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.initialRepairCosts.amount;
 };
 
 export const getTravelingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.travelingCosts;
+    return property.metrics.initialInvestmenDetails["Initial Expense"].breakdown["Traveling Costs"].amount;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.travelingCosts;
 };
 
 export const getClosingCosts = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.closingCosts.amount;
+    return property.metrics.initialInvestmenDetails["Initial Expense"].breakdown["Closing Costs"].amount;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.closingCosts.amount;
 };
 
 export const getOtherInitialExpenses = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.otherExpenses.amount;
+    return property.metrics.initialInvestmenDetails["Initial Expense"].breakdown["Other Initial Expenses"].amount;
+    // return property.metrics[0].mortgageDetails.transactions.expenses.initialCosts.breakdown.otherExpenses.amount;
 };
 
 export const getAnnualRentIncreaseRate = (property: ListingWithScenariosDTO): number => {
