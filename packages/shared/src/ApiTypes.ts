@@ -217,6 +217,12 @@ export interface MonthlyInvestmentBreakdownDTO {
         appreciationRate: number;
         homeValue: number;
     },
+    investmentBreakdown: {
+        capRate: number;
+        ROI: number;
+        monthlyCashFlow: number;
+        yearlyCashFlow: number;
+    },
     transactions: {
         expenseAmount: number;
         incomeAmount: number;

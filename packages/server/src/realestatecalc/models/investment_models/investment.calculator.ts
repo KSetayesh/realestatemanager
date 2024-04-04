@@ -89,6 +89,13 @@ export class InvestmentCalculator {
                 appreciationRate: this.purchasePrice.getExpectedAppreciationRate(),
                 homeValue: Utility.round(this.purchasePrice.getFutureDatedHomeValue(monthCounter)),
             },
+            // Go back to the calculations for each of these 4 investmentBreakdown properties
+            investmentBreakdown: {
+                capRate: Utility.round(this.calculateCapRate(monthCounter)),
+                ROI: Utility.round(this.calculateROI(monthCounter)),
+                monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(monthCounter)),
+                yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(monthCounter)),
+            },
             transactions: {
                 expenseAmount: Utility.round(this.getTotalRecurringExpenseAmount(this.rentalEstimate, monthCounter)),
                 incomeAmount: Utility.round(this.getTotalIncomeStreams(this.rentalEstimate, monthCounter)),
