@@ -16,12 +16,14 @@ import {
     Utility
 } from "@realestatemanager/shared";
 import { TransactionManager } from "./transaction.manager";
+import { GrowthProjections } from "./growth.projections.model";
 
 
 export class InvestmentCalculator {
 
     private transactionManager: TransactionManager;
     private mortgageCalc: MortgageCalculator;
+    private growthProjections: GrowthProjections;
 
     // Financing
     private purchasePrice: PurchasePrice;
@@ -30,11 +32,13 @@ export class InvestmentCalculator {
     constructor(
         transactionManager: TransactionManager,
         mortgageCalc: MortgageCalculator,
+        growthProjections: GrowthProjections,
         purchasePrice: PurchasePrice,
         rentalEstimate: RentEstimate,
     ) {
         this.transactionManager = transactionManager;
         this.mortgageCalc = mortgageCalc;
+        this.growthProjections = growthProjections;
         this.purchasePrice = purchasePrice;
         this.rentalEstimate = rentalEstimate;
     }
@@ -60,6 +64,7 @@ export class InvestmentCalculator {
 
         const returnData: AmortizationBreakdownDTO = {
             initialInvestmenDetails: this.getInitialValues(),
+            growthProjections: this.growthProjections.toDTO(),
             amortizationData: ammortizationList,
         }
 

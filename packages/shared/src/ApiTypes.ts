@@ -267,6 +267,7 @@ export type GrowthProjectionsDTO = {
 
 export interface AmortizationBreakdownDTO {
     initialInvestmenDetails: InitialInvestmentBreakdownDTO;
+    growthProjections: GrowthProjectionsDTO;
     amortizationData: MonthlyInvestmentDetailsDTO[];
 };
 

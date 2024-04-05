@@ -185,6 +185,7 @@ export class InvestmentMetricBuilder {
         return new InvestmentCalculator(
             txnManager,
             mortgageCalc,
+            growthProjections,
             purchasePriceObj,
             rentEstimateObj
         );
