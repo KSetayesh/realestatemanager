@@ -219,13 +219,7 @@ export interface MonthlyInvestmentBreakdownDTO {
         appreciationRate: number;
         homeValue: number;
     },
-    investmentBreakdown: {
-        capRate: number;
-        ROI: number;
-        monthlyCashFlow: number;
-        yearlyCashFlow: number;
-        equityAmount: number;
-    },
+    investmentBreakdown: InvestmentBreakdownDTO,
     transactions: {
         expenseAmount: number;
         incomeAmount: number;
@@ -242,16 +236,18 @@ export interface MonthlyInvestmentBreakdownDTO {
 export interface MonthlyInvestmentDetailsDTO {
     monthlyDateData: MonthlyDateData;
     monthlyBreakdown: MonthlyInvestmentBreakdownDTO;
-}
+};
+
+export interface InvestmentBreakdownDTO {
+    capRate: number;
+    ROI: number;
+    monthlyCashFlow: number;
+    yearlyCashFlow: number;
+    equityAmount: number;
+};
 
 export interface InitialInvestmentBreakdownDTO {
-    investmentBreakdown: {
-        capRate: number;
-        ROI: number;
-        monthlyCashFlow: number;
-        yearlyCashFlow: number;
-        equityAmount: number;
-    },
+    investmentBreakdown: InvestmentBreakdownDTO,
     transactions: {
         [TransactionType.FINANCING]: FinancingDTO;
         [TransactionType.MORTGAGE]: MortgageDTO;

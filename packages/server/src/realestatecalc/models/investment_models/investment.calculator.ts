@@ -6,6 +6,7 @@ import {
     AmortizationBreakdownDTO,
     FinancingDTO,
     InitialInvestmentBreakdownDTO,
+    InvestmentBreakdownDTO,
     MonthlyDateData,
     MonthlyInvestmentBreakdownDTO,
     MonthlyInvestmentDetailsDTO,
@@ -78,13 +79,7 @@ export class InvestmentCalculator {
 
     private getInitialValues(): InitialInvestmentBreakdownDTO {
         return {
-            investmentBreakdown: {
-                capRate: Utility.round(this.calculateCapRate(0)),
-                ROI: Utility.round(this.calculateROI(0)),
-                monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(0)),
-                yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(0)),
-                equityAmount: Utility.round(this.calculateEquityAmount(0)),
-            },
+            investmentBreakdown: this.getInvestmentBreakdownDTO(0),
             transactions: {
                 [TransactionType.FINANCING]: this.getFinancingDTO(),
 
@@ -112,13 +107,7 @@ export class InvestmentCalculator {
                 homeValue: Utility.round(this.purchasePrice.getFutureDatedHomeValue(monthCounter)),
             },
             // Go back to the calculations for each of these 4 investmentBreakdown properties
-            investmentBreakdown: {
-                capRate: Utility.round(this.calculateCapRate(monthCounter)),
-                ROI: Utility.round(this.calculateROI(monthCounter)),
-                monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(monthCounter)),
-                yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(monthCounter)),
-                equityAmount: Utility.round(this.calculateEquityAmount(monthCounter)),
-            },
+            investmentBreakdown: this.getInvestmentBreakdownDTO(monthCounter),
             transactions: {
                 expenseAmount: Utility.round(this.getTotalRecurringExpenseAmount(this.rentalEstimate, monthCounter)),
                 incomeAmount: Utility.round(this.getTotalIncomeStreams(this.rentalEstimate, monthCounter)),
@@ -138,6 +127,16 @@ export class InvestmentCalculator {
             },
         };
 
+    }
+
+    private getInvestmentBreakdownDTO(monthCounter: number): InvestmentBreakdownDTO {
+        return {
+            capRate: Utility.round(this.calculateCapRate(monthCounter)),
+            ROI: Utility.round(this.calculateROI(monthCounter)),
+            monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(monthCounter)),
+            yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(monthCounter)),
+            equityAmount: Utility.round(this.calculateEquityAmount(monthCounter)),
+        };
     }
 
     private getFinancingDTO(): FinancingDTO {
