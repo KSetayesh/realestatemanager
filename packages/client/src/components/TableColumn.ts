@@ -682,39 +682,39 @@ export const getOtherInitialExpenses = (property: ListingWithScenariosDTO): numb
 };
 
 export const getAnnualRentIncreaseRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].growthProjections.annualRentIncreaseRate;
+    return property.metrics.growthProjections.annualRentIncreaseRate;
 };
 
 export const getAnnualAppreciationRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].growthProjections.annualAppreciationRate;
+    return property.metrics.growthProjections.annualAppreciationRate;
 };
 
 export const getAnnualHOAFeesIncreaseRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].growthProjections.annualHOAFeesIncreaseRate;
+    return property.metrics.growthProjections.annualHOAFeesIncreaseRate ?? 0;
 };
 
 export const getAnnualTaxIncreaseRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].growthProjections.annualTaxIncreaseRate;
+    return property.metrics.growthProjections.annualTaxIncreaseRate ?? 0;
 };
 
 export const getAnnualHomeInsuranceIncreaseRate = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].growthProjections.annualHomeInsuranceIncreaseRate;
+    return property.metrics.growthProjections.annualHomeInsuranceIncreaseRate ?? 0;
 };
 
 export const getParkingFees = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.parkingFees;
+    return property.metrics.initialInvestmenDetails["Income Streams"].breakdown["Parking Fees"].amount;
 };
 
 export const getLaundryServices = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.laundryServices;
+    return property.metrics.initialInvestmenDetails["Income Streams"].breakdown["Laundry Service"].amount;
 };
 
 export const getStorageUnitFees = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.storageUnitFees;
+    return property.metrics.initialInvestmenDetails["Income Streams"].breakdown["Storage Unit Fees"].amount;
 };
 
 export const getOtherAdditionalIncomeStreams = (property: ListingWithScenariosDTO): number => {
-    return property.metrics[0].mortgageDetails.transactions.incomes.additionalIncomeStreams.otherAdditionalIncomeStreams;
+    return property.metrics.initialInvestmenDetails["Income Streams"].breakdown["Other Additional Incomes Streams"].amount;   
 };
 
 export const getTaxDepreciation = (property: ListingWithScenariosDTO): number => {

@@ -25,6 +25,7 @@ import { PurchasePrice } from "../models/investment_models/purchase.price";
 import { InitialCost } from "../models/investment_models/initial.cost";
 import { RentEstimate } from "../models/investment_models/rent.estimate";
 import { InvestmentCalculator } from "../models/investment_models/investment.calculator";
+import { TaxImplications } from "../models/investment_models/tax.implications.model";
 
 export class InvestmentMetricBuilder {
 
@@ -182,10 +183,17 @@ export class InvestmentMetricBuilder {
             pmiRate,
         );
 
+        const taxImplications: TaxImplications = new TaxImplications(
+            depreciation,
+            mortgageInterest,
+            operatingExpenses,
+        );
+
         return new InvestmentCalculator(
             txnManager,
             mortgageCalc,
             growthProjections,
+            taxImplications,
             purchasePriceObj,
             rentEstimateObj
         );

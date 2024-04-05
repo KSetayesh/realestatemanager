@@ -17,6 +17,7 @@ import {
 } from "@realestatemanager/shared";
 import { TransactionManager } from "./transaction.manager";
 import { GrowthProjections } from "./growth.projections.model";
+import { TaxImplications } from "./tax.implications.model";
 
 
 export class InvestmentCalculator {
@@ -24,6 +25,7 @@ export class InvestmentCalculator {
     private transactionManager: TransactionManager;
     private mortgageCalc: MortgageCalculator;
     private growthProjections: GrowthProjections;
+    private taxImplications: TaxImplications;
 
     // Financing
     private purchasePrice: PurchasePrice;
@@ -33,12 +35,14 @@ export class InvestmentCalculator {
         transactionManager: TransactionManager,
         mortgageCalc: MortgageCalculator,
         growthProjections: GrowthProjections,
+        taxImplications: TaxImplications,
         purchasePrice: PurchasePrice,
         rentalEstimate: RentEstimate,
     ) {
         this.transactionManager = transactionManager;
         this.mortgageCalc = mortgageCalc;
         this.growthProjections = growthProjections;
+        this.taxImplications = taxImplications;
         this.purchasePrice = purchasePrice;
         this.rentalEstimate = rentalEstimate;
     }
@@ -65,6 +69,7 @@ export class InvestmentCalculator {
         const returnData: AmortizationBreakdownDTO = {
             initialInvestmenDetails: this.getInitialValues(),
             growthProjections: this.growthProjections.toDTO(),
+            taxImplications: this.taxImplications.toDTO(),
             amortizationData: ammortizationList,
         }
 
