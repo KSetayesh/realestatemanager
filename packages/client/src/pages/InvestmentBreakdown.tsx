@@ -1,9 +1,19 @@
-import { AmortizationDetailsDTO, ListingWithScenariosDTO, ValueInput, InvestmentScenarioRequest } from '@realestatemanager/shared';
+import {
+    ListingWithScenariosDTO,
+    ValueInput,
+    InvestmentScenarioRequest,
+    MonthlyInvestmentDetailsDTO
+} from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 import PropertyDetailsModal from './PropertyDetailsModal';
-import { createDefaultRowData, defaultColumns, getAnnualHOAFeesIncreaseRate, getAnnualHomeInsuranceIncreaseRate } from '../components/TableColumn';
+import {
+    createDefaultRowData,
+    defaultColumns,
+    getAnnualHOAFeesIncreaseRate,
+    getAnnualHomeInsuranceIncreaseRate
+} from '../components/TableColumn';
 import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
 import {
     getAnnualAppreciationRate,
@@ -345,32 +355,37 @@ const InvestmentBreakdown: React.FC = () => {
         },
     ];
 
-    const createRowDataForInvestmentMetrics = (ammortizationDetail: AmortizationDetailsDTO): TableRow => {
+    const createRowDataForInvestmentMetrics = (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
         return {
-            year: ammortizationDetail.year,
-            month: ammortizationDetail.month,
-            date: ammortizationDetail.date,
-            recurringCosts: ammortizationDetail.recurringCosts,
-            fixedCosts: ammortizationDetail.fixedCosts,
-            monthlyPayment: ammortizationDetail.monthlyPayment,
-            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyPaymentAndRecurringCosts,
-            rentEstimate: ammortizationDetail.rentEstimate,
-            monthlyCashFlow: ammortizationDetail.monthlyCashFlow,
-            accumulatedCashFlow: ammortizationDetail.accumulatedCashFlow,
-            mortgageAmount: ammortizationDetail.mortgageAmount,
-            interestPayment: ammortizationDetail.amountPaidInInterest.amount,
-            principalPayment: ammortizationDetail.amountPaidInPrincipal.amount,
-            totalInterestPaid: ammortizationDetail.totalInterestPaid,
-            remainingBalance: ammortizationDetail.remainingBalance,
-            equityAmountWithDownPayment: ammortizationDetail.equityWithDownPayment,
-            equityAmountWithoutDownPayment: ammortizationDetail.equityAmountWithoutDownPayment,
-            equityAmountWithAppreciation: ammortizationDetail.equityAmountWithAppreciation,
-            appreciationAmount: ammortizationDetail.appreciationAmount,
+            year: ammortizationDetail.monthlyDateData.yearCounter,
+            month: ammortizationDetail.monthlyDateData.monthMod12,
+            date: ammortizationDetail.monthlyDateData.dateAsString,
+            recurringCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount,
+            fixedCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount,
+            // Come back to this
+            monthlyPayment: 0, // ammortizationDetail.monthlyPayment,
+            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount, //ammortizationDetail.monthlyPaymentAndRecurringCosts,
+            rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
+            monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
+            // come back to this
+            accumulatedCashFlow: 0,//ammortizationDetail.accumulatedCashFlow,
+            mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+            interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
+            principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
+            // come back to this
+            totalInterestPaid: 0, //ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown
+            remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
+            equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
+            // come back to this
+            equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,
+            // come back to this
+            equityAmountWithAppreciation: 0, //ammortizationDetail.equityAmountWithAppreciation,
+            appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
         };
     };
 
-    const createTableDataForInvestmentMetrics = (): TableDataItem<AmortizationDetailsDTO>[] => {
-        const ammortizationDetails: AmortizationDetailsDTO[] = property.metrics[0].investmentProjections.ammortizationDetails!;
+    const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsDTO>[] => {
+        const ammortizationDetails: MonthlyInvestmentDetailsDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,
@@ -694,11 +709,11 @@ const InvestmentBreakdown: React.FC = () => {
             },
             investmentDetails: {
                 mortgageDetails: {
-                    annualInterestRate: Number(formData.annualInterestRate),
+                    annualInterestRate: { type: ValueType.RATE, rate: Number(formData.annualInterestRate) },
                     termInYears: Number(formData.termInYears),
                     interestType: getInterestType(formData.interestType)!,
                     downPayment: convertToValueInput(formData.downPaymentType, Number(formData.downPaymentPercentage))!,
-                    pmiRate: Number(formData.pmiRate),
+                    pmiRate: { type: ValueType.RATE, rate: Number(formData.pmiRate) },
                     pmiDropoffPoint: Number(formData.pmiDropoffPoint),
                     monthlyPropertyTax: convertToValueInput(formData.monthlyPropertyTaxType, Number(formData.monthlyPropertyTax))!,
                     monthlyHomeInsuranceAmount: convertToValueInput(formData.monthlyHomeInsuranceAmountType, Number(formData.monthlyHomeInsuranceAmount))!,
@@ -735,7 +750,7 @@ const InvestmentBreakdown: React.FC = () => {
                     amount: Number(formData.rentEstimate),
                     type: ValueType.AMOUNT,
                 },
-                purchasePrice: Number(formData.purchasePrice),
+                purchasePrice: { type: ValueType.AMOUNT, amount: Number(formData.purchasePrice) },
                 growthProjections: {
                     annualRentIncreaseRate: {
                         rate: Number(formData.annualRentIncreaseRate),

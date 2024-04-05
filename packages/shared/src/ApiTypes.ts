@@ -245,12 +245,21 @@ export interface MonthlyInvestmentDetailsDTO {
 }
 
 export interface InitialInvestmentBreakdownDTO {
-    [TransactionType.FINANCING]: FinancingDTO;
-    [TransactionType.MORTGAGE]: MortgageDTO;
-    [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
-    [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesDTO;
-    [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
-    [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+    investmentBreakdown: {
+        capRate: number;
+        ROI: number;
+        monthlyCashFlow: number;
+        yearlyCashFlow: number;
+        equityAmount: number;
+    },
+    transactions: {
+        [TransactionType.FINANCING]: FinancingDTO;
+        [TransactionType.MORTGAGE]: MortgageDTO;
+        [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
+        [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesDTO;
+        [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
+        [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+    }
 };
 
 export type GrowthProjectionsDTO = {

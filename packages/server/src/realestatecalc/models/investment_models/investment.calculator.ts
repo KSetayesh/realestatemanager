@@ -78,20 +78,29 @@ export class InvestmentCalculator {
 
     private getInitialValues(): InitialInvestmentBreakdownDTO {
         return {
-            [TransactionType.FINANCING]: this.getFinancingDTO(),
+            investmentBreakdown: {
+                capRate: Utility.round(this.calculateCapRate(0)),
+                ROI: Utility.round(this.calculateROI(0)),
+                monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(0)),
+                yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(0)),
+                equityAmount: Utility.round(this.calculateEquityAmount(0)),
+            },
+            transactions: {
+                [TransactionType.FINANCING]: this.getFinancingDTO(),
 
-            [TransactionType.MORTGAGE]: this.getMortgageDTO(0),
+                [TransactionType.MORTGAGE]: this.getMortgageDTO(0),
 
-            [TransactionType.FIXED_RECURRING_EXPENSE]:
-                this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, 0),
+                [TransactionType.FIXED_RECURRING_EXPENSE]:
+                    this.transactionManager.getRecurringFixedExpensesDTO(this.rentalEstimate, 0),
 
-            [TransactionType.INCOME_STREAMS]:
-                this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, 0),
+                [TransactionType.INCOME_STREAMS]:
+                    this.transactionManager.getIncomeStreamsDTO(this.rentalEstimate, 0),
 
-            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
-                this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, 0),
+                [TransactionType.OPERATIONAL_RECURRING_EXPENSE]:
+                    this.transactionManager.getRecurringOperationalCostsDTO(this.rentalEstimate, 0),
 
-            [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
+                [TransactionType.INITIAL_EXPENSE]: this.transactionManager.getInitialCostsDTO(this.purchasePrice),
+            },
         };
     }
 
