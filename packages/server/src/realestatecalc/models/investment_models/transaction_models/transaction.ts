@@ -1,11 +1,28 @@
-import { ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { getYear } from "src/shared/Constants";
 
 export abstract class Transaction {
 
-    constructor() { }
+    private _txnKey: TransactionKey;
+    private _txnType: TransactionType;
 
-    getFutureDatedAmount(
+    constructor(
+        txnKey: TransactionKey,
+        txnType: TransactionType
+    ) {
+        this._txnKey = txnKey;
+        this._txnType = txnType;
+    }
+
+    get txnKey(): TransactionKey {
+        return this._txnKey;
+    }
+
+    get txnType(): TransactionType {
+        return this._txnType;
+    }
+
+    protected getFutureDatedAmount(
         principal: number,
         growthRate: number,
         monthCounter: number,
@@ -14,7 +31,7 @@ export abstract class Transaction {
         return principal * (Math.pow(rateOfGrowth, getYear(monthCounter)));
     }
 
-    getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {
+    protected getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {
         if (isValueAmountInput(valueInput)) {
             return valueInput.amount;
         }
@@ -23,7 +40,7 @@ export abstract class Transaction {
         }
     }
 
-    getTransactionPercent(valueInput: ValueInput, principalAmount: number): number {
+    protected getTransactionPercent(valueInput: ValueInput, principalAmount: number): number {
         if (isValueAmountInput(valueInput)) {
             return (valueInput.amount / principalAmount) * 100;
         }

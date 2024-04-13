@@ -6,29 +6,17 @@ import { Transaction } from "./transaction";
 export class RecurringOperationalCost extends Transaction implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
 
     private _baseValue: ValueRateInput;
-    private _txnKey: TransactionKey;
-    private _txnType: TransactionType;
     private _cumulatedAmount: number;
     private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueRateInput) {
-        super();
-        this._txnKey = txnKey;
-        this._txnType = TransactionType.OPERATIONAL_RECURRING_EXPENSE;
+        super(txnKey, TransactionType.OPERATIONAL_RECURRING_EXPENSE);
         this._baseValue = baseValue;
         this._isExpense = true;
     }
 
     get baseValue(): ValueRateInput {
         return this._baseValue;
-    }
-
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
     }
 
     get cumulatedAmount(): number {

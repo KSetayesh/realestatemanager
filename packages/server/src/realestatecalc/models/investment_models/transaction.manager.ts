@@ -8,12 +8,12 @@ import {
     TxnDTO,
     Utility
 } from "@realestatemanager/shared";
-import { Income } from "./income";
-import { InitialCost } from "./initial.cost";
-import { PurchasePrice } from "./purchase.price";
-import { RecurringFixedCost } from "./recurring.fixed.cost";
-import { RecurringOperationalCost } from "./recurring.operational.cost";
-import { RentEstimate } from "./rent.estimate";
+import { Income } from "./transaction_models/income";
+import { InitialCost } from "./transaction_models/initial.cost";
+import { PurchasePrice } from "./transaction_models/purchase.price";
+import { RecurringFixedCost } from "./transaction_models/recurring.fixed.cost";
+import { RecurringOperationalCost } from "./transaction_models/recurring.operational.cost";
+import { RentEstimate } from "./transaction_models/rent.estimate";
 
 
 export class TransactionManager {

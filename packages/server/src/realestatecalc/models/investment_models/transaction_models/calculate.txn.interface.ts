@@ -15,7 +15,6 @@ export interface CalculateTxnInterface<T extends ValueInput, Z extends RentEstim
 
     getRate(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number): number;
 
-    // Update return value from any to something else
     toDTO(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number, previousTotalAmount?: number): TxnDTO;
 
 };

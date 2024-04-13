@@ -5,6 +5,7 @@ import {
     InterestType,
     MortgageTxnDTO,
     TransactionKey,
+    TransactionType,
     Utility,
     ValueInput,
     ValueRateInput,
@@ -38,7 +39,7 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
         pmiDropOffRatio: number = DefaultInvestmentRates.PMI_DROP_OFF_POINT,
         pmiValue: ValueInput) {
 
-        super();
+        super(TransactionKey.MORTGAGE, TransactionType.MORTGAGE);
         this.purchasePrice = purchasePrice;
         this.downPaymentTxn = downPaymentTxn;
         this._loanTermYears = loanTermYears;

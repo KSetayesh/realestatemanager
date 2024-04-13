@@ -20,10 +20,10 @@ import {
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { TransactionBuilder } from "./transaction.builder";
 import { TransactionManager } from "../models/investment_models/transaction.manager";
-import { MortgageCalculator } from "../models/investment_models/mortgage.calc";
-import { PurchasePrice } from "../models/investment_models/purchase.price";
-import { InitialCost } from "../models/investment_models/initial.cost";
-import { RentEstimate } from "../models/investment_models/rent.estimate";
+import { MortgageCalculator } from "../models/investment_models/transaction_models/mortgage.calc";
+import { PurchasePrice } from "../models/investment_models/transaction_models/purchase.price";
+import { InitialCost } from "../models/investment_models/transaction_models/initial.cost";
+import { RentEstimate } from "../models/investment_models/transaction_models/rent.estimate";
 import { InvestmentCalculator } from "../models/investment_models/investment.calculator";
 import { TaxImplications } from "../models/investment_models/tax.implications.model";
 

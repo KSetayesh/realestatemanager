@@ -1,7 +1,7 @@
 import { getYear } from "src/shared/Constants";
-import { MortgageCalculator } from "./mortgage.calc";
-import { PurchasePrice } from "./purchase.price";
-import { RentEstimate } from "./rent.estimate";
+import { MortgageCalculator } from "./transaction_models/mortgage.calc";
+import { PurchasePrice } from "./transaction_models/purchase.price";
+import { RentEstimate } from "./transaction_models/rent.estimate";
 import {
     AmortizationBreakdownDTO,
     FinancingDTO,

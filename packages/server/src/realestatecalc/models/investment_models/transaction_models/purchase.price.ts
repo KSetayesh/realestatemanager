@@ -4,37 +4,17 @@ import { Transaction } from "./transaction";
 export class PurchasePrice extends Transaction {
     private initialPurchasePrice: ValueAmountInput;
     private expectedAppreciationRate: ValueRateInput;
-    private _txnKey: TransactionKey;
-    private _txnType: TransactionType;
 
     constructor(
         initialPurchasePrice: ValueAmountInput,
         expectedAppreciationRate: ValueRateInput
     ) {
-        super();
-        this._txnKey = TransactionKey.PURCHASE_PRICE;
-        this._txnType = TransactionType.FINANCING;
+        super(TransactionKey.PURCHASE_PRICE, TransactionType.FINANCING);
         this.initialPurchasePrice = initialPurchasePrice;
         this.expectedAppreciationRate = expectedAppreciationRate;
     }
 
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
-    }
-
-    getInitialPurchasePrice(): number {
-        return this.initialPurchasePrice.amount;
-    }
-
-    getExpectedAppreciationRate(): number {
-        return this.expectedAppreciationRate.rate;
-    }
-
-    getFutureDatedAmount(
+    protected getFutureDatedAmount(
         principal: number,
         growthRate: number,
         monthCounter: number,
@@ -46,6 +26,14 @@ export class PurchasePrice extends Transaction {
         };
 
         return principal * (Math.pow(1 + getMonthlyAppreciationRate(growthRate), monthCounter));
+    }
+
+    getInitialPurchasePrice(): number {
+        return this.initialPurchasePrice.amount;
+    }
+
+    getExpectedAppreciationRate(): number {
+        return this.expectedAppreciationRate.rate;
     }
 
     getFutureDatedHomeValue(monthCounter: number): number {

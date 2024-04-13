@@ -4,23 +4,11 @@ import { Transaction } from "./transaction";
 export class RentEstimate extends Transaction {
     private rentEstimate: ValueAmountInput;
     private expectedGrowthRate: ValueRateInput;
-    private _txnType: TransactionType;
-    private _txnKey: TransactionKey;
 
     constructor(rentEstimate: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
-        super();
-        this._txnType = TransactionType.INCOME_STREAMS;
-        this._txnKey = TransactionKey.RENTAL_INCOME;
+        super(TransactionKey.RENTAL_INCOME, TransactionType.INCOME_STREAMS);
         this.rentEstimate = rentEstimate;
         this.expectedGrowthRate = expectedGrowthRate;
-    }
-
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
     }
 
     getInitialRentalAmount(): number {

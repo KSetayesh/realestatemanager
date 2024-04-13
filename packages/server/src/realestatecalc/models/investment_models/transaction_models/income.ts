@@ -7,15 +7,11 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
 
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
-    private _txnType: TransactionType;
-    private _txnKey: TransactionKey;
     private _cumulatedAmount: number;
     private _isExpense: boolean
 
     constructor(txnKey: TransactionKey, baseValue: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
-        super();
-        this._txnKey = txnKey;
-        this._txnType = TransactionType.INCOME_STREAMS;
+        super(txnKey, TransactionType.INCOME_STREAMS);
         this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
         this._cumulatedAmount = 0;
@@ -28,14 +24,6 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
 
     get rateOfGrowth(): ValueRateInput {
         return this._rateOfGrowth;
-    }
-
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
     }
 
     get cumulatedAmount(): number {

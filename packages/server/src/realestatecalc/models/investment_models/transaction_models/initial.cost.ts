@@ -6,28 +6,16 @@ import { Transaction } from "./transaction";
 export class InitialCost extends Transaction implements CalculateTxnInterface<ValueInput, PurchasePrice> {
 
     private _baseValue: ValueInput;
-    private _txnKey: TransactionKey;
-    private _txnType: TransactionType;
     private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueInput) {
-        super();
-        this._txnKey = txnKey;
-        this._txnType = TransactionType.INITIAL_EXPENSE;
+        super(txnKey, TransactionType.INITIAL_EXPENSE);
         this._baseValue = baseValue;
         this._isExpense = true;
     }
 
     get baseValue(): ValueInput {
         return this._baseValue;
-    }
-
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
     }
 
     get isExpense(): boolean {

@@ -7,15 +7,11 @@ export class RecurringFixedCost extends Transaction implements CalculateTxnInter
 
     private _baseValue: ValueInput;
     private _rateOfGrowth: ValueRateInput;
-    private _txnKey: TransactionKey;
-    private _txnType: TransactionType;
     private _cumulatedAmount: number;
     private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueInput, expectedGrowthRate: ValueRateInput) {
-        super();
-        this._txnKey = txnKey;
-        this._txnType = TransactionType.FIXED_RECURRING_EXPENSE;
+        super(txnKey, TransactionType.FIXED_RECURRING_EXPENSE);
         this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
         this._cumulatedAmount = 0;
@@ -28,14 +24,6 @@ export class RecurringFixedCost extends Transaction implements CalculateTxnInter
 
     get rateOfGrowth(): ValueRateInput {
         return this._rateOfGrowth;
-    }
-
-    get txnKey(): TransactionKey {
-        return this._txnKey;
-    }
-
-    get txnType(): TransactionType {
-        return this._txnType;
     }
 
     get cumulatedAmount(): number {

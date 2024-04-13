@@ -1,10 +1,10 @@
 import { GrowthProjectionsRequest, InterestType, TransactionKey, ValueAmountInput, ValueInput, ValueRateInput } from "@realestatemanager/shared";
-import { PurchasePrice } from "../models/investment_models/purchase.price";
-import { RentEstimate } from "../models/investment_models/rent.estimate";
-import { RecurringFixedCost } from "../models/investment_models/recurring.fixed.cost";
-import { Income } from "../models/investment_models/income";
-import { InitialCost } from "../models/investment_models/initial.cost";
-import { RecurringOperationalCost } from "../models/investment_models/recurring.operational.cost";
+import { PurchasePrice } from "../models/investment_models/transaction_models/purchase.price";
+import { RentEstimate } from "../models/investment_models/transaction_models/rent.estimate";
+import { RecurringFixedCost } from "../models/investment_models/transaction_models/recurring.fixed.cost";
+import { Income } from "../models/investment_models/transaction_models/income";
+import { InitialCost } from "../models/investment_models/transaction_models/initial.cost";
+import { RecurringOperationalCost } from "../models/investment_models/transaction_models/recurring.operational.cost";
 import { TransactionManager } from "../models/investment_models/transaction.manager";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 
