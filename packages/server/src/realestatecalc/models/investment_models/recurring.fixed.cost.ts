@@ -1,11 +1,10 @@
 import { TransactionKey, TransactionType, TxnDTO, Utility, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
-import { CalcHelper } from "./calc.helper";
+import { Transaction } from "./transaction";
 
-export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, RentEstimate> {
+export class RecurringFixedCost extends Transaction implements CalculateTxnInterface<ValueInput, RentEstimate> {
 
-    private calcHelper: CalcHelper;
     private _baseValue: ValueInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnKey: TransactionKey;
@@ -14,11 +13,11 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
     private _isExpense: boolean;
 
     constructor(txnKey: TransactionKey, baseValue: ValueInput, expectedGrowthRate: ValueRateInput) {
+        super();
         this._txnKey = txnKey;
         this._txnType = TransactionType.FIXED_RECURRING_EXPENSE;
         this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
-        this.calcHelper = new CalcHelper();
         this._cumulatedAmount = 0;
         this._isExpense = true;
     }
@@ -52,19 +51,19 @@ export class RecurringFixedCost implements CalculateTxnInterface<ValueInput, Ren
     }
 
     getAmount(rentalTxn: RentEstimate, monthCounter: number): number {
-        const amount = this.calcHelper.getTransactionAmount(
+        const amount = this.getTransactionAmount(
             this.baseValue,
             rentalTxn.getInitialRentalAmount()
         );
 
-        return this.calcHelper.getFutureDatedAmount(amount, this.rateOfGrowth.rate, monthCounter);
+        return this.getFutureDatedAmount(amount, this.rateOfGrowth.rate, monthCounter);
 
     }
 
     getRate(rentalTxn: RentEstimate, monthCounter: number): number {
         const futureDatedRentalAmount = rentalTxn.getFutureDatedRentalAmount(monthCounter);
         const futureDatedTxnAmount = this.getAmount(rentalTxn, monthCounter);
-        return this.calcHelper.getTransactionPercent(
+        return this.getTransactionPercent(
             {
                 type: ValueType.AMOUNT,
                 amount: futureDatedTxnAmount

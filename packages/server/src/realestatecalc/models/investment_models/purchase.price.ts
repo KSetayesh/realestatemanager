@@ -1,9 +1,7 @@
 import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
-import { CalcHelper } from "./calc.helper";
-import { getYear } from "src/shared/Constants";
+import { Transaction } from "./transaction";
 
-export class PurchasePrice {
-    private calcHelper: CalcHelper;
+export class PurchasePrice extends Transaction {
     private initialPurchasePrice: ValueAmountInput;
     private expectedAppreciationRate: ValueRateInput;
     private _txnKey: TransactionKey;
@@ -13,7 +11,7 @@ export class PurchasePrice {
         initialPurchasePrice: ValueAmountInput,
         expectedAppreciationRate: ValueRateInput
     ) {
-        this.calcHelper = new CalcHelper();
+        super();
         this._txnKey = TransactionKey.PURCHASE_PRICE;
         this._txnType = TransactionType.FINANCING;
         this.initialPurchasePrice = initialPurchasePrice;
@@ -36,19 +34,26 @@ export class PurchasePrice {
         return this.expectedAppreciationRate.rate;
     }
 
-    getFutureDatedHomeValue(monthCounter: number): number {
+    getFutureDatedAmount(
+        principal: number,
+        growthRate: number,
+        monthCounter: number,
+    ): number {
         const getMonthlyAppreciationRate = (growthRate: number): number => {
             // Calculate the equivalent monthly appreciation rate for a 4% annual rate
             const annualAppreciationRate = growthRate / 100;
             return Math.pow(1 + annualAppreciationRate, 1 / 12) - 1;
         };
 
-        return this.calcHelper.getFutureDatedAmount(
+        return principal * (Math.pow(1 + getMonthlyAppreciationRate(growthRate), monthCounter));
+    }
+
+    getFutureDatedHomeValue(monthCounter: number): number {
+        return this.getFutureDatedAmount(
             this.getInitialPurchasePrice(),
-            getMonthlyAppreciationRate(this.getExpectedAppreciationRate()),
+            this.getExpectedAppreciationRate(),
             monthCounter,
         );
-
     }
 
     toDTO(monthCounter: number): TxnDTO {

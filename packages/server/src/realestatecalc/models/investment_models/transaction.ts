@@ -1,7 +1,9 @@
 import { ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
 import { getYear } from "src/shared/Constants";
 
-export class CalcHelper {
+export abstract class Transaction {
+
+    constructor() { }
 
     getFutureDatedAmount(
         principal: number,
@@ -29,8 +31,4 @@ export class CalcHelper {
             return valueInput.rate;
         }
     }
-
-    // getYear(monthCounter: number): number {
-    //     return Math.floor((monthCounter - 1) / 12) + 1;
-    // }
 }

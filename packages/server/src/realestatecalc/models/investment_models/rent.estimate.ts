@@ -1,13 +1,14 @@
 import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
-import { CalcHelper } from "./calc.helper";
+import { Transaction } from "./transaction";
 
-export class RentEstimate {
+export class RentEstimate extends Transaction {
     private rentEstimate: ValueAmountInput;
     private expectedGrowthRate: ValueRateInput;
     private _txnType: TransactionType;
     private _txnKey: TransactionKey;
 
     constructor(rentEstimate: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
+        super();
         this._txnType = TransactionType.INCOME_STREAMS;
         this._txnKey = TransactionKey.RENTAL_INCOME;
         this.rentEstimate = rentEstimate;
@@ -31,7 +32,7 @@ export class RentEstimate {
     }
 
     getFutureDatedRentalAmount(monthCounter: number): number {
-        return new CalcHelper().getFutureDatedAmount(
+        return this.getFutureDatedAmount(
             this.getInitialRentalAmount(),
             this.expectedGrowthRate.rate,
             monthCounter

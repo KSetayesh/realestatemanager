@@ -1,11 +1,10 @@
 import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
-import { CalcHelper } from "./calc.helper";
+import { Transaction } from "./transaction";
 
-export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
+export class Income extends Transaction implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 
-    private calcHelper: CalcHelper;
     private _baseValue: ValueAmountInput;
     private _rateOfGrowth: ValueRateInput;
     private _txnType: TransactionType;
@@ -14,11 +13,11 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
     private _isExpense: boolean
 
     constructor(txnKey: TransactionKey, baseValue: ValueAmountInput, expectedGrowthRate: ValueRateInput) {
+        super();
         this._txnKey = txnKey;
         this._txnType = TransactionType.INCOME_STREAMS;
         this._baseValue = baseValue;
         this._rateOfGrowth = expectedGrowthRate;
-        this.calcHelper = new CalcHelper();
         this._cumulatedAmount = 0;
         this._isExpense = false;
     }
@@ -52,7 +51,7 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
     }
 
     getAmount(rentalTxn: RentEstimate, monthCounter: number): number {
-        return this.calcHelper.getFutureDatedAmount(
+        return this.getFutureDatedAmount(
             this.baseValue.amount,
             this.rateOfGrowth.rate,
             monthCounter
@@ -67,7 +66,7 @@ export class Income implements CalculateTxnInterface<ValueAmountInput, RentEstim
             amount: this.getAmount(rentalTxn, monthCounter),
         };
 
-        return this.calcHelper.getTransactionPercent(income, futureDatedRentalAmount);
+        return this.getTransactionPercent(income, futureDatedRentalAmount);
 
     }
 

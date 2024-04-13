@@ -12,10 +12,11 @@ import {
     isValueRateInput
 } from "@realestatemanager/shared";
 import { PurchasePrice } from "./purchase.price";
+import { Transaction } from "./transaction";
 
 
 @Injectable()
-export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
+export class MortgageCalculator extends Transaction { //implements MortgageCalculateTxnInterface {
 
     private purchasePrice: PurchasePrice;
     private downPaymentTxn: InitialCost;
@@ -37,6 +38,7 @@ export class MortgageCalculator { //implements MortgageCalculateTxnInterface {
         pmiDropOffRatio: number = DefaultInvestmentRates.PMI_DROP_OFF_POINT,
         pmiValue: ValueInput) {
 
+        super();
         this.purchasePrice = purchasePrice;
         this.downPaymentTxn = downPaymentTxn;
         this._loanTermYears = loanTermYears;
