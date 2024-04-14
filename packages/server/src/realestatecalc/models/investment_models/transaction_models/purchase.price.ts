@@ -25,7 +25,10 @@ export class PurchasePrice extends Transaction {
             return Math.pow(1 + annualAppreciationRate, 1 / 12) - 1;
         };
 
-        return principal * (Math.pow(1 + getMonthlyAppreciationRate(growthRate), monthCounter));
+        if (monthCounter <= 1) {
+            return principal;
+        }
+        return principal * (Math.pow(1 + getMonthlyAppreciationRate(growthRate), monthCounter - 1));
     }
 
     getInitialPurchasePrice(): number {

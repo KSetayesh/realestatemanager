@@ -38,3 +38,7 @@ export const getYear = (monthCounter: number): number => {
     return Math.floor((monthCounter - 1) / 12) + 1;
 };
 
+export const isFirstYear = (monthCounter: number): boolean => {
+    return getYear(monthCounter) <= 1;
+};
+

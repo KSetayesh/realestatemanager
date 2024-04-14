@@ -1,5 +1,5 @@
 import { TransactionKey, TransactionType, ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
-import { getYear } from "src/shared/Constants";
+import { getYear, isFirstYear } from "src/shared/Constants";
 
 export abstract class Transaction {
 
@@ -27,8 +27,11 @@ export abstract class Transaction {
         growthRate: number,
         monthCounter: number,
     ): number {
+        if (isFirstYear(monthCounter)) {
+            return principal;
+        }
         const rateOfGrowth = 1 + (growthRate / 100);
-        return principal * (Math.pow(rateOfGrowth, getYear(monthCounter)));
+        return principal * (Math.pow(rateOfGrowth, getYear(monthCounter) - 1));
     }
 
     protected getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {
