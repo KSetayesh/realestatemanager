@@ -124,6 +124,14 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
         throw new Error('Cannot be amount for MortgageCalculator');
     }
 
+    getTotalInterestPaid(paymentNumber: number): number {
+        let total = 0;
+        for (let i = 0; i < paymentNumber; i++) {
+            total += this.getInterestAmountForPayment(i);
+        }
+        return total;
+    }
+
     getInterestAmountForPayment(paymentNumber: number): number {
         if (isValueRateInput(this.annualInterestRate)) {
             const monthlyInterestRate = this.annualInterestRate.rate / 100 / 12;
@@ -205,6 +213,7 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
             balanceAfterPayment: Utility.round(this.calculateBalanceAfterPayment(monthCounter)),
             principalAmountForPayment: Utility.round(this.getPrincipalAmountForPayment(monthCounter)),
             interestAmountForPayment: Utility.round(this.getInterestAmountForPayment(monthCounter)),
+            totalInterestPaid: Utility.round(this.getTotalInterestPaid(monthCounter)),
             percentageOfInterest: Utility.round(this.getPercentageOfInterest(monthCounter)),
             percentageOfPrincipal: Utility.round(this.getPercentageOfPrincipal(monthCounter)),
             hasPMI: this.hasPMI(),

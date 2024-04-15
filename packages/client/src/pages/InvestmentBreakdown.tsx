@@ -208,8 +208,8 @@ const InvestmentBreakdown: React.FC = () => {
             isSortable: false,
         },
         {
-            header: "Recurring Costs",
-            accessor: "recurringCosts",
+            header: "Operational Costs",
+            accessor: "operationalCosts",
             isURL: false,
             showColumn: true,
             isDollarAmount: true,
@@ -244,8 +244,8 @@ const InvestmentBreakdown: React.FC = () => {
                                 Monthly HOA Fees Amount`,
         },
         {
-            header: "Monthly Payment + Recurring Costs",
-            accessor: "monthlyPaymentAndRecurringCosts",
+            header: "Monthly Payment + Operational Costs",
+            accessor: "monthlyPaymentAndOperationalCosts",
             isURL: false,
             showColumn: true,
             isDollarAmount: true,
@@ -266,7 +266,7 @@ const InvestmentBreakdown: React.FC = () => {
             showColumn: true,
             isDollarAmount: true,
             isSortable: false,
-            detailedDescription: `Rent Estimate - (Monthly Payment + RecurringCosts)`,
+            detailedDescription: `Rent Estimate - (Monthly Payment + Operational Costs)`,
         },
         {
             header: "Accumulated Cash Flow",
@@ -356,24 +356,26 @@ const InvestmentBreakdown: React.FC = () => {
     ];
 
     const createRowDataForInvestmentMetrics = (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+        const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
+        const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
+        //TODO - Maybe move monthlyPayment calculation to backend
+        const monthlyPayment = mortgageAmount + fixedCosts;
         return {
             year: ammortizationDetail.monthlyDateData.yearCounter,
             month: ammortizationDetail.monthlyDateData.monthMod12,
             date: ammortizationDetail.monthlyDateData.dateAsString,
-            recurringCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount,
-            fixedCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount,
-            // Come back to this
-            monthlyPayment: 0, // ammortizationDetail.monthlyPayment,
-            monthlyPaymentAndRecurringCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount, //ammortizationDetail.monthlyPaymentAndRecurringCosts,
+            operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
+            fixedCosts: fixedCosts,
+            monthlyPayment: monthlyPayment,
+            monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
             rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
             monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
             // come back to this
-            accumulatedCashFlow: 0,//ammortizationDetail.accumulatedCashFlow,
-            mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+            accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
+            mortgageAmount: mortgageAmount,
             interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
             principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
-            // come back to this
-            totalInterestPaid: 0, //ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown
+            totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
             remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
             equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
             // come back to this

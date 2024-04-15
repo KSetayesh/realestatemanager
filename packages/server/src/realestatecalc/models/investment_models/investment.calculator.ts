@@ -135,6 +135,7 @@ export class InvestmentCalculator {
             ROI: Utility.round(this.calculateROI(monthCounter)),
             monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(monthCounter)),
             yearlyCashFlow: Utility.round(this.calculateYearlyCashFlow(monthCounter)),
+            accumulatedCashFlow: Utility.round(this.getAccumulatedCashFlow(this.rentalEstimate, monthCounter)),
             equityAmount: Utility.round(this.calculateEquityAmount(monthCounter)),
         };
     }
@@ -163,6 +164,14 @@ export class InvestmentCalculator {
             },
             breakdown: mortgageTxnDTO(monthCounter),
         };
+    }
+
+    private getAccumulatedCashFlow(rentEstimate: RentEstimate, monthCounter: number): number {
+        let total = 0;
+        for (let i = 0; i < monthCounter; i++) {
+            total += this.getNetIncome(rentEstimate, i);
+        }
+        return total;
     }
 
     private getNetIncome(rentEstimate: RentEstimate, monthCounter: number): number {

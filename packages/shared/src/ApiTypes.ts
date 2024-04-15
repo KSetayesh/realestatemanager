@@ -139,6 +139,7 @@ export interface MortgageTxnDTO extends TxnDTO {
     balanceAfterPayment: number;
     principalAmountForPayment: number;
     interestAmountForPayment: number;
+    totalInterestPaid: number;
     percentageOfInterest: number;
     percentageOfPrincipal: number;
     hasPMI: boolean;
@@ -243,6 +244,7 @@ export interface InvestmentBreakdownDTO {
     ROI: number;
     monthlyCashFlow: number;
     yearlyCashFlow: number;
+    accumulatedCashFlow: number;
     equityAmount: number;
 };
 
