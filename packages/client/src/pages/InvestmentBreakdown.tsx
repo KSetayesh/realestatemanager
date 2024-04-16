@@ -99,6 +99,21 @@ export type InvestmentFormData = {
     propertyTaxes: number,
 };
 
+enum TableTypeEnum {
+    MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
+    EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
+    INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
+};
+
+interface TableConfig {
+    columns: TableColumn[];
+    data: (ammortizationDetail: MonthlyInvestmentDetailsDTO) => TableRow;
+}
+
+interface TablesConfig {
+    [type: string]: TableConfig;
+}
+
 const InvestmentBreakdown: React.FC = () => {
 
     const [property, setProperty] = useState<ListingWithScenariosDTO>(
@@ -106,6 +121,295 @@ const InvestmentBreakdown: React.FC = () => {
     );
 
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
+
+    const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.MORTGAGE_BREAKDOWN);
+
+    const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const input = event.target.value as keyof typeof TableTypeEnum;
+        setTableType(TableTypeEnum[input]);
+    };
+
+    const tablesConfig: TablesConfig = {
+        [TableTypeEnum.MORTGAGE_BREAKDOWN]: {
+            columns: [
+                {
+                    header: "Year",
+                    accessor: "year",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Month",
+                    accessor: "month",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Date",
+                    accessor: "date",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Operational Costs",
+                    accessor: "operationalCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Management Amount + 
+                        Vacancy Amount +
+                        Maintenance Amount +
+                        Other Expenses Amount +
+                        CapEx Reserve Amount`,
+                },
+                {
+                    header: "Fixed Costs",
+                    accessor: "fixedCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+                },
+                {
+                    header: "Monthly Payment",
+                    accessor: "monthlyPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Mortgage Amount +
+                                Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+                },
+                {
+                    header: "Monthly Payment + Operational Costs",
+                    accessor: "monthlyPaymentAndOperationalCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+            ],
+            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
+                const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
+                //TODO - Maybe move monthlyPayment calculation to backend
+                const monthlyPayment = mortgageAmount + fixedCosts;
+                return {
+                    year: ammortizationDetail.monthlyDateData.yearCounter,
+                    month: ammortizationDetail.monthlyDateData.monthMod12,
+                    date: ammortizationDetail.monthlyDateData.dateAsString,
+                    operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
+                    fixedCosts: fixedCosts,
+                    monthlyPayment: monthlyPayment,
+                    monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
+                };
+            },
+        },
+        [TableTypeEnum.INVESTMENT_BREAKDOWN]: {
+            columns: [
+                {
+                    header: "Year",
+                    accessor: "year",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Month",
+                    accessor: "month",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Date",
+                    accessor: "date",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Rent Estimate",
+                    accessor: "rentEstimate",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Cash Flow",
+                    accessor: "monthlyCashFlow",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Rent Estimate - (Monthly Payment + Operational Costs)`,
+                },
+                {
+                    header: "Accumulated Cash Flow",
+                    accessor: "accumulatedCashFlow",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Mortgage Amount",
+                    accessor: "mortgageAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+            ],
+            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                //TODO - Maybe move monthlyPayment calculation to backend
+                return {
+                    year: ammortizationDetail.monthlyDateData.yearCounter,
+                    month: ammortizationDetail.monthlyDateData.monthMod12,
+                    date: ammortizationDetail.monthlyDateData.dateAsString,
+                    rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
+                    monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
+                    // come back to this
+                    accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
+                    mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+
+                };
+            },
+        },
+        // Define type3 and type4 similarly
+        [TableTypeEnum.EXPENSES_BREAKDOWN]: {
+            columns: [
+                {
+                    header: "Year",
+                    accessor: "year",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Month",
+                    accessor: "month",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Date",
+                    accessor: "date",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Interest Payment",
+                    accessor: "interestPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Principal Payment",
+                    accessor: "principalPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Total Interest Paid",
+                    accessor: "totalInterestPaid",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Remaining Balance",
+                    accessor: "remainingBalance",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Equity Amount w/ Down Payment",
+                    accessor: "equityAmountWithDownPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Equity Amount +
+                                Down Payment Amount`,
+                },
+                {
+                    header: "Equity Amount w/ out Down Payment",
+                    accessor: "equityAmountWithoutDownPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Equity Amount w/ Appreciation",
+                    accessor: "equityAmountWithAppreciation",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Equity Amount +
+                                Down Payment Amount +
+                                Expected Appreciation Amount`,
+                },
+                {
+                    header: "Appreciation Amount",
+                    accessor: "appreciationAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false
+                },
+            ],
+            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                //TODO - Maybe move monthlyPayment calculation to backend
+                return {
+                    year: ammortizationDetail.monthlyDateData.yearCounter,
+                    month: ammortizationDetail.monthlyDateData.monthMod12,
+                    date: ammortizationDetail.monthlyDateData.dateAsString,
+                    interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
+                    principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
+                    totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
+                    remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
+                    equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
+                    // come back to this
+                    equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,
+                    // come back to this
+                    equityAmountWithAppreciation: 0, //ammortizationDetail.equityAmountWithAppreciation,
+                    appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
+                };
+            },
+        },
+    };
+
 
     // Create a state to store the form data.
     const getInvestmentFormData = (): InvestmentFormData => {
@@ -181,218 +485,14 @@ const InvestmentBreakdown: React.FC = () => {
         rowData: createDefaultRowData(property),
     };
 
-
-    const columnsForInvestmentMetrics: TableColumn[] = [
-        {
-            header: "Year",
-            accessor: "year",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: false,
-        },
-        {
-            header: "Month",
-            accessor: "month",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: false,
-        },
-        {
-            header: "Date",
-            accessor: "date",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: false,
-        },
-        {
-            header: "Operational Costs",
-            accessor: "operationalCosts",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: true,
-            detailedDescription: `Property Management Amount + 
-                        Vacancy Amount +
-                        Maintenance Amount +
-                        Other Expenses Amount +
-                        CapEx Reserve Amount`,
-        },
-        {
-            header: "Fixed Costs",
-            accessor: "fixedCosts",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: true,
-            detailedDescription: `Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
-        },
-        {
-            header: "Monthly Payment",
-            accessor: "monthlyPayment",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-            detailedDescription: `Mortgage Amount +
-                                Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
-        },
-        {
-            header: "Monthly Payment + Operational Costs",
-            accessor: "monthlyPaymentAndOperationalCosts",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Rent Estimate",
-            accessor: "rentEstimate",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Monthly Cash Flow",
-            accessor: "monthlyCashFlow",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-            detailedDescription: `Rent Estimate - (Monthly Payment + Operational Costs)`,
-        },
-        {
-            header: "Accumulated Cash Flow",
-            accessor: "accumulatedCashFlow",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Mortgage Amount",
-            accessor: "mortgageAmount",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Interest Payment",
-            accessor: "interestPayment",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Principal Payment",
-            accessor: "principalPayment",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Total Interest Paid",
-            accessor: "totalInterestPaid",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Remaining Balance",
-            accessor: "remainingBalance",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Equity Amount w/ Down Payment",
-            accessor: "equityAmountWithDownPayment",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-            detailedDescription: `Equity Amount +
-                                Down Payment Amount`,
-        },
-        {
-            header: "Equity Amount w/ out Down Payment",
-            accessor: "equityAmountWithoutDownPayment",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-        },
-        {
-            header: "Equity Amount w/ Appreciation",
-            accessor: "equityAmountWithAppreciation",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false,
-            detailedDescription: `Equity Amount +
-                                Down Payment Amount +
-                                Expected Appreciation Amount`,
-        },
-        {
-            header: "Appreciation Amount",
-            accessor: "appreciationAmount",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: true,
-            isSortable: false
-        },
-    ];
-
-    const createRowDataForInvestmentMetrics = (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
-        const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
-        const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
-        //TODO - Maybe move monthlyPayment calculation to backend
-        const monthlyPayment = mortgageAmount + fixedCosts;
-        return {
-            year: ammortizationDetail.monthlyDateData.yearCounter,
-            month: ammortizationDetail.monthlyDateData.monthMod12,
-            date: ammortizationDetail.monthlyDateData.dateAsString,
-            operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
-            fixedCosts: fixedCosts,
-            monthlyPayment: monthlyPayment,
-            monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
-            rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
-            monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
-            // come back to this
-            accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
-            mortgageAmount: mortgageAmount,
-            interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
-            principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
-            totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
-            remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
-            equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
-            // come back to this
-            equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,
-            // come back to this
-            equityAmountWithAppreciation: 0, //ammortizationDetail.equityAmountWithAppreciation,
-            appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
-        };
-    };
-
     const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsDTO>[] => {
         const ammortizationDetails: MonthlyInvestmentDetailsDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,
             },
-            rowData: createRowDataForInvestmentMetrics(ammortizationDetail),
+            // Change createRowDataForInvestmentMetrics to the proper function for radio type
+            rowData: tablesConfig[tableType].data(ammortizationDetail), //createRowDataForInvestmentMetrics(ammortizationDetail),
         }));
     };
 
@@ -840,8 +940,38 @@ const InvestmentBreakdown: React.FC = () => {
                     <br />
                     <hr />
                     <br />
+                    <div className="radio-button-group">
+                        <h2>Select Table Type</h2>
+                        <label>
+                            <input
+                                type="radio"
+                                value={TableTypeEnum.MORTGAGE_BREAKDOWN}
+                                checked={tableType === TableTypeEnum.MORTGAGE_BREAKDOWN}
+                                onChange={handleTableTypeChange}
+                            />
+                            Mortgage Breakdown
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value={TableTypeEnum.INVESTMENT_BREAKDOWN}
+                                checked={tableType === TableTypeEnum.INVESTMENT_BREAKDOWN}
+                                onChange={handleTableTypeChange}
+                            />
+                            Investment Breakdown
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                value={TableTypeEnum.EXPENSES_BREAKDOWN}
+                                checked={tableType === TableTypeEnum.EXPENSES_BREAKDOWN}
+                                onChange={handleTableTypeChange}
+                            />
+                            Expenses Breakdown
+                        </label>
+                    </div>
                     <ReusableTable
-                        columns={columnsForInvestmentMetrics} // Adjust based on your needs
+                        columns={tablesConfig[tableType].columns} //{columnsForInvestmentMetrics} 
                         tableData={createTableDataForInvestmentMetrics()}
                         includeTableSeparator={true}
                     />

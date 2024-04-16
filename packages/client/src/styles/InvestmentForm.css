@@ -75,6 +75,28 @@ label {
     margin-left: 5px;
 }
 
+.radio-button-group {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Generic label styling */
+.radio-button-group label {
+    margin-right: 20px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Hover effect for labels */
+.radio-button-group label:hover:before {
+    border-color: #888;
+}
+
+
 /* .additional-inputs {
     transition: max-height 0.2s ease-out;
 }
