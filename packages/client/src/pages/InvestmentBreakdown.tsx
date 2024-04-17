@@ -292,6 +292,22 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false,
                 },
                 {
+                    header: "Monthly Income",
+                    accessor: "monthlyIncome",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Expenses",
+                    accessor: "monthlyExpenses",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
                     header: "Monthly Cash Flow",
                     accessor: "monthlyCashFlow",
                     isURL: false,
@@ -353,6 +369,8 @@ const InvestmentBreakdown: React.FC = () => {
                     month: ammortizationDetail.monthlyDateData.monthMod12,
                     date: ammortizationDetail.monthlyDateData.dateAsString,
                     rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
+                    monthlyIncome: ammortizationDetail.monthlyBreakdown.transactions.incomeAmount,
+                    monthlyExpenses: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
                     monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
                     // come back to this
                     accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
