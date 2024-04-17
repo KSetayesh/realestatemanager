@@ -163,6 +163,7 @@ const InvestmentBreakdown: React.FC = () => {
                     showColumn: true,
                     isDollarAmount: true,
                     isSortable: false,
+                    detailedDescription: `Mortgage Amount + PMI`,
                 },
                 {
                     header: "PMI Amount",
@@ -307,91 +308,6 @@ const InvestmentBreakdown: React.FC = () => {
                     isDollarAmount: true,
                     isSortable: false,
                 },
-            ],
-            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
-                //TODO - Maybe move monthlyPayment calculation to backend
-                return {
-                    year: ammortizationDetail.monthlyDateData.yearCounter,
-                    month: ammortizationDetail.monthlyDateData.monthMod12,
-                    date: ammortizationDetail.monthlyDateData.dateAsString,
-                    rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
-                    monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
-                    // come back to this
-                    accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
-                };
-            },
-        },
-        // Define type3 and type4 similarly
-        [TableTypeEnum.EXPENSES_BREAKDOWN]: {
-            columns: [
-                {
-                    header: "Year",
-                    accessor: "year",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: false,
-                    isSortable: false,
-                },
-                {
-                    header: "Month",
-                    accessor: "month",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: false,
-                    isSortable: false,
-                },
-                {
-                    header: "Date",
-                    accessor: "date",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: false,
-                    isSortable: false,
-                },
-                {
-                    header: "Operational Costs",
-                    accessor: "operationalCosts",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: true,
-                    detailedDescription: `Property Management Amount + 
-                        Vacancy Amount +
-                        Maintenance Amount +
-                        Other Expenses Amount +
-                        CapEx Reserve Amount`,
-                },
-                {
-                    header: "Fixed Costs",
-                    accessor: "fixedCosts",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: true,
-                    detailedDescription: `Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
-                },
-                {
-                    header: "Monthly Payment",
-                    accessor: "monthlyPayment",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: false,
-                    detailedDescription: `Mortgage Amount +
-                                Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
-                },
-                {
-                    header: "Monthly Payment + Operational Costs",
-                    accessor: "monthlyPaymentAndOperationalCosts",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: false,
-                },
                 {
                     header: "Equity Amount w/ Down Payment",
                     accessor: "equityAmountWithDownPayment",
@@ -431,6 +347,180 @@ const InvestmentBreakdown: React.FC = () => {
                 },
             ],
             data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                //TODO - Maybe move monthlyPayment calculation to backend
+                return {
+                    year: ammortizationDetail.monthlyDateData.yearCounter,
+                    month: ammortizationDetail.monthlyDateData.monthMod12,
+                    date: ammortizationDetail.monthlyDateData.dateAsString,
+                    rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
+                    monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
+                    // come back to this
+                    accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
+                    equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
+                    // come back to this
+                    equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,
+                    // come back to this
+                    equityAmountWithAppreciation: 0, //ammortizationDetail.equityAmountWithAppreciation,
+                    appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
+
+                };
+            },
+        },
+        // Define type3 and type4 similarly
+        [TableTypeEnum.EXPENSES_BREAKDOWN]: {
+            columns: [
+                {
+                    header: "Year",
+                    accessor: "year",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Month",
+                    accessor: "month",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Date",
+                    accessor: "date",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+
+                {
+                    header: "Property Management Amount",
+                    accessor: "propertyManagementAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Vacancy Amount",
+                    accessor: "vacancyAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Maintenance Amount",
+                    accessor: "maintenanceAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Cap Ex Reserve Amount",
+                    accessor: "capExReserveAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Other Expense Amount",
+                    accessor: "otherExpenseAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Operational Costs",
+                    accessor: "operationalCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Management Amount + 
+                        Vacancy Amount +
+                        Maintenance Amount +
+                        Other Expenses Amount +
+                        CapEx Reserve Amount`,
+                },
+                {
+                    header: "Property Tax Amount",
+                    accessor: "propertyTaxAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Home Insurance Amount",
+                    accessor: "monthlyHomeInsuranceAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly HOA Fees Amount",
+                    accessor: "monthlyHOAFeesAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Fixed Costs",
+                    accessor: "fixedCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+                },
+                {
+                    header: "Mortgage Amount",
+                    accessor: "mortgageAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Mortgage Amount + PMI`,
+                },
+                {
+                    header: "PMI Amount",
+                    accessor: "pmiAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Payment",
+                    accessor: "monthlyPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Mortgage Amount +
+                                Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+                },
+                {
+                    header: "Monthly Payment + Operational Costs",
+                    accessor: "monthlyPaymentAndOperationalCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+            ],
+            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
                 const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
                 const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
                 //TODO - Maybe move monthlyPayment calculation to backend
@@ -440,16 +530,20 @@ const InvestmentBreakdown: React.FC = () => {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
                     month: ammortizationDetail.monthlyDateData.monthMod12,
                     date: ammortizationDetail.monthlyDateData.dateAsString,
+                    propertyManagementAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Property Management Expense'].amount,
+                    vacancyAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Vacancy Expense'].amount,
+                    maintenanceAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Maintenance Expense'].amount,
+                    capExReserveAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Cap Ex Reserve Expense'].amount,
+                    otherExpenseAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Other Expeneses'].amount,
                     operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
+                    propertyTaxAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].breakdown['Property Tax'].amount,
+                    monthlyHomeInsuranceAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].breakdown['Monthly Home Insurance'].amount,
+                    monthlyHOAFeesAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].breakdown['Monthly HOA Fee'].amount,
                     fixedCosts: fixedCosts,
+                    mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+                    pmiAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.pmiAmount,
                     monthlyPayment: monthlyPayment,
                     monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
-                    equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
-                    // come back to this
-                    equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,
-                    // come back to this
-                    equityAmountWithAppreciation: 0, //ammortizationDetail.equityAmountWithAppreciation,
-                    appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
                 };
             },
         },
