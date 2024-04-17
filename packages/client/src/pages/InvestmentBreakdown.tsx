@@ -157,44 +157,82 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false,
                 },
                 {
-                    header: "Operational Costs",
-                    accessor: "operationalCosts",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: true,
-                    detailedDescription: `Property Management Amount + 
-                        Vacancy Amount +
-                        Maintenance Amount +
-                        Other Expenses Amount +
-                        CapEx Reserve Amount`,
-                },
-                {
-                    header: "Fixed Costs",
-                    accessor: "fixedCosts",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: true,
-                    detailedDescription: `Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
-                },
-                {
-                    header: "Monthly Payment",
-                    accessor: "monthlyPayment",
+                    header: "Mortgage Amount",
+                    accessor: "mortgageAmount",
                     isURL: false,
                     showColumn: true,
                     isDollarAmount: true,
                     isSortable: false,
-                    detailedDescription: `Mortgage Amount +
-                                Property Tax Amount +
-                                Monthly Home Insurance Amount +
-                                Monthly HOA Fees Amount`,
                 },
                 {
-                    header: "Monthly Payment + Operational Costs",
-                    accessor: "monthlyPaymentAndOperationalCosts",
+                    header: "PMI Amount",
+                    accessor: "pmiAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Interest Payment",
+                    accessor: "interestPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Principal Payment",
+                    accessor: "principalPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Interest Payment",
+                    accessor: "interestPayment",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Percentage of Interest (%)",
+                    accessor: "percentageOfInterest",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                    addSuffix: '%',
+                },
+                {
+                    header: "Percentage of Principal (%)",
+                    accessor: "percentageOfPrincipal",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                    addSuffix: '%',
+                },
+                {
+                    header: "Total Interest Paid",
+                    accessor: "totalInterestPaid",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Total Principal Paid",
+                    accessor: "totalPrincipalPaid",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Remaining Balance",
+                    accessor: "remainingBalance",
                     isURL: false,
                     showColumn: true,
                     isDollarAmount: true,
@@ -202,18 +240,19 @@ const InvestmentBreakdown: React.FC = () => {
                 },
             ],
             data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
-                const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
-                const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
-                //TODO - Maybe move monthlyPayment calculation to backend
-                const monthlyPayment = mortgageAmount + fixedCosts;
                 return {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
                     month: ammortizationDetail.monthlyDateData.monthMod12,
                     date: ammortizationDetail.monthlyDateData.dateAsString,
-                    operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
-                    fixedCosts: fixedCosts,
-                    monthlyPayment: monthlyPayment,
-                    monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
+                    mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+                    pmiAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.pmiAmount,
+                    interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
+                    principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
+                    percentageOfInterest: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.percentageOfInterest,
+                    percentageOfPrincipal: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.percentageOfPrincipal,
+                    totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
+                    totalPrincipalPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalPrincipalPaid,
+                    remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
                 };
             },
         },
@@ -268,14 +307,6 @@ const InvestmentBreakdown: React.FC = () => {
                     isDollarAmount: true,
                     isSortable: false,
                 },
-                {
-                    header: "Mortgage Amount",
-                    accessor: "mortgageAmount",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: false,
-                },
             ],
             data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
                 //TODO - Maybe move monthlyPayment calculation to backend
@@ -287,8 +318,6 @@ const InvestmentBreakdown: React.FC = () => {
                     monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
                     // come back to this
                     accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
-                    mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
-
                 };
             },
         },
@@ -320,32 +349,44 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false,
                 },
                 {
-                    header: "Interest Payment",
-                    accessor: "interestPayment",
+                    header: "Operational Costs",
+                    accessor: "operationalCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Management Amount + 
+                        Vacancy Amount +
+                        Maintenance Amount +
+                        Other Expenses Amount +
+                        CapEx Reserve Amount`,
+                },
+                {
+                    header: "Fixed Costs",
+                    accessor: "fixedCosts",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: true,
+                    detailedDescription: `Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
+                },
+                {
+                    header: "Monthly Payment",
+                    accessor: "monthlyPayment",
                     isURL: false,
                     showColumn: true,
                     isDollarAmount: true,
                     isSortable: false,
+                    detailedDescription: `Mortgage Amount +
+                                Property Tax Amount +
+                                Monthly Home Insurance Amount +
+                                Monthly HOA Fees Amount`,
                 },
                 {
-                    header: "Principal Payment",
-                    accessor: "principalPayment",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: false,
-                },
-                {
-                    header: "Total Interest Paid",
-                    accessor: "totalInterestPaid",
-                    isURL: false,
-                    showColumn: true,
-                    isDollarAmount: true,
-                    isSortable: false,
-                },
-                {
-                    header: "Remaining Balance",
-                    accessor: "remainingBalance",
+                    header: "Monthly Payment + Operational Costs",
+                    accessor: "monthlyPaymentAndOperationalCosts",
                     isURL: false,
                     showColumn: true,
                     isDollarAmount: true,
@@ -390,15 +431,19 @@ const InvestmentBreakdown: React.FC = () => {
                 },
             ],
             data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
+                const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
                 //TODO - Maybe move monthlyPayment calculation to backend
+                const monthlyPayment = mortgageAmount + fixedCosts;
+
                 return {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
                     month: ammortizationDetail.monthlyDateData.monthMod12,
                     date: ammortizationDetail.monthlyDateData.dateAsString,
-                    interestPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment,
-                    principalPayment: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.principalAmountForPayment,
-                    totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
-                    remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
+                    operationalCosts: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].totalAmount.amount,
+                    fixedCosts: fixedCosts,
+                    monthlyPayment: monthlyPayment,
+                    monthlyPaymentAndOperationalCosts: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
                     equityAmountWithDownPayment: ammortizationDetail.monthlyBreakdown.investmentBreakdown.equityAmount,
                     // come back to this
                     equityAmountWithoutDownPayment: 0,//ammortizationDetail.equityAmountWithoutDownPayment,

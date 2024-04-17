@@ -140,6 +140,7 @@ export interface MortgageTxnDTO extends TxnDTO {
     principalAmountForPayment: number;
     interestAmountForPayment: number;
     totalInterestPaid: number;
+    totalPrincipalPaid: number;
     percentageOfInterest: number;
     percentageOfPrincipal: number;
     hasPMI: boolean;
