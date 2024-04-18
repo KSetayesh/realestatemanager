@@ -100,6 +100,7 @@ export type InvestmentFormData = {
 };
 
 enum TableTypeEnum {
+    STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
     MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
     EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
     INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
@@ -122,7 +123,7 @@ const InvestmentBreakdown: React.FC = () => {
 
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
 
-    const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.MORTGAGE_BREAKDOWN);
+    const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.STANDARD_BREAKDOWN);
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value as keyof typeof TableTypeEnum;
@@ -130,6 +131,134 @@ const InvestmentBreakdown: React.FC = () => {
     };
 
     const tablesConfig: TablesConfig = {
+        [TableTypeEnum.STANDARD_BREAKDOWN]: {
+            columns: [
+                {
+                    header: "Year",
+                    accessor: "year",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Month",
+                    accessor: "month",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Date",
+                    accessor: "date",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: false,
+                    isSortable: false,
+                },
+                {
+                    header: "Mortgage Amount",
+                    accessor: "mortgageAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Mortgage Amount + PMI`,
+                },
+                {
+                    header: "Total Interest Paid",
+                    accessor: "totalInterestPaid",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Total Principal Paid",
+                    accessor: "totalPrincipalPaid",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Remaining Balance",
+                    accessor: "remainingBalance",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Rent Estimate",
+                    accessor: "rentEstimate",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Income",
+                    accessor: "monthlyIncome",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Expenses",
+                    accessor: "monthlyExpenses",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Monthly Cash Flow",
+                    accessor: "monthlyCashFlow",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                    detailedDescription: `Rent Estimate - (Monthly Payment + Operational Costs)`,
+                },
+                {
+                    header: "Accumulated Cash Flow",
+                    accessor: "accumulatedCashFlow",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false,
+                },
+                {
+                    header: "Appreciation Amount",
+                    accessor: "appreciationAmount",
+                    isURL: false,
+                    showColumn: true,
+                    isDollarAmount: true,
+                    isSortable: false
+                },
+            ],
+            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+                return {
+                    year: ammortizationDetail.monthlyDateData.yearCounter,
+                    month: ammortizationDetail.monthlyDateData.monthMod12,
+                    date: ammortizationDetail.monthlyDateData.dateAsString,
+                    mortgageAmount: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount,
+                    totalInterestPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalInterestPaid,
+                    totalPrincipalPaid: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.totalPrincipalPaid,
+                    remainingBalance: ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.balanceAfterPayment,
+                    rentEstimate: ammortizationDetail.monthlyBreakdown.transactions.breakdown['Income Streams'].breakdown['Rental Income'].amount,
+                    monthlyIncome: ammortizationDetail.monthlyBreakdown.transactions.incomeAmount,
+                    monthlyExpenses: ammortizationDetail.monthlyBreakdown.transactions.expenseAmount,
+                    monthlyCashFlow: ammortizationDetail.monthlyBreakdown.transactions.netIncome,
+                    accumulatedCashFlow: ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedCashFlow,
+                    appreciationAmount: ammortizationDetail.monthlyBreakdown.appreciation.homeValue, //ammortizationDetail.appreciationAmount,
+
+                }
+            },
+        },
         [TableTypeEnum.MORTGAGE_BREAKDOWN]: {
             columns: [
                 {
@@ -411,7 +540,6 @@ const InvestmentBreakdown: React.FC = () => {
                     isDollarAmount: false,
                     isSortable: false,
                 },
-
                 {
                     header: "Property Management Amount",
                     accessor: "propertyManagementAmount",
@@ -1099,6 +1227,15 @@ const InvestmentBreakdown: React.FC = () => {
                     <br />
                     <div className="radio-button-group">
                         <h2>Select Table Type</h2>
+                        <label>
+                            <input
+                                type="radio"
+                                value={TableTypeEnum.STANDARD_BREAKDOWN}
+                                checked={tableType === TableTypeEnum.STANDARD_BREAKDOWN}
+                                onChange={handleTableTypeChange}
+                            />
+                            Standard Breakdown
+                        </label>
                         <label>
                             <input
                                 type="radio"
