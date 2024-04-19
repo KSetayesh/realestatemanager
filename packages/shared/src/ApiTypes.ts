@@ -225,7 +225,7 @@ export interface MonthlyInvestmentBreakdownDTO {
     transactions: {
         expenseAmount: number;
         incomeAmount: number;
-        netIncome: number;
+        cashFlow: number;
         breakdown: {
             [TransactionType.MORTGAGE]: MortgageDTO;
             [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
@@ -241,8 +241,12 @@ export interface MonthlyInvestmentDetailsDTO {
 };
 
 export interface InvestmentBreakdownDTO {
+    NOI: number;
     capRate: number;
     ROI: number;
+    cashOnCashReturn: number;
+    monthlyNetIncome: number;
+    accumulatedNetIncome: number;
     monthlyCashFlow: number;
     yearlyCashFlow: number;
     accumulatedCashFlow: number;

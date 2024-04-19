@@ -58,6 +58,14 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
 
     }
 
+    getCumulatedAmount(rentalTxn: RentEstimate, monthCounter: number): number {
+        let total = 0;
+        for (let i = 1; i <= monthCounter; i++) {
+            total += this.getAmount(rentalTxn, monthCounter);
+        }
+        return total;
+    }
+
     toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
         const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
@@ -66,7 +74,7 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
             amount: Utility.round(txnAmount),
             percentage: Utility.round(this.getRate(rentalTxn, monthCounter)),
             rateOfGrowth: Utility.round(this.rateOfGrowth.rate),
-            cumulatedAmount: Utility.round(this.cumulatedAmount),
+            cumulatedAmount: Utility.round(this.getCumulatedAmount(rentalTxn, monthCounter)),
         };
     }
 }

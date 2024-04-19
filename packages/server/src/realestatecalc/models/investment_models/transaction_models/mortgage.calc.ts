@@ -126,7 +126,7 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
 
     getTotalInterestPaid(paymentNumber: number): number {
         let total = 0;
-        for (let i = 0; i < paymentNumber; i++) {
+        for (let i = 1; i <= paymentNumber; i++) {
             total += this.getInterestAmountForPayment(i);
         }
         return total;
@@ -134,7 +134,7 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
 
     getTotalPrincipalPaid(paymentNumber: number): number {
         let total = 0;
-        for (let i = 0; i < paymentNumber; i++) {
+        for (let i = 1; i <= paymentNumber; i++) {
             total += this.getPrincipalAmountForPayment(i);
         }
         return total;

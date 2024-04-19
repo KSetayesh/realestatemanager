@@ -39,7 +39,7 @@ export class TransactionManager {
             type: TransactionType.FIXED_RECURRING_EXPENSE,
             totalAmount: {
                 description: '',
-                amount: Utility.round(this.getTotalAmountOfRecurringExpenses(rentEstimate, monthCounter))
+                amount: Utility.round(this.getTotalAmountOfRecurringFixedExpenses(rentEstimate, monthCounter))
             },
             breakdown: {
                 [TransactionKey.PROPERTY_TAX]: this.getMonthlyPropertyTaxDTO(rentEstimate, monthCounter),
@@ -103,9 +103,13 @@ export class TransactionManager {
 
     // Total Amounts
 
-    getTotalRecurringExpenseAmount(rentEstimate: RentEstimate, monthCounter: number): number {
-        return this.getTotalAmountOfRecurringExpenses(rentEstimate, monthCounter) +
-            this.getTotalRecurringOperationalCosts(rentEstimate, monthCounter);
+    getTotalRecurringExpenseAmount(
+        rentEstimate: RentEstimate,
+        monthCounter: number,
+        callBack?: (txnKey: TransactionKey) => boolean
+    ): number {
+        return this.getTotalAmountOfRecurringFixedExpenses(rentEstimate, monthCounter, callBack) +
+            this.getTotalRecurringOperationalCosts(rentEstimate, monthCounter, callBack);
     }
 
     getTotalIncomeStreams(rentEstimate: RentEstimate, monthCounter: number): number {
@@ -116,10 +120,17 @@ export class TransactionManager {
         return totalAmount;
     }
 
-    getTotalAmountOfRecurringExpenses(rentEstimate: RentEstimate, monthCounter: number): number {
+    getTotalAmountOfRecurringFixedExpenses(
+        rentEstimate: RentEstimate,
+        monthCounter: number,
+        callBack?: (txnKey: TransactionKey) => boolean
+    ): number {
+
         let totalAmount = 0;
         this.recurringFixedCostMap.forEach((recurringFixedCost: RecurringFixedCost) => {
-            totalAmount += recurringFixedCost.getAmount(rentEstimate, monthCounter);
+            if (!callBack || callBack(recurringFixedCost.txnKey)) {
+                totalAmount += recurringFixedCost.getAmount(rentEstimate, monthCounter);
+            }
         });
         return totalAmount;
     }
@@ -132,10 +143,17 @@ export class TransactionManager {
         return totalAmount;
     }
 
-    getTotalRecurringOperationalCosts(rentEstimate: RentEstimate, monthCounter: number): number {
+    getTotalRecurringOperationalCosts(
+        rentEstimate: RentEstimate,
+        monthCounter: number,
+        callBack?: (recurringOperationalCost: TransactionKey) => boolean
+    ): number {
+
         let totalAmount = 0;
         this.recurringOperationalCostMap.forEach((recurringOperationalCost: RecurringOperationalCost) => {
-            totalAmount += recurringOperationalCost.getAmount(rentEstimate, monthCounter);
+            if (!callBack || callBack(recurringOperationalCost.txnKey)) {
+                totalAmount += recurringOperationalCost.getAmount(rentEstimate, monthCounter);
+            }
         });
         return totalAmount;
     }
