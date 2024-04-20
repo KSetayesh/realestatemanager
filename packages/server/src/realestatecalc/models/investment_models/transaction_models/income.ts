@@ -2,6 +2,7 @@ import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, Val
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";
+import { accumulateAndSum } from "src/shared/Constants";
 
 export class Income extends Transaction implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 
@@ -59,11 +60,7 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
     }
 
     getCumulatedAmount(rentalTxn: RentEstimate, monthCounter: number): number {
-        let total = 0;
-        for (let i = 1; i <= monthCounter; i++) {
-            total += this.getAmount(rentalTxn, monthCounter);
-        }
-        return total;
+        return accumulateAndSum(month => this.getAmount(rentalTxn, month), monthCounter);
     }
 
     toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {

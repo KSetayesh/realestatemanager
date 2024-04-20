@@ -1,4 +1,5 @@
 import { InterestType, ValueInput, ValueType } from "@realestatemanager/shared"
+import { RentEstimate } from "src/realestatecalc/models/investment_models/transaction_models/rent.estimate";
 
 export const getAmountFromValueInput = (input: ValueInput, baseValue?: number): number => {
     if (input.type === ValueType.AMOUNT) {
@@ -42,3 +43,13 @@ export const isFirstYear = (monthCounter: number): boolean => {
     return getYear(monthCounter) <= 1;
 };
 
+export const accumulateAndSum = (
+    callback: (month: number) => number,
+    monthCounter: number,
+): number => {
+    let total = 0;
+    for (let month = 1; month <= monthCounter; month++) {
+        total += callback(month);
+    }
+    return total;
+}

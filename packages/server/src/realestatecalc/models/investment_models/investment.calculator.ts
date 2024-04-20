@@ -1,4 +1,4 @@
-import { getYear } from "src/shared/Constants";
+import { accumulateAndSum, getYear } from "src/shared/Constants";
 import { MortgageCalculator } from "./transaction_models/mortgage.calc";
 import { PurchasePrice } from "./transaction_models/purchase.price";
 import { RentEstimate } from "./transaction_models/rent.estimate";
@@ -323,13 +323,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        let total = 0;
-        // Loop through each month up to the specified month counter
-        for (let i = 1; i <= monthCounter; i++) {
-            // Sum the cash flow for each month to accumulate the total
-            total += this.calculateMonthlyCashFlow(rentEstimate, i);
-        }
-        return total;
+        return accumulateAndSum(month => this.calculateMonthlyCashFlow(rentEstimate, month), monthCounter);
     }
 
     /**
@@ -348,19 +342,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        // Initialize a variable to keep track of the total income.
-        let total = 0;
-
-        // Iterate through each month up to the specified month counter.
-        // Note that month indices start at 0 and go up to monthCounter - 1.
-        for (let i = 1; i <= monthCounter; i++) {
-            // For each month, add the total income streams for that month to the running total.
-            // getTotalIncomeStreams must be designed to fetch the income for a given month based on the rentEstimate.
-            total += this.getTotalIncomeStreams(rentEstimate, i);
-        }
-
-        // Return the total income accumulated over the given period.
-        return total;
+        return accumulateAndSum(month => this.getTotalIncomeStreams(rentEstimate, month), monthCounter);
     }
 
     /**
@@ -382,20 +364,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        let total = 0;
-
-        // Iterate over each month, starting from month 0 up to, but not including, monthCounter.
-        // This ensures that the expenses for exactly monthCounter months are summed.
-        for (let i = 1; i <= monthCounter; i++) {
-            // Add the total recurring expenses for each month to the cumulative total.
-            // The getTotalRecurringExpenseAmount method must correctly calculate and return
-            // the total recurring expenses for each month based on the rentEstimate data.
-            total += this.getTotalRecurringExpenseAmount(rentEstimate, i);
-        }
-
-        // Return the total accumulated expenses, which represents the sum of all recurring expenses
-        // over the specified time period.
-        return total;
+        return accumulateAndSum(month => this.getTotalRecurringExpenseAmount(rentEstimate, month), monthCounter);
     }
 
 
@@ -467,11 +436,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        let total = 0;
-        for (let i = 1; i <= monthCounter; i++) {
-            total += this.calculateMonthlyNetIncome(this.rentalEstimate, i);
-        }
-        return total;
+        return accumulateAndSum(month => this.calculateMonthlyNetIncome(rentEstimate, month), monthCounter);
     }
 
 
