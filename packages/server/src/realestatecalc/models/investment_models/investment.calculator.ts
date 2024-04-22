@@ -131,6 +131,7 @@ export class InvestmentCalculator {
     private getInvestmentBreakdownDTO(monthCounter: number): InvestmentBreakdownDTO {
         return {
             NOI: Utility.round(this.calculateNOI(this.rentalEstimate, monthCounter)),
+            accumulatedNOI: Utility.round(this.calculateAccumulatedNOI(this.rentalEstimate, monthCounter)),
             capRate: Utility.round(this.calculateCapRate(this.rentalEstimate, monthCounter)),
             ROI: Utility.round(this.calculateROI(monthCounter)),
             cashOnCashReturn: Utility.round(this.calculateCashOnCashReturn(this.rentalEstimate, monthCounter)),
@@ -455,14 +456,14 @@ export class InvestmentCalculator {
         monthCounter: number
     ): number {
         // Calculate NOI for the property using provided rent estimates and month index.
-        const NOI = this.calculateNOI(rentEstimate, monthCounter);
+        const accumulatedNOI = this.calculateAccumulatedNOI(rentEstimate, monthCounter);
 
         // Retrieve the estimated current market value of the property as of the specified month.
         // Assumes a method is available that can predict or provide property value at a future date.
         const currentMarketValueOfProperty = this.purchasePrice.getFutureDatedHomeValue(monthCounter);
 
         // Calculate the cap rate by dividing NOI by the current market value and multiplying by 100.
-        return (NOI / currentMarketValueOfProperty) * 100;
+        return (accumulatedNOI / currentMarketValueOfProperty) * 100;
     }
 
 
@@ -493,6 +494,13 @@ export class InvestmentCalculator {
 
         // NOI is calculated as total income minus operational expenses that qualify under the defined criteria.
         return totalIncome - totalRecurringExpensesAmount;
+    }
+
+    private calculateAccumulatedNOI(
+        rentEstimate: RentEstimate,
+        monthCounter: number
+    ): number {
+        return accumulateAndSum(month => this.calculateNOI(rentEstimate, month), monthCounter);
     }
 
 

@@ -242,6 +242,7 @@ export interface MonthlyInvestmentDetailsDTO {
 
 export interface InvestmentBreakdownDTO {
     NOI: number;
+    accumulatedNOI: number;
     capRate: number;
     ROI: number;
     cashOnCashReturn: number;
