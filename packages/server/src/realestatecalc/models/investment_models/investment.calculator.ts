@@ -133,7 +133,7 @@ export class InvestmentCalculator {
             NOI: Utility.round(this.calculateNOI(this.rentalEstimate, monthCounter)),
             accumulatedNOI: Utility.round(this.calculateAccumulatedNOI(this.rentalEstimate, monthCounter)),
             capRate: Utility.round(this.calculateCapRate(this.rentalEstimate, monthCounter)),
-            ROI: Utility.round(this.calculateROI(monthCounter)),
+            ROI: Utility.round(this.calculateROI(this.rentalEstimate, monthCounter)),
             cashOnCashReturn: Utility.round(this.calculateCashOnCashReturn(this.rentalEstimate, monthCounter)),
             monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(this.rentalEstimate, monthCounter)),
             yearlyCashFlow: Utility.round(this.getAccumulatedCashFlow(this.rentalEstimate, 12)),
@@ -232,7 +232,10 @@ export class InvestmentCalculator {
    *                                indicates how long the property has been held and generating income.
    * @return {number} - The ROI percentage, indicating the efficiency and profitability of the investment.
    */
-    private calculateROI(monthCounter: number): number {
+    private calculateROI(
+        rentEstimate: RentEstimate,
+        monthCounter: number
+    ): number {
         // Retrieve the total cash initially invested in the property. This includes down payments,
         // closing costs, and any other upfront expenses directly related to the purchase of the property.
         const totalCashInvested = this.totalInitialCosts;
@@ -247,12 +250,12 @@ export class InvestmentCalculator {
         // number of months. This figure should account for the current value of the property minus
         // any outstanding mortgage balance and selling costs.
         // This function needs to be accurately implemented to reflect true sale proceeds.
-        const netProceedsInSale = this.calculateNetSaleProceeds(monthCounter);
+        const netProceedsInSale = this.calculateNetSaleProceeds(monthCounter) - this.mortgageCalc.calculateBalanceAfterPayment(monthCounter);
 
         // Accumulate the total cash flow generated from the property over the specified period.
         // This includes all rental income after expenses, providing insight into the operational
         // profitability of the property.
-        const accumulatedCashFlow = this.getAccumulatedCashFlow(this.rentalEstimate, monthCounter);
+        const accumulatedCashFlow = this.getAccumulatedCashFlow(rentEstimate, monthCounter);
 
         // Sum of net sale proceeds and accumulated operational cash flow gives the total gain
         // from the investment, encapsulating both capital gains (from property value increase and sale)
@@ -261,7 +264,8 @@ export class InvestmentCalculator {
 
         // The ROI is calculated by comparing the total gains from the investment against the
         // total cash initially invested, showing the total return as a percentage.
-        return ((totalGainFromInvestment - totalCashInvested) / totalCashInvested) * 100;
+        // return ((totalGainFromInvestment - totalCashInvested) / totalCashInvested) * 100;
+        return (totalGainFromInvestment / totalCashInvested) * 100;
     }
 
 
@@ -297,8 +301,6 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        // Calculate the total net cash flow accumulated from the start of the investment to the specified month.
-        const accumulatedCashFlow = this.getAccumulatedCashFlow(rentEstimate, monthCounter);
 
         // Retrieve the total initial cash invested in the property.
         const totalCashInvested = this.totalInitialCosts;
@@ -307,6 +309,9 @@ export class InvestmentCalculator {
         if (totalCashInvested <= 0) {
             throw new Error("Total cash invested must be greater than zero.");
         }
+
+        // Calculate the total net cash flow accumulated from the start of the investment to the specified month.
+        const accumulatedCashFlow = this.getAccumulatedCashFlow(rentEstimate, monthCounter);
 
         // Calculate the Cash on Cash Return as a percentage.
         return (accumulatedCashFlow / totalCashInvested) * 100;
