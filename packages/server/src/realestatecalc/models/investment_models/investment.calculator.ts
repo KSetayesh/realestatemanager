@@ -131,15 +131,15 @@ export class InvestmentCalculator {
     private getInvestmentBreakdownDTO(monthCounter: number): InvestmentBreakdownDTO {
         return {
             NOI: Utility.round(this.calculateNOI(this.rentalEstimate, monthCounter)),
-            accumulatedNOI: Utility.round(this.calculateAccumulatedNOI(this.rentalEstimate, monthCounter)),
-            capRate: Utility.round(this.calculateCapRate(this.rentalEstimate, monthCounter)),
-            ROI: Utility.round(this.calculateROI(this.rentalEstimate, monthCounter)),
-            cashOnCashReturn: Utility.round(this.calculateCashOnCashReturn(this.rentalEstimate, monthCounter)),
+            accumulatedNOI: Utility.round(this.calculateAccumulatedNOI(this.rentalEstimate, 12)),
+            capRate: Utility.round(this.calculateCapRate(this.rentalEstimate, 12)),
+            ROI: Utility.round(this.calculateROI(this.rentalEstimate, 12)),
+            cashOnCashReturn: Utility.round(this.calculateCashOnCashReturn(this.rentalEstimate, 12)),
             monthlyCashFlow: Utility.round(this.calculateMonthlyCashFlow(this.rentalEstimate, monthCounter)),
             yearlyCashFlow: Utility.round(this.getAccumulatedCashFlow(this.rentalEstimate, 12)),
             monthlyNetIncome: Utility.round(this.calculateMonthlyNetIncome(this.rentalEstimate, monthCounter)),
-            accumulatedNetIncome: Utility.round(this.calculateAccumulatedNetIncome(this.rentalEstimate, monthCounter)),
-            accumulatedCashFlow: Utility.round(this.getAccumulatedCashFlow(this.rentalEstimate, monthCounter)),
+            accumulatedNetIncome: Utility.round(this.calculateAccumulatedNetIncome(this.rentalEstimate, 12)),
+            accumulatedCashFlow: Utility.round(this.getAccumulatedCashFlow(this.rentalEstimate, 12)),
             equityAmount: Utility.round(this.calculateEquityAmount(monthCounter)),
         };
     }
