@@ -94,3 +94,21 @@ CREATE TABLE IF NOT EXISTS agent (
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
+
+-- Query: CreateRentCastApiTable
+CREATE TABLE IF NOT EXISTS rent_cast_api (
+    id SERIAL PRIMARY KEY,
+    api_calls_this_month INT,
+    number_of_free_api_calls INT,
+    billing_period INT,
+    first_billed_on TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+-- EndQuery
+
+-- Query: InsertIntoRentCastApiTable
+INSERT INTO rent_cast_api (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, created_at, updated_at)
+SELECT 0, 50, 31, NOW(), NOW(), NOW()
+WHERE NOT EXISTS (SELECT 1 FROM rent_cast_api);
+-- EndQuery

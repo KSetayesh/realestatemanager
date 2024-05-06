@@ -12,6 +12,8 @@ enum SQLTable {
     CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
     CREATE_LISTING_DETAILS_TABLE = 'CreateListingDetailsTable',
     CREATE_AGENTS_TABLE = 'CreateAgentsTable',
+    CREATE_RENT_CAST_API_TABLE = 'CreateRentCastApiTable',
+    INSERT_INTO_RENT_CAST_API_TABLE = 'InsertIntoRentCastApiTable',
 };
 
 const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;
