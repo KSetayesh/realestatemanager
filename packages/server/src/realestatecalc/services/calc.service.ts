@@ -8,6 +8,7 @@ import {
     ListingDetailsDTO,
     ListingWithScenariosDTO,
     RentCastApiRequestDTO,
+    RentCastDetailsDTO,
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
@@ -57,6 +58,10 @@ export class CalcService {
         };
     }
 
+    async getRentCastApiDetails(): Promise<RentCastDetailsDTO> {
+        return (await this.rentCastManager.getRentCastDetails()).toDTO();
+    }
+
     async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
         this.listingManager.insertListingDetails(listingDetailsDTO);
     }
@@ -73,7 +78,7 @@ export class CalcService {
 
         const rentCastDetails: RentCastDetails = await this.rentCastManager.getRentCastDetails();
 
-        if (!rentCastDetails.canMakeFreeApiCall()) {
+        if (!rentCastDetails.canMakeFreeApiCall) {
             console.log(`Number of rent cast api calls has exceeded ${rentCastDetails.numberOfFreeApiCalls}`);
             return;
         }
@@ -299,7 +304,6 @@ export class CalcService {
                 }
             })
             .catch(err => console.error('error:' + err));
-
 
     }
 

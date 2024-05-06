@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { State, InputType, RentCastPropertyType, RentCastStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { FormFieldConfig } from "./PropertyForm";
-import { RentCastApiRequestDTO } from '@realestatemanager/shared';
+import { RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
+import { RentCastApi } from '../api/rentcastapi';
 
 const CollectProperties: React.FC = () => {
+
+    const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsDTO>();
+    const [isLoading, setIsLoading] = useState(true);
+    const rentCastApi: RentCastApi = new RentCastApi();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoading(true); // Set loading state to true before fetching data
+                const rentCastDetails: RentCastDetailsDTO = await rentCastApi.getRentCastApiDetails();
+                setRentCastDetails(rentCastDetails); // Update state with fetched data
+                console.log("Fetched data:", rentCastDetails);
+            } catch (error) {
+                // Error handling if fetchProperties fails
+                console.error('Failed to fetch rentCastApi details:', error);
+            } finally {
+                setIsLoading(false); // Ensure loading state is updated regardless of success or failure
+            }
+        })();
+    }, []); // Empty dependency array means this effect runs once on mount
 
     const formFieldsConfig: FormFieldConfig[] = [
         {
@@ -152,27 +173,36 @@ const CollectProperties: React.FC = () => {
     return (
         <div className="form-container">
             <h2>Collect Properties Request Form</h2>
-            <form onSubmit={handleSubmit}>
-                {formFieldsConfig.map(({ name, label, type, selections }) => (
-                    <div className="form-field" key={name}>
-                        <label htmlFor={name} className="form-label">{label}:</label>
-                        {type === 'select' && selections ? (
-                            <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
-                                {selections.map((selection, index) => (
-                                    <option key={index} value={selection.toString()}>
-                                        {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : (
-                            <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
-                        )}
-                    </div>
-                ))}
-                <div className="submit-button-container">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+            {isLoading ? (
+                <p>Loading Rent Cast Api Details...</p>
+            ) : (
+                <>
+                    <h2>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</h2>
+                    <hr></hr>
+                    <br></br>
+                    <form onSubmit={handleSubmit}>
+                        {formFieldsConfig.map(({ name, label, type, selections }) => (
+                            <div className="form-field" key={name}>
+                                <label htmlFor={name} className="form-label">{label}:</label>
+                                {type === 'select' && selections ? (
+                                    <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
+                                        {selections.map((selection, index) => (
+                                            <option key={index} value={selection.toString()}>
+                                                {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
+                                )}
+                            </div>
+                        ))}
+                        <div className="submit-button-container">
+                            <button type="submit" disabled={!rentCastDetails?.canMakeApiCalls}>Submit</button>
+                        </div>
+                    </form>
+                </>
+            )}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('realestatecalc')
@@ -32,6 +32,12 @@ export class CalcController {
             throw new Error('Not a valid Investment Scenario Request');
         }
         return this.calcService.getPropertyByZillowURL(zillowURL, investmentScenarioRequest);
+    }
+
+    @Get('rentCastApiCallDetails')
+    async getRentCastApiCallDetails(
+    ): Promise<RentCastDetailsDTO> {
+        return this.calcService.getRentCastApiDetails();
     }
 
     @Post('addNewProperty')

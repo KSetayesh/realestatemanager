@@ -14,3 +14,12 @@ export interface RentCastApiRequestDTO {
     limit: number;
     offset: number;
 };
+
+export interface RentCastDetailsDTO {
+    apiCallsThisMonth: number;
+    numberOfFreeApiCalls: number;
+    remainingNumberOfFreeApiCalls: number;
+    canMakeApiCalls: boolean;
+    billingPeriod: number;
+    firstBilledOn: Date;
+}
