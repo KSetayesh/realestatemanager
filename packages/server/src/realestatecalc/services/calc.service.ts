@@ -3,6 +3,7 @@ import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from '@nestjs/common';
 import {
     AmortizationBreakdownDTO,
+    Country,
     InvestmentScenarioRequest,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
@@ -14,6 +15,7 @@ import { InvestmentCalculator } from '../models/investment_models/investment.cal
 import { ListingManager } from 'src/db/realestate/listing.db';
 import { RentCastManager } from 'src/db/realestate/rentcast.db';
 import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.model';
+import { RentCastResponse } from '../models/rent_cast_api_models/rentcastresponse.model';
 
 @Injectable()
 export class CalcService {
@@ -174,7 +176,118 @@ export class CalcService {
                     // Call updateNumberOfApiCalls here
                     await this.rentCastManager.updateNumberOfApiCalls();
 
+                    const parseApiResponse = (jsonData): RentCastResponse[] => {
+                        const rentCastResponses: RentCastResponse[] = [];
+                        // Iterate through each object in the array
+                        for (const property of jsonData) {
+                            const id = property.id; // "8417-Lakewood-Ridge-Cv,-Austin,-TX-78738";
+                            const formattedAddress = property.formattedAddress; // "8417 Lakewood Ridge Cv, Austin, TX 78738";
+                            const addressLine1 = property.addressLine1; // "8417 Lakewood Ridge Cv";
+                            const addressLine2 = property.addressLine2; // null;
+                            const city = property.city; // "Austin";
+                            const state = property.state; // "TX";
+                            const zipCode = property.zipCode; //"78738";
+                            const county = property.county; // "Travis";
+                            const bedrooms = property.bedrooms;
+                            const bathrooms = property.bathrooms;
+                            const latitude = property.latitude; // 30.295995;
+                            const longitude = property.longitude; // -98.03995;
+                            const squareFootage = property.squareFootage;
+                            const propertyType = property.propertyType; // "Land";
+                            const lotSize = property.lotSize; // 45128;
+                            const status = property.status; // "Active";
+                            const yearBuilt = property.yearBuilt;
+                            const price = property.price; // 799000;
+                            const listedDate = property.listedDate; // "2022-06-16T00:00:00.000Z";
+                            const removedDate = property.removedDate; // null;
+                            const createdDate = property.createdDate; // "2020-09-15T18:20:57.279Z";
+                            const lastSeenDate = property.lastSeenDate; // "2023-02-25T00:00:00.000Z";
+                            const daysOnMarket = property.daysOnMarket; // 254;
+
+                            rentCastResponses.push(
+                                new RentCastResponse(
+                                    id,
+                                    formattedAddress,
+                                    addressLine1,
+                                    addressLine2,
+                                    city,
+                                    state,
+                                    zipCode,
+                                    county,
+                                    bedrooms,
+                                    bathrooms,
+                                    latitude,
+                                    longitude,
+                                    squareFootage,
+                                    propertyType,
+                                    lotSize,
+                                    status,
+                                    yearBuilt,
+                                    price,
+                                    listedDate,
+                                    removedDate,
+                                    createdDate,
+                                    lastSeenDate,
+                                    daysOnMarket
+                                )
+                            );
+
+                        }
+
+                        return rentCastResponses;
+
+                    };
+
                     const data = await res.json();
+                    const rentCastResponses: RentCastResponse[] = parseApiResponse(data);
+                    for (const rentCastResponse of rentCastResponses) {
+                        const listingDetail: ListingDetailsDTO = {
+                            zillowURL: '',
+                            propertyDetails: {
+                                address: {
+                                    fullAddress: rentCastResponse.formattedAddress,
+                                    state: rentCastResponse.state,
+                                    zipcode: rentCastResponse.zipCode,
+                                    city: rentCastResponse.city,
+                                    county: rentCastResponse.county,
+                                    country: Country.UnitedStates,
+                                    streetAddress: rentCastResponse.addressLine1,
+                                    apartmentNumber: rentCastResponse.addressLine2,
+                                },
+                                schoolRating: {
+                                    elementarySchoolRating: -1,
+                                    middleSchoolRating: -1,
+                                    highSchoolRating: -1,
+                                },
+                                numberOfBedrooms: rentCastResponse.bedrooms,
+                                numberOfFullBathrooms: rentCastResponse.bathrooms,
+                                numberOfHalfBathrooms: 0,
+                                squareFeet: rentCastResponse.squareFootage,
+                                acres: rentCastResponse.lotSize,
+                                yearBuilt: rentCastResponse.yearBuilt,
+                                hasGarage: false,
+                                hasPool: false,
+                                hasBasement: false,
+                                homeType: rentCastResponse.propertyType,
+                                description: '',
+                            },
+                            zillowMarketEstimates: {
+                                zestimate: -1,
+                                zestimateRange: {
+                                    low: -1,
+                                    high: -1,
+                                },
+                                zillowRentEstimate: -1,
+                                zillowMonthlyPropertyTaxAmount: -1,
+                                zillowMonthlyHomeInsuranceAmount: -1,
+                                zillowMonthlyHOAFeesAmount: -1,
+                            },
+                            listingPrice: rentCastResponse.price,
+                            dateListed: rentCastResponse.listedDate,
+                            numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
+                        };
+                        await this.addNewProperty(listingDetail);
+                    }
                     console.log(data); // Log the response data
                 } else {
                     console.log("Is NOT successful!");
@@ -200,7 +313,6 @@ export class CalcService {
             metrics: metrics,
         };
     }
-
 
 }
 
