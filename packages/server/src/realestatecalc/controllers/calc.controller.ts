@@ -41,6 +41,11 @@ export class CalcController {
         await this.calcService.addNewProperty(listingDetails);
     }
 
+    @Post('addNewPropertyWithRentCastAPI')
+    async addNewPropertyWithRentCastAPI(): Promise<void> {
+        await this.calcService.addNewPropertyWithRentCastAPI();
+    }
+
     @Post('calculate')
     async calculate(
         @Body() investmentScenarioRequest: InvestmentScenarioRequest,

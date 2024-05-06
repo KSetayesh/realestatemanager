@@ -46,6 +46,20 @@ export class RealEstateCalcApi extends CalcApi {
         return true;
     }
 
+    async addNewPropertyWithRentCastAPI(): Promise<boolean> {
+
+        try {
+            await axios.post(`${this.getURL()}/addNewPropertyWithRentCastAPI`, {
+                headers: this.getHeaders(),
+            });
+        } catch (error) {
+            console.error('There was an error submitting the form:', error);
+            return false;
+        }
+
+        return true;
+    }
+
     protected getURL(): string {
         return `${this.getBaseURL()}/realestatecalc`;
     }

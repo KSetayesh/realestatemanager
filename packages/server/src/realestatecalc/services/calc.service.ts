@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from '@nestjs/common';
 import { RealEstateManager } from 'src/db/realestate/realestate.db';
 import {
@@ -50,6 +52,35 @@ export class CalcService {
 
     async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
         this.realEstateManager.insertListingDetails(listingDetailsDTO);
+    }
+
+    async addNewPropertyWithRentCastAPI(): Promise<any> {
+
+        console.log("In addNewPropertyWithRentCastAPI!");
+
+        const url = 'https://api.rentcast.io/v1/listings/sale?city=Austin&state=TX&status=Active&limit=5';
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                'X-Api-Key': apiKeysConfig.rentCastApiKey,
+            }
+        };
+
+        fetch(url, options)
+            .then(res => {
+                if (res.status === 200) {
+                    console.log("Is successful!");
+                    const data = res.json();
+                    return data;
+                } else {
+                    console.log("Is NOT successful!");
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+            })
+            .then(json => console.log(json))
+            .catch(err => console.error('error:' + err));
+
     }
 
     async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
