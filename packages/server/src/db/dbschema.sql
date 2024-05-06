@@ -95,6 +95,35 @@ CREATE TABLE IF NOT EXISTS agent (
 );
 -- EndQuery
 
+-- Query: CreateRentCastApiResponseTable
+CREATE TABLE IF NOT EXISTS rent_cast_api_response (
+    id SERIAL PRIMARY KEY,
+    address_id VARCHAR(255) UNIQUE,
+    formatted_address VARCHAR(255),
+    address_line1 VARCHAR(255),
+    address_line2 VARCHAR(255),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    zip_code VARCHAR(10),
+    county VARCHAR(50),
+    bedrooms INT,
+    bathrooms DECIMAL,
+    latitude DECIMAL,
+    longitude DECIMAL,
+    square_footage DECIMAL,
+    property_type VARCHAR(50),
+    lot_size DECIMAL,
+    status VARCHAR(50),
+    year_built INT,
+    price INT,
+    listed_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    removed_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    last_seen_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    days_on_market INT
+);
+-- EndQuery
+
 -- Query: CreateRentCastApiTable
 CREATE TABLE IF NOT EXISTS rent_cast_api (
     id SERIAL PRIMARY KEY,

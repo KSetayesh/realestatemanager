@@ -180,29 +180,30 @@ export class CalcService {
                         const rentCastResponses: RentCastResponse[] = [];
                         // Iterate through each object in the array
                         for (const property of jsonData) {
-                            const id = property.id; // "8417-Lakewood-Ridge-Cv,-Austin,-TX-78738";
-                            const formattedAddress = property.formattedAddress; // "8417 Lakewood Ridge Cv, Austin, TX 78738";
-                            const addressLine1 = property.addressLine1; // "8417 Lakewood Ridge Cv";
-                            const addressLine2 = property.addressLine2; // null;
-                            const city = property.city; // "Austin";
-                            const state = property.state; // "TX";
-                            const zipCode = property.zipCode; //"78738";
-                            const county = property.county; // "Travis";
-                            const bedrooms = property.bedrooms;
-                            const bathrooms = property.bathrooms;
-                            const latitude = property.latitude; // 30.295995;
-                            const longitude = property.longitude; // -98.03995;
-                            const squareFootage = property.squareFootage;
-                            const propertyType = property.propertyType; // "Land";
-                            const lotSize = property.lotSize; // 45128;
-                            const status = property.status; // "Active";
-                            const yearBuilt = property.yearBuilt;
-                            const price = property.price; // 799000;
-                            const listedDate = property.listedDate; // "2022-06-16T00:00:00.000Z";
-                            const removedDate = property.removedDate; // null;
-                            const createdDate = property.createdDate; // "2020-09-15T18:20:57.279Z";
-                            const lastSeenDate = property.lastSeenDate; // "2023-02-25T00:00:00.000Z";
-                            const daysOnMarket = property.daysOnMarket; // 254;
+                            const id = property.id;
+                            const formattedAddress = property.formattedAddress ?? '';
+                            const addressLine1 = property.addressLine1 ?? '';
+                            const addressLine2 = property.addressLine2 ?? '';
+                            const city = property.city ?? '';
+                            const state = property.state ?? '';
+                            const zipCode = property.zipCode ?? '';
+                            const county = property.county ?? '';
+                            const bedrooms = property.bedrooms ?? -1;
+                            const bathrooms = property.bathrooms ?? -1;
+                            const latitude = property.latitude ?? -1;
+                            const longitude = property.longitude ?? -1;
+                            const squareFootage = property.squareFootage ?? -1;
+                            const propertyType = property.propertyType ?? '';
+                            const lotSize = property.lotSize ?? -1;
+                            const status = property.status ?? '';
+                            const yearBuilt = property.yearBuilt ?? -1;
+                            const price = property.price ?? -1;
+                            const listedDate = property.listedDate ?? '';
+                            const removedDate = property.removedDate ?? '';
+                            const createdDate = property.createdDate ?? '';
+                            const lastSeenDate = property.lastSeenDate ?? '';
+                            const daysOnMarket = property.daysOnMarket ?? -1;
+
 
                             rentCastResponses.push(
                                 new RentCastResponse(
@@ -228,7 +229,7 @@ export class CalcService {
                                     removedDate,
                                     createdDate,
                                     lastSeenDate,
-                                    daysOnMarket
+                                    daysOnMarket,
                                 )
                             );
 
@@ -241,6 +242,9 @@ export class CalcService {
                     const data = await res.json();
                     const rentCastResponses: RentCastResponse[] = parseApiResponse(data);
                     for (const rentCastResponse of rentCastResponses) {
+
+                        await this.rentCastManager.insertRentCastApiResponse(rentCastResponse);
+
                         const listingDetail: ListingDetailsDTO = {
                             zillowURL: '',
                             propertyDetails: {
