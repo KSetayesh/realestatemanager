@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Country, HomeType, State, InputType, ratingSelections } from '../constants/Constant';
+import { Country, HomeType, State, InputType, ratingSelections, RentCastPropertyType, RentCastStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { ListingDetailsDTO } from '@realestatemanager/shared';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 
-const PropertyForm: React.FC = () => {
+export type FormFieldConfig = {
+    name: string;
+    label: string;
+    type: InputType;
+    defaultValue: boolean | string | Country | HomeType;
+    selections?: State[] | Country[] | HomeType[] | number[] | boolean[] | RentCastPropertyType[] | RentCastStatus[];
+};
 
-    type FormFieldConfig = {
-        name: string;
-        label: string;
-        type: InputType;
-        defaultValue: boolean | string | Country | HomeType;
-        selections?: State[] | Country[] | HomeType[] | number[] | boolean[];
-    };
+const PropertyForm: React.FC = () => {
 
     const formFieldsConfig: FormFieldConfig[] = [
         {
@@ -290,7 +290,7 @@ const PropertyForm: React.FC = () => {
                 zillowMonthlyHOAFeesAmount: parseFloat(formData.zillowMonthlyHOAFeesAmount),
             },
         };
-    }
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

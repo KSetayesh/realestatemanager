@@ -90,7 +90,22 @@ export enum ValueType {
 export enum PercentageAndAmount {
     PERCENTAGE = 'Percentage',
     AMOUNT = 'Amount',
-}
+};
+
+export enum RentCastStatus {
+    ACTIVE = 'Active',
+    INACTIVE = 'Inactive',
+};
+
+export enum RentCastPropertyType {
+    SINGLE_FAMILY = 'Single Family',
+    CONDO = 'Condo',
+    TOWN_HOUSE = 'Townhouse',
+    MANUFACTURED = 'Manufactured',
+    MULTI_FAMILY = 'Multi-Family',
+    APARTMENT = 'Apartment',
+    LAND = 'Land',
+};
 
 export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 

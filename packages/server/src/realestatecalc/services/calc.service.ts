@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from '@nestjs/common';
-import { RealEstateManager } from 'src/db/realestate/realestate.db';
 import {
     AmortizationBreakdownDTO,
     InvestmentScenarioRequest,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
+    RentCastApiRequestDTO,
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
@@ -59,40 +59,55 @@ export class CalcService {
         this.listingManager.insertListingDetails(listingDetailsDTO);
     }
 
-    async addNewPropertyWithRentCastAPI(): Promise<any> {
+    async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<any> {
 
         console.log("In addNewPropertyWithRentCastAPI!");
+        console.log("requestData:", rentCastApiRequest);
+
+        if (!apiKeysConfig.canMakeRentCastApiCall) {
+            console.log(`"canMakeRentCastApiCall" is set to false in .env`);
+            return;
+        }
 
         const rentCastDetails: RentCastDetails = await this.rentCastManager.getRentCastDetails();
 
-        if (rentCastDetails.canMakeFreeApiCall()) {
-            const url = 'https://api.rentcast.io/v1/listings/sale?city=Austin&state=TX&status=Active&limit=5';
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    'X-Api-Key': apiKeysConfig.rentCastApiKey,
-                }
-            };
-            fetch(url, options)
-                .then(async res => {
-                    if (res.status === 200) {
-                        console.log("Is successful!");
-
-                        // Call updateNumberOfApiCalls here
-                        await this.rentCastManager.updateNumberOfApiCalls();
-
-                        const data = await res.json();
-                        console.log(data); // Log the response data
-                    } else {
-                        console.log("Is NOT successful!");
-                        throw new Error(`HTTP error! Status: ${res.status}`);
-                    }
-                })
-                .catch(err => console.error('error:' + err));
-        } else {
+        if (!rentCastDetails.canMakeFreeApiCall()) {
             console.log(`Number of rent cast api calls has exceeded ${rentCastDetails.numberOfFreeApiCalls}`);
+            return;
         }
+
+        const createURL = (
+            rentCastApiRequest: RentCastApiRequestDTO
+        ): string => {
+            console.log("requestData:", rentCastApiRequest);
+            return 'https://api.rentcast.io/v1/listings/sale?city=Austin&state=TX&status=Active&limit=5';
+        };
+
+        const url = createURL(rentCastApiRequest);
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                'X-Api-Key': apiKeysConfig.rentCastApiKey,
+            }
+        };
+        fetch(url, options)
+            .then(async res => {
+                if (res.status === 200) {
+                    console.log("Is successful!");
+
+                    // Call updateNumberOfApiCalls here
+                    await this.rentCastManager.updateNumberOfApiCalls();
+
+                    const data = await res.json();
+                    console.log(data); // Log the response data
+                } else {
+                    console.log("Is NOT successful!");
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+            })
+            .catch(err => console.error('error:' + err));
+
 
     }
 

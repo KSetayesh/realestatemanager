@@ -160,3 +160,18 @@ export enum TransactionKey {
     TRAVELING_COST = 'Traveling Costs',
     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
 };
+
+export enum RentCastStatus {
+    ACTIVE = 'Active',
+    INACTIVE = 'Inactive',
+};
+
+export enum RentCastPropertyType {
+    SINGLE_FAMILY = 'Single Family',
+    CONDO = 'Condo',
+    TOWN_HOUSE = 'Townhouse',
+    MANUFACTURED = 'Manufactured',
+    MULTI_FAMILY = 'Multi-Family',
+    APARTMENT = 'Apartment',
+    LAND = 'Land',
+};
