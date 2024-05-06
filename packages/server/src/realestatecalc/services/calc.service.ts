@@ -79,8 +79,83 @@ export class CalcService {
         const createURL = (
             rentCastApiRequest: RentCastApiRequestDTO
         ): string => {
-            console.log("requestData:", rentCastApiRequest);
-            return 'https://api.rentcast.io/v1/listings/sale?city=Austin&state=TX&status=Active&limit=5';
+
+            const appendUrlParameter = (
+                property: string,
+                value: string,
+                firstAppended: boolean,
+            ): string => {
+                const space = '%20';
+                value = value.replace(/ /g, space);
+                const returnValue = `${property}=${value}`;
+                if (firstAppended) {
+                    return `?${returnValue}`;
+                }
+                else {
+                    return `&${returnValue}`;
+                }
+            };
+
+            let appendToUrl = '';
+            let firstAppended = true;
+            if (rentCastApiRequest.address) {
+                appendToUrl += appendUrlParameter('address', rentCastApiRequest.address, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.city) {
+                appendToUrl += appendUrlParameter('city', rentCastApiRequest.city, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.state) {
+                appendToUrl += appendUrlParameter('state', rentCastApiRequest.state, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.zipCode) {
+                appendToUrl += appendUrlParameter('zipCode', rentCastApiRequest.zipCode, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.latitude) {
+                appendToUrl += appendUrlParameter('latitude', rentCastApiRequest.latitude.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.longitude) {
+                appendToUrl += appendUrlParameter('longitude', rentCastApiRequest.longitude.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.radius) {
+                appendToUrl += appendUrlParameter('radius', rentCastApiRequest.radius.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.propertyType) {
+                appendToUrl += appendUrlParameter('propertyType', rentCastApiRequest.propertyType, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.bedrooms) {
+                appendToUrl += appendUrlParameter('bedrooms', rentCastApiRequest.bedrooms.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.bathrooms) {
+                appendToUrl += appendUrlParameter('bathrooms', rentCastApiRequest.bathrooms.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.status) {
+                appendToUrl += appendUrlParameter('status', rentCastApiRequest.status, firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.daysOld) {
+                appendToUrl += appendUrlParameter('daysOld', rentCastApiRequest.daysOld.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.limit) {
+                appendToUrl += appendUrlParameter('limit', rentCastApiRequest.limit.toString(), firstAppended);
+                firstAppended = false;
+            }
+            if (rentCastApiRequest.offset) {
+                appendToUrl += appendUrlParameter('offset', rentCastApiRequest.offset.toString(), firstAppended);
+                firstAppended = false;
+            }
+            return `https://api.rentcast.io/v1/listings/sale${appendToUrl}`;
+            // return 'https://api.rentcast.io/v1/listings/sale?city=Austin&state=TX&status=Active&limit=5';
         };
 
         const url = createURL(rentCastApiRequest);
