@@ -8,7 +8,7 @@ export type FormFieldConfig = {
     name: string;
     label: string;
     type: InputType;
-    defaultValue: boolean | string | Country | PropertyType;
+    defaultValue: boolean | string | Country | PropertyType | PropertyStatus;
     selections?: State[] | Country[] | PropertyType[] | number[] | boolean[] | PropertyType[] | PropertyStatus[];
 };
 
@@ -166,6 +166,13 @@ const PropertyForm: React.FC = () => {
             selections: Object.values(PropertyType)
         },
         {
+            name: 'propertyStatus',
+            label: 'Property Status',
+            type: InputType.SELECT,
+            defaultValue: PropertyStatus.ACTIVE,
+            selections: Object.values(PropertyStatus)
+        },
+        {
             name: 'listingPrice',
             label: 'Listing Price',
             type: InputType.NUMBER,
@@ -250,6 +257,7 @@ const PropertyForm: React.FC = () => {
             zillowURL: formData.zillowURL,
             listingPrice: formData.listingPrice,
             dateListed: getDateNDaysAgo(parseInt(formData.numberOfDaysOnMarket)),
+            propertyStatus: formData.propertyStatus as PropertyStatus,
             propertyDetails: {
                 address: {
                     fullAddress: formData.fullAddress,
