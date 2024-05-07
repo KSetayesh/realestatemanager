@@ -1,3 +1,5 @@
+import { PropertyStatus } from "./Constants";
+
 export interface RentCastApiRequestDTO {
     address: string;
     city: string;
@@ -9,7 +11,7 @@ export interface RentCastApiRequestDTO {
     propertyType: string;
     bedrooms: number;
     bathrooms: number;
-    status: string;
+    status: PropertyStatus;
     daysOld: number;
     limit: number;
     offset: number;

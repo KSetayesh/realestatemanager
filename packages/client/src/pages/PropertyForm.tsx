@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Country, HomeType, State, InputType, ratingSelections, RentCastPropertyType, RentCastStatus } from '../constants/Constant';
+import { Country, State, InputType, ratingSelections, PropertyType, PropertyStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { ListingDetailsDTO } from '@realestatemanager/shared';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
@@ -8,8 +8,8 @@ export type FormFieldConfig = {
     name: string;
     label: string;
     type: InputType;
-    defaultValue: boolean | string | Country | HomeType;
-    selections?: State[] | Country[] | HomeType[] | number[] | boolean[] | RentCastPropertyType[] | RentCastStatus[];
+    defaultValue: boolean | string | Country | PropertyType;
+    selections?: State[] | Country[] | PropertyType[] | number[] | boolean[] | PropertyType[] | PropertyStatus[];
 };
 
 const PropertyForm: React.FC = () => {
@@ -159,11 +159,11 @@ const PropertyForm: React.FC = () => {
             selections: [true, false]
         },
         {
-            name: 'homeType',
-            label: 'Home Type',
+            name: 'propertyType',
+            label: 'Property Type',
             type: InputType.SELECT,
-            defaultValue: HomeType.SingleFamilyHome,
-            selections: Object.values(HomeType)
+            defaultValue: PropertyType.SINGLE_FAMILY,
+            selections: Object.values(PropertyType)
         },
         {
             name: 'listingPrice',
@@ -275,7 +275,7 @@ const PropertyForm: React.FC = () => {
                 hasGarage: formData.hasGarage,
                 hasPool: formData.hasPool,
                 hasBasement: formData.hasBasement,
-                homeType: formData.homeType as HomeType,
+                propertyType: formData.propertyType as PropertyType,
                 description: formData.description,
             },
             zillowMarketEstimates: {

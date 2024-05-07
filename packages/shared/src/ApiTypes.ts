@@ -1,7 +1,7 @@
 
 //------------------------------ Investment Related Requests ------------------------------
 
-import { Country, HomeType, InterestType, State, TransactionKey, TransactionType, ValueType } from "./Constants";
+import { Country, InterestType, PropertyType, PropertyStatus, State, TransactionKey, TransactionType, ValueType } from "./Constants";
 
 // Defines the base structure for input that can either be a rate or an amount
 export interface ValueInputBase {
@@ -633,6 +633,7 @@ export interface ListingDetailsDTO {
     dateCreated?: string;
     dateUpdated?: string;
     numberOfDaysOnMarket?: number;
+    propertyStatus?: PropertyStatus;
 };
 
 export type AddressDTO = {
@@ -659,7 +660,7 @@ export interface PropertyDetailsDTO {
     hasGarage?: boolean;
     hasPool?: boolean;
     hasBasement?: boolean;
-    homeType?: HomeType;
+    propertyType?: PropertyType;
     description?: string;
 };
 

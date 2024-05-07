@@ -1,10 +1,18 @@
 //-----Enums----
 
-export enum HomeType {
-    Condo = "Condo",
-    SingleFamilyHome = "Single Family Home",
-    TownHome = "Town Home",
-    MultiFamilyHome = "Multi Family Home",
+export enum PropertyStatus {
+    ACTIVE = 'Active',
+    INACTIVE = 'Inactive',
+};
+
+export enum PropertyType {
+    SINGLE_FAMILY = 'Single Family',
+    CONDO = 'Condo',
+    TOWN_HOUSE = 'Townhouse',
+    MANUFACTURED = 'Manufactured',
+    MULTI_FAMILY = 'Multi-Family',
+    APARTMENT = 'Apartment',
+    LAND = 'Land',
 };
 
 export enum Country {
@@ -161,17 +169,4 @@ export enum TransactionKey {
     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
 };
 
-export enum RentCastStatus {
-    ACTIVE = 'Active',
-    INACTIVE = 'Inactive',
-};
 
-export enum RentCastPropertyType {
-    SINGLE_FAMILY = 'Single Family',
-    CONDO = 'Condo',
-    TOWN_HOUSE = 'Townhouse',
-    MANUFACTURED = 'Manufactured',
-    MULTI_FAMILY = 'Multi-Family',
-    APARTMENT = 'Apartment',
-    LAND = 'Land',
-};

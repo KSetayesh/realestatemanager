@@ -1,4 +1,4 @@
-import { HomeType, PropertyDetailsDTO } from "@realestatemanager/shared";
+import { PropertyType, PropertyDetailsDTO } from "@realestatemanager/shared";
 import { Address } from "./address.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { SchoolRating } from "./schoolrating.model";
@@ -15,7 +15,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
     private hasGarage?: boolean;
     private hasPool?: boolean;
     private hasBasement?: boolean;
-    private homeType?: HomeType;
+    private propertyType?: PropertyType;
     private description?: string;
 
     constructor(
@@ -30,7 +30,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
         hasGarage?: boolean,
         hasPool?: boolean,
         hasBasement?: boolean,
-        homeType?: HomeType,
+        propertyType?: PropertyType,
         description?: string,
     ) {
         this.address = address;
@@ -44,7 +44,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
         this.hasGarage = hasGarage;
         this.hasPool = hasPool;
         this.hasBasement = hasBasement;
-        this.homeType = homeType;
+        this.propertyType = propertyType;
         this.description = description;
     }
 
@@ -58,7 +58,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
             squareFeet: this.squareFeet,
             acres: this.acres,
             yearBuilt: this.yearBuilt,
-            homeType: this.homeType,
+            propertyType: this.propertyType,
             hasGarage: this.hasGarage,
             hasPool: this.hasPool,
             hasBasement: this.hasBasement,

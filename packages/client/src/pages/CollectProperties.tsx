@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { State, InputType, RentCastPropertyType, RentCastStatus } from '../constants/Constant';
+import { State, InputType, PropertyType, PropertyStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { FormFieldConfig } from "./PropertyForm";
@@ -76,8 +76,8 @@ const CollectProperties: React.FC = () => {
             name: 'propertyType',
             label: 'Property Type',
             type: InputType.SELECT,
-            defaultValue: RentCastPropertyType.SINGLE_FAMILY,
-            selections: Object.values(RentCastPropertyType)
+            defaultValue: PropertyType.SINGLE_FAMILY,
+            selections: Object.values(PropertyType)
         },
         {
             name: 'bedrooms',
@@ -95,8 +95,8 @@ const CollectProperties: React.FC = () => {
             name: 'status',
             label: 'Status',
             type: InputType.SELECT,
-            defaultValue: RentCastStatus.ACTIVE,
-            selections: Object.values(RentCastStatus)
+            defaultValue: PropertyStatus.ACTIVE,
+            selections: Object.values(PropertyStatus)
         },
         {
             name: 'daysOld',
@@ -159,10 +159,10 @@ const CollectProperties: React.FC = () => {
             latitude: parseFloat(formData.latitude),
             longitude: parseFloat(formData.longitude),
             radius: parseFloat(formData.radius),
-            propertyType: formData.propertyType as RentCastPropertyType,
+            propertyType: formData.propertyType as PropertyType,
             bedrooms: parseFloat(formData.bedrooms),
             bathrooms: parseFloat(formData.bathrooms),
-            status: formData.status as RentCastStatus,
+            status: formData.status as PropertyStatus,
             daysOld: parseInt(formData.daysOld),
             limit: parseInt(formData.limit),
             offset: parseInt(formData.offset),

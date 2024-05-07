@@ -1,4 +1,4 @@
-import { Country, HomeType, State } from "@realestatemanager/shared";
+import { Country, PropertyType, PropertyStatus, State } from "@realestatemanager/shared";
 
 export class RentCastResponse {
 
@@ -15,9 +15,9 @@ export class RentCastResponse {
     private _latitude: number;
     private _longitude: number;
     private _squareFootage: number;
-    private _propertyType: HomeType;
+    private _propertyType: PropertyType;
     private _lotSize: number;
-    private _status: string;
+    private _status: PropertyStatus;
     private _yearBuilt: number;
     private _price: number;
     private _listedDate: string;
@@ -40,9 +40,9 @@ export class RentCastResponse {
         latitude: number,
         longitude: number,
         squareFootage: number,
-        propertyType: HomeType,
+        propertyType: PropertyType,
         lotSize: number,
-        status: string,
+        status: PropertyStatus,
         yearBuilt: number,
         price: number,
         listedDate: string,
@@ -128,7 +128,7 @@ export class RentCastResponse {
         return this._squareFootage;
     }
 
-    get propertyType(): HomeType {
+    get propertyType(): PropertyType {
         return this._propertyType;
     }
 
@@ -136,7 +136,7 @@ export class RentCastResponse {
         return this._lotSize;
     }
 
-    get status(): string {
+    get status(): PropertyStatus {
         return this._status;
     }
 

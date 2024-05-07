@@ -3,8 +3,8 @@ import { TableColumn, TableRow } from "./ReusableTable";
 
 export const defaultColumns: TableColumn[] = [
     {
-        header: "Home Type",
-        accessor: "homeType",
+        header: "Property Type",
+        accessor: "propertyType",
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -417,7 +417,7 @@ export const defaultColumns: TableColumn[] = [
 
 export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRow => {
     return {
-        homeType: getHomeType(property),
+        propertyType: getPropertyType(property),
         fullAddress: getFullAddress(property),
         state: getState(property),
         zipcode: getZipCode(property),
@@ -468,8 +468,8 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
     };
 };
 
-export const getHomeType = (property: ListingWithScenariosDTO): string => {
-    return listingDetails(property).propertyDetails.homeType ?? "";
+export const getPropertyType = (property: ListingWithScenariosDTO): string => {
+    return listingDetails(property).propertyDetails.propertyType ?? "";
 };
 
 export const getFullAddress = (property: ListingWithScenariosDTO): string => {

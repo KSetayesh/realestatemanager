@@ -3,18 +3,18 @@ import { ListingDetails } from 'src/realestatecalc/models/listing_models/listing
 import { Address } from 'src/realestatecalc/models/listing_models/address.model';
 import { PropertyDetails } from 'src/realestatecalc/models/listing_models/propertydetails.model';
 import { ZillowMarketEstimates } from 'src/realestatecalc/models/listing_models/zillowmarketestimates.model';
-import { AddressDTO, AgentType, AgentsDTO, Country, HomeType, ListingDetailsDTO, PropertyDetailsDTO, SchoolRatingDTO, State, ZillowMarketEstimatesDTO } from '@realestatemanager/shared';
+import { AddressDTO, AgentType, AgentsDTO, Country, ListingDetailsDTO, PropertyDetailsDTO, PropertyType, PropertyStatus, SchoolRatingDTO, State, ZillowMarketEstimatesDTO } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 import { Agent } from 'src/agents/models/agent.model';
 
 export class ListingManager extends RealEstateManager {
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, ld.date_listed, ld.created_at, ld.updated_at, 
+            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.created_at, ld.updated_at, 
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
             sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
-            pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.home_type, pd._description,
+            pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.property_type, pd._description,
             zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
             zme.zillow_monthly_home_insurance_amount, zme.zillow_monthly_hoa_fees_amount 
         FROM listing_details ld
@@ -33,6 +33,7 @@ export class ListingManager extends RealEstateManager {
             property_details_id, 
             zillow_market_estimates_id, 
             listing_price,
+            property_status,
             date_listed)`;
 
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
@@ -62,7 +63,7 @@ export class ListingManager extends RealEstateManager {
                 has_garage,
                 has_pool,
                 has_basement,
-                home_type, 
+                property_type,
                 _description)`;
 
     private INSERT_ZILLOW_MARKET_ESTIMATES_QUERY = `INSERT INTO zillow_market_estimates 
@@ -232,7 +233,7 @@ export class ListingManager extends RealEstateManager {
         const hasGarage: boolean = row.has_garage;
         const hasPool: boolean = row.has_pool;
         const hasBasement: boolean = row.has_basement;
-        const homeType: HomeType = row.home_type;
+        const propertyType: PropertyType = row.property_type;
         const description: string = row._description;
         const schoolRating: SchoolRating = new SchoolRating(elementarySchoolRating, middleSchoolRating, highSchoolRating);
 
@@ -249,7 +250,7 @@ export class ListingManager extends RealEstateManager {
                 hasGarage,
                 hasPool,
                 hasBasement,
-                homeType,
+                propertyType,
                 description);
 
         const zestimate: number = row.zestimate;
@@ -272,11 +273,21 @@ export class ListingManager extends RealEstateManager {
 
         const zillowURL: string = row.zillow_url;
         const listingPrice: number = row.listing_price;
+        const propertyStatus: PropertyStatus = row.property_status;
         const dateListed: Date = new Date(row.date_listed);
         const dateCreated: Date = new Date(row.created_at);
         const dateUpdated: Date = new Date(row.updated_at);
 
-        return new ListingDetails(zillowURL, propertyDetails, zillowMarketEstimates, listingPrice, dateListed, dateCreated, dateUpdated);
+        return new ListingDetails(
+            zillowURL,
+            propertyDetails,
+            zillowMarketEstimates,
+            listingPrice,
+            propertyStatus,
+            dateListed,
+            dateCreated,
+            dateUpdated,
+        );
 
     }
 
@@ -290,7 +301,14 @@ export class ListingManager extends RealEstateManager {
                 zillowMarketEstimatesId = await this.insertZillowMarketEstimates(listingDetails.zillowMarketEstimates);
             }
 
-            const values: any[] = [listingDetails.zillowURL, propertyDetailsId, zillowMarketEstimatesId, listingDetails.listingPrice, listingDetails.dateListed];
+            const values: any[] = [
+                listingDetails.zillowURL,
+                propertyDetailsId,
+                zillowMarketEstimatesId,
+                listingDetails.listingPrice,
+                listingDetails.propertyStatus,
+                listingDetails.dateListed
+            ];
             this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
 
             console.log('Listing information inserted successfully');
@@ -339,7 +357,7 @@ export class ListingManager extends RealEstateManager {
             propertyDetails.hasGarage,
             propertyDetails.hasPool,
             propertyDetails.hasBasement,
-            propertyDetails.homeType,
+            propertyDetails.propertyType,
             propertyDetails.description]
 
         return this.genericInsertQuery(this.INSERT_PROPERTY_DETAILS_QUERY, values);

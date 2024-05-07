@@ -277,7 +277,7 @@ export class CalcService {
                                 hasGarage: false,
                                 hasPool: false,
                                 hasBasement: false,
-                                homeType: rentCastResponse.propertyType,
+                                propertyType: rentCastResponse.propertyType,
                                 description: '',
                             },
                             zillowMarketEstimates: {

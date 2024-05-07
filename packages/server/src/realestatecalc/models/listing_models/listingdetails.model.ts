@@ -1,4 +1,4 @@
-import { ListingDetailsDTO } from "@realestatemanager/shared";
+import { ListingDetailsDTO, PropertyStatus } from "@realestatemanager/shared";
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
@@ -12,19 +12,23 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private dateListed: Date;
     private dateCreated: Date;
     private dateUpdated: Date;
+    private propertyStatus: PropertyStatus;
 
     constructor(zillowURL: string,
         propertyDetails: PropertyDetails,
         zillowMarketEstimates: ZillowMarketEstimates,
         listingPrice: number,
+        propertyStatus: PropertyStatus,
         dateListed: Date,
         dateCreated: Date,
-        dateUpdated: Date) {
+        dateUpdated: Date,
+    ) {
 
         this.zillowURL = zillowURL;
         this.propertyDetails = propertyDetails;
         this.zillowMarketEstimates = zillowMarketEstimates;
         this.listingPrice = listingPrice;
+        this.propertyStatus = propertyStatus;
         this.dateListed = dateListed;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
@@ -74,6 +78,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
             propertyDetails: this.propertyDetails.toDTO(),
             zillowMarketEstimates: this.zillowMarketEstimates.toDTO(),
             listingPrice: this.listingPrice,
+            propertyStatus: this.propertyStatus,
             dateListed: this.dateListed.toLocaleDateString('en-US'),
             dateCreated: this.dateCreated.toLocaleDateString('en-US'),
             dateUpdated: this.dateUpdated.toLocaleDateString('en-US'),
