@@ -5,6 +5,7 @@ import {
     AmortizationBreakdownDTO,
     Country,
     InvestmentScenarioRequest,
+    ListingCreationType,
     ListingDetailsDTO,
     ListingWithScenariosDTO,
     RentCastApiRequestDTO,
@@ -62,8 +63,8 @@ export class CalcService {
         return (await this.rentCastManager.getRentCastDetails()).toDTO();
     }
 
-    async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
-        this.listingManager.insertListingDetails(listingDetailsDTO);
+    async addNewProperty(listingDetailsDTO: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
+        this.listingManager.insertListingDetails(listingDetailsDTO, creationType);
     }
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<any> {
@@ -298,7 +299,7 @@ export class CalcService {
                             numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
                             propertyStatus: rentCastApiRequest.status,
                         };
-                        await this.addNewProperty(listingDetail);
+                        await this.addNewProperty(listingDetail, ListingCreationType.RENT_CAST_API);
                     }
                     console.log(data); // Log the response data
                 } else {

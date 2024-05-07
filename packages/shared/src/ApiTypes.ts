@@ -9,7 +9,8 @@ import {
     State,
     TransactionKey,
     TransactionType,
-    ValueType
+    ValueType,
+    ListingCreationType
 } from './Constants';
 
 // Defines the base structure for input that can either be a rate or an amount

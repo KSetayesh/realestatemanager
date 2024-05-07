@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS listing_details (
     listing_price INT,
     property_status VARCHAR(50),
     date_listed TIMESTAMP WITHOUT TIME ZONE DEFAULT '1970-01-01 00:00:00',
+    creation_type VARCHAR(50),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,

@@ -169,4 +169,7 @@ export enum TransactionKey {
     OTHER_INITIAL_EXPENSES = 'Other Initial Expenses',
 };
 
-
+export enum ListingCreationType {
+    MANUAL = 'Manual',
+    RENT_CAST_API = 'Rent Cast Api',
+};

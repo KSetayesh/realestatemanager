@@ -12,14 +12,15 @@ import {
     PropertyStatus,
     SchoolRatingDTO,
     State,
-    ZillowMarketEstimatesDTO
+    ZillowMarketEstimatesDTO,
+    ListingCreationType
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 
 export class ListingManager extends RealEstateManager {
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.created_at, ld.updated_at, 
+            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at,
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
             ad.longitude, ad.latitude, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
@@ -38,7 +39,8 @@ export class ListingManager extends RealEstateManager {
             zillow_market_estimates_id, 
             listing_price,
             property_status,
-            date_listed)`;
+            date_listed,
+            creation_type)`;
 
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
             (elementary_school_rating, 
@@ -81,13 +83,13 @@ export class ListingManager extends RealEstateManager {
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
 
-    async insertListingDetails(listingDetails: ListingDetailsDTO): Promise<void> {
+    async insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
         const client = await this.pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._insertListingDetails(listingDetails);
+            await this._insertListingDetails(listingDetails, creationType);
 
             await client.query('COMMIT');
         } catch (e) {
@@ -208,6 +210,7 @@ export class ListingManager extends RealEstateManager {
 
         const zillowURL: string = row.zillow_url;
         const listingPrice: number = row.listing_price;
+        const creationType: ListingCreationType = row.creation_type;
         const propertyStatus: PropertyStatus = row.property_status;
         const dateListed: Date = new Date(row.date_listed);
         const dateCreated: Date = new Date(row.created_at);
@@ -219,6 +222,7 @@ export class ListingManager extends RealEstateManager {
             zillowMarketEstimates,
             listingPrice,
             propertyStatus,
+            creationType,
             dateListed,
             dateCreated,
             dateUpdated,
@@ -226,7 +230,7 @@ export class ListingManager extends RealEstateManager {
 
     }
 
-    private async _insertListingDetails(listingDetails: ListingDetailsDTO): Promise<void> {
+    private async _insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
         try {
             const addressId = await this.insertAddress(listingDetails.propertyDetails.address);
             const schoolRatingId = await this._insertSchoolRating(listingDetails.propertyDetails.schoolRating);
@@ -242,7 +246,8 @@ export class ListingManager extends RealEstateManager {
                 zillowMarketEstimatesId,
                 listingDetails.listingPrice,
                 listingDetails.propertyStatus,
-                listingDetails.dateListed
+                listingDetails.dateListed,
+                creationType,
             ];
             this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
 
