@@ -177,7 +177,10 @@ const CollectProperties: React.FC = () => {
                 <p>Loading Rent Cast Api Details...</p>
             ) : (
                 <>
-                    <h2>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</h2>
+                    <hr></hr>
+                    <p>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</p>
+                    <p>Can make API call: {rentCastDetails!.canMakeApiCalls.toString()}</p>
+                    <p>Days into billing period: {rentCastDetails!.daysIntoBillingPeriod}</p>
                     <hr></hr>
                     <br></br>
                     <form onSubmit={handleSubmit}>

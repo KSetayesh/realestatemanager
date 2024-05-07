@@ -1,4 +1,5 @@
-import { RentCastDetailsDTO } from "@realestatemanager/shared";
+import { RentCastDetailsDTO, Utility } from "@realestatemanager/shared";
+import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
 
 export class RentCastDetails {
 
@@ -43,12 +44,17 @@ export class RentCastDetails {
         return this.numberOfFreeApiCalls - this.apiCallsThisMonth;
     }
 
+    get daysIntoBillingPeriod(): number {
+        return calculateDaysPassedSinceIgnoreTime(this.firstBilledOn);
+    }
+
     toDTO(): RentCastDetailsDTO {
         return {
             apiCallsThisMonth: this.apiCallsThisMonth,
             numberOfFreeApiCalls: this.numberOfFreeApiCalls,
             remainingNumberOfFreeApiCalls: this.remainingNumberOfFreeApiCalls,
             canMakeApiCalls: this.canMakeFreeApiCall,
+            daysIntoBillingPeriod: this.daysIntoBillingPeriod,
             billingPeriod: this.billingPeriod,
             firstBilledOn: this.firstBilledOn,
         };

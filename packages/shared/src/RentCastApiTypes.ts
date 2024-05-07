@@ -19,7 +19,8 @@ export interface RentCastDetailsDTO {
     apiCallsThisMonth: number;
     numberOfFreeApiCalls: number;
     remainingNumberOfFreeApiCalls: number;
+    daysIntoBillingPeriod: number;
     canMakeApiCalls: boolean;
     billingPeriod: number;
     firstBilledOn: Date;
-}
+};
