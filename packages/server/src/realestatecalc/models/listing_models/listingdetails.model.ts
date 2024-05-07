@@ -86,6 +86,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
             dateCreated: this.dateCreated.toLocaleDateString('en-US'),
             dateUpdated: this.dateUpdated.toLocaleDateString('en-US'),
             numberOfDaysOnMarket: this.getNumberOfDaysOnMarket(),
+            creationType: this.creationType,
         };
     }
 

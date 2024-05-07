@@ -644,6 +644,7 @@ export interface ListingDetailsDTO {
     dateUpdated?: string;
     numberOfDaysOnMarket?: number;
     propertyStatus?: PropertyStatus;
+    creationType?: ListingCreationType;
 };
 
 export type AddressDTO = {

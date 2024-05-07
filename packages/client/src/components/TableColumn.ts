@@ -413,6 +413,14 @@ export const defaultColumns: TableColumn[] = [
         isSortable: true,
     },
     {
+        header: "Creation Type",
+        accessor: "creationType",
+        isURL: false,
+        showColumn: false,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+    {
         header: "Description",
         accessor: "description",
         isURL: false,
@@ -482,6 +490,7 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
         zillowMonthlyHomeInsuranceAmount: getZillowMonthlyHomeInsuranceAmount(property),
         zillowMonthlyHOAFeesAmount: getZillowMonthlyHOAFeesAmount(property),
         description: getDescription(property),
+        creationType: getCreationType(property),
         investmentBreakdown: 'View',
     };
 };
@@ -628,6 +637,10 @@ export const getZillowMonthlyHOAFeesAmount = (property: ListingWithScenariosDTO)
 
 export const getDescription = (property: ListingWithScenariosDTO): string => {
     return listingDetails(property).propertyDetails.description ?? "";
+};
+
+export const getCreationType = (property: ListingWithScenariosDTO): string => {
+    return listingDetails(property).creationType ?? "";
 };
 
 export const getPMIRate = (property: ListingWithScenariosDTO): number => {
