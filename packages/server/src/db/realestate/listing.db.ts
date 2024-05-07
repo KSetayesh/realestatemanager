@@ -3,9 +3,18 @@ import { ListingDetails } from 'src/realestatecalc/models/listing_models/listing
 import { Address } from 'src/realestatecalc/models/listing_models/address.model';
 import { PropertyDetails } from 'src/realestatecalc/models/listing_models/propertydetails.model';
 import { ZillowMarketEstimates } from 'src/realestatecalc/models/listing_models/zillowmarketestimates.model';
-import { AddressDTO, AgentType, AgentsDTO, Country, ListingDetailsDTO, PropertyDetailsDTO, PropertyType, PropertyStatus, SchoolRatingDTO, State, ZillowMarketEstimatesDTO } from '@realestatemanager/shared';
+import {
+    AddressDTO,
+    Country,
+    ListingDetailsDTO,
+    PropertyDetailsDTO,
+    PropertyType,
+    PropertyStatus,
+    SchoolRatingDTO,
+    State,
+    ZillowMarketEstimatesDTO
+} from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
-import { Agent } from 'src/agents/models/agent.model';
 
 export class ListingManager extends RealEstateManager {
 
@@ -22,11 +31,6 @@ export class ListingManager extends RealEstateManager {
         JOIN property_details pd ON ld.property_details_id = pd.id
         JOIN address ad ON pd.address_id = ad.id 
         JOIN school_rating sr ON pd.school_rating_id = sr.id`;
-
-    private GET_AGENTS_QUERY = `SELECT
-        first_name, last_name, company_name, phone_number, state, country, agent_type 
-        FROM agent;
-    `;
 
     private INSERT_LISTING_DETAILS_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
@@ -74,70 +78,6 @@ export class ListingManager extends RealEstateManager {
             zillow_monthly_property_tax_amount,
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
-
-    private INSERT_AGENT_QUERY = `INSERT INTO agent
-            (first_name,
-            last_name,
-            company_name,
-            phone_number,
-            state,
-            country,
-            agent_type)`;
-
-    async insertAgent(agent: AgentsDTO): Promise<void> {
-        const client = await this.pool.connect();
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            await this._insertAgent(agent);
-
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
-        }
-    }
-
-    private async _insertAgent(agent: AgentsDTO): Promise<void> {
-        try {
-            const values: any[] = [
-                agent.firstName,
-                agent.lastName,
-                agent.companyName,
-                agent.phoneNumber,
-                agent.state,
-                agent.country,
-                agent.agentType
-            ];
-
-            this.genericInsertQuery(this.INSERT_AGENT_QUERY, values);
-
-            console.log('Listing information inserted successfully');
-        } catch (err) {
-            console.error('Error inserting listing information', err);
-            throw err;
-        }
-    }
-
-    async getAllAgents(): Promise<Agent[]> {
-        const agents: Agent[] = [];
-        const query = `${this.GET_AGENTS_QUERY};`;
-
-        try {
-            const res = await this.pool.query(query);
-            res.rows.forEach(row => {
-                const agent: Agent = this.mapRowToAgent(row);
-                agents.push(agent);
-            });
-            return agents;
-        } catch (err) {
-            console.error('Error fetching all agents', err);
-            throw err;
-        }
-    }
 
     async insertListingDetails(listingDetails: ListingDetailsDTO): Promise<void> {
         const client = await this.pool.connect();
@@ -187,18 +127,6 @@ export class ListingManager extends RealEstateManager {
             console.error(`Error fetching property by Zillow URL: ${zillowURL}`, err);
             throw err;
         }
-    }
-
-    private mapRowToAgent(row: any): Agent {
-        const firstName: string = row.first_name;
-        const lastName: string = row.last_name;
-        const companyName: string = row.company_name;
-        const phoneNumber: string = row.phone_number;
-        const state: State = row.state;
-        const country: Country = row.country;
-        const agentType: AgentType = row.agent_type;
-
-        return new Agent(firstName, lastName, companyName, phoneNumber, state, country, agentType);
     }
 
     private mapRowToListingDetails(row: any): ListingDetails {
