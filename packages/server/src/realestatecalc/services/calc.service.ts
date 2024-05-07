@@ -262,6 +262,8 @@ export class CalcService {
                                     country: Country.UnitedStates,
                                     streetAddress: rentCastResponse.addressLine1,
                                     apartmentNumber: rentCastResponse.addressLine2,
+                                    longitude: rentCastResponse.longitude,
+                                    latitude: rentCastResponse.latitude,
                                 },
                                 schoolRating: {
                                     elementarySchoolRating: -1,
@@ -294,6 +296,7 @@ export class CalcService {
                             listingPrice: rentCastResponse.price,
                             dateListed: rentCastResponse.listedDate,
                             numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
+                            propertyStatus: rentCastApiRequest.status,
                         };
                         await this.addNewProperty(listingDetail);
                     }

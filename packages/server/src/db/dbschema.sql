@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS address (
     country VARCHAR(50),
     street_address VARCHAR(255),
     apartment_number VARCHAR(50),
+    longitude DECIMAL(9,6),
+    latitude DECIMAL(9,6),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );

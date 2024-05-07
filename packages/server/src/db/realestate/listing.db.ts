@@ -21,7 +21,7 @@ export class ListingManager extends RealEstateManager {
     private GET_LISTINGS_QUERY = `SELECT 
             ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.created_at, ld.updated_at, 
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
-            sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
+            ad.longitude, ad.latitude, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
             pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.property_type, pd._description,
             zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
@@ -53,7 +53,9 @@ export class ListingManager extends RealEstateManager {
             county, 
             country, 
             street_address, 
-            apartment_number)`;
+            apartment_number,
+            longitude,
+            latitude)`;
 
     private INSERT_PROPERTY_DETAILS_QUERY = `INSERT INTO property_details 
                 (address_id, 
@@ -138,6 +140,8 @@ export class ListingManager extends RealEstateManager {
         const country: Country = row.country;
         const streetAddress: string = row.street_address;
         const apartmentNumber: string = row.apartment_number;
+        const longitude: number = row.longitude;
+        const latitude: number = row.latitude;
         const address: Address =
             new Address(
                 fullAddress,
@@ -147,7 +151,10 @@ export class ListingManager extends RealEstateManager {
                 county,
                 country,
                 streetAddress,
-                apartmentNumber);
+                apartmentNumber,
+                longitude,
+                latitude
+            );
 
         const elementarySchoolRating: number = row.elementary_school_rating;
         const middleSchoolRating: number = row.middle_school_rating;
@@ -266,7 +273,9 @@ export class ListingManager extends RealEstateManager {
             address.county,
             address.country,
             address.streetAddress,
-            address.apartmentNumber];
+            address.apartmentNumber,
+            address.longitude,
+            address.latitude];
 
         return this.genericInsertQuery(this.INSERT_ADDRESS_QUERY, values);
     }

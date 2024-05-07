@@ -229,6 +229,22 @@ export const defaultColumns: TableColumn[] = [
         isSortable: false,
     },
     {
+        header: "Longitude",
+        accessor: "longitude",
+        isURL: false,
+        showColumn: false,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+    {
+        header: "Latitude",
+        accessor: "latitude",
+        isURL: false,
+        showColumn: false,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+    {
         header: "Number Of Days On Market",
         accessor: "numberOfDaysOnMarket",
         isURL: false,
@@ -440,6 +456,8 @@ export const createDefaultRowData = (property: ListingWithScenariosDTO): TableRo
         country: getCountry(property),
         streetAddress: getStreetAddress(property),
         apartmentNumber: getApartmentNumber(property),
+        longitude: getLongitude(property),
+        latitude: getLatitude(property),
         numberOfDaysOnMarket: getNumberOfDaysOnMarket(property),
         dateListed: getDateListed(property),
         dateCreated: getDateCreated(property),
@@ -506,6 +524,14 @@ export const getStreetAddress = (property: ListingWithScenariosDTO): string => {
 
 export const getApartmentNumber = (property: ListingWithScenariosDTO): string => {
     return listingDetails(property).propertyDetails.address?.apartmentNumber ?? "";
+};
+
+export const getLongitude = (property: ListingWithScenariosDTO): number => {
+    return listingDetails(property).propertyDetails.address?.longitude ?? -1;
+};
+
+export const getLatitude = (property: ListingWithScenariosDTO): number => {
+    return listingDetails(property).propertyDetails.address?.latitude ?? -1;
 };
 
 export const getNumberOfDaysOnMarket = (property: ListingWithScenariosDTO): number => {

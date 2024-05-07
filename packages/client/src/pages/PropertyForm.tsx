@@ -72,6 +72,18 @@ const PropertyForm: React.FC = () => {
             defaultValue: ''
         },
         {
+            name: 'longitude',
+            label: 'Longitude',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
+            name: 'latitude',
+            label: 'Latitude',
+            type: InputType.NUMBER,
+            defaultValue: ''
+        },
+        {
             name: 'numberOfDaysOnMarket',
             label: 'Number Of Days On Market',
             type: InputType.NUMBER,
@@ -268,6 +280,8 @@ const PropertyForm: React.FC = () => {
                     country: formData.country as Country,
                     streetAddress: formData.streetAddress,
                     apartmentNumber: formData.apartmentNumber,
+                    longitude: formData.longitude,
+                    latitude: formData.latitude,
                 },
                 schoolRating: {
                     elementarySchoolRating: parseInt(formData.elementarySchoolRating),

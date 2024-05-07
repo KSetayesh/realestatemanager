@@ -10,6 +10,8 @@ export class Address implements IDTOConvertible<AddressDTO> {
     private country?: Country; // Assuming Country is a type or enum you've defined
     private streetAddress?: string;
     private apartmentNumber?: string;
+    private longitude?: number;
+    private latitude?: number;
 
     constructor(
         fullAddress: string,
@@ -19,7 +21,10 @@ export class Address implements IDTOConvertible<AddressDTO> {
         county?: string,
         country?: Country,
         streetAddress?: string,
-        apartmentNumber?: string) {
+        apartmentNumber?: string,
+        longitude?: number,
+        latitude?: number
+    ) {
 
         this.fullAddress = fullAddress;
         this.state = state;
@@ -29,6 +34,8 @@ export class Address implements IDTOConvertible<AddressDTO> {
         this.country = country;
         this.streetAddress = streetAddress;
         this.apartmentNumber = apartmentNumber;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     toDTO(): AddressDTO {
@@ -41,6 +48,8 @@ export class Address implements IDTOConvertible<AddressDTO> {
             country: this.country,
             streetAddress: this.streetAddress,
             apartmentNumber: this.apartmentNumber,
+            longitude: this.longitude,
+            latitude: this.latitude,
         };
     }
 
