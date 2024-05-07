@@ -181,6 +181,7 @@ const CollectProperties: React.FC = () => {
                     <p>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</p>
                     <p>Can make API call: {rentCastDetails!.canMakeApiCalls.toString()}</p>
                     <p>Days into billing period: {rentCastDetails!.daysIntoBillingPeriod}</p>
+                    <p>Most recent billing date: {new Date(rentCastDetails!.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
                     <hr></hr>
                     <br></br>
                     <form onSubmit={handleSubmit}>

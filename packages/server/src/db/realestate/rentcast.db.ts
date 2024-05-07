@@ -5,7 +5,7 @@ import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models
 export class RentCastManager extends RealEstateManager {
 
     private GET_RENT_CAST_API_QUERY = `SELECT 
-        api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on 
+        api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date 
         FROM rent_cast_api;
     `;
 
@@ -178,9 +178,10 @@ export class RentCastManager extends RealEstateManager {
         const apiCallsThisMonth: number = row.api_calls_this_month;
         const numberOfFreeApiCalls: number = row.number_of_free_api_calls;
         const billingPeriod: number = row.billing_period;
+        const mostRecentBillingDate: Date = row.most_recent_billing_date;
         const firstBilledOn: Date = row.first_billed_on;
 
-        return new RentCastDetails(apiCallsThisMonth, numberOfFreeApiCalls, billingPeriod, firstBilledOn);
+        return new RentCastDetails(apiCallsThisMonth, numberOfFreeApiCalls, billingPeriod, mostRecentBillingDate, firstBilledOn);
     }
 
 }

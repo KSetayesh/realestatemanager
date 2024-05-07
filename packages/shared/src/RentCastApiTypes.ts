@@ -22,5 +22,6 @@ export interface RentCastDetailsDTO {
     daysIntoBillingPeriod: number;
     canMakeApiCalls: boolean;
     billingPeriod: number;
+    mostRecentBillingDate: Date;
     firstBilledOn: Date;
 };

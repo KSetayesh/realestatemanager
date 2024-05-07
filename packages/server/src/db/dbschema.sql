@@ -131,13 +131,14 @@ CREATE TABLE IF NOT EXISTS rent_cast_api (
     number_of_free_api_calls INT,
     billing_period INT,
     first_billed_on TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    most_recent_billing_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
 
 -- Query: InsertIntoRentCastApiTable
-INSERT INTO rent_cast_api (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, created_at, updated_at)
-SELECT 0, 50, 31, NOW(), NOW(), NOW()
+INSERT INTO rent_cast_api (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date, created_at, updated_at)
+SELECT 0, 50, 31, NOW(), NOW(), NOW(), NOW()
 WHERE NOT EXISTS (SELECT 1 FROM rent_cast_api);
 -- EndQuery

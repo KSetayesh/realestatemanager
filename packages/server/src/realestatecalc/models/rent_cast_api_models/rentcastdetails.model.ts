@@ -6,17 +6,20 @@ export class RentCastDetails {
     private _apiCallsThisMonth: number;
     private _numberOfFreeApiCalls: number;
     private _billingPeriod: number;
+    private _mostRecentBillingDate: Date;
     private _firstBilledOn: Date;
 
     constructor(
         apiCallsThisMonth: number,
         numberOfFreeApiCalls: number,
         billingPeriod: number,
+        mostRecentBillingDate: Date,
         firstBilledOn: Date,
     ) {
         this._apiCallsThisMonth = apiCallsThisMonth;
         this._numberOfFreeApiCalls = numberOfFreeApiCalls;
         this._billingPeriod = billingPeriod;
+        this._mostRecentBillingDate = mostRecentBillingDate;
         this._firstBilledOn = firstBilledOn;
     }
 
@@ -30,6 +33,10 @@ export class RentCastDetails {
 
     get billingPeriod(): number {
         return this._billingPeriod;
+    }
+
+    get mostRecentBillingDate(): Date {
+        return this._mostRecentBillingDate;
     }
 
     get firstBilledOn(): Date {
@@ -56,6 +63,7 @@ export class RentCastDetails {
             canMakeApiCalls: this.canMakeFreeApiCall,
             daysIntoBillingPeriod: this.daysIntoBillingPeriod,
             billingPeriod: this.billingPeriod,
+            mostRecentBillingDate: this.mostRecentBillingDate,
             firstBilledOn: this.firstBilledOn,
         };
 
