@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { InvestmentScenarioRequest, ListingCreationType, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
+import { RentCastService } from '../services/rentcast.service';
 
 @Controller('realestatecalc')
 export class CalcController {
 
-    constructor(private readonly calcService: CalcService) { }
-
+    constructor(private readonly calcService: CalcService, private readonly rentCastService: RentCastService) { }
 
     @Get()
     async getAllProperties(
@@ -37,21 +37,21 @@ export class CalcController {
     @Get('rentCastApiCallDetails')
     async getRentCastApiCallDetails(
     ): Promise<RentCastDetailsDTO> {
-        return this.calcService.getRentCastApiDetails();
+        return this.rentCastService.getRentCastApiDetails();
     }
 
     @Post('addNewProperty')
     async addNewProperty(
         @Body() listingDetails: ListingDetailsDTO,
     ): Promise<void> {
-        await this.calcService.addNewProperty(listingDetails, ListingCreationType.MANUAL);
+        await this.calcService.addNewProperty(listingDetails);
     }
 
     @Post('addNewPropertyWithRentCastAPI')
     async addNewPropertyWithRentCastAPI(
         @Body() rentCastApiRequest: RentCastApiRequestDTO,
     ): Promise<void> {
-        await this.calcService.addNewPropertyWithRentCastAPI(rentCastApiRequest);
+        await this.rentCastService.addNewPropertyWithRentCastAPI(rentCastApiRequest);
     }
 
     @Post('calculate')

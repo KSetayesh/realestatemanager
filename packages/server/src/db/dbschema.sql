@@ -80,7 +80,8 @@ CREATE TABLE IF NOT EXISTS listing_details (
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
-    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
+    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE,
+    FOREIGN KEY (rent_cast_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE
 );
 -- EndQuery
 
@@ -96,6 +97,14 @@ CREATE TABLE IF NOT EXISTS agent (
     agent_type VARCHAR(50),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+-- EndQuery
+
+-- Query: CreateRentCastApiCallTable
+CREATE TABLE IF NOT EXISTS rent_cast_api_call (
+    id SERIAL PRIMARY KEY, 
+    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
 
@@ -124,12 +133,13 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_response (
     removed_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     last_seen_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    days_on_market INT
+    days_on_market INT,
+    FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
 );
 -- EndQuery
 
--- Query: CreateRentCastApiTable
-CREATE TABLE IF NOT EXISTS rent_cast_api (
+-- Query: CreateRentCastConfigDetailsTable
+CREATE TABLE IF NOT EXISTS rent_cast_config_details (
     id SERIAL PRIMARY KEY,
     api_calls_this_month INT,
     number_of_free_api_calls INT,
@@ -141,8 +151,8 @@ CREATE TABLE IF NOT EXISTS rent_cast_api (
 );
 -- EndQuery
 
--- Query: InsertIntoRentCastApiTable
-INSERT INTO rent_cast_api (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date, created_at, updated_at)
+-- Query: InsertIntoRentCastConfigDetailsTable
+INSERT INTO rent_cast_config_details (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date, created_at, updated_at)
 SELECT 0, 50, 31, NOW(), NOW(), NOW(), NOW()
-WHERE NOT EXISTS (SELECT 1 FROM rent_cast_api);
+WHERE NOT EXISTS (SELECT 1 FROM rent_cast_config_details);
 -- EndQuery

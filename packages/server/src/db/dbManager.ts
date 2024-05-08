@@ -12,9 +12,10 @@ enum SQLTable {
     CREATE_ZILLOW_MARKET_ESTIMATES_TABLE = 'CreateZillowMarketEstimatesTable',
     CREATE_LISTING_DETAILS_TABLE = 'CreateListingDetailsTable',
     CREATE_AGENTS_TABLE = 'CreateAgentsTable',
-    CREATE_RENT_CAST_API_TABLE = 'CreateRentCastApiTable',
+    CREATE_RENT_CAST_CONFIG_DETAILS_TABLE = 'CreateRentCastConfigDetailsTable',
+    CREATE_RENT_CAST_API_CALL_TABLE = 'CreateRentCastApiCallTable',
     CREATE_RENT_CAST_API_RESPONSE_TABLE = 'CreateRentCastApiResponseTable',
-    INSERT_INTO_RENT_CAST_API_TABLE = 'InsertIntoRentCastApiTable',
+    INSERT_INTO_RENT_CAST_CONFIG_DETAILS_TABLE = 'InsertIntoRentCastConfigDetailsTable',
 };
 
 const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;

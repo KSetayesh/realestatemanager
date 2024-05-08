@@ -4,16 +4,16 @@ import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models
 
 export class RentCastManager extends RealEstateManager {
 
-    private GET_RENT_CAST_API_QUERY = `SELECT 
+    private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
         api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date 
-        FROM rent_cast_api;
+        FROM rent_cast_config_details;
     `;
 
-    private UPDATE_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_api 
+    private UPDATE_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = api_calls_this_month + 1;
     `;
 
-    private RESET_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_api 
+    private RESET_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = 0;
     `;
 
@@ -40,30 +40,59 @@ export class RentCastManager extends RealEstateManager {
             removed_date,
             created_date,
             last_seen_date,
-            days_on_market)`;
+            days_on_market,
+            rent_cast_api_call_id)`;
 
+    private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (execution_time)`;
 
-    async insertRentCastApiResponse(rentCastResponse: RentCastResponse): Promise<void> {
-        const client = await this.pool.connect();
+    async insertRentCastApiResponse(rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
         try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
+            const values: any[] = [
+                rentCastResponse.id,
+                rentCastResponse.formattedAddress,
+                rentCastResponse.addressLine1,
+                rentCastResponse.addressLine2,
+                rentCastResponse.city,
+                rentCastResponse.state,
+                rentCastResponse.zipCode,
+                rentCastResponse.county,
+                rentCastResponse.bedrooms,
+                rentCastResponse.bathrooms,
+                rentCastResponse.latitude,
+                rentCastResponse.longitude,
+                rentCastResponse.squareFootage,
+                rentCastResponse.propertyType,
+                rentCastResponse.lotSize,
+                rentCastResponse.status,
+                rentCastResponse.yearBuilt,
+                rentCastResponse.price,
+                rentCastResponse.listedDate,
+                rentCastResponse.removedDate,
+                rentCastResponse.createdDate,
+                rentCastResponse.lastSeenDate,
+                rentCastResponse.daysOnMarket,
+                rentCastApiCallId,
+            ];
 
-            await this._insertRentCastApiResponse(rentCastResponse);
+            for (let i = 0; i < values.length; i++) {
+                console.log(values[i]);
+            }
 
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
+            const id = await this.genericInsertQuery(this.INSERT_RENT_CAST_API_RESPONSE_QUERY, values);
+
+            console.log('RentCast Response information inserted successfully');
+
+            return id;
+        } catch (err) {
+            console.error('Error inserting RentCast Response information', err);
+            throw err;
         }
     }
 
     async getRentCastDetails(): Promise<RentCastDetails> {
 
         const rentCastDetails: RentCastDetails[] = [];
-        const query = `${this.GET_RENT_CAST_API_QUERY};`;
+        const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
 
         try {
             const res = await this.pool.query(query);
@@ -115,6 +144,21 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
+    async insertRentCastApiCall(executionTime: Date = new Date()): Promise<number> {
+        try {
+            const values: any[] = [executionTime];
+
+            const id = await this.genericInsertQuery(this.INSERT_RENT_CAST_API_CALL_QUERY, values);
+
+            console.log('RentCast Api Call inserted successfully');
+
+            return id;
+        } catch (err) {
+            console.error('Error inserting RentCast API Call', err);
+            throw err;
+        }
+    }
+
     private async _resetNumberOfApiCalls() {
         try {
             await this.pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY);
@@ -133,43 +177,6 @@ export class RentCastManager extends RealEstateManager {
 
         } catch (err) {
             console.error('Error inserting listing information', err);
-            throw err;
-        }
-    }
-
-    private async _insertRentCastApiResponse(rentCastResponse: RentCastResponse): Promise<void> {
-        try {
-            const values: any[] = [
-                rentCastResponse.id,
-                rentCastResponse.formattedAddress,
-                rentCastResponse.addressLine1,
-                rentCastResponse.addressLine2,
-                rentCastResponse.city,
-                rentCastResponse.state,
-                rentCastResponse.zipCode,
-                rentCastResponse.county,
-                rentCastResponse.bedrooms,
-                rentCastResponse.bathrooms,
-                rentCastResponse.latitude,
-                rentCastResponse.longitude,
-                rentCastResponse.squareFootage,
-                rentCastResponse.propertyType,
-                rentCastResponse.lotSize,
-                rentCastResponse.status,
-                rentCastResponse.yearBuilt,
-                rentCastResponse.price,
-                rentCastResponse.listedDate,
-                rentCastResponse.removedDate,
-                rentCastResponse.createdDate,
-                rentCastResponse.lastSeenDate,
-                rentCastResponse.daysOnMarket,
-            ];
-
-            this.genericInsertQuery(this.INSERT_RENT_CAST_API_RESPONSE_QUERY, values);
-
-            console.log('RentCast Response information inserted successfully');
-        } catch (err) {
-            console.error('Error inserting RentCast Response information', err);
             throw err;
         }
     }

@@ -16,6 +16,9 @@ import {
     ListingCreationType
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
+import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
+import { RentCastManager } from "./rentcast.db";
+import { DatabaseManagerFactory } from "./dbfactory";
 
 export class ListingManager extends RealEstateManager {
 
@@ -41,6 +44,16 @@ export class ListingManager extends RealEstateManager {
             property_status,
             date_listed,
             creation_type)`;
+
+    private INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY = `INSERT INTO listing_details 
+            (zillow_url, 
+            property_details_id, 
+            zillow_market_estimates_id, 
+            listing_price,
+            property_status,
+            date_listed,
+            creation_type,
+            rent_cast_response_id)`;
 
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
             (elementary_school_rating, 
@@ -82,6 +95,83 @@ export class ListingManager extends RealEstateManager {
             zillow_monthly_property_tax_amount,
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
+
+    async insertListingDetailsWithRentCastDetails(
+        rentCastResponses: RentCastResponse[],
+        creationType: ListingCreationType,
+        executionTime: Date = new Date()): Promise<void> {
+        const rentCastManager: RentCastManager = DatabaseManagerFactory.createRentCastManager();
+        const client = await this.pool.connect();
+        try {
+            await client.query('BEGIN');
+            console.log('BEGIN QUERY');
+
+
+            const rentCastApiCallId = await rentCastManager.insertRentCastApiCall(executionTime);
+
+            for (const rentCastResponse of rentCastResponses) {
+                const rentCastResponseId = await rentCastManager.insertRentCastApiResponse(rentCastResponse, rentCastApiCallId);
+
+                const listingDetail: ListingDetailsDTO = {
+                    zillowURL: `NEED TO UPDATE_${rentCastApiCallId}`,
+                    propertyDetails: {
+                        address: {
+                            fullAddress: rentCastResponse.formattedAddress,
+                            state: rentCastResponse.state,
+                            zipcode: rentCastResponse.zipCode,
+                            city: rentCastResponse.city,
+                            county: rentCastResponse.county,
+                            country: Country.UnitedStates,
+                            streetAddress: rentCastResponse.addressLine1,
+                            apartmentNumber: rentCastResponse.addressLine2,
+                            longitude: rentCastResponse.longitude,
+                            latitude: rentCastResponse.latitude,
+                        },
+                        schoolRating: {
+                            elementarySchoolRating: -1,
+                            middleSchoolRating: -1,
+                            highSchoolRating: -1,
+                        },
+                        numberOfBedrooms: rentCastResponse.bedrooms,
+                        numberOfFullBathrooms: rentCastResponse.bathrooms,
+                        numberOfHalfBathrooms: 0,
+                        squareFeet: rentCastResponse.squareFootage,
+                        acres: rentCastResponse.lotSize,
+                        yearBuilt: rentCastResponse.yearBuilt,
+                        hasGarage: false,
+                        hasPool: false,
+                        hasBasement: false,
+                        propertyType: rentCastResponse.propertyType,
+                        description: '',
+                    },
+                    zillowMarketEstimates: {
+                        zestimate: -1,
+                        zestimateRange: {
+                            low: -1,
+                            high: -1,
+                        },
+                        zillowRentEstimate: -1,
+                        zillowMonthlyPropertyTaxAmount: -1,
+                        zillowMonthlyHomeInsuranceAmount: -1,
+                        zillowMonthlyHOAFeesAmount: -1,
+                    },
+                    listingPrice: rentCastResponse.price,
+                    dateListed: rentCastResponse.listedDate,
+                    numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
+                    propertyStatus: rentCastResponse.status,
+                };
+
+                await this._insertListingDetails(listingDetail, creationType, rentCastResponseId);
+            }
+
+            await client.query('COMMIT');
+        } catch (e) {
+            await client.query('ROLLBACK');
+            throw e;
+        } finally {
+            client.release();
+        }
+    }
 
     async insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
         const client = await this.pool.connect();
@@ -230,7 +320,7 @@ export class ListingManager extends RealEstateManager {
 
     }
 
-    private async _insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
+    private async _insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType, rentCastResponseId?: number): Promise<void> {
         try {
             const addressId = await this.insertAddress(listingDetails.propertyDetails.address);
             const schoolRatingId = await this._insertSchoolRating(listingDetails.propertyDetails.schoolRating);
@@ -249,7 +339,18 @@ export class ListingManager extends RealEstateManager {
                 listingDetails.dateListed,
                 creationType,
             ];
-            this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
+
+            const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
+                return rentCastResponseId && rentCastResponseId > -1;
+            }
+
+            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(rentCastResponseId)) {
+                values.push(rentCastResponseId);
+                this.genericInsertQuery(this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+            }
+            else {
+                this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
+            }
 
             console.log('Listing information inserted successfully');
         } catch (err) {

@@ -2,9 +2,14 @@ import { Pool } from 'pg';
 import dbConfig from '../../config/dbConfig';
 
 
-export class RealEstateManager {
+export abstract class RealEstateManager {
 
-    protected pool = new Pool(dbConfig);
+    //protected pool = new Pool(dbConfig);
+    protected pool: Pool;
+
+    constructor(pool: Pool) {
+        this.pool = pool;
+    }
 
     protected async genericInsertQuery(query: string, values: any[]): Promise<number> {
         let insertString = ' VALUES (';

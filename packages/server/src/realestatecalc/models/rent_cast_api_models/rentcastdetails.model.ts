@@ -1,4 +1,4 @@
-import { RentCastDetailsDTO, Utility } from "@realestatemanager/shared";
+import { RentCastDetailsDTO } from "@realestatemanager/shared";
 import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
 
 export class RentCastDetails {
