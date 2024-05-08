@@ -106,7 +106,8 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_call (
     base_url VARCHAR(50),
     full_url VARCHAR(500),
     execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
 
@@ -114,28 +115,9 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_call (
 CREATE TABLE IF NOT EXISTS rent_cast_api_response (
     id SERIAL PRIMARY KEY,
     address_id VARCHAR(255) UNIQUE,
-    formatted_address VARCHAR(255),
-    address_line1 VARCHAR(255),
-    address_line2 VARCHAR(255),
-    city VARCHAR(50),
-    state VARCHAR(50),
-    zip_code VARCHAR(10),
-    county VARCHAR(50),
-    bedrooms INT,
-    bathrooms DECIMAL,
-    latitude DECIMAL,
-    longitude DECIMAL,
-    square_footage DECIMAL,
-    property_type VARCHAR(50),
-    lot_size DECIMAL,
-    status VARCHAR(50),
-    year_built INT,
-    price INT,
-    listed_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    removed_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    created_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    last_seen_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    days_on_market INT,
+    api_response_data JSONB,
+    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
 );
 -- EndQuery

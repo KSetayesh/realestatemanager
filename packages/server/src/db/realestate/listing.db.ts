@@ -106,7 +106,7 @@ export class ListingManager extends RealEstateManager {
 
         const rentCastManager: RentCastManager = DatabaseManagerFactory.createRentCastManager();
         const client = await this.pool.connect();
-        let counter = 0;
+        let listingsAddedCounter = 0;
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
@@ -120,8 +120,9 @@ export class ListingManager extends RealEstateManager {
                     continue;
                 }
                 const rentCastResponseId = await rentCastManager.insertRentCastApiResponse(rentCastResponse, rentCastApiCallId);
-                const listedDate = rentCastResponse.listedDate ?? Utility.getDateNDaysAgo(rentCastResponse.daysOnMarket);
-                const numberOfBathrooms = rentCastResponse.bathrooms;
+                const daysOnMarket = rentCastResponse.apiResponseData.daysOnMarket ?? 0;
+                const listedDate = rentCastResponse.apiResponseData.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
+                const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
                 const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
                 const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
 
@@ -129,32 +130,32 @@ export class ListingManager extends RealEstateManager {
                     zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
                     propertyDetails: {
                         address: {
-                            fullAddress: rentCastResponse.formattedAddress,
-                            state: rentCastResponse.state,
-                            zipcode: rentCastResponse.zipCode,
-                            city: rentCastResponse.city,
-                            county: rentCastResponse.county,
+                            fullAddress: rentCastResponse.apiResponseData.formattedAddress ?? '',
+                            state: rentCastResponse.apiResponseData.state ?? '',
+                            zipcode: rentCastResponse.apiResponseData.zipCode ?? '',
+                            city: rentCastResponse.apiResponseData.city ?? '',
+                            county: rentCastResponse.apiResponseData.county ?? '',
                             country: Country.UnitedStates,
-                            streetAddress: rentCastResponse.addressLine1,
-                            apartmentNumber: rentCastResponse.addressLine2,
-                            longitude: rentCastResponse.longitude,
-                            latitude: rentCastResponse.latitude,
+                            streetAddress: rentCastResponse.apiResponseData.addressLine1 ?? '',
+                            apartmentNumber: rentCastResponse.apiResponseData.addressLine2 ?? '',
+                            longitude: rentCastResponse.apiResponseData.longitude ?? -1,
+                            latitude: rentCastResponse.apiResponseData.latitude ?? -1,
                         },
                         schoolRating: {
                             elementarySchoolRating: -1,
                             middleSchoolRating: -1,
                             highSchoolRating: -1,
                         },
-                        numberOfBedrooms: rentCastResponse.bedrooms,
+                        numberOfBedrooms: rentCastResponse.apiResponseData.bedrooms ?? -1,
                         numberOfFullBathrooms: numberOfFullBathrooms,
                         numberOfHalfBathrooms: numberOfHalfBathrooms,
-                        squareFeet: rentCastResponse.squareFootage,
-                        acres: rentCastResponse.lotSize,
-                        yearBuilt: rentCastResponse.yearBuilt,
+                        squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
+                        acres: rentCastResponse.apiResponseData.lotSize ?? -1,
+                        yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
                         hasGarage: false,
                         hasPool: false,
                         hasBasement: false,
-                        propertyType: rentCastResponse.propertyType,
+                        propertyType: rentCastResponse.apiResponseData.propertyType ?? -1,
                         description: '',
                     },
                     zillowMarketEstimates: {
@@ -168,14 +169,14 @@ export class ListingManager extends RealEstateManager {
                         zillowMonthlyHomeInsuranceAmount: -1,
                         zillowMonthlyHOAFeesAmount: -1,
                     },
-                    listingPrice: rentCastResponse.price,
+                    listingPrice: rentCastResponse.apiResponseData.price ?? -1,
                     dateListed: listedDate,
-                    numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
-                    propertyStatus: rentCastResponse.status,
+                    numberOfDaysOnMarket: daysOnMarket,
+                    propertyStatus: rentCastResponse.apiResponseData.status ?? '',
                 };
 
                 await this._insertListingDetails(listingDetail, creationType, rentCastResponseId);
-                counter++;
+                listingsAddedCounter++;
             }
 
             await client.query('COMMIT');
@@ -184,7 +185,7 @@ export class ListingManager extends RealEstateManager {
             throw e;
         } finally {
             client.release();
-            return counter;
+            return listingsAddedCounter;
         }
     }
 

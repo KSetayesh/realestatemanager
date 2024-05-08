@@ -122,50 +122,6 @@ export class RentCastService {
         }
     }
 
-    // private async callRentCastApi(url: string): Promise<RentCastApiResponse> {
-    //     let data;
-    //     let now: Date;
-    //     const options = this.getHeadersForRentCastApiCall();
-
-    //     fetch(url, options)
-    //         .then(async res => {
-    //             if (res.status === 200) {
-    //                 now = new Date();
-    //                 console.log("Is successful!");
-
-    //                 // Call updateNumberOfApiCalls here
-    //                 await this.rentCastManager.updateNumberOfApiCalls();
-    //                 data = await res.json();
-    //                 console.log("_data1:", data); // Log the response data
-
-    //                 // Define the function to write response data to JSON file
-    //                 const writeResponseToJsonFile = (data: any) => {
-    //                     fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
-    //                         if (err) {
-    //                             console.error('Failed to write to file:', err);
-    //                         } else {
-    //                             console.log('File has been saved successfully.');
-    //                         }
-    //                     });
-    //                 };
-
-    //                 // Call the function to write to the JSON file
-    //                 writeResponseToJsonFile(data);
-
-    //             } else {
-    //                 console.log("Is NOT successful!");
-    //                 throw new Error(`HTTP error! Status: ${res.status}`);
-    //             }
-    //         })
-    //         .catch(err => console.error('error:' + err));
-
-    //     return {
-    //         executionTime: now,
-    //         jsonData: data,
-    //     };
-
-    // }
-
     private getHeadersForRentCastApiCall() {
         return {
             method: 'GET',
@@ -198,58 +154,7 @@ export class RentCastService {
         const rentCastResponses: RentCastResponse[] = [];
         // Iterate through each object in the array
         for (const property of jsonData) {
-            const id = property.id;
-            const formattedAddress = property.formattedAddress ?? '';
-            const addressLine1 = property.addressLine1 ?? '';
-            const addressLine2 = property.addressLine2 ?? '';
-            const city = property.city ?? '';
-            const state = property.state ?? ''; // Utility.getEnumNameFromValue(State, property.state) ?? '';
-            const zipCode = property.zipCode ?? '';
-            const county = property.county ?? '';
-            const bedrooms = property.bedrooms ?? -1;
-            const bathrooms = property.bathrooms ?? -1;
-            const latitude = property.latitude ?? -1;
-            const longitude = property.longitude ?? -1;
-            const squareFootage = property.squareFootage ?? -1;
-            const propertyType = property.propertyType ?? '';
-            const lotSize = property.lotSize ?? -1;
-            const status = property.status ?? '';
-            const yearBuilt = property.yearBuilt ?? -1;
-            const price = property.price ?? -1;
-            const listedDate = property.listedDate ?? null;
-            const removedDate = property.removedDate ?? null;
-            const createdDate = property.createdDate ?? null;
-            const lastSeenDate = property.lastSeenDate ?? null;
-            const daysOnMarket = property.daysOnMarket ?? -1;
-
-            rentCastResponses.push(
-                new RentCastResponse(
-                    id,
-                    formattedAddress,
-                    addressLine1,
-                    addressLine2,
-                    city,
-                    state,
-                    zipCode,
-                    county,
-                    bedrooms,
-                    bathrooms,
-                    latitude,
-                    longitude,
-                    squareFootage,
-                    propertyType,
-                    lotSize,
-                    status,
-                    yearBuilt,
-                    price,
-                    listedDate,
-                    removedDate,
-                    createdDate,
-                    lastSeenDate,
-                    daysOnMarket,
-                )
-            );
-
+            rentCastResponses.push(new RentCastResponse(property.id, property));
         }
 
         return rentCastResponses;
