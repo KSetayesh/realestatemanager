@@ -98,23 +98,35 @@ export class ListingManager extends RealEstateManager {
             zillow_monthly_hoa_fees_amount)`;
 
     async insertListingDetailsWithRentCastDetails(
+        baseUrl: string,
+        fullUrl: string,
         rentCastResponses: RentCastResponse[],
         creationType: ListingCreationType,
-        executionTime: Date = new Date()): Promise<void> {
+        executionTime: Date = new Date()): Promise<number> {
+
         const rentCastManager: RentCastManager = DatabaseManagerFactory.createRentCastManager();
         const client = await this.pool.connect();
+        let counter = 0;
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-
-            const rentCastApiCallId = await rentCastManager.insertRentCastApiCall(executionTime);
+            const rentCastApiCallId = await rentCastManager.insertRentCastApiCall(baseUrl, fullUrl, executionTime);
 
             for (const rentCastResponse of rentCastResponses) {
+                const addressIdFound = await rentCastManager.checkIfAddressIdExists(rentCastResponse.id);
+                if (addressIdFound) {
+                    console.log(`${addressIdFound} already exists in the database, skipping`);
+                    continue;
+                }
                 const rentCastResponseId = await rentCastManager.insertRentCastApiResponse(rentCastResponse, rentCastApiCallId);
                 const listedDate = rentCastResponse.listedDate ?? Utility.getDateNDaysAgo(rentCastResponse.daysOnMarket);
+                const numberOfBathrooms = rentCastResponse.bathrooms;
+                const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
+                const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
+
                 const listingDetail: ListingDetailsDTO = {
-                    zillowURL: `NEED TO UPDATE_${rentCastApiCallId}`,
+                    zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
                     propertyDetails: {
                         address: {
                             fullAddress: rentCastResponse.formattedAddress,
@@ -134,8 +146,8 @@ export class ListingManager extends RealEstateManager {
                             highSchoolRating: -1,
                         },
                         numberOfBedrooms: rentCastResponse.bedrooms,
-                        numberOfFullBathrooms: rentCastResponse.bathrooms,
-                        numberOfHalfBathrooms: 0,
+                        numberOfFullBathrooms: numberOfFullBathrooms,
+                        numberOfHalfBathrooms: numberOfHalfBathrooms,
                         squareFeet: rentCastResponse.squareFootage,
                         acres: rentCastResponse.lotSize,
                         yearBuilt: rentCastResponse.yearBuilt,
@@ -163,6 +175,7 @@ export class ListingManager extends RealEstateManager {
                 };
 
                 await this._insertListingDetails(listingDetail, creationType, rentCastResponseId);
+                counter++;
             }
 
             await client.query('COMMIT');
@@ -171,6 +184,7 @@ export class ListingManager extends RealEstateManager {
             throw e;
         } finally {
             client.release();
+            return counter;
         }
     }
 

@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';  // Use promise-based fs
 import path from 'path';
 import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from "@nestjs/common";
@@ -18,14 +18,15 @@ import { RentCastDetails } from "../models/rent_cast_api_models/rentcastdetails.
 type RentCastApiResponse = {
     executionTime: Date;
     jsonData: any;
-}
+};
 
 @Injectable()
 export class RentCastService {
 
     private listingManager: ListingManager;
     private rentCastManager: RentCastManager;
-    private latestRentCastFilePath = path.join(__dirname, '../../../data/latestRentCast.json');
+    private latestRentCastFilePath = path.join(__dirname, '../../../src/data/latestRentCast.json');
+    private BASE_URL = 'https://api.rentcast.io/v1/listings/sale';
 
     constructor() {
         this.listingManager = DatabaseManagerFactory.createListingManager();
@@ -60,14 +61,18 @@ export class RentCastService {
         };
 
         try {
-            const response: RentCastApiResponse = this.callRentCastApi(url);
+            const response: RentCastApiResponse = await this.callRentCastApi(url);
             const rentCastResponses: RentCastResponse[] = this.parseApiResponse(response.jsonData);
 
-            await this.listingManager.insertListingDetailsWithRentCastDetails(
+            const numberOfPropertiesAdded = await this.listingManager.insertListingDetailsWithRentCastDetails(
+                this.BASE_URL,
+                url,
                 rentCastResponses,
                 ListingCreationType.RENT_CAST_API,
                 response.executionTime
             );
+
+            console.log(`${numberOfPropertiesAdded} new properties added!`);
         }
         catch (error) {
             console.error(error);
@@ -76,49 +81,90 @@ export class RentCastService {
 
     }
 
-    private callRentCastApi(url: string): RentCastApiResponse {
-        let data;
+    private async callRentCastApi(url: string): Promise<RentCastApiResponse> {
         let now: Date;
         const options = this.getHeadersForRentCastApiCall();
 
-        fetch(url, options)
-            .then(async res => {
-                if (res.status === 200) {
-                    now = new Date();
-                    console.log("Is successful!");
+        try {
+            const response = await fetch(url, options);
+            if (response.status === 200) {
+                now = new Date();
+                console.log("Is successful!");
 
-                    // Call updateNumberOfApiCalls here
-                    await this.rentCastManager.updateNumberOfApiCalls();
-                    data = await res.json();
-                    console.log(data); // Log the response data
+                // Call updateNumberOfApiCalls here
+                await this.rentCastManager.updateNumberOfApiCalls();
+                const data = await response.json();
+                console.log("_data1:", data); // Log the response data
 
-                    // Define the function to write response data to JSON file
-                    const writeResponseToJsonFile = (data: any) => {
-                        fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
-                            if (err) {
-                                console.error('Failed to write to file:', err);
-                            } else {
-                                console.log('File has been saved successfully.');
-                            }
-                        });
-                    };
+                // Write response data to JSON file
+                await this.writeResponseToJsonFile(data);
+                return {
+                    executionTime: now,
+                    jsonData: data,
+                };
 
-                    // Call the function to write to the JSON file
-                    writeResponseToJsonFile(data);
-
-                } else {
-                    console.log("Is NOT successful!");
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-            })
-            .catch(err => console.error('error:' + err));
-
-        return {
-            executionTime: now,
-            jsonData: data,
-        };
-
+            } else {
+                console.log("Is NOT successful!");
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            throw err;  // Re-throw the error if needed or handle it as needed
+        }
     }
+
+    private async writeResponseToJsonFile(data: any): Promise<void> {
+        try {
+            await fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8');
+            console.log('File has been saved successfully.');
+        } catch (err) {
+            console.error('Failed to write to file:', err);
+        }
+    }
+
+    // private async callRentCastApi(url: string): Promise<RentCastApiResponse> {
+    //     let data;
+    //     let now: Date;
+    //     const options = this.getHeadersForRentCastApiCall();
+
+    //     fetch(url, options)
+    //         .then(async res => {
+    //             if (res.status === 200) {
+    //                 now = new Date();
+    //                 console.log("Is successful!");
+
+    //                 // Call updateNumberOfApiCalls here
+    //                 await this.rentCastManager.updateNumberOfApiCalls();
+    //                 data = await res.json();
+    //                 console.log("_data1:", data); // Log the response data
+
+    //                 // Define the function to write response data to JSON file
+    //                 const writeResponseToJsonFile = (data: any) => {
+    //                     fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+    //                         if (err) {
+    //                             console.error('Failed to write to file:', err);
+    //                         } else {
+    //                             console.log('File has been saved successfully.');
+    //                         }
+    //                     });
+    //                 };
+
+    //                 // Call the function to write to the JSON file
+    //                 writeResponseToJsonFile(data);
+
+    //             } else {
+    //                 console.log("Is NOT successful!");
+    //                 throw new Error(`HTTP error! Status: ${res.status}`);
+    //             }
+    //         })
+    //         .catch(err => console.error('error:' + err));
+
+    //     return {
+    //         executionTime: now,
+    //         jsonData: data,
+    //     };
+
+    // }
 
     private getHeadersForRentCastApiCall() {
         return {
@@ -145,7 +191,10 @@ export class RentCastService {
         return true;
     }
 
-    private parseApiResponse(jsonData): RentCastResponse[] {
+    private parseApiResponse(jsonData: any): RentCastResponse[] {
+
+        console.log("_data2:", jsonData); // Log the response data
+
         const rentCastResponses: RentCastResponse[] = [];
         // Iterate through each object in the array
         for (const property of jsonData) {
@@ -267,7 +316,7 @@ export class RentCastService {
             appendToUrl += this.appendUrlParameter('offset', rentCastApiRequest.offset.toString(), firstAppended);
             firstAppended = false;
         }
-        return `https://api.rentcast.io/v1/listings/sale${appendToUrl}`;
+        return `${this.BASE_URL}${appendToUrl}`;
     }
 
     private appendUrlParameter(

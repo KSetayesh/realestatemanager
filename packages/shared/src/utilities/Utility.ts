@@ -5,6 +5,10 @@ export class Utility {
         return Math.round(num * multiplier) / multiplier;
     }
 
+    static isDecimal(num: number): boolean {
+        return num % 1 !== 0;
+    }
+
     static getDateNDaysAgo(daysAgo: number): string {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Remove time component

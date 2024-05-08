@@ -4,6 +4,8 @@ import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models
 
 export class RentCastManager extends RealEstateManager {
 
+    private CHECK_FOR_EXISTING_ADDRESS_ID = `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists;`;
+
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
         api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date 
         FROM rent_cast_config_details;
@@ -43,7 +45,19 @@ export class RentCastManager extends RealEstateManager {
             days_on_market,
             rent_cast_api_call_id)`;
 
-    private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (execution_time)`;
+    private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (base_url, full_url, execution_time)`;
+
+    // Function to check if a specific ID exists in the database
+    async checkIfAddressIdExists(address_id: string): Promise<boolean> {
+        const query = this.CHECK_FOR_EXISTING_ADDRESS_ID;
+        try {
+            const res = await this.pool.query(query, [address_id]);
+            return res.rows[0].exists;  // This will be true or false
+        } catch (err) {
+            console.error('Error executing query', err.stack);
+            return false;  // Return false or throw an error as per your error handling policy
+        }
+    }
 
     async insertRentCastApiResponse(rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
         try {
@@ -144,9 +158,17 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async insertRentCastApiCall(executionTime: Date = new Date()): Promise<number> {
+    async insertRentCastApiCall(
+        baseUrl: string,
+        fullUrl: string,
+        executionTime: Date = new Date()
+    ): Promise<number> {
         try {
-            const values: any[] = [executionTime];
+            const values: any[] = [
+                baseUrl,
+                fullUrl,
+                executionTime,
+            ];
 
             const id = await this.genericInsertQuery(this.INSERT_RENT_CAST_API_CALL_QUERY, values);
 
