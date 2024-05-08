@@ -1,9 +1,13 @@
+import fs from 'fs';
+import path from 'path';
 import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from "@nestjs/common";
 import {
     ListingCreationType,
     RentCastApiRequestDTO,
-    RentCastDetailsDTO
+    RentCastDetailsDTO,
+    State,
+    Utility
 } from "@realestatemanager/shared";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastManager } from "src/db/realestate/rentcast.db";
@@ -21,6 +25,7 @@ export class RentCastService {
 
     private listingManager: ListingManager;
     private rentCastManager: RentCastManager;
+    private latestRentCastFilePath = path.join(__dirname, '../../../data/latestRentCast.json');
 
     constructor() {
         this.listingManager = DatabaseManagerFactory.createListingManager();
@@ -43,6 +48,8 @@ export class RentCastService {
         }
 
         const url = this.createURL(rentCastApiRequest);
+
+        console.log("URL for RentCast Api:", url);
 
         const options = {
             method: 'GET',
@@ -84,6 +91,20 @@ export class RentCastService {
                     await this.rentCastManager.updateNumberOfApiCalls();
                     data = await res.json();
                     console.log(data); // Log the response data
+
+                    // Define the function to write response data to JSON file
+                    const writeResponseToJsonFile = (data: any) => {
+                        fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8', (err) => {
+                            if (err) {
+                                console.error('Failed to write to file:', err);
+                            } else {
+                                console.log('File has been saved successfully.');
+                            }
+                        });
+                    };
+
+                    // Call the function to write to the JSON file
+                    writeResponseToJsonFile(data);
 
                 } else {
                     console.log("Is NOT successful!");
@@ -133,7 +154,7 @@ export class RentCastService {
             const addressLine1 = property.addressLine1 ?? '';
             const addressLine2 = property.addressLine2 ?? '';
             const city = property.city ?? '';
-            const state = property.state ?? '';
+            const state = property.state ?? ''; // Utility.getEnumNameFromValue(State, property.state) ?? '';
             const zipCode = property.zipCode ?? '';
             const county = property.county ?? '';
             const bedrooms = property.bedrooms ?? -1;
@@ -198,7 +219,8 @@ export class RentCastService {
             firstAppended = false;
         }
         if (rentCastApiRequest.state) {
-            appendToUrl += this.appendUrlParameter('state', rentCastApiRequest.state, firstAppended);
+            const state = Utility.getEnumNameFromValue(State, rentCastApiRequest.state) ?? '';
+            appendToUrl += this.appendUrlParameter('state', state, firstAppended);
             firstAppended = false;
         }
         if (rentCastApiRequest.zipCode) {

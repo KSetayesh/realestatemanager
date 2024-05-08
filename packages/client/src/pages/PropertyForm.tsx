@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Country, State, InputType, ratingSelections, PropertyType, PropertyStatus } from '../constants/Constant';
+import { Country, State, InputType, ratingSelections, PropertyType, PropertyStatus, getDateNDaysAgo } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import { ListingDetailsDTO } from '@realestatemanager/shared';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
@@ -257,13 +257,6 @@ const PropertyForm: React.FC = () => {
     };
 
     const getRequestData = (): ListingDetailsDTO => {
-
-        const getDateNDaysAgo = (daysAgo: number): string => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // Remove time component
-            today.setDate(today.getDate() - daysAgo);
-            return today.toISOString();
-        }
 
         return {
             zillowURL: formData.zillowURL,

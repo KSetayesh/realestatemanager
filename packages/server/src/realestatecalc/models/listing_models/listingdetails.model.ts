@@ -1,4 +1,4 @@
-import { ListingDetailsDTO, PropertyStatus, ListingCreationType } from "@realestatemanager/shared";
+import { ListingDetailsDTO, PropertyStatus, ListingCreationType, Utility } from "@realestatemanager/shared";
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
@@ -57,24 +57,6 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return this.zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
     }
 
-    getNumberOfDaysOnMarket(): number {
-        // Create a new date object for the current date with time set to 00:00:00
-        const currentDate = new Date();
-        currentDate.setHours(0, 0, 0, 0);
-
-        // Clone dateListed and set its time to 00:00:00
-        const listedDate = new Date(this.dateListed.getTime());
-        listedDate.setHours(0, 0, 0, 0);
-
-        // Calculate the difference in milliseconds between the two dates
-        const timeDiff = currentDate.getTime() - listedDate.getTime();
-
-        // Convert the time difference to days
-        const daysOnMarket = Math.floor(timeDiff / (1000 * 3600 * 24)) + 1;
-
-        return daysOnMarket;
-    }
-
     toDTO(): ListingDetailsDTO {
         return {
             zillowURL: this.zillowURL,
@@ -85,7 +67,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
             dateListed: this.dateListed.toLocaleDateString('en-US'),
             dateCreated: this.dateCreated.toLocaleDateString('en-US'),
             dateUpdated: this.dateUpdated.toLocaleDateString('en-US'),
-            numberOfDaysOnMarket: this.getNumberOfDaysOnMarket(),
+            numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this.dateListed),
             creationType: this.creationType,
         };
     }

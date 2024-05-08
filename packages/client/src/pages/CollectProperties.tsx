@@ -108,7 +108,7 @@ const CollectProperties: React.FC = () => {
             name: 'limit',
             label: 'Limit',
             type: InputType.NUMBER,
-            defaultValue: '',
+            defaultValue: '5',
         },
         {
             name: 'offset',

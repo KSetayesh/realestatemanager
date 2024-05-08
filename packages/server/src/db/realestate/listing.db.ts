@@ -13,7 +13,8 @@ import {
     SchoolRatingDTO,
     State,
     ZillowMarketEstimatesDTO,
-    ListingCreationType
+    ListingCreationType,
+    Utility
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
@@ -111,7 +112,7 @@ export class ListingManager extends RealEstateManager {
 
             for (const rentCastResponse of rentCastResponses) {
                 const rentCastResponseId = await rentCastManager.insertRentCastApiResponse(rentCastResponse, rentCastApiCallId);
-
+                const listedDate = rentCastResponse.listedDate ?? Utility.getDateNDaysAgo(rentCastResponse.daysOnMarket);
                 const listingDetail: ListingDetailsDTO = {
                     zillowURL: `NEED TO UPDATE_${rentCastApiCallId}`,
                     propertyDetails: {
@@ -156,7 +157,7 @@ export class ListingManager extends RealEstateManager {
                         zillowMonthlyHOAFeesAmount: -1,
                     },
                     listingPrice: rentCastResponse.price,
-                    dateListed: rentCastResponse.listedDate,
+                    dateListed: listedDate,
                     numberOfDaysOnMarket: rentCastResponse.daysOnMarket,
                     propertyStatus: rentCastResponse.status,
                 };

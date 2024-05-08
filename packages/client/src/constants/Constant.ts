@@ -11,7 +11,7 @@ export enum PropertyType {
     MULTI_FAMILY = 'Multi-Family',
     APARTMENT = 'Apartment',
     LAND = 'Land',
-}; 
+};
 
 export enum Country {
     UnitedStates = "US",
@@ -115,6 +115,13 @@ const formatDollarAmount = (amount: number): string => {
 };
 
 const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
+
+export const getDateNDaysAgo = (daysAgo: number): string => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Remove time component
+    today.setDate(today.getDate() - daysAgo);
+    return today.toISOString();
+};
 
 // Function to render the cell data based on its type
 export const renderCellData = (cellData: any, isDollarAmount: boolean = false, addSuffix?: string): string => {

@@ -1,14 +1,14 @@
-import { PropertyStatus } from "./Constants";
+import { PropertyStatus, PropertyType, State } from "./Constants";
 
 export interface RentCastApiRequestDTO {
     address: string;
     city: string;
-    state: string;
+    state: State;
     zipCode: string;
     latitude: number;
     longitude: number;
     radius: number;
-    propertyType: string;
+    propertyType: PropertyType;
     bedrooms: number;
     bathrooms: number;
     status: PropertyStatus;
