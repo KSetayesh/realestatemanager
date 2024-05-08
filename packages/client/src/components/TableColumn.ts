@@ -245,14 +245,6 @@ export const defaultColumns: TableColumn[] = [
         isSortable: false,
     },
     {
-        header: "Number Of Days On Market",
-        accessor: "numberOfDaysOnMarket",
-        isURL: false,
-        showColumn: false,
-        isDollarAmount: false,
-        isSortable: true,
-    },
-    {
         header: "Elementary School Rating",
         accessor: "elementarySchoolRating",
         isURL: false,

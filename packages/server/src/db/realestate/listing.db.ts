@@ -20,6 +20,7 @@ import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrat
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
 import { RentCastManager } from "./rentcast.db";
 import { DatabaseManagerFactory } from "./dbfactory";
+import { convertSquareFeetToAcres } from "src/shared/Constants";
 
 export class ListingManager extends RealEstateManager {
 
@@ -125,6 +126,8 @@ export class ListingManager extends RealEstateManager {
                 const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
                 const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
                 const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
+                const lotSize = rentCastResponse.apiResponseData.lotSize;
+                const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
 
                 const listingDetail: ListingDetailsDTO = {
                     zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
@@ -150,7 +153,7 @@ export class ListingManager extends RealEstateManager {
                         numberOfFullBathrooms: numberOfFullBathrooms,
                         numberOfHalfBathrooms: numberOfHalfBathrooms,
                         squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
-                        acres: rentCastResponse.apiResponseData.lotSize ?? -1,
+                        acres: acres,
                         yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
                         hasGarage: false,
                         hasPool: false,

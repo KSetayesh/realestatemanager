@@ -112,7 +112,7 @@ export class RentCastService {
             throw err;  // Re-throw the error if needed or handle it as needed
         }
     }
-
+ 
     private async writeResponseToJsonFile(data: any): Promise<void> {
         try {
             await fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8');

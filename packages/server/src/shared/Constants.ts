@@ -71,3 +71,7 @@ export const calculateDaysPassedSinceIgnoreTime = (inputDate: Date): number => {
 
     return daysPassed;
 };
+
+export const convertSquareFeetToAcres = (squareFeet: number): number => {
+    return squareFeet / 43560;
+};
