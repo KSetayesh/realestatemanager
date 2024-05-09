@@ -24,33 +24,6 @@ export class RentCastManager extends RealEstateManager {
             api_response_data,
             rent_cast_api_call_id)`;
 
-
-    // private INSERT_RENT_CAST_API_RESPONSE_QUERY = `INSERT INTO rent_cast_api_response
-    //        (address_id,
-    //         formatted_address,
-    //         address_line1,
-    //         address_line2,
-    //         city,
-    //         state,
-    //         zip_code,
-    //         county,
-    //         bedrooms,
-    //         bathrooms,
-    //         latitude,
-    //         longitude,
-    //         square_footage,
-    //         property_type,
-    //         lot_size,
-    //         status,
-    //         year_built,
-    //         price,
-    //         listed_date,
-    //         removed_date,
-    //         created_date,
-    //         last_seen_date,
-    //         days_on_market,
-    //         rent_cast_api_call_id)`;
-
     private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (base_url, full_url, execution_time)`;
 
     // Function to check if a specific ID exists in the database

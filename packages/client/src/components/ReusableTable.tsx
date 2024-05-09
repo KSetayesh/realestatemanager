@@ -8,7 +8,7 @@ import Tooltip from '../components/Tooltip';
 enum SortDirection {
     ASCENDING = 'ascending',
     DESCENDING = 'descending',
-}
+};
 
 export interface TableRow { [key: string]: any };
 
@@ -17,7 +17,7 @@ export interface TableDataItem<T> {
         key: T;
     };
     rowData: TableRow;
-}
+};
 
 export interface TableColumn {
     header: string;
@@ -29,14 +29,14 @@ export interface TableColumn {
     routeTo?: string;
     addSuffix?: string;
     detailedDescription?: string;
-}
+};
 
 export interface ReusableTableProps<T> {
     columns: TableColumn[];
     tableData: TableDataItem<T>[];
     onRowClick?: (item: T) => void;
     includeTableSeparator?: boolean;
-}
+};
 
 const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparator }: ReusableTableProps<T>) => {
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);

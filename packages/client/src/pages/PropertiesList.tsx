@@ -12,6 +12,7 @@ const PropertiesList: React.FC = () => {
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
+    console.log('PropertiesList mounted');
     useEffect(() => {
         (async () => {
             try {
