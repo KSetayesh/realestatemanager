@@ -60,7 +60,7 @@ export class CalcService {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            this.listingManager.insertListingDetails(this.pool, listingDetailsDTO, ListingCreationType.MANUAL);
+            await this.insertListingDetails(listingDetailsDTO, ListingCreationType.MANUAL);
 
             await client.query('COMMIT');
         } catch (e) {
@@ -69,6 +69,14 @@ export class CalcService {
         } finally {
             client.release();
         }
+    }
+
+    async insertListingDetails(
+        listingDetailsDTO: ListingDetailsDTO,
+        listingCreationType: ListingCreationType,
+        responseId?: number
+    ): Promise<void> {
+        await this.listingManager.insertListingDetails(this.pool, listingDetailsDTO, listingCreationType, responseId);
     }
 
     async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {

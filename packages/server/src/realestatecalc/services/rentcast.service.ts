@@ -15,9 +15,9 @@ import {
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastManager } from "src/db/realestate/rentcast.db";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
-import { ListingManager } from "src/db/realestate/listing.db";
 import { RentCastDetails } from "../models/rent_cast_api_models/rentcastdetails.model";
 import { convertSquareFeetToAcres } from 'src/shared/Constants';
+import { CalcService } from './calc.service';
 
 type RentCastApiResponse = {
     executionTime: Date;
@@ -27,14 +27,12 @@ type RentCastApiResponse = {
 @Injectable()
 export class RentCastService {
 
-    private listingManager: ListingManager;
     private rentCastManager: RentCastManager;
     private pool: Pool;
     private latestRentCastFilePath = path.join(__dirname, '../../../src/data/latestRentCast.json');
     private BASE_URL = 'https://api.rentcast.io/v1/listings/sale';
 
     constructor() {
-        this.listingManager = DatabaseManagerFactory.createListingManager();
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
         this.pool = DatabaseManagerFactory.getDbPool();
     }
@@ -156,7 +154,7 @@ export class RentCastService {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, url); 
+            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, url);
 
             for (const rentCastResponse of rentCastResponses) {
                 const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastResponse.id);
@@ -167,12 +165,8 @@ export class RentCastService {
                 const rentCastResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastResponse, rentCastApiCallId);
                 const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastResponse);
 
-                await this.listingManager.insertListingDetails(
-                    this.pool,
-                    listingDetail,
-                    ListingCreationType.RENT_CAST_API,
-                    rentCastResponseId
-                );
+                await new CalcService().insertListingDetails(listingDetail, ListingCreationType.RENT_CAST_API, rentCastResponseId);
+
                 numberOfPropertiesAdded++;
             }
 
