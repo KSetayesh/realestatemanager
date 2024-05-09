@@ -163,10 +163,10 @@ export class ListingManager extends RealEstateManager {
 
             if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(rentCastResponseId)) {
                 values.push(rentCastResponseId);
-                this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+                await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
             }
             else {
-                this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
+                await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
             }
 
             console.log('Listing information inserted successfully');

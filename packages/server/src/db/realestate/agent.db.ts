@@ -34,7 +34,7 @@ export class AgentManager extends RealEstateManager {
                 agent.agentType
             ];
 
-            this.genericInsertQuery(pool, this.INSERT_AGENT_QUERY, values);
+            await this.genericInsertQuery(pool, this.INSERT_AGENT_QUERY, values);
 
             console.log('Listing information inserted successfully');
         } catch (err) {

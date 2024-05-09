@@ -76,6 +76,41 @@ export class RentCastService {
 
     }
 
+    private async persistNewListingAndRentCastDetails(rentCastResponses: RentCastResponse[], executionTime: Date, url: string): Promise<number> {
+
+        const client = await this.pool.connect();
+        let numberOfPropertiesAdded = 0;
+        try {
+            await client.query('BEGIN');
+            console.log('BEGIN QUERY');
+
+            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, url);
+
+            for (const rentCastResponse of rentCastResponses) {
+                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastResponse.id);
+                if (addressIdFound) {
+                    console.log(`${addressIdFound} already exists in the database, skipping`);
+                    continue;
+                }
+                const rentCastResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastResponse, rentCastApiCallId);
+                const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastResponse);
+
+                await new CalcService().insertListingDetails(listingDetail, ListingCreationType.RENT_CAST_API, rentCastResponseId);
+
+                numberOfPropertiesAdded++;
+            }
+
+            await client.query('COMMIT');
+        } catch (e) {
+            await client.query('ROLLBACK');
+            throw e;
+        } finally {
+            client.release();
+            return numberOfPropertiesAdded;
+        }
+
+    }
+
     private async insertRentCastApiCall(executionTime: Date, url: string): Promise<number> {
         return this.rentCastManager.insertRentCastApiCall(
             this.pool,
@@ -144,41 +179,6 @@ export class RentCastService {
         };
 
         return listingDetail;
-    }
-
-    private async persistNewListingAndRentCastDetails(rentCastResponses: RentCastResponse[], executionTime: Date, url: string): Promise<number> {
-
-        const client = await this.pool.connect();
-        let numberOfPropertiesAdded = 0;
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, url);
-
-            for (const rentCastResponse of rentCastResponses) {
-                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastResponse.id);
-                if (addressIdFound) {
-                    console.log(`${addressIdFound} already exists in the database, skipping`);
-                    continue;
-                }
-                const rentCastResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastResponse, rentCastApiCallId);
-                const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastResponse);
-
-                await new CalcService().insertListingDetails(listingDetail, ListingCreationType.RENT_CAST_API, rentCastResponseId);
-
-                numberOfPropertiesAdded++;
-            }
-
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
-            return numberOfPropertiesAdded;
-        }
-
     }
 
     private async callRentCastApi(url: string): Promise<RentCastApiResponse> {
