@@ -11,6 +11,7 @@ export interface AgentsDTO {
     firstName: string;
     lastName: string;
     fullName?: string;
+    website?: string;
     companyName: string;
     phoneNumber: string;
     email: string;

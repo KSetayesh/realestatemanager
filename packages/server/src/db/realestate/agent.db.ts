@@ -6,13 +6,14 @@ import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared"
 export class AgentManager extends RealEstateManager {
 
     private GET_AGENTS_QUERY = `SELECT
-        first_name, last_name, company_name, phone_number, email, state, country, agent_type 
+        first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 
         FROM agent;
     `;
 
     private INSERT_AGENT_QUERY = `INSERT INTO agent
             (first_name,
             last_name,
+            website,
             company_name,
             phone_number,
             email,
@@ -26,6 +27,7 @@ export class AgentManager extends RealEstateManager {
             const values: any[] = [
                 agent.firstName,
                 agent.lastName,
+                agent.website,
                 agent.companyName,
                 agent.phoneNumber,
                 agent.email,
@@ -63,6 +65,7 @@ export class AgentManager extends RealEstateManager {
     private mapRowToAgent(row: any): Agent {
         const firstName: string = row.first_name;
         const lastName: string = row.last_name;
+        const website: string = row.website;
         const companyName: string = row.company_name;
         const phoneNumber: string = row.phone_number;
         const email: string = row.email;
@@ -70,7 +73,7 @@ export class AgentManager extends RealEstateManager {
         const country: Country = row.country;
         const agentType: AgentType = row.agent_type;
 
-        return new Agent(firstName, lastName, companyName, phoneNumber, email, state, country, agentType);
+        return new Agent(firstName, lastName, website, companyName, phoneNumber, email, state, country, agentType);
     }
 
 }

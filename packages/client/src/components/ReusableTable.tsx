@@ -67,6 +67,13 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparat
         setSortConfig({ key, direction });
     };
 
+    const ensureAbsoluteUrl = (url: string): string => {
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            return 'http://' + url;  // Defaulting to http if no protocol is specified
+        }
+        return url;
+    };
+
     const visibleColumnsCount = columns.filter(column => column.showColumn).length;
 
     return (
@@ -95,8 +102,10 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparat
 
                                 let cellContent;
                                 if (column.isURL) {
+                                    const formattedUrl = ensureAbsoluteUrl(cellData); // Ensure the URL is absolute
+                                    console.log("Formatted URL:", formattedUrl);
                                     cellContent = (
-                                        <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                                        <a href={formattedUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                                             View
                                         </a>
                                     );

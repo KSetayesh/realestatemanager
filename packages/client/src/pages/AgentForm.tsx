@@ -7,6 +7,7 @@ import { AgentApi } from '../api/agentapi';
 type AgentFormData = {
     firstName: string;
     lastName: string;
+    website?: string;
     companyName: string,
     phoneNumber: string;
     email: string;
@@ -39,6 +40,7 @@ const AgentForm: React.FC = () => {
         return {
             firstName: formData.firstName,
             lastName: formData.lastName,
+            website: formData.website ?? '',
             companyName: formData.companyName,
             phoneNumber: formData.phoneNumber,
             email: formData.email,
@@ -92,6 +94,12 @@ const AgentForm: React.FC = () => {
             title: 'Last Name',
             name: 'lastName',
             value: formData.lastName,
+            type: InputType.STRING,
+        },
+        {
+            title: 'Website',
+            name: 'website',
+            value: formData.website!,
             type: InputType.STRING,
         },
         {
