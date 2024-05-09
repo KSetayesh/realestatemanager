@@ -123,7 +123,6 @@ const CollectProperties: React.FC = () => {
             type: InputType.CHECKBOX,
             defaultValue: false,
         },
-
     ];
 
     const initialFormState = formFieldsConfig.reduce((acc, { name, defaultValue }) => {
@@ -134,29 +133,21 @@ const CollectProperties: React.FC = () => {
 
     const [formData, setFormData] = useState(initialFormState);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        let value: string | boolean;
-        const name = e.target.name;
-
-        if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
-            value = e.target.checked;
-        } else {
-            value = e.target.value;
-        }
-
-        setFormData((prevFormData: FormData) => ({
-            ...prevFormData,
-            [name]: value
-        }));
-
-    };
-
     // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData(prevFormData => ({
+    //     let value: string | boolean;
+    //     const name = e.target.name;
+
+    //     if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
+    //         value = e.target.checked;
+    //     } else {
+    //         value = e.target.value;
+    //     }
+
+    //     setFormData((prevFormData: FormData) => ({
     //         ...prevFormData,
-    //         [name]: value,
+    //         [name]: value
     //     }));
+
     // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -176,8 +167,6 @@ const CollectProperties: React.FC = () => {
     };
 
     const getRequestData = (): RentCastApiRequestDTO => {
-        console.log("cool:", formData.cool);
-        console.log("typeof cool:", (typeof formData.cool));
         return {
             address: formData.address,
             city: formData.city,
@@ -219,7 +208,8 @@ const CollectProperties: React.FC = () => {
                     <AddPropertyForm
                         formFieldsConfig={formFieldsConfig}
                         formData={formData}
-                        handleChange={handleChange}
+                        setFormData={setFormData}
+                        // handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         buttonDisableLogic={buttonDisableLogic}
                     />

@@ -4,13 +4,31 @@ import { InputType } from "../constants/Constant";
 interface AddPropertyFormProps {
     formFieldsConfig: FormFieldConfig[];
     formData: { [key: string]: any };
-    handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    // handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    setFormData: React.Dispatch<React.SetStateAction<{ [key: string]: any }>>;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     buttonDisableLogic?: () => boolean;
 };
 
-const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ formFieldsConfig, formData, handleChange, handleSubmit, buttonDisableLogic }) => {
+const AddPropertyForm: React.FC<AddPropertyFormProps> = ({ formFieldsConfig, formData, setFormData, handleSubmit, buttonDisableLogic }) => {
     // Prepare form fields
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        let value: string | boolean;
+        const name = e.target.name;
+
+        if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
+            value = e.target.checked;
+        } else {
+            value = e.target.value;
+        }
+
+        setFormData((prevFormData: FormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+
+    };
 
     const pageContent = formFieldsConfig.map(({ name, label, type, selections }) => {
         let inputElement;

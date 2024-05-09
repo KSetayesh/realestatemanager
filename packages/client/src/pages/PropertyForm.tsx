@@ -249,13 +249,13 @@ const PropertyForm: React.FC = () => {
 
     const [formData, setFormData] = useState(initialFormState);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    };
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    //     const { name, value } = e.target;
+    //     setFormData(prevFormData => ({
+    //         ...prevFormData,
+    //         [name]: value,
+    //     }));
+    // };
 
     const getRequestData = (): ListingDetailsDTO => {
 
@@ -345,7 +345,8 @@ const PropertyForm: React.FC = () => {
             <AddPropertyForm
                 formFieldsConfig={formFieldsConfig}
                 formData={formData}
-                handleChange={handleChange}
+                setFormData={setFormData}
+                // handleChange={handleChange}
                 handleSubmit={handleSubmit}
             />
         </div>
