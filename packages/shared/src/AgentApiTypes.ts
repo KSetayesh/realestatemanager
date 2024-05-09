@@ -13,6 +13,7 @@ export interface AgentsDTO {
     fullName?: string;
     companyName: string;
     phoneNumber: string;
+    email: string;
     state: State;
     country: Country;
     agentType: AgentType;

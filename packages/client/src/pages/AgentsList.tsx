@@ -31,6 +31,7 @@ const AgentsList: React.FC = () => {
             fullName: agent.fullName,
             companyName: agent.companyName,
             phoneNumber: agent.phoneNumber,
+            email: agent.email,
             country: agent.country,
             state: agent.state,
             agentType: agent.agentType,
@@ -81,6 +82,14 @@ const AgentsList: React.FC = () => {
         {
             header: "Phone Number",
             accessor: "phoneNumber",
+            isURL: false,
+            showColumn: true,
+            isDollarAmount: false,
+            isSortable: true,
+        },
+        {
+            header: "Email",
+            accessor: "email",
             isURL: false,
             showColumn: true,
             isDollarAmount: false,

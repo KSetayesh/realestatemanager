@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS agent (
     last_name VARCHAR(50),
     company_name VARCHAR(250),
     phone_number VARCHAR(15),
+    email VARCHAR(250),
     state VARCHAR(50),
     country VARCHAR(50),
     agent_type VARCHAR(50),

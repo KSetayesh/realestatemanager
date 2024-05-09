@@ -9,6 +9,7 @@ type AgentFormData = {
     lastName: string;
     companyName: string,
     phoneNumber: string;
+    email: string;
     country: string;
     state: string;
     agentType: string;
@@ -25,6 +26,7 @@ const AgentForm: React.FC = () => {
             lastName: '',
             companyName: '',
             phoneNumber: '',
+            email: '',
             country: Country.UnitedStates,
             state: State.AL,
             agentType: AgentType.REAL_ESTATE_AGENT,
@@ -39,6 +41,7 @@ const AgentForm: React.FC = () => {
             lastName: formData.lastName,
             companyName: formData.companyName,
             phoneNumber: formData.phoneNumber,
+            email: formData.email,
             state: formData.state as State,
             country: formData.country as Country,
             agentType: formData.agentType as AgentType,
@@ -101,6 +104,12 @@ const AgentForm: React.FC = () => {
             title: 'Phone Number',
             name: 'phoneNumber',
             value: formData.phoneNumber,
+            type: InputType.STRING,
+        },
+        {
+            title: 'Email',
+            name: 'email',
+            value: formData.email,
             type: InputType.STRING,
         },
         {
