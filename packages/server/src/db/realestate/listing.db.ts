@@ -1,3 +1,4 @@
+import { Pool } from 'pg';
 import { RealEstateManager } from "./realestate.db";
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 import { Address } from 'src/realestatecalc/models/listing_models/address.model';
@@ -98,123 +99,12 @@ export class ListingManager extends RealEstateManager {
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
 
-    async insertListingDetailsWithRentCastDetails(
-        baseUrl: string,
-        fullUrl: string,
-        rentCastResponses: RentCastResponse[],
-        creationType: ListingCreationType,
-        executionTime: Date = new Date()): Promise<number> {
-
-        const rentCastManager: RentCastManager = DatabaseManagerFactory.createRentCastManager();
-        const client = await this.pool.connect();
-        let listingsAddedCounter = 0;
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            const rentCastApiCallId = await rentCastManager.insertRentCastApiCall(baseUrl, fullUrl, executionTime);
-
-            for (const rentCastResponse of rentCastResponses) {
-                const addressIdFound = await rentCastManager.checkIfAddressIdExists(rentCastResponse.id);
-                if (addressIdFound) {
-                    console.log(`${addressIdFound} already exists in the database, skipping`);
-                    continue;
-                }
-                const rentCastResponseId = await rentCastManager.insertRentCastApiResponse(rentCastResponse, rentCastApiCallId);
-                const daysOnMarket = rentCastResponse.apiResponseData.daysOnMarket ?? 0;
-                const listedDate = rentCastResponse.apiResponseData.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
-                const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
-                const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
-                const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
-                const lotSize = rentCastResponse.apiResponseData.lotSize;
-                const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
-
-                const listingDetail: ListingDetailsDTO = {
-                    zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
-                    propertyDetails: {
-                        address: {
-                            fullAddress: rentCastResponse.apiResponseData.formattedAddress ?? '',
-                            state: rentCastResponse.apiResponseData.state ?? '',
-                            zipcode: rentCastResponse.apiResponseData.zipCode ?? '',
-                            city: rentCastResponse.apiResponseData.city ?? '',
-                            county: rentCastResponse.apiResponseData.county ?? '',
-                            country: Country.UnitedStates,
-                            streetAddress: rentCastResponse.apiResponseData.addressLine1 ?? '',
-                            apartmentNumber: rentCastResponse.apiResponseData.addressLine2 ?? '',
-                            longitude: rentCastResponse.apiResponseData.longitude ?? -1,
-                            latitude: rentCastResponse.apiResponseData.latitude ?? -1,
-                        },
-                        schoolRating: {
-                            elementarySchoolRating: -1,
-                            middleSchoolRating: -1,
-                            highSchoolRating: -1,
-                        },
-                        numberOfBedrooms: rentCastResponse.apiResponseData.bedrooms ?? -1,
-                        numberOfFullBathrooms: numberOfFullBathrooms,
-                        numberOfHalfBathrooms: numberOfHalfBathrooms,
-                        squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
-                        acres: acres,
-                        yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
-                        hasGarage: false,
-                        hasPool: false,
-                        hasBasement: false,
-                        propertyType: rentCastResponse.apiResponseData.propertyType ?? -1,
-                        description: '',
-                    },
-                    zillowMarketEstimates: {
-                        zestimate: -1,
-                        zestimateRange: {
-                            low: -1,
-                            high: -1,
-                        },
-                        zillowRentEstimate: -1,
-                        zillowMonthlyPropertyTaxAmount: -1,
-                        zillowMonthlyHomeInsuranceAmount: -1,
-                        zillowMonthlyHOAFeesAmount: -1,
-                    },
-                    listingPrice: rentCastResponse.apiResponseData.price ?? -1,
-                    dateListed: listedDate,
-                    numberOfDaysOnMarket: daysOnMarket,
-                    propertyStatus: rentCastResponse.apiResponseData.status ?? '',
-                };
-
-                await this._insertListingDetails(listingDetail, creationType, rentCastResponseId);
-                listingsAddedCounter++;
-            }
-
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
-            return listingsAddedCounter;
-        }
-    }
-
-    async insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType): Promise<void> {
-        const client = await this.pool.connect();
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            await this._insertListingDetails(listingDetails, creationType);
-
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
-        }
-    }
-
-    async getAllListings(): Promise<ListingDetails[]> {
+    async getAllListings(pool: Pool): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
         const query = `${this.GET_LISTINGS_QUERY};`;
 
         try {
-            const res = await this.pool.query(query);
+            const res = await pool.query(query);
             res.rows.forEach(row => {
                 const listing: ListingDetails = this.mapRowToListingDetails(row);
                 listings.push(listing);
@@ -226,10 +116,10 @@ export class ListingManager extends RealEstateManager {
         }
     }
 
-    async getPropertyByZillowURL(zillowURL: string): Promise<ListingDetails | null> {
+    async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
         try {
-            const res = await this.pool.query(query, [zillowURL]);
+            const res = await pool.query(query, [zillowURL]);
             if (res.rows.length > 0) {
                 const row = res.rows[0];
                 const listing: ListingDetails = this.mapRowToListingDetails(row);
@@ -238,6 +128,50 @@ export class ListingManager extends RealEstateManager {
             return null;
         } catch (err) {
             console.error(`Error fetching property by Zillow URL: ${zillowURL}`, err);
+            throw err;
+        }
+    }
+
+    async insertListingDetails(
+        pool: Pool,
+        listingDetails: ListingDetailsDTO,
+        creationType: ListingCreationType,
+        rentCastResponseId?: number
+    ): Promise<void> {
+        try {
+            const addressId = await this.insertAddress(pool, listingDetails.propertyDetails.address);
+            const schoolRatingId = await this._insertSchoolRating(pool, listingDetails.propertyDetails.schoolRating);
+            const propertyDetailsId = await this.insertPropertyDetails(pool, listingDetails.propertyDetails, addressId, schoolRatingId);
+            let zillowMarketEstimatesId: number | null = null;
+            if (listingDetails.zillowMarketEstimates) {
+                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(pool, listingDetails.zillowMarketEstimates);
+            }
+
+            const values: any[] = [
+                listingDetails.zillowURL,
+                propertyDetailsId,
+                zillowMarketEstimatesId,
+                listingDetails.listingPrice,
+                listingDetails.propertyStatus,
+                listingDetails.dateListed,
+                creationType,
+            ];
+
+            const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
+                return rentCastResponseId && rentCastResponseId > -1;
+            }
+
+            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(rentCastResponseId)) {
+                values.push(rentCastResponseId);
+                this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+            }
+            else {
+                this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
+            }
+
+            console.log('Listing information inserted successfully');
+        } catch (err) {
+            console.error('Error inserting listing information', err);
             throw err;
         }
     }
@@ -339,56 +273,17 @@ export class ListingManager extends RealEstateManager {
 
     }
 
-    private async _insertListingDetails(listingDetails: ListingDetailsDTO, creationType: ListingCreationType, rentCastResponseId?: number): Promise<void> {
-        try {
-            const addressId = await this.insertAddress(listingDetails.propertyDetails.address);
-            const schoolRatingId = await this._insertSchoolRating(listingDetails.propertyDetails.schoolRating);
-            const propertyDetailsId = await this.insertPropertyDetails(listingDetails.propertyDetails, addressId, schoolRatingId);
-            let zillowMarketEstimatesId: number | null = null;
-            if (listingDetails.zillowMarketEstimates) {
-                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(listingDetails.zillowMarketEstimates);
-            }
-
-            const values: any[] = [
-                listingDetails.zillowURL,
-                propertyDetailsId,
-                zillowMarketEstimatesId,
-                listingDetails.listingPrice,
-                listingDetails.propertyStatus,
-                listingDetails.dateListed,
-                creationType,
-            ];
-
-            const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
-                return rentCastResponseId && rentCastResponseId > -1;
-            }
-
-            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(rentCastResponseId)) {
-                values.push(rentCastResponseId);
-                this.genericInsertQuery(this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
-            }
-            else {
-                this.genericInsertQuery(this.INSERT_LISTING_DETAILS_QUERY, values);
-            }
-
-            console.log('Listing information inserted successfully');
-        } catch (err) {
-            console.error('Error inserting listing information', err);
-            throw err;
-        }
-    }
-
-    private async _insertSchoolRating(schoolRating: SchoolRatingDTO): Promise<number> {
+    private async _insertSchoolRating(pool: Pool, schoolRating: SchoolRatingDTO): Promise<number> {
 
         const values: any[] = [
             schoolRating.elementarySchoolRating,
             schoolRating.middleSchoolRating,
             schoolRating.highSchoolRating]
 
-        return this.genericInsertQuery(this.INSERT_SCHOOL_RATING_QUERY, values);
+        return this.genericInsertQuery(pool, this.INSERT_SCHOOL_RATING_QUERY, values);
     }
 
-    private async insertAddress(address: AddressDTO): Promise<number> {
+    private async insertAddress(pool: Pool, address: AddressDTO): Promise<number> {
 
         const values: any[] = [
             address.fullAddress,
@@ -402,10 +297,15 @@ export class ListingManager extends RealEstateManager {
             address.longitude,
             address.latitude];
 
-        return this.genericInsertQuery(this.INSERT_ADDRESS_QUERY, values);
+        return this.genericInsertQuery(pool, this.INSERT_ADDRESS_QUERY, values);
     }
 
-    private async insertPropertyDetails(propertyDetails: PropertyDetailsDTO, addressId: number, schoolRatingId: number): Promise<number> {
+    private async insertPropertyDetails(
+        pool: Pool,
+        propertyDetails: PropertyDetailsDTO,
+        addressId: number,
+        schoolRatingId: number
+    ): Promise<number> {
 
         const values: any[] = [
             addressId,
@@ -422,11 +322,11 @@ export class ListingManager extends RealEstateManager {
             propertyDetails.propertyType,
             propertyDetails.description]
 
-        return this.genericInsertQuery(this.INSERT_PROPERTY_DETAILS_QUERY, values);
+        return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
 
     }
 
-    private async insertZillowMarketEstimates(zillowMarketEstimates: ZillowMarketEstimatesDTO): Promise<number> {
+    private async insertZillowMarketEstimates(pool: Pool, zillowMarketEstimates: ZillowMarketEstimatesDTO): Promise<number> {
 
         const values: any[] = [
             zillowMarketEstimates.zestimate,
@@ -437,6 +337,6 @@ export class ListingManager extends RealEstateManager {
             zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount,
             zillowMarketEstimates.zillowMonthlyHOAFeesAmount];
 
-        return this.genericInsertQuery(this.INSERT_ZILLOW_MARKET_ESTIMATES_QUERY, values);
+        return this.genericInsertQuery(pool, this.INSERT_ZILLOW_MARKET_ESTIMATES_QUERY, values);
     }
 }

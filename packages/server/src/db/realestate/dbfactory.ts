@@ -9,15 +9,19 @@ export class DatabaseManagerFactory {
     private static pool: Pool = new Pool(dbConfig);
 
     static createAgentManager(): AgentManager {
-        return new AgentManager(this.pool);
+        return new AgentManager();
     }
 
     static createListingManager(): ListingManager {
-        return new ListingManager(this.pool);
+        return new ListingManager();
     }
 
     static createRentCastManager(): RentCastManager {
-        return new RentCastManager(this.pool);
+        return new RentCastManager();
+    }
+
+    static getDbPool(): Pool {
+        return this.pool;
     }
 
 }

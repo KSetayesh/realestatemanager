@@ -1,3 +1,4 @@
+import { Pool } from 'pg';
 import { Agent } from "src/agents/models/agent.model";
 import { RealEstateManager } from "./realestate.db";
 import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared";
@@ -20,24 +21,7 @@ export class AgentManager extends RealEstateManager {
             agent_type)
     `;
 
-    async insertAgent(agent: AgentsDTO): Promise<void> {
-        const client = await this.pool.connect();
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            await this._insertAgent(agent);
-
-            await client.query('COMMIT');
-        } catch (e) {
-            await client.query('ROLLBACK');
-            throw e;
-        } finally {
-            client.release();
-        }
-    }
-
-    private async _insertAgent(agent: AgentsDTO): Promise<void> {
+    async insertAgent(pool: Pool, agent: AgentsDTO): Promise<void> {
         try {
             const values: any[] = [
                 agent.firstName,
@@ -50,7 +34,7 @@ export class AgentManager extends RealEstateManager {
                 agent.agentType
             ];
 
-            this.genericInsertQuery(this.INSERT_AGENT_QUERY, values);
+            this.genericInsertQuery(pool, this.INSERT_AGENT_QUERY, values);
 
             console.log('Listing information inserted successfully');
         } catch (err) {
@@ -59,12 +43,12 @@ export class AgentManager extends RealEstateManager {
         }
     }
 
-    async getAllAgents(): Promise<Agent[]> {
+    async getAllAgents(pool: Pool): Promise<Agent[]> {
         const agents: Agent[] = [];
         const query = `${this.GET_AGENTS_QUERY};`;
 
         try {
-            const res = await this.pool.query(query);
+            const res = await pool.query(query);
             res.rows.forEach(row => {
                 const agent: Agent = this.mapRowToAgent(row);
                 agents.push(agent);

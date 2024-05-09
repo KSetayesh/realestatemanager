@@ -1,3 +1,4 @@
+import { Pool } from 'pg';
 import { Injectable } from '@nestjs/common';
 import {
     AmortizationBreakdownDTO,
@@ -16,14 +17,16 @@ import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 export class CalcService {
 
     private listingManager: ListingManager;
+    protected pool: Pool;
 
     constructor() {
         this.listingManager = DatabaseManagerFactory.createListingManager();
+        this.pool = DatabaseManagerFactory.getDbPool();
     }
 
     async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO[]> {
         const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
-        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings();
+        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
@@ -40,7 +43,7 @@ export class CalcService {
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
-        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(zillowURL);
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
         const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();
@@ -52,12 +55,25 @@ export class CalcService {
 
 
     async addNewProperty(listingDetailsDTO: ListingDetailsDTO): Promise<void> {
-        this.listingManager.insertListingDetails(listingDetailsDTO, ListingCreationType.MANUAL);
+        const client = await this.pool.connect();
+        try {
+            await client.query('BEGIN');
+            console.log('BEGIN QUERY');
+
+            this.listingManager.insertListingDetails(this.pool, listingDetailsDTO, ListingCreationType.MANUAL);
+
+            await client.query('COMMIT');
+        } catch (e) {
+            await client.query('ROLLBACK');
+            throw e;
+        } finally {
+            client.release();
+        }
     }
 
     async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
         const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
-        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(zillowURL);
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
         const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();

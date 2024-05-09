@@ -5,13 +5,13 @@ import dbConfig from '../../config/dbConfig';
 export abstract class RealEstateManager {
 
     //protected pool = new Pool(dbConfig);
-    protected pool: Pool;
+    // protected pool: Pool;
 
-    constructor(pool: Pool) {
-        this.pool = pool;
-    }
+    // constructor(pool: Pool) {
+    //     this.pool = pool;
+    // }
 
-    protected async genericInsertQuery(query: string, values: any[]): Promise<number> {
+    protected async genericInsertQuery(pool: Pool, query: string, values: any[]): Promise<number> {
         let insertString = ' VALUES (';
         for (let i = 0; i < values.length; i++) {
             insertString += `$${i + 1}`;
@@ -23,7 +23,7 @@ export abstract class RealEstateManager {
 
         console.log(insertString);
 
-        const res = await this.pool.query(`${query} ${insertString}`, values);
+        const res = await pool.query(`${query} ${insertString}`, values);
         return res.rows[0].id;
     }
 

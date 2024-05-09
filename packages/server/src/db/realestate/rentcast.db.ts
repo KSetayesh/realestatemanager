@@ -1,3 +1,4 @@
+import { Pool } from 'pg';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RealEstateManager } from "./realestate.db";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
@@ -27,10 +28,10 @@ export class RentCastManager extends RealEstateManager {
     private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (base_url, full_url, execution_time)`;
 
     // Function to check if a specific ID exists in the database
-    async checkIfAddressIdExists(address_id: string): Promise<boolean> {
+    async checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
         const query = this.CHECK_FOR_EXISTING_ADDRESS_ID;
         try {
-            const res = await this.pool.query(query, [address_id]);
+            const res = await pool.query(query, [address_id]);
             return res.rows[0].exists;  // This will be true or false
         } catch (err) {
             console.error('Error executing query', err.stack);
@@ -38,7 +39,7 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async insertRentCastApiResponse(rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
+    async insertRentCastApiResponse(pool: Pool, rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
         try {
             const values: any[] = [
                 rentCastResponse.id,
@@ -50,7 +51,7 @@ export class RentCastManager extends RealEstateManager {
                 console.log(values[i]);
             }
 
-            const id = await this.genericInsertQuery(this.INSERT_RENT_CAST_API_RESPONSE_QUERY, values);
+            const id = await this.genericInsertQuery(pool, this.INSERT_RENT_CAST_API_RESPONSE_QUERY, values);
 
             console.log('RentCast Response information inserted successfully');
 
@@ -61,13 +62,13 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async getRentCastDetails(): Promise<RentCastDetails> {
+    async getRentCastDetails(pool: Pool,): Promise<RentCastDetails> {
 
         const rentCastDetails: RentCastDetails[] = [];
         const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
 
         try {
-            const res = await this.pool.query(query);
+            const res = await pool.query(query);
             res.rows.forEach(row => {
                 const agent: RentCastDetails = this.mapRowToRentCastDetails(row);
                 rentCastDetails.push(agent);
@@ -82,13 +83,13 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async updateNumberOfApiCalls() {
-        const client = await this.pool.connect();
+    async updateNumberOfApiCalls(pool: Pool) {
+        const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._updateNumberOfApiCalls();
+            await this._updateNumberOfApiCalls(pool);
 
             await client.query('COMMIT');
         } catch (e) {
@@ -99,13 +100,13 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async resetNumberOfApiCalls() {
-        const client = await this.pool.connect();
+    async resetNumberOfApiCalls(pool: Pool) {
+        const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._resetNumberOfApiCalls();
+            await this._resetNumberOfApiCalls(pool);
 
             await client.query('COMMIT');
         } catch (e) {
@@ -117,6 +118,7 @@ export class RentCastManager extends RealEstateManager {
     }
 
     async insertRentCastApiCall(
+        pool: Pool,
         baseUrl: string,
         fullUrl: string,
         executionTime: Date = new Date()
@@ -128,7 +130,7 @@ export class RentCastManager extends RealEstateManager {
                 executionTime,
             ];
 
-            const id = await this.genericInsertQuery(this.INSERT_RENT_CAST_API_CALL_QUERY, values);
+            const id = await this.genericInsertQuery(pool, this.INSERT_RENT_CAST_API_CALL_QUERY, values);
 
             console.log('RentCast Api Call inserted successfully');
 
@@ -139,9 +141,9 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    private async _resetNumberOfApiCalls() {
+    private async _resetNumberOfApiCalls(pool: Pool) {
         try {
-            await this.pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY);
+            await pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY);
             console.log('Listing information inserted successfully');
 
         } catch (err) {
@@ -150,9 +152,9 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    private async _updateNumberOfApiCalls() {
+    private async _updateNumberOfApiCalls(pool: Pool) {
         try {
-            await this.pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY);
+            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY);
             console.log('Listing information inserted successfully');
 
         } catch (err) {
