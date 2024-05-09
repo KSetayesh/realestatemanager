@@ -92,9 +92,10 @@ export class RentCastManager extends RealEstateManager {
             await this._updateNumberOfApiCalls(pool);
 
             await client.query('COMMIT');
-        } catch (e) {
+        } catch (error) {
             await client.query('ROLLBACK');
-            throw e;
+            console.error('Transaction failed:', error);
+            throw error;
         } finally {
             client.release();
         }
@@ -109,9 +110,10 @@ export class RentCastManager extends RealEstateManager {
             await this._resetNumberOfApiCalls(pool);
 
             await client.query('COMMIT');
-        } catch (e) {
+        } catch (error) {
             await client.query('ROLLBACK');
-            throw e;
+            console.error('Transaction failed:', error);
+            throw error;
         } finally {
             client.release();
         }

@@ -63,9 +63,10 @@ export class CalcService {
             await this.insertListingDetails(listingDetailsDTO, ListingCreationType.MANUAL);
 
             await client.query('COMMIT');
-        } catch (e) {
+        } catch (error) {
             await client.query('ROLLBACK');
-            throw e;
+            console.error('Transaction failed:', error);
+            throw error;
         } finally {
             client.release();
         }
