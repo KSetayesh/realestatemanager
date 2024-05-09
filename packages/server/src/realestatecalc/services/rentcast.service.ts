@@ -7,6 +7,8 @@ import {
     Country,
     ListingCreationType,
     ListingDetailsDTO,
+    PropertyStatus,
+    PropertyType,
     RentCastApiRequestDTO,
     RentCastDetailsDTO,
     State,
@@ -20,10 +22,76 @@ import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
 
 type RentCastApiResponse = {
-    // executionTime: Date;
     rentCastApiCallId: number;
-    // url: string;
     jsonData: any;
+};
+
+type RentCastSaleResponseType = {
+    id: string;
+    formattedAddress: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    state: State;
+    zipCode: string;
+    county: Country;
+    bedrooms: number;
+    bathrooms: number;
+    latitude: number;
+    longitude: number;
+    squareFootage: number;
+    propertyType: PropertyType;
+    lotSize: number;
+    status: PropertyStatus;
+    yearBuilt: number;
+    price: number;
+    listedDate: string;
+    removedDate: string;
+    createdDate: string;
+    lastSeenDate: string;
+    daysOnMarket: number;
+};
+
+type RentCastPropertyResponseType = {
+    id: string;
+    formattedAddress: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    state: State;
+    zipCode: string;
+    county: Country;
+    bedrooms: number;
+    bathrooms: number;
+    latitude: number;
+    longitude: number;
+    squareFootage: number;
+    propertyType: PropertyType;
+    lotSize: number;
+    yearBuilt: number;
+    assessorID: string;
+    lastSalePrice: number;
+    lastSaleDate: Date;
+    ownerOccupied: boolean;
+    features: {
+        garage: boolean;
+        pool: boolean;
+        floorCount: number;
+        unitCount: number;
+    };
+    previousYearPropertyTaxes: number;
+    owner: {
+        names: string[];
+        mailingAddress: {
+            id: string;
+            formattedAddress: string;
+            addressLine1: string;
+            addressLine2: string;
+            city: string;
+            state: State;
+            zipCode: string;
+        };
+    };
 };
 
 @Injectable()
@@ -31,7 +99,8 @@ export class RentCastService {
 
     private rentCastManager: RentCastManager;
     private pool: Pool;
-    private latestRentCastFilePath = path.join(__dirname, '../../../src/data/latestRentCast.json');
+    private latestRentCastSaleFilePath = path.join(__dirname, '../../../src/data/latestRentCastSale.json');
+    private latestRentCastPropertyFilePath = path.join(__dirname, '../../../src/data/latestRentCastProperty.json');
     private SALE_END_POINT = 'https://api.rentcast.io/v1/listings/sale';
     private PROPERTY_RECORDS_END_POINT = 'https://api.rentcast.io/v1/listings/properties';
 
@@ -45,8 +114,6 @@ export class RentCastService {
     }
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
-        console.log("In addNewPropertyWithRentCastAPI!");
-        console.log("requestData:", rentCastApiRequest);
         const client = await this.pool.connect();
         let numberOfPropertiesAdded = 0;
 
@@ -54,25 +121,7 @@ export class RentCastService {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            const saleApiResponse: RentCastApiResponse = await this._addNewPropertyWithRentCastAPI(this.SALE_END_POINT, rentCastApiRequest);
-            if (!saleApiResponse) {
-                return;
-            }
-            const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(saleApiResponse.jsonData);
-            const rentCastPropertyResponses: RentCastResponse[] = [];
-
-            if (rentCastApiRequest.retrieveExtraData) {
-                const propertyApiResponse = await this._addNewPropertyWithRentCastAPI(this.PROPERTY_RECORDS_END_POINT, rentCastApiRequest);
-                if (!propertyApiResponse) {
-                    return;
-                }
-                rentCastPropertyResponses.push(...this.parseApiResponse(saleApiResponse.jsonData));
-            }
-
-            numberOfPropertiesAdded = await this.persistNewListingAndRentCastDetails(
-                rentCastSalesResponses,
-                saleApiResponse.rentCastApiCallId,
-            );
+            await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
 
             console.log(`${numberOfPropertiesAdded} new properties added!`);
             await client.query('COMMIT');
@@ -84,129 +133,63 @@ export class RentCastService {
             client.release();
             return numberOfPropertiesAdded;
         }
+    }
+
+    async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
+
+        const canCallRentCastApi: boolean = await this.canCallRentCastApi();
+        if (!canCallRentCastApi) {
+            return 0;
+        }
+        const saleApiResponse: RentCastApiResponse = await this.callRentCastApi(
+            this.SALE_END_POINT,
+            rentCastApiRequest,
+            this.latestRentCastSaleFilePath
+        );
+
+
+        const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(saleApiResponse.jsonData);
+        const rentCastPropertyResponses: RentCastResponse[] = [];
+
+        let propertyApiResponse: RentCastApiResponse;
+        if (rentCastApiRequest.retrieveExtraData) {
+            const canCallRentCastApi = await this.canCallRentCastApi();
+            if (canCallRentCastApi) {
+                propertyApiResponse = await this.callRentCastApi(
+                    this.PROPERTY_RECORDS_END_POINT,
+                    rentCastApiRequest,
+                    this.latestRentCastPropertyFilePath
+                );
+                rentCastPropertyResponses.push(...this.parseApiResponse(saleApiResponse.jsonData));
+            }
+        }
+
+        return this.persistNewListingAndRentCastDetails(
+            rentCastSalesResponses,
+            rentCastPropertyResponses,
+            saleApiResponse.rentCastApiCallId,
+            propertyApiResponse?.rentCastApiCallId ?? -1,
+        );
 
     }
 
-    private async _addNewPropertyWithRentCastAPI(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO): Promise<RentCastApiResponse> {
+    private async callRentCastApi(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO, filePath: string): Promise<RentCastApiResponse> {
 
         console.log("In addNewPropertyWithRentCastAPI!");
         console.log("requestData:", rentCastApiRequest);
 
-        const canCallRentCastApi: boolean = await this.canCallRentCastApi();
+        // const canCallRentCastApi: boolean = await this.canCallRentCastApi();
 
-        if (!canCallRentCastApi) {
-            return;
-        }
+        // if (!canCallRentCastApi) {
+        //     return;
+        // }
 
         const url = this.createURL(endpoint, rentCastApiRequest);
 
         console.log("URL for RentCast Api:", url);
 
         try {
-            return this.callRentCastApi(endpoint, url);
-        }
-        catch (error) {
-            console.error(error);
-            throw new Error(error);
-        }
-
-    }
-
-    private async persistNewListingAndRentCastDetails(
-        rentCastResponses: RentCastResponse[],
-        rentCastApiCallId: number,
-    ): Promise<number> {
-
-        try {
-            let numberOfPropertiesAdded = 0;
-            for (const rentCastResponse of rentCastResponses) {
-                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastResponse.id);
-                if (addressIdFound) {
-                    console.log(`${addressIdFound} already exists in the database, skipping`);
-                    continue;
-                }
-                const rentCastResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastResponse, rentCastApiCallId);
-                const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastResponse);
-
-                await new CalcService().insertListingDetails(listingDetail, ListingCreationType.RENT_CAST_API, rentCastResponseId);
-
-                numberOfPropertiesAdded++;
-            }
-            return numberOfPropertiesAdded;
-
-
-        } catch (error) {
-            throw error;
-        }
-
-    }
-
-    private createListingDetails(rentCastResponse: RentCastResponse): ListingDetailsDTO {
-        const daysOnMarket = rentCastResponse.apiResponseData.daysOnMarket ?? 0;
-        const listedDate = rentCastResponse.apiResponseData.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
-        const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
-        const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
-        const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
-        const lotSize = rentCastResponse.apiResponseData.lotSize;
-        const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
-
-        const listingDetail: ListingDetailsDTO = {
-            zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
-            propertyDetails: {
-                address: {
-                    fullAddress: rentCastResponse.apiResponseData.formattedAddress ?? '',
-                    state: rentCastResponse.apiResponseData.state ?? '',
-                    zipcode: rentCastResponse.apiResponseData.zipCode ?? '',
-                    city: rentCastResponse.apiResponseData.city ?? '',
-                    county: rentCastResponse.apiResponseData.county ?? '',
-                    country: Country.UnitedStates,
-                    streetAddress: rentCastResponse.apiResponseData.addressLine1 ?? '',
-                    apartmentNumber: rentCastResponse.apiResponseData.addressLine2 ?? '',
-                    longitude: rentCastResponse.apiResponseData.longitude ?? -1,
-                    latitude: rentCastResponse.apiResponseData.latitude ?? -1,
-                },
-                schoolRating: {
-                    elementarySchoolRating: -1,
-                    middleSchoolRating: -1,
-                    highSchoolRating: -1,
-                },
-                numberOfBedrooms: rentCastResponse.apiResponseData.bedrooms ?? -1,
-                numberOfFullBathrooms: numberOfFullBathrooms,
-                numberOfHalfBathrooms: numberOfHalfBathrooms,
-                squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
-                acres: acres,
-                yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
-                hasGarage: false,
-                hasPool: false,
-                hasBasement: false,
-                propertyType: rentCastResponse.apiResponseData.propertyType ?? -1,
-                description: '',
-            },
-            zillowMarketEstimates: {
-                zestimate: -1,
-                zestimateRange: {
-                    low: -1,
-                    high: -1,
-                },
-                zillowRentEstimate: -1,
-                zillowMonthlyPropertyTaxAmount: -1,
-                zillowMonthlyHomeInsuranceAmount: -1,
-                zillowMonthlyHOAFeesAmount: -1,
-            },
-            listingPrice: rentCastResponse.apiResponseData.price ?? -1,
-            dateListed: listedDate,
-            numberOfDaysOnMarket: daysOnMarket,
-            propertyStatus: rentCastResponse.apiResponseData.status ?? '',
-        };
-
-        return listingDetail;
-    }
-
-    private async callRentCastApi(endpoint: string, url: string): Promise<RentCastApiResponse> {
-
-        const options = this.getHeadersForRentCastApiCall();
-
-        try {
+            const options = this.getHeadersForRentCastApiCall();
             const response = await fetch(url, options);
             if (response.status === 200) {
                 const executionTime = new Date();
@@ -224,7 +207,7 @@ export class RentCastService {
                 console.log("_data1:", data); // Log the response data
 
                 // Write response data to JSON file
-                await this.writeResponseToJsonFile(data);
+                await this.writeResponseToJsonFile(filePath, data);
                 return {
                     rentCastApiCallId: rentCastApiCallId,
                     jsonData: data,
@@ -234,15 +217,317 @@ export class RentCastService {
                 console.log("Is NOT successful!");
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-        } catch (err) {
-            console.error('Error:', err);
-            throw err;  // Re-throw the error if needed or handle it as needed
+        } catch (error) {
+            console.error('Error:', error);
+            throw new Error(error);// Re-throw the error if needed or handle it as needed
         }
     }
 
-    private async writeResponseToJsonFile(data: any): Promise<void> {
+
+    private async persistNewListingAndRentCastDetails(
+        rentCastSaleResponses: RentCastResponse[],
+        rentCastPropertyResponses: RentCastResponse[],
+        rentCastSaleApiCallId: number,
+        rentCastPropertyApiCallId: number,
+    ): Promise<number> {
+
+        const createRentCastSaleResponseType = (rentCastSalesResponse: RentCastResponse): RentCastSaleResponseType => {
+            const jsonData = rentCastSalesResponse.apiResponseData;
+            return {
+                id: rentCastSalesResponse.id,
+                formattedAddress: jsonData.formattedAddress ?? '',
+                addressLine1: jsonData.addressLine1 ?? '',
+                addressLine2: jsonData.addressLine2 ?? '',
+                city: jsonData.city ?? '',
+                state: jsonData.state ?? '',
+                zipCode: jsonData.zipCode ?? '',
+                county: jsonData.county ?? '',
+                bedrooms: jsonData.bedrooms ?? -1,
+                bathrooms: jsonData.bathrooms ?? -1,
+                latitude: jsonData.latitude ?? -1,
+                longitude: jsonData.longitude ?? -1,
+                squareFootage: jsonData.squareFootage ?? -1,
+                propertyType: jsonData.propertyType ?? '',
+                lotSize: jsonData.lotSize ?? -1,
+                status: jsonData.status ?? '',
+                yearBuilt: jsonData.yearBuilt ?? -1,
+                price: jsonData.price ?? -1,
+                listedDate: jsonData.listedDate ?? new Date(0),
+                removedDate: jsonData.removedDate ?? new Date(0),
+                createdDate: jsonData.createdDate ?? new Date(0),
+                lastSeenDate: jsonData.lastSeenDate ?? new Date(0),
+                daysOnMarket: jsonData.daysOnMarket ?? 0,   // Come back to this and think about what to do here
+            };
+        };
+
+        const createRentCastPropertyResponseType = (rentCastSalesResponse: RentCastResponse): RentCastPropertyResponseType => {
+            const jsonData = rentCastSalesResponse.apiResponseData;
+            return {
+                id: rentCastSalesResponse.id,
+                formattedAddress: jsonData.formattedAddress ?? '',
+                addressLine1: jsonData.addressLine1 ?? '',
+                addressLine2: jsonData.addressLine2 ?? '',
+                city: jsonData.city ?? '',
+                state: jsonData.state ?? '',
+                zipCode: jsonData.zipCode ?? '',
+                county: jsonData.county ?? '',
+                bedrooms: jsonData.bedrooms ?? -1,
+                bathrooms: jsonData.bathrooms ?? -1,
+                latitude: jsonData.latitude ?? -1,
+                longitude: jsonData.longitude ?? -1,
+                squareFootage: jsonData.squareFootage ?? -1,
+                propertyType: jsonData.propertyType ?? '',
+                lotSize: jsonData.lotSize ?? -1,
+                yearBuilt: jsonData.yearBuilt ?? -1,
+
+                assessorID: jsonData.assessorID ?? '',
+                lastSalePrice: jsonData.lastSalePrice ?? -1,
+                lastSaleDate: jsonData.lastSaleDate ?? new Date(0),
+                ownerOccupied: jsonData.ownerOccupied ?? false,
+                features: {
+                    garage: jsonData.features?.garage ?? false,
+                    pool: jsonData.features?.pool ?? false,
+                    floorCount: jsonData.features?.floorCount ?? -1,
+                    unitCount: jsonData.features?.unitCount ?? -1
+                },
+                previousYearPropertyTaxes: jsonData.propertyTaxes[(new Date().getFullYear() - 1)]?.total ?? -1,
+                owner: {
+                    names: jsonData.owner?.names ?? [],
+                    mailingAddress: {
+                        id: jsonData.owner?.mailingAddress?.id ?? '',
+                        formattedAddress: jsonData.owner?.mailingAddress?.formattedAddress ?? '',
+                        addressLine1: jsonData.owner?.mailingAddress?.addressLine1 ?? '',
+                        addressLine2: jsonData.owner?.mailingAddress?.addressLine2 ?? '',
+                        city: jsonData.owner?.mailingAddress?.city ?? '',
+                        state: jsonData.owner?.mailingAddress?.state ?? '',
+                        zipCode: jsonData.owner?.mailingAddress?.zipCode ?? '',
+                    },
+                },
+            };
+        };
+
+
+        const rentCastPropertyMap: Map<String, RentCastPropertyResponseType> =
+            new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
+                [rentCastProperty.id, createRentCastPropertyResponseType(rentCastProperty)]));
+
         try {
-            await fs.writeFile(this.latestRentCastFilePath, JSON.stringify(data, null, 2), 'utf8');
+            let numberOfPropertiesAdded = 0;
+            for (const rentCastSaleResponse of rentCastSaleResponses) {
+                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastSaleResponse.id);
+                if (addressIdFound) {
+                    console.log(`${addressIdFound} already exists in the database, skipping`);
+                    continue;
+                }
+                const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
+                let rentCastPropertyResponseId = -1;
+                if ((rentCastSaleResponse.id in rentCastPropertyMap) && rentCastPropertyApiCallId > -1) {
+                    rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
+                }
+
+                //const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastSaleResponse);
+                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
+                    createRentCastSaleResponseType(rentCastSaleResponse),
+                    createRentCastPropertyResponseType(rentCastPropertyMap[rentCastSaleResponse.id])
+                );
+
+                await new CalcService().insertListingDetails(
+                    listingDetail,
+                    ListingCreationType.RENT_CAST_API,
+                    rentCastSaleResponseId,
+                    rentCastPropertyResponseId,
+                );
+
+                numberOfPropertiesAdded++;
+            }
+            return numberOfPropertiesAdded;
+
+
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    private buildListingDetails(
+        rentCastSalesResponseTyped: RentCastSaleResponseType,
+        rentCastPropertyTyped?: RentCastPropertyResponseType,
+    ): ListingDetailsDTO {
+        const daysOnMarket = rentCastSalesResponseTyped.daysOnMarket ?? 0;
+        const listedDate = rentCastSalesResponseTyped.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
+        const numberOfBathrooms = rentCastSalesResponseTyped.bathrooms ?? rentCastPropertyTyped?.bathrooms ?? -1;
+        const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
+        const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
+        const lotSize = rentCastSalesResponseTyped.lotSize ?? rentCastPropertyTyped?.lotSize;
+        const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
+
+        const listingDetail: ListingDetailsDTO = {
+            zillowURL: `NEED TO UPDATE_${rentCastSalesResponseTyped.id}`,
+            propertyDetails: {
+                address: {
+                    fullAddress: rentCastSalesResponseTyped.formattedAddress ?? rentCastPropertyTyped?.formattedAddress ?? '',
+                    state: rentCastSalesResponseTyped.state ?? rentCastPropertyTyped?.state, // Let it be undefined
+                    zipcode: rentCastSalesResponseTyped.zipCode ?? rentCastPropertyTyped?.zipCode ?? '',
+                    city: rentCastSalesResponseTyped.city ?? rentCastPropertyTyped?.city ?? '',
+                    county: rentCastSalesResponseTyped.county ?? rentCastPropertyTyped?.county ?? '',
+                    country: Country.UnitedStates,
+                    streetAddress: rentCastSalesResponseTyped.addressLine1 ?? rentCastPropertyTyped?.addressLine1 ?? '',
+                    apartmentNumber: rentCastSalesResponseTyped.addressLine2 ?? rentCastPropertyTyped?.addressLine2 ?? '',
+                    longitude: rentCastSalesResponseTyped.longitude ?? rentCastPropertyTyped?.longitude ?? -1,
+                    latitude: rentCastSalesResponseTyped.latitude ?? rentCastPropertyTyped?.latitude ?? -1,
+                },
+                schoolRating: {
+                    elementarySchoolRating: -1,
+                    middleSchoolRating: -1,
+                    highSchoolRating: -1,
+                },
+                numberOfBedrooms: rentCastSalesResponseTyped.bedrooms ?? rentCastPropertyTyped?.bedrooms ?? -1,
+                numberOfFullBathrooms: numberOfFullBathrooms,
+                numberOfHalfBathrooms: numberOfHalfBathrooms,
+                squareFeet: rentCastSalesResponseTyped.squareFootage ?? rentCastPropertyTyped?.squareFootage ?? -1,
+                acres: acres,
+                yearBuilt: rentCastSalesResponseTyped.yearBuilt ?? rentCastPropertyTyped?.yearBuilt ?? -1,
+                hasGarage: rentCastPropertyTyped?.features?.garage ?? false,
+                hasPool: rentCastPropertyTyped?.features?.pool ?? false,
+                hasBasement: false, // No info here
+                propertyType: rentCastSalesResponseTyped.propertyType ?? rentCastPropertyTyped?.propertyType, // Let it be undefined
+                description: '',
+            },
+            zillowMarketEstimates: {
+                zestimate: -1,
+                zestimateRange: {
+                    low: -1,
+                    high: -1,
+                },
+                zillowRentEstimate: -1,
+                zillowMonthlyPropertyTaxAmount: Utility.round((rentCastPropertyTyped?.previousYearPropertyTaxes / 12) ?? -1),
+                zillowMonthlyHomeInsuranceAmount: -1,
+                zillowMonthlyHOAFeesAmount: -1,
+            },
+            listingPrice: rentCastSalesResponseTyped.price ?? -1,
+            dateListed: listedDate,
+            numberOfDaysOnMarket: daysOnMarket,
+            propertyStatus: rentCastSalesResponseTyped.status, // Let it be undefined
+        };
+
+        return listingDetail;
+    }
+
+    // private createRentCastPropertyResponseTypeMap(): Map<string, RentCastPropertyResponseType> {
+    //     const rentCastPropertyResponseMap = new Map<string, RentCastPropertyResponseType>();
+    //     for (const rentCastPropertyResponse of this.rentCastPropertyResponses) {
+    //         const rentCastPropertyResponseTyped: RentCastPropertyResponseType =
+    //             this.createRentCastPropertyResponseType(rentCastPropertyResponse);
+    //         const id = rentCastPropertyResponseTyped.id;
+    //         if (!(id in rentCastPropertyResponseMap)) {
+    //             rentCastPropertyResponseMap.set(id, rentCastPropertyResponseTyped);
+    //         }
+    //     }
+    //     return rentCastPropertyResponseMap;
+    // }
+
+    // private createListingDetails(rentCastResponse: RentCastResponse): ListingDetailsDTO {
+    //     const daysOnMarket = rentCastResponse.apiResponseData.daysOnMarket ?? 0;
+    //     const listedDate = rentCastResponse.apiResponseData.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
+    //     const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
+    //     const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
+    //     const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
+    //     const lotSize = rentCastResponse.apiResponseData.lotSize;
+    //     const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
+
+    //     const listingDetail: ListingDetailsDTO = {
+    //         zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
+    //         propertyDetails: {
+    //             address: {
+    //                 fullAddress: rentCastResponse.apiResponseData.formattedAddress ?? '',
+    //                 state: rentCastResponse.apiResponseData.state ?? '',
+    //                 zipcode: rentCastResponse.apiResponseData.zipCode ?? '',
+    //                 city: rentCastResponse.apiResponseData.city ?? '',
+    //                 county: rentCastResponse.apiResponseData.county ?? '',
+    //                 country: Country.UnitedStates,
+    //                 streetAddress: rentCastResponse.apiResponseData.addressLine1 ?? '',
+    //                 apartmentNumber: rentCastResponse.apiResponseData.addressLine2 ?? '',
+    //                 longitude: rentCastResponse.apiResponseData.longitude ?? -1,
+    //                 latitude: rentCastResponse.apiResponseData.latitude ?? -1,
+    //             },
+    //             schoolRating: {
+    //                 elementarySchoolRating: -1,
+    //                 middleSchoolRating: -1,
+    //                 highSchoolRating: -1,
+    //             },
+    //             numberOfBedrooms: rentCastResponse.apiResponseData.bedrooms ?? -1,
+    //             numberOfFullBathrooms: numberOfFullBathrooms,
+    //             numberOfHalfBathrooms: numberOfHalfBathrooms,
+    //             squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
+    //             acres: acres,
+    //             yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
+    //             hasGarage: false,
+    //             hasPool: false,
+    //             hasBasement: false,
+    //             propertyType: rentCastResponse.apiResponseData.propertyType ?? -1,
+    //             description: '',
+    //         },
+    //         zillowMarketEstimates: {
+    //             zestimate: -1,
+    //             zestimateRange: {
+    //                 low: -1,
+    //                 high: -1,
+    //             },
+    //             zillowRentEstimate: -1,
+    //             zillowMonthlyPropertyTaxAmount: -1,
+    //             zillowMonthlyHomeInsuranceAmount: -1,
+    //             zillowMonthlyHOAFeesAmount: -1,
+    //         },
+    //         listingPrice: rentCastResponse.apiResponseData.price ?? -1,
+    //         dateListed: listedDate,
+    //         numberOfDaysOnMarket: daysOnMarket,
+    //         propertyStatus: rentCastResponse.apiResponseData.status ?? '',
+    //     };
+
+    //     return listingDetail;
+    // }
+
+    // private async callRentCastApi(endpoint: string, url: string): Promise<RentCastApiResponse> {
+
+    //     const options = this.getHeadersForRentCastApiCall();
+
+    //     try {
+    //         const response = await fetch(url, options);
+    //         if (response.status === 200) {
+    //             const executionTime = new Date();
+    //             console.log("Is successful!");
+
+    //             // Call updateNumberOfApiCalls here
+    //             await this.rentCastManager.updateNumberOfApiCalls(this.pool);
+    //             const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
+    //                 this.pool,
+    //                 endpoint,
+    //                 url,
+    //                 executionTime
+    //             );
+    //             const data = await response.json();
+    //             console.log("_data1:", data); // Log the response data
+
+    //             // Write response data to JSON file
+    //             await this.writeResponseToJsonFile(data);
+    //             return {
+    //                 rentCastApiCallId: rentCastApiCallId,
+    //                 jsonData: data,
+    //             };
+
+    //         } else {
+    //             console.log("Is NOT successful!");
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    //     } catch (err) {
+    //         console.error('Error:', err);
+    //         throw err;  // Re-throw the error if needed or handle it as needed
+    //     }
+    // }
+
+    private async writeResponseToJsonFile(filePath: string, data: any): Promise<void> {
+        try {
+            await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
             console.log('File has been saved successfully.');
         } catch (err) {
             console.error('Failed to write to file:', err);

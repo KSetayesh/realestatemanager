@@ -75,9 +75,16 @@ export class CalcService {
     async insertListingDetails(
         listingDetailsDTO: ListingDetailsDTO,
         listingCreationType: ListingCreationType,
-        responseId?: number
+        saleResponseId?: number,
+        propertyResponseId?: number,
     ): Promise<void> {
-        await this.listingManager.insertListingDetails(this.pool, listingDetailsDTO, listingCreationType, responseId);
+        await this.listingManager.insertListingDetails(
+            this.pool,
+            listingDetailsDTO,
+            listingCreationType,
+            saleResponseId,
+            propertyResponseId
+        );
     }
 
     async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {

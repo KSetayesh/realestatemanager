@@ -56,7 +56,18 @@ export class ListingManager extends RealEstateManager {
             property_status,
             date_listed,
             creation_type,
-            rent_cast_response_id)`;
+            rent_cast_sale_response_id)`;
+
+    private INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY = `INSERT INTO listing_details 
+            (zillow_url, 
+            property_details_id, 
+            zillow_market_estimates_id, 
+            listing_price,
+            property_status,
+            date_listed,
+            creation_type,
+            rent_cast_sale_response_id,
+            rent_cast_property_response_id)`;
 
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
             (elementary_school_rating, 
@@ -136,7 +147,8 @@ export class ListingManager extends RealEstateManager {
         pool: Pool,
         listingDetails: ListingDetailsDTO,
         creationType: ListingCreationType,
-        rentCastResponseId?: number
+        saleResponseId?: number,
+        propertyResponseId?: number,
     ): Promise<void> {
         try {
             const addressId = await this.insertAddress(pool, listingDetails.propertyDetails.address);
@@ -161,9 +173,15 @@ export class ListingManager extends RealEstateManager {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
 
-            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(rentCastResponseId)) {
-                values.push(rentCastResponseId);
-                await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(saleResponseId)) {
+                values.push(saleResponseId);
+                if (isValidRentCastResponseId(propertyResponseId)) {
+                    values.push(propertyResponseId);
+                    await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY, values);
+                }
+                else {
+                    await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+                }
             }
             else {
                 await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);

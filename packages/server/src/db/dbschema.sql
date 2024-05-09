@@ -81,7 +81,8 @@ CREATE TABLE IF NOT EXISTS listing_details (
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
     FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE,
-    FOREIGN KEY (rent_cast_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE
+    FOREIGN KEY (rent_cast_sale_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE,
+    FOREIGN KEY (rent_cast_property_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE
 );
 -- EndQuery
 
