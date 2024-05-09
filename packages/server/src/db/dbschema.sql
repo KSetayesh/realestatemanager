@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS agent (
 -- Query: CreateRentCastApiCallTable
 CREATE TABLE IF NOT EXISTS rent_cast_api_call (
     id SERIAL PRIMARY KEY, 
-    base_url VARCHAR(50),
+    end_point VARCHAR(50),
     full_url VARCHAR(500),
     execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),

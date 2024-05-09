@@ -25,7 +25,7 @@ export class RentCastManager extends RealEstateManager {
             api_response_data,
             rent_cast_api_call_id)`;
 
-    private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (base_url, full_url, execution_time)`;
+    private INSERT_RENT_CAST_API_CALL_QUERY = `INSERT INTO rent_cast_api_call (end_point, full_url, execution_time)`;
 
     // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
@@ -121,13 +121,13 @@ export class RentCastManager extends RealEstateManager {
 
     async insertRentCastApiCall(
         pool: Pool,
-        baseUrl: string,
+        endpoint: string,
         fullUrl: string,
         executionTime: Date = new Date()
     ): Promise<number> {
         try {
             const values: any[] = [
-                baseUrl,
+                endpoint,
                 fullUrl,
                 executionTime,
             ];

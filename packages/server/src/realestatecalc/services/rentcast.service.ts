@@ -30,7 +30,7 @@ export class RentCastService {
     private rentCastManager: RentCastManager;
     private pool: Pool;
     private latestRentCastFilePath = path.join(__dirname, '../../../src/data/latestRentCast.json');
-    private BASE_URL = 'https://api.rentcast.io/v1/listings/sale';
+    private SALE_END_POINT = 'https://api.rentcast.io/v1/listings/sale';
 
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
@@ -52,7 +52,7 @@ export class RentCastService {
             return;
         }
 
-        const url = this.createURL(rentCastApiRequest);
+        const url = this.createURL(this.SALE_END_POINT, rentCastApiRequest);
 
         console.log("URL for RentCast Api:", url);
 
@@ -63,6 +63,7 @@ export class RentCastService {
             const numberOfPropertiesAdded = await this.persistNewListingAndRentCastDetails(
                 rentCastResponses,
                 response.executionTime,
+                this.SALE_END_POINT,
                 url
             );
 
@@ -76,7 +77,12 @@ export class RentCastService {
 
     }
 
-    private async persistNewListingAndRentCastDetails(rentCastResponses: RentCastResponse[], executionTime: Date, url: string): Promise<number> {
+    private async persistNewListingAndRentCastDetails(
+        rentCastResponses: RentCastResponse[],
+        executionTime: Date,
+        endpoint: string,
+        url: string
+    ): Promise<number> {
 
         const client = await this.pool.connect();
         let numberOfPropertiesAdded = 0;
@@ -84,7 +90,7 @@ export class RentCastService {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, url);
+            const rentCastApiCallId = await this.insertRentCastApiCall(executionTime, endpoint, url);
 
             for (const rentCastResponse of rentCastResponses) {
                 const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastResponse.id);
@@ -112,10 +118,10 @@ export class RentCastService {
 
     }
 
-    private async insertRentCastApiCall(executionTime: Date, url: string): Promise<number> {
+    private async insertRentCastApiCall(executionTime: Date, endpoint: string, url: string): Promise<number> {
         return this.rentCastManager.insertRentCastApiCall(
             this.pool,
-            this.BASE_URL,
+            endpoint,
             url,
             executionTime,
         );
@@ -262,7 +268,7 @@ export class RentCastService {
 
     };
 
-    private createURL(rentCastApiRequest: RentCastApiRequestDTO): string {
+    private createURL(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO): string {
         let appendToUrl = '';
         let firstAppended = true;
         if (rentCastApiRequest.address) {
@@ -322,7 +328,7 @@ export class RentCastService {
             appendToUrl += this.appendUrlParameter('offset', rentCastApiRequest.offset.toString(), firstAppended);
             firstAppended = false;
         }
-        return `${this.BASE_URL}${appendToUrl}`;
+        return `${endpoint}${appendToUrl}`;
     }
 
     private appendUrlParameter(
