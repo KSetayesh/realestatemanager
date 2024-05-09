@@ -5,6 +5,7 @@ import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { FormFieldConfig } from "./PropertyForm";
 import { RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
+import AddPropertyForm from '../components/AddPropertyForm';
 
 const CollectProperties: React.FC = () => {
 
@@ -116,6 +117,13 @@ const CollectProperties: React.FC = () => {
             type: InputType.NUMBER,
             defaultValue: '',
         },
+        {
+            name: 'retrieveExtraData',
+            label: 'Retrieve Extra Data',
+            type: InputType.CHECKBOX,
+            defaultValue: false,
+        },
+
     ];
 
     const initialFormState = formFieldsConfig.reduce((acc, { name, defaultValue }) => {
@@ -127,16 +135,34 @@ const CollectProperties: React.FC = () => {
     const [formData, setFormData] = useState(initialFormState);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevFormData => ({
+        let value: string | boolean;
+        const name = e.target.name;
+
+        if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
+            value = e.target.checked;
+        } else {
+            value = e.target.value;
+        }
+
+        setFormData((prevFormData: FormData) => ({
             ...prevFormData,
-            [name]: value,
+            [name]: value
         }));
+
     };
+
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    //     const { name, value } = e.target;
+    //     setFormData(prevFormData => ({
+    //         ...prevFormData,
+    //         [name]: value,
+    //     }));
+    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const dataToSubmit: RentCastApiRequestDTO = getRequestData();
+        console.log('dataToSubmit:', dataToSubmit);
 
         const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
         const postSuccess = await realEstateCalcApi.addNewPropertyWithRentCastAPI(dataToSubmit);
@@ -150,7 +176,8 @@ const CollectProperties: React.FC = () => {
     };
 
     const getRequestData = (): RentCastApiRequestDTO => {
-
+        console.log("cool:", formData.cool);
+        console.log("typeof cool:", (typeof formData.cool));
         return {
             address: formData.address,
             city: formData.city,
@@ -166,49 +193,50 @@ const CollectProperties: React.FC = () => {
             daysOld: parseInt(formData.daysOld),
             limit: parseInt(formData.limit),
             offset: parseInt(formData.offset),
-
+            retrieveExtraData: formData.retrieveExtraData,
         };
+    };
+
+    const buttonDisableLogic = (): boolean => {
+        return !rentCastDetails?.canMakeApiCalls;
+    }
+
+    // Content based on loading state
+    const getPageContent = () => {
+        let content;
+        if (isLoading) {
+            content = <p>Loading Rent Cast Api Details...</p>;
+        } else {
+            content = (
+                <>
+                    <hr />
+                    <p>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</p>
+                    <p>Can make API call: {rentCastDetails!.canMakeApiCalls.toString()}</p>
+                    <p>Days into billing period: {rentCastDetails!.daysIntoBillingPeriod}</p>
+                    <p>Most recent billing date: {new Date(rentCastDetails!.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
+                    <hr />
+                    <br />
+                    <AddPropertyForm
+                        formFieldsConfig={formFieldsConfig}
+                        formData={formData}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        buttonDisableLogic={buttonDisableLogic}
+                    />
+                </>
+            );
+        }
+
+        return content;
     };
 
     return (
         <div className="form-container">
             <h2>Collect Properties Request Form</h2>
-            {isLoading ? (
-                <p>Loading Rent Cast Api Details...</p>
-            ) : (
-                <>
-                    <hr></hr>
-                    <p>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</p>
-                    <p>Can make API call: {rentCastDetails!.canMakeApiCalls.toString()}</p>
-                    <p>Days into billing period: {rentCastDetails!.daysIntoBillingPeriod}</p>
-                    <p>Most recent billing date: {new Date(rentCastDetails!.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
-                    <hr></hr>
-                    <br></br>
-                    <form onSubmit={handleSubmit}>
-                        {formFieldsConfig.map(({ name, label, type, selections }) => (
-                            <div className="form-field" key={name}>
-                                <label htmlFor={name} className="form-label">{label}:</label>
-                                {type === 'select' && selections ? (
-                                    <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
-                                        {selections.map((selection, index) => (
-                                            <option key={index} value={selection.toString()}>
-                                                {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
-                                            </option>
-                                        ))}
-                                    </select>
-                                ) : (
-                                    <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
-                                )}
-                            </div>
-                        ))}
-                        <div className="submit-button-container">
-                            <button type="submit" disabled={!rentCastDetails?.canMakeApiCalls}>Submit</button>
-                        </div>
-                    </form>
-                </>
-            )}
+            {getPageContent()}
         </div>
     );
+
 };
 
 export default CollectProperties;

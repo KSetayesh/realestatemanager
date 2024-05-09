@@ -15,6 +15,7 @@ export interface RentCastApiRequestDTO {
     daysOld: number;
     limit: number;
     offset: number;
+    retrieveExtraData: boolean;
 };
 
 export interface RentCastDetailsDTO {

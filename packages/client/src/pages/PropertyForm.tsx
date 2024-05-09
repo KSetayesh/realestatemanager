@@ -3,6 +3,7 @@ import { Country, State, InputType, ratingSelections, PropertyType, PropertyStat
 import '../styles/PropertyForm.css';
 import { ListingDetailsDTO } from '@realestatemanager/shared';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
+import AddPropertyForm from '../components/AddPropertyForm';
 
 export type FormFieldConfig = {
     name: string;
@@ -322,32 +323,60 @@ const PropertyForm: React.FC = () => {
         }
     };
 
+    // return (
+    //     <div>
+    //         <AddPropertyForm
+    //             isLoading={false}
+    //             rentCastDetails={rentCastDetails!}
+    //             formFieldsConfig={formFieldsConfig}
+    //             formData={formData}
+    //             handleChange={handleChange}
+    //             handleSubmit={handleSubmit}
+    //         />
+
+    //     </div>
+    // );
+
+
+
     return (
         <div className="form-container">
             <h2>Property Listing Form</h2>
-            <form onSubmit={handleSubmit}>
-                {formFieldsConfig.map(({ name, label, type, selections }) => (
-                    <div className="form-field" key={name}>
-                        <label htmlFor={name} className="form-label">{label}:</label>
-                        {type === 'select' && selections ? (
-                            <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
-                                {selections.map((selection, index) => (
-                                    <option key={index} value={selection.toString()}>
-                                        {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : (
-                            <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
-                        )}
-                    </div>
-                ))}
-                <div className="submit-button-container">
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
+            <AddPropertyForm
+                formFieldsConfig={formFieldsConfig}
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
         </div>
     );
+
+    // return (
+    //     <div className="form-container">
+    //         <h2>Property Listing Form</h2>
+    //         <form onSubmit={handleSubmit}>
+    //             {formFieldsConfig.map(({ name, label, type, selections }) => (
+    //                 <div className="form-field" key={name}>
+    //                     <label htmlFor={name} className="form-label">{label}:</label>
+    //                     {type === 'select' && selections ? (
+    //                         <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
+    //                             {selections.map((selection, index) => (
+    //                                 <option key={index} value={selection.toString()}>
+    //                                     {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
+    //                                 </option>
+    //                             ))}
+    //                         </select>
+    //                     ) : (
+    //                         <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
+    //                     )}
+    //                 </div>
+    //             ))}
+    //             <div className="submit-button-container">
+    //                 <button type="submit">Submit</button>
+    //             </div>
+    //         </form>
+    //     </div>
+    // );
 
 
 };

@@ -88,6 +88,7 @@ export enum InputType {
     NUMBER = 'number',
     RADIO = 'radio',
     STRING = 'string',
+    CHECKBOX = 'checkbox',
 };
 
 export enum ValueType {
