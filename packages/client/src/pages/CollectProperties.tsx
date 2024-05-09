@@ -133,23 +133,6 @@ const CollectProperties: React.FC = () => {
 
     const [formData, setFormData] = useState(initialFormState);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     let value: string | boolean;
-    //     const name = e.target.name;
-
-    //     if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
-    //         value = e.target.checked;
-    //     } else {
-    //         value = e.target.value;
-    //     }
-
-    //     setFormData((prevFormData: FormData) => ({
-    //         ...prevFormData,
-    //         [name]: value
-    //     }));
-
-    // };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const dataToSubmit: RentCastApiRequestDTO = getRequestData();

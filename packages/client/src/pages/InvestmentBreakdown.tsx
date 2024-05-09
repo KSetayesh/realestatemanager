@@ -106,13 +106,13 @@ enum TableTypeEnum {
     INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
 };
 
-interface TableConfig {
+export interface TableConfig<T> {
     columns: TableColumn[];
-    data: (ammortizationDetail: MonthlyInvestmentDetailsDTO) => TableRow;
+    data: (ammortizationDetail: T) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
 }
 
-interface TablesConfig {
-    [type: string]: TableConfig;
+export interface TablesConfig<T> {
+    [type: string]: TableConfig<T>;
 }
 
 const InvestmentBreakdown: React.FC = () => {
@@ -130,7 +130,7 @@ const InvestmentBreakdown: React.FC = () => {
         setTableType(TableTypeEnum[input]);
     };
 
-    const tablesConfig: TablesConfig = {
+    const tablesConfig: TablesConfig<MonthlyInvestmentDetailsDTO> = {
         [TableTypeEnum.STANDARD_BREAKDOWN]: {
             columns: [
                 {
