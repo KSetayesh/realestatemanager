@@ -113,37 +113,7 @@ export class RentCastService {
         return (await this.rentCastManager.getRentCastDetails(this.pool)).toDTO();
     }
 
-    private async prework() {
-        await this.modifyJsonFile(this.latestRentCastSaleFilePath);
-        await this.modifyJsonFile(this.latestRentCastPropertyFilePath);
-    }
-
-    private async modifyJsonFile(filePath: string): Promise<void> {
-        try {
-            // Step 1: Read the existing JSON file
-            const data = await fs.readFile(filePath, { encoding: 'utf8' });
-            const json = JSON.parse(data);
-
-            // Step 2: Modify each 'id' to append 'X' 
-            const updatedJson = json.map((item: any) => ({
-                ...item,
-                id: item.id + 'X'
-            }));
-
-            console.log('updatedJson:', updatedJson);
-
-            // Step 3: Write the updated JSON back to the file
-            await fs.writeFile(filePath, JSON.stringify(updatedJson, null, 2), 'utf8');
-            console.log('JSON file has been updated successfully.');
-        } catch (error) {
-            console.error('Error processing the JSON file:', error);
-        }
-    }
-
-
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
-
-        // await this.prework();
 
         const client = await this.pool.connect();
         let numberOfPropertiesAdded = 0;
@@ -168,11 +138,7 @@ export class RentCastService {
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
-        console.log("In _addNewPropertyWithRentCastAPI");
-
         const canCallRentCastApi: boolean = await this.canCallRentCastApi();
-
-        console.log("canCallRentCastApi_1:", canCallRentCastApi);
 
         if (!canCallRentCastApi) {
             return 0;
@@ -184,8 +150,6 @@ export class RentCastService {
             this.latestRentCastSaleFilePath
         );
 
-        console.log("saleApiResponse:", saleApiResponse);
-
         const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(saleApiResponse.jsonData);
 
         console.log("rentCastSalesResponses:", rentCastSalesResponses);
@@ -193,10 +157,8 @@ export class RentCastService {
         const rentCastPropertyResponses: RentCastResponse[] = [];
 
         let propertyApiResponse: RentCastApiResponse;
-        console.log("retrieveExtraData:", rentCastApiRequest.retrieveExtraData);
         if (rentCastApiRequest.retrieveExtraData) {
             const canCallRentCastApi = await this.canCallRentCastApi();
-            console.log("canCallRentCastApi_2:", canCallRentCastApi);
             if (canCallRentCastApi) {
                 propertyApiResponse = await this.callRentCastApi(
                     this.PROPERTY_RECORDS_END_POINT,
@@ -219,36 +181,7 @@ export class RentCastService {
     }
 
     private async callRentCastApi(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO, filePath: string): Promise<RentCastApiResponse> {
-        // let data;
-        // if (endpoint.includes('properties')) {
-        //     try {
-        //         data = await fs.readFile(filePath, { encoding: 'utf8' });
-        //         data = JSON.parse(data);
-        //     } catch (error) {
-        //         console.error('Error reading file:', error);
-        //         return null;
-        //     }
-        // } else if (endpoint.includes('sale')) {
-        //     try {
-        //         data = await fs.readFile(filePath, { encoding: 'utf8' });
-        //         data = JSON.parse(data);
-        //     } catch (error) {
-        //         console.error('Error reading file:', error);
-        //         return null;
-        //     }
-        // }
-        // const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
-        //     this.pool,
-        //     endpoint,
-        //     filePath,
-        //     new Date(),
-        // );
-        // return {
-        //     rentCastApiCallId: rentCastApiCallId,
-        //     jsonData: data,
-        // };
 
-        console.log("In addNewPropertyWithRentCastAPI!");
         console.log("requestData:", rentCastApiRequest);
 
         const url = this.createURL(endpoint, rentCastApiRequest);
@@ -399,7 +332,6 @@ export class RentCastService {
             new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
                 [rentCastProperty.id, rentCastProperty]));
 
-        console.log("rentCastPropertyMap:", rentCastPropertyMap);
 
         try {
             const addressIdOfMatchesFound = new Set<string>();
@@ -413,15 +345,6 @@ export class RentCastService {
                 }
                 const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
                 let rentCastPropertyResponseId = -1;
-                console.log("(rentCastSaleResponse.id in rentCastPropertyMap):", (rentCastSaleResponse.id in rentCastPropertyMap));
-                console.log("(rentCastPropertyApiCallId > -1):", (rentCastPropertyApiCallId > -1));
-
-                // if ((rentCastSaleResponse.id in rentCastPropertyMap) && rentCastPropertyApiCallId > -1) {
-                //     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
-                // }
-                // if (rentCastPropertyApiCallId > -1) {
-                //     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
-                // }
 
                 let listingDetail: ListingDetailsDTO;
                 if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.id in rentCastPropertyMap)) {

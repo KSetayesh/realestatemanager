@@ -169,25 +169,17 @@ export class ListingManager extends RealEstateManager {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
 
-            console.log("creationType:", creationType);
-            console.log("saleResponseId:", saleResponseId);
-            console.log('propertyResponseId:', propertyResponseId);
-            console.log("isValidRentCastResponseId(saleResponseId):", isValidRentCastResponseId(saleResponseId));
-
             if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(saleResponseId)) {
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {
-                    console.log("In here 1");
                     values.push(propertyResponseId);
                     newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY, values);
                 }
                 else {
-                    console.log("In here 2");
                     newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
                 }
             }
             else {
-                console.log("In here 3");
                 newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
             }
 
