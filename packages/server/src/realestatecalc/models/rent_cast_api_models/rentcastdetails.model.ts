@@ -8,6 +8,8 @@ export class RentCastDetails {
     private _billingPeriod: number;
     private _mostRecentBillingDate: Date;
     private _firstBilledOn: Date;
+    private _email: string; // Sensative info don't want to expose in getter
+    private _apiKeyName: string; // Sensative info don't want to expose in getter
 
     constructor(
         apiCallsThisMonth: number,
@@ -15,12 +17,17 @@ export class RentCastDetails {
         billingPeriod: number,
         mostRecentBillingDate: Date,
         firstBilledOn: Date,
+        email: string,
+        apiKeyName: string,
     ) {
         this._apiCallsThisMonth = apiCallsThisMonth;
         this._numberOfFreeApiCalls = numberOfFreeApiCalls;
         this._billingPeriod = billingPeriod;
         this._mostRecentBillingDate = mostRecentBillingDate;
         this._firstBilledOn = firstBilledOn;
+        this._email = email;
+        this._apiKeyName = apiKeyName;
+
     }
 
     get canMakeFreeApiCall(): boolean {

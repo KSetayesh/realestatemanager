@@ -128,6 +128,8 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_response (
 -- Query: CreateRentCastConfigDetailsTable
 CREATE TABLE IF NOT EXISTS rent_cast_config_details (
     id SERIAL PRIMARY KEY,
+    api_key_name VARCHAR(250),
+    email VARCHAR(250),
     api_calls_this_month INT,
     number_of_free_api_calls INT,
     billing_period INT,

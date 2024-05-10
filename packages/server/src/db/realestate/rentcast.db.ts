@@ -8,7 +8,8 @@ export class RentCastManager extends RealEstateManager {
     private CHECK_FOR_EXISTING_ADDRESS_ID = `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists;`;
 
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
-        api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date 
+        api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
+        email, api_key_name 
         FROM rent_cast_config_details;
     `;
 
@@ -176,8 +177,18 @@ export class RentCastManager extends RealEstateManager {
         const billingPeriod: number = row.billing_period;
         const mostRecentBillingDate: Date = row.most_recent_billing_date;
         const firstBilledOn: Date = row.first_billed_on;
+        const email: string = row.email;
+        const apiKeyName: string = row.api_key_name;
 
-        return new RentCastDetails(apiCallsThisMonth, numberOfFreeApiCalls, billingPeriod, mostRecentBillingDate, firstBilledOn);
+        return new RentCastDetails(
+            apiCallsThisMonth,
+            numberOfFreeApiCalls,
+            billingPeriod,
+            mostRecentBillingDate,
+            firstBilledOn,
+            email,
+            apiKeyName
+        );
     }
 
 }
