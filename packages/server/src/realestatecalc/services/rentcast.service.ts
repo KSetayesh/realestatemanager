@@ -102,7 +102,7 @@ export class RentCastService {
     private latestRentCastSaleFilePath = path.join(__dirname, '../../../src/data/latestRentCastSale.json');
     private latestRentCastPropertyFilePath = path.join(__dirname, '../../../src/data/latestRentCastProperty.json');
     private SALE_END_POINT = 'https://api.rentcast.io/v1/listings/sale';
-    private PROPERTY_RECORDS_END_POINT = 'https://api.rentcast.io/v1/listings/properties';
+    private PROPERTY_RECORDS_END_POINT = 'https://api.rentcast.io/v1/properties';
 
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
@@ -137,32 +137,46 @@ export class RentCastService {
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
+        console.log("In _addNewPropertyWithRentCastAPI");
+
         const canCallRentCastApi: boolean = await this.canCallRentCastApi();
+
+        console.log("canCallRentCastApi_1:", canCallRentCastApi);
+
         if (!canCallRentCastApi) {
             return 0;
         }
+
         const saleApiResponse: RentCastApiResponse = await this.callRentCastApi(
             this.SALE_END_POINT,
             rentCastApiRequest,
             this.latestRentCastSaleFilePath
         );
 
+        console.log("saleApiResponse:", saleApiResponse);
 
         const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(saleApiResponse.jsonData);
+
+        console.log("rentCastSalesResponses:", rentCastSalesResponses);
+
         const rentCastPropertyResponses: RentCastResponse[] = [];
 
         let propertyApiResponse: RentCastApiResponse;
+        console.log("retrieveExtraData:", rentCastApiRequest.retrieveExtraData);
         if (rentCastApiRequest.retrieveExtraData) {
             const canCallRentCastApi = await this.canCallRentCastApi();
+            console.log("canCallRentCastApi_2:", canCallRentCastApi);
             if (canCallRentCastApi) {
                 propertyApiResponse = await this.callRentCastApi(
                     this.PROPERTY_RECORDS_END_POINT,
                     rentCastApiRequest,
                     this.latestRentCastPropertyFilePath
                 );
-                rentCastPropertyResponses.push(...this.parseApiResponse(saleApiResponse.jsonData));
+                rentCastPropertyResponses.push(...this.parseApiResponse(propertyApiResponse.jsonData)); //(saleApiResponse.jsonData));
             }
         }
+
+        console.log("rentCastPropertyResponses:", rentCastPropertyResponses);
 
         return this.persistNewListingAndRentCastDetails(
             rentCastSalesResponses,
@@ -261,7 +275,27 @@ export class RentCastService {
         };
 
         const createRentCastPropertyResponseType = (rentCastSalesResponse: RentCastResponse): RentCastPropertyResponseType => {
+
             const jsonData = rentCastSalesResponse.apiResponseData;
+
+            const getLatestPropertyTax = (jsonData): number => {
+                const currentYear = new Date().getFullYear();
+                const lastYear = currentYear - 1;
+                const yearBeforeLast = currentYear - 2;
+
+                // Check for last year and the year before last
+                if (jsonData.propertyTaxes) {
+                    if (jsonData.propertyTaxes[lastYear]) {
+                        return jsonData.propertyTaxes[lastYear].total;
+                    } else if (jsonData.propertyTaxes[yearBeforeLast]) {
+                        return jsonData.propertyTaxes[yearBeforeLast].total;
+                    }
+                }
+
+                // Return -1 if no data available
+                return -1;
+            };
+
             return {
                 id: rentCastSalesResponse.id,
                 formattedAddress: jsonData.formattedAddress ?? '',
@@ -290,7 +324,7 @@ export class RentCastService {
                     floorCount: jsonData.features?.floorCount ?? -1,
                     unitCount: jsonData.features?.unitCount ?? -1
                 },
-                previousYearPropertyTaxes: jsonData.propertyTaxes[(new Date().getFullYear() - 1)]?.total ?? -1,
+                previousYearPropertyTaxes: getLatestPropertyTax(jsonData),
                 owner: {
                     names: jsonData.owner?.names ?? [],
                     mailingAddress: {
@@ -307,39 +341,70 @@ export class RentCastService {
         };
 
 
-        const rentCastPropertyMap: Map<String, RentCastPropertyResponseType> =
+        const rentCastPropertyMap: Map<string, RentCastResponse> =
             new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
-                [rentCastProperty.id, createRentCastPropertyResponseType(rentCastProperty)]));
+                [rentCastProperty.id, rentCastProperty]));
+
+        console.log("rentCastPropertyMap:", rentCastPropertyMap);
 
         try {
+            const addressIdOfMatchesFound = new Set<string>();
             let numberOfPropertiesAdded = 0;
             for (const rentCastSaleResponse of rentCastSaleResponses) {
                 const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastSaleResponse.id);
+                console.log("addressIdFound:", addressIdFound);
                 if (addressIdFound) {
                     console.log(`${addressIdFound} already exists in the database, skipping`);
                     continue;
                 }
                 const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
                 let rentCastPropertyResponseId = -1;
-                if ((rentCastSaleResponse.id in rentCastPropertyMap) && rentCastPropertyApiCallId > -1) {
-                    rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
+                console.log("(rentCastSaleResponse.id in rentCastPropertyMap):", (rentCastSaleResponse.id in rentCastPropertyMap));
+                console.log("(rentCastPropertyApiCallId > -1):", (rentCastPropertyApiCallId > -1));
+
+                // if ((rentCastSaleResponse.id in rentCastPropertyMap) && rentCastPropertyApiCallId > -1) {
+                //     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
+                // }
+                // if (rentCastPropertyApiCallId > -1) {
+                //     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastPropertyApiCallId);
+                // }
+
+                let listingDetail: ListingDetailsDTO;
+                if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.id in rentCastPropertyMap)) {
+                    const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.id];
+                    rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
+
+                    listingDetail = this.buildListingDetails(
+                        createRentCastSaleResponseType(rentCastSaleResponse),
+                        createRentCastPropertyResponseType(rentCastProperty)
+                    );
+                    addressIdOfMatchesFound.add(rentCastSaleResponse.id);
+                }
+                else {
+                    listingDetail = this.buildListingDetails(
+                        createRentCastSaleResponseType(rentCastSaleResponse),
+                    );
                 }
 
-                //const listingDetail: ListingDetailsDTO = this.createListingDetails(rentCastSaleResponse);
-                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
-                    createRentCastSaleResponseType(rentCastSaleResponse),
-                    createRentCastPropertyResponseType(rentCastPropertyMap[rentCastSaleResponse.id])
-                );
-
-                await new CalcService().insertListingDetails(
+                const newListingId = await new CalcService().insertListingDetails(
                     listingDetail,
                     ListingCreationType.RENT_CAST_API,
                     rentCastSaleResponseId,
                     rentCastPropertyResponseId,
                 );
 
-                numberOfPropertiesAdded++;
+                if (newListingId > -1) {
+                    numberOfPropertiesAdded++;
+                }
             }
+
+            for (const addressId of rentCastPropertyMap.keys()) {
+                if (!addressIdOfMatchesFound.has(addressId)) {
+                    const rentCastProperty: RentCastResponse = rentCastPropertyMap[addressId];
+                    await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
+                }
+            }
+
             return numberOfPropertiesAdded;
 
 
@@ -410,120 +475,10 @@ export class RentCastService {
             propertyStatus: rentCastSalesResponseTyped.status, // Let it be undefined
         };
 
+        console.log("listingDetails:", listingDetail);
+
         return listingDetail;
     }
-
-    // private createRentCastPropertyResponseTypeMap(): Map<string, RentCastPropertyResponseType> {
-    //     const rentCastPropertyResponseMap = new Map<string, RentCastPropertyResponseType>();
-    //     for (const rentCastPropertyResponse of this.rentCastPropertyResponses) {
-    //         const rentCastPropertyResponseTyped: RentCastPropertyResponseType =
-    //             this.createRentCastPropertyResponseType(rentCastPropertyResponse);
-    //         const id = rentCastPropertyResponseTyped.id;
-    //         if (!(id in rentCastPropertyResponseMap)) {
-    //             rentCastPropertyResponseMap.set(id, rentCastPropertyResponseTyped);
-    //         }
-    //     }
-    //     return rentCastPropertyResponseMap;
-    // }
-
-    // private createListingDetails(rentCastResponse: RentCastResponse): ListingDetailsDTO {
-    //     const daysOnMarket = rentCastResponse.apiResponseData.daysOnMarket ?? 0;
-    //     const listedDate = rentCastResponse.apiResponseData.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
-    //     const numberOfBathrooms = rentCastResponse.apiResponseData.bathrooms ?? -1;
-    //     const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
-    //     const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
-    //     const lotSize = rentCastResponse.apiResponseData.lotSize;
-    //     const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
-
-    //     const listingDetail: ListingDetailsDTO = {
-    //         zillowURL: `NEED TO UPDATE_${rentCastResponse.id}`,
-    //         propertyDetails: {
-    //             address: {
-    //                 fullAddress: rentCastResponse.apiResponseData.formattedAddress ?? '',
-    //                 state: rentCastResponse.apiResponseData.state ?? '',
-    //                 zipcode: rentCastResponse.apiResponseData.zipCode ?? '',
-    //                 city: rentCastResponse.apiResponseData.city ?? '',
-    //                 county: rentCastResponse.apiResponseData.county ?? '',
-    //                 country: Country.UnitedStates,
-    //                 streetAddress: rentCastResponse.apiResponseData.addressLine1 ?? '',
-    //                 apartmentNumber: rentCastResponse.apiResponseData.addressLine2 ?? '',
-    //                 longitude: rentCastResponse.apiResponseData.longitude ?? -1,
-    //                 latitude: rentCastResponse.apiResponseData.latitude ?? -1,
-    //             },
-    //             schoolRating: {
-    //                 elementarySchoolRating: -1,
-    //                 middleSchoolRating: -1,
-    //                 highSchoolRating: -1,
-    //             },
-    //             numberOfBedrooms: rentCastResponse.apiResponseData.bedrooms ?? -1,
-    //             numberOfFullBathrooms: numberOfFullBathrooms,
-    //             numberOfHalfBathrooms: numberOfHalfBathrooms,
-    //             squareFeet: rentCastResponse.apiResponseData.squareFootage ?? -1,
-    //             acres: acres,
-    //             yearBuilt: rentCastResponse.apiResponseData.yearBuilt ?? -1,
-    //             hasGarage: false,
-    //             hasPool: false,
-    //             hasBasement: false,
-    //             propertyType: rentCastResponse.apiResponseData.propertyType ?? -1,
-    //             description: '',
-    //         },
-    //         zillowMarketEstimates: {
-    //             zestimate: -1,
-    //             zestimateRange: {
-    //                 low: -1,
-    //                 high: -1,
-    //             },
-    //             zillowRentEstimate: -1,
-    //             zillowMonthlyPropertyTaxAmount: -1,
-    //             zillowMonthlyHomeInsuranceAmount: -1,
-    //             zillowMonthlyHOAFeesAmount: -1,
-    //         },
-    //         listingPrice: rentCastResponse.apiResponseData.price ?? -1,
-    //         dateListed: listedDate,
-    //         numberOfDaysOnMarket: daysOnMarket,
-    //         propertyStatus: rentCastResponse.apiResponseData.status ?? '',
-    //     };
-
-    //     return listingDetail;
-    // }
-
-    // private async callRentCastApi(endpoint: string, url: string): Promise<RentCastApiResponse> {
-
-    //     const options = this.getHeadersForRentCastApiCall();
-
-    //     try {
-    //         const response = await fetch(url, options);
-    //         if (response.status === 200) {
-    //             const executionTime = new Date();
-    //             console.log("Is successful!");
-
-    //             // Call updateNumberOfApiCalls here
-    //             await this.rentCastManager.updateNumberOfApiCalls(this.pool);
-    //             const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
-    //                 this.pool,
-    //                 endpoint,
-    //                 url,
-    //                 executionTime
-    //             );
-    //             const data = await response.json();
-    //             console.log("_data1:", data); // Log the response data
-
-    //             // Write response data to JSON file
-    //             await this.writeResponseToJsonFile(data);
-    //             return {
-    //                 rentCastApiCallId: rentCastApiCallId,
-    //                 jsonData: data,
-    //             };
-
-    //         } else {
-    //             console.log("Is NOT successful!");
-    //             throw new Error(`HTTP error! Status: ${response.status}`);
-    //         }
-    //     } catch (err) {
-    //         console.error('Error:', err);
-    //         throw err;  // Re-throw the error if needed or handle it as needed
-    //     }
-    // }
 
     private async writeResponseToJsonFile(filePath: string, data: any): Promise<void> {
         try {

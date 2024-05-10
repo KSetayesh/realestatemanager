@@ -149,7 +149,8 @@ export class ListingManager extends RealEstateManager {
         creationType: ListingCreationType,
         saleResponseId?: number,
         propertyResponseId?: number,
-    ): Promise<void> {
+    ): Promise<number> {
+        let newListingId = -1;
         try {
             const addressId = await this.insertAddress(pool, listingDetails.propertyDetails.address);
             const schoolRatingId = await this._insertSchoolRating(pool, listingDetails.propertyDetails.schoolRating);
@@ -173,18 +174,25 @@ export class ListingManager extends RealEstateManager {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
 
+            console.log("creationType:", creationType);
+            console.log("saleResponseId:", saleResponseId);
+            console.log('propertyResponseId:', propertyResponseId);
+            console.log("isValidRentCastResponseId(saleResponseId):", isValidRentCastResponseId(saleResponseId));
             if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(saleResponseId)) {
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {
+                    console.log("In here 1");
                     values.push(propertyResponseId);
-                    await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY, values);
+                    newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY, values);
                 }
                 else {
-                    await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+                    console.log("In here 2");
+                    newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
                 }
             }
             else {
-                await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
+                console.log("In here 3");
+                newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
             }
 
             console.log('Listing information inserted successfully');
@@ -192,6 +200,7 @@ export class ListingManager extends RealEstateManager {
             console.error('Error inserting listing information', err);
             throw err;
         }
+        return newListingId;
     }
 
     private mapRowToListingDetails(row: any): ListingDetails {

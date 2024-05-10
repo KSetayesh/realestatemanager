@@ -60,7 +60,7 @@ export class CalcService {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this.insertListingDetails(listingDetailsDTO, ListingCreationType.MANUAL);
+            const newListingId = await this.insertListingDetails(listingDetailsDTO, ListingCreationType.MANUAL);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -77,8 +77,8 @@ export class CalcService {
         listingCreationType: ListingCreationType,
         saleResponseId?: number,
         propertyResponseId?: number,
-    ): Promise<void> {
-        await this.listingManager.insertListingDetails(
+    ): Promise<number> {
+        return this.listingManager.insertListingDetails(
             this.pool,
             listingDetailsDTO,
             listingCreationType,

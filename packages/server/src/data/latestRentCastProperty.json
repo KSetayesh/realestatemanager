@@ -1,0 +1,237 @@
+[
+  {
+    "id": "34-Washington-Ave,-Patchogue,-NY-11772",
+    "formattedAddress": "34 Washington Ave, Patchogue, NY 11772",
+    "addressLine1": "34 Washington Ave",
+    "addressLine2": null,
+    "city": "Patchogue",
+    "state": "NY",
+    "zipCode": "11772",
+    "county": "Suffolk",
+    "latitude": 40.768244,
+    "longitude": -72.999485,
+    "propertyType": "Single Family",
+    "lotSize": 10454,
+    "assessorID": "0200-977.60-01.00-006.000",
+    "legalDescription": "AVERY & LANE 562 41",
+    "subdivision": "AVERY CHAS W & WM F LANE",
+    "lastSaleDate": "2019-08-07T00:00:00.000Z",
+    "lastSalePrice": 355000,
+    "features": {
+      "architectureType": "Duplex",
+      "unitCount": 2
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 2100,
+        "land": 240,
+        "improvements": 1860
+      },
+      "2022": {
+        "value": 2100,
+        "land": 240,
+        "improvements": 1860
+      }
+    },
+    "propertyTaxes": {
+      "2019": {
+        "total": 6748
+      }
+    },
+    "owner": {
+      "names": [
+        "CHIN H SHIN",
+        "HYESON SHIN"
+      ],
+      "mailingAddress": {
+        "id": "34-Washington-Ave,-Patchogue,-NY-11772",
+        "addressLine1": "34 Washington Ave",
+        "addressLine2": null,
+        "city": "Patchogue",
+        "state": "NY",
+        "zipCode": "11772"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "23-Washington-Ave,-Patchogue,-NY-11772",
+    "formattedAddress": "23 Washington Ave, Patchogue, NY 11772",
+    "addressLine1": "23 Washington Ave",
+    "addressLine2": null,
+    "city": "Patchogue",
+    "state": "NY",
+    "zipCode": "11772",
+    "county": "Suffolk",
+    "latitude": 40.768032,
+    "longitude": -72.998649,
+    "propertyType": "Single Family",
+    "lotSize": 15246,
+    "assessorID": "0200-977.60-01.00-019.001",
+    "legalDescription": "GRUHN REALTY CORP 746 N/W P/O 203 & W P/O 204",
+    "subdivision": "GRUHN REALTY CO",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 3150,
+        "land": 400,
+        "improvements": 2750
+      }
+    },
+    "propertyTaxes": {
+      "2019": {
+        "total": 12777
+      }
+    },
+    "owner": {
+      "names": [
+        "LUIS S YANZA"
+      ],
+      "mailingAddress": {
+        "id": "23-Washington-Ave,-Patchogue,-NY-11772",
+        "addressLine1": "23 Washington Ave",
+        "addressLine2": null,
+        "city": "Patchogue",
+        "state": "NY",
+        "zipCode": "11772"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "34-Gilbert-St,-Patchogue,-NY-11772",
+    "formattedAddress": "34 Gilbert St, Patchogue, NY 11772",
+    "addressLine1": "34 Gilbert St",
+    "addressLine2": null,
+    "city": "Patchogue",
+    "state": "NY",
+    "zipCode": "11772",
+    "county": "Suffolk",
+    "latitude": 40.752414,
+    "longitude": -73.012078,
+    "propertyType": "Single Family",
+    "lotSize": 17424,
+    "assessorID": "0204-019.00-08.00-010.001",
+    "features": {},
+    "taxAssessments": {
+      "2019": {
+        "value": 2200,
+        "land": 900,
+        "improvements": 1300
+      }
+    },
+    "propertyTaxes": {
+      "2016": {
+        "total": 7365
+      }
+    },
+    "owner": {
+      "names": [
+        "WARREN CROTTY"
+      ],
+      "mailingAddress": {
+        "id": "41-Furman-Ln,-Patchogue,-NY-11772",
+        "addressLine1": "41 Furman Ln",
+        "addressLine2": null,
+        "city": "Patchogue",
+        "state": "NY",
+        "zipCode": "11772"
+      }
+    },
+    "ownerOccupied": false
+  },
+  {
+    "id": "64-Lee-Ave,-Patchogue,-NY-11772",
+    "formattedAddress": "64 Lee Ave, Patchogue, NY 11772",
+    "addressLine1": "64 Lee Ave",
+    "addressLine2": null,
+    "city": "Patchogue",
+    "state": "NY",
+    "zipCode": "11772",
+    "county": "Suffolk",
+    "latitude": 40.753155,
+    "longitude": -73.011954,
+    "propertyType": "Single Family",
+    "lotSize": 10019,
+    "assessorID": "0204-019.00-07.00-012.000",
+    "legalDescription": "MRS KATE L GILBERT AMD 222 B3 3",
+    "subdivision": "GILBERT KATE L AMENDED",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 2880,
+        "land": 400,
+        "improvements": 2480
+      }
+    },
+    "propertyTaxes": {
+      "2019": {
+        "total": 9096
+      }
+    },
+    "owner": {
+      "names": [
+        "PATRICIA SARGENT"
+      ],
+      "mailingAddress": {
+        "id": "64-Lee-Ave,-Patchogue,-NY-11772",
+        "addressLine1": "64 Lee Ave",
+        "addressLine2": null,
+        "city": "Patchogue",
+        "state": "NY",
+        "zipCode": "11772"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "12-Roosevelt-Ave,-Patchogue,-NY-11772",
+    "formattedAddress": "12 Roosevelt Ave, Patchogue, NY 11772",
+    "addressLine1": "12 Roosevelt Ave",
+    "addressLine2": null,
+    "city": "Patchogue",
+    "state": "NY",
+    "zipCode": "11772",
+    "county": "Suffolk",
+    "latitude": 40.751359,
+    "longitude": -73.014982,
+    "propertyType": "Single Family",
+    "lotSize": 10890,
+    "assessorID": "0204-019.00-05.00-015.002",
+    "legalDescription": "MRS KATE L GILBERT AMD 222 B9 7 & 8 E P/O 100X109.6",
+    "subdivision": "GILBERT KATE L AMENDED",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 2760,
+        "land": 375,
+        "improvements": 2385
+      }
+    },
+    "propertyTaxes": {
+      "2019": {
+        "total": 8667
+      }
+    },
+    "owner": {
+      "names": [
+        "NICHOLAS VENEZIA"
+      ],
+      "mailingAddress": {
+        "id": "12-Roosevelt-Ave,-Patchogue,-NY-11772",
+        "addressLine1": "12 Roosevelt Ave",
+        "addressLine2": null,
+        "city": "Patchogue",
+        "state": "NY",
+        "zipCode": "11772"
+      }
+    },
+    "ownerOccupied": true
+  }
+]
