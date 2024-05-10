@@ -1,235 +1,1035 @@
 [
   {
-    "id": "34-Washington-Ave,-Patchogue,-NY-11772",
-    "formattedAddress": "34 Washington Ave, Patchogue, NY 11772",
-    "addressLine1": "34 Washington Ave",
+    "id": "175-Baldwin-Rd,-Hempstead,-NY-11550",
+    "formattedAddress": "175 Baldwin Rd, Hempstead, NY 11550",
+    "addressLine1": "175 Baldwin Rd",
     "addressLine2": null,
-    "city": "Patchogue",
+    "city": "Hempstead",
     "state": "NY",
-    "zipCode": "11772",
-    "county": "Suffolk",
-    "latitude": 40.768244,
-    "longitude": -72.999485,
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.696159,
+    "longitude": -73.615062,
     "propertyType": "Single Family",
-    "lotSize": 10454,
-    "assessorID": "0200-977.60-01.00-006.000",
-    "legalDescription": "AVERY & LANE 562 41",
-    "subdivision": "AVERY CHAS W & WM F LANE",
-    "lastSaleDate": "2019-08-07T00:00:00.000Z",
-    "lastSalePrice": 355000,
+    "lastSaleDate": "2012-02-01T00:00:00.000Z",
+    "lastSalePrice": 575000,
+    "features": {}
+  },
+  {
+    "id": "236-Fulton-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "236 Fulton Ave, Hempstead, NY 11550",
+    "addressLine1": "236 Fulton Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau County",
+    "latitude": 40.707451,
+    "longitude": -73.626623,
+    "propertyType": "Single Family",
+    "lotSize": 12632,
+    "yearBuilt": 1938
+  },
+  {
+    "id": "95-Angevine-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "95 Angevine Ave, Hempstead, NY 11550",
+    "addressLine1": "95 Angevine Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.701784,
+    "longitude": -73.619848,
+    "propertyType": "Single Family",
+    "lastSaleDate": "2020-08-03T00:00:00.000Z",
+    "lastSalePrice": 255000
+  },
+  {
+    "id": "126-William-St,-Hempstead,-NY-11550",
+    "formattedAddress": "126 William St, Hempstead, NY 11550",
+    "addressLine1": "126 William St",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.704747,
+    "longitude": -73.612677,
+    "propertyType": "Single Family",
+    "lastSaleDate": "2005-12-14T00:00:00.000Z",
+    "lastSalePrice": 470000
+  },
+  {
+    "id": "298-Main-St,-Apt-3B,-Hempstead,-NY-11550",
+    "formattedAddress": "298 Main St, Apt 3B, Hempstead, NY 11550",
+    "addressLine1": "298 Main St",
+    "addressLine2": "Apt 3B",
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "latitude": 40.716702,
+    "longitude": -73.628281,
+    "propertyType": "Single Family",
+    "features": {}
+  },
+  {
+    "id": "302-Greenwich-St,-Hempstead,-NY-11550",
+    "formattedAddress": "302 Greenwich St, Hempstead, NY 11550",
+    "addressLine1": "302 Greenwich St",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.69927,
+    "longitude": -73.614168,
+    "propertyType": "Single Family",
+    "squareFootage": 3202,
+    "lastSaleDate": "2022-06-17T00:00:00.000Z",
+    "lastSalePrice": 675000,
+    "features": {}
+  },
+  {
+    "id": "350-Greenwich-St,-Hempstead,-NY-11550",
+    "formattedAddress": "350 Greenwich St, Hempstead, NY 11550",
+    "addressLine1": "350 Greenwich St",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698632,
+    "longitude": -73.612865,
+    "propertyType": "Single Family",
+    "squareFootage": 3797,
+    "features": {}
+  },
+  {
+    "id": "101-Robinwood-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "101 Robinwood Ave, Hempstead, NY 11550",
+    "addressLine1": "101 Robinwood Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.697148,
+    "longitude": -73.60336,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1150,
+    "lotSize": 5280,
+    "yearBuilt": 1956,
+    "assessorID": "36-106-00-0109",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "subdivision": "ROBINWOOD",
+    "lastSaleDate": "2004-03-26T00:00:00.000Z",
+    "lastSalePrice": 273000,
     "features": {
-      "architectureType": "Duplex",
-      "unitCount": 2
+      "architectureType": "Ranch / Rambler",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Aluminum / Vinyl Siding",
+      "floorCount": 1,
+      "foundationType": "Concrete",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 6,
+      "unitCount": 1
     },
     "taxAssessments": {
       "2019": {
-        "value": 2100,
-        "land": 240,
-        "improvements": 1860
+        "value": 379,
+        "land": 378,
+        "improvements": 1
       },
       "2022": {
-        "value": 2100,
-        "land": 240,
-        "improvements": 1860
+        "value": 324,
+        "land": 127,
+        "improvements": 197
       }
     },
     "propertyTaxes": {
-      "2019": {
-        "total": 6748
+      "2018": {
+        "total": 3133
+      },
+      "2022": {
+        "total": 3248
       }
     },
     "owner": {
       "names": [
-        "CHIN H SHIN",
-        "HYESON SHIN"
+        "JAMES MORIAH"
       ],
       "mailingAddress": {
-        "id": "34-Washington-Ave,-Patchogue,-NY-11772",
-        "addressLine1": "34 Washington Ave",
+        "id": "101-Robinwood-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "101 Robinwood Ave",
         "addressLine2": null,
-        "city": "Patchogue",
+        "city": "Hempstead",
         "state": "NY",
-        "zipCode": "11772"
+        "zipCode": "11550"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "23-Washington-Ave,-Patchogue,-NY-11772",
-    "formattedAddress": "23 Washington Ave, Patchogue, NY 11772",
-    "addressLine1": "23 Washington Ave",
+    "id": "120-Florence-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "120 Florence Ave, Hempstead, NY 11550",
+    "addressLine1": "120 Florence Ave",
     "addressLine2": null,
-    "city": "Patchogue",
+    "city": "Hempstead",
     "state": "NY",
-    "zipCode": "11772",
-    "county": "Suffolk",
-    "latitude": 40.768032,
-    "longitude": -72.998649,
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698867,
+    "longitude": -73.601633,
     "propertyType": "Single Family",
-    "lotSize": 15246,
-    "assessorID": "0200-977.60-01.00-019.001",
-    "legalDescription": "GRUHN REALTY CORP 746 N/W P/O 203 & W P/O 204",
-    "subdivision": "GRUHN REALTY CO",
+    "bathrooms": 1,
+    "squareFootage": 1291,
+    "lotSize": 4000,
+    "yearBuilt": 1947,
+    "assessorID": "36-109-00-0057",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "lastSaleDate": "2002-06-17T00:00:00.000Z",
+    "lastSalePrice": 185500,
     "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Masonry",
+      "floorCount": 1,
+      "foundationType": "Concrete",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 5,
       "unitCount": 1
     },
     "taxAssessments": {
       "2019": {
-        "value": 3150,
-        "land": 400,
-        "improvements": 2750
+        "value": 607,
+        "land": 408,
+        "improvements": 199
+      },
+      "2022": {
+        "value": 351,
+        "land": 121,
+        "improvements": 230
       }
     },
     "propertyTaxes": {
-      "2019": {
-        "total": 12777
+      "2018": {
+        "total": 5208
+      },
+      "2022": {
+        "total": 4474
       }
     },
     "owner": {
       "names": [
-        "LUIS S YANZA"
+        "JEROME MCCALL"
       ],
       "mailingAddress": {
-        "id": "23-Washington-Ave,-Patchogue,-NY-11772",
-        "addressLine1": "23 Washington Ave",
+        "id": "120-Florence-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "120 Florence Ave",
         "addressLine2": null,
-        "city": "Patchogue",
+        "city": "Hempstead",
         "state": "NY",
-        "zipCode": "11772"
+        "zipCode": "11550"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "34-Gilbert-St,-Patchogue,-NY-11772",
-    "formattedAddress": "34 Gilbert St, Patchogue, NY 11772",
-    "addressLine1": "34 Gilbert St",
+    "id": "118-Robinwood-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "118 Robinwood Ave, Hempstead, NY 11550",
+    "addressLine1": "118 Robinwood Ave",
     "addressLine2": null,
-    "city": "Patchogue",
+    "city": "Hempstead",
     "state": "NY",
-    "zipCode": "11772",
-    "county": "Suffolk",
-    "latitude": 40.752414,
-    "longitude": -73.012078,
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.697099,
+    "longitude": -73.602475,
     "propertyType": "Single Family",
-    "lotSize": 17424,
-    "assessorID": "0204-019.00-08.00-010.001",
-    "features": {},
-    "taxAssessments": {
-      "2019": {
-        "value": 2200,
-        "land": 900,
-        "improvements": 1300
-      }
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 7365
-      }
-    },
-    "owner": {
-      "names": [
-        "WARREN CROTTY"
-      ],
-      "mailingAddress": {
-        "id": "41-Furman-Ln,-Patchogue,-NY-11772",
-        "addressLine1": "41 Furman Ln",
-        "addressLine2": null,
-        "city": "Patchogue",
-        "state": "NY",
-        "zipCode": "11772"
-      }
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "64-Lee-Ave,-Patchogue,-NY-11772",
-    "formattedAddress": "64 Lee Ave, Patchogue, NY 11772",
-    "addressLine1": "64 Lee Ave",
-    "addressLine2": null,
-    "city": "Patchogue",
-    "state": "NY",
-    "zipCode": "11772",
-    "county": "Suffolk",
-    "latitude": 40.753155,
-    "longitude": -73.011954,
-    "propertyType": "Single Family",
-    "lotSize": 10019,
-    "assessorID": "0204-019.00-07.00-012.000",
-    "legalDescription": "MRS KATE L GILBERT AMD 222 B3 3",
-    "subdivision": "GILBERT KATE L AMENDED",
+    "bathrooms": 1,
+    "squareFootage": 1155,
+    "lotSize": 4000,
+    "yearBuilt": 1953,
+    "assessorID": "36-114-00-0238",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "subdivision": "ROBINWOOD",
+    "lastSaleDate": "2018-02-26T00:00:00.000Z",
+    "lastSalePrice": 323300,
     "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Wood",
+      "floorCount": 1,
+      "foundationType": "Block",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle",
+      "roomCount": 5,
       "unitCount": 1
     },
     "taxAssessments": {
       "2019": {
-        "value": 2880,
-        "land": 400,
-        "improvements": 2480
+        "value": 450,
+        "land": 345,
+        "improvements": 105
+      },
+      "2023": {
+        "value": 331,
+        "land": 118,
+        "improvements": 213
       }
     },
     "propertyTaxes": {
-      "2019": {
-        "total": 9096
+      "2018": {
+        "total": 3603
+      },
+      "2023": {
+        "total": 4957
       }
     },
     "owner": {
       "names": [
-        "PATRICIA SARGENT"
+        "DAMIAN D COOMBS",
+        "TANIESHA S VALENTINE"
       ],
       "mailingAddress": {
-        "id": "64-Lee-Ave,-Patchogue,-NY-11772",
-        "addressLine1": "64 Lee Ave",
+        "id": "118-Robinwood-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "118 Robinwood Ave",
         "addressLine2": null,
-        "city": "Patchogue",
+        "city": "Hempstead",
         "state": "NY",
-        "zipCode": "11772"
+        "zipCode": "11550"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "12-Roosevelt-Ave,-Patchogue,-NY-11772",
-    "formattedAddress": "12 Roosevelt Ave, Patchogue, NY 11772",
-    "addressLine1": "12 Roosevelt Ave",
+    "id": "84-Maplewood-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "84 Maplewood Ave, Hempstead, NY 11550",
+    "addressLine1": "84 Maplewood Ave",
     "addressLine2": null,
-    "city": "Patchogue",
+    "city": "Hempstead",
     "state": "NY",
-    "zipCode": "11772",
-    "county": "Suffolk",
-    "latitude": 40.751359,
-    "longitude": -73.014982,
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698867,
+    "longitude": -73.605376,
     "propertyType": "Single Family",
-    "lotSize": 10890,
-    "assessorID": "0204-019.00-05.00-015.002",
-    "legalDescription": "MRS KATE L GILBERT AMD 222 B9 7 & 8 E P/O 100X109.6",
-    "subdivision": "GILBERT KATE L AMENDED",
+    "bathrooms": 1,
+    "squareFootage": 1332,
+    "lotSize": 4000,
+    "yearBuilt": 1930,
+    "assessorID": "36-103-00-0166",
+    "legalDescription": "TOWN #1 SCH DIST 002",
     "features": {
+      "architectureType": "Old Style",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Aluminum / Vinyl Siding",
+      "floorCount": 2,
+      "foundationType": "Concrete",
+      "garage": true,
+      "garageSpaces": 1,
+      "garageType": "Detached Garage",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 6,
       "unitCount": 1
     },
     "taxAssessments": {
       "2019": {
-        "value": 2760,
-        "land": 375,
-        "improvements": 2385
+        "value": 598,
+        "land": 408,
+        "improvements": 190
+      },
+      "2022": {
+        "value": 354,
+        "land": 121,
+        "improvements": 233
       }
     },
     "propertyTaxes": {
-      "2019": {
-        "total": 8667
+      "2018": {
+        "total": 5116
+      },
+      "2022": {
+        "total": 5067
       }
     },
     "owner": {
       "names": [
-        "NICHOLAS VENEZIA"
+        "ROBERT HUTTON"
       ],
       "mailingAddress": {
-        "id": "12-Roosevelt-Ave,-Patchogue,-NY-11772",
-        "addressLine1": "12 Roosevelt Ave",
+        "id": "84-Maplewood-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "84 Maplewood Ave",
         "addressLine2": null,
-        "city": "Patchogue",
+        "city": "Hempstead",
         "state": "NY",
-        "zipCode": "11772"
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "89-Florence-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "89 Florence Ave, Hempstead, NY 11550",
+    "addressLine1": "89 Florence Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.699573,
+    "longitude": -73.602264,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1291,
+    "lotSize": 4120,
+    "yearBuilt": 1947,
+    "assessorID": "36-108-00-0103",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Brick / Stone",
+      "floorCount": 1,
+      "foundationType": "OTHER",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle",
+      "roomCount": 5,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 510,
+        "land": 410,
+        "improvements": 100
+      },
+      "2022": {
+        "value": 351,
+        "land": 122,
+        "improvements": 229
+      },
+      "2023": {
+        "value": 351,
+        "land": 122,
+        "improvements": 229
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 4216
+      },
+      "2022": {
+        "total": 4617
+      },
+      "2023": {
+        "total": 4508
+      }
+    },
+    "owner": {
+      "names": [
+        "ALIX BRICOURT"
+      ],
+      "mailingAddress": {
+        "id": "89-Florence-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "89 Florence Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "95-Oakmont-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "95 Oakmont Ave, Hempstead, NY 11550",
+    "addressLine1": "95 Oakmont Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698048,
+    "longitude": -73.602399,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1330,
+    "lotSize": 5280,
+    "yearBuilt": 1947,
+    "assessorID": "36-108-00-0212",
+    "legalDescription": "LOTS 212-213,311 TOWN #1 SCH DIST 002",
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Masonry",
+      "floorCount": 1,
+      "foundationType": "Concrete",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 5,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 539,
+        "land": 366,
+        "improvements": 173
+      },
+      "2022": {
+        "value": 366,
+        "land": 139,
+        "improvements": 227
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 5510
+      },
+      "2022": {
+        "total": 5796
+      }
+    },
+    "owner": {
+      "names": [
+        "PAMELA BONNETT"
+      ],
+      "mailingAddress": {
+        "id": "95-Oakmont-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "95 Oakmont Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "63-Elmwood-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "63 Elmwood Ave, Hempstead, NY 11550",
+    "addressLine1": "63 Elmwood Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.700427,
+    "longitude": -73.604238,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1576,
+    "lotSize": 4000,
+    "yearBuilt": 1938,
+    "assessorID": "36-104-00-0555",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "subdivision": "HEMPSTEAD MANOR SEC #7",
+    "features": {
+      "architectureType": "Colonial",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Masonry",
+      "fireplace": true,
+      "floorCount": 2,
+      "foundationType": "Concrete",
+      "garage": true,
+      "garageSpaces": 1,
+      "garageType": "Detached Garage",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 6,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 444,
+        "land": 267,
+        "improvements": 177
+      },
+      "2022": {
+        "value": 384,
+        "land": 121,
+        "improvements": 263
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 5566
+      },
+      "2022": {
+        "total": 3791
+      }
+    },
+    "owner": {
+      "names": [
+        "BERNETTE J HOUSTON"
+      ],
+      "mailingAddress": {
+        "id": "63-Elmwood-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "63 Elmwood Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "131-Florence-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "131 Florence Ave, Hempstead, NY 11550",
+    "addressLine1": "131 Florence Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698473,
+    "longitude": -73.6021,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1291,
+    "lotSize": 3977,
+    "yearBuilt": 1947,
+    "assessorID": "36-108-00-0083",
+    "legalDescription": "LOTS 83,482,494 TOWN #1 SCH DIST 002",
+    "lastSaleDate": "2005-07-07T00:00:00.000Z",
+    "lastSalePrice": 260000,
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Brick / Stone",
+      "floorCount": 1,
+      "foundationType": "OTHER",
+      "garage": true,
+      "garageSpaces": 1,
+      "garageType": "Detached",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle",
+      "roomCount": 8,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 449,
+        "land": 336,
+        "improvements": 113
+      },
+      "2022": {
+        "value": 354,
+        "land": 120,
+        "improvements": 234
+      },
+      "2023": {
+        "value": 354,
+        "land": 120,
+        "improvements": 234
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 3593
+      },
+      "2022": {
+        "total": 4352
+      },
+      "2023": {
+        "total": 4362
+      }
+    },
+    "owner": {
+      "names": [
+        "TOWNSEND LEMARR"
+      ],
+      "mailingAddress": {
+        "id": "131-Florence-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "131 Florence Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "87-Patterson-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "87 Patterson Ave, Hempstead, NY 11550",
+    "addressLine1": "87 Patterson Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.699759,
+    "longitude": -73.603222,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1291,
+    "lotSize": 4000,
+    "yearBuilt": 1947,
+    "assessorID": "36-107-00-0248",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "subdivision": "PATTERSON PARK MAP #2",
+    "lastSaleDate": "2016-10-26T00:00:00.000Z",
+    "lastSalePrice": 250000,
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Masonry",
+      "floorCount": 1,
+      "foundationType": "Concrete Block",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 5,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 480,
+        "land": 322,
+        "improvements": 158
+      },
+      "2022": {
+        "value": 349,
+        "land": 115,
+        "improvements": 234
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 6215
+      },
+      "2022": {
+        "total": 5190
+      }
+    },
+    "owner": {
+      "names": [
+        "FREDY A ALVARENGA"
+      ],
+      "mailingAddress": {
+        "id": "87-Patterson-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "87 Patterson Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "153-Patterson-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "153 Patterson Ave, Hempstead, NY 11550",
+    "addressLine1": "153 Patterson Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.697978,
+    "longitude": -73.602918,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1291,
+    "lotSize": 3000,
+    "yearBuilt": 1947,
+    "assessorID": "36-107-00-0216",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "features": {
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Brick / Stone",
+      "floorCount": 1,
+      "heating": true,
+      "heatingType": "Central",
+      "roomCount": 5,
+      "unitCount": 1,
+      "architectureType": "Cape Cod",
+      "foundationType": "OTHER",
+      "roofType": "Shingle"
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 7,
+        "land": 7
+      },
+      "2022": {
+        "value": 341,
+        "land": 104,
+        "improvements": 237
+      },
+      "2023": {
+        "value": 341,
+        "land": 104,
+        "improvements": 237
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 72
+      },
+      "2022": {
+        "total": 3728
+      },
+      "2023": {
+        "total": 3436
+      }
+    },
+    "owner": {
+      "names": [
+        "DAVID LEWIS"
+      ],
+      "mailingAddress": {
+        "id": "153-Patterson-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "153 Patterson Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "70-Patterson-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "70 Patterson Ave, Hempstead, NY 11550",
+    "addressLine1": "70 Patterson Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.700222,
+    "longitude": -73.602787,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1808,
+    "lotSize": 5300,
+    "yearBuilt": 1931,
+    "assessorID": "36-108-00-0272",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "lastSaleDate": "2007-08-15T00:00:00.000Z",
+    "lastSalePrice": 448050,
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Brick / Stone",
+      "fireplace": true,
+      "floorCount": 2,
+      "foundationType": "OTHER",
+      "garage": true,
+      "garageType": "Detached",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Slate",
+      "roomCount": 5,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 584,
+        "land": 430,
+        "improvements": 154
+      },
+      "2022": {
+        "value": 398,
+        "land": 139,
+        "improvements": 259
+      },
+      "2023": {
+        "value": 398,
+        "land": 139,
+        "improvements": 259
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 4973
+      },
+      "2022": {
+        "total": 5394
+      },
+      "2023": {
+        "total": 5258
+      }
+    },
+    "owner": {
+      "names": [
+        "KEITH WIGGINS"
+      ],
+      "mailingAddress": {
+        "id": "70-Patterson-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "70 Patterson Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "76-Belmont-Pkwy,-Hempstead,-NY-11550",
+    "formattedAddress": "76 Belmont Pkwy, Hempstead, NY 11550",
+    "addressLine1": "76 Belmont Pkwy",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.700178,
+    "longitude": -73.604596,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 1553,
+    "lotSize": 8000,
+    "yearBuilt": 1932,
+    "assessorID": "36-104-00-0364",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "subdivision": "HEMPSTEAD MANOR",
+    "features": {
+      "architectureType": "Cape Cod",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Masonry",
+      "fireplace": true,
+      "floorCount": 1,
+      "foundationType": "Concrete",
+      "garage": true,
+      "garageSpaces": 1,
+      "garageType": "Detached Garage",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Shingle (Not Wood)",
+      "roomCount": 6,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 554,
+        "land": 318,
+        "improvements": 236
+      },
+      "2022": {
+        "value": 390,
+        "land": 170,
+        "improvements": 220
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 4666
+      },
+      "2022": {
+        "total": 5128
+      }
+    },
+    "owner": {
+      "names": [
+        "JANAE RUCKER"
+      ],
+      "mailingAddress": {
+        "id": "76-Belmont-Pkwy,-Hempstead,-NY-11550",
+        "addressLine1": "76 Belmont Pkwy",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "88-Maplewood-Ave,-Hempstead,-NY-11550",
+    "formattedAddress": "88 Maplewood Ave, Hempstead, NY 11550",
+    "addressLine1": "88 Maplewood Ave",
+    "addressLine2": null,
+    "city": "Hempstead",
+    "state": "NY",
+    "zipCode": "11550",
+    "county": "Nassau",
+    "latitude": 40.698759,
+    "longitude": -73.60536,
+    "propertyType": "Single Family",
+    "bathrooms": 1,
+    "squareFootage": 819,
+    "lotSize": 5000,
+    "yearBuilt": 1923,
+    "assessorID": "36-103-00-0168",
+    "legalDescription": "TOWN #1 SCH DIST 002",
+    "lastSaleDate": "1998-09-22T00:00:00.000Z",
+    "lastSalePrice": 102500,
+    "features": {
+      "architectureType": "Old Style",
+      "cooling": true,
+      "coolingType": "Central",
+      "exteriorType": "Aluminum / Vinyl Siding",
+      "floorCount": 1,
+      "foundationType": "Concrete",
+      "garage": true,
+      "garageSpaces": 1,
+      "garageType": "Detached Garage",
+      "heating": true,
+      "heatingType": "Central",
+      "roofType": "Wood Shake / Shingle",
+      "roomCount": 5,
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2019": {
+        "value": 445,
+        "land": 373,
+        "improvements": 72
+      },
+      "2022": {
+        "value": 317,
+        "land": 134,
+        "improvements": 183
+      }
+    },
+    "propertyTaxes": {
+      "2018": {
+        "total": 4186
+      },
+      "2022": {
+        "total": 4004
+      }
+    },
+    "owner": {
+      "names": [
+        "LESLY ROSEMOND"
+      ],
+      "mailingAddress": {
+        "id": "88-Maplewood-Ave,-Hempstead,-NY-11550",
+        "addressLine1": "88 Maplewood Ave",
+        "addressLine2": null,
+        "city": "Hempstead",
+        "state": "NY",
+        "zipCode": "11550"
       }
     },
     "ownerOccupied": true

@@ -15,13 +15,8 @@ import {
     State,
     ZillowMarketEstimatesDTO,
     ListingCreationType,
-    Utility
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
-import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
-import { RentCastManager } from "./rentcast.db";
-import { DatabaseManagerFactory } from "./dbfactory";
-import { convertSquareFeetToAcres } from "src/shared/Constants";
 
 export class ListingManager extends RealEstateManager {
 
@@ -178,6 +173,7 @@ export class ListingManager extends RealEstateManager {
             console.log("saleResponseId:", saleResponseId);
             console.log('propertyResponseId:', propertyResponseId);
             console.log("isValidRentCastResponseId(saleResponseId):", isValidRentCastResponseId(saleResponseId));
+
             if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(saleResponseId)) {
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {

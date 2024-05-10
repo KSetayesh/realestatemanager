@@ -34,7 +34,7 @@ export class RentCastManager extends RealEstateManager {
             const res = await pool.query(query, [address_id]);
             return res.rows[0].exists;  // This will be true or false
         } catch (err) {
-            console.error('Error executing query', err.stack);
+            // console.error('Error executing query', err.stack);
             return false;  // Return false or throw an error as per your error handling policy
         }
     }
@@ -51,7 +51,12 @@ export class RentCastManager extends RealEstateManager {
                 console.log(values[i]);
             }
 
-            const id = await this.genericInsertQuery(pool, this.INSERT_RENT_CAST_API_RESPONSE_QUERY, values);
+            const id = await this.genericInsertQuery(
+                pool,
+                this.INSERT_RENT_CAST_API_RESPONSE_QUERY,
+                values,
+                'address_id'
+            );
 
             console.log('RentCast Response information inserted successfully');
 
