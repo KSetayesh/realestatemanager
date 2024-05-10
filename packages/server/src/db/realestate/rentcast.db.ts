@@ -7,18 +7,31 @@ export class RentCastManager extends RealEstateManager {
 
     private CHECK_FOR_EXISTING_ADDRESS_ID = `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists;`;
 
+
+    /*
+        Remove hardcoded "WHERE id = 1;"
+    */
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
         api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
         email, api_key_name 
-        FROM rent_cast_config_details;
+        FROM rent_cast_config_details
+        WHERE id = 1;
     `;
 
+    /*
+        Remove hardcoded "WHERE id = 1;"
+    */
     private UPDATE_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
-        SET api_calls_this_month = api_calls_this_month + 1;
+        SET api_calls_this_month = api_calls_this_month + 1
+        WHERE id = 1;
     `;
 
+    /*
+        Remove hardcoded "WHERE id = 1;"
+    */
     private RESET_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
-        SET api_calls_this_month = 0;
+        SET api_calls_this_month = 0
+        WHERE id = 1;
     `;
 
     private INSERT_RENT_CAST_API_RESPONSE_QUERY = `INSERT INTO rent_cast_api_response

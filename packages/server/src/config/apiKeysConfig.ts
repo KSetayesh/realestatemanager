@@ -5,6 +5,7 @@ dotenv.config();
 // Define the database configuration
 const apiKeysConfig = {
     rentCastApiKey: process.env.RENTCAST_API_KEY,
+    backUpRentCastApiKey: process.env.BACK_UP_RENTCAST_API_KEY,
     canMakeRentCastApiCall: process.env.CAN_MAKE_RENTCAST_API_CALL.toLocaleLowerCase() === 'true',
 };
 
