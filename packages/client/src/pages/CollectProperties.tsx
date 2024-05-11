@@ -16,9 +16,10 @@ const CollectProperties: React.FC = () => {
     useEffect(() => {
         (async () => {
             try {
-                setIsLoading(true); // Set loading state to true before fetching data
-                const rentCastDetails: RentCastDetailsDTO = await rentCastApi.getRentCastApiDetails();
-                setRentCastDetails(rentCastDetails); // Update state with fetched data
+                setIsLoading(true);
+                const rentCastDetails: RentCastDetailsDTO[] = await rentCastApi.getRentCastApiDetails();
+                // For now just show the first rentCastDetails in the list
+                setRentCastDetails(rentCastDetails[0]); 
                 console.log("Fetched data:", rentCastDetails);
             } catch (error) {
                 // Error handling if fetchProperties fails

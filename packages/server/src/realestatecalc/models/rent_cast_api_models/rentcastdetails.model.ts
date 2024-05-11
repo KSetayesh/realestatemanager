@@ -1,8 +1,10 @@
 import { RentCastDetailsDTO } from "@realestatemanager/shared";
 import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
+import { IDTOConvertible } from "../idtoconvertible.model";
 
-export class RentCastDetails {
+export class RentCastDetails implements IDTOConvertible<RentCastDetailsDTO> {
 
+    private _id: number;
     private _apiCallsThisMonth: number;
     private _numberOfFreeApiCalls: number;
     private _billingPeriod: number;
@@ -12,6 +14,7 @@ export class RentCastDetails {
     private _apiKeyName: string; // Sensative info don't want to expose in getter
 
     constructor(
+        id: number,
         apiCallsThisMonth: number,
         numberOfFreeApiCalls: number,
         billingPeriod: number,
@@ -20,6 +23,7 @@ export class RentCastDetails {
         email: string,
         apiKeyName: string,
     ) {
+        this._id = id;
         this._apiCallsThisMonth = apiCallsThisMonth;
         this._numberOfFreeApiCalls = numberOfFreeApiCalls;
         this._billingPeriod = billingPeriod;
@@ -28,6 +32,10 @@ export class RentCastDetails {
         this._email = email;
         this._apiKeyName = apiKeyName;
 
+    }
+
+    get id(): number {
+        return this._id;
     }
 
     get canMakeFreeApiCall(): boolean {
@@ -60,6 +68,14 @@ export class RentCastDetails {
 
     get daysIntoBillingPeriod(): number {
         return calculateDaysPassedSinceIgnoreTime(this.firstBilledOn);
+    }
+
+    get email(): string {
+        return this._email;
+    }
+
+    get apiKeyName(): string {
+        return this._apiKeyName;
     }
 
     toDTO(): RentCastDetailsDTO {

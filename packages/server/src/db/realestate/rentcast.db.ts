@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RealEstateManager } from "./realestate.db";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
+import { RentCastDetailsManager } from 'src/realestatecalc/models/rent_cast_api_models/rentcastdetailsmanager.model';
 
 export class RentCastManager extends RealEstateManager {
 
@@ -12,27 +13,27 @@ export class RentCastManager extends RealEstateManager {
         Remove hardcoded "WHERE id = 1;"
     */
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
-        api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
+        id, api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
         email, api_key_name 
-        FROM rent_cast_config_details
-        WHERE id = 1;
-    `;
+        FROM rent_cast_config_details;`;
+    //     WHERE id = 1;
+    // `;
 
     /*
         Remove hardcoded "WHERE id = 1;"
     */
     private UPDATE_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = api_calls_this_month + 1
-        WHERE id = 1;
-    `;
+        WHERE id = $1;`;
+
 
     /*
         Remove hardcoded "WHERE id = 1;"
     */
     private RESET_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = 0
-        WHERE id = 1;
-    `;
+        WHERE id = $1;`;
+
 
     private INSERT_RENT_CAST_API_RESPONSE_QUERY = `INSERT INTO rent_cast_api_response
            (address_id,
@@ -81,7 +82,7 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async getRentCastDetails(pool: Pool,): Promise<RentCastDetails> {
+    async getRentCastDetails(pool: Pool,): Promise<RentCastDetailsManager> {
 
         const rentCastDetails: RentCastDetails[] = [];
         const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
@@ -95,20 +96,20 @@ export class RentCastManager extends RealEstateManager {
             if (rentCastDetails.length < 1) {
                 throw new Error('Should be at least 1 Rent Cast Details Row in database');
             }
-            return rentCastDetails[0];
+            return new RentCastDetailsManager(rentCastDetails); //rentCastDetails[0];
         } catch (err) {
             console.error('Error fetching all agents', err);
             throw err;
         }
     }
 
-    async updateNumberOfApiCalls(pool: Pool) {
+    async updateNumberOfApiCalls(pool: Pool, id: number) {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._updateNumberOfApiCalls(pool);
+            await this._updateNumberOfApiCalls(pool, id);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -120,13 +121,13 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async resetNumberOfApiCalls(pool: Pool) {
+    async resetNumberOfApiCalls(pool: Pool, id: number) {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._resetNumberOfApiCalls(pool);
+            await this._resetNumberOfApiCalls(pool, id);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -162,9 +163,9 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    private async _resetNumberOfApiCalls(pool: Pool) {
+    private async _resetNumberOfApiCalls(pool: Pool, id: number) {
         try {
-            await pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY);
+            await pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY, [id]);
             console.log('Listing information inserted successfully');
 
         } catch (err) {
@@ -173,9 +174,9 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    private async _updateNumberOfApiCalls(pool: Pool) {
+    private async _updateNumberOfApiCalls(pool: Pool, id: number) {
         try {
-            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY);
+            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY, [id]);
             console.log('Listing information inserted successfully');
 
         } catch (err) {
@@ -185,6 +186,7 @@ export class RentCastManager extends RealEstateManager {
     }
 
     private mapRowToRentCastDetails(row: any): RentCastDetails {
+        const id: number = row.id;
         const apiCallsThisMonth: number = row.api_calls_this_month;
         const numberOfFreeApiCalls: number = row.number_of_free_api_calls;
         const billingPeriod: number = row.billing_period;
@@ -194,6 +196,7 @@ export class RentCastManager extends RealEstateManager {
         const apiKeyName: string = row.api_key_name;
 
         return new RentCastDetails(
+            id,
             apiCallsThisMonth,
             numberOfFreeApiCalls,
             billingPeriod,

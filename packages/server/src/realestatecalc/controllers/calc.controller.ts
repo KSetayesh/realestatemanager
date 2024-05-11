@@ -36,7 +36,7 @@ export class CalcController {
 
     @Get('rentCastApiCallDetails')
     async getRentCastApiCallDetails(
-    ): Promise<RentCastDetailsDTO> {
+    ): Promise<RentCastDetailsDTO[]> {
         return this.rentCastService.getRentCastApiDetails();
     }
 

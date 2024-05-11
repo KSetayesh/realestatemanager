@@ -17,9 +17,9 @@ import {
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastManager } from "src/db/realestate/rentcast.db";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
-import { RentCastDetails } from "../models/rent_cast_api_models/rentcastdetails.model";
 import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
+import { RentCastDetailsManager } from '../models/rent_cast_api_models/rentcastdetailsmanager.model';
 
 type RentCastApiResponse = {
     rentCastApiCallId: number;
@@ -109,7 +109,7 @@ export class RentCastService {
         this.pool = DatabaseManagerFactory.getDbPool();
     }
 
-    async getRentCastApiDetails(): Promise<RentCastDetailsDTO> {
+    async getRentCastApiDetails(): Promise<RentCastDetailsDTO[]> {
         return (await this.rentCastManager.getRentCastDetails(this.pool)).toDTO();
     }
 
@@ -138,7 +138,10 @@ export class RentCastService {
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
-        const canCallRentCastApi: boolean = await this.canCallRentCastApi();
+        const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
+        const canCallRentCastApi: boolean = rentCastDetailsManager.canCallRentCastApi();
+
+        // const canCallRentCastApi: boolean = await this.canCallRentCastApi();
 
         if (!canCallRentCastApi) {
             return 0;
@@ -146,6 +149,7 @@ export class RentCastService {
 
         const saleApiResponse: RentCastApiResponse = await this.callRentCastApi(
             this.SALE_END_POINT,
+            rentCastDetailsManager,
             rentCastApiRequest,
             this.latestRentCastSaleFilePath
         );
@@ -158,10 +162,13 @@ export class RentCastService {
 
         let propertyApiResponse: RentCastApiResponse;
         if (rentCastApiRequest.retrieveExtraData) {
-            const canCallRentCastApi = await this.canCallRentCastApi();
+            // Need to refetch RentCastDetailsManager from database
+            const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
+            const canCallRentCastApi: boolean = rentCastDetailsManager.canCallRentCastApi();
             if (canCallRentCastApi) {
                 propertyApiResponse = await this.callRentCastApi(
                     this.PROPERTY_RECORDS_END_POINT,
+                    rentCastDetailsManager,
                     rentCastApiRequest,
                     this.latestRentCastPropertyFilePath
                 );
@@ -180,7 +187,12 @@ export class RentCastService {
 
     }
 
-    private async callRentCastApi(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO, filePath: string): Promise<RentCastApiResponse> {
+    private async callRentCastApi(
+        endpoint: string,
+        rentCastDetailsManager: RentCastDetailsManager,
+        rentCastApiRequest: RentCastApiRequestDTO,
+        filePath: string
+    ): Promise<RentCastApiResponse> {
 
         console.log("requestData:", rentCastApiRequest);
 
@@ -189,14 +201,19 @@ export class RentCastService {
         console.log("URL for RentCast Api:", url);
 
         try {
-            const options = this.getHeadersForRentCastApiCall();
+            // const options = this.getHeadersForRentCastApiCall()
+            const options = rentCastDetailsManager.getHeadersForRentCastApiCall();
             const response = await fetch(url, options);
             if (response.status === 200) {
                 const executionTime = new Date();
                 console.log("Is successful!");
 
                 // Call updateNumberOfApiCalls here
-                await this.rentCastManager.updateNumberOfApiCalls(this.pool);
+                const id = rentCastDetailsManager.getRentCastDetailId();
+                if (id < 0) {
+                    throw new Error(`${id} is an Invalid RentCastDetails id`);
+                }
+                await this.rentCastManager.updateNumberOfApiCalls(this.pool, id);
                 const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
                     this.pool,
                     endpoint,
@@ -471,30 +488,30 @@ export class RentCastService {
         }
     }
 
-    private getHeadersForRentCastApiCall() {
-        return {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                'X-Api-Key': apiKeysConfig.rentCastApiKey,
-            }
-        };
-    }
+    // private getHeadersForRentCastApiCall() {
+    //     return {
+    //         method: 'GET',
+    //         headers: {
+    //             accept: 'application/json',
+    //             'X-Api-Key': apiKeysConfig.rentCastApiKey,
+    //         }
+    //     };
+    // }
 
-    private async canCallRentCastApi(): Promise<boolean> {
-        if (!apiKeysConfig.canMakeRentCastApiCall) {
-            console.log(`"canMakeRentCastApiCall" is set to false in .env`);
-            return false;
-        }
+    // private async canCallRentCastApi(): Promise<boolean> {
+    //     if (!apiKeysConfig.canMakeRentCastApiCall) {
+    //         console.log(`"canMakeRentCastApiCall" is set to false in .env`);
+    //         return false;
+    //     }
 
-        const rentCastDetails: RentCastDetails = await this.rentCastManager.getRentCastDetails(this.pool);
+    //     const rentCastDetails: RentCastDetails = await this.rentCastManager.getRentCastDetails(this.pool);
 
-        if (!rentCastDetails.canMakeFreeApiCall) {
-            console.log(`Number of rent cast api calls has exceeded ${rentCastDetails.numberOfFreeApiCalls}`);
-            return false;
-        }
-        return true;
-    }
+    //     if (!rentCastDetails.canMakeFreeApiCall) {
+    //         console.log(`Number of rent cast api calls has exceeded ${rentCastDetails.numberOfFreeApiCalls}`);
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     private parseApiResponse(jsonData: any): RentCastResponse[] {
 

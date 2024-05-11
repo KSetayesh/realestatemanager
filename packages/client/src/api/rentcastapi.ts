@@ -4,7 +4,7 @@ import { RentCastDetailsDTO } from "@realestatemanager/shared";
 
 export class RentCastApi extends CalcApi {
 
-    async getRentCastApiDetails(): Promise<RentCastDetailsDTO> {
+    async getRentCastApiDetails(): Promise<RentCastDetailsDTO[]> {
 
         try {
             const response = await axios.get(`${this.getURL()}/rentCastApiCallDetails`);
