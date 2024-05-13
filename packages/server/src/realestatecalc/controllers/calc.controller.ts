@@ -37,7 +37,7 @@ export class CalcController {
     @Get('rentCastApiCallDetails')
     async getRentCastApiCallDetails(
     ): Promise<RentCastDetailsDTO[]> {
-        return this.rentCastService.getRentCastApiDetails();
+        return this.rentCastService.getRentCastApiDetailsDTO();
     }
 
     @Post('addNewProperty')

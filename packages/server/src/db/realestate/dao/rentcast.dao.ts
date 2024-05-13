@@ -1,10 +1,9 @@
 import { Pool } from 'pg';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
-import { RealEstateManager } from "./realestate.db";
+import { RealEstateDAO } from "./realestate.dao";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
-import { RentCastDetailsManager } from 'src/realestatecalc/models/rent_cast_api_models/rentcastdetailsmanager.model';
 
-export class RentCastManager extends RealEstateManager {
+export class RentCastDAO extends RealEstateDAO {
 
     private CHECK_FOR_EXISTING_ADDRESS_ID =
         `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists;`;
@@ -75,7 +74,7 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async getRentCastDetails(pool: Pool,): Promise<RentCastDetails[]> {
+    async getRentCastDetails(pool: Pool): Promise<RentCastDetails[]> {
 
         const rentCastDetails: RentCastDetails[] = [];
         const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
@@ -96,13 +95,13 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    async updateNumberOfApiCalls(pool: Pool, id: number) {
+    async updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number) {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._updateNumberOfApiCalls(pool, id);
+            await this._updateNumberOfApiCalls(pool, rentCastConfigDetailsId);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -169,9 +168,9 @@ export class RentCastManager extends RealEstateManager {
         }
     }
 
-    private async _updateNumberOfApiCalls(pool: Pool, id: number) {
+    private async _updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number) {
         try {
-            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY, [id]);
+            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY, [rentCastConfigDetailsId]);
             console.log('Listing information inserted successfully');
 
         } catch (err) {

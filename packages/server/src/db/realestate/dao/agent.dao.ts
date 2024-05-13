@@ -1,9 +1,9 @@
 import { Pool } from 'pg';
 import { Agent } from "src/agents/models/agent.model";
-import { RealEstateManager } from "./realestate.db";
+import { RealEstateDAO } from "./realestate.dao";
 import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared";
 
-export class AgentManager extends RealEstateManager {
+export class AgentDAO extends RealEstateDAO {
 
     private GET_AGENTS_QUERY = `SELECT
         first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 

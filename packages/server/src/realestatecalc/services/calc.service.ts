@@ -10,14 +10,14 @@ import {
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
 import { InvestmentCalculator } from '../models/investment_models/investment.calculator';
-import { ListingManager } from 'src/db/realestate/listing.db';
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
+import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 
 @Injectable()
 export class CalcService {
 
     private listingManager: ListingManager;
-    protected pool: Pool;
+    private pool: Pool;
 
     constructor() {
         this.listingManager = DatabaseManagerFactory.createListingManager();

@@ -2,14 +2,14 @@ import { Pool } from 'pg';
 import { Injectable } from "@nestjs/common";
 import { AgentsDTO } from "@realestatemanager/shared";
 import { Agent } from "../models/agent.model";
-import { AgentManager } from "src/db/realestate/agent.db";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
+import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
 
 @Injectable()
 export class AgentService {
 
     private agentManager: AgentManager;
-    protected pool: Pool;
+    private pool: Pool;
 
     constructor() {
         this.agentManager = DatabaseManagerFactory.createAgentManager();

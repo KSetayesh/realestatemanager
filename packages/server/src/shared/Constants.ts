@@ -1,4 +1,5 @@
 import { InterestType, ValueInput, ValueType } from "@realestatemanager/shared"
+import apiKeysConfig from '../config/apiKeysConfig';
 
 export const getAmountFromValueInput = (input: ValueInput, baseValue?: number): number => {
     if (input.type === ValueType.AMOUNT) {
@@ -74,4 +75,9 @@ export const calculateDaysPassedSinceIgnoreTime = (inputDate: Date): number => {
 
 export const convertSquareFeetToAcres = (squareFeet: number): number => {
     return squareFeet / 43560;
+};
+
+export const rentCastDetailsMap: { [key: number]: string } = {
+    1: apiKeysConfig.rentCastApiKey,
+    2: apiKeysConfig.backUpRentCastApiKey,
 };

@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-export abstract class RealEstateManager {
+export abstract class RealEstateDAO {
 
     protected async genericInsertQuery(
         pool: Pool,

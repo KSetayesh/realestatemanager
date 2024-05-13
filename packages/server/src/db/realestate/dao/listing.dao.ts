@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { RealEstateManager } from "./realestate.db";
+import { RealEstateDAO } from "./realestate.dao";
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 import { Address } from 'src/realestatecalc/models/listing_models/address.model';
 import { PropertyDetails } from 'src/realestatecalc/models/listing_models/propertydetails.model';
@@ -18,7 +18,7 @@ import {
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 
-export class ListingManager extends RealEstateManager {
+export class ListingDAO extends RealEstateDAO {
 
     private GET_LISTINGS_QUERY = `SELECT 
             ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at,
