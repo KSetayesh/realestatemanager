@@ -24,12 +24,7 @@ export class RentCastManager {
 
     async insertRentCastApiResponse(pool: Pool, rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
         return this.rentCastDAO.insertRentCastApiResponse(pool, rentCastResponse, rentCastApiCallId);
-    }
-
-    async getRentCastDetails(pool: Pool): Promise<RentCastDetails[]> {
-        return this.rentCastDAO.getRentCastDetails(pool);
-
-    }
+    } 
 
     async resetNumberOfApiCalls(pool: Pool, id: number) {
         await this.rentCastDAO.resetNumberOfApiCalls(pool, id);

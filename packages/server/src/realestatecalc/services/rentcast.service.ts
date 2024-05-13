@@ -101,7 +101,7 @@ export class RentCastService {
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
         this.pool = DatabaseManagerFactory.getDbPool();
-        this.rentCastApi = new RentCastApi(this.pool);
+        this.rentCastApi = new RentCastApi();
     }
 
     async getRentCastApiDetailsDTO(): Promise<RentCastDetailsDTO[]> {
@@ -112,38 +112,8 @@ export class RentCastService {
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
-        const client = await this.pool.connect();
-        let numberOfPropertiesAdded = 0;
-
-        try {
-            await client.query('BEGIN');
-            console.log('BEGIN QUERY');
-
-            numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
-
-            console.log(`${numberOfPropertiesAdded} new properties added!`);
-            await client.query('COMMIT');
-        } catch (error) {
-            await client.query('ROLLBACK');
-            console.error('Transaction failed:', error);
-            throw error;
-        } finally {
-            client.release();
-            return numberOfPropertiesAdded;
-        }
-    }
-
-    async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
-
-        const apiCallDetails: ApiCallDetails = await this.rentCastApi.getApiCallDetails();
-
-        if (!apiCallDetails.canCallRentCastApi) {
-            return 0;
-        }
-
         const saleApiResponse: RentCastApiResponse = await this.rentCastApi.callRentCastApi(
             this.SALE_END_POINT,
-            apiCallDetails.rentCastDetailsId,
             rentCastApiRequest,
             this.latestRentCastSaleFilePath
         );
@@ -156,15 +126,14 @@ export class RentCastService {
 
         let propertyApiResponse: RentCastApiResponse;
         if (rentCastApiRequest.retrieveExtraData) {
-            // Need to refetch RentCastDetailsManager from database
-            const apiCallDetails: ApiCallDetails = await this.rentCastApi.getApiCallDetails();
-            if (apiCallDetails.canCallRentCastApi) {
-                propertyApiResponse = await this.rentCastApi.callRentCastApi(
-                    this.PROPERTY_RECORDS_END_POINT,
-                    apiCallDetails.rentCastDetailsId,
-                    rentCastApiRequest,
-                    this.latestRentCastPropertyFilePath
-                );
+
+            propertyApiResponse = await this.rentCastApi.callRentCastApi(
+                this.PROPERTY_RECORDS_END_POINT,
+                rentCastApiRequest,
+                this.latestRentCastPropertyFilePath
+            );
+
+            if (propertyApiResponse) {
                 rentCastPropertyResponses.push(...this.parseApiResponse(propertyApiResponse.jsonData));
             }
         }
@@ -187,6 +156,42 @@ export class RentCastService {
         rentCastSaleApiCallId: number,
         rentCastPropertyApiCallId: number,
     ): Promise<number> {
+
+        const client = await this.pool.connect();
+        let numberOfPropertiesAdded = 0;
+
+        try {
+            await client.query('BEGIN');
+            console.log('BEGIN QUERY');
+
+            numberOfPropertiesAdded = await this._persistNewListingAndRentCastDetails(
+                rentCastSaleResponses,
+                rentCastPropertyResponses,
+                rentCastSaleApiCallId,
+                rentCastPropertyApiCallId,
+            );
+
+            console.log(`${numberOfPropertiesAdded} new properties added!`);
+            await client.query('COMMIT');
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error('Transaction failed:', error);
+            throw error;
+        } finally {
+            client.release();
+            return numberOfPropertiesAdded;
+        }
+
+
+    }
+
+    private async _persistNewListingAndRentCastDetails(
+        rentCastSaleResponses: RentCastResponse[],
+        rentCastPropertyResponses: RentCastResponse[],
+        rentCastSaleApiCallId: number,
+        rentCastPropertyApiCallId: number,
+    ): Promise<number> {
+
 
         const createRentCastSaleResponseType = (rentCastSalesResponse: RentCastResponse): RentCastSaleResponseType => {
             const jsonData = rentCastSalesResponse.apiResponseData;
@@ -351,7 +356,6 @@ export class RentCastService {
         } catch (error) {
             throw error;
         }
-
     }
 
     private buildListingDetails(

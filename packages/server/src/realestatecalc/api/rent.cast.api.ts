@@ -31,37 +31,72 @@ export class RentCastApi {
     private rentCastManager: RentCastManager;
     private pool: Pool;
 
-    constructor(pool: Pool) {
+    constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-        this.pool = pool;
+        this.pool = DatabaseManagerFactory.getDbPool();
+    }
+
+    async getRentCastDetailsId(): Promise<number> {
+        return (await this.getApiCallDetails()).rentCastDetailsId;
     }
 
     async callRentCastApi(
         endpoint: string,
-        rentCastDetailsId: number,
         rentCastApiRequest: RentCastApiRequestDTO,
         filePath: string
     ): Promise<RentCastApiResponse> {
-
-        console.log("requestData:", rentCastApiRequest);
 
         const apiCallDetails = await this.getApiCallDetails();
         if (!apiCallDetails.canCallRentCastApi) {
             throw new Error('API call not permitted at this time.');
         }
 
+        const client = await this.pool.connect();
+        let rentCastApiResponse: RentCastApiResponse;
+        try {
+
+            await client.query('BEGIN');
+            console.log('BEGIN QUERY');
+
+            rentCastApiResponse = await this._callRentCastApi(
+                endpoint,
+                apiCallDetails,
+                rentCastApiRequest,
+                filePath,
+            );
+
+            await client.query('COMMIT');
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error('Transaction failed:', error);
+            throw error;
+        } finally {
+            client.release();
+        }
+        return rentCastApiResponse;
+
+    }
+
+    private async _callRentCastApi(
+        endpoint: string,
+        apiCallDetails: ApiCallDetails,
+        rentCastApiRequest: RentCastApiRequestDTO,
+        filePath: string
+    ): Promise<RentCastApiResponse> {
+
+        console.log("requestData:", rentCastApiRequest);
+
         const url = new RentClassApiUrlCreator().createURL(endpoint, rentCastApiRequest);
 
         console.log("URL for RentCast Api:", url);
 
         try {
-            // const options = this.getHeadersForRentCastApiCall()
-            const options: RentCastApiHeader = await this.getHeadersForRentCastApiCall();
+            const options: RentCastApiHeader = await this.getHeadersForRentCastApiCall(apiCallDetails);
             const response = await fetch(url, options);
             if (response.status === 200) {
                 const executionTime = new Date();
                 console.log("Is successful!");
-
+                const rentCastDetailsId = apiCallDetails.rentCastDetailsId;
                 await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
                 const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
                     this.pool,
@@ -90,15 +125,7 @@ export class RentCastApi {
         }
     }
 
-    private async getApiKey(): Promise<string> {
-        const apiCallDetails: ApiCallDetails = await this.getApiCallDetails();
-        if (!this.canMakeApiCall(apiCallDetails)) {
-            throw new Error('Cannot fetch api key');
-        }
-        return rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
-    }
-
-    async getApiCallDetails(): Promise<ApiCallDetails> {
+    private async getApiCallDetails(): Promise<ApiCallDetails> {
         if (!apiKeysConfig.canMakeRentCastApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
             return { canCallRentCastApi: false };
@@ -115,23 +142,9 @@ export class RentCastApi {
         return { canCallRentCastApi: false };
     }
 
-    private canMakeApiCall(apiCallDetails: ApiCallDetails): boolean {
-        if (!apiKeysConfig.canMakeRentCastApiCall) {
-            console.log(`"canMakeRentCastApiCall" is set to false in .env`);
-            return false;
-        }
+    private async getHeadersForRentCastApiCall(apiCallDetails: ApiCallDetails): Promise<RentCastApiHeader> {
 
-        return apiCallDetails.canCallRentCastApi && apiCallDetails.rentCastDetailsId > -1;
-    }
-
-    private async getHeadersForRentCastApiCall(): Promise<RentCastApiHeader> {
-        const apiCallDetails: ApiCallDetails = await this.getApiCallDetails();
-
-        if (!apiCallDetails.canCallRentCastApi || !apiCallDetails.rentCastDetailsId) {
-            throw new Error(`No available API configurations to make a call.`);
-        }
-
-        const apiKey = await this.getApiKey();
+        const apiKey = rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
 
         return {
             method: 'GET',
