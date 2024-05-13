@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
 import fs from 'fs/promises';  // Use promise-based fs
 import path from 'path';
-import apiKeysConfig from '../../config/apiKeysConfig';
 import { Injectable } from "@nestjs/common";
 import {
     Country,
@@ -19,7 +18,7 @@ import { RentCastManager } from "src/db/realestate/rentcast.db";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
 import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
-import { RentCastDetailsManager } from '../models/rent_cast_api_models/rentcastdetailsmanager.model';
+import { ApiCallDetails, RentCastApiHeader, RentCastDetailsManager } from '../models/rent_cast_api_models/rentcastdetailsmanager.model';
 
 type RentCastApiResponse = {
     rentCastApiCallId: number;
@@ -98,6 +97,7 @@ type RentCastPropertyResponseType = {
 export class RentCastService {
 
     private rentCastManager: RentCastManager;
+    private rentCastDetailsManager: RentCastDetailsManager;
     private pool: Pool;
     private latestRentCastSaleFilePath = path.join(__dirname, '../../../src/data/latestRentCastSale.json');
     private latestRentCastPropertyFilePath = path.join(__dirname, '../../../src/data/latestRentCastProperty.json');
@@ -110,7 +110,10 @@ export class RentCastService {
     }
 
     async getRentCastApiDetails(): Promise<RentCastDetailsDTO[]> {
-        return (await this.rentCastManager.getRentCastDetails(this.pool)).toDTO();
+        return (await this.rentCastDetailsManager.getRentCastApiDetails()).map(rentCastDetail => {
+            return rentCastDetail.toDTO();
+        });
+        // (await this.rentCastManager.getRentCastDetails(this.pool)).toDTO();
     }
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
@@ -138,18 +141,17 @@ export class RentCastService {
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
-        const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
-        const canCallRentCastApi: boolean = rentCastDetailsManager.canCallRentCastApi();
+        // const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
+        const apiCallDetails: ApiCallDetails = await this.rentCastDetailsManager.getApiCallDetails();
 
-        // const canCallRentCastApi: boolean = await this.canCallRentCastApi();
 
-        if (!canCallRentCastApi) {
+        if (!apiCallDetails.canCallRentCastApi) {
             return 0;
         }
 
         const saleApiResponse: RentCastApiResponse = await this.callRentCastApi(
             this.SALE_END_POINT,
-            rentCastDetailsManager,
+            apiCallDetails.rentCastDetailsId,
             rentCastApiRequest,
             this.latestRentCastSaleFilePath
         );
@@ -163,12 +165,12 @@ export class RentCastService {
         let propertyApiResponse: RentCastApiResponse;
         if (rentCastApiRequest.retrieveExtraData) {
             // Need to refetch RentCastDetailsManager from database
-            const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
-            const canCallRentCastApi: boolean = rentCastDetailsManager.canCallRentCastApi();
-            if (canCallRentCastApi) {
+            // const rentCastDetailsManager: RentCastDetailsManager = await this.rentCastManager.getRentCastDetails(this.pool);
+            const apiCallDetails: ApiCallDetails = await this.rentCastDetailsManager.getApiCallDetails();
+            if (apiCallDetails.canCallRentCastApi) {
                 propertyApiResponse = await this.callRentCastApi(
                     this.PROPERTY_RECORDS_END_POINT,
-                    rentCastDetailsManager,
+                    apiCallDetails.rentCastDetailsId,
                     rentCastApiRequest,
                     this.latestRentCastPropertyFilePath
                 );
@@ -189,7 +191,8 @@ export class RentCastService {
 
     private async callRentCastApi(
         endpoint: string,
-        rentCastDetailsManager: RentCastDetailsManager,
+        // rentCastDetailsManager: RentCastDetailsManager,
+        rentCastDetailsId: number,
         rentCastApiRequest: RentCastApiRequestDTO,
         filePath: string
     ): Promise<RentCastApiResponse> {
@@ -202,22 +205,23 @@ export class RentCastService {
 
         try {
             // const options = this.getHeadersForRentCastApiCall()
-            const options = rentCastDetailsManager.getHeadersForRentCastApiCall();
+            const options: RentCastApiHeader = await this.rentCastDetailsManager.getHeadersForRentCastApiCall();
             const response = await fetch(url, options);
             if (response.status === 200) {
                 const executionTime = new Date();
                 console.log("Is successful!");
 
                 // Call updateNumberOfApiCalls here
-                const id = rentCastDetailsManager.getRentCastDetailId();
-                if (id < 0) {
-                    throw new Error(`${id} is an Invalid RentCastDetails id`);
-                }
-                await this.rentCastManager.updateNumberOfApiCalls(this.pool, id);
+                // const id = this.rentCastDetailsManager.getRentCastDetailId();
+                // if (id < 0) {
+                //     throw new Error(`${id} is an Invalid RentCastDetails id`);
+                // }
+                await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId); //id);
                 const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
                     this.pool,
                     endpoint,
                     url,
+                    rentCastDetailsId,
                     executionTime
                 );
                 const data = await response.json();
@@ -360,23 +364,28 @@ export class RentCastService {
                     console.log(`${addressIdFound} already exists in the database, skipping`);
                     continue;
                 }
+
                 const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
+
                 let rentCastPropertyResponseId = -1;
 
                 let listingDetail: ListingDetailsDTO;
+
+                const rentCastSaleResponseType: RentCastSaleResponseType = createRentCastSaleResponseType(rentCastSaleResponse);
+
                 if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.id in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.id];
                     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
 
                     listingDetail = this.buildListingDetails(
-                        createRentCastSaleResponseType(rentCastSaleResponse),
+                        rentCastSaleResponseType,
                         createRentCastPropertyResponseType(rentCastProperty)
                     );
                     addressIdOfMatchesFound.add(rentCastSaleResponse.id);
                 }
                 else {
                     listingDetail = this.buildListingDetails(
-                        createRentCastSaleResponseType(rentCastSaleResponse),
+                        rentCastSaleResponseType
                     );
                 }
 

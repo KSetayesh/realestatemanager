@@ -1,67 +1,84 @@
+import { Pool } from 'pg';
 import { RentCastDetails } from "./rentcastdetails.model";
 import apiKeysConfig from '../../../config/apiKeysConfig';
-import { RentCastDetailsDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../idtoconvertible.model";
+import { RentCastManager } from "src/db/realestate/rentcast.db";
+import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 
-export class RentCastDetailsManager implements IDTOConvertible<RentCastDetailsDTO[]> {
+export type ApiCallDetails = {
+    canCallRentCastApi: boolean;
+    rentCastDetailsId?: number;
+};
+
+export type RentCastApiHeader = {
+    method: string;
+    headers: {
+        accept: string;
+        'X-Api-Key': string;
+    }
+};
+
+
+export class RentCastDetailsManager {
 
     private rentCastDetailsMap: { [key: number]: string } = {
         1: apiKeysConfig.rentCastApiKey,
         2: apiKeysConfig.backUpRentCastApiKey,
     };
 
-    private rentCastDetailsList: RentCastDetails[];
+    private rentCastManager: RentCastManager;
+    private pool: Pool;
 
-    constructor(rentCastDetailsList: RentCastDetails[]) {
-        this.rentCastDetailsList = rentCastDetailsList.sort((a, b) => a.id - b.id);
-        for (const rentCastDetail of this.rentCastDetailsList) {
+    constructor() {
+        this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
+        this.pool = DatabaseManagerFactory.getDbPool();
+    }
+
+    async getRentCastApiDetails(): Promise<RentCastDetails[]> {
+        const rentCastDetails: RentCastDetails[] = await this.rentCastManager.getRentCastDetails(this.pool);
+
+        for (const rentCastDetail of rentCastDetails) {
             if (!(rentCastDetail.id in this.rentCastDetailsMap)) {
                 throw new Error(`${rentCastDetail.id} not found! Need to update rentCastDetailsMap`);
             }
         }
+        return (await this.rentCastManager.getRentCastDetails(this.pool)).sort((a, b) => a.id - b.id);
     }
 
-    canCallRentCastApi(): boolean {
+    async updateNumberOfApiCalls(id: number): Promise<void> {
+        await this.rentCastManager.updateNumberOfApiCalls(this.pool, id);
+    }
+
+    async getApiCallDetails(): Promise<ApiCallDetails> {
         if (!apiKeysConfig.canMakeRentCastApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
-            return false;
+            return { canCallRentCastApi: false };
         }
 
-        if (this.getRentCastDetailId() > -1) {
-            return true;
+        const rentCastDetails: RentCastDetails[] = await this.getRentCastApiDetails();
+        for (const rentCastDetail of rentCastDetails) {
+            if (rentCastDetail.canMakeFreeApiCall) {
+                return { canCallRentCastApi: true, rentCastDetailsId: rentCastDetail.id };
+            }
         }
 
         console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
-        return false;
+        return { canCallRentCastApi: false };
     }
 
-    getHeadersForRentCastApiCall() {
-        const id = this.getRentCastDetailId();
+    async getHeadersForRentCastApiCall(): Promise<RentCastApiHeader> {
+        const apiCallDetails: ApiCallDetails = await this.getApiCallDetails();
 
-        if (id < 0 || !(id in this.rentCastDetailsMap)) {
-            throw new Error(`Cannot fetch header because there arent't any configs available to use`);
+        if (!apiCallDetails.canCallRentCastApi || !apiCallDetails.rentCastDetailsId) {
+            throw new Error(`No available API configurations to make a call.`);
         }
 
         return {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                'X-Api-Key': this.rentCastDetailsMap[id],
+                'X-Api-Key': this.rentCastDetailsMap[apiCallDetails.rentCastDetailsId],
             }
         };
-    }
-
-    getRentCastDetailId(): number {
-        for (const rentCastDetail of this.rentCastDetailsList) {
-            if (rentCastDetail.canMakeFreeApiCall) {
-                return rentCastDetail.id;
-            }
-        }
-        return -1;
-    }
-
-    toDTO(): RentCastDetailsDTO[] {
-        return this.rentCastDetailsList.map(rentCastDetails => rentCastDetails.toDTO());
     }
 
 

@@ -103,28 +103,6 @@ CREATE TABLE IF NOT EXISTS agent (
 );
 -- EndQuery
 
--- Query: CreateRentCastApiCallTable
-CREATE TABLE IF NOT EXISTS rent_cast_api_call (
-    id SERIAL PRIMARY KEY, 
-    end_point VARCHAR(50),
-    full_url VARCHAR(500),
-    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
-);
--- EndQuery
-
--- Query: CreateRentCastApiResponseTable
-CREATE TABLE IF NOT EXISTS rent_cast_api_response (
-    id SERIAL PRIMARY KEY,
-    address_id VARCHAR(255) UNIQUE,
-    api_response_data JSONB,
-    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
-);
--- EndQuery
-
 -- Query: CreateRentCastConfigDetailsTable
 CREATE TABLE IF NOT EXISTS rent_cast_config_details (
     id SERIAL PRIMARY KEY,
@@ -137,6 +115,29 @@ CREATE TABLE IF NOT EXISTS rent_cast_config_details (
     most_recent_billing_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+-- EndQuery
+
+-- Query: CreateRentCastApiCallTable
+CREATE TABLE IF NOT EXISTS rent_cast_api_call (
+    id SERIAL PRIMARY KEY, 
+    end_point VARCHAR(50),
+    full_url VARCHAR(500),
+    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (rent_cast_config_detail_id) REFERENCES rent_cast_config_details(id) ON DELETE CASCADE
+);
+-- EndQuery
+
+-- Query: CreateRentCastApiResponseTable
+CREATE TABLE IF NOT EXISTS rent_cast_api_response (
+    id SERIAL PRIMARY KEY,
+    address_id VARCHAR(255) UNIQUE,
+    api_response_data JSONB,
+    execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
 );
 -- EndQuery
 
