@@ -1,0 +1,12 @@
+.scrollable-container {
+    height: 200px;
+    /* Set the height of the container */
+    border: 2px solid #ccc;
+    /* Optional: Add a border for visual effect */
+    padding: 10px;
+    /* Optional: Add padding for content spacing */
+    overflow-y: scroll;
+    /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Hide horizontal scrolling */
+}

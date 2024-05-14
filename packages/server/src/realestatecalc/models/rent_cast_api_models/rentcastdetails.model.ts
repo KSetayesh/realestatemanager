@@ -80,6 +80,7 @@ export class RentCastDetails implements IDTOConvertible<RentCastDetailsDTO> {
 
     toDTO(): RentCastDetailsDTO {
         return {
+            apiKeyName: this.apiKeyName,
             apiCallsThisMonth: this.apiCallsThisMonth,
             numberOfFreeApiCalls: this.numberOfFreeApiCalls,
             remainingNumberOfFreeApiCalls: this.remainingNumberOfFreeApiCalls,

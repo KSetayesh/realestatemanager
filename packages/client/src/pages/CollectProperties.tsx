@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { State, InputType, PropertyType, PropertyStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
+import '../styles/CollectProperties.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { FormFieldConfig } from "./PropertyForm";
 import { RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
@@ -9,7 +10,7 @@ import AddPropertyForm from '../components/AddPropertyForm';
 
 const CollectProperties: React.FC = () => {
 
-    const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsDTO>();
+    const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsDTO[]>();
     const [isLoading, setIsLoading] = useState(true);
     const rentCastApi: RentCastApi = new RentCastApi();
 
@@ -19,7 +20,7 @@ const CollectProperties: React.FC = () => {
                 setIsLoading(true);
                 const rentCastDetails: RentCastDetailsDTO[] = await rentCastApi.getRentCastApiDetails();
                 // For now just show the first rentCastDetails in the list
-                setRentCastDetails(rentCastDetails[0]); 
+                setRentCastDetails(rentCastDetails);
                 console.log("Fetched data:", rentCastDetails);
             } catch (error) {
                 // Error handling if fetchProperties fails
@@ -171,7 +172,15 @@ const CollectProperties: React.FC = () => {
     };
 
     const buttonDisableLogic = (): boolean => {
-        return !rentCastDetails?.canMakeApiCalls;
+        if (!rentCastDetails) {
+            return true;
+        }
+        for (const rentCastDetail of rentCastDetails) {
+            if (rentCastDetail?.canMakeApiCalls) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Content based on loading state
@@ -183,10 +192,18 @@ const CollectProperties: React.FC = () => {
             content = (
                 <>
                     <hr />
-                    <p>Remaining number of free api calls left: {rentCastDetails!.remainingNumberOfFreeApiCalls}</p>
-                    <p>Can make API call: {rentCastDetails!.canMakeApiCalls.toString()}</p>
-                    <p>Days into billing period: {rentCastDetails!.daysIntoBillingPeriod}</p>
-                    <p>Most recent billing date: {new Date(rentCastDetails!.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
+                    <div className="scrollable-container">
+                        {rentCastDetails ? rentCastDetails.map((rentCastDetail, index) => (
+                            <div key={index}>
+                                <p><b>Api Key Name:</b> {rentCastDetail.apiKeyName}</p>
+                                <p><b>Remaining number of free API calls left:</b> {rentCastDetail.remainingNumberOfFreeApiCalls}</p>
+                                <p><b>Can make API call:</b> {rentCastDetail.canMakeApiCalls.toString()}</p>
+                                <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod}</p>
+                                <p><b>Most recent billing date:</b> {new Date(rentCastDetail.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
+                                <hr />
+                            </div>
+                        )) : []}
+                    </div>
                     <hr />
                     <br />
                     <AddPropertyForm

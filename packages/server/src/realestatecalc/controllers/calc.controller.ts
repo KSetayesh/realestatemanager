@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { InvestmentScenarioRequest, ListingCreationType, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
+import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
 

@@ -19,6 +19,7 @@ export interface RentCastApiRequestDTO {
 };
 
 export interface RentCastDetailsDTO {
+    apiKeyName: string;
     apiCallsThisMonth: number;
     numberOfFreeApiCalls: number;
     remainingNumberOfFreeApiCalls: number;
