@@ -61,6 +61,11 @@ export class RentCastApi {
         this.pool = DatabaseManagerFactory.getDbPool();
     }
 
+    getEndpoint(rentCastEndPoint: RentCastEndPoint): string {
+        const endpointDetails: EndpointDetails = this.endPointMap[rentCastEndPoint];
+        return endpointDetails.endPoint;
+    }
+
     async getRentCastDetailsId(): Promise<number> {
         return (await this.getApiCallDetails()).rentCastDetailsId;
     }

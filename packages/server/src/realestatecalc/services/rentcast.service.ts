@@ -17,6 +17,9 @@ import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
 import { RentCastApi, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
+import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
+import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
+import { ListingDetails } from '../models/listing_models/listingdetails.model';
 
 type RentCastSaleResponseType = {
     id: string;
@@ -90,11 +93,13 @@ type RentCastPropertyResponseType = {
 export class RentCastService {
 
     private rentCastManager: RentCastManager;
+    private listingManager: ListingManager;
     private rentCastApi: RentCastApi;
     private pool: Pool;
 
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
+        this.listingManager = DatabaseManagerFactory.createListingManager();
         this.pool = DatabaseManagerFactory.getDbPool();
         this.rentCastApi = new RentCastApi();
     }
@@ -112,6 +117,30 @@ export class RentCastService {
     }
 
     async matchAndCreateListing(): Promise<number> {
+        const saleEndpoint = this.rentCastApi.getEndpoint(RentCastEndPoint.SALE);
+        const propertiesEndpoint = this.rentCastApi.getEndpoint(RentCastEndPoint.PROPERTIES);
+
+        const rentCastMatchingData: RentCastMatchingData[] =
+            await this.rentCastManager.findMatchingRentingCastData(this.pool, saleEndpoint, propertiesEndpoint);
+
+        const listingsWithRentCastIds: Map<number, ListingDetails> = new Map();
+        const listingDetails: ListingDetails[] = await this.listingManager.getListingsByRentCastSaleResponseIds(this.pool, []);
+
+        for (const listingDetail of listingDetails) {
+            const rentCastSaleResponseId = listingDetail.getRentCastSaleResponseId();
+            if (rentCastSaleResponseId && rentCastSaleResponseId > -1) {
+                listingsWithRentCastIds.set(rentCastSaleResponseId, listingDetail);
+            }
+        }
+
+        for (const rentCastMatch of rentCastMatchingData) {
+            if (listingsWithRentCastIds.has(rentCastMatch.rentCastApiSaleCallId)) {
+                // Update current listing in database
+            }
+            else {
+                // Create new listing in database
+            }
+        }
 
         return 0;
     }

@@ -14,6 +14,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private dateListed: Date;
     private dateCreated: Date;
     private dateUpdated: Date;
+    private rentCastSaleResponseId?: number;
 
     constructor(zillowURL: string,
         propertyDetails: PropertyDetails,
@@ -24,6 +25,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         dateListed: Date,
         dateCreated: Date,
         dateUpdated: Date,
+        rentCastSaleResponseId?: number,
     ) {
 
         this.zillowURL = zillowURL;
@@ -35,6 +37,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         this.dateListed = dateListed;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
+        this.rentCastSaleResponseId = rentCastSaleResponseId;
     }
 
     getListingPrice(): number {
@@ -55,6 +58,10 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
 
     getZillowMonthlyHOAFeesAmount(): number {
         return this.zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
+    }
+
+    getRentCastSaleResponseId(): number {
+        return this.rentCastSaleResponseId;
     }
 
     toDTO(): ListingDetailsDTO {
