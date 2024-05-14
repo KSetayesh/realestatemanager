@@ -93,9 +93,6 @@ export class CalcService {
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
         const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();
-        // return;
-        // const investmentScenario: InvestmentScenario = investmentMetricsBuilder.build();
-        // const investmentMetricsDTO: InvestmentMetricsResponseDTO = investmentScenario.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
             metrics: metrics,

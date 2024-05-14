@@ -1,5 +1,4 @@
 import { Pool } from 'pg';
-import path from 'path';
 import { Injectable } from "@nestjs/common";
 import {
     Country,
@@ -16,7 +15,7 @@ import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
 import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
-import { ApiCallDetails, RentCastApi, RentCastApiResponse } from '../api/rent.cast.api';
+import { RentCastApi, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 
 type RentCastSaleResponseType = {
@@ -93,10 +92,6 @@ export class RentCastService {
     private rentCastManager: RentCastManager;
     private rentCastApi: RentCastApi;
     private pool: Pool;
-    private latestRentCastSaleFilePath = path.join(__dirname, '../../../src/data/latestRentCastSale.json');
-    private latestRentCastPropertyFilePath = path.join(__dirname, '../../../src/data/latestRentCastProperty.json');
-    private SALE_END_POINT = 'https://api.rentcast.io/v1/listings/sale';
-    private PROPERTY_RECORDS_END_POINT = 'https://api.rentcast.io/v1/properties';
 
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
@@ -113,9 +108,8 @@ export class RentCastService {
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
         const saleApiResponse: RentCastApiResponse = await this.rentCastApi.callRentCastApi(
-            this.SALE_END_POINT,
+            RentCastEndPoint.SALE,
             rentCastApiRequest,
-            this.latestRentCastSaleFilePath
         );
 
         const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(saleApiResponse.jsonData);
@@ -128,9 +122,8 @@ export class RentCastService {
         if (rentCastApiRequest.retrieveExtraData) {
 
             propertyApiResponse = await this.rentCastApi.callRentCastApi(
-                this.PROPERTY_RECORDS_END_POINT,
+                RentCastEndPoint.PROPERTIES,
                 rentCastApiRequest,
-                this.latestRentCastPropertyFilePath
             );
 
             if (propertyApiResponse) {

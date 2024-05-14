@@ -7,6 +7,12 @@ import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
+import path from 'path';
+
+export enum RentCastEndPoint {
+    SALE = 'SALE',
+    PROPERTIES = 'PROPERTIES',
+};
 
 export type ApiCallDetails = {
     canCallRentCastApi: boolean;
@@ -26,8 +32,25 @@ export type RentCastApiResponse = {
     jsonData: any;
 };
 
+interface EndpointDetails {
+    endPoint: string;
+    responseFilePath: string;
+};
+
 export class RentCastApi {
 
+
+    private endPointMap: Record<RentCastEndPoint, EndpointDetails> = {
+        [RentCastEndPoint.SALE]: {
+            endPoint: 'https://api.rentcast.io/v1/listings/sale',
+            responseFilePath: path.join(__dirname, '../../../src/data/latestRentCastSale.json'),
+        },
+        [RentCastEndPoint.PROPERTIES]: {
+            endPoint: 'https://api.rentcast.io/v1/properties',
+            responseFilePath: path.join(__dirname, '../../../src/data/latestRentCastProperty.json'),
+        },
+    };
+ 
     private rentCastManager: RentCastManager;
     private pool: Pool;
 
@@ -41,10 +64,11 @@ export class RentCastApi {
     }
 
     async callRentCastApi(
-        endpoint: string,
+        rentCastEndPoint: RentCastEndPoint,
         rentCastApiRequest: RentCastApiRequestDTO,
-        filePath: string
     ): Promise<RentCastApiResponse> {
+
+        console.log("filePath: ", (__dirname + '../../../src/data/latestRentCastSale.json'));
 
         const apiCallDetails = await this.getApiCallDetails();
         if (!apiCallDetails.canCallRentCastApi) {
@@ -59,10 +83,9 @@ export class RentCastApi {
             console.log('BEGIN QUERY');
 
             rentCastApiResponse = await this._callRentCastApi(
-                endpoint,
+                rentCastEndPoint,
                 apiCallDetails,
                 rentCastApiRequest,
-                filePath,
             );
 
             await client.query('COMMIT');
@@ -78,15 +101,18 @@ export class RentCastApi {
     }
 
     private async _callRentCastApi(
-        endpoint: string,
+        rentCastEndPoint: RentCastEndPoint,
         apiCallDetails: ApiCallDetails,
         rentCastApiRequest: RentCastApiRequestDTO,
-        filePath: string
     ): Promise<RentCastApiResponse> {
 
         console.log("requestData:", rentCastApiRequest);
 
-        const url = new RentClassApiUrlCreator().createURL(endpoint, rentCastApiRequest);
+        const endpointDetails: EndpointDetails = this.endPointMap[rentCastEndPoint];
+        const filePath = endpointDetails.responseFilePath;
+        const endPoint = endpointDetails.endPoint;
+
+        const url = new RentClassApiUrlCreator().createURL(endPoint, rentCastApiRequest);
 
         console.log("URL for RentCast Api:", url);
 
@@ -100,7 +126,7 @@ export class RentCastApi {
                 await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
                 const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
                     this.pool,
-                    endpoint,
+                    endPoint,
                     url,
                     rentCastDetailsId,
                     executionTime
@@ -110,6 +136,7 @@ export class RentCastApi {
 
                 // Write response data to JSON file
                 await this.writeResponseToJsonFile(filePath, data);
+                console.log(`Api response written to ${filePath}`);
                 return {
                     rentCastApiCallId: rentCastApiCallId,
                     jsonData: data,
