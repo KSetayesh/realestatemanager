@@ -13,9 +13,8 @@ import {
 } from "@realestatemanager/shared";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
-import { convertSquareFeetToAcres } from 'src/shared/Constants';
 import { CalcService } from './calc.service';
-import { RentCastApi, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api';
+import { RentCastApiClient, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api.client';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
@@ -95,14 +94,14 @@ export class RentCastService {
 
     private rentCastManager: RentCastManager;
     private listingManager: ListingManager;
-    private rentCastApi: RentCastApi;
+    private rentCastApiClient: RentCastApiClient;
     private pool: Pool;
 
     constructor() {
         this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
         this.listingManager = DatabaseManagerFactory.createListingManager();
         this.pool = DatabaseManagerFactory.getDbPool();
-        this.rentCastApi = new RentCastApi();
+        this.rentCastApiClient = new RentCastApiClient();
     }
 
     async getRentCastApiDetailsDTO(): Promise<RentCastDetailsDTO[]> {
@@ -121,8 +120,8 @@ export class RentCastService {
     }
 
     async matchAndCreateListing(): Promise<number> {
-        const saleEndpoint = this.rentCastApi.getEndpoint(RentCastEndPoint.SALE);
-        const propertiesEndpoint = this.rentCastApi.getEndpoint(RentCastEndPoint.PROPERTIES);
+        const saleEndpoint = this.getEndpoint(RentCastEndPoint.SALE);
+        const propertiesEndpoint = this.getEndpoint(RentCastEndPoint.PROPERTIES);
 
         const rentCastMatchingData: RentCastMatchingData[] =
             await this.rentCastManager.findMatchingRentingCastData(this.pool, saleEndpoint, propertiesEndpoint);
@@ -188,7 +187,7 @@ export class RentCastService {
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
-        const saleApiResponse: RentCastApiResponse = await this.rentCastApi.callRentCastApi(
+        const saleApiResponse: RentCastApiResponse = await this.rentCastApiClient.callRentCastApi(
             RentCastEndPoint.SALE,
             rentCastApiRequest,
         );
@@ -202,7 +201,7 @@ export class RentCastService {
         let propertyApiResponse: RentCastApiResponse;
         if (rentCastApiRequest.retrieveExtraData) {
 
-            propertyApiResponse = await this.rentCastApi.callRentCastApi(
+            propertyApiResponse = await this.rentCastApiClient.callRentCastApi(
                 RentCastEndPoint.PROPERTIES,
                 rentCastApiRequest,
             );
@@ -458,6 +457,10 @@ export class RentCastService {
         }
 
         return rentCastResponses;
+    }
+
+    private getEndpoint(rentCastEndPoint: RentCastEndPoint): string {
+        return this.rentCastApiClient.getEndpoint(rentCastEndPoint);
     }
 
 

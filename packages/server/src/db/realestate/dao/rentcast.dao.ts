@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RealEstateDAO } from "./realestate.dao";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
-import { RentCastApiResponse } from 'src/realestatecalc/api/rent.cast.api';
+import { RentCastApiResponse } from 'src/realestatecalc/api/rent.cast.api.client';
 import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 
 export class RentCastDAO extends RealEstateDAO {

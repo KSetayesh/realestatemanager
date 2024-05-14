@@ -39,7 +39,7 @@ interface EndpointDetails {
     responseFilePath: string;
 };
 
-export class RentCastApi {
+export class RentCastApiClient {
 
 
     private endPointMap: Record<RentCastEndPoint, EndpointDetails> = {
