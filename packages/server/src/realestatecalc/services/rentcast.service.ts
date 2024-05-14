@@ -183,7 +183,7 @@ export class RentCastService {
             }
         }
 
-        return 0;
+        return numberOfPropertiesAdded;
     }
 
     async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
@@ -426,7 +426,6 @@ export class RentCastService {
             },
         };
     }
-
 
     private buildListingDetails(
         rentCastSalesResponseTyped: RentCastSaleResponseType,

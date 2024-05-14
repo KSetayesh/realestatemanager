@@ -43,6 +43,10 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
 
+    get zillowURL(): string {
+        return this._zillowURL;
+    }
+
     get listingPrice(): number {
         return this._listingPrice;
     }
@@ -63,6 +67,14 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return this._zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
     }
 
+    get propertyStatus(): PropertyStatus {
+        return this._propertyStatus;
+    }
+
+    get creationType(): ListingCreationType {
+        return this._creationType;
+    }
+
     get dateListed(): Date {
         return this._dateListed;
     }
@@ -77,16 +89,16 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
 
     toDTO(): ListingDetailsDTO {
         return {
-            zillowURL: this._zillowURL,
+            zillowURL: this.zillowURL,
             propertyDetails: this._propertyDetails.toDTO(),
             zillowMarketEstimates: this._zillowMarketEstimates.toDTO(),
             listingPrice: this.listingPrice,
-            propertyStatus: this._propertyStatus,
-            dateListed: this._dateListed.toLocaleDateString('en-US'),
+            propertyStatus: this.propertyStatus,
+            dateListed: this.dateListed.toLocaleDateString('en-US'),
             dateCreated: this._dateCreated.toLocaleDateString('en-US'),
             dateUpdated: this._dateUpdated.toLocaleDateString('en-US'),
-            numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this._dateListed),
-            creationType: this._creationType,
+            numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this.dateListed),
+            creationType: this.creationType,
         };
     }
 
