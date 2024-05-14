@@ -1,5313 +1,667 @@
 [
   {
-    "id": "1-W-Hills-Pl,-Melville,-NY-11747",
-    "formattedAddress": "1 W Hills Pl, Melville, NY 11747",
-    "addressLine1": "1 W Hills Pl",
+    "id": "110-Overlook-Dr,-Mastic,-NY-11950",
+    "formattedAddress": "110 Overlook Dr, Mastic, NY 11950",
+    "addressLine1": "110 Overlook Dr",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.768762,
-    "longitude": -73.364783,
+    "latitude": 40.792205,
+    "longitude": -72.831811,
     "propertyType": "Single Family",
-    "lotSize": 37462,
-    "assessorID": "0400-273.00-03.00-084.005",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1999-11-16T00:00:00.000Z",
-    "lastSalePrice": 340000,
+    "lotSize": 15246,
+    "assessorID": "0200-910.00-02.00-017.000",
+    "legalDescription": "MASTIC ACRES 1464 UNIT 4 2415 & 2416",
+    "subdivision": "MASTIC ACRES",
+    "lastSaleDate": "2021-11-23T00:00:00.000Z",
+    "lastSalePrice": 400000,
     "features": {
       "unitCount": 1
     },
     "taxAssessments": {
       "2020": {
-        "value": 5100,
-        "land": 450,
-        "improvements": 4650
-      }
-    },
-    "propertyTaxes": {
-      "2021": {
-        "total": 17192
-      }
-    },
-    "owner": {
-      "names": [
-        "MARWAN HENNAWI"
-      ],
-      "mailingAddress": {
-        "id": "1-W-Hills-Pl,-Melville,-NY-11747",
-        "addressLine1": "1 W Hills Pl",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "1-W-Lyons-St,-Melville,-NY-11747",
-    "formattedAddress": "1 W Lyons St, Melville, NY 11747",
-    "addressLine1": "1 W Lyons St",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk County",
-    "latitude": 40.806291,
-    "longitude": -73.410661,
-    "propertyType": "Single Family",
-    "lotSize": 12197
-  },
-  {
-    "id": "119-Redbrook-Ct,-Melville,-NY-11747",
-    "formattedAddress": "119 Redbrook Ct, Melville, NY 11747",
-    "addressLine1": "119 Redbrook Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.782799,
-    "longitude": -73.428449,
-    "propertyType": "Single Family",
-    "lotSize": 37897,
-    "assessorID": "0400-255.00-01.00-039.007",
-    "legalDescription": "BLK LOT 5",
-    "subdivision": "ROLLING HILLS",
-    "lastSaleDate": "2003-03-07T00:00:00.000Z",
-    "lastSalePrice": 795000,
-    "features": {},
-    "taxAssessments": {
-      "2016": {
-        "value": 905882,
-        "land": null,
-        "improvements": null
+        "value": 225,
+        "land": 225
       },
-      "2017": {
-        "value": 916667,
-        "land": null,
-        "improvements": null
-      },
-      "2018": {
-        "value": 962500,
-        "land": null,
-        "improvements": null
-      },
-      "2020": {
-        "value": 1013158,
-        "land": null,
-        "improvements": null
-      },
-      "2021": {
-        "value": 1040541,
-        "land": null,
-        "improvements": null
-      },
-      "2023": {
-        "value": 7700,
-        "land": 850,
-        "improvements": 6850
+      "2022": {
+        "value": 2700,
+        "land": 225,
+        "improvements": 2475
       }
     },
     "propertyTaxes": {
       "2016": {
-        "total": 23934
-      },
-      "2017": {
-        "total": 24429
-      },
-      "2018": {
-        "total": 25222
-      },
-      "2020": {
-        "total": 25847
-      },
-      "2021": {
-        "total": 26150
+        "total": 3707
       }
     },
     "owner": {
       "names": [
-        "Mohammed Issac Aminzada",
-        "FAZILAT AMINZADA"
+        "110 OVERLOOK DRIVE LLC"
       ],
       "mailingAddress": {
-        "id": "119-Redbrook-Ct,-Melville,-NY-11747",
-        "formattedAddress": "119 Redbrook Ct, Melville, NY 11747",
-        "addressLine1": "119 Redbrook Ct",
+        "id": "110-Overlook-Dr,-Mastic,-NY-11950",
+        "formattedAddress": "110 Overlook Dr, Mastic, NY 11950",
+        "addressLine1": "110 Overlook Dr",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "8-Tucker-Ct,-Melville,-NY-11747",
-    "formattedAddress": "8 Tucker Ct, Melville, NY 11747",
-    "addressLine1": "8 Tucker Ct",
+    "id": "126-Overlook-Dr,-Mastic,-NY-11950",
+    "formattedAddress": "126 Overlook Dr, Mastic, NY 11950",
+    "addressLine1": "126 Overlook Dr",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.803695,
-    "longitude": -73.396879,
+    "latitude": 40.791402,
+    "longitude": -72.830961,
     "propertyType": "Single Family",
-    "lotSize": 7841,
-    "assessorID": "0400-236.00-02.00-131.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "MELVILLE PARK",
-    "zoning": "R10",
-    "lastSaleDate": "2022-01-10T00:00:00.000Z",
-    "lastSalePrice": 676200,
-    "features": {
-      "unitCount": 1
-    },
+    "lotSize": 19602,
+    "assessorID": "0200-910.00-03.00-022.001",
+    "legalDescription": "LOT:22.001 BLK:3 SEC:910.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
+    "features": {},
     "taxAssessments": {
-      "2016": {
-        "value": 388235,
-        "land": null,
-        "improvements": null
-      },
-      "2017": {
-        "value": 392857,
-        "land": null,
-        "improvements": null
-      },
-      "2018": {
-        "value": 412500,
-        "land": null,
-        "improvements": null
-      },
       "2020": {
-        "value": 434211,
-        "land": null,
-        "improvements": null
+        "value": 2250,
+        "land": 250,
+        "improvements": 2000
       },
-      "2021": {
-        "value": 445946,
-        "land": null,
-        "improvements": null
-      },
-      "2023": {
-        "value": 3300,
-        "land": 100,
-        "improvements": 3200
+      "2022": {
+        "value": 2250,
+        "land": 250,
+        "improvements": 2000
       }
     },
     "propertyTaxes": {
       "2016": {
-        "total": 9367
-      },
-      "2017": {
-        "total": 9268
-      },
-      "2018": {
-        "total": 9499
-      },
-      "2020": {
-        "total": 10009
-      },
-      "2021": {
-        "total": 10217
+        "total": 9365
       }
     },
     "owner": {
       "names": [
-        "Mohammad Aminzada"
+        "Oudry Dennis Belle",
+        "MARIOL BELLE"
       ],
       "mailingAddress": {
-        "id": "8-Tucker-Ct,-Melville,-NY-11747",
-        "formattedAddress": "8 Tucker Ct, Melville, NY 11747",
-        "addressLine1": "8 Tucker Ct",
+        "id": "126-Overlook-Dr,-Mastic,-NY-11950",
+        "formattedAddress": "126 Overlook Dr, Mastic, NY 11950",
+        "addressLine1": "126 Overlook Dr",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "6-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "6 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "6 Apricot Ct",
+    "id": "127-Neptune-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "127 Neptune Ave, Mastic, NY 11950",
+    "addressLine1": "127 Neptune Ave",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.758101,
-    "longitude": -73.418954,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-178.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTY POINTE/MELVILLE SEC 1-6",
-    "lastSaleDate": "1998-09-16T00:00:00.000Z",
-    "lastSalePrice": 230000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "Ira M Newman",
-        "VANESSA NEWMAN"
-      ],
-      "mailingAddress": {
-        "id": "6-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "6 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "6 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "21-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "21 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "21 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757763,
-    "longitude": -73.418248,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-139.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINT",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12826
-      }
-    },
-    "owner": {
-      "names": [
-        "STEFANO FAMILY TRUST"
-      ],
-      "mailingAddress": {
-        "id": "21-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "21 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "21 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "10-Hyacinth-Ct,-Melville,-NY-11747",
-    "formattedAddress": "10 Hyacinth Ct, Melville, NY 11747",
-    "addressLine1": "10 Hyacinth Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760436,
-    "longitude": -73.417287,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-094.000",
-    "legalDescription": "BLK LOT 94",
-    "subdivision": "COUNTRY POINT @ MELVILLE",
-    "lastSaleDate": "1997-11-14T00:00:00.000Z",
-    "lastSalePrice": 113000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16306
-      }
-    },
-    "owner": {
-      "names": [
-        "Raj Arora",
-        "GEETA KOCHAR"
-      ],
-      "mailingAddress": {
-        "id": "10-Hyacinth-Ct,-Melville,-NY-11747",
-        "formattedAddress": "10 Hyacinth Ct, Melville, NY 11747",
-        "addressLine1": "10 Hyacinth Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "144-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "144 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "144 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759986,
-    "longitude": -73.415742,
-    "propertyType": "Single Family",
-    "lotSize": 7841,
-    "assessorID": "0400-267.01-01.00-036.000",
-    "legalDescription": "BLK LOT 36",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2017-01-18T00:00:00.000Z",
-    "lastSalePrice": 680000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4725,
-        "land": 550,
-        "improvements": 4175
-      },
-      "2023": {
-        "value": 4725,
-        "land": 550,
-        "improvements": 4175
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17152
-      }
-    },
-    "owner": {
-      "names": [
-        "Tim Caras",
-        "JEANINE CARAS"
-      ],
-      "mailingAddress": {
-        "id": "144-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "144 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "144 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "9-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "9 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "9 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759467,
-    "longitude": -73.418035,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-022.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1997-11-26T00:00:00.000Z",
-    "lastSalePrice": 278500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "Joanne Giordano",
-        "ROBERT GIORDANO"
-      ],
-      "mailingAddress": {
-        "id": "9-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "9 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "9 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "132-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "132 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "132 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.75979,
-    "longitude": -73.416887,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-033.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILE SEC 01-",
-    "lastSaleDate": "1998-01-09T00:00:00.000Z",
-    "lastSalePrice": 122000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5225,
-        "land": 500,
-        "improvements": 4725
-      },
-      "2023": {
-        "value": 5225,
-        "land": 500,
-        "improvements": 4725
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 18308
-      }
-    },
-    "owner": {
-      "names": [
-        "Charles S Handelman",
-        "DEBRA A HANDELMAN"
-      ],
-      "mailingAddress": {
-        "id": "132-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "132 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "132 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "33-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "33 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "33 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757807,
-    "longitude": -73.417698,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-133.000",
-    "legalDescription": "BLK LOT 133",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13401
-      }
-    },
-    "owner": {
-      "names": [
-        "WOHL FAMILY IRT",
-        "Sherrie R Wohl"
-      ],
-      "mailingAddress": {
-        "id": "33-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "33 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "33 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "107-Hazelnut-Ct,-Melville,-NY-11747",
-    "formattedAddress": "107 Hazelnut Ct, Melville, NY 11747",
-    "addressLine1": "107 Hazelnut Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760241,
-    "longitude": -73.418673,
-    "propertyType": "Single Family",
-    "lotSize": 7841,
-    "assessorID": "0400-267.01-01.00-111.000",
-    "legalDescription": "BLK LOT 111",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "1997-11-21T00:00:00.000Z",
-    "lastSalePrice": 116500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5100,
-        "land": 550,
-        "improvements": 4550
-      },
-      "2023": {
-        "value": 5100,
-        "land": 550,
-        "improvements": 4550
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16990
-      }
-    },
-    "owner": {
-      "names": [
-        "Fred Feldstein",
-        "ELIANA G FELDSTEIN"
-      ],
-      "mailingAddress": {
-        "id": "107-Hazelnut-Ct,-Melville,-NY-11747",
-        "formattedAddress": "107 Hazelnut Ct, Melville, NY 11747",
-        "addressLine1": "107 Hazelnut Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "101-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "101 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "101 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757463,
-    "longitude": -73.418249,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-140.000",
-    "legalDescription": "BLK LOT",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13344
-      }
-    },
-    "owner": {
-      "names": [
-        "GILDA V HICKS IRRUST DEBOR MARTINO"
-      ],
-      "mailingAddress": {
-        "id": "101-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "101 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "101 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "110-Hazelnut-Ct,-Melville,-NY-11747",
-    "formattedAddress": "110 Hazelnut Ct, Melville, NY 11747",
-    "addressLine1": "110 Hazelnut Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760424,
-    "longitude": -73.418174,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-107.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1997-11-17T00:00:00.000Z",
-    "lastSalePrice": 114000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      },
-      "2023": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16477
-      }
-    },
-    "owner": {
-      "names": [
-        "Steven Gerber",
-        "SUSAN GERBER"
-      ],
-      "mailingAddress": {
-        "id": "110-Hazelnut-Ct,-Melville,-NY-11747",
-        "formattedAddress": "110 Hazelnut Ct, Melville, NY 11747",
-        "addressLine1": "110 Hazelnut Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "204-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "204 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "204 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.762303,
-    "longitude": -73.415876,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-051.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2015-08-10T00:00:00.000Z",
-    "lastSalePrice": 685000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      },
-      "2023": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15744
-      }
-    },
-    "owner": {
-      "names": [
-        "Vinay K Anipindi"
-      ],
-      "mailingAddress": {
-        "id": "204-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "204 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "204 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "181-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "181 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "181 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761387,
-    "longitude": -73.416249,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-060.000",
-    "legalDescription": "BLK LOT 60",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2006-08-15T00:00:00.000Z",
-    "lastSalePrice": 780000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "Kerrie Zeh"
-      ],
-      "mailingAddress": {
-        "id": "181-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "181 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "181 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "14-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "14 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "14 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759097,
-    "longitude": -73.417828,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-004.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2000-10-23T00:00:00.000Z",
-    "lastSalePrice": 530000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "Mark Spiegel"
-      ],
-      "mailingAddress": {
-        "id": "14-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "14 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "14 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "116-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "116 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "116 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760813,
-    "longitude": -73.41648,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-071.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE SEC 1",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4400,
-        "land": 500,
-        "improvements": 3900
-      },
-      "2023": {
-        "value": 4400,
-        "land": 500,
-        "improvements": 3900
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14739
-      }
-    },
-    "owner": {
-      "names": [
-        "BETH BART"
-      ],
-      "mailingAddress": {
-        "id": "116-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "116 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "116 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "157-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "157 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "157 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760396,
-    "longitude": -73.416133,
+    "latitude": 40.791881,
+    "longitude": -72.832754,
     "propertyType": "Single Family",
     "lotSize": 9148,
-    "assessorID": "0400-267.01-01.00-066.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-06-17T00:00:00.000Z",
-    "lastSalePrice": 278000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5000,
-        "land": 600,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 5000,
-        "land": 600,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17539
-      }
-    },
-    "owner": {
-      "names": [
-        "James A Dale",
-        "CARRIE B DALE"
-      ],
-      "mailingAddress": {
-        "id": "157-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "157 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "157 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "26-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "26 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "26 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758389,
-    "longitude": -73.419009,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-184.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINT/MELVILLE",
-    "lastSaleDate": "2016-06-07T00:00:00.000Z",
-    "lastSalePrice": 532500,
+    "assessorID": "0200-910.00-02.00-020.001",
+    "legalDescription": "LOT:20.001 BLK:2 SEC:910.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
     "features": {},
     "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13808
-      }
-    },
-    "owner": {
-      "names": [
-        "Ankur Shah",
-        "LAJJA SHAH"
-      ],
-      "mailingAddress": {
-        "id": "26-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "26 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "26 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "115-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "115 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "115 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757502,
-    "longitude": -73.417727,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-146.000",
-    "legalDescription": "BLK LOT 146",
-    "subdivision": "COUNTRY POINT AT MELVILLE",
-    "lastSaleDate": "2007-02-02T00:00:00.000Z",
-    "lastSalePrice": 601500,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14292
-      }
-    },
-    "owner": {
-      "names": [
-        "AMBROSIO E"
-      ],
-      "mailingAddress": {
-        "id": "115-Cinnamon-Ct,-Melville,-NY-11747",
-        "addressLine1": "115 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "160-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "160 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "160 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760641,
-    "longitude": -73.415676,
-    "propertyType": "Single Family",
-    "lotSize": 4356,
-    "assessorID": "0400-267.01-01.00-040.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2014-08-29T00:00:00.000Z",
-    "lastSalePrice": 577500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      },
-      "2023": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14890
-      }
-    },
-    "owner": {
-      "names": [
-        "RAYMOND ALTAMIRANO",
-        "JENNIFER ALTAMIRANO"
-      ],
-      "mailingAddress": {
-        "id": "160-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "160 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "160 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "110-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "110 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "110 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757411,
-    "longitude": -73.419088,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-161.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2004-03-12T00:00:00.000Z",
-    "lastSalePrice": 440000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      },
-      "2023": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 11863
-      }
-    },
-    "owner": {
-      "names": [
-        "DARRYL A ARONSOHN"
-      ],
-      "mailingAddress": {
-        "id": "110-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "110 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "110 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "69-Republic-Rd,-Melville,-NY-11747",
-    "formattedAddress": "69 Republic Rd, Melville, NY 11747",
-    "addressLine1": "69 Republic Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759814,
-    "longitude": -73.41575,
-    "propertyType": "Single Family",
-    "lotSize": 6970,
-    "assessorID": "0400-267.00-02.00-020.001",
-    "legalDescription": "BLK LOT 1",
-    "subdivision": "TRACEY ESTS.",
-    "lastSaleDate": "2016-12-01T00:00:00.000Z",
-    "lastSalePrice": 599000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4250,
+      "2020": {
+        "value": 2200,
         "land": 200,
-        "improvements": 4050
+        "improvements": 2000
       },
-      "2023": {
-        "value": 4250,
+      "2022": {
+        "value": 2200,
         "land": 200,
-        "improvements": 4050
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14975
+        "improvements": 2000
       }
     },
     "owner": {
       "names": [
-        "Carlos Gonzales",
-        "EMMA GONZALES"
+        "Thomas Theresa"
       ],
       "mailingAddress": {
-        "id": "69-Republic-Rd,-Melville,-NY-11747",
-        "formattedAddress": "69 Republic Rd, Melville, NY 11747",
-        "addressLine1": "69 Republic Rd",
+        "id": "127-Neptune-Ave,-Mastic,-NY-11950",
+        "formattedAddress": "127 Neptune Ave, Mastic, NY 11950",
+        "addressLine1": "127 Neptune Ave",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "10-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "10 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "10 Apricot Ct",
+    "id": "209-Madison-St,-Mastic,-NY-11950",
+    "formattedAddress": "209 Madison St, Mastic, NY 11950",
+    "addressLine1": "209 Madison St",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.758087,
-    "longitude": -73.419129,
+    "latitude": 40.787547,
+    "longitude": -72.850323,
     "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-176.000",
-    "legalDescription": "BLK LOT 176",
-    "subdivision": "COUNTRY POINTE@ MELVILLE",
-    "lastSaleDate": "2004-05-03T00:00:00.000Z",
-    "lastSalePrice": 440000,
+    "lotSize": 17424,
+    "assessorID": "0200-938.00-04.00-006.001",
+    "features": {}
+  },
+  {
+    "id": "264-Hawthorne-St,-Mastic,-NY-11950",
+    "formattedAddress": "264 Hawthorne St, Mastic, NY 11950",
+    "addressLine1": "264 Hawthorne St",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.784061,
+    "longitude": -72.847548,
+    "propertyType": "Single Family",
+    "lotSize": 28750,
+    "assessorID": "0200-938.00-07.00-032.000",
+    "legalDescription": "LOT:32.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "MASTIC ACRES",
+    "lastSaleDate": "2004-08-26T00:00:00.000Z",
+    "lastSalePrice": 313500,
     "features": {},
     "taxAssessments": {
-      "2021": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      },
-      "2023": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      }
-    },
-    "propertyTaxes": {
       "2022": {
-        "total": 12754
-      }
-    },
-    "owner": {
-      "names": [
-        "MARIE MARZANO"
-      ],
-      "mailingAddress": {
-        "id": "10-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "10 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "10 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "27-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "27 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "27 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757791,
-    "longitude": -73.417994,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-136.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE",
-    "lastSaleDate": "2014-07-01T00:00:00.000Z",
-    "lastSalePrice": 615000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13738
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ],
-      "mailingAddress": {
-        "id": "27-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "27 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "27 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "15-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "15 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "15 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758845,
-    "longitude": -73.417863,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-118.000",
-    "legalDescription": "BLK LOT 118",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2018-05-08T00:00:00.000Z",
-    "lastSalePrice": 638000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14499
-      }
-    },
-    "owner": {
-      "names": [
-        "Nicole Reynoso"
-      ],
-      "mailingAddress": {
-        "id": "15-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "15 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "15 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "23-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "23 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "23 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759509,
-    "longitude": -73.417383,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-019.000",
-    "legalDescription": "BLK LOT 19",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2005-07-15T00:00:00.000Z",
-    "lastSalePrice": 806800,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "GUOMING OU"
-      ],
-      "mailingAddress": {
-        "id": "23-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "23 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "23 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "23-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "23 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "23 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757768,
-    "longitude": -73.418154,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-138.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2001-08-22T00:00:00.000Z",
-    "lastSalePrice": 390000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "Seth Kaplan",
-        "ROBIN KAPLAN"
-      ],
-      "mailingAddress": {
-        "id": "23-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "23 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "23 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "29-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "29 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "29 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757799,
-    "longitude": -73.417912,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-135.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      },
-      "2023": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 11863
-      }
-    },
-    "owner": {
-      "names": [
-        "Barbara J Record"
-      ],
-      "mailingAddress": {
-        "id": "29-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "29 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "29 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "3-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "3 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "3 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758135,
-    "longitude": -73.418215,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-127.000",
-    "legalDescription": "BLK LOT 127",
-    "subdivision": "COUNTRY POINT@MELVILLE",
-    "lastSaleDate": "2002-09-06T00:00:00.000Z",
-    "lastSalePrice": 415000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "RONI J BERK"
-      ],
-      "mailingAddress": {
-        "id": "3-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "3 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "3 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "103-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "103 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "103 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.75747,
-    "longitude": -73.418152,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-141.000",
-    "legalDescription": "BLK LOT 141",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2014-08-18T00:00:00.000Z",
-    "lastSalePrice": 587000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4150,
-        "land": 500,
-        "improvements": 3650
-      },
-      "2023": {
-        "value": 4150,
-        "land": 500,
-        "improvements": 3650
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13743
-      }
-    },
-    "owner": {
-      "names": [
-        "MAUREEN CITRON"
-      ],
-      "mailingAddress": {
-        "id": "103-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "103 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "103 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "2-Hyacinth-Ct,-Melville,-NY-11747",
-    "formattedAddress": "2 Hyacinth Ct, Melville, NY 11747",
-    "addressLine1": "2 Hyacinth Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760127,
-    "longitude": -73.417258,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-092.000",
-    "legalDescription": "BLK LOT 92",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2016-06-27T00:00:00.000Z",
-    "lastSalePrice": 775000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "David A Cohon",
-        "DANIELLE K COHON"
-      ],
-      "mailingAddress": {
-        "id": "2-Hyacinth-Ct,-Melville,-NY-11747",
-        "formattedAddress": "2 Hyacinth Ct, Melville, NY 11747",
-        "addressLine1": "2 Hyacinth Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "67-Republic-Rd,-Melville,-NY-11747",
-    "formattedAddress": "67 Republic Rd, Melville, NY 11747",
-    "addressLine1": "67 Republic Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759694,
-    "longitude": -73.415725,
-    "propertyType": "Single Family",
-    "lotSize": 8712,
-    "assessorID": "0400-267.00-02.00-020.002",
-    "legalDescription": "BLK LOT 2",
-    "subdivision": "TRACEY ESTS.",
-    "lastSaleDate": "2004-02-02T00:00:00.000Z",
-    "lastSalePrice": 557000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4190,
+        "value": 2390,
         "land": 200,
-        "improvements": 3990
-      },
-      "2023": {
-        "value": 4190,
-        "land": 200,
-        "improvements": 3990
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13880
+        "improvements": 2190
       }
     },
     "owner": {
       "names": [
-        "Geeta Singh"
+        "Julia E Fuentes",
+        "RUTH V FUENTES"
       ],
       "mailingAddress": {
-        "id": "67-Republic-Rd,-Melville,-NY-11747",
-        "formattedAddress": "67 Republic Rd, Melville, NY 11747",
-        "addressLine1": "67 Republic Rd",
+        "id": "264-Hawthorne-St,-Mastic,-NY-11950",
+        "formattedAddress": "264 Hawthorne St, Mastic, NY 11950",
+        "addressLine1": "264 Hawthorne St",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "105-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "105 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "105 Raspberry Ct",
+    "id": "268-Hawthorne-St,-Mastic,-NY-11950",
+    "formattedAddress": "268 Hawthorne St, Mastic, NY 11950",
+    "addressLine1": "268 Hawthorne St",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.760303,
-    "longitude": -73.41695,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-090.000",
-    "legalDescription": "BLK LOT 90",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2005-10-13T00:00:00.000Z",
-    "lastSalePrice": 848000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "Marlon S Small"
-      ],
-      "mailingAddress": {
-        "id": "105-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "105 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "105 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "173-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "173 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "173 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761088,
-    "longitude": -73.416194,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-062.000",
-    "legalDescription": "BLK LOT 62",
-    "subdivision": "COUNTRY POINTE @ MELVILLE",
-    "lastSaleDate": "2017-08-08T00:00:00.000Z",
-    "lastSalePrice": 765000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      },
-      "2023": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15744
-      }
-    },
-    "owner": {
-      "names": [
-        "Joseph Scott"
-      ],
-      "mailingAddress": {
-        "id": "173-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "173 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "173 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "10-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "10 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "10 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759098,
-    "longitude": -73.418028,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-003.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2008-06-19T00:00:00.000Z",
-    "lastSalePrice": 747500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      },
-      "2023": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14890
-      }
-    },
-    "owner": {
-      "names": [
-        "S KIPNIS"
-      ],
-      "mailingAddress": {
-        "id": "10-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "10 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "10 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "100-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "100 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "100 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759688,
-    "longitude": -73.418507,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-025.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4525,
-        "land": 500,
-        "improvements": 4025
-      },
-      "2023": {
-        "value": 4525,
-        "land": 500,
-        "improvements": 4025
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15762
-      }
-    },
-    "owner": {
-      "names": [
-        "SEOYOUNG KIM"
-      ],
-      "mailingAddress": {
-        "id": "100-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "100 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "100 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "65-Republic-Rd,-Melville,-NY-11747",
-    "formattedAddress": "65 Republic Rd, Melville, NY 11747",
-    "addressLine1": "65 Republic Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759562,
-    "longitude": -73.415711,
-    "propertyType": "Single Family",
-    "lotSize": 8712,
-    "assessorID": "0400-267.00-02.00-020.003",
-    "legalDescription": "BLK LOT 3",
-    "subdivision": "TRACEY ESTS.",
-    "lastSaleDate": "2004-02-05T00:00:00.000Z",
-    "lastSalePrice": 550000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4425,
-        "land": 200,
-        "improvements": 4225
-      },
-      "2023": {
-        "value": 4300,
-        "land": 200,
-        "improvements": 4100
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14738
-      }
-    },
-    "owner": {
-      "names": [
-        "JEAN RAMIALL"
-      ],
-      "mailingAddress": {
-        "id": "65-Republic-Rd,-Melville,-NY-11747",
-        "formattedAddress": "65 Republic Rd, Melville, NY 11747",
-        "addressLine1": "65 Republic Rd",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "2-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "2 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "2 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759063,
-    "longitude": -73.418414,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-001.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2017-05-03T00:00:00.000Z",
-    "lastSalePrice": 396000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4925,
-        "land": 500,
-        "improvements": 4425
-      },
-      "2023": {
-        "value": 4925,
-        "land": 500,
-        "improvements": 4425
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17593
-      }
-    },
-    "owner": {
-      "names": [
-        "Ajay Mehra"
-      ],
-      "mailingAddress": {
-        "id": "2-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "2 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "2 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "205-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "205 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "205 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.762233,
-    "longitude": -73.416647,
-    "propertyType": "Single Family",
-    "lotSize": 9148,
-    "assessorID": "0400-267.01-01.00-054.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-10-01T00:00:00.000Z",
-    "lastSalePrice": 305000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5000,
-        "land": 600,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4850,
-        "land": 600,
-        "improvements": 4250
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17539
-      }
-    },
-    "owner": {
-      "names": [
-        "James G Bianco",
-        "JOANN BIANCO"
-      ],
-      "mailingAddress": {
-        "id": "205-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "205 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "205 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "193-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "193 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "193 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761842,
-    "longitude": -73.416315,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-057.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2019-10-09T00:00:00.000Z",
-    "lastSalePrice": 843000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17237
-      }
-    },
-    "owner": {
-      "names": [
-        "Dana Finkel",
-        "Michael Drehwing"
-      ],
-      "mailingAddress": {
-        "id": "193-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "193 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "193 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "109-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "109 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "109 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757501,
-    "longitude": -73.417905,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-144.000",
-    "legalDescription": "BLK LOT 144",
-    "subdivision": "COUNTRY POINT AT MELVILLE",
-    "lastSaleDate": "2019-07-11T00:00:00.000Z",
-    "lastSalePrice": 640000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "Harry Rouzeau"
-      ],
-      "mailingAddress": {
-        "id": "109-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "109 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "109 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "31-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "31 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "31 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759546,
-    "longitude": -73.416912,
-    "propertyType": "Single Family",
-    "lotSize": 6970,
-    "assessorID": "0400-267.01-01.00-017.000",
-    "legalDescription": "BLK LOT 17",
-    "subdivision": "COUNTRY POINT @ MELVILLE",
-    "lastSaleDate": "2008-10-27T00:00:00.000Z",
-    "lastSalePrice": 93000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5100,
-        "land": 550,
-        "improvements": 4550
-      },
-      "2023": {
-        "value": 5100,
-        "land": 550,
-        "improvements": 4550
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17204
-      }
-    },
-    "owner": {
-      "names": [
-        "JYOTI SHIKAPURI"
-      ],
-      "mailingAddress": {
-        "id": "31-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "31 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "31 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "125-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "125 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "125 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757114,
-    "longitude": -73.417889,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-150.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2014-11-07T00:00:00.000Z",
-    "lastSalePrice": 515000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3625,
-        "land": 500,
-        "improvements": 3125
-      },
-      "2023": {
-        "value": 3625,
-        "land": 500,
-        "improvements": 3125
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 4878
-      }
-    },
-    "owner": {
-      "names": [
-        "ANNETTE RIAD"
-      ],
-      "mailingAddress": {
-        "id": "125-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "125 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "125 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "2-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "2 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "2 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758814,
-    "longitude": -73.418848,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-193.000",
-    "legalDescription": "BLK LOT",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12826
-      }
-    },
-    "owner": {
-      "names": [
-        "COHEN FAMILY TRUST"
-      ],
-      "mailingAddress": {
-        "id": "2-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "2 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "2 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "19-Hyacinth-Ct,-Melville,-NY-11747",
-    "formattedAddress": "19 Hyacinth Ct, Melville, NY 11747",
-    "addressLine1": "19 Hyacinth Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760737,
-    "longitude": -73.418013,
-    "propertyType": "Single Family",
-    "lotSize": 6970,
-    "assessorID": "0400-267.01-01.00-101.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-03-11T00:00:00.000Z",
-    "lastSalePrice": 99500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5050,
-        "land": 550,
-        "improvements": 4500
-      },
-      "2023": {
-        "value": 5050,
-        "land": 550,
-        "improvements": 4500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16819
-      }
-    },
-    "owner": {
-      "names": [
-        "Gary Moser",
-        "JODI MOSER"
-      ],
-      "mailingAddress": {
-        "id": "19-Hyacinth-Ct,-Melville,-NY-11747",
-        "formattedAddress": "19 Hyacinth Ct, Melville, NY 11747",
-        "addressLine1": "19 Hyacinth Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "129-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "129 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "129 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757138,
-    "longitude": -73.417783,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-148.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2006-09-25T00:00:00.000Z",
-    "lastSalePrice": 587000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "L BECKER"
-      ],
-      "mailingAddress": {
-        "id": "129-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "129 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "129 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "7-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "7 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "7 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758164,
-    "longitude": -73.418047,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-129.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1997-11-24T00:00:00.000Z",
-    "lastSalePrice": 223000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "Charles Evans",
-        "ILENE EVANS"
-      ],
-      "mailingAddress": {
-        "id": "7-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "7 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "7 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "116-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "116 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "116 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759731,
-    "longitude": -73.417679,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-029.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE SEC 01",
-    "lastSaleDate": "1998-02-06T00:00:00.000Z",
-    "lastSalePrice": 117000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5000,
-        "land": 500,
-        "improvements": 4500
-      },
-      "2023": {
-        "value": 5000,
-        "land": 500,
-        "improvements": 4500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17539
-      }
-    },
-    "owner": {
-      "names": [
-        "Craig Marcus",
-        "ROBIN MARCUS"
-      ],
-      "mailingAddress": {
-        "id": "116-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "116 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "116 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "30-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "30 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "30 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758389,
-    "longitude": -73.418833,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-182.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY PT",
-    "lastSaleDate": "2006-09-06T00:00:00.000Z",
-    "lastSalePrice": 600000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "B BLATT"
-      ],
-      "mailingAddress": {
-        "id": "30-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "30 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "30 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "31-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "31 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "31 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757805,
-    "longitude": -73.417829,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-134.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2004-03-16T00:00:00.000Z",
-    "lastSalePrice": 505000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "Michael A Shapiro",
-        "NANCY SHAPIRO"
-      ],
-      "mailingAddress": {
-        "id": "31-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "31 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "31 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "21-Ruland-Rd,-Melville,-NY-11747",
-    "formattedAddress": "21 Ruland Rd, Melville, NY 11747",
-    "addressLine1": "21 Ruland Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760063,
-    "longitude": -73.420732,
-    "propertyType": "Single Family",
-    "lotSize": 52272,
-    "assessorID": "0400-267.00-01.00-048.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "DESCRIBED PROPERTY",
-    "zoning": "I2",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4850,
-        "land": 500,
-        "improvements": 4350
-      },
-      "2023": {
-        "value": 4850,
-        "land": 500,
-        "improvements": 4350
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17026
-      }
-    },
-    "owner": {
-      "names": [
-        "FRANK DACCOLTI",
-        "TERESA DACCOLTI"
-      ],
-      "mailingAddress": {
-        "id": "21-Ruland-Rd,-Melville,-NY-11747",
-        "formattedAddress": "21 Ruland Rd, Melville, NY 11747",
-        "addressLine1": "21 Ruland Rd",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "139-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "139 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "139 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761459,
-    "longitude": -73.417391,
-    "propertyType": "Single Family",
-    "lotSize": 6970,
-    "assessorID": "0400-267.01-01.00-082.000",
-    "legalDescription": "BLK LOT 82",
-    "subdivision": "COUNTRY POINTE",
-    "lastSaleDate": "2023-01-05T00:00:00.000Z",
-    "lastSalePrice": 899000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4950,
-        "land": 550,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4950,
-        "land": 550,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17368
-      }
-    },
-    "owner": {
-      "names": [
-        "Christopher Hansen"
-      ],
-      "mailingAddress": {
-        "id": "139-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "139 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "139 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "104-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "104 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "104 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759699,
-    "longitude": -73.418285,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-026.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-02-19T00:00:00.000Z",
-    "lastSalePrice": 284500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16306
-      }
-    },
-    "owner": {
-      "names": [
-        "Thomas O'leary",
-        "CHRISTINA MOLINA"
-      ],
-      "mailingAddress": {
-        "id": "104-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "104 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "104 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "124-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "124 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "124 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759757,
-    "longitude": -73.417278,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-031.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTY POINTE/MELVILLE",
-    "lastSaleDate": "2019-06-20T00:00:00.000Z",
-    "lastSalePrice": 742500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17197
-      }
-    },
-    "owner": {
-      "names": [
-        "Lia Pistilli"
-      ],
-      "mailingAddress": {
-        "id": "124-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "124 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "124 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "143-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "143 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "143 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761686,
-    "longitude": -73.417454,
-    "propertyType": "Single Family",
-    "lotSize": 9583,
-    "assessorID": "0400-267.01-01.00-081.000",
-    "legalDescription": "BLK LOT 81",
-    "subdivision": "COUNTRY POINTE @ MELVILLE",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5100,
-        "land": 600,
-        "improvements": 4500
-      },
-      "2023": {
-        "value": 5100,
-        "land": 600,
-        "improvements": 4500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16990
-      }
-    },
-    "owner": {
-      "names": [
-        "BRIAN PETER DICE IRT",
-        "Brian P Dice"
-      ],
-      "mailingAddress": {
-        "id": "143-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "143 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "143 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "180-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "180 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "180 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761391,
-    "longitude": -73.415749,
-    "propertyType": "Single Family",
-    "lotSize": 4356,
-    "assessorID": "0400-267.01-01.00-045.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTY POINTE/MELVILLE",
-    "lastSaleDate": "2017-04-26T00:00:00.000Z",
-    "lastSalePrice": 680000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      },
-      "2023": {
-        "value": 4475,
-        "land": 500,
-        "improvements": 3975
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15744
-      }
-    },
-    "owner": {
-      "names": [
-        "Sandy X Zhu"
-      ],
-      "mailingAddress": {
-        "id": "180-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "180 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "180 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "115-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "115 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "115 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760631,
-    "longitude": -73.416944,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-088.000",
-    "legalDescription": "BLK LOT 88",
-    "subdivision": "COUNTRY POINTE @ MELVILLE",
-    "lastSaleDate": "2019-11-07T00:00:00.000Z",
-    "lastSalePrice": 800000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      },
-      "2023": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17368
-      }
-    },
-    "owner": {
-      "names": [
-        "Tanaz Sethna"
-      ],
-      "mailingAddress": {
-        "id": "115-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "115 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "115 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "121-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "121 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "121 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757101,
-    "longitude": -73.418113,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-152.000",
-    "legalDescription": "BLK LOT 152",
-    "subdivision": "COUNTRY POINTE @ MELVILLE",
-    "lastSaleDate": "2003-02-27T00:00:00.000Z",
-    "lastSalePrice": 470000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14292
-      }
-    },
-    "owner": {
-      "names": [
-        "ERIC GOLDSTEIN",
-        "SUSAN GOLDSTEIN"
-      ],
-      "mailingAddress": {
-        "id": "121-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "121 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "121 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "189-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "189 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "189 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761689,
-    "longitude": -73.416281,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-058.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-06-24T00:00:00.000Z",
-    "lastSalePrice": 280000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15830
-      }
-    },
-    "owner": {
-      "names": [
-        "Peter Metaxas",
-        "LISA METAXAS"
-      ],
-      "mailingAddress": {
-        "id": "189-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "189 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "189 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "177-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "177 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "177 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.76124,
-    "longitude": -73.41623,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-061.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2009-10-21T00:00:00.000Z",
-    "lastSalePrice": 700000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14939
-      }
-    },
-    "owner": {
-      "names": [
-        "GANESH PANDIT"
-      ],
-      "mailingAddress": {
-        "id": "177-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "177 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "177 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "185-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "185 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "185 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761541,
-    "longitude": -73.416249,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-059.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "1998-06-03T00:00:00.000Z",
-    "lastSalePrice": 293000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17772
-      }
-    },
-    "owner": {
-      "names": [
-        "Christian J Tiriolo",
-        "SHARI A TIRIOLO"
-      ],
-      "mailingAddress": {
-        "id": "185-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "185 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "185 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "176-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "176 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "176 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761243,
-    "longitude": -73.41575,
-    "propertyType": "Single Family",
-    "lotSize": 4356,
-    "assessorID": "0400-267.01-01.00-044.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY PTS/MELVILLE SECS 1-6",
-    "lastSaleDate": "1998-07-22T00:00:00.000Z",
-    "lastSalePrice": 250000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      },
-      "2023": {
-        "value": 4225,
-        "land": 500,
-        "improvements": 3725
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14010
-      }
-    },
-    "owner": {
-      "names": [
-        "Lawrence Carvano",
-        "MICHELLE COLLURA"
-      ],
-      "mailingAddress": {
-        "id": "176-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "176 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "176 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "26-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "26 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "26 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757715,
-    "longitude": -73.419031,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-170.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE SEC 6",
-    "lastSaleDate": "2005-11-18T00:00:00.000Z",
-    "lastSalePrice": 595000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      },
-      "2023": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12754
-      }
-    },
-    "owner": {
-      "names": [
-        "THOMAS A LOPRESTI"
-      ],
-      "mailingAddress": {
-        "id": "26-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "26 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "26 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "38-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "38 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "38 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759207,
-    "longitude": -73.416604,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-010.000",
-    "legalDescription": "BLK LOT 10",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2019-02-26T00:00:00.000Z",
-    "lastSalePrice": 805000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16306
-      }
-    },
-    "owner": {
-      "names": [
-        "Harbans Chandihok",
-        "Achla Chandihok"
-      ],
-      "mailingAddress": {
-        "id": "38-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "38 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "38 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "35-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "35 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "35 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.75976,
-    "longitude": -73.416688,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-016.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1997-10-07T00:00:00.000Z",
-    "lastSalePrice": 97500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      },
-      "2023": {
-        "value": 4950,
-        "land": 500,
-        "improvements": 4450
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16477
-      }
-    },
-    "owner": {
-      "names": [
-        "Robert Gelman",
-        "LAURA GELMAN"
-      ],
-      "mailingAddress": {
-        "id": "35-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "35 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "35 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "12-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "12 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "12 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.75807,
-    "longitude": -73.419212,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-175.000",
-    "legalDescription": "BLK LOT 175",
-    "subdivision": "COUNTRY POINTE",
-    "lastSaleDate": "2015-03-26T00:00:00.000Z",
-    "lastSalePrice": 565000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14199
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ],
-      "mailingAddress": {
-        "id": "12-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "12 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "12 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "100-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "100 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "100 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760191,
-    "longitude": -73.416428,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-067.000",
-    "legalDescription": "BLK LOT 67",
-    "subdivision": "COUNTRY POINT AT MELVILLE",
-    "lastSaleDate": "1998-03-18T00:00:00.000Z",
-    "lastSalePrice": 100500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4550,
-        "land": 550,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4550,
-        "land": 550,
-        "improvements": 4000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 15110
-      }
-    },
-    "owner": {
-      "names": [
-        "Roger Intaz Mohamed",
-        "MOHAMED SEETA"
-      ],
-      "mailingAddress": {
-        "id": "100-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "100 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "100 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "52-Ruland-Rd,-Melville,-NY-11747",
-    "formattedAddress": "52 Ruland Rd, Melville, NY 11747",
-    "addressLine1": "52 Ruland Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761392,
-    "longitude": -73.417717,
+    "latitude": 40.783753,
+    "longitude": -72.847472,
     "propertyType": "Single Family",
     "lotSize": 43560,
-    "assessorID": "0400-267.00-02.00-003.000",
-    "legalDescription": "BLK LOT",
-    "zoning": "R5",
+    "assessorID": "0200-969.00-08.00-001.000",
+    "legalDescription": "LOT:1.000 BLK:8 SEC:969.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
+    "lastSaleDate": "2002-10-31T00:00:00.000Z",
+    "lastSalePrice": 199990,
+    "features": {},
+    "taxAssessments": {
+      "2022": {
+        "value": 2420,
+        "land": 400,
+        "improvements": 2020
+      }
+    },
+    "owner": {
+      "names": [
+        "Donald White",
+        "JUDY A WHITE"
+      ],
+      "mailingAddress": {
+        "id": "268-Hawthorne-St,-Mastic,-NY-11950",
+        "formattedAddress": "268 Hawthorne St, Mastic, NY 11950",
+        "addressLine1": "268 Hawthorne St",
+        "addressLine2": null,
+        "city": "Mastic",
+        "state": "NY",
+        "zipCode": "11950"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "228-Madison-St,-Mastic,-NY-11950",
+    "formattedAddress": "228 Madison St, Mastic, NY 11950",
+    "addressLine1": "228 Madison St",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.785928,
+    "longitude": -72.850487,
+    "propertyType": "Single Family",
+    "lotSize": 64381680,
+    "assessorID": "0209001000100002000",
+    "legalDescription": "MASTIC ACRES 1478 UNIT 6 3006 & 300",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2021": {
-        "value": 4675,
-        "land": 325,
-        "improvements": 4350
-      },
-      "2023": {
-        "value": 4675,
-        "land": 325,
-        "improvements": 4350
-      }
-    },
     "propertyTaxes": {
-      "2022": {
-        "total": 6904
+      "2016": {
+        "total": 5637
       }
     },
     "owner": {
       "names": [
-        "Carol Cress",
-        "THERESA L ROSS"
-      ],
-      "mailingAddress": {
-        "id": "52-Ruland-Rd,-Melville,-NY-11747",
-        "formattedAddress": "52 Ruland Rd, Melville, NY 11747",
-        "addressLine1": "52 Ruland Rd",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "30-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "30 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "30 Apricot Ct",
+    "id": "106-Meadowmere-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "106 Meadowmere Ave, Mastic, NY 11950",
+    "addressLine1": "106 Meadowmere Ave",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.757734,
-    "longitude": -73.418863,
+    "latitude": 40.787169,
+    "longitude": -72.846611,
     "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-168.000",
-    "legalDescription": "BLK LOT",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "Diana Demetri"
-      ],
-      "mailingAddress": {
-        "id": "30-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "30 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "30 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "14-Hyacinth-Ct,-Melville,-NY-11747",
-    "formattedAddress": "14 Hyacinth Ct, Melville, NY 11747",
-    "addressLine1": "14 Hyacinth Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760596,
-    "longitude": -73.417315,
-    "propertyType": "Single Family",
-    "lotSize": 5663,
-    "assessorID": "0400-267.01-01.00-095.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2018-10-15T00:00:00.000Z",
-    "lastSalePrice": 720000,
+    "lotSize": 63815400,
+    "assessorID": "0200939000100017001",
+    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2899 TO 29",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2021": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      }
-    },
     "propertyTaxes": {
-      "2022": {
-        "total": 15830
+      "2016": {
+        "total": 11944
       }
     },
     "owner": {
       "names": [
-        "Laurentiu Ciufecu",
-        "Carmen A Ciufecu"
-      ],
-      "mailingAddress": {
-        "id": "14-Hyacinth-Ct,-Melville,-NY-11747",
-        "formattedAddress": "14 Hyacinth Ct, Melville, NY 11747",
-        "addressLine1": "14 Hyacinth Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
+        "",
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "1-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "1 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "1 Blueberry Ct",
+    "id": "229-Hawthorne-St,-Mastic,-NY-11950",
+    "formattedAddress": "229 Hawthorne St, Mastic, NY 11950",
+    "addressLine1": "229 Hawthorne St",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.758796,
-    "longitude": -73.418387,
+    "latitude": 40.78644,
+    "longitude": -72.847114,
     "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-112.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
+    "lotSize": 64381680,
+    "assessorID": "0200939000100021000",
+    "legalDescription": "MASTIC ACRES 1478 UNIT 6 3096 & 309",
+    "features": {},
+    "propertyTaxes": {
+      "2016": {
+        "total": 10135
+      }
+    },
+    "owner": {
+      "names": [
+        ""
+      ]
+    },
+    "ownerOccupied": false
+  },
+  {
+    "id": "259-Madison-St,-Mastic,-NY-11950",
+    "formattedAddress": "259 Madison St, Mastic, NY 11950",
+    "addressLine1": "259 Madison St",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.783834,
+    "longitude": -72.848929,
+    "propertyType": "Single Family",
+    "lotSize": 28750,
+    "assessorID": "0200-938.00-07.00-012.000",
+    "legalDescription": "LOT:12.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
+    "lastSaleDate": "2005-10-26T00:00:00.000Z",
+    "lastSalePrice": 274540,
     "features": {},
     "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
       "2022": {
-        "total": 13401
+        "value": 1450,
+        "land": 250,
+        "improvements": 1200
       }
     },
     "owner": {
       "names": [
-        "Denise Cormio",
-        "LISA NOTARANTONIO",
-        "Maria Notarantonio"
+        ""
       ],
       "mailingAddress": {
-        "id": "1-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "1 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "1 Blueberry Ct",
+        "id": "259-Madison-St,-Mastic,-NY-11950",
+        "formattedAddress": "259 Madison St, Mastic, NY 11950",
+        "addressLine1": "259 Madison St",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "101-Hazelnut-Ct,-Melville,-NY-11747",
-    "formattedAddress": "101 Hazelnut Ct, Melville, NY 11747",
-    "addressLine1": "101 Hazelnut Ct",
+    "id": "199-Madison-St,-Mastic,-NY-11950",
+    "formattedAddress": "199 Madison St, Mastic, NY 11950",
+    "addressLine1": "199 Madison St",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.760104,
-    "longitude": -73.41855,
+    "latitude": 40.788483,
+    "longitude": -72.850383,
     "propertyType": "Single Family",
-    "lotSize": 7841,
-    "assessorID": "0400-267.01-01.00-110.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1997-11-12T00:00:00.000Z",
-    "lastSalePrice": 126500,
+    "lotSize": 10890,
+    "assessorID": "0200-938.00-04.00-003.000",
+    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2736",
+    "subdivision": "MASTIC ACRES",
+    "lastSaleDate": "2015-12-09T00:00:00.000Z",
+    "lastSalePrice": 234000,
+    "features": {},
+    "taxAssessments": {
+      "2022": {
+        "value": 2000,
+        "land": 135,
+        "improvements": 1865
+      }
+    },
+    "owner": {
+      "names": [
+        "ESPOSITO FRANK",
+        "VICTORIA PEPK"
+      ],
+      "mailingAddress": {
+        "id": "199-Madison-St,-Mastic,-NY-11950",
+        "addressLine1": "199 Madison St",
+        "addressLine2": null,
+        "city": "Mastic",
+        "state": "NY",
+        "zipCode": "11950"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "52-Meadowmere-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "52 Meadowmere Ave, Mastic, NY 11950",
+    "addressLine1": "52 Meadowmere Ave",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.786853,
+    "longitude": -72.851589,
+    "propertyType": "Single Family",
+    "lotSize": 10890,
+    "assessorID": "0200-938.00-05.00-027.000",
+    "features": {}
+  },
+  {
+    "id": "675-Mastic-Rd,-Mastic,-NY-11950",
+    "formattedAddress": "675 Mastic Rd, Mastic, NY 11950",
+    "addressLine1": "675 Mastic Rd",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.788309,
+    "longitude": -72.844631,
+    "propertyType": "Single Family",
+    "lotSize": 63815400,
+    "assessorID": "0200939000200006000",
+    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2929 & 293",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2021": {
-        "value": 5275,
-        "land": 550,
-        "improvements": 4725
-      },
-      "2023": {
-        "value": 5275,
-        "land": 550,
-        "improvements": 4725
-      }
-    },
     "propertyTaxes": {
-      "2022": {
-        "total": 18566
+      "2016": {
+        "total": 5417
       }
     },
     "owner": {
       "names": [
-        "Audra Beberman",
-        "MICHAEL BEBERMAN"
-      ],
-      "mailingAddress": {
-        "id": "101-Hazelnut-Ct,-Melville,-NY-11747",
-        "formattedAddress": "101 Hazelnut Ct, Melville, NY 11747",
-        "addressLine1": "101 Hazelnut Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "8-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "8 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "8 Blueberry Ct",
+    "id": "232-Madison-St,-Mastic,-NY-11950",
+    "formattedAddress": "232 Madison St, Mastic, NY 11950",
+    "addressLine1": "232 Madison St",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.758799,
-    "longitude": -73.419095,
+    "latitude": 40.785695,
+    "longitude": -72.850346,
     "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-190.000",
-    "legalDescription": "BLK LOT",
+    "lotSize": 21780,
+    "assessorID": "0200-938.00-07.00-003.000",
+    "legalDescription": "LOT:3.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "MASTIC ACRES",
+    "lastSaleDate": "2016-07-22T00:00:00.000Z",
+    "lastSalePrice": 54600,
     "features": {},
     "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
       "2022": {
-        "total": 11755
-      }
-    },
-    "owner": {
-      "names": [
-        "HOLM-ANDERSEN L & R TRUST"
-      ],
-      "mailingAddress": {
-        "id": "8-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "8 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "8 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "27-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "27 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "27 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758461,
-    "longitude": -73.418086,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-122.000",
-    "legalDescription": "BLK LOT 122",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2023-09-14T00:00:00.000Z",
-    "lastSalePrice": 805000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "Michele Molitor"
-      ],
-      "mailingAddress": {
-        "id": "27-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "27 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "27 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "169-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "169 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "169 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760941,
-    "longitude": -73.416175,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-063.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-09-16T00:00:00.000Z",
-    "lastSalePrice": 265000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4400,
-        "land": 500,
-        "improvements": 3900
-      },
-      "2023": {
-        "value": 4400,
-        "land": 500,
-        "improvements": 3900
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16029
-      }
-    },
-    "owner": {
-      "names": [
-        "Fred Silverman"
-      ],
-      "mailingAddress": {
-        "id": "169-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "169 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "169 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "63-Republic-Rd,-Melville,-NY-11747",
-    "formattedAddress": "63 Republic Rd, Melville, NY 11747",
-    "addressLine1": "63 Republic Rd",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759428,
-    "longitude": -73.415694,
-    "propertyType": "Single Family",
-    "lotSize": 8712,
-    "assessorID": "0400-267.00-02.00-020.004",
-    "legalDescription": "BLK LOT 4",
-    "subdivision": "TRACEY ESTS.",
-    "lastSaleDate": "2003-07-01T00:00:00.000Z",
-    "lastSalePrice": 529000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4250,
+        "value": 1275,
         "land": 200,
-        "improvements": 4050
-      },
-      "2023": {
-        "value": 4250,
+        "improvements": 1075
+      }
+    },
+    "owner": {
+      "names": [
+        "LUIS HUMBERTO PENAFIEL"
+      ],
+      "mailingAddress": {
+        "id": "232-Madison-St,-Mastic,-NY-11950",
+        "addressLine1": "232 Madison St",
+        "addressLine2": null,
+        "city": "Mastic",
+        "state": "NY",
+        "zipCode": "11950"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "133-Shinnecock-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "133 Shinnecock Ave, Mastic, NY 11950",
+    "addressLine1": "133 Shinnecock Ave",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.797495,
+    "longitude": -72.843014,
+    "propertyType": "Single Family",
+    "lotSize": 6098,
+    "assessorID": "0200882000200086000",
+    "legalDescription": "MASTIC PARK 109 SEC 10 10329 TO 103",
+    "features": {
+      "unitCount": 1
+    },
+    "propertyTaxes": {
+      "2016": {
+        "total": 7539
+      }
+    },
+    "owner": {
+      "names": [
+        ""
+      ]
+    },
+    "ownerOccupied": false
+  },
+  {
+    "id": "58-Wills-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "58 Wills Ave, Mastic, NY 11950",
+    "addressLine1": "58 Wills Ave",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.797539,
+    "longitude": -72.832682,
+    "propertyType": "Single Family",
+    "lotSize": 3920,
+    "assessorID": "0200-883.00-04.00-003.000",
+    "features": {}
+  },
+  {
+    "id": "86-Riviera-Dr,---A,-Mastic,-NY-11950",
+    "formattedAddress": "86 Riviera Dr, # A, Mastic, NY 11950",
+    "addressLine1": "86 Riviera Dr",
+    "addressLine2": "# A",
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.795563,
+    "longitude": -72.834606,
+    "propertyType": "Single Family",
+    "lotSize": 10019,
+    "assessorID": "0200-883.00-03.00-060.000",
+    "features": {}
+  },
+  {
+    "id": "174-Southaven-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "174 Southaven Ave, Mastic, NY 11950",
+    "addressLine1": "174 Southaven Ave",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.798363,
+    "longitude": -72.83766,
+    "propertyType": "Single Family",
+    "lotSize": 6098,
+    "assessorID": "0200-882.00-03.00-054.000",
+    "features": {}
+  },
+  {
+    "id": "173-Somerset-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "173 Somerset Ave, Mastic, NY 11950",
+    "addressLine1": "173 Somerset Ave",
+    "addressLine2": null,
+    "city": "Mastic",
+    "state": "NY",
+    "zipCode": "11950",
+    "county": "Suffolk",
+    "latitude": 40.796112,
+    "longitude": -72.841785,
+    "propertyType": "Single Family",
+    "lotSize": 16117,
+    "assessorID": "0200-882.00-05.00-027.001",
+    "legalDescription": "MASTIC ACRES 1443 UNIT 3 1480 TO 1482 S 100 X 138",
+    "subdivision": "MASTIC ACRES",
+    "lastSaleDate": "2019-07-01T00:00:00.000Z",
+    "lastSalePrice": 309000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 2300,
         "land": 200,
-        "improvements": 4050
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14085
+        "improvements": 2100
+      },
+      "2023": {
+        "value": 2300,
+        "land": 200,
+        "improvements": 2100
       }
     },
     "owner": {
       "names": [
-        "Ravi K Korlipara",
-        "VIJAYA L KORLIPARA"
+        "C Jimenezencarnacion",
+        "Jose Jimenezalmonte"
       ],
       "mailingAddress": {
-        "id": "63-Republic-Rd,-Melville,-NY-11747",
-        "formattedAddress": "63 Republic Rd, Melville, NY 11747",
-        "addressLine1": "63 Republic Rd",
+        "id": "173-Somerset-Ave,-Mastic,-NY-11950",
+        "formattedAddress": "173 Somerset Ave, Mastic, NY 11950",
+        "addressLine1": "173 Somerset Ave",
         "addressLine2": null,
-        "city": "Melville",
+        "city": "Mastic",
         "state": "NY",
-        "zipCode": "11747"
+        "zipCode": "11950"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "106-Hazelnut-Ct,-Melville,-NY-11747",
-    "formattedAddress": "106 Hazelnut Ct, Melville, NY 11747",
-    "addressLine1": "106 Hazelnut Ct",
+    "id": "15-Wills-Ave,-Mastic,-NY-11950",
+    "formattedAddress": "15 Wills Ave, Mastic, NY 11950",
+    "addressLine1": "15 Wills Ave",
     "addressLine2": null,
-    "city": "Melville",
+    "city": "Mastic",
     "state": "NY",
-    "zipCode": "11747",
+    "zipCode": "11950",
     "county": "Suffolk",
-    "latitude": 40.760261,
-    "longitude": -73.418095,
+    "latitude": 40.797333,
+    "longitude": -72.838208,
     "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-108.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE",
-    "lastSaleDate": "2003-08-19T00:00:00.000Z",
-    "lastSalePrice": 650000,
+    "lotSize": 3920,
+    "assessorID": "0200882000700022000",
+    "legalDescription": "MASTIC PARK 109 SEC 10 10739 & 1074",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2021": {
-        "value": 5100,
-        "land": 500,
-        "improvements": 4600
-      },
-      "2023": {
-        "value": 5100,
-        "land": 500,
-        "improvements": 4600
-      }
-    },
     "propertyTaxes": {
-      "2022": {
-        "total": 16990
+      "2016": {
+        "total": 8664
       }
     },
     "owner": {
       "names": [
-        "Mark Smith"
-      ],
-      "mailingAddress": {
-        "id": "106-Hazelnut-Ct,-Melville,-NY-11747",
-        "formattedAddress": "106 Hazelnut Ct, Melville, NY 11747",
-        "addressLine1": "106 Hazelnut Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
-  },
-  {
-    "id": "1-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "1 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "1 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.75944,
-    "longitude": -73.418483,
-    "propertyType": "Single Family",
-    "lotSize": 5663,
-    "assessorID": "0400-267.01-01.00-024.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-03-12T00:00:00.000Z",
-    "lastSalePrice": 282000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4500,
-        "land": 500,
-        "improvements": 4000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14939
-      }
-    },
-    "owner": {
-      "names": [
-        "Kenneth Manwai Tse",
-        "TERRY SUETYEE MUI"
-      ],
-      "mailingAddress": {
-        "id": "1-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "1 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "1 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "136-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "136 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "136 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759898,
-    "longitude": -73.416278,
-    "propertyType": "Single Family",
-    "lotSize": 6534,
-    "assessorID": "0400-267.01-01.00-034.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2006-10-05T00:00:00.000Z",
-    "lastSalePrice": 859000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4750,
-        "land": 550,
-        "improvements": 4200
-      },
-      "2023": {
-        "value": 4750,
-        "land": 550,
-        "improvements": 4200
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17239
-      }
-    },
-    "owner": {
-      "names": [
-        "J PENG"
-      ],
-      "mailingAddress": {
-        "id": "136-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "136 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "136 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "24-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "24 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "24 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757709,
-    "longitude": -73.419109,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-171.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12803
-      }
-    },
-    "owner": {
-      "names": [
-        "D A & M G MILLER-DYM LT",
-        "Denis A Dym"
-      ],
-      "mailingAddress": {
-        "id": "24-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "24 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "24 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "9-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "9 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "9 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758831,
-    "longitude": -73.418041,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-116.000",
-    "legalDescription": "BLK LOT 116",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2015-12-08T00:00:00.000Z",
-    "lastSalePrice": 525000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "Cheryl Gaber"
-      ],
-      "mailingAddress": {
-        "id": "9-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "9 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "9 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "42-Honeysuckle-Ct,-Melville,-NY-11747",
-    "formattedAddress": "42 Honeysuckle Ct, Melville, NY 11747",
-    "addressLine1": "42 Honeysuckle Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.759169,
-    "longitude": -73.41636,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-011.000",
-    "legalDescription": "BLK LOT 11",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "1997-10-10T00:00:00.000Z",
-    "lastSalePrice": 123000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5300,
-        "land": 500,
-        "improvements": 4800
-      },
-      "2023": {
-        "value": 5300,
-        "land": 500,
-        "improvements": 4800
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17673
-      }
-    },
-    "owner": {
-      "names": [
-        "Jody Barbery",
-        "BARBERY SALADINO"
-      ],
-      "mailingAddress": {
-        "id": "42-Honeysuckle-Ct,-Melville,-NY-11747",
-        "formattedAddress": "42 Honeysuckle Ct, Melville, NY 11747",
-        "addressLine1": "42 Honeysuckle Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "34-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "34 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "34 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757733,
-    "longitude": -73.418689,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-166.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE SECTIO",
-    "lastSaleDate": "2018-07-02T00:00:00.000Z",
-    "lastSalePrice": 637500,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14292
-      }
-    },
-    "owner": {
-      "names": [
-        "Perry Wengrofsky",
-        "Debra Wengrofsky"
-      ],
-      "mailingAddress": {
-        "id": "34-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "34 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "34 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "128-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "128 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "128 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757063,
-    "longitude": -73.418912,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-154.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2021-10-06T00:00:00.000Z",
-    "lastSalePrice": 695000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 9636
-      }
-    },
-    "owner": {
-      "names": [
-        "Jeffrey Bloom",
-        "Laura Bloom"
-      ],
-      "mailingAddress": {
-        "id": "128-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "128 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "128 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "14-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "14 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "14 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758063,
-    "longitude": -73.41931,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-174.000",
-    "legalDescription": "BLK LOT 174",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2003-12-11T00:00:00.000Z",
-    "lastSalePrice": 485000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13401
-      }
-    },
-    "owner": {
-      "names": [
-        "LORRAINE STANTON"
-      ],
-      "mailingAddress": {
-        "id": "14-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "14 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "14 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "106-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "106 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "106 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757431,
-    "longitude": -73.418936,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-163.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTS",
-    "lastSaleDate": "2016-01-22T00:00:00.000Z",
-    "lastSalePrice": 500000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3700,
-        "land": 500,
-        "improvements": 3200
-      },
-      "2023": {
-        "value": 3700,
-        "land": 500,
-        "improvements": 3200
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13210
-      }
-    },
-    "owner": {
-      "names": [
-        "Javier Lorenzo",
-        "Marisa Lorenzo"
-      ],
-      "mailingAddress": {
-        "id": "106-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "106 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "106 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "23-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "23 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "23 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758432,
-    "longitude": -73.418243,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-124.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2019-02-15T00:00:00.000Z",
-    "lastSalePrice": 670000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13694
-      }
-    },
-    "owner": {
-      "names": [
-        "Marian Iorio"
-      ],
-      "mailingAddress": {
-        "id": "23-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "23 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "23 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "6-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "6 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "6 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758799,
-    "longitude": -73.419009,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-191.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-04-03T00:00:00.000Z",
-    "lastSalePrice": 217000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      },
-      "2023": {
-        "value": 3600,
-        "land": 500,
-        "improvements": 3100
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 11863
-      }
-    },
-    "owner": {
-      "names": [
-        "Joyce H Levine"
-      ],
-      "mailingAddress": {
-        "id": "6-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "6 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "6 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "9-Hyacinth-Ct,-Melville,-NY-11747",
-    "formattedAddress": "9 Hyacinth Ct, Melville, NY 11747",
-    "addressLine1": "9 Hyacinth Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760443,
-    "longitude": -73.417831,
-    "propertyType": "Single Family",
-    "lotSize": 6534,
-    "assessorID": "0400-267.01-01.00-099.000",
-    "legalDescription": "BLK LOT",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4950,
-        "land": 550,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4950,
-        "land": 550,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17368
-      }
-    },
-    "owner": {
-      "names": [
-        "SHERMAN PAMELA H TRUST"
-      ],
-      "mailingAddress": {
-        "id": "9-Hyacinth-Ct,-Melville,-NY-11747",
-        "formattedAddress": "9 Hyacinth Ct, Melville, NY 11747",
-        "addressLine1": "9 Hyacinth Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "108-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "108 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "108 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.760513,
-    "longitude": -73.416455,
-    "propertyType": "Single Family",
-    "lotSize": 4792,
-    "assessorID": "0400-267.01-01.00-069.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-05-06T00:00:00.000Z",
-    "lastSalePrice": 298000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16342
-      }
-    },
-    "owner": {
-      "names": [
-        "Joseph M Charlack",
-        "GAYLE CHARLACK"
-      ],
-      "mailingAddress": {
-        "id": "108-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "108 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "108 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "122-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "122 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "122 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757044,
-    "longitude": -73.419158,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-157.000",
-    "legalDescription": "BLK LOT 157",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2015-10-30T00:00:00.000Z",
-    "lastSalePrice": 490000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3500,
-        "land": 500,
-        "improvements": 3000
-      },
-      "2023": {
-        "value": 3500,
-        "land": 500,
-        "improvements": 3000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 12818
-      }
-    },
-    "owner": {
-      "names": [
-        "Supreet K Singh",
-        "Baljeet Singh"
-      ],
-      "mailingAddress": {
-        "id": "122-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "122 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "122 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "212-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "212 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "212 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.762566,
-    "longitude": -73.416134,
-    "propertyType": "Single Family",
-    "lotSize": 8712,
-    "assessorID": "0400-267.01-01.00-053.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "2022-05-02T00:00:00.000Z",
-    "lastSalePrice": 865000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5000,
-        "land": 600,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4650,
-        "land": 600,
-        "improvements": 4050
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 17551
-      }
-    },
-    "owner": {
-      "names": [
-        "Kaur Divine"
-      ],
-      "mailingAddress": {
-        "id": "212-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "212 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "212 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "140-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "140 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "140 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761798,
-    "longitude": -73.416628,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0400-267.01-01.00-077.000",
-    "legalDescription": "BLK LOT",
-    "subdivision": "COUNTRY POINTE/MELVILLE",
-    "lastSaleDate": "2001-12-05T00:00:00.000Z",
-    "lastSalePrice": 554000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 5100,
-        "land": 500,
-        "improvements": 4600
-      },
-      "2023": {
-        "value": 5100,
-        "land": 500,
-        "improvements": 4600
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16990
-      }
-    },
-    "owner": {
-      "names": [
-        "LAURA P DAMICO"
-      ],
-      "mailingAddress": {
-        "id": "140-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "140 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "140 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "22-Apricot-Ct,-Melville,-NY-11747",
-    "formattedAddress": "22 Apricot Ct, Melville, NY 11747",
-    "addressLine1": "22 Apricot Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.7577,
-    "longitude": -73.419191,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-172.000",
-    "legalDescription": "BLK LOT 172",
-    "subdivision": "COUNTRY POINTE AT MELVILLE",
-    "lastSaleDate": "2005-08-16T00:00:00.000Z",
-    "lastSalePrice": 640000,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 13904
-      }
-    },
-    "owner": {
-      "names": [
-        "GULJIT S SODHI"
-      ],
-      "mailingAddress": {
-        "id": "22-Apricot-Ct,-Melville,-NY-11747",
-        "formattedAddress": "22 Apricot Ct, Melville, NY 11747",
-        "addressLine1": "22 Apricot Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "114-Cinnamon-Ct,-Melville,-NY-11747",
-    "formattedAddress": "114 Cinnamon Ct, Melville, NY 11747",
-    "addressLine1": "114 Cinnamon Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.757395,
-    "longitude": -73.419281,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0400-267.01-01.00-159.000",
-    "legalDescription": "BLK LOT",
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      },
-      "2023": {
-        "value": 4050,
-        "land": 550,
-        "improvements": 3500
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14292
-      }
-    },
-    "owner": {
-      "names": [
-        "Frederick E Sylvester",
-        "DYANNE SYLVESTER"
-      ],
-      "mailingAddress": {
-        "id": "114-Cinnamon-Ct,-Melville,-NY-11747",
-        "formattedAddress": "114 Cinnamon Ct, Melville, NY 11747",
-        "addressLine1": "114 Cinnamon Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "208-Cranberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "208 Cranberry Ct, Melville, NY 11747",
-    "addressLine1": "208 Cranberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.762467,
-    "longitude": -73.415942,
-    "propertyType": "Single Family",
-    "lotSize": 5227,
-    "assessorID": "0400-267.01-01.00-052.000",
-    "legalDescription": "BLK LOT",
-    "lastSaleDate": "1998-09-30T00:00:00.000Z",
-    "lastSalePrice": 295000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      },
-      "2023": {
-        "value": 4900,
-        "land": 500,
-        "improvements": 4400
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16306
-      }
-    },
-    "owner": {
-      "names": [
-        "Harry Mangal",
-        "JOYCELENE MANGAL"
-      ],
-      "mailingAddress": {
-        "id": "208-Cranberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "208 Cranberry Ct, Melville, NY 11747",
-        "addressLine1": "208 Cranberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "24-Blueberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "24 Blueberry Ct, Melville, NY 11747",
-    "addressLine1": "24 Blueberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.758385,
-    "longitude": -73.419151,
-    "propertyType": "Single Family",
-    "lotSize": 1742,
-    "assessorID": "0400-267.01-01.00-185.000",
-    "legalDescription": "BLK LOT 185",
-    "subdivision": "COUNTRY POINT AT MELVILLE",
-    "lastSaleDate": "2005-06-15T00:00:00.000Z",
-    "lastSalePrice": 602500,
-    "features": {},
-    "taxAssessments": {
-      "2021": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      },
-      "2023": {
-        "value": 3875,
-        "land": 500,
-        "improvements": 3375
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 14199
-      }
-    },
-    "owner": {
-      "names": [
-        "AMY POTRUCH-KAYE"
-      ],
-      "mailingAddress": {
-        "id": "24-Blueberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "24 Blueberry Ct, Melville, NY 11747",
-        "addressLine1": "24 Blueberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "151-Raspberry-Ct,-Melville,-NY-11747",
-    "formattedAddress": "151 Raspberry Ct, Melville, NY 11747",
-    "addressLine1": "151 Raspberry Ct",
-    "addressLine2": null,
-    "city": "Melville",
-    "state": "NY",
-    "zipCode": "11747",
-    "county": "Suffolk",
-    "latitude": 40.761934,
-    "longitude": -73.41703,
-    "propertyType": "Single Family",
-    "lotSize": 9148,
-    "assessorID": "0400-267.01-01.00-079.000",
-    "legalDescription": "BLK LOT 79",
-    "subdivision": "COUNTRY POINT @ MELVILLE",
-    "lastSaleDate": "2020-05-04T00:00:00.000Z",
-    "lastSalePrice": 747500,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2021": {
-        "value": 4600,
-        "land": 600,
-        "improvements": 4000
-      },
-      "2023": {
-        "value": 4600,
-        "land": 600,
-        "improvements": 4000
-      }
-    },
-    "propertyTaxes": {
-      "2022": {
-        "total": 16172
-      }
-    },
-    "owner": {
-      "names": [
-        "Sahil Mehra",
-        "Pavneet Mehra"
-      ],
-      "mailingAddress": {
-        "id": "151-Raspberry-Ct,-Melville,-NY-11747",
-        "formattedAddress": "151 Raspberry Ct, Melville, NY 11747",
-        "addressLine1": "151 Raspberry Ct",
-        "addressLine2": null,
-        "city": "Melville",
-        "state": "NY",
-        "zipCode": "11747"
-      }
-    },
-    "ownerOccupied": true
+    "ownerOccupied": false
   }
 ]

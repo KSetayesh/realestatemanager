@@ -185,104 +185,6 @@ export class RentCastService {
         rentCastPropertyApiCallId: number,
     ): Promise<number> {
 
-
-        const createRentCastSaleResponseType = (rentCastSalesResponse: RentCastResponse): RentCastSaleResponseType => {
-            const jsonData = rentCastSalesResponse.apiResponseData;
-
-            return {
-                id: rentCastSalesResponse.id,
-                formattedAddress: jsonData.formattedAddress ?? '',
-                addressLine1: jsonData.addressLine1 ?? '',
-                addressLine2: jsonData.addressLine2 ?? '',
-                city: jsonData.city ?? '',
-                state: jsonData.state ?? '',
-                zipCode: jsonData.zipCode ?? '',
-                county: jsonData.county ?? '',
-                bedrooms: jsonData.bedrooms ?? -1,
-                bathrooms: jsonData.bathrooms ?? -1,
-                latitude: jsonData.latitude ?? -1,
-                longitude: jsonData.longitude ?? -1,
-                squareFootage: jsonData.squareFootage ?? -1,
-                propertyType: jsonData.propertyType ?? '',
-                lotSize: jsonData.lotSize ?? -1,
-                status: jsonData.status ?? '',
-                yearBuilt: jsonData.yearBuilt ?? -1,
-                price: jsonData.price ?? -1,
-                listedDate: jsonData.listedDate ?? new Date(0),
-                removedDate: jsonData.removedDate ?? new Date(0),
-                createdDate: jsonData.createdDate ?? new Date(0),
-                lastSeenDate: jsonData.lastSeenDate ?? new Date(0),
-                daysOnMarket: jsonData.daysOnMarket ?? 0,   // Come back to this and think about what to do here
-            };
-        };
-
-        const createRentCastPropertyResponseType = (rentCastSalesResponse: RentCastResponse): RentCastPropertyResponseType => {
-
-            const jsonData = rentCastSalesResponse.apiResponseData;
-
-            const getLatestPropertyTax = (jsonData): number => {
-                const currentYear = new Date().getFullYear();
-                const lastYear = currentYear - 1;
-                const yearBeforeLast = currentYear - 2;
-
-                // Check for last year and the year before last
-                if (jsonData.propertyTaxes) {
-                    if (jsonData.propertyTaxes[lastYear]) {
-                        return jsonData.propertyTaxes[lastYear].total;
-                    } else if (jsonData.propertyTaxes[yearBeforeLast]) {
-                        return jsonData.propertyTaxes[yearBeforeLast].total;
-                    }
-                }
-
-                // Return -1 if no data available
-                return -1;
-            };
-
-            return {
-                id: rentCastSalesResponse.id,
-                formattedAddress: jsonData.formattedAddress ?? '',
-                addressLine1: jsonData.addressLine1 ?? '',
-                addressLine2: jsonData.addressLine2 ?? '',
-                city: jsonData.city ?? '',
-                state: jsonData.state ?? '',
-                zipCode: jsonData.zipCode ?? '',
-                county: jsonData.county ?? '',
-                bedrooms: jsonData.bedrooms ?? -1,
-                bathrooms: jsonData.bathrooms ?? -1,
-                latitude: jsonData.latitude ?? -1,
-                longitude: jsonData.longitude ?? -1,
-                squareFootage: jsonData.squareFootage ?? -1,
-                propertyType: jsonData.propertyType ?? '',
-                lotSize: jsonData.lotSize ?? -1,
-                yearBuilt: jsonData.yearBuilt ?? -1,
-
-                assessorID: jsonData.assessorID ?? '',
-                lastSalePrice: jsonData.lastSalePrice ?? -1,
-                lastSaleDate: jsonData.lastSaleDate ?? new Date(0),
-                ownerOccupied: jsonData.ownerOccupied ?? false,
-                features: {
-                    garage: jsonData.features?.garage ?? false,
-                    pool: jsonData.features?.pool ?? false,
-                    floorCount: jsonData.features?.floorCount ?? -1,
-                    unitCount: jsonData.features?.unitCount ?? -1
-                },
-                previousYearPropertyTaxes: getLatestPropertyTax(jsonData),
-                owner: {
-                    names: jsonData.owner?.names ?? [],
-                    mailingAddress: {
-                        id: jsonData.owner?.mailingAddress?.id ?? '',
-                        formattedAddress: jsonData.owner?.mailingAddress?.formattedAddress ?? '',
-                        addressLine1: jsonData.owner?.mailingAddress?.addressLine1 ?? '',
-                        addressLine2: jsonData.owner?.mailingAddress?.addressLine2 ?? '',
-                        city: jsonData.owner?.mailingAddress?.city ?? '',
-                        state: jsonData.owner?.mailingAddress?.state ?? '',
-                        zipCode: jsonData.owner?.mailingAddress?.zipCode ?? '',
-                    },
-                },
-            };
-        };
-
-
         const rentCastPropertyMap: Map<string, RentCastResponse> =
             new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
                 [rentCastProperty.id, rentCastProperty]));
@@ -305,7 +207,7 @@ export class RentCastService {
 
                 let listingDetail: ListingDetailsDTO;
 
-                const rentCastSaleResponseType: RentCastSaleResponseType = createRentCastSaleResponseType(rentCastSaleResponse);
+                const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSaleResponse);
 
                 if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.id in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.id];
@@ -313,7 +215,7 @@ export class RentCastService {
 
                     listingDetail = this.buildListingDetails(
                         rentCastSaleResponseType,
-                        createRentCastPropertyResponseType(rentCastProperty)
+                        this.createRentCastPropertyResponseType(rentCastProperty)
                     );
                     addressIdOfMatchesFound.add(rentCastSaleResponse.id);
                 }
@@ -350,6 +252,103 @@ export class RentCastService {
             throw error;
         }
     }
+
+    private createRentCastSaleResponseType(rentCastSalesResponse: RentCastResponse): RentCastSaleResponseType {
+        const jsonData = rentCastSalesResponse.apiResponseData;
+
+        return {
+            id: rentCastSalesResponse.id,
+            formattedAddress: jsonData.formattedAddress ?? '',
+            addressLine1: jsonData.addressLine1 ?? '',
+            addressLine2: jsonData.addressLine2 ?? '',
+            city: jsonData.city ?? '',
+            state: jsonData.state ?? '',
+            zipCode: jsonData.zipCode ?? '',
+            county: jsonData.county ?? '',
+            bedrooms: jsonData.bedrooms ?? -1,
+            bathrooms: jsonData.bathrooms ?? -1,
+            latitude: jsonData.latitude ?? -1,
+            longitude: jsonData.longitude ?? -1,
+            squareFootage: jsonData.squareFootage ?? -1,
+            propertyType: jsonData.propertyType ?? '',
+            lotSize: jsonData.lotSize ?? -1,
+            status: jsonData.status ?? '',
+            yearBuilt: jsonData.yearBuilt ?? -1,
+            price: jsonData.price ?? -1,
+            listedDate: jsonData.listedDate ?? new Date(0),
+            removedDate: jsonData.removedDate ?? new Date(0),
+            createdDate: jsonData.createdDate ?? new Date(0),
+            lastSeenDate: jsonData.lastSeenDate ?? new Date(0),
+            daysOnMarket: jsonData.daysOnMarket ?? 0,   // Come back to this and think about what to do here
+        };
+    }
+
+    private createRentCastPropertyResponseType(rentCastSalesResponse: RentCastResponse): RentCastPropertyResponseType {
+
+        const jsonData = rentCastSalesResponse.apiResponseData;
+
+        const getLatestPropertyTax = (jsonData): number => {
+            const currentYear = new Date().getFullYear();
+            const lastYear = currentYear - 1;
+            const yearBeforeLast = currentYear - 2;
+
+            // Check for last year and the year before last
+            if (jsonData.propertyTaxes) {
+                if (jsonData.propertyTaxes[lastYear]) {
+                    return jsonData.propertyTaxes[lastYear].total;
+                } else if (jsonData.propertyTaxes[yearBeforeLast]) {
+                    return jsonData.propertyTaxes[yearBeforeLast].total;
+                }
+            }
+
+            // Return -1 if no data available
+            return -1;
+        };
+
+        return {
+            id: rentCastSalesResponse.id,
+            formattedAddress: jsonData.formattedAddress ?? '',
+            addressLine1: jsonData.addressLine1 ?? '',
+            addressLine2: jsonData.addressLine2 ?? '',
+            city: jsonData.city ?? '',
+            state: jsonData.state ?? '',
+            zipCode: jsonData.zipCode ?? '',
+            county: jsonData.county ?? '',
+            bedrooms: jsonData.bedrooms ?? -1,
+            bathrooms: jsonData.bathrooms ?? -1,
+            latitude: jsonData.latitude ?? -1,
+            longitude: jsonData.longitude ?? -1,
+            squareFootage: jsonData.squareFootage ?? -1,
+            propertyType: jsonData.propertyType ?? '',
+            lotSize: jsonData.lotSize ?? -1,
+            yearBuilt: jsonData.yearBuilt ?? -1,
+
+            assessorID: jsonData.assessorID ?? '',
+            lastSalePrice: jsonData.lastSalePrice ?? -1,
+            lastSaleDate: jsonData.lastSaleDate ?? new Date(0),
+            ownerOccupied: jsonData.ownerOccupied ?? false,
+            features: {
+                garage: jsonData.features?.garage ?? false,
+                pool: jsonData.features?.pool ?? false,
+                floorCount: jsonData.features?.floorCount ?? -1,
+                unitCount: jsonData.features?.unitCount ?? -1
+            },
+            previousYearPropertyTaxes: getLatestPropertyTax(jsonData),
+            owner: {
+                names: jsonData.owner?.names ?? [],
+                mailingAddress: {
+                    id: jsonData.owner?.mailingAddress?.id ?? '',
+                    formattedAddress: jsonData.owner?.mailingAddress?.formattedAddress ?? '',
+                    addressLine1: jsonData.owner?.mailingAddress?.addressLine1 ?? '',
+                    addressLine2: jsonData.owner?.mailingAddress?.addressLine2 ?? '',
+                    city: jsonData.owner?.mailingAddress?.city ?? '',
+                    state: jsonData.owner?.mailingAddress?.state ?? '',
+                    zipCode: jsonData.owner?.mailingAddress?.zipCode ?? '',
+                },
+            },
+        };
+    }
+
 
     private buildListingDetails(
         rentCastSalesResponseTyped: RentCastSaleResponseType,
