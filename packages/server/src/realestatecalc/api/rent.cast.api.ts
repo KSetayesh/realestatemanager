@@ -30,6 +30,8 @@ export type RentCastApiHeader = {
 export type RentCastApiResponse = {
     rentCastApiCallId: number;
     jsonData: any;
+    endPoint: string;
+    executionTime?: Date;
 };
 
 interface EndpointDetails {
@@ -50,7 +52,7 @@ export class RentCastApi {
             responseFilePath: path.join(__dirname, '../../../src/data/latestRentCastProperty.json'),
         },
     };
- 
+
     private rentCastManager: RentCastManager;
     private pool: Pool;
 
@@ -140,6 +142,7 @@ export class RentCastApi {
                 return {
                     rentCastApiCallId: rentCastApiCallId,
                     jsonData: data,
+                    endPoint: endPoint,
                 };
 
             } else {

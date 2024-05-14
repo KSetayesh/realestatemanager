@@ -2,6 +2,8 @@ import { Pool } from 'pg';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RealEstateDAO } from "./realestate.dao";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
+import { RentCastApiResponse } from 'src/realestatecalc/api/rent.cast.api';
+import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 
 export class RentCastDAO extends RealEstateDAO {
 
@@ -37,16 +39,21 @@ export class RentCastDAO extends RealEstateDAO {
     private MATCHING_RENT_CAST_DATA_QUERY = `
         SELECT
 	    s.address_id AS sale_address_id,
+        s.api_call_id AS sale_api_call_id,
+        p.api_call_id AS property_api_call_id,
 	    s.api_response_data AS sale_api_response_data,
 	    p.api_response_data AS property_api_response_data,
 	    s.end_point AS sale_end_point,
-	    p.end_point AS property_end_point
+	    p.end_point AS property_end_point,
+        s.call_execution_time as sale_call_execution_time,
+        p.call_execution_time as property_call_execution_time
         FROM
             (
                 SELECT
                     rcar.id AS response_id,
                     rcar.address_id,
                     rcar.api_response_data,
+                    rcac.id AS api_call_id,
                     rcac.end_point,
                     rcac.full_url,
                     rcac.execution_time AS call_execution_time
@@ -64,6 +71,7 @@ export class RentCastDAO extends RealEstateDAO {
                     rcar.id AS response_id,
                     rcar.address_id,
                     rcar.api_response_data,
+                    rcac.id AS api_call_id,
                     rcac.end_point,
                     rcac.full_url,
                     rcac.execution_time AS call_execution_time
@@ -199,21 +207,45 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<any[]> {
-
+    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<RentCastMatchingData[]> {
+        const matchingRentCastDataList: RentCastMatchingData[] = [];
         try {
             const res = await pool.query(this.MATCHING_RENT_CAST_DATA_QUERY, [saleEndPoint], [propertyEndPoint]);
             res.rows.forEach(row => {
-                // const agent: RentCastDetails = this.mapRowToRentCastDetails(row);
-                // rentCastDetails.push(agent);
+                const saleAddressId = row.sale_address_id;
+                const saleResponseJsonData = row.sale_api_response_data;
+                const propertyResponseJsonData = row.property_api_response_data;
+                const saleEndPoint = row.sale_end_point;
+                const propertyEndPoint = row.property_end_point;
+                const saleExecutionTime = row.sale_call_execution_time
+                const propertyExecutionTime = row.property_call_execution_time;
+                const saleApiCallId = row.sale_api_call_id;
+                const propertyApiCallId = row.property_api_call_id;
+
+                const saleRentCastData: RentCastApiResponse = {
+                    rentCastApiCallId: saleApiCallId,
+                    jsonData: saleResponseJsonData,
+                    endPoint: saleEndPoint,
+                    executionTime: saleExecutionTime,
+                };
+
+                const propertyRentCastData: RentCastApiResponse = {
+                    rentCastApiCallId: propertyApiCallId,
+                    jsonData: propertyResponseJsonData,
+                    endPoint: propertyEndPoint,
+                    executionTime: propertyExecutionTime,
+                };
+
+                matchingRentCastDataList.push(
+                    new RentCastMatchingData(saleAddressId, saleRentCastData, propertyRentCastData)
+                );
             });
 
-            // return rentCastDetails; //rentCastDetails[0];
         } catch (err) {
             console.error('Error fetching all agents', err);
             throw err;
         }
-        return [];
+        return matchingRentCastDataList;
     }
 
     private async _resetNumberOfApiCalls(pool: Pool, id: number) {

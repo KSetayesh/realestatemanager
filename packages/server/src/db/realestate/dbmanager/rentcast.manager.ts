@@ -3,6 +3,7 @@ import apiKeysConfig from '../../../config/apiKeysConfig';
 import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RentCastDAO } from '../dao/rentcast.dao';
 import { RentCastResponse } from 'src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
+import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 
 export class RentCastManager {
 
@@ -61,7 +62,7 @@ export class RentCastManager {
         );
     }
 
-    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<any[]> {
+    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<RentCastMatchingData[]> {
         return this.rentCastDAO.findMatchingRentingCastData(pool, saleEndPoint, propertyEndPoint);
     }
 
