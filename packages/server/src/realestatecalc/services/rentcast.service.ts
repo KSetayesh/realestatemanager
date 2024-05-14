@@ -106,6 +106,17 @@ export class RentCastService {
     }
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
+        const numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
+
+        return numberOfPropertiesAdded;
+    }
+
+    async matchAndCreateListing(): Promise<number> {
+
+        return 0;
+    }
+
+    async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
 
         const saleApiResponse: RentCastApiResponse = await this.rentCastApi.callRentCastApi(
             RentCastEndPoint.SALE,

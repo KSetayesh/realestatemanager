@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_call (
 -- Query: CreateRentCastApiResponseTable
 CREATE TABLE IF NOT EXISTS rent_cast_api_response (
     id SERIAL PRIMARY KEY,
-    address_id VARCHAR(255) UNIQUE,
+    address_id VARCHAR(255), -- Not unique because different api calls can return the same address (we want that)
     api_response_data JSONB,
     execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),

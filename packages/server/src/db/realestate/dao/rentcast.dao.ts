@@ -34,11 +34,54 @@ export class RentCastDAO extends RealEstateDAO {
     private INSERT_RENT_CAST_API_CALL_QUERY =
         `INSERT INTO rent_cast_api_call (end_point, full_url, rent_cast_config_detail_id, execution_time)`;
 
+    private MATCHING_RENT_CAST_DATA_QUERY = `
+        SELECT
+	    s.address_id AS sale_address_id,
+	    s.api_response_data AS sale_api_response_data,
+	    p.api_response_data AS property_api_response_data,
+	    s.end_point AS sale_end_point,
+	    p.end_point AS property_end_point
+        FROM
+            (
+                SELECT
+                    rcar.id AS response_id,
+                    rcar.address_id,
+                    rcar.api_response_data,
+                    rcac.end_point,
+                    rcac.full_url,
+                    rcac.execution_time AS call_execution_time
+                FROM
+                    rent_cast_api_response rcar
+                JOIN
+                    rent_cast_api_call rcac ON rcac.id = rcar.rent_cast_api_call_id
+                WHERE
+                    rcac.end_point = $1 
+                    AND rcar.api_response_data IS NOT NULL
+            ) AS s
+        JOIN
+            (
+                SELECT
+                    rcar.id AS response_id,
+                    rcar.address_id,
+                    rcar.api_response_data,
+                    rcac.end_point,
+                    rcac.full_url,
+                    rcac.execution_time AS call_execution_time
+                FROM
+                    rent_cast_api_response rcar
+                JOIN
+                    rent_cast_api_call rcac ON rcac.id = rcar.rent_cast_api_call_id
+                WHERE
+                    rcac.end_point = $2
+                    AND rcar.api_response_data IS NOT NULL
+            ) AS p ON s.address_id = p.address_id
+            ORDER BY sale_address_id;
+        `;
+
     // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
-        const query = this.CHECK_FOR_EXISTING_ADDRESS_ID;
         try {
-            const res = await pool.query(query, [address_id]);
+            const res = await pool.query(this.CHECK_FOR_EXISTING_ADDRESS_ID, [address_id]);
             return res.rows[0].exists;  // This will be true or false
         } catch (err) {
             // console.error('Error executing query', err.stack);
@@ -77,10 +120,9 @@ export class RentCastDAO extends RealEstateDAO {
     async getRentCastDetails(pool: Pool): Promise<RentCastDetails[]> {
 
         const rentCastDetails: RentCastDetails[] = [];
-        const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
 
         try {
-            const res = await pool.query(query);
+            const res = await pool.query(this.GET_RENT_CAST_CONFIG_DETAILS_QUERY);
             res.rows.forEach(row => {
                 const agent: RentCastDetails = this.mapRowToRentCastDetails(row);
                 rentCastDetails.push(agent);
@@ -155,6 +197,23 @@ export class RentCastDAO extends RealEstateDAO {
             console.error('Error inserting RentCast API Call', err);
             throw err;
         }
+    }
+
+    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<any[]> {
+
+        try {
+            const res = await pool.query(this.MATCHING_RENT_CAST_DATA_QUERY, [saleEndPoint], [propertyEndPoint]);
+            res.rows.forEach(row => {
+                // const agent: RentCastDetails = this.mapRowToRentCastDetails(row);
+                // rentCastDetails.push(agent);
+            });
+
+            // return rentCastDetails; //rentCastDetails[0];
+        } catch (err) {
+            console.error('Error fetching all agents', err);
+            throw err;
+        }
+        return [];
     }
 
     private async _resetNumberOfApiCalls(pool: Pool, id: number) {
