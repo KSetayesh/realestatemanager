@@ -433,11 +433,11 @@ export class RentCastService {
         rentCastPropertyTyped?: RentCastPropertyResponseType,
         listingDetails?: ListingDetails,
     ): ListingDetailsDTO {
-        return new ListingDetailsDTOBuilder().build(
+        return new ListingDetailsDTOBuilder(
             rentCastSalesResponseTyped,
             rentCastPropertyTyped,
             listingDetails,
-        );
+        ).build();
     }
 
     private parseApiResponse(jsonData: any): RentCastResponse[] {
