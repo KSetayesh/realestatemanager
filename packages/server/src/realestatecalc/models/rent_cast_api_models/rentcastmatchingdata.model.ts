@@ -1,15 +1,20 @@
 import { RentCastApiResponse } from "src/realestatecalc/api/rent.cast.api";
 
+type RentCastApiResponseWithId = {
+    rentCastResponseId: number;
+    rentCastData: RentCastApiResponse;
+};
+
 export class RentCastMatchingData {
 
     private _addressId: string;
-    private _saleRentCastData: RentCastApiResponse;
-    private _propertyRentCastData: RentCastApiResponse;
+    private _saleRentCastData: RentCastApiResponseWithId;
+    private _propertyRentCastData: RentCastApiResponseWithId;
 
     constructor(
         addressId: string,
-        saleRentCastData: RentCastApiResponse,
-        propertyRentCastData: RentCastApiResponse,
+        saleRentCastData: RentCastApiResponseWithId,
+        propertyRentCastData: RentCastApiResponseWithId,
     ) {
         this._addressId = addressId;
         this._saleRentCastData = saleRentCastData;
@@ -20,12 +25,20 @@ export class RentCastMatchingData {
         return this._addressId
     }
 
-    get rentCastApiSaleCallId(): number {
-        return this._saleRentCastData.rentCastApiCallId;
+    get rentCastApiSaleJsonData(): any {
+        return this._saleRentCastData.rentCastData.jsonData;
     }
 
-    get rentCastApiPropertyCallId(): number {
-        return this._propertyRentCastData.rentCastApiCallId;
+    get rentCastApiPropertyJsonData(): any {
+        return this._propertyRentCastData.rentCastData.jsonData;
+    }
+
+    get rentCastSaleResponseId(): number {
+        return this._saleRentCastData.rentCastResponseId;
+    }
+
+    get rentCastPropertyResponseId(): number {
+        return this._propertyRentCastData.rentCastResponseId;
     }
 
 

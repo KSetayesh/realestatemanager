@@ -21,7 +21,8 @@ import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrat
 export class ListingDAO extends RealEstateDAO {
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at, ld.rent_cast_sale_response_id, 
+            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at, 
+            ld.rent_cast_sale_response_id,  ld.rent_cast_property_response_id,
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
             ad.longitude, ad.latitude, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
@@ -191,7 +192,12 @@ export class ListingDAO extends RealEstateDAO {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
 
-            if (ListingCreationType.RENT_CAST_API === creationType && isValidRentCastResponseId(saleResponseId)) {
+            // Should probably move this logic elsewhere
+            const insertWithRentCastResponseIds: boolean = (ListingCreationType.RENT_CAST_API === creationType || ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA === creationType)
+                && isValidRentCastResponseId(saleResponseId);
+
+            if (insertWithRentCastResponseIds) {
+
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {
                     values.push(propertyResponseId);

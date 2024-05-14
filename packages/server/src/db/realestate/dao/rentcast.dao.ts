@@ -38,9 +38,9 @@ export class RentCastDAO extends RealEstateDAO {
 
     private MATCHING_RENT_CAST_DATA_QUERY = `
         SELECT
+        s.response_id AS sale_response_id,
+        p.response_id AS property_response_id,
 	    s.address_id AS sale_address_id,
-        s.api_call_id AS sale_api_call_id,
-        p.api_call_id AS property_api_call_id,
 	    s.api_response_data AS sale_api_response_data,
 	    p.api_response_data AS property_api_response_data,
 	    s.end_point AS sale_end_point,
@@ -53,7 +53,6 @@ export class RentCastDAO extends RealEstateDAO {
                     rcar.id AS response_id,
                     rcar.address_id,
                     rcar.api_response_data,
-                    rcac.id AS api_call_id,
                     rcac.end_point,
                     rcac.full_url,
                     rcac.execution_time AS call_execution_time
@@ -71,7 +70,6 @@ export class RentCastDAO extends RealEstateDAO {
                     rcar.id AS response_id,
                     rcar.address_id,
                     rcar.api_response_data,
-                    rcac.id AS api_call_id,
                     rcac.end_point,
                     rcac.full_url,
                     rcac.execution_time AS call_execution_time
@@ -216,32 +214,8 @@ export class RentCastDAO extends RealEstateDAO {
             const query = `${this.MATCHING_RENT_CAST_DATA_QUERY};`;
             const res = await pool.query(query, [saleEndPoint], [propertyEndPoint]);
             res.rows.forEach(row => {
-                const saleAddressId = row.sale_address_id;
-                const saleResponseJsonData = row.sale_api_response_data;
-                const propertyResponseJsonData = row.property_api_response_data;
-                const saleEndPoint = row.sale_end_point;
-                const propertyEndPoint = row.property_end_point;
-                const saleExecutionTime = row.sale_call_execution_time
-                const propertyExecutionTime = row.property_call_execution_time;
-                const saleApiCallId = row.sale_api_call_id;
-                const propertyApiCallId = row.property_api_call_id;
-
-                const saleRentCastData: RentCastApiResponse = {
-                    rentCastApiCallId: saleApiCallId,
-                    jsonData: saleResponseJsonData,
-                    endPoint: saleEndPoint,
-                    executionTime: saleExecutionTime,
-                };
-
-                const propertyRentCastData: RentCastApiResponse = {
-                    rentCastApiCallId: propertyApiCallId,
-                    jsonData: propertyResponseJsonData,
-                    endPoint: propertyEndPoint,
-                    executionTime: propertyExecutionTime,
-                };
-
                 matchingRentCastDataList.push(
-                    new RentCastMatchingData(saleAddressId, saleRentCastData, propertyRentCastData)
+                    this.mapRowToMatchingRentingCastData(row)
                 );
             });
 
@@ -274,6 +248,42 @@ export class RentCastDAO extends RealEstateDAO {
             console.error('Error inserting listing information', err);
             throw err;
         }
+    }
+
+    private mapRowToMatchingRentingCastData(row: any): RentCastMatchingData {
+        const saleAddressId = row.sale_address_id;
+        const saleResponseId = row.sale_response_id;
+        const propertyResponseId = row.property_response_id;
+        const saleResponseJsonData = row.sale_api_response_data;
+        const propertyResponseJsonData = row.property_api_response_data;
+        const saleEndPoint = row.sale_end_point;
+        const propertyEndPoint = row.property_end_point;
+        const saleExecutionTime = row.sale_call_execution_time
+        const propertyExecutionTime = row.property_call_execution_time;
+
+        const saleRentCastData: RentCastApiResponse = {
+            jsonData: saleResponseJsonData,
+            endPoint: saleEndPoint,
+            executionTime: saleExecutionTime,
+        };
+
+        const propertyRentCastData: RentCastApiResponse = {
+            jsonData: propertyResponseJsonData,
+            endPoint: propertyEndPoint,
+            executionTime: propertyExecutionTime,
+        };
+
+        return new RentCastMatchingData(
+            saleAddressId,
+            {
+                rentCastResponseId: saleResponseId,
+                rentCastData: saleRentCastData
+            },
+            {
+                rentCastResponseId: propertyResponseId,
+                rentCastData: propertyRentCastData
+            }
+        );
     }
 
     private mapRowToRentCastDetails(row: any): RentCastDetails {

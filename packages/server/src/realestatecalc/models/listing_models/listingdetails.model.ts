@@ -5,16 +5,17 @@ import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 
 export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
 
-    private zillowURL: string;
-    private propertyDetails: PropertyDetails;
-    private zillowMarketEstimates: ZillowMarketEstimates;
-    private listingPrice: number;
-    private propertyStatus: PropertyStatus;
-    private creationType: ListingCreationType;
-    private dateListed: Date;
-    private dateCreated: Date;
-    private dateUpdated: Date;
-    private rentCastSaleResponseId?: number;
+    private _zillowURL: string;
+    private _propertyDetails: PropertyDetails;
+    private _zillowMarketEstimates: ZillowMarketEstimates;
+    private _listingPrice: number;
+    private _propertyStatus: PropertyStatus;
+    private _creationType: ListingCreationType;
+    private _dateListed: Date;
+    private _dateCreated: Date;
+    private _dateUpdated: Date;
+    private _rentCastSaleResponseId?: number;
+    private _rentCastPropertyResponseId?: number;
 
     constructor(zillowURL: string,
         propertyDetails: PropertyDetails,
@@ -26,56 +27,66 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         dateCreated: Date,
         dateUpdated: Date,
         rentCastSaleResponseId?: number,
+        rentCastPropertyResponseId?: number,
     ) {
 
-        this.zillowURL = zillowURL;
-        this.propertyDetails = propertyDetails;
-        this.zillowMarketEstimates = zillowMarketEstimates;
-        this.listingPrice = listingPrice;
-        this.propertyStatus = propertyStatus;
-        this.creationType = creationType;
-        this.dateListed = dateListed;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
-        this.rentCastSaleResponseId = rentCastSaleResponseId;
+        this._zillowURL = zillowURL;
+        this._propertyDetails = propertyDetails;
+        this._zillowMarketEstimates = zillowMarketEstimates;
+        this._listingPrice = listingPrice;
+        this._propertyStatus = propertyStatus;
+        this._creationType = creationType;
+        this._dateListed = dateListed;
+        this._dateCreated = dateCreated;
+        this._dateUpdated = dateUpdated;
+        this._rentCastSaleResponseId = rentCastSaleResponseId;
+        this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
 
-    getListingPrice(): number {
-        return this.listingPrice;
+    get listingPrice(): number {
+        return this._listingPrice;
     }
 
-    getZillowRentEstimate(): number {
-        return this.zillowMarketEstimates.getZillowRentEstimate();
+    get zillowRentEstimate(): number {
+        return this._zillowMarketEstimates.getZillowRentEstimate();
     }
 
-    getZillowMonthlyPropertyTaxAmount(): number {
-        return this.zillowMarketEstimates.getZillowMonthlyPropertyTaxAmount();
+    get zillowMonthlyPropertyTaxAmount(): number {
+        return this._zillowMarketEstimates.getZillowMonthlyPropertyTaxAmount();
     }
 
-    getZillowMonthlyHomeInsuranceAmount(): number {
-        return this.zillowMarketEstimates.getZillowMonthlyHomeInsuranceAmount();
+    get zillowMonthlyHomeInsuranceAmount(): number {
+        return this._zillowMarketEstimates.getZillowMonthlyHomeInsuranceAmount();
     }
 
-    getZillowMonthlyHOAFeesAmount(): number {
-        return this.zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
+    get zillowMonthlyHOAFeesAmount(): number {
+        return this._zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
     }
 
-    getRentCastSaleResponseId(): number {
-        return this.rentCastSaleResponseId;
+    get dateListed(): Date {
+        return this._dateListed;
+    }
+
+    get rentCastSaleResponseId(): number {
+        return this._rentCastSaleResponseId;
+    }
+
+    get rentCastPropertyResponseId(): number {
+        return this._rentCastPropertyResponseId;
     }
 
     toDTO(): ListingDetailsDTO {
         return {
-            zillowURL: this.zillowURL,
-            propertyDetails: this.propertyDetails.toDTO(),
-            zillowMarketEstimates: this.zillowMarketEstimates.toDTO(),
+            zillowURL: this._zillowURL,
+            propertyDetails: this._propertyDetails.toDTO(),
+            zillowMarketEstimates: this._zillowMarketEstimates.toDTO(),
             listingPrice: this.listingPrice,
-            propertyStatus: this.propertyStatus,
-            dateListed: this.dateListed.toLocaleDateString('en-US'),
-            dateCreated: this.dateCreated.toLocaleDateString('en-US'),
-            dateUpdated: this.dateUpdated.toLocaleDateString('en-US'),
-            numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this.dateListed),
-            creationType: this.creationType,
+            propertyStatus: this._propertyStatus,
+            dateListed: this._dateListed.toLocaleDateString('en-US'),
+            dateCreated: this._dateCreated.toLocaleDateString('en-US'),
+            dateUpdated: this._dateUpdated.toLocaleDateString('en-US'),
+            numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this._dateListed),
+            creationType: this._creationType,
         };
     }
 

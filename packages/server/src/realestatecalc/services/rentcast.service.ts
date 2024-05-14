@@ -20,8 +20,9 @@ import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
+import { ListingDetailsDTOBuilder } from '../builders/listing.details.dto.builder';
 
-type RentCastSaleResponseType = {
+export type RentCastSaleResponseType = {
     id: string;
     formattedAddress: string;
     addressLine1: string;
@@ -47,7 +48,7 @@ type RentCastSaleResponseType = {
     daysOnMarket: number;
 };
 
-type RentCastPropertyResponseType = {
+export type RentCastPropertyResponseType = {
     id: string;
     formattedAddress: string;
     addressLine1: string;
@@ -111,7 +112,10 @@ export class RentCastService {
     }
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
-        const numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
+        let numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
+
+        // Come back and create a return type with additional data instead of just returning a number
+        numberOfPropertiesAdded += await this.matchAndCreateListing();
 
         return numberOfPropertiesAdded;
     }
@@ -123,22 +127,59 @@ export class RentCastService {
         const rentCastMatchingData: RentCastMatchingData[] =
             await this.rentCastManager.findMatchingRentingCastData(this.pool, saleEndpoint, propertiesEndpoint);
 
+        const rentCastSaleResponseIds: number[] = rentCastMatchingData.map(rentCastMatch => {
+            return rentCastMatch.rentCastSaleResponseId;
+        });
+
         const listingsWithRentCastIds: Map<number, ListingDetails> = new Map();
-        const listingDetails: ListingDetails[] = await this.listingManager.getListingsByRentCastSaleResponseIds(this.pool, []);
+        const listingDetails: ListingDetails[] = await this.listingManager.getListingsByRentCastSaleResponseIds(this.pool, rentCastSaleResponseIds);
 
         for (const listingDetail of listingDetails) {
-            const rentCastSaleResponseId = listingDetail.getRentCastSaleResponseId();
+            const rentCastSaleResponseId = listingDetail.rentCastSaleResponseId;
             if (rentCastSaleResponseId && rentCastSaleResponseId > -1) {
                 listingsWithRentCastIds.set(rentCastSaleResponseId, listingDetail);
             }
         }
 
+        const isValidData = (rentCastSalesResponses: RentCastResponse[], rentCastPropertyResponses: RentCastResponse[]): boolean => {
+            return rentCastSalesResponses.length == 1 && rentCastPropertyResponses.length == 1
+        };
+
+        let numberOfPropertiesAdded = 0;
         for (const rentCastMatch of rentCastMatchingData) {
-            if (listingsWithRentCastIds.has(rentCastMatch.rentCastApiSaleCallId)) {
+            const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
+            const rentCastPropertyResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
+
+            if (isValidData(rentCastSalesResponses, rentCastPropertyResponses)) {
+                throw new Error('There should only be 1 listing response per "rent_cast_api_response" table row');
+            }
+
+            const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSalesResponses[0]);
+            const rentCastPropertyResponseType: RentCastPropertyResponseType = this.createRentCastPropertyResponseType(rentCastPropertyResponses[0]);
+
+
+            if (listingsWithRentCastIds.has(rentCastMatch.rentCastSaleResponseId)) {
                 // Update current listing in database
+                const preExistingListing: ListingDetails = listingsWithRentCastIds.get(rentCastMatch.rentCastSaleResponseId);
+
             }
             else {
                 // Create new listing in database
+                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
+                    rentCastSaleResponseType,
+                    rentCastPropertyResponseType,
+                );
+                const newListingId = await new CalcService().insertListingDetails(
+                    listingDetail,
+                    ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA,
+                    rentCastMatch.rentCastSaleResponseId,
+                    rentCastMatch.rentCastPropertyResponseId,
+                );
+
+                if (newListingId > -1) {
+                    numberOfPropertiesAdded++;
+                }
+
             }
         }
 
@@ -182,7 +223,6 @@ export class RentCastService {
 
     }
 
-
     private async persistNewListingAndRentCastDetails(
         rentCastSaleResponses: RentCastResponse[],
         rentCastPropertyResponses: RentCastResponse[],
@@ -215,7 +255,6 @@ export class RentCastService {
             return numberOfPropertiesAdded;
         }
 
-
     }
 
     private async _persistNewListingAndRentCastDetails(
@@ -228,7 +267,6 @@ export class RentCastService {
         const rentCastPropertyMap: Map<string, RentCastResponse> =
             new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
                 [rentCastProperty.id, rentCastProperty]));
-
 
         try {
             const addressIdOfMatchesFound = new Set<string>();
@@ -393,85 +431,35 @@ export class RentCastService {
     private buildListingDetails(
         rentCastSalesResponseTyped: RentCastSaleResponseType,
         rentCastPropertyTyped?: RentCastPropertyResponseType,
+        listingDetails?: ListingDetails,
     ): ListingDetailsDTO {
-        const daysOnMarket = rentCastSalesResponseTyped.daysOnMarket ?? 0;
-        const listedDate = rentCastSalesResponseTyped.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
-        const numberOfBathrooms = rentCastSalesResponseTyped.bathrooms ?? rentCastPropertyTyped?.bathrooms ?? -1;
-        const numberOfFullBathrooms = Math.floor(numberOfBathrooms);
-        const numberOfHalfBathrooms = Utility.isDecimal(numberOfBathrooms) ? 1 : 0;
-        const lotSize = rentCastSalesResponseTyped.lotSize ?? rentCastPropertyTyped?.lotSize;
-        const acres = lotSize ? convertSquareFeetToAcres(lotSize) : -1;
-        let propertyTax = -1;
-        if (rentCastPropertyTyped && rentCastPropertyTyped.previousYearPropertyTaxes > -1) {
-            propertyTax = Utility.round(rentCastPropertyTyped.previousYearPropertyTaxes / 12);
-        }
-
-        const listingDetail: ListingDetailsDTO = {
-            zillowURL: `NEED TO UPDATE_${rentCastSalesResponseTyped.id}`,
-            propertyDetails: {
-                address: {
-                    fullAddress: rentCastSalesResponseTyped.formattedAddress ?? rentCastPropertyTyped?.formattedAddress ?? '',
-                    state: rentCastSalesResponseTyped.state ?? rentCastPropertyTyped?.state, // Let it be undefined
-                    zipcode: rentCastSalesResponseTyped.zipCode ?? rentCastPropertyTyped?.zipCode ?? '',
-                    city: rentCastSalesResponseTyped.city ?? rentCastPropertyTyped?.city ?? '',
-                    county: rentCastSalesResponseTyped.county ?? rentCastPropertyTyped?.county ?? '',
-                    country: Country.UnitedStates,
-                    streetAddress: rentCastSalesResponseTyped.addressLine1 ?? rentCastPropertyTyped?.addressLine1 ?? '',
-                    apartmentNumber: rentCastSalesResponseTyped.addressLine2 ?? rentCastPropertyTyped?.addressLine2 ?? '',
-                    longitude: rentCastSalesResponseTyped.longitude ?? rentCastPropertyTyped?.longitude ?? -1,
-                    latitude: rentCastSalesResponseTyped.latitude ?? rentCastPropertyTyped?.latitude ?? -1,
-                },
-                schoolRating: {
-                    elementarySchoolRating: -1,
-                    middleSchoolRating: -1,
-                    highSchoolRating: -1,
-                },
-                numberOfBedrooms: rentCastSalesResponseTyped.bedrooms ?? rentCastPropertyTyped?.bedrooms ?? -1,
-                numberOfFullBathrooms: numberOfFullBathrooms,
-                numberOfHalfBathrooms: numberOfHalfBathrooms,
-                squareFeet: rentCastSalesResponseTyped.squareFootage ?? rentCastPropertyTyped?.squareFootage ?? -1,
-                acres: acres,
-                yearBuilt: rentCastSalesResponseTyped.yearBuilt ?? rentCastPropertyTyped?.yearBuilt ?? -1,
-                hasGarage: rentCastPropertyTyped?.features?.garage ?? false,
-                hasPool: rentCastPropertyTyped?.features?.pool ?? false,
-                hasBasement: false, // No info here
-                propertyType: rentCastSalesResponseTyped.propertyType ?? rentCastPropertyTyped?.propertyType, // Let it be undefined
-                description: '',
-            },
-            zillowMarketEstimates: {
-                zestimate: -1,
-                zestimateRange: {
-                    low: -1,
-                    high: -1,
-                },
-                zillowRentEstimate: -1,
-                zillowMonthlyPropertyTaxAmount: propertyTax,
-                zillowMonthlyHomeInsuranceAmount: -1,
-                zillowMonthlyHOAFeesAmount: -1,
-            },
-            listingPrice: rentCastSalesResponseTyped.price ?? -1,
-            dateListed: listedDate,
-            numberOfDaysOnMarket: daysOnMarket,
-            propertyStatus: rentCastSalesResponseTyped.status, // Let it be undefined
-        };
-
-        console.log("listingDetails:", listingDetail);
-
-        return listingDetail;
+        return new ListingDetailsDTOBuilder().build(
+            rentCastSalesResponseTyped,
+            rentCastPropertyTyped,
+            listingDetails,
+        );
     }
 
     private parseApiResponse(jsonData: any): RentCastResponse[] {
-
         console.log("_data2:", jsonData); // Log the response data
 
         const rentCastResponses: RentCastResponse[] = [];
-        // Iterate through each object in the array
-        for (const property of jsonData) {
-            rentCastResponses.push(new RentCastResponse(property.id, property));
+
+        // Check if jsonData is an array
+        if (Array.isArray(jsonData)) {
+            // Iterate through each object in the array
+            for (const property of jsonData) {
+                rentCastResponses.push(new RentCastResponse(property.id, property));
+            }
+        } else if (typeof jsonData === 'object' && jsonData !== null) {
+            // Handle the case where jsonData is a single object
+            rentCastResponses.push(new RentCastResponse(jsonData.id, jsonData));
+        } else {
+            throw new Error(`Unexpected data format: ${jsonData}`);
         }
 
         return rentCastResponses;
+    }
 
-    };
 
 }

@@ -197,50 +197,7 @@ export class InvestmentMetricBuilder {
             purchasePriceObj,
             rentEstimateObj
         );
-
-
-        // const txnMap: Map<TransactionKey, BaseTransaction> = txnBuilder.build();
-        // const txnBreakdown: TransactionBreakdown<TransactionCalculator> = new TransactionBreakdown(txnMap);
-        // const txnDetail: TransactionDetail = new TransactionDetail(txnBreakdown);
-        // return new InvestmentCalculator(txnDetail);
-
-        // return new InvestmentCalculator(txnBreakdown);
-        // const taxImplications: TaxImplications = new TaxImplications(
-        //     depreciation,
-        //     mortgageInterest,
-        //     operatingExpenses,
-        //     0, // property taxes
-        // );
-
-        // const financingTerms: FinancingTerms = new FinancingTerms(
-        //     // loanAmount,
-        //     annualInterestRate,
-        //     interestType,
-        //     termInYears,
-        //     0,  // monthlyPayment
-        //     0, // interestOnlyPeriod
-        // );
-
-        // const pmiDetails: PMIDetails = new PMIDetails(
-        //     pmiRate,
-        //     pmiDropoffPoint
-        // );
-
-        // // const txnBuilder: TransactionBuilder = new TransactionBuilder(growthProjections);
-
-        // const mortgageCalculator: MortgageCalculator = new MortgageCalculator(
-        //     purchasePrice,
-        //     txnBuilder.createDownPaymentAmount(purchasePrice),
-        //     financingTerms,
-        //     txnBuilder.build(purchasePrice),
-        //     pmiDetails,
-        // );
-
-        // return new InvestmentScenario(
-        //     growthProjections,
-        //     mortgageCalculator,
-        //     taxImplications,
-        // );
+ 
     }
 
     private getInvestmentDetails(): InvestmentDetailsRequest {
@@ -326,7 +283,7 @@ export class InvestmentMetricBuilder {
 
     private getMonthlyPropertyTax(): ValueInput {
         const defaultMonthlyPropertyTax: ValueAmountInput = {
-            amount: this.listingDetails.getZillowMonthlyPropertyTaxAmount() ?? 0,
+            amount: this.listingDetails.zillowMonthlyPropertyTaxAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -337,7 +294,7 @@ export class InvestmentMetricBuilder {
 
     private getMonthlyHomeInsuranceAmount(): ValueInput {
         const defaultMonthlyHomeInsuranceAmount: ValueAmountInput = {
-            amount: this.listingDetails.getZillowMonthlyHomeInsuranceAmount() ?? 0,
+            amount: this.listingDetails.zillowMonthlyHomeInsuranceAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -348,7 +305,7 @@ export class InvestmentMetricBuilder {
 
     private getMonthlyHOAFeesAmount(): ValueInput {
         const defaultMonthlyHOAFeesAmount: ValueAmountInput = {
-            amount: this.listingDetails.getZillowMonthlyHOAFeesAmount() ?? 0,
+            amount: this.listingDetails.zillowMonthlyHOAFeesAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -472,7 +429,7 @@ export class InvestmentMetricBuilder {
     private getPurchasePrice(): ValueAmountInput {
         const defaultAmount: ValueAmountInput = {
             type: ValueType.AMOUNT,
-            amount: this.listingDetails.getListingPrice(),
+            amount: this.listingDetails.listingPrice,
         };
         if (this._useDefaultRequest()) {
             return defaultAmount
@@ -482,7 +439,7 @@ export class InvestmentMetricBuilder {
 
     private getRentEstimate(): ValueAmountInput {
         const defaultRentEstimate: ValueAmountInput = {
-            amount: this.listingDetails.getZillowRentEstimate() ?? 0,
+            amount: this.listingDetails.zillowRentEstimate ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {

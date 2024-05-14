@@ -28,9 +28,9 @@ export type RentCastApiHeader = {
 };
 
 export type RentCastApiResponse = {
-    rentCastApiCallId: number;
     jsonData: any;
     endPoint: string;
+    rentCastApiCallId?: number;
     executionTime?: Date;
 };
 
@@ -145,7 +145,7 @@ export class RentCastApi {
                 await this.writeResponseToJsonFile(filePath, data);
                 console.log(`Api response written to ${filePath}`);
                 return {
-                    rentCastApiCallId: rentCastApiCallId,
+                    rentCastApiCallId,
                     jsonData: data,
                     endPoint: endPoint,
                 };

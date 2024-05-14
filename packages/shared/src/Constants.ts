@@ -172,4 +172,5 @@ export enum TransactionKey {
 export enum ListingCreationType {
     MANUAL = 'Manual',
     RENT_CAST_API = 'Rent Cast Api',
+    MATCHED_PRE_EXISTING_RENT_CAST_DATA = 'Matched Pre Existing Rent Cast Data',
 };
