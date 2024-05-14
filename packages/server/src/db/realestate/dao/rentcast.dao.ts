@@ -8,23 +8,23 @@ import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_mo
 export class RentCastDAO extends RealEstateDAO {
 
     private CHECK_FOR_EXISTING_ADDRESS_ID =
-        `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists;`;
+        `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists`;
 
 
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
         id, api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
         email, api_key_name 
-        FROM rent_cast_config_details;`;
+        FROM rent_cast_config_details`;
 
 
     private UPDATE_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = api_calls_this_month + 1
-        WHERE id = $1;`;
+        WHERE id = $1`;
 
 
     private RESET_NUMBER_OF_API_CALLS_QUERY = `UPDATE rent_cast_config_details 
         SET api_calls_this_month = 0
-        WHERE id = $1;`;
+        WHERE id = $1`;
 
 
     private INSERT_RENT_CAST_API_RESPONSE_QUERY = `INSERT INTO rent_cast_api_response
@@ -83,13 +83,14 @@ export class RentCastDAO extends RealEstateDAO {
                     rcac.end_point = $2
                     AND rcar.api_response_data IS NOT NULL
             ) AS p ON s.address_id = p.address_id
-            ORDER BY sale_address_id;
+            ORDER BY sale_address_id
         `;
 
     // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
+        const query = `${this.CHECK_FOR_EXISTING_ADDRESS_ID};`;
         try {
-            const res = await pool.query(this.CHECK_FOR_EXISTING_ADDRESS_ID, [address_id]);
+            const res = await pool.query(query, [address_id]);
             return res.rows[0].exists;  // This will be true or false
         } catch (err) {
             // console.error('Error executing query', err.stack);
@@ -130,7 +131,8 @@ export class RentCastDAO extends RealEstateDAO {
         const rentCastDetails: RentCastDetails[] = [];
 
         try {
-            const res = await pool.query(this.GET_RENT_CAST_CONFIG_DETAILS_QUERY);
+            const query = `${this.GET_RENT_CAST_CONFIG_DETAILS_QUERY};`;
+            const res = await pool.query(query);
             res.rows.forEach(row => {
                 const agent: RentCastDetails = this.mapRowToRentCastDetails(row);
                 rentCastDetails.push(agent);
@@ -189,6 +191,7 @@ export class RentCastDAO extends RealEstateDAO {
         executionTime: Date = new Date()
     ): Promise<number> {
         try {
+
             const values: any[] = [
                 endpoint,
                 fullUrl,
@@ -210,7 +213,8 @@ export class RentCastDAO extends RealEstateDAO {
     async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<RentCastMatchingData[]> {
         const matchingRentCastDataList: RentCastMatchingData[] = [];
         try {
-            const res = await pool.query(this.MATCHING_RENT_CAST_DATA_QUERY, [saleEndPoint], [propertyEndPoint]);
+            const query = `${this.MATCHING_RENT_CAST_DATA_QUERY};`;
+            const res = await pool.query(query, [saleEndPoint], [propertyEndPoint]);
             res.rows.forEach(row => {
                 const saleAddressId = row.sale_address_id;
                 const saleResponseJsonData = row.sale_api_response_data;
@@ -249,8 +253,9 @@ export class RentCastDAO extends RealEstateDAO {
     }
 
     private async _resetNumberOfApiCalls(pool: Pool, id: number) {
+        const query = `${this.RESET_NUMBER_OF_API_CALLS_QUERY};`;
         try {
-            await pool.query(this.RESET_NUMBER_OF_API_CALLS_QUERY, [id]);
+            await pool.query(query, [id]);
             console.log('Listing information inserted successfully');
 
         } catch (err) {
@@ -260,8 +265,9 @@ export class RentCastDAO extends RealEstateDAO {
     }
 
     private async _updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number) {
+        const query = `${this.UPDATE_NUMBER_OF_API_CALLS_QUERY};`;
         try {
-            await pool.query(this.UPDATE_NUMBER_OF_API_CALLS_QUERY, [rentCastConfigDetailsId]);
+            await pool.query(query, [rentCastConfigDetailsId]);
             console.log('Listing information inserted successfully');
 
         } catch (err) {

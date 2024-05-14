@@ -7,7 +7,7 @@ export class AgentDAO extends RealEstateDAO {
 
     private GET_AGENTS_QUERY = `SELECT
         first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 
-        FROM agent;
+        FROM agent
     `;
 
     private INSERT_AGENT_QUERY = `INSERT INTO agent

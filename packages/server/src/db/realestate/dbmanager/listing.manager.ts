@@ -1,4 +1,4 @@
-import { Pool } from 'pg'; 
+import { Pool } from 'pg';
 import { ListingDAO } from '../dao/listing.dao';
 import { ListingCreationType, ListingDetailsDTO } from '@realestatemanager/shared';
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
@@ -13,6 +13,10 @@ export class ListingManager {
 
     async getAllListings(pool: Pool): Promise<ListingDetails[]> {
         return this.listingDAO.getAllListings(pool);
+    }
+
+    async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
+        return this.listingDAO.getListingsByRentCastSaleResponseIds(pool, rentCastSaleResponseIds);
     }
 
     async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {

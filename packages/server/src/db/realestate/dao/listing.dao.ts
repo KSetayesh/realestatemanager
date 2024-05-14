@@ -21,7 +21,7 @@ import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrat
 export class ListingDAO extends RealEstateDAO {
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at,
+            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at, 
             ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
             ad.longitude, ad.latitude, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
             pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
@@ -108,6 +108,28 @@ export class ListingDAO extends RealEstateDAO {
     async getAllListings(pool: Pool): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
         const query = `${this.GET_LISTINGS_QUERY};`;
+
+        try {
+            const res = await pool.query(query);
+            res.rows.forEach(row => {
+                const listing: ListingDetails = this.mapRowToListingDetails(row);
+                listings.push(listing);
+            });
+            return listings;
+        } catch (err) {
+            console.error('Error fetching all listings', err);
+            throw err;
+        }
+    }
+
+    async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
+        const listings: ListingDetails[] = [];
+
+        // Generate the placeholder for the parameterized query
+        const placeholders = rentCastSaleResponseIds.map((_, index) => `$${index + 1}`).join(', ');
+        const query = `${this.GET_LISTINGS_QUERY} WHERE ld.rent_cast_sale_response_id IN (${placeholders});`;
+
+        // Generate the placeholder for the parameterized query
 
         try {
             const res = await pool.query(query);
