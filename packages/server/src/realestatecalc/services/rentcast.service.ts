@@ -404,7 +404,6 @@ export class RentCastService {
             propertyType: jsonData.propertyType ?? '',
             lotSize: jsonData.lotSize ?? -1,
             yearBuilt: jsonData.yearBuilt ?? -1,
-
             assessorID: jsonData.assessorID ?? '',
             lastSalePrice: jsonData.lastSalePrice ?? -1,
             lastSaleDate: jsonData.lastSaleDate ?? new Date(0),

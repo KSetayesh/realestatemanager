@@ -1,7 +1,8 @@
 import { AddressDTO, Country, State } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
+import { Entity } from "src/shared/entity";
 
-export class Address implements IDTOConvertible<AddressDTO> {
+export class Address extends Entity implements IDTOConvertible<AddressDTO> {
     private _fullAddress: string;
     private _state?: State; // Assuming State is a type or enum you've defined
     private _zipcode?: string;
@@ -14,6 +15,7 @@ export class Address implements IDTOConvertible<AddressDTO> {
     private _latitude?: number;
 
     constructor(
+        id: number,
         fullAddress: string,
         state?: State,
         zipCode?: string,
@@ -23,9 +25,9 @@ export class Address implements IDTOConvertible<AddressDTO> {
         streetAddress?: string,
         apartmentNumber?: string,
         longitude?: number,
-        latitude?: number
+        latitude?: number,
     ) {
-
+        super(id);
         this._fullAddress = fullAddress;
         this._state = state;
         this._zipcode = zipCode;

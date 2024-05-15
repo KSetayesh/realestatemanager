@@ -21,13 +21,17 @@ import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrat
 export class ListingDAO extends RealEstateDAO {
 
     private GET_LISTINGS_QUERY = `SELECT 
-            ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed, ld.creation_type, ld.created_at, ld.updated_at, 
-            ld.rent_cast_sale_response_id,  ld.rent_cast_property_response_id,
-            ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, ad.street_address, ad.apartment_number,
-            ad.longitude, ad.latitude, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
-            pd.number_of_bedrooms, pd.number_of_full_bathrooms, pd.number_of_half_bathrooms, pd.square_feet, 
-            pd.acres, pd.year_built, pd.has_garage, pd.has_pool, pd.has_basement, pd.property_type, pd._description,
-            zme.zestimate, zme.zestimate_low, zme.zestimate_high, zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
+            ld.id AS listing_details_id, ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed,
+            ld.creation_type, ld.created_at, ld.updated_at, ld.rent_cast_sale_response_id, 
+            ld.rent_cast_property_response_id, 
+            ad.id AS address_id, ad.full_address, ad.state, ad.zipcode, ad.city, ad.county, ad.country, 
+            ad.street_address, ad.apartment_number, ad.longitude, ad.latitude,
+            sr.id AS school_rating_id, sr.elementary_school_rating, sr.middle_school_rating, sr.high_school_rating, 
+            pd.id AS property_details_id, pd.number_of_bedrooms, pd.number_of_full_bathrooms, 
+            pd.number_of_half_bathrooms, pd.square_feet, pd.acres, pd.year_built, pd.has_garage, pd.has_pool, 
+            pd.has_basement, pd.property_type, pd._description,
+            zme.id AS zillow_market_estimates_id, zme.zestimate, zme.zestimate_low, zme.zestimate_high, 
+            zme.zillow_rent_estimate, zme.zillow_monthly_property_tax_amount, 
             zme.zillow_monthly_home_insurance_amount, zme.zillow_monthly_hoa_fees_amount 
         FROM listing_details ld
         JOIN zillow_market_estimates zme ON ld.zillow_market_estimates_id = zme.id 
@@ -220,6 +224,8 @@ export class ListingDAO extends RealEstateDAO {
     }
 
     private mapRowToListingDetails(row: any): ListingDetails {
+
+        const addressId: number = row.address_id;
         const fullAddress: string = row.full_address;
         const state: State = row.state;
         const zipcode: string = row.zipcode;
@@ -232,6 +238,7 @@ export class ListingDAO extends RealEstateDAO {
         const latitude: number = row.latitude;
         const address: Address =
             new Address(
+                addressId,
                 fullAddress,
                 state,
                 zipcode,
@@ -244,9 +251,20 @@ export class ListingDAO extends RealEstateDAO {
                 latitude
             );
 
+        const schoolRatingId: number = row.school_rating_id;
         const elementarySchoolRating: number = row.elementary_school_rating;
         const middleSchoolRating: number = row.middle_school_rating;
         const highSchoolRating: number = row.high_school_rating;
+
+        const schoolRating: SchoolRating =
+            new SchoolRating(
+                schoolRatingId,
+                elementarySchoolRating,
+                middleSchoolRating,
+                highSchoolRating
+            );
+
+        const propertyDetailsId: number = row.property_details_id;
         const numberOfBedrooms: number = row.number_of_bedrooms;
         const numberOfFullBathrooms: number = row.number_of_full_bathrooms;
         const numberOfHalfBathrooms: number = row.number_of_half_bathrooms;
@@ -258,10 +276,10 @@ export class ListingDAO extends RealEstateDAO {
         const hasBasement: boolean = row.has_basement;
         const propertyType: PropertyType = row.property_type;
         const description: string = row._description;
-        const schoolRating: SchoolRating = new SchoolRating(elementarySchoolRating, middleSchoolRating, highSchoolRating);
 
         const propertyDetails: PropertyDetails =
             new PropertyDetails(
+                propertyDetailsId,
                 address,
                 schoolRating,
                 numberOfBedrooms,
@@ -276,6 +294,7 @@ export class ListingDAO extends RealEstateDAO {
                 propertyType,
                 description);
 
+        const zillowMarketEstimatesId: number = row.zillow_market_estimates_id;
         const zestimate: number = row.zestimate;
         const zillowRentEstimate: number = row.zillow_rent_estimate;
         const zestimateLow: number = row.zestimate_low;
@@ -286,6 +305,7 @@ export class ListingDAO extends RealEstateDAO {
 
         const zillowMarketEstimates: ZillowMarketEstimates =
             new ZillowMarketEstimates(
+                zillowMarketEstimatesId,
                 zestimate,
                 zestimateLow,
                 zestimateHigh,
@@ -294,6 +314,7 @@ export class ListingDAO extends RealEstateDAO {
                 zillowMonthlyHomeInsuranceAmount,
                 zillowMonthlHOAFeesAmount);
 
+        const listingDetailsId: number = row.listing_details_id;
         const zillowURL: string = row.zillow_url;
         const listingPrice: number = row.listing_price;
         const creationType: ListingCreationType = row.creation_type;
@@ -301,8 +322,12 @@ export class ListingDAO extends RealEstateDAO {
         const dateListed: Date = new Date(row.date_listed);
         const dateCreated: Date = new Date(row.created_at);
         const dateUpdated: Date = new Date(row.updated_at);
+        const rentCastSaleResponseId: number = row.rent_cast_sale_response_id;
+        const rentCastPropertyResponseId: number = row.rent_cast_property_response_id;
+
 
         return new ListingDetails(
+            listingDetailsId,
             zillowURL,
             propertyDetails,
             zillowMarketEstimates,
@@ -312,6 +337,8 @@ export class ListingDAO extends RealEstateDAO {
             dateListed,
             dateCreated,
             dateUpdated,
+            rentCastSaleResponseId,
+            rentCastPropertyResponseId
         );
 
     }
@@ -363,7 +390,7 @@ export class ListingDAO extends RealEstateDAO {
             propertyDetails.hasPool,
             propertyDetails.hasBasement,
             propertyDetails.propertyType,
-            propertyDetails.description]
+            propertyDetails.description];
 
         return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
 

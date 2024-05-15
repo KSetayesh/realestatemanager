@@ -2,8 +2,9 @@ import { ListingDetailsDTO, PropertyStatus, ListingCreationType, Utility, State,
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
+import { Entity } from "src/shared/entity";
 
-export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
+export class ListingDetails extends Entity implements IDTOConvertible<ListingDetailsDTO>{
 
     private _zillowURL: string;
     private _propertyDetails: PropertyDetails;
@@ -12,12 +13,11 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private _propertyStatus: PropertyStatus;
     private _creationType: ListingCreationType;
     private _dateListed: Date;
-    private _dateCreated: Date;
-    private _dateUpdated: Date;
     private _rentCastSaleResponseId?: number;
     private _rentCastPropertyResponseId?: number;
 
     constructor(
+        id: number,
         zillowURL: string,
         propertyDetails: PropertyDetails,
         zillowMarketEstimates: ZillowMarketEstimates,
@@ -30,7 +30,7 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         rentCastSaleResponseId?: number,
         rentCastPropertyResponseId?: number,
     ) {
-
+        super(id, dateCreated, dateUpdated);
         this._zillowURL = zillowURL;
         this._propertyDetails = propertyDetails;
         this._zillowMarketEstimates = zillowMarketEstimates;
@@ -38,8 +38,6 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         this._propertyStatus = propertyStatus;
         this._creationType = creationType;
         this._dateListed = dateListed;
-        this._dateCreated = dateCreated;
-        this._dateUpdated = dateUpdated;
         this._rentCastSaleResponseId = rentCastSaleResponseId;
         this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
@@ -204,8 +202,8 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
             listingPrice: this.listingPrice,
             propertyStatus: this.propertyStatus,
             dateListed: this.dateListed.toLocaleDateString('en-US'),
-            dateCreated: this._dateCreated.toLocaleDateString('en-US'),
-            dateUpdated: this._dateUpdated.toLocaleDateString('en-US'),
+            dateCreated: this.dateCreated.toLocaleDateString('en-US'),
+            dateUpdated: this.dateUpdated.toLocaleDateString('en-US'),
             numberOfDaysOnMarket: Utility.getNumberOfDaysSince(this.dateListed),
             creationType: this.creationType,
         };

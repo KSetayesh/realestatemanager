@@ -6,7 +6,7 @@ import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared"
 export class AgentDAO extends RealEstateDAO {
 
     private GET_AGENTS_QUERY = `SELECT
-        first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 
+        id AS agent_id, first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 
         FROM agent
     `;
 
@@ -63,6 +63,7 @@ export class AgentDAO extends RealEstateDAO {
     }
 
     private mapRowToAgent(row: any): Agent {
+        const id: number = row.agent_id;
         const firstName: string = row.first_name;
         const lastName: string = row.last_name;
         const website: string = row.website;
@@ -73,7 +74,18 @@ export class AgentDAO extends RealEstateDAO {
         const country: Country = row.country;
         const agentType: AgentType = row.agent_type;
 
-        return new Agent(firstName, lastName, website, companyName, phoneNumber, email, state, country, agentType);
+        return new Agent(
+            id,
+            firstName,
+            lastName,
+            website,
+            companyName,
+            phoneNumber,
+            email,
+            state,
+            country,
+            agentType
+        );
     }
 
 }

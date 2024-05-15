@@ -2,8 +2,9 @@ import { PropertyType, PropertyDetailsDTO, State, Country } from "@realestateman
 import { Address } from "./address.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { SchoolRating } from "./schoolrating.model";
+import { Entity } from "src/shared/entity";
 
-export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
+export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsDTO>{
     private _address?: Address;
     private _schoolRating?: SchoolRating;
     private _numberOfBedrooms?: number;
@@ -19,6 +20,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
     private _description?: string;
 
     constructor(
+        id: number,
         address?: Address,
         schoolRating?: SchoolRating,
         numberOfBedrooms?: number,
@@ -33,6 +35,7 @@ export class PropertyDetails implements IDTOConvertible<PropertyDetailsDTO>{
         propertyType?: PropertyType,
         description?: string,
     ) {
+        super(id);
         this._address = address;
         this._schoolRating = schoolRating;
         this._numberOfBedrooms = numberOfBedrooms;

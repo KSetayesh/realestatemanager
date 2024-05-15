@@ -1,7 +1,8 @@
 import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared";
 import { IDTOConvertible } from "src/realestatecalc/models/idtoconvertible.model";
+import { Entity } from "src/shared/entity";
 
-export class Agent implements IDTOConvertible<AgentsDTO> {
+export class Agent extends Entity implements IDTOConvertible<AgentsDTO> {
 
     private firstName: string;
     private lastName: string;
@@ -14,6 +15,7 @@ export class Agent implements IDTOConvertible<AgentsDTO> {
     private agentType: AgentType;
 
     constructor(
+        id: number,
         firstName: string,
         lastName: string,
         website: string,
@@ -24,7 +26,7 @@ export class Agent implements IDTOConvertible<AgentsDTO> {
         country: Country,
         agentType: AgentType
     ) {
-
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.website = website;
