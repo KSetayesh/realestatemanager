@@ -40,10 +40,10 @@ export type RentCastSaleResponseType = {
     status: PropertyStatus;
     yearBuilt: number;
     price: number;
-    listedDate: string;
-    removedDate: string;
-    createdDate: string;
-    lastSeenDate: string;
+    listedDate: string;  // Figure out if this should be a string or a Date
+    removedDate: string;  // Figure out if this should be a string or a Date
+    createdDate: string;  // Figure out if this should be a string or a Date
+    lastSeenDate: string;  // Figure out if this should be a string or a Date
     daysOnMarket: number;
 };
 
@@ -66,7 +66,7 @@ export type RentCastPropertyResponseType = {
     yearBuilt: number;
     assessorID: string;
     lastSalePrice: number;
-    lastSaleDate: Date;
+    lastSaleDate: Date; // Figure out if this should be a string or a Date
     ownerOccupied: boolean;
     features: {
         garage: boolean;
@@ -160,7 +160,12 @@ export class RentCastService {
             if (listingsWithRentCastIds.has(rentCastMatch.rentCastSaleResponseId)) {
                 // Update current listing in database
                 const preExistingListing: ListingDetails = listingsWithRentCastIds.get(rentCastMatch.rentCastSaleResponseId);
-
+                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
+                    rentCastSaleResponseType,
+                    rentCastPropertyResponseType,
+                    preExistingListing,
+                );
+                // Need to create an update listingdetails sql function 
             }
             else {
                 // Create new listing in database

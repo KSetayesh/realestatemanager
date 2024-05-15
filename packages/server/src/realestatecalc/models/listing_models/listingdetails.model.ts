@@ -1,4 +1,4 @@
-import { ListingDetailsDTO, PropertyStatus, ListingCreationType, Utility } from "@realestatemanager/shared";
+import { ListingDetailsDTO, PropertyStatus, ListingCreationType, Utility, State, Country, PropertyType } from "@realestatemanager/shared";
 import { PropertyDetails } from "./propertydetails.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
@@ -17,7 +17,8 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
     private _rentCastSaleResponseId?: number;
     private _rentCastPropertyResponseId?: number;
 
-    constructor(zillowURL: string,
+    constructor(
+        zillowURL: string,
         propertyDetails: PropertyDetails,
         zillowMarketEstimates: ZillowMarketEstimates,
         listingPrice: number,
@@ -47,24 +48,132 @@ export class ListingDetails implements IDTOConvertible<ListingDetailsDTO>{
         return this._zillowURL;
     }
 
-    get listingPrice(): number {
-        return this._listingPrice;
+    get fullAddress(): string {
+        return this._propertyDetails.fullAddress;
+    }
+
+    get state(): State {
+        return this._propertyDetails.state;
+    }
+
+    get zipcode(): string {
+        return this._propertyDetails.zipcode;
+    }
+
+    get city(): string {
+        return this._propertyDetails.city;
+    }
+
+    get county(): string {
+        return this._propertyDetails.county;
+    }
+
+    get country(): Country {
+        return this._propertyDetails.country;
+    }
+
+    get streetAddress(): string {
+        return this._propertyDetails.streetAddress;
+    }
+
+    get apartmentNumber(): string {
+        return this._propertyDetails.apartmentNumber;
+    }
+
+    get longitude(): number {
+        return this._propertyDetails.longitude;
+    }
+
+    get latitude(): number {
+        return this._propertyDetails.latitude;
+    }
+
+    get elementarySchoolRating(): number {
+        return this._propertyDetails.elementarySchoolRating;
+    }
+
+    get middleSchoolRating(): number {
+        return this._propertyDetails.middleSchoolRating;
+    }
+
+    get highSchoolRating(): number {
+        return this._propertyDetails.highSchoolRating;
+    }
+
+    get numberOfBedrooms(): number {
+        return this._propertyDetails.numberOfBedrooms;
+    }
+
+    get numberOfFullBathrooms(): number {
+        return this._propertyDetails.numberOfFullBathrooms;
+    }
+
+    get numberOfHalfBathrooms(): number {
+        return this._propertyDetails.numberOfHalfBathrooms;
+    }
+
+    get squareFeet(): number {
+        return this._propertyDetails.squareFeet;
+    }
+
+    get acres(): number {
+        return this._propertyDetails.acres;
+    }
+
+    get yearBuilt(): number {
+        return this._propertyDetails.yearBuilt;
+    }
+
+    get hasGarage(): boolean {
+        return this._propertyDetails.hasGarage;
+    }
+
+    get hasPool(): boolean {
+        return this._propertyDetails.hasPool;
+    }
+
+    get hasBasement(): boolean {
+        return this._propertyDetails.hasBasement;
+    }
+
+    get propertyType(): PropertyType {
+        return this._propertyDetails.propertyType;
+    }
+
+    get description(): string {
+        return this._propertyDetails.description;
+    }
+
+    get zestimate(): number {
+        return this._zillowMarketEstimates.zestimate;
+    }
+
+    get zestimateRangeLow(): number {
+        return this._zillowMarketEstimates.zestimateRangeLow;
+    }
+
+    get zestimateRangeHigh(): number {
+        return this._zillowMarketEstimates.zestimateRangeHigh;
     }
 
     get zillowRentEstimate(): number {
-        return this._zillowMarketEstimates.getZillowRentEstimate();
+        return this._zillowMarketEstimates.zillowRentEstimate;
     }
 
     get zillowMonthlyPropertyTaxAmount(): number {
-        return this._zillowMarketEstimates.getZillowMonthlyPropertyTaxAmount();
+        return this._zillowMarketEstimates.zillowMonthlyPropertyTaxAmount;
     }
 
     get zillowMonthlyHomeInsuranceAmount(): number {
-        return this._zillowMarketEstimates.getZillowMonthlyHomeInsuranceAmount();
+        return this._zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount;
     }
 
     get zillowMonthlyHOAFeesAmount(): number {
-        return this._zillowMarketEstimates.getZillowMonthlyHOAFeesAmount();
+        return this._zillowMarketEstimates.zillowMonthlyHOAFeesAmount;
+    }
+
+    get listingPrice(): number {
+        return this._listingPrice;
     }
 
     get propertyStatus(): PropertyStatus {
