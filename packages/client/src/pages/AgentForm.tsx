@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AgentsDTO } from '@realestatemanager/shared';
+import { CreateAgentRequest } from '@realestatemanager/shared';
 import CalculateForm, { FormProperty } from '../components/CalculateForm';
 import { AgentType, Country, InputType, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
@@ -36,7 +36,7 @@ const AgentForm: React.FC = () => {
 
     const [formData, setFormData] = useState<AgentFormData>(getAgentFormData());
 
-    const getAgentRequest = (): AgentsDTO => {
+    const getAgentRequest = (): CreateAgentRequest => {
         return {
             firstName: formData.firstName,
             lastName: formData.lastName,

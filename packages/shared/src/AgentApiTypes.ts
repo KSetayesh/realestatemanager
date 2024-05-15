@@ -7,11 +7,24 @@ export enum AgentType {
     CONTRACTOR = "Contractor",
 };
 
-export interface AgentsDTO {
+export interface CreateAgentRequest {
     firstName: string;
     lastName: string;
     fullName?: string;
     website?: string;
+    companyName: string;
+    phoneNumber: string;
+    email: string;
+    state: State;
+    country: Country;
+    agentType: AgentType;
+};
+
+export interface AgentResponseDTO {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    website: string;
     companyName: string;
     phoneNumber: string;
     email: string;

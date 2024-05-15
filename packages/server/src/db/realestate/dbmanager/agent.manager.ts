@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
 import { AgentDAO } from "../dao/agent.dao";
 import { Agent } from 'src/agents/models/agent.model';
-import { AgentsDTO } from '@realestatemanager/shared';
+import { AgentResponseDTO, CreateAgentRequest } from '@realestatemanager/shared';
 
 export class AgentManager {
-    
+
     private agentDAO: AgentDAO;
 
     constructor(agentDAO: AgentDAO) {
@@ -12,7 +12,7 @@ export class AgentManager {
     }
 
 
-    async insertAgent(pool: Pool, agent: AgentsDTO): Promise<void> {
+    async insertAgent(pool: Pool, agent: Agent): Promise<void> {
         this.agentDAO.insertAgent(pool, agent);
     }
 

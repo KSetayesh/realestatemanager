@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { Injectable } from "@nestjs/common";
-import { AgentsDTO } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateAgentRequest } from "@realestatemanager/shared";
 import { Agent } from "../models/agent.model";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
@@ -16,20 +16,20 @@ export class AgentService {
         this.pool = DatabaseManagerFactory.getDbPool();
     }
 
-    async getAllAgents(): Promise<AgentsDTO[]> {
+    async getAllAgents(): Promise<AgentResponseDTO[]> {
         const agents: Agent[] = await this.agentManager.getAllAgents(this.pool);
         return agents.map(agent => {
             return agent.toDTO()
         });
     }
 
-    async addNewAgent(agent: AgentsDTO): Promise<void> {
+    async addNewAgent(agentRequest: CreateAgentRequest): Promise<void> {
         const client = await this.pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this.agentManager.insertAgent(this.pool, agent);
+            await this.agentManager.insertAgent(this.pool, this.buildAgent(agentRequest));
 
             await client.query('COMMIT');
         } catch (error) {
@@ -39,5 +39,20 @@ export class AgentService {
         } finally {
             client.release();
         }
+    }
+
+    private buildAgent(agent: CreateAgentRequest): Agent {
+        return new Agent(
+            -1,
+            agent.firstName,
+            agent.lastName,
+            agent.website,
+            agent.companyName,
+            agent.phoneNumber,
+            agent.email,
+            agent.state,
+            agent.country,
+            agent.agentType
+        );
     }
 }

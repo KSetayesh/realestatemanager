@@ -1,18 +1,18 @@
-import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared";
+import { AgentResponseDTO, AgentType, Country, State } from "@realestatemanager/shared";
 import { IDTOConvertible } from "src/realestatecalc/models/idtoconvertible.model";
 import { Entity } from "src/shared/entity";
 
-export class Agent extends Entity implements IDTOConvertible<AgentsDTO> {
+export class Agent extends Entity implements IDTOConvertible<AgentResponseDTO> {
 
-    private firstName: string;
-    private lastName: string;
-    private website: string;
-    private companyName: string;
-    private phoneNumber: string;
-    private email: string;
-    private state: State;
-    private country: Country;
-    private agentType: AgentType;
+    private _firstName: string;
+    private _lastName: string;
+    private _website: string;
+    private _companyName: string;
+    private _phoneNumber: string;
+    private _email: string;
+    private _state: State;
+    private _country: Country;
+    private _agentType: AgentType;
 
     constructor(
         id: number,
@@ -27,27 +27,62 @@ export class Agent extends Entity implements IDTOConvertible<AgentsDTO> {
         agentType: AgentType
     ) {
         super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.website = website;
-        this.companyName = companyName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.state = state;
-        this.country = country;
-        this.agentType = agentType;
-
+        this._firstName = firstName;
+        this._lastName = lastName;
+        this._website = website;
+        this._companyName = companyName;
+        this._phoneNumber = phoneNumber;
+        this._email = email;
+        this._state = state;
+        this._country = country;
+        this._agentType = agentType;
     }
 
-    getFullName(): string {
+    get firstName(): string {
+        return this._firstName;
+    }
+
+    get lastName(): string {
+        return this._lastName;
+    }
+
+    get fullName(): string {
         return `${this.firstName} ${this.lastName}`;
     }
 
-    toDTO(): AgentsDTO {
+    get website(): string {
+        return this._website;
+    }
+
+    get companyName(): string {
+        return this._companyName;
+    }
+
+    get phoneNumber(): string {
+        return this._phoneNumber;
+    }
+
+    get email(): string {
+        return this._email;
+    }
+
+    get state(): State {
+        return this._state;
+    }
+
+    get country(): Country {
+        return this._country;
+    }
+
+    get agentType(): AgentType {
+        return this._agentType;
+    }
+
+    toDTO(): AgentResponseDTO {
         return {
             firstName: this.firstName,
             lastName: this.lastName,
-            fullName: this.getFullName(),
+            fullName: this.fullName,
             website: this.website,
             companyName: this.companyName,
             phoneNumber: this.phoneNumber,

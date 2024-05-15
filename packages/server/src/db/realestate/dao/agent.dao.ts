@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { Agent } from "src/agents/models/agent.model";
 import { RealEstateDAO } from "./realestate.dao";
-import { AgentType, AgentsDTO, Country, State } from "@realestatemanager/shared";
+import { AgentResponseDTO, AgentType, Country, State } from "@realestatemanager/shared";
 
 export class AgentDAO extends RealEstateDAO {
 
@@ -22,7 +22,7 @@ export class AgentDAO extends RealEstateDAO {
             agent_type)
     `;
 
-    async insertAgent(pool: Pool, agent: AgentsDTO): Promise<void> {
+    async insertAgent(pool: Pool, agent: Agent): Promise<void> {
         try {
             const values: any[] = [
                 agent.firstName,

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { CalcApi } from "./calcapi";
-import { AgentsDTO } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateAgentRequest } from "@realestatemanager/shared";
 
 export class AgentApi extends CalcApi {
 
-    async getAllAgents(): Promise<AgentsDTO[]> {
+    async getAllAgents(): Promise<AgentResponseDTO[]> {
 
         try {
             const response = await axios.get(this.getURL());
@@ -16,7 +16,7 @@ export class AgentApi extends CalcApi {
         }
     }
 
-    async addNewAgent(dataToSubmit: AgentsDTO): Promise<boolean> {
+    async addNewAgent(dataToSubmit: CreateAgentRequest): Promise<boolean> {
 
         try {
             await axios.post(`${this.getURL()}/addNewAgent`, dataToSubmit, {

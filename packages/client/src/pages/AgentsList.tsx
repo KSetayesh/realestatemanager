@@ -1,10 +1,10 @@
-import { AgentsDTO } from "@realestatemanager/shared";
+import { AgentResponseDTO } from "@realestatemanager/shared";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 
 const AgentsList: React.FC = () => {
-    const [agents, setAgents] = useState<AgentsDTO[]>([]);
+    const [agents, setAgents] = useState<AgentResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const agentApi: AgentApi = new AgentApi();
 
@@ -12,7 +12,7 @@ const AgentsList: React.FC = () => {
         (async () => {
             try {
                 setIsLoading(true); // Set loading state to true before fetching data
-                const agentsData: AgentsDTO[] = await agentApi.getAllAgents();
+                const agentsData: AgentResponseDTO[] = await agentApi.getAllAgents();
                 setAgents(agentsData); // Update state with fetched data
                 console.log("Fetched data:", agentsData);
             } catch (error) {
@@ -24,7 +24,7 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const createRowData = (agent: AgentsDTO): TableRow => {
+    const createRowData = (agent: AgentResponseDTO): TableRow => {
         return {
             firstName: agent.firstName,
             lastName: agent.lastName,
@@ -39,7 +39,7 @@ const AgentsList: React.FC = () => {
         };
     };
 
-    const tableData: TableDataItem<AgentsDTO>[] = agents.map(agent => ({
+    const tableData: TableDataItem<AgentResponseDTO>[] = agents.map(agent => ({
         objectData: {
             key: agent,
         },
