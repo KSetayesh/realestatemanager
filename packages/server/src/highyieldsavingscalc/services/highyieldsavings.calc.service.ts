@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import {
-    HighYeildSavingsDTO, HighYeildSavingsRequest, Utility
+    HighYeildSavingsResponseDTO, HighYeildSavingsRequest, Utility
 } from '@realestatemanager/shared';
 
 
 @Injectable()
 export class HighYieldSavingsCalcService {
 
-    calculateFutureValueByMonth(highYeildSavingsRequest: HighYeildSavingsRequest): HighYeildSavingsDTO[] {
+    calculateFutureValueByMonth(highYeildSavingsRequest: HighYeildSavingsRequest): HighYeildSavingsResponseDTO[] {
 
         const annualInterestRate = Number(highYeildSavingsRequest.annualInterestRate);
         const years = Number(highYeildSavingsRequest.years);
@@ -19,7 +19,7 @@ export class HighYieldSavingsCalcService {
         const totalMonths = years * 12;
 
         // Array to hold the future value at the end of each month
-        const futureValueByMonth: HighYeildSavingsDTO[] = [];
+        const futureValueByMonth: HighYeildSavingsResponseDTO[] = [];
 
         // Initialize the future value with the initial deposit
         let endBalance = initialDeposit;

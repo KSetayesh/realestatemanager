@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
-import { HighYeildSavingsDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
+import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
 import CalculateForm, { FormProperty } from '../components/CalculateForm';
 import { InputType } from '../constants/Constant';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
@@ -26,7 +26,7 @@ const HighYieldSavings: React.FC = () => {
 
     const [formData, setFormData] = useState<HighYieldSavingsFormData>(getHighYieldSavingsFormData());
 
-    const [metrics, setMetrics] = useState<HighYeildSavingsDTO[]>();
+    const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>();
 
     const getCalculateRequest = (): HighYeildSavingsRequest => {
         return {
@@ -40,7 +40,7 @@ const HighYieldSavings: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
-        const data: HighYeildSavingsDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
+        const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
         console.log("Calculation result:", data);
         setMetrics(data);
     };
@@ -169,7 +169,7 @@ const HighYieldSavings: React.FC = () => {
         },
     ];
 
-    const createRowDataForMetrics = (highYeildSavingsData: HighYeildSavingsDTO): TableRow => {
+    const createRowDataForMetrics = (highYeildSavingsData: HighYeildSavingsResponseDTO): TableRow => {
         return {
             year: highYeildSavingsData.year,
             month: highYeildSavingsData.month,
@@ -183,11 +183,11 @@ const HighYieldSavings: React.FC = () => {
         };
     };
 
-    const createTableDataForMetrics = (): TableDataItem<HighYeildSavingsDTO>[] => {
+    const createTableDataForMetrics = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
         if (!metrics) {
             return [];
         }
-        const highYeildSavings: HighYeildSavingsDTO[] = metrics;
+        const highYeildSavings: HighYeildSavingsResponseDTO[] = metrics;
         return highYeildSavings.map(metrics => ({
             objectData: {
                 key: metrics,

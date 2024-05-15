@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { HighYieldSavingsCalcService } from "../services/highyieldsavings.calc.service";
-import { HighYeildSavingsDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
+import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
 
 @Controller('highyieldsavingscalc')
 export class HighYieldSavingsCalcController {
@@ -10,7 +10,7 @@ export class HighYieldSavingsCalcController {
     @Post('calculate')
     async calculate(
         @Body() highYeildSavingsRequest: HighYeildSavingsRequest,
-    ): Promise<HighYeildSavingsDTO[]> {
+    ): Promise<HighYeildSavingsResponseDTO[]> {
         return this.calcService.calculateFutureValueByMonth(highYeildSavingsRequest);
     }
 

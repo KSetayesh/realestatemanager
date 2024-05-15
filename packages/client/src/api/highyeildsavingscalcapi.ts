@@ -1,10 +1,10 @@
-import { HighYeildSavingsDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
+import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 
 export class HighYieldSavingsCalcApi extends CalcApi {
 
-    async highYieldSavingsCalculator(dataToSubmit: HighYeildSavingsRequest): Promise<HighYeildSavingsDTO[]> {
+    async highYieldSavingsCalculator(dataToSubmit: HighYeildSavingsRequest): Promise<HighYeildSavingsResponseDTO[]> {
 
         try {
             const response = await axios.post(`${this.getURL()}/calculate`, dataToSubmit, {
