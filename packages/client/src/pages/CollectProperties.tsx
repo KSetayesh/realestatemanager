@@ -4,13 +4,13 @@ import '../styles/PropertyForm.css';
 import '../styles/CollectProperties.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { FormFieldConfig } from "./PropertyForm";
-import { RentCastApiRequestDTO, RentCastDetailsDTO } from '@realestatemanager/shared';
+import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
 import AddPropertyForm from '../components/AddPropertyForm';
 
 const CollectProperties: React.FC = () => {
 
-    const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsDTO[]>();
+    const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsResponseDTO[]>();
     const [isLoading, setIsLoading] = useState(true);
     const rentCastApi: RentCastApi = new RentCastApi();
 
@@ -18,7 +18,7 @@ const CollectProperties: React.FC = () => {
         (async () => {
             try {
                 setIsLoading(true);
-                const rentCastDetails: RentCastDetailsDTO[] = await rentCastApi.getRentCastApiDetails();
+                const rentCastDetails: RentCastDetailsResponseDTO[] = await rentCastApi.getRentCastApiDetails();
                 // For now just show the first rentCastDetails in the list
                 setRentCastDetails(rentCastDetails);
                 console.log("Fetched data:", rentCastDetails);
@@ -137,7 +137,7 @@ const CollectProperties: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const dataToSubmit: RentCastApiRequestDTO = getRequestData();
+        const dataToSubmit: CreateRentCastApiRequest = getRequestData();
         console.log('dataToSubmit:', dataToSubmit);
 
         const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
@@ -151,7 +151,7 @@ const CollectProperties: React.FC = () => {
         }
     };
 
-    const getRequestData = (): RentCastApiRequestDTO => {
+    const getRequestData = (): CreateRentCastApiRequest => {
         return {
             address: formData.address,
             city: formData.city,

@@ -1,8 +1,8 @@
-import { RentCastApiRequestDTO, State, Utility } from "@realestatemanager/shared";
+import { CreateRentCastApiRequest, State, Utility } from "@realestatemanager/shared";
 
 export class RentClassApiUrlCreator {
 
-    createURL(endpoint: string, rentCastApiRequest: RentCastApiRequestDTO): string {
+    createURL(endpoint: string, rentCastApiRequest: CreateRentCastApiRequest): string {
         let appendToUrl = '';
         let firstAppended = true;
         if (rentCastApiRequest.address) {

@@ -1,9 +1,9 @@
-import { RentCastDetailsDTO } from "@realestatemanager/shared";
+import { RentCastDetailsResponseDTO } from "@realestatemanager/shared";
 import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { Entity } from "src/shared/entity";
 
-export class RentCastDetails extends Entity implements IDTOConvertible<RentCastDetailsDTO> {
+export class RentCastDetails extends Entity implements IDTOConvertible<RentCastDetailsResponseDTO> {
 
     private _apiCallsThisMonth: number;
     private _numberOfFreeApiCalls: number;
@@ -74,7 +74,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
         return this._apiKeyName;
     }
 
-    toDTO(): RentCastDetailsDTO {
+    toDTO(): RentCastDetailsResponseDTO {
         return {
             apiKeyName: this.apiKeyName,
             apiCallsThisMonth: this.apiCallsThisMonth,

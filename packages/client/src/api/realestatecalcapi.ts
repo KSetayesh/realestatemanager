@@ -1,4 +1,9 @@
-import { InvestmentScenarioRequest, ListingDetailsDTO, ListingWithScenariosDTO, RentCastApiRequestDTO } from "@realestatemanager/shared";
+import {
+    InvestmentScenarioRequest,
+    ListingDetailsDTO,
+    ListingWithScenariosDTO,
+    CreateRentCastApiRequest
+} from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 
@@ -46,7 +51,7 @@ export class RealEstateCalcApi extends CalcApi {
         return true;
     }
 
-    async addNewPropertyWithRentCastAPI(dataToSubmit: RentCastApiRequestDTO): Promise<boolean> {
+    async addNewPropertyWithRentCastAPI(dataToSubmit: CreateRentCastApiRequest): Promise<boolean> {
 
         try {
             await axios.post(`${this.getURL()}/addNewPropertyWithRentCastAPI`, dataToSubmit, {

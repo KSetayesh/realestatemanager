@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import fs from 'fs/promises';  // Use promise-based fs
 import apiKeysConfig from '../../config/apiKeysConfig';
-import { RentCastApiRequestDTO } from "@realestatemanager/shared";
+import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { rentCastDetailsMap } from 'src/shared/Constants';
 import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.model';
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
@@ -72,7 +72,7 @@ export class RentCastApiClient {
 
     async callRentCastApi(
         rentCastEndPoint: RentCastEndPoint,
-        rentCastApiRequest: RentCastApiRequestDTO,
+        rentCastApiRequest: CreateRentCastApiRequest,
     ): Promise<RentCastApiResponse> {
 
         console.log("filePath: ", (__dirname + '../../../src/data/latestRentCastSale.json'));
@@ -110,7 +110,7 @@ export class RentCastApiClient {
     private async _callRentCastApi(
         rentCastEndPoint: RentCastEndPoint,
         apiCallDetails: ApiCallDetails,
-        rentCastApiRequest: RentCastApiRequestDTO,
+        rentCastApiRequest: CreateRentCastApiRequest,
     ): Promise<RentCastApiResponse> {
 
         console.log("requestData:", rentCastApiRequest);

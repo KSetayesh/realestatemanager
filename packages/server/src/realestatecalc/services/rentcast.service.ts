@@ -6,10 +6,9 @@ import {
     ListingDetailsDTO,
     PropertyStatus,
     PropertyType,
-    RentCastApiRequestDTO,
-    RentCastDetailsDTO,
-    State,
-    Utility
+    CreateRentCastApiRequest,
+    RentCastDetailsResponseDTO,
+    State, 
 } from "@realestatemanager/shared";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
@@ -104,13 +103,13 @@ export class RentCastService {
         this.rentCastApiClient = new RentCastApiClient();
     }
 
-    async getRentCastApiDetailsDTO(): Promise<RentCastDetailsDTO[]> {
+    async getRentCastApiDetailsDTO(): Promise<RentCastDetailsResponseDTO[]> {
         return (await this.rentCastManager.getRentCastApiDetails(this.pool)).map(rentCastDetail => {
             return rentCastDetail.toDTO();
         });
     }
 
-    async addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
+    async addNewPropertyWithRentCastAPI(rentCastApiRequest: CreateRentCastApiRequest): Promise<number> {
         let numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
 
         // Come back and create a return type with additional data instead of just returning a number
@@ -119,7 +118,7 @@ export class RentCastService {
         return numberOfPropertiesAdded;
     }
 
-    async matchAndCreateListing(): Promise<number> {
+    private async matchAndCreateListing(): Promise<number> {
         const saleEndpoint = this.getEndpoint(RentCastEndPoint.SALE);
         const propertiesEndpoint = this.getEndpoint(RentCastEndPoint.PROPERTIES);
 
@@ -190,7 +189,7 @@ export class RentCastService {
         return numberOfPropertiesAdded;
     }
 
-    async _addNewPropertyWithRentCastAPI(rentCastApiRequest: RentCastApiRequestDTO): Promise<number> {
+    private async _addNewPropertyWithRentCastAPI(rentCastApiRequest: CreateRentCastApiRequest): Promise<number> {
 
         const saleApiResponse: RentCastApiResponse = await this.rentCastApiClient.callRentCastApi(
             RentCastEndPoint.SALE,

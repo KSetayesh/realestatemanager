@@ -1,6 +1,6 @@
 import { PropertyStatus, PropertyType, State } from "./Constants";
 
-export interface RentCastApiRequestDTO {
+export interface CreateRentCastApiRequest {
     address: string;
     city: string;
     state: State;
@@ -18,7 +18,7 @@ export interface RentCastApiRequestDTO {
     retrieveExtraData: boolean;
 };
 
-export interface RentCastDetailsDTO {
+export interface RentCastDetailsResponseDTO {
     apiKeyName: string;
     apiCallsThisMonth: number;
     numberOfFreeApiCalls: number;
