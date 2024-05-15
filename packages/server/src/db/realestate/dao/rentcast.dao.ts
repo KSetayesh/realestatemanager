@@ -99,7 +99,7 @@ export class RentCastDAO extends RealEstateDAO {
     async insertRentCastApiResponse(pool: Pool, rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
         try {
             const values: any[] = [
-                rentCastResponse.id,
+                rentCastResponse.addressId,
                 rentCastResponse.apiResponseData,
                 rentCastApiCallId,
             ];

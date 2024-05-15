@@ -1,15 +1,15 @@
 export class RentCastResponse {
 
-    private _id: string;
+    private _addressId: string;
     private _apiResponseData: any;
 
-    constructor(id: string, apiResponseData: any) {
-        this._id = id;
+    constructor(addressId: string, apiResponseData: any) {
+        this._addressId = addressId;
         this._apiResponseData = apiResponseData;
     }
 
-    get id(): string {
-        return this._id;
+    get addressId(): string {
+        return this._addressId;
     }
 
     get apiResponseData(): any {

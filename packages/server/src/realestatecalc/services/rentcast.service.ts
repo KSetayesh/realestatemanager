@@ -269,13 +269,13 @@ export class RentCastService {
 
         const rentCastPropertyMap: Map<string, RentCastResponse> =
             new Map(rentCastPropertyResponses.map((rentCastProperty: RentCastResponse) =>
-                [rentCastProperty.id, rentCastProperty]));
+                [rentCastProperty.addressId, rentCastProperty]));
 
         try {
             const addressIdOfMatchesFound = new Set<string>();
             let numberOfPropertiesAdded = 0;
             for (const rentCastSaleResponse of rentCastSaleResponses) {
-                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastSaleResponse.id);
+                const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastSaleResponse.addressId);
                 console.log("addressIdFound:", addressIdFound);
                 if (addressIdFound) {
                     console.log(`${addressIdFound} already exists in the database, skipping`);
@@ -290,15 +290,15 @@ export class RentCastService {
 
                 const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSaleResponse);
 
-                if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.id in rentCastPropertyMap)) {
-                    const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.id];
+                if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
+                    const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.addressId];
                     rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
 
                     listingDetail = this.buildListingDetails(
                         rentCastSaleResponseType,
                         this.createRentCastPropertyResponseType(rentCastProperty)
                     );
-                    addressIdOfMatchesFound.add(rentCastSaleResponse.id);
+                    addressIdOfMatchesFound.add(rentCastSaleResponse.addressId);
                 }
                 else {
                     listingDetail = this.buildListingDetails(
@@ -338,7 +338,7 @@ export class RentCastService {
         const jsonData = rentCastSalesResponse.apiResponseData;
 
         return {
-            id: rentCastSalesResponse.id,
+            id: rentCastSalesResponse.addressId,
             formattedAddress: jsonData.formattedAddress ?? '',
             addressLine1: jsonData.addressLine1 ?? '',
             addressLine2: jsonData.addressLine2 ?? '',
@@ -387,7 +387,7 @@ export class RentCastService {
         };
 
         return {
-            id: rentCastSalesResponse.id,
+            id: rentCastSalesResponse.addressId,
             formattedAddress: jsonData.formattedAddress ?? '',
             addressLine1: jsonData.addressLine1 ?? '',
             addressLine2: jsonData.addressLine2 ?? '',
