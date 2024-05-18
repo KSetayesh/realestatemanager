@@ -1,4 +1,10 @@
-import { GrowthProjectionsDTO, InitialInvestmentBreakdownDTO, ListingDetailsDTO, ListingWithScenariosDTO, TaxImplicationsDTO } from "@realestatemanager/shared";
+import {
+    GrowthProjectionsDTO,
+    InitialInvestmentBreakdownDTO,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosDTO,
+    TaxImplicationsDTO
+} from "@realestatemanager/shared";
 import { TableColumn, TableRow } from "./ReusableTable";
 
 export const defaultColumns: TableColumn[] = [
@@ -825,6 +831,6 @@ const taxImplications = (property: ListingWithScenariosDTO): TaxImplicationsDTO 
     return property.metrics.taxImplications;
 };
 
-const listingDetails = (property: ListingWithScenariosDTO): ListingDetailsDTO => {
+const listingDetails = (property: ListingWithScenariosDTO): ListingDetailsResponseDTO => {
     return property.listingDetails;
 };

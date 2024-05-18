@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { ListingDAO } from '../dao/listing.dao';
-import { ListingCreationType, ListingDetailsDTO } from '@realestatemanager/shared';
+import { ListingCreationType } from '@realestatemanager/shared';
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 
 export class ListingManager {
@@ -25,7 +25,8 @@ export class ListingManager {
 
     async insertListingDetails(
         pool: Pool,
-        listingDetails: ListingDetailsDTO,
+        // listingDetails: ListingDetailsDTO,
+        listingDetails: ListingDetails,
         creationType: ListingCreationType,
         saleResponseId?: number,
         propertyResponseId?: number,

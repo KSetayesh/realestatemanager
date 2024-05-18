@@ -1,10 +1,15 @@
-import { PropertyType, PropertyDetailsDTO, State, Country } from "@realestatemanager/shared";
+import {
+    PropertyType,
+    State,
+    Country,
+    PropertyDetailsResponseDTO
+} from "@realestatemanager/shared";
 import { Address } from "./address.model";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { SchoolRating } from "./schoolrating.model";
 import { Entity } from "src/shared/entity";
 
-export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsDTO>{
+export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsResponseDTO>{
     private _address?: Address;
     private _schoolRating?: SchoolRating;
     private _numberOfBedrooms?: number;
@@ -147,7 +152,7 @@ export class PropertyDetails extends Entity implements IDTOConvertible<PropertyD
         return this._description;
     }
 
-    toDTO(): PropertyDetailsDTO {
+    toDTO(): PropertyDetailsResponseDTO {
         return {
             address: this._address.toDTO(),
             schoolRating: this._schoolRating.toDTO(),

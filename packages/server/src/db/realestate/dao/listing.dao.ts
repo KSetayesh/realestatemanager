@@ -5,15 +5,10 @@ import { Address } from 'src/realestatecalc/models/listing_models/address.model'
 import { PropertyDetails } from 'src/realestatecalc/models/listing_models/propertydetails.model';
 import { ZillowMarketEstimates } from 'src/realestatecalc/models/listing_models/zillowmarketestimates.model';
 import {
-    AddressDTO,
     Country,
-    ListingDetailsDTO,
-    PropertyDetailsDTO,
     PropertyType,
     PropertyStatus,
-    SchoolRatingDTO,
     State,
-    ZillowMarketEstimatesDTO,
     ListingCreationType,
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
@@ -167,7 +162,8 @@ export class ListingDAO extends RealEstateDAO {
 
     async insertListingDetails(
         pool: Pool,
-        listingDetails: ListingDetailsDTO,
+        // listingDetails: ListingDetailsDTO,
+        listingDetails: ListingDetails,
         creationType: ListingCreationType,
         saleResponseId?: number,
         propertyResponseId?: number,

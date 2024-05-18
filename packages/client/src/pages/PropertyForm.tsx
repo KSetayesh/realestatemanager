@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { Country, State, InputType, ratingSelections, PropertyType, PropertyStatus, getDateNDaysAgo } from '../constants/Constant';
+import {
+    Country,
+    State,
+    InputType,
+    ratingSelections,
+    PropertyType,
+    PropertyStatus,
+} from '../constants/Constant';
 import '../styles/PropertyForm.css';
-import { ListingDetailsDTO } from '@realestatemanager/shared';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import AddPropertyForm from '../components/AddPropertyForm';
+import { CreateListingDetailsRequest } from '@realestatemanager/shared';
 
 export type FormFieldConfig = {
     name: string;
@@ -249,20 +256,13 @@ const PropertyForm: React.FC = () => {
 
     const [formData, setFormData] = useState(initialFormState);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData(prevFormData => ({
-    //         ...prevFormData,
-    //         [name]: value,
-    //     }));
-    // };
-
-    const getRequestData = (): ListingDetailsDTO => {
+    const getRequestData = (): CreateListingDetailsRequest => {
 
         return {
             zillowURL: formData.zillowURL,
             listingPrice: formData.listingPrice,
-            dateListed: getDateNDaysAgo(parseInt(formData.numberOfDaysOnMarket)),
+            // dateListed: getDateNDaysAgo(parseInt(formData.numberOfDaysOnMarket)),
+            numberOfDaysOnMarket: parseInt(formData.numberOfDaysOnMarket),
             propertyStatus: formData.propertyStatus as PropertyStatus,
             propertyDetails: {
                 address: {
@@ -274,8 +274,8 @@ const PropertyForm: React.FC = () => {
                     country: formData.country as Country,
                     streetAddress: formData.streetAddress,
                     apartmentNumber: formData.apartmentNumber,
-                    longitude: formData.longitude,
-                    latitude: formData.latitude,
+                    longitude: parseFloat(formData.longitude),
+                    latitude: parseFloat(formData.latitude),
                 },
                 schoolRating: {
                     elementarySchoolRating: parseInt(formData.elementarySchoolRating),
@@ -310,7 +310,7 @@ const PropertyForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const dataToSubmit: ListingDetailsDTO = getRequestData();
+        const dataToSubmit: CreateListingDetailsRequest = getRequestData();
 
         const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
         const postSuccess = await realEstateCalcApi.addNewProperty(dataToSubmit);
@@ -322,22 +322,6 @@ const PropertyForm: React.FC = () => {
             alert('Failed to submit data.');
         }
     };
-
-    // return (
-    //     <div>
-    //         <AddPropertyForm
-    //             isLoading={false}
-    //             rentCastDetails={rentCastDetails!}
-    //             formFieldsConfig={formFieldsConfig}
-    //             formData={formData}
-    //             handleChange={handleChange}
-    //             handleSubmit={handleSubmit}
-    //         />
-
-    //     </div>
-    // );
-
-
 
     return (
         <div className="form-container">
@@ -351,34 +335,6 @@ const PropertyForm: React.FC = () => {
             />
         </div>
     );
-
-    // return (
-    //     <div className="form-container">
-    //         <h2>Property Listing Form</h2>
-    //         <form onSubmit={handleSubmit}>
-    //             {formFieldsConfig.map(({ name, label, type, selections }) => (
-    //                 <div className="form-field" key={name}>
-    //                     <label htmlFor={name} className="form-label">{label}:</label>
-    //                     {type === 'select' && selections ? (
-    //                         <select name={name} id={name} value={formData[name]} onChange={handleChange} className="form-input">
-    //                             {selections.map((selection, index) => (
-    //                                 <option key={index} value={selection.toString()}>
-    //                                     {typeof selection === 'number' || typeof selection === 'boolean' ? selection.toString() : selection}
-    //                                 </option>
-    //                             ))}
-    //                         </select>
-    //                     ) : (
-    //                         <input type={type} id={name} name={name} value={formData[name]} onChange={handleChange} className="form-input" />
-    //                     )}
-    //                 </div>
-    //             ))}
-    //             <div className="submit-button-container">
-    //                 <button type="submit">Submit</button>
-    //             </div>
-    //         </form>
-    //     </div>
-    // );
-
 
 };
 

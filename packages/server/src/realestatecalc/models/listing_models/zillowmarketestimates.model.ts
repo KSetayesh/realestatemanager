@@ -1,8 +1,8 @@
-import { ZillowMarketEstimatesDTO } from "@realestatemanager/shared";
+import { ZillowMarketEstimatesResponseDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 import { Entity } from "src/shared/entity";
 
-export class ZillowMarketEstimates extends Entity implements IDTOConvertible<ZillowMarketEstimatesDTO>{
+export class ZillowMarketEstimates extends Entity implements IDTOConvertible<ZillowMarketEstimatesResponseDTO>{
     private _zestimate?: number; // Estimated market value
     private _zestimateRange?: {
         low?: number,
@@ -60,7 +60,7 @@ export class ZillowMarketEstimates extends Entity implements IDTOConvertible<Zil
         return this._zillowMonthlyHOAFeesAmount;
     }
 
-    toDTO(): ZillowMarketEstimatesDTO {
+    toDTO(): ZillowMarketEstimatesResponseDTO {
         return {
             zestimate: this.zestimate,
             zestimateRange: this._zestimateRange,

@@ -3,12 +3,11 @@ import { Injectable } from "@nestjs/common";
 import {
     Country,
     ListingCreationType,
-    ListingDetailsDTO,
     PropertyStatus,
     PropertyType,
     CreateRentCastApiRequest,
     RentCastDetailsResponseDTO,
-    State, 
+    State,
 } from "@realestatemanager/shared";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
@@ -18,7 +17,7 @@ import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
-import { ListingDetailsDTOBuilder } from '../builders/listing.details.dto.builder';
+import { ListingDetailsBuilder } from '../builders/listing.details.builder';
 
 export type RentCastSaleResponseType = {
     id: string;
@@ -159,7 +158,7 @@ export class RentCastService {
             if (listingsWithRentCastIds.has(rentCastMatch.rentCastSaleResponseId)) {
                 // Update current listing in database
                 const preExistingListing: ListingDetails = listingsWithRentCastIds.get(rentCastMatch.rentCastSaleResponseId);
-                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
+                const listingDetail: ListingDetails = this.buildListingDetails(
                     rentCastSaleResponseType,
                     rentCastPropertyResponseType,
                     preExistingListing,
@@ -168,7 +167,7 @@ export class RentCastService {
             }
             else {
                 // Create new listing in database
-                const listingDetail: ListingDetailsDTO = this.buildListingDetails(
+                const listingDetail: ListingDetails = this.buildListingDetails(
                     rentCastSaleResponseType,
                     rentCastPropertyResponseType,
                 );
@@ -286,7 +285,7 @@ export class RentCastService {
 
                 let rentCastPropertyResponseId = -1;
 
-                let listingDetail: ListingDetailsDTO;
+                let listingDetail: ListingDetails;
 
                 const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSaleResponse);
 
@@ -433,8 +432,8 @@ export class RentCastService {
         rentCastSalesResponseTyped: RentCastSaleResponseType,
         rentCastPropertyTyped?: RentCastPropertyResponseType,
         listingDetails?: ListingDetails,
-    ): ListingDetailsDTO {
-        return new ListingDetailsDTOBuilder(
+    ): ListingDetails {
+        return new ListingDetailsBuilder(
             rentCastSalesResponseTyped,
             rentCastPropertyTyped,
             listingDetails,

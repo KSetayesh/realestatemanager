@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import {
     InvestmentScenarioRequest,
-    ListingDetailsDTO,
     ListingWithScenariosDTO,
     CreateRentCastApiRequest,
-    RentCastDetailsResponseDTO
+    RentCastDetailsResponseDTO,
+    CreateListingDetailsRequest
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
@@ -48,7 +48,7 @@ export class CalcController {
 
     @Post('addNewProperty')
     async addNewProperty(
-        @Body() listingDetails: ListingDetailsDTO,
+        @Body() listingDetails: CreateListingDetailsRequest,
     ): Promise<void> {
         await this.calcService.addNewProperty(listingDetails);
     }

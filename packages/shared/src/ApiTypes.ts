@@ -2,16 +2,12 @@
 //------------------------------ Investment Related Requests ------------------------------
 
 import {
-    Country,
     InterestType,
-    PropertyType,
-    PropertyStatus,
-    State,
     TransactionKey,
     TransactionType,
     ValueType,
-    ListingCreationType
 } from './Constants';
+import { ListingDetailsResponseDTO } from './ListingTypes';
 
 // Defines the base structure for input that can either be a rate or an amount
 export interface ValueInputBase {
@@ -296,71 +292,71 @@ export interface AmortizationBreakdownDTO {
 };
 
 export interface ListingWithScenariosDTO {
-    listingDetails: ListingDetailsDTO;
+    listingDetails: ListingDetailsResponseDTO;
     metrics: AmortizationBreakdownDTO;
 };
 
 
 //------------------------------ ListingDetails related models ------------------------------
 
-export interface ListingDetailsDTO {
-    zillowURL: string;
-    propertyDetails: PropertyDetailsDTO;
-    zillowMarketEstimates: ZillowMarketEstimatesDTO;
-    listingPrice: number;
-    dateListed?: string;
-    dateCreated?: string;
-    dateUpdated?: string;
-    numberOfDaysOnMarket?: number;
-    propertyStatus?: PropertyStatus;
-    creationType?: ListingCreationType;
-};
+// export interface ListingDetailsDTO {
+//     zillowURL: string;
+//     propertyDetails: PropertyDetailsDTO;
+//     zillowMarketEstimates: ZillowMarketEstimatesDTO;
+//     listingPrice: number;
+//     dateListed?: string;
+//     dateCreated?: string;
+//     dateUpdated?: string;
+//     numberOfDaysOnMarket?: number;
+//     propertyStatus?: PropertyStatus;
+//     creationType?: ListingCreationType;
+// };
 
-export type AddressDTO = {
-    fullAddress?: string;
-    state?: State;
-    zipcode?: string;
-    city?: string;
-    county?: string;
-    country?: Country;
-    streetAddress?: string;
-    apartmentNumber?: string;
-    longitude?: number;
-    latitude?: number;
-};
+// export type AddressDTO = {
+//     fullAddress?: string;
+//     state?: State;
+//     zipcode?: string;
+//     city?: string;
+//     county?: string;
+//     country?: Country;
+//     streetAddress?: string;
+//     apartmentNumber?: string;
+//     longitude?: number;
+//     latitude?: number;
+// };
 
-export interface PropertyDetailsDTO {
-    address?: AddressDTO;
-    schoolRating?: SchoolRatingDTO;
-    // numberOfDaysOnMarket?: number;
-    numberOfBedrooms?: number;
-    numberOfFullBathrooms?: number;
-    numberOfHalfBathrooms?: number;
-    squareFeet?: number;
-    acres?: number;
-    yearBuilt?: number;
-    hasGarage?: boolean;
-    hasPool?: boolean;
-    hasBasement?: boolean;
-    propertyType?: PropertyType;
-    description?: string;
-};
+// export interface PropertyDetailsDTO {
+//     address?: AddressDTO;
+//     schoolRating?: SchoolRatingDTO;
+//     // numberOfDaysOnMarket?: number;
+//     numberOfBedrooms?: number;
+//     numberOfFullBathrooms?: number;
+//     numberOfHalfBathrooms?: number;
+//     squareFeet?: number;
+//     acres?: number;
+//     yearBuilt?: number;
+//     hasGarage?: boolean;
+//     hasPool?: boolean;
+//     hasBasement?: boolean;
+//     propertyType?: PropertyType;
+//     description?: string;
+// };
 
-export interface SchoolRatingDTO {
-    elementarySchoolRating?: number;
-    middleSchoolRating?: number;
-    highSchoolRating?: number;
-};
+// export interface SchoolRatingDTO {
+//     elementarySchoolRating?: number;
+//     middleSchoolRating?: number;
+//     highSchoolRating?: number;
+// };
 
-export interface ZillowMarketEstimatesDTO {
-    zestimate?: number; // Estimated market value
-    zestimateRange?: {
-        low?: number,
-        high?: number,
-    },
-    zillowRentEstimate?: number; // Estimated rental value
-    zillowMonthlyPropertyTaxAmount?: number;
-    zillowMonthlyHomeInsuranceAmount?: number;
-    zillowMonthlyHOAFeesAmount?: number;
-};
+// export interface ZillowMarketEstimatesDTO {
+//     zestimate?: number; // Estimated market value
+//     zestimateRange?: {
+//         low?: number,
+//         high?: number,
+//     },
+//     zillowRentEstimate?: number; // Estimated rental value
+//     zillowMonthlyPropertyTaxAmount?: number;
+//     zillowMonthlyHomeInsuranceAmount?: number;
+//     zillowMonthlyHOAFeesAmount?: number;
+// };
 
