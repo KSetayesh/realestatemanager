@@ -172,7 +172,13 @@ export class ListingDAO extends RealEstateDAO {
         try {
             const addressId = await this.insertAddress(pool, listingDetails);
             const schoolRatingId = await this._insertSchoolRating(pool, listingDetails);
-            const propertyDetailsId = await this.insertPropertyDetails(pool, listingDetails, addressId, schoolRatingId);
+            const propertyDetailsId = await this.insertPropertyDetails(
+                pool,
+                listingDetails,
+                addressId,
+                schoolRatingId
+            );
+
             let zillowMarketEstimatesId: number | null = null;
 
             // Come back to this and update

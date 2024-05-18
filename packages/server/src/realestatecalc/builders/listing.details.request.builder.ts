@@ -11,135 +11,139 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
     }
 
     protected createZillowURL(): string {
-        return this.listingDetailsRequest.zillowURL;
+        const zillowUrl = this.listingDetailsRequest.zillowURL;
+        if (!zillowUrl) {
+            throw new Error('Must have ZillowURL');
+        }
+        return zillowUrl;
     }
 
     protected createFullAddress(): string {
-        return this.listingDetailsRequest.propertyDetails.address.fullAddress;
+        return this.listingDetailsRequest.propertyDetails?.address?.fullAddress ?? '';
     }
 
     protected createState(): State {
-        return this.listingDetailsRequest.propertyDetails.address.state;
+        return this.listingDetailsRequest.propertyDetails?.address?.state; // let it be undefined
     }
 
     protected createzipCode(): string {
-        return this.listingDetailsRequest.propertyDetails.address.zipcode;
+        return this.listingDetailsRequest.propertyDetails?.address?.zipcode ?? '';
     }
 
     protected createCity(): string {
-        return this.listingDetailsRequest.propertyDetails.address.city;
+        return this.listingDetailsRequest.propertyDetails?.address?.city ?? '';
     }
 
     protected createCounty(): string {
-        return this.listingDetailsRequest.propertyDetails.address.county;
+        return this.listingDetailsRequest.propertyDetails?.address?.county ?? '';
     }
 
     protected createCountry(): Country {
-        return this.listingDetailsRequest.propertyDetails.address.country;
+        return this.listingDetailsRequest.propertyDetails?.address?.country ?? Country.UnitedStates;
     }
 
     protected createStreetAddress(): string {
-        return this.listingDetailsRequest.propertyDetails.address.streetAddress;
+        return this.listingDetailsRequest.propertyDetails?.address?.streetAddress ?? '';
     }
 
     protected createApartmentNumber(): string {
-        return this.listingDetailsRequest.propertyDetails.address.apartmentNumber;
+        return this.listingDetailsRequest.propertyDetails?.address?.apartmentNumber ?? '';
     }
 
     protected createLongitude(): number {
-        return this.listingDetailsRequest.propertyDetails.address.longitude;
+        return this.listingDetailsRequest.propertyDetails?.address?.longitude ?? -1;
     }
 
     protected createLatitude(): number {
-        return this.listingDetailsRequest.propertyDetails.address.latitude;
+        return this.listingDetailsRequest.propertyDetails?.address?.latitude ?? -1;
     }
 
     protected createElementarySchoolRating(): number {
-        return this.listingDetailsRequest.propertyDetails.schoolRating.elementarySchoolRating;
+        return this.listingDetailsRequest.propertyDetails?.schoolRating?.elementarySchoolRating ?? -1;
     }
 
     protected createMiddleSchoolRating(): number {
-        return this.listingDetailsRequest.propertyDetails.schoolRating.middleSchoolRating;
+        return this.listingDetailsRequest.propertyDetails?.schoolRating?.middleSchoolRating ?? -1;
     }
 
     protected createHighSchoolRating(): number {
-        return this.listingDetailsRequest.propertyDetails.schoolRating.highSchoolRating;
+        return this.listingDetailsRequest.propertyDetails?.schoolRating?.highSchoolRating ?? -1;
     }
 
     protected createNumberOfBedrooms(): number {
-        return this.listingDetailsRequest.propertyDetails.numberOfBedrooms;
+        return this.listingDetailsRequest.propertyDetails?.numberOfBedrooms ?? -1;
     }
 
     protected createNumberOfFullBathrooms(): number {
-        return this.listingDetailsRequest.propertyDetails.numberOfFullBathrooms;
+        return this.listingDetailsRequest.propertyDetails?.numberOfFullBathrooms ?? -1;
     }
 
     protected createNumberOfHalfBathrooms(): number {
-        return this.listingDetailsRequest.propertyDetails.numberOfHalfBathrooms;
+        return this.listingDetailsRequest.propertyDetails?.numberOfHalfBathrooms ?? -1;
     }
 
     protected createSquareFeet(): number {
-        return this.listingDetailsRequest.propertyDetails.squareFeet;
+        return this.listingDetailsRequest.propertyDetails?.squareFeet ?? -1;
     }
 
     protected createAcres(): number {
-        return this.listingDetailsRequest.propertyDetails.acres;
+        return this.listingDetailsRequest.propertyDetails?.acres ?? -1;
     }
 
     protected createYearBuilt(): number {
-        return this.listingDetailsRequest.propertyDetails.yearBuilt;
+        return this.listingDetailsRequest.propertyDetails?.yearBuilt ?? -1;
     }
 
     protected createHasGarage(): boolean {
-        return this.listingDetailsRequest.propertyDetails.hasGarage;
+        return this.listingDetailsRequest.propertyDetails?.hasGarage ?? false;
     }
 
     protected createHasPool(): boolean {
-        return this.listingDetailsRequest.propertyDetails.hasPool;
+        return this.listingDetailsRequest.propertyDetails?.hasPool ?? false;
     }
 
     protected createHasBasement(): boolean {
-        return this.listingDetailsRequest.propertyDetails.hasBasement;
+        return this.listingDetailsRequest.propertyDetails?.hasBasement ?? false;
     }
 
     protected createPropertyType(): PropertyType {
-        return this.listingDetailsRequest.propertyDetails.propertyType;
+        return this.listingDetailsRequest.propertyDetails?.propertyType; // let it be undefined
     }
 
     protected createDescription(): string {
-        return this.listingDetailsRequest.propertyDetails.description;
+        return this.listingDetailsRequest.propertyDetails?.description ?? '';
     }
 
     protected createZestimate(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zestimate;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zestimate ?? -1;
     }
 
     protected createZestimateRangeLow(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zestimateRange.low;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zestimateRange?.low ?? -1;
     }
 
     protected createZestimateRangeHigh(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zestimateRange.high;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zestimateRange?.high ?? -1;
     }
 
     protected createZillowRentEstimate(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zillowRentEstimate;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zillowRentEstimate ?? -1;
     }
 
     protected createZillowMonthlyPropertyTaxAmount(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zillowMonthlyPropertyTaxAmount ?? -1;
     }
 
     protected createZillowMonthlyHomeInsuranceAmount(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zillowMonthlyHomeInsuranceAmount ?? -1;
     }
 
     protected createZillowMonthlyHOAFeesAmount(): number {
-        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyHOAFeesAmount;
+        return this.listingDetailsRequest.zillowMarketEstimates?.zillowMonthlyHOAFeesAmount ?? -1;
     }
 
     protected createListingPrice(): number {
-        return this.listingDetailsRequest.listingPrice;
+        return this.listingDetailsRequest?.listingPrice ?? -1;
     }
 
     // Come back to this
@@ -154,7 +158,7 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
     }
 
     protected createPropertyStatus(): PropertyStatus {
-        return this.listingDetailsRequest.propertyStatus;
+        return this.listingDetailsRequest.propertyStatus; // let it be undefined
     }
 
 
