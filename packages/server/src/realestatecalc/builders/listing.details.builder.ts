@@ -209,7 +209,7 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     }
 
     protected createDateListed(): Date {
-        const daysOnMarket = this.createDaysOnMarket();
+        const daysOnMarket = this.rentCastSalesResponseTyped.daysOnMarket ?? 0;
         const listedDate = this.rentCastSalesResponseTyped.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
 
         // Need to figure out what to do with below code
@@ -217,10 +217,6 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
 
         // Come back to this and make sure the string is being parsed correctly
         return new Date(listedDate);
-    }
-
-    protected createDaysOnMarket(): number {
-        return this.rentCastSalesResponseTyped.daysOnMarket ?? 0;
     }
 
     protected createPropertyStatus(): PropertyStatus {

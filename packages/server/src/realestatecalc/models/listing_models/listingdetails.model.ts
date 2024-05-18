@@ -50,6 +50,12 @@ export class ListingDetails extends Entity implements IDTOConvertible<ListingDet
         this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
 
+
+    // Come back to this and remove
+    get hasZillowMarketUpdates(): boolean {
+        return this._zillowMarketEstimates ? true : false;
+    }
+
     get zillowURL(): string {
         return this._zillowURL;
     }

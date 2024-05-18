@@ -1,4 +1,4 @@
-import { Country, CreateListingDetailsRequest, ListingCreationType, PropertyStatus, PropertyType, State } from "@realestatemanager/shared";
+import { Country, CreateListingDetailsRequest, ListingCreationType, PropertyStatus, PropertyType, State, Utility } from "@realestatemanager/shared";
 import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
 
 export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder {
@@ -11,151 +11,150 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
     }
 
     protected createZillowURL(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowURL;
     }
 
     protected createFullAddress(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.fullAddress;
     }
 
     protected createState(): State {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.state;
     }
 
     protected createzipCode(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.zipcode;
     }
 
     protected createCity(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.city;
     }
 
     protected createCounty(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.county;
     }
 
     protected createCountry(): Country {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.country;
     }
 
     protected createStreetAddress(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.streetAddress;
     }
 
     protected createApartmentNumber(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.apartmentNumber;
     }
 
     protected createLongitude(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.longitude;
     }
 
     protected createLatitude(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.address.latitude;
     }
 
     protected createElementarySchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.schoolRating.elementarySchoolRating;
     }
 
     protected createMiddleSchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.schoolRating.middleSchoolRating;
     }
 
     protected createHighSchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.schoolRating.highSchoolRating;
     }
 
     protected createNumberOfBedrooms(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.numberOfBedrooms;
     }
 
     protected createNumberOfFullBathrooms(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.numberOfFullBathrooms;
     }
 
     protected createNumberOfHalfBathrooms(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.numberOfHalfBathrooms;
     }
 
     protected createSquareFeet(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.squareFeet;
     }
 
     protected createAcres(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.acres;
     }
 
     protected createYearBuilt(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.yearBuilt;
     }
 
     protected createHasGarage(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.hasGarage;
     }
 
     protected createHasPool(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.hasPool;
     }
 
     protected createHasBasement(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.hasBasement;
     }
 
     protected createPropertyType(): PropertyType {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.propertyType;
     }
 
     protected createDescription(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyDetails.description;
     }
 
     protected createZestimate(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zestimate;
     }
 
     protected createZestimateRangeLow(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zestimateRange.low;
     }
 
     protected createZestimateRangeHigh(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zestimateRange.high;
     }
 
     protected createZillowRentEstimate(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zillowRentEstimate;
     }
 
     protected createZillowMonthlyPropertyTaxAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount;
     }
 
     protected createZillowMonthlyHomeInsuranceAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount;
     }
 
     protected createZillowMonthlyHOAFeesAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.zillowMarketEstimates.zillowMonthlyHOAFeesAmount;
     }
 
     protected createListingPrice(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.listingPrice;
     }
 
+    // Come back to this
     protected createCreationType(): ListingCreationType {
-        throw new Error("Method not implemented.");
+        return;
     }
 
     protected createDateListed(): Date {
-        throw new Error("Method not implemented.");
-    }
-
-    protected createDaysOnMarket(): number {
-        throw new Error("Method not implemented.");
+        const listedDate = Utility.getDateNDaysAgo(this.listingDetailsRequest.numberOfDaysOnMarket);
+        // Come back to this and make sure the string is being parsed correctly
+        return new Date(listedDate);
     }
 
     protected createPropertyStatus(): PropertyStatus {
-        throw new Error("Method not implemented.");
+        return this.listingDetailsRequest.propertyStatus;
     }
 
 

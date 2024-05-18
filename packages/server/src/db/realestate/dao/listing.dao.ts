@@ -170,12 +170,14 @@ export class ListingDAO extends RealEstateDAO {
     ): Promise<number> {
         let newListingId = -1;
         try {
-            const addressId = await this.insertAddress(pool, listingDetails.propertyDetails.address);
-            const schoolRatingId = await this._insertSchoolRating(pool, listingDetails.propertyDetails.schoolRating);
-            const propertyDetailsId = await this.insertPropertyDetails(pool, listingDetails.propertyDetails, addressId, schoolRatingId);
+            const addressId = await this.insertAddress(pool, listingDetails);
+            const schoolRatingId = await this._insertSchoolRating(pool, listingDetails);
+            const propertyDetailsId = await this.insertPropertyDetails(pool, listingDetails, addressId, schoolRatingId);
             let zillowMarketEstimatesId: number | null = null;
-            if (listingDetails.zillowMarketEstimates) {
-                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(pool, listingDetails.zillowMarketEstimates);
+
+            // Come back to this and update
+            if (listingDetails.hasZillowMarketUpdates) {
+                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(pool, listingDetails);
             }
 
             const values: any[] = [
@@ -193,7 +195,8 @@ export class ListingDAO extends RealEstateDAO {
             }
 
             // Should probably move this logic elsewhere
-            const insertWithRentCastResponseIds: boolean = (ListingCreationType.RENT_CAST_API === creationType || ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA === creationType)
+            const insertWithRentCastResponseIds: boolean =
+                (ListingCreationType.RENT_CAST_API === creationType || ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA === creationType)
                 && isValidRentCastResponseId(saleResponseId);
 
             if (insertWithRentCastResponseIds) {
@@ -201,14 +204,26 @@ export class ListingDAO extends RealEstateDAO {
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {
                     values.push(propertyResponseId);
-                    newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY, values);
+                    newListingId = await this.genericInsertQuery(
+                        pool,
+                        this.INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY,
+                        values
+                    );
                 }
                 else {
-                    newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY, values);
+                    newListingId = await this.genericInsertQuery(
+                        pool,
+                        this.INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY,
+                        values
+                    );
                 }
             }
             else {
-                newListingId = await this.genericInsertQuery(pool, this.INSERT_LISTING_DETAILS_QUERY, values);
+                newListingId = await this.genericInsertQuery(
+                    pool,
+                    this.INSERT_LISTING_DETAILS_QUERY,
+                    values
+                );
             }
 
             console.log('Listing information inserted successfully');
@@ -339,36 +354,36 @@ export class ListingDAO extends RealEstateDAO {
 
     }
 
-    private async _insertSchoolRating(pool: Pool, schoolRating: SchoolRatingDTO): Promise<number> {
+    private async _insertSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
         const values: any[] = [
-            schoolRating.elementarySchoolRating,
-            schoolRating.middleSchoolRating,
-            schoolRating.highSchoolRating]
+            listingDetails.elementarySchoolRating,
+            listingDetails.middleSchoolRating,
+            listingDetails.highSchoolRating]
 
         return this.genericInsertQuery(pool, this.INSERT_SCHOOL_RATING_QUERY, values);
     }
 
-    private async insertAddress(pool: Pool, address: AddressDTO): Promise<number> {
+    private async insertAddress(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
         const values: any[] = [
-            address.fullAddress,
-            address.state,
-            address.zipcode,
-            address.city,
-            address.county,
-            address.country,
-            address.streetAddress,
-            address.apartmentNumber,
-            address.longitude,
-            address.latitude];
+            listingDetails.fullAddress,
+            listingDetails.state,
+            listingDetails.zipcode,
+            listingDetails.city,
+            listingDetails.county,
+            listingDetails.country,
+            listingDetails.streetAddress,
+            listingDetails.apartmentNumber,
+            listingDetails.longitude,
+            listingDetails.latitude];
 
         return this.genericInsertQuery(pool, this.INSERT_ADDRESS_QUERY, values);
     }
 
     private async insertPropertyDetails(
         pool: Pool,
-        propertyDetails: PropertyDetailsDTO,
+        listingDetails: ListingDetails,
         addressId: number,
         schoolRatingId: number
     ): Promise<number> {
@@ -376,32 +391,32 @@ export class ListingDAO extends RealEstateDAO {
         const values: any[] = [
             addressId,
             schoolRatingId,
-            propertyDetails.numberOfBedrooms,
-            propertyDetails.numberOfFullBathrooms,
-            propertyDetails.numberOfHalfBathrooms,
-            propertyDetails.squareFeet,
-            propertyDetails.acres,
-            propertyDetails.yearBuilt,
-            propertyDetails.hasGarage,
-            propertyDetails.hasPool,
-            propertyDetails.hasBasement,
-            propertyDetails.propertyType,
-            propertyDetails.description];
+            listingDetails.numberOfBedrooms,
+            listingDetails.numberOfFullBathrooms,
+            listingDetails.numberOfHalfBathrooms,
+            listingDetails.squareFeet,
+            listingDetails.acres,
+            listingDetails.yearBuilt,
+            listingDetails.hasGarage,
+            listingDetails.hasPool,
+            listingDetails.hasBasement,
+            listingDetails.propertyType,
+            listingDetails.description];
 
         return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
 
     }
 
-    private async insertZillowMarketEstimates(pool: Pool, zillowMarketEstimates: ZillowMarketEstimatesDTO): Promise<number> {
+    private async insertZillowMarketEstimates(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
         const values: any[] = [
-            zillowMarketEstimates.zestimate,
-            zillowMarketEstimates.zestimateRange.low,
-            zillowMarketEstimates.zestimateRange.high,
-            zillowMarketEstimates.zillowRentEstimate,
-            zillowMarketEstimates.zillowMonthlyPropertyTaxAmount,
-            zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount,
-            zillowMarketEstimates.zillowMonthlyHOAFeesAmount];
+            listingDetails.zestimate,
+            listingDetails.zestimateRangeLow,
+            listingDetails.zestimateRangeHigh,
+            listingDetails.zillowRentEstimate,
+            listingDetails.zillowMonthlyPropertyTaxAmount,
+            listingDetails.zillowMonthlyHomeInsuranceAmount,
+            listingDetails.zillowMonthlyHOAFeesAmount];
 
         return this.genericInsertQuery(pool, this.INSERT_ZILLOW_MARKET_ESTIMATES_QUERY, values);
     }

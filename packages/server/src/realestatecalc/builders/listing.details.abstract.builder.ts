@@ -154,8 +154,6 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createDateListed(): Date;
 
-    protected abstract createDaysOnMarket(): number;
-
     protected abstract createPropertyStatus(): PropertyStatus;
 
 }
