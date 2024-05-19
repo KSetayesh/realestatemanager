@@ -2,12 +2,14 @@ import { Pool } from 'pg';
 import { ListingDAO } from '../dao/listing.dao';
 import { ListingCreationType } from '@realestatemanager/shared';
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
+import { DatabaseManager } from './db.manager';
 
-export class ListingManager {
+export class ListingManager extends DatabaseManager {
 
     private listingDAO: ListingDAO;
 
-    constructor(listingDAO: ListingDAO) {
+    constructor(listingDAO: ListingDAO, commit: boolean) {
+        super(commit);
         this.listingDAO = listingDAO;
     }
 
@@ -31,6 +33,10 @@ export class ListingManager {
         saleResponseId?: number,
         propertyResponseId?: number,
     ): Promise<number> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         return this.listingDAO.insertListingDetails(
             pool,
             listingDetails,

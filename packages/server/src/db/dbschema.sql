@@ -142,7 +142,14 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_response (
 -- EndQuery
 
 -- Query: InsertIntoRentCastConfigDetailsTable
-INSERT INTO rent_cast_config_details (api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date, created_at, updated_at)
-SELECT 0, 50, 31, NOW(), NOW(), NOW(), NOW()
+INSERT INTO rent_cast_config_details (
+    api_calls_this_month, 
+    number_of_free_api_calls, 
+    billing_period, 
+    first_billed_on, 
+    most_recent_billing_date, 
+    created_at, 
+    updated_at
+) SELECT 0, 50, 31, NOW(), NOW(), NOW(), NOW()
 WHERE NOT EXISTS (SELECT 1 FROM rent_cast_config_details);
 -- EndQuery

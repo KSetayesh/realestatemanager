@@ -4,8 +4,9 @@ import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/
 import { RentCastDAO } from '../dao/rentcast.dao';
 import { RentCastResponse } from 'src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
 import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
+import { DatabaseManager } from './db.manager';
 
-export class RentCastManager {
+export class RentCastManager extends DatabaseManager {
 
     private rentCastDAO: RentCastDAO;
 
@@ -14,7 +15,8 @@ export class RentCastManager {
         2: apiKeysConfig.backUpRentCastApiKey,
     };
 
-    constructor(rentCastDAO: RentCastDAO) {
+    constructor(rentCastDAO: RentCastDAO, commit: boolean) {
+        super(commit);
         this.rentCastDAO = rentCastDAO;
     }
 
@@ -23,11 +25,23 @@ export class RentCastManager {
         return this.rentCastDAO.checkIfAddressIdExists(pool, addressId);
     }
 
-    async insertRentCastApiResponse(pool: Pool, rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
+    async insertRentCastApiResponse(
+        pool: Pool,
+        rentCastResponse: RentCastResponse,
+        rentCastApiCallId: number
+    ): Promise<number> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         return this.rentCastDAO.insertRentCastApiResponse(pool, rentCastResponse, rentCastApiCallId);
     }
 
     async resetNumberOfApiCalls(pool: Pool, id: number) {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         await this.rentCastDAO.resetNumberOfApiCalls(pool, id);
     }
 
@@ -43,6 +57,10 @@ export class RentCastManager {
     }
 
     async updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number): Promise<void> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         await this.rentCastDAO.updateNumberOfApiCalls(pool, rentCastConfigDetailsId);
     }
 
@@ -53,6 +71,10 @@ export class RentCastManager {
         rentCastDetailsId: number,
         executionTime: Date = new Date()
     ): Promise<number> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         return this.rentCastDAO.insertRentCastApiCall(
             pool,
             endpoint,
