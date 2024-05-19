@@ -1,20 +1,20 @@
-import { GrowthProjectionsDTO, ValueRateInput } from "@realestatemanager/shared";
+import { GrowthProjectionsResponseDTO, ValueRateInput } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
-export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> {
+export class GrowthProjections implements IDTOConvertible<GrowthProjectionsResponseDTO> {
 
     // Expenses
-    private annualAppreciationRate: ValueRateInput;
-    private annualTaxIncreaseRate: ValueRateInput;
-    private annualHomeInsuranceIncreaseRate: ValueRateInput;
-    private annualHOAFeesIncreaseRate: ValueRateInput;
+    private _annualAppreciationRate: ValueRateInput;
+    private _annualTaxIncreaseRate: ValueRateInput;
+    private _annualHomeInsuranceIncreaseRate: ValueRateInput;
+    private _annualHOAFeesIncreaseRate: ValueRateInput;
 
     // Incomes
-    private annualRentIncreaseRate: ValueRateInput;
-    private parkingFeesIncreaseRate: ValueRateInput;
-    private laundryServicesIncreaseRate: ValueRateInput;
-    private storageUnitFeesIncreaseRate: ValueRateInput;
-    private otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput;
+    private _annualRentIncreaseRate: ValueRateInput;
+    private _parkingFeesIncreaseRate: ValueRateInput;
+    private _laundryServicesIncreaseRate: ValueRateInput;
+    private _storageUnitFeesIncreaseRate: ValueRateInput;
+    private _otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput;
 
     constructor(
         annualAppreciationRate: ValueRateInput,
@@ -27,57 +27,57 @@ export class GrowthProjections implements IDTOConvertible<GrowthProjectionsDTO> 
         storageUnitFeesIncreaseRate: ValueRateInput,
         otherAdditionalIncomeStreamsIncreaseRate: ValueRateInput) {
 
-        this.annualAppreciationRate = annualAppreciationRate;
-        this.annualTaxIncreaseRate = annualTaxIncreaseRate;
-        this.annualHomeInsuranceIncreaseRate = annualHomeInsuranceIncreaseRate;
-        this.annualHOAFeesIncreaseRate = annualHOAFeesIncreaseRate;
-        this.annualRentIncreaseRate = annualRentIncreaseRate;
-        this.parkingFeesIncreaseRate = parkingFeesIncreaseRate;
-        this.laundryServicesIncreaseRate = laundryServicesIncreaseRate;
-        this.storageUnitFeesIncreaseRate = storageUnitFeesIncreaseRate;
-        this.otherAdditionalIncomeStreamsIncreaseRate = otherAdditionalIncomeStreamsIncreaseRate;
+        this._annualAppreciationRate = annualAppreciationRate;
+        this._annualTaxIncreaseRate = annualTaxIncreaseRate;
+        this._annualHomeInsuranceIncreaseRate = annualHomeInsuranceIncreaseRate;
+        this._annualHOAFeesIncreaseRate = annualHOAFeesIncreaseRate;
+        this._annualRentIncreaseRate = annualRentIncreaseRate;
+        this._parkingFeesIncreaseRate = parkingFeesIncreaseRate;
+        this._laundryServicesIncreaseRate = laundryServicesIncreaseRate;
+        this._storageUnitFeesIncreaseRate = storageUnitFeesIncreaseRate;
+        this._otherAdditionalIncomeStreamsIncreaseRate = otherAdditionalIncomeStreamsIncreaseRate;
     }
 
     // Getter functions for expenses
-    getAnnualAppreciationRate(): ValueRateInput {
-        return this.annualAppreciationRate;
+    get annualAppreciationRate(): ValueRateInput {
+        return this._annualAppreciationRate;
     }
 
-    getAnnualTaxIncreaseRate(): ValueRateInput {
-        return this.annualTaxIncreaseRate;
+    get annualTaxIncreaseRate(): ValueRateInput {
+        return this._annualTaxIncreaseRate;
     }
 
-    getAnnualHomeInsuranceIncreaseRate(): ValueRateInput {
-        return this.annualHomeInsuranceIncreaseRate;
+    get annualHomeInsuranceIncreaseRate(): ValueRateInput {
+        return this._annualHomeInsuranceIncreaseRate;
     }
 
-    getAnnualHOAFeesIncreaseRate(): ValueRateInput {
-        return this.annualHOAFeesIncreaseRate;
+    get annualHOAFeesIncreaseRate(): ValueRateInput {
+        return this._annualHOAFeesIncreaseRate;
     }
 
     // Getter functions for incomes
-    getAnnualRentIncreaseRate(): ValueRateInput {
-        return this.annualRentIncreaseRate;
+    get annualRentIncreaseRate(): ValueRateInput {
+        return this._annualRentIncreaseRate;
     }
 
-    getParkingFeesIncreaseRate(): ValueRateInput {
-        return this.parkingFeesIncreaseRate;
+    get parkingFeesIncreaseRate(): ValueRateInput {
+        return this._parkingFeesIncreaseRate;
     }
 
-    getLaundryServicesIncreaseRate(): ValueRateInput {
-        return this.laundryServicesIncreaseRate;
+    get laundryServicesIncreaseRate(): ValueRateInput {
+        return this._laundryServicesIncreaseRate;
     }
 
-    getStorageUnitFeesIncreaseRate(): ValueRateInput {
-        return this.storageUnitFeesIncreaseRate;
+    get storageUnitFeesIncreaseRate(): ValueRateInput {
+        return this._storageUnitFeesIncreaseRate;
     }
 
-    getOtherAdditionalIncomeStreamsIncreaseRate(): ValueRateInput {
-        return this.otherAdditionalIncomeStreamsIncreaseRate;
+    get otherAdditionalIncomeStreamsIncreaseRate(): ValueRateInput {
+        return this._otherAdditionalIncomeStreamsIncreaseRate;
     }
 
 
-    toDTO(): GrowthProjectionsDTO {
+    toDTO(): GrowthProjectionsResponseDTO {
         return {
             annualAppreciationRate: this.annualAppreciationRate.rate,
             annualTaxIncreaseRate: this.annualTaxIncreaseRate.rate,

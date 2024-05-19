@@ -1,12 +1,12 @@
 import React from 'react';
-import { ListingWithScenariosDTO } from "@realestatemanager/shared";
+import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import '../styles/PropertyDetailsModal.css';
 import { TableColumn, TableRow } from "../components/ReusableTable";
 import { Link } from 'react-router-dom';
 import { renderCellData } from '../constants/Constant';
 
 const PropertyDetailsModal: React.FC<{
-    property: ListingWithScenariosDTO | null;
+    property: ListingWithScenariosResponseDTO | null;
     rowData: TableRow;
     onClose: () => void;
     columns: TableColumn[];
@@ -20,7 +20,7 @@ const PropertyDetailsModal: React.FC<{
             <div className="modal" onClick={stopPropagation}>
                 <h2>Property Details</h2>
                 {columns.map((column, colIndex) => {
-                    const cellData = renderCellData(rowData[column.accessor as keyof ListingWithScenariosDTO],
+                    const cellData = renderCellData(rowData[column.accessor as keyof ListingWithScenariosResponseDTO],
                         column.isDollarAmount,
                         column.addSuffix);
 

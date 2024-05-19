@@ -1,4 +1,4 @@
-import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnResponseDTO, Utility, ValueAmountInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";
@@ -63,7 +63,7 @@ export class Income extends Transaction implements CalculateTxnInterface<ValueAm
         return accumulateAndSum(month => this.getAmount(rentalTxn, month), monthCounter);
     }
 
-    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
+    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnResponseDTO {
         const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
         return {

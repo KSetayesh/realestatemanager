@@ -1,4 +1,4 @@
-import { TransactionKey, TransactionType, TxnDTO, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnResponseDTO, Utility, ValueAmountInput, ValueRateInput } from "@realestatemanager/shared";
 import { Transaction } from "./transaction";
 
 export class RentEstimate extends Transaction {
@@ -27,7 +27,7 @@ export class RentEstimate extends Transaction {
         );
     }
 
-    toDTO(monthCounter: number): TxnDTO {
+    toDTO(monthCounter: number): TxnResponseDTO {
         return {
             key: TransactionKey.RENTAL_INCOME,
             amount: Utility.round(this.getFutureDatedRentalAmount(monthCounter)),

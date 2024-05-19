@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ListingWithScenariosDTO } from '@realestatemanager/shared';
 import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
+import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 
 enum TableTypeEnum {
     ALL = 'ALL',
@@ -13,9 +13,9 @@ enum TableTypeEnum {
 };
 
 const PropertiesList: React.FC = () => {
-    const [properties, setProperties] = useState<ListingWithScenariosDTO[]>([]);
+    const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
+    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.STANDARD_BREAKDOWN);
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
@@ -29,7 +29,7 @@ const PropertiesList: React.FC = () => {
         (async () => {
             try {
                 setIsLoading(true); // Set loading state to true before fetching data
-                const propertiesData: ListingWithScenariosDTO[] = await realEstateCalcApi.getAllProperties();
+                const propertiesData: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties();
                 setProperties(propertiesData); // Update state with fetched data
                 console.log("Fetched data:", propertiesData);
             } catch (error) {
@@ -48,7 +48,7 @@ const PropertiesList: React.FC = () => {
         }));
     }
 
-    const tablesConfig: TablesConfig<ListingWithScenariosDTO> = {
+    const tablesConfig: TablesConfig<ListingWithScenariosResponseDTO> = {
         [TableTypeEnum.STANDARD_BREAKDOWN]: {
             columns: defaultColumns,
             data: createDefaultRowData,
@@ -59,7 +59,7 @@ const PropertiesList: React.FC = () => {
         },
     };
 
-    const handleRowClick = (property: ListingWithScenariosDTO) => {
+    const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
     };
 
@@ -67,7 +67,7 @@ const PropertiesList: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const tableData: TableDataItem<ListingWithScenariosDTO>[] = properties.map(property => ({
+    const tableData: TableDataItem<ListingWithScenariosResponseDTO>[] = properties.map(property => ({
         objectData: {
             key: property,
         },

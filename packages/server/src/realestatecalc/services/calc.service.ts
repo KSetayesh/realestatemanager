@@ -1,18 +1,17 @@
 import { Pool } from 'pg';
 import { Injectable } from '@nestjs/common';
 import {
-    AmortizationBreakdownDTO,
+    AmortizationBreakdownResponseDTO,
+    CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
-    InvestmentScenarioRequest,
     ListingCreationType,
-    ListingWithScenariosDTO,
+    ListingWithScenariosResponseDTO,
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
 import { InvestmentCalculator } from '../models/investment_models/investment.calculator';
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
-import { ListingDetailsBuilder } from '../builders/listing.details.builder';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 
 @Injectable()
@@ -26,15 +25,15 @@ export class CalcService {
         this.pool = DatabaseManagerFactory.getDbPool();
     }
 
-    async getAllProperties(investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO[]> {
-        const listingWithScenariosArr: ListingWithScenariosDTO[] = [];
+    async getAllProperties(investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO[]> {
+        const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-            const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();
+            const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();
 
-            const listingWithScenariosDTO: ListingWithScenariosDTO = {
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = {
                 listingDetails: listingDetails.toDTO(),
                 metrics: metrics,
             };
@@ -44,11 +43,11 @@ export class CalcService {
         return listingWithScenariosArr;
     }
 
-    async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
+    async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
         const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-        const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();
+        const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
             metrics: metrics,
@@ -90,12 +89,12 @@ export class CalcService {
         );
     }
 
-    async calculate(investmentScenarioRequest: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
+    async calculate(investmentScenarioRequest: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
         const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
         const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-        const metrics: AmortizationBreakdownDTO = investmentCalc.createInvestmentMetrics();
+        const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();
         return {
             listingDetails: listingDetails.toDTO(),
             metrics: metrics,

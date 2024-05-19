@@ -1,11 +1,11 @@
 import {
-    IncomeStreamsDTO,
-    InitialCostsExpensesDTO,
-    RecurringFixedExpensesDTO,
-    RecurringOperationalCostsDTO,
+    IncomeStreamsResponseDTO,
+    InitialCostsExpensesResponseDTO,
+    RecurringFixedExpensesResponseDTO,
+    RecurringOperationalCostsResponseDTO,
     TransactionKey,
     TransactionType,
-    TxnDTO,
+    TxnResponseDTO,
     Utility
 } from "@realestatemanager/shared";
 import { Income } from "./transaction_models/income";
@@ -34,7 +34,7 @@ export class TransactionManager {
         this.recurringOperationalCostMap = recurringOperationalCostMap;
     }
 
-    getRecurringFixedExpensesDTO(rentEstimate: RentEstimate, monthCounter: number): RecurringFixedExpensesDTO {
+    getRecurringFixedExpensesDTO(rentEstimate: RentEstimate, monthCounter: number): RecurringFixedExpensesResponseDTO {
         return {
             type: TransactionType.FIXED_RECURRING_EXPENSE,
             totalAmount: {
@@ -49,7 +49,7 @@ export class TransactionManager {
         };
     }
 
-    getInitialCostsDTO(purchasePrice: PurchasePrice): InitialCostsExpensesDTO {
+    getInitialCostsDTO(purchasePrice: PurchasePrice): InitialCostsExpensesResponseDTO {
         return {
             type: TransactionType.INITIAL_EXPENSE,
             totalAmount: {
@@ -67,7 +67,7 @@ export class TransactionManager {
         };
     }
 
-    getIncomeStreamsDTO(rentEstimate: RentEstimate, monthCounter: number): IncomeStreamsDTO {
+    getIncomeStreamsDTO(rentEstimate: RentEstimate, monthCounter: number): IncomeStreamsResponseDTO {
         return {
             type: TransactionType.INCOME_STREAMS,
             totalAmount: {
@@ -84,7 +84,7 @@ export class TransactionManager {
         };
     }
 
-    getRecurringOperationalCostsDTO(rentEstimate: RentEstimate, monthCounter: number): RecurringOperationalCostsDTO {
+    getRecurringOperationalCostsDTO(rentEstimate: RentEstimate, monthCounter: number): RecurringOperationalCostsResponseDTO {
         return {
             type: TransactionType.OPERATIONAL_RECURRING_EXPENSE,
             totalAmount: {
@@ -159,79 +159,79 @@ export class TransactionManager {
     }
 
     // Fixed Recurring Expenses DTO
-    private getMonthlyHOAFeesAmountDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getMonthlyHOAFeesAmountDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.monthlyHOAFeesTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getMonthlyHomeInsuranceAmountDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getMonthlyHomeInsuranceAmountDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.monthlyHomeInsuranceAmountTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getMonthlyPropertyTaxDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getMonthlyPropertyTaxDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.monthlyPropertyTaxTxn.toDTO(rentEstimate, monthCounter);
     }
 
     // Initial Costs DTO
-    private getDownPaymentDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getDownPaymentDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.downPaymentTxn.toDTO(purchasePrice);
     }
 
-    private getClosingCostsDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getClosingCostsDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.closingCostsTxn.toDTO(purchasePrice);
     }
 
-    private getInitialRepairCostsDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getInitialRepairCostsDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.initialRepairCostsTxn.toDTO(purchasePrice);
     }
 
-    private getLegalAndProfessionalFeesDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getLegalAndProfessionalFeesDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.legalAndProfessionalFeesTxn.toDTO(purchasePrice);
     }
 
-    private getTravelingCostsDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getTravelingCostsDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.travelingCostsTxn.toDTO(purchasePrice);
     }
 
-    private getOtherInititalExpensesDTO(purchasePrice: PurchasePrice): TxnDTO {
+    private getOtherInititalExpensesDTO(purchasePrice: PurchasePrice): TxnResponseDTO {
         return this.otherInitialExpensesTxn.toDTO(purchasePrice);
     }
 
     // Income Streams DTO
-    private getStorageUnitFeesDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getStorageUnitFeesDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.storageUnitFeesTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getParkingFeeDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getParkingFeeDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.parkingFeeTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getLaundryServiceDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getLaundryServiceDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.laundryServiceTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getOtherAdditionalIncomeStreamsDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getOtherAdditionalIncomeStreamsDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.otherAdditionalIncomeStreamsTxn.toDTO(rentEstimate, monthCounter);
     }
 
     // Recurring Operational Expenses DTO
 
-    private getCapExReserveRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getCapExReserveRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.capExReserveRateTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getMaintenanceRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getMaintenanceRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.maintenanceRateTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getOtherExpenseRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getOtherExpenseRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.otherExpenseRateTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getPropertyManagementRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getPropertyManagementRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.propertyManagementRateTxn.toDTO(rentEstimate, monthCounter);
     }
 
-    private getVacancyRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnDTO {
+    private getVacancyRateDTO(rentEstimate: RentEstimate, monthCounter: number): TxnResponseDTO {
         return this.vacancyRateTxn.toDTO(rentEstimate, monthCounter);
     }
 

@@ -1,15 +1,15 @@
-import {
-    InvestmentScenarioRequest,
-    ListingWithScenariosDTO,
+import { 
     CreateRentCastApiRequest,
-    CreateListingDetailsRequest
+    CreateListingDetailsRequest,
+    CreateInvestmentScenarioRequest,
+    ListingWithScenariosResponseDTO
 } from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 
 export class RealEstateCalcApi extends CalcApi {
 
-    async getAllProperties(): Promise<ListingWithScenariosDTO[]> {
+    async getAllProperties(): Promise<ListingWithScenariosResponseDTO[]> {
 
         try {
             const response = await axios.get(this.getURL());
@@ -22,7 +22,7 @@ export class RealEstateCalcApi extends CalcApi {
 
     }
 
-    async realEstateCalculator(dataToSubmit: InvestmentScenarioRequest): Promise<ListingWithScenariosDTO> {
+    async realEstateCalculator(dataToSubmit: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
 
         try {
             const response = await axios.post(`${this.getURL()}/calculate`, dataToSubmit, {

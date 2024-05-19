@@ -1,4 +1,4 @@
-import { TransactionKey, TransactionType, TxnDTO, Utility, ValueInput } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnResponseDTO, Utility, ValueInput } from "@realestatemanager/shared";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { PurchasePrice } from "./purchase.price";
 import { Transaction } from "./transaction";
@@ -37,7 +37,7 @@ export class InitialCost extends Transaction implements CalculateTxnInterface<Va
     }
 
 
-    toDTO(purchaseTxn: PurchasePrice): TxnDTO {
+    toDTO(purchaseTxn: PurchasePrice): TxnResponseDTO {
         const txnAmount = this.getAmount(purchaseTxn);
 
         return {

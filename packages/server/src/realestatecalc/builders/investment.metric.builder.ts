@@ -3,15 +3,15 @@ import {
 } from "src/shared/Constants";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
 import {
-    AdditionalIncomeStreamsRequest,
+    CreateAdditionalIncomeStreamsRequest,
+    CreateGrowthProjectionsRequest,
+    CreateInvestmentDetailsRequest,
+    CreateInvestmentScenarioRequest,
+    CreateMortgageDetailsRequest,
+    CreateOperatingExpensesRequest,
+    CreateTaxImplicationsRequest,
     DefaultInvestmentRates,
-    GrowthProjectionsRequest,
     InterestType,
-    InvestmentDetailsRequest,
-    InvestmentScenarioRequest,
-    MortgageDetailsRequest,
-    OperatingExpensesRequest,
-    TaxImplicationsRequest,
     ValueAmountInput,
     ValueInput,
     ValueRateInput,
@@ -30,11 +30,11 @@ import { TaxImplications } from "../models/investment_models/tax.implications.mo
 export class InvestmentMetricBuilder {
 
     private listingDetails: ListingDetails;
-    private investmentScenarioRequest?: InvestmentScenarioRequest;
+    private investmentScenarioRequest?: CreateInvestmentScenarioRequest;
 
     constructor(
         listingDetails: ListingDetails,
-        investmentScenarioRequest?: InvestmentScenarioRequest) {
+        investmentScenarioRequest?: CreateInvestmentScenarioRequest) {
 
         this.listingDetails = listingDetails;
         this.investmentScenarioRequest = investmentScenarioRequest;
@@ -200,27 +200,27 @@ export class InvestmentMetricBuilder {
  
     }
 
-    private getInvestmentDetails(): InvestmentDetailsRequest {
+    private getInvestmentDetails(): CreateInvestmentDetailsRequest {
         return this.investmentScenarioRequest.investmentDetails;
     }
 
-    private getMortgageDetails(): MortgageDetailsRequest {
+    private getMortgageDetails(): CreateMortgageDetailsRequest {
         return this.getInvestmentDetails().mortgageDetails;
     }
 
-    private getOperatingExpenses(): OperatingExpensesRequest {
+    private getOperatingExpenses(): CreateOperatingExpensesRequest {
         return this.getInvestmentDetails().operatingExpenses;
     }
 
-    private getGrowthProjections(): GrowthProjectionsRequest {
+    private getGrowthProjections(): CreateGrowthProjectionsRequest {
         return this.getInvestmentDetails().growthProjections;
     }
 
-    private getAdditionalIncomeStreams(): AdditionalIncomeStreamsRequest {
+    private getAdditionalIncomeStreams(): CreateAdditionalIncomeStreamsRequest {
         return this.getInvestmentDetails().additionalIncomeStreams;
     }
 
-    private getTaxImplications(): TaxImplicationsRequest {
+    private getTaxImplications(): CreateTaxImplicationsRequest {
         return this.getInvestmentDetails().taxImplications;
     }
 

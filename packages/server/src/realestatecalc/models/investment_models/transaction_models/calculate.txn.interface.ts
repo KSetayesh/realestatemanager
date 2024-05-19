@@ -1,4 +1,4 @@
-import { TransactionKey, TransactionType, TxnDTO, ValueInput, ValueRateInput } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnResponseDTO, ValueInput, ValueRateInput } from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { PurchasePrice } from "./purchase.price";
 
@@ -15,7 +15,7 @@ export interface CalculateTxnInterface<T extends ValueInput, Z extends RentEstim
 
     getRate(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number): number;
 
-    toDTO(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number, previousTotalAmount?: number): TxnDTO;
+    toDTO(rentalTxnOrPurchaseTxn?: Z, monthCounter?: number, previousTotalAmount?: number): TxnResponseDTO;
 
 };
 

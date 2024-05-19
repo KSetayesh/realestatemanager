@@ -3,15 +3,15 @@ import { MortgageCalculator } from "./transaction_models/mortgage.calc";
 import { PurchasePrice } from "./transaction_models/purchase.price";
 import { RentEstimate } from "./transaction_models/rent.estimate";
 import {
-    AmortizationBreakdownDTO,
-    FinancingDTO,
-    InitialInvestmentBreakdownDTO,
-    InvestmentBreakdownDTO,
+    AmortizationBreakdownResponseDTO,
+    FinancingResponseDTO,
+    InitialInvestmentBreakdownResponseDTO,
+    InvestmentBreakdownResponseDTO,
     MonthlyDateData,
-    MonthlyInvestmentBreakdownDTO,
-    MonthlyInvestmentDetailsDTO,
-    MortgageDTO,
-    MortgageTxnDTO,
+    MonthlyInvestmentBreakdownResponseDTO,
+    MonthlyInvestmentDetailsResponseDTO,
+    MortgageResponseDTO,
+    MortgageTxnResponseDTO,
     TransactionKey,
     TransactionType,
     Utility
@@ -47,8 +47,8 @@ export class InvestmentCalculator {
         this.rentalEstimate = rentalEstimate;
     }
 
-    createInvestmentMetrics(): AmortizationBreakdownDTO {
-        let ammortizationList: MonthlyInvestmentDetailsDTO[] = [];
+    createInvestmentMetrics(): AmortizationBreakdownResponseDTO {
+        let ammortizationList: MonthlyInvestmentDetailsResponseDTO[] = [];
 
         const totalPayments = this.mortgageCalc.numberOfPayments;
         const today = new Date();
@@ -58,7 +58,7 @@ export class InvestmentCalculator {
 
         for (let monthCounter = 1; monthCounter <= totalPayments; monthCounter++) {
             const monthlyDateData: MonthlyDateData = this.getDateData(year, nextMonth, monthCounter);
-            const monthlyInvestmentDetailsDTO: MonthlyInvestmentDetailsDTO = {
+            const monthlyInvestmentDetailsDTO: MonthlyInvestmentDetailsResponseDTO = {
                 monthlyDateData: monthlyDateData,
                 monthlyBreakdown: this.getMonthlyTransactionData(monthCounter),
             };
@@ -66,7 +66,7 @@ export class InvestmentCalculator {
             ammortizationList.push(monthlyInvestmentDetailsDTO);
         }
 
-        const returnData: AmortizationBreakdownDTO = {
+        const returnData: AmortizationBreakdownResponseDTO = {
             initialInvestmenDetails: this.getInitialValues(),
             growthProjections: this.growthProjections.toDTO(),
             taxImplications: this.taxImplications.toDTO(),
@@ -76,7 +76,7 @@ export class InvestmentCalculator {
         return returnData;
     }
 
-    private getInitialValues(): InitialInvestmentBreakdownDTO {
+    private getInitialValues(): InitialInvestmentBreakdownResponseDTO {
         return {
             investmentBreakdown: this.getInvestmentBreakdownDTO(0),
             transactions: {
@@ -98,7 +98,7 @@ export class InvestmentCalculator {
         };
     }
 
-    private getMonthlyTransactionData(monthCounter: number): MonthlyInvestmentBreakdownDTO { //AmortizationYearData {
+    private getMonthlyTransactionData(monthCounter: number): MonthlyInvestmentBreakdownResponseDTO { //AmortizationYearData {
         // const yearCounter = getYear(monthCounter);
         return {
             appreciation: {
@@ -128,7 +128,7 @@ export class InvestmentCalculator {
 
     }
 
-    private getInvestmentBreakdownDTO(monthCounter: number): InvestmentBreakdownDTO {
+    private getInvestmentBreakdownDTO(monthCounter: number): InvestmentBreakdownResponseDTO {
         return {
             NOI: Utility.round(this.calculateNOI(this.rentalEstimate, monthCounter)),
             accumulatedNOI: Utility.round(this.calculateAccumulatedNOI(this.rentalEstimate, 12)),
@@ -144,7 +144,7 @@ export class InvestmentCalculator {
         };
     }
 
-    private getFinancingDTO(): FinancingDTO {
+    private getFinancingDTO(): FinancingResponseDTO {
         return {
             type: TransactionType.FINANCING,
             breakdown: {
@@ -154,9 +154,9 @@ export class InvestmentCalculator {
         };
     }
 
-    private getMortgageDTO(monthCounter: number): MortgageDTO {
+    private getMortgageDTO(monthCounter: number): MortgageResponseDTO {
 
-        const mortgageTxnDTO = (monthCounter: number): MortgageTxnDTO => {
+        const mortgageTxnDTO = (monthCounter: number): MortgageTxnResponseDTO => {
             return this.mortgageCalc.toDTO(monthCounter);
         }
 

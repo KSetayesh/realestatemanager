@@ -3,7 +3,7 @@ import { InitialCost } from "./initial.cost";
 import {
     DefaultInvestmentRates,
     InterestType,
-    MortgageTxnDTO,
+    MortgageTxnResponseDTO,
     TransactionKey,
     TransactionType,
     Utility,
@@ -202,7 +202,7 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
         // throw new Error('Cannot be amount for MortgageCalculator');
     }
 
-    toDTO(monthCounter: number): MortgageTxnDTO {
+    toDTO(monthCounter: number): MortgageTxnResponseDTO {
         return {
             key: TransactionKey.MORTGAGE,
             amount: Utility.round(this.getAmount(monthCounter)),

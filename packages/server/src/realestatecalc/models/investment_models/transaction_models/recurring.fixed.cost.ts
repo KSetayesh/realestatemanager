@@ -1,4 +1,4 @@
-import { TransactionKey, TransactionType, TxnDTO, Utility, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
+import { TransactionKey, TransactionType, TxnResponseDTO, Utility, ValueInput, ValueRateInput, ValueType } from "@realestatemanager/shared";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";
@@ -61,7 +61,7 @@ export class RecurringFixedCost extends Transaction implements CalculateTxnInter
     }
 
 
-    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnDTO {
+    toDTO(rentalTxn: RentEstimate, monthCounter: number): TxnResponseDTO {
         const txnAmount = this.getAmount(rentalTxn, monthCounter);
 
         return {

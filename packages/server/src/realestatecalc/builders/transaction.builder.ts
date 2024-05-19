@@ -1,4 +1,10 @@
-import { GrowthProjectionsRequest, InterestType, TransactionKey, ValueAmountInput, ValueInput, ValueRateInput } from "@realestatemanager/shared";
+import {
+    InterestType,
+    TransactionKey,
+    ValueAmountInput,
+    ValueInput,
+    ValueRateInput
+} from "@realestatemanager/shared";
 import { PurchasePrice } from "../models/investment_models/transaction_models/purchase.price";
 import { RentEstimate } from "../models/investment_models/transaction_models/rent.estimate";
 import { RecurringFixedCost } from "../models/investment_models/transaction_models/recurring.fixed.cost";
@@ -49,43 +55,43 @@ export class TransactionBuilder {
         const monthlyHOAFeesAmount: RecurringFixedCost = new RecurringFixedCost(
             TransactionKey.HOA_FEE,
             this.txnBuilderReq.monthlyHOAFeesAmount,
-            this.txnBuilderReq.growthProjections.getAnnualHOAFeesIncreaseRate()
+            this.txnBuilderReq.growthProjections.annualHOAFeesIncreaseRate,
         );
 
         const monthlyHomeInsuranceAmount: RecurringFixedCost = new RecurringFixedCost(
             TransactionKey.HOME_INSURANCE,
             this.txnBuilderReq.monthlyHomeInsuranceAmount,
-            this.txnBuilderReq.growthProjections.getAnnualHomeInsuranceIncreaseRate()
+            this.txnBuilderReq.growthProjections.annualHomeInsuranceIncreaseRate,
         );
 
         const monthlyPropertyTax: RecurringFixedCost = new RecurringFixedCost(
             TransactionKey.PROPERTY_TAX,
             this.txnBuilderReq.monthlyPropertyTax,
-            this.txnBuilderReq.growthProjections.getAnnualTaxIncreaseRate()
+            this.txnBuilderReq.growthProjections.annualTaxIncreaseRate,
         );
 
         const storageUnitFees: Income = new Income(
             TransactionKey.STORAGE_UNIT_FEES,
             this.txnBuilderReq.storageUnitFees,
-            this.txnBuilderReq.growthProjections.getStorageUnitFeesIncreaseRate(),
+            this.txnBuilderReq.growthProjections.storageUnitFeesIncreaseRate,
         );
 
         const parkingFee: Income = new Income(
             TransactionKey.PARKING_FEES,
             this.txnBuilderReq.parkingFees,
-            this.txnBuilderReq.growthProjections.getParkingFeesIncreaseRate(),
+            this.txnBuilderReq.growthProjections.parkingFeesIncreaseRate,
         );
 
         const laundryService: Income = new Income(
             TransactionKey.LAUNDRY_SERVICES,
             this.txnBuilderReq.laundryServices,
-            this.txnBuilderReq.growthProjections.getLaundryServicesIncreaseRate(),
+            this.txnBuilderReq.growthProjections.laundryServicesIncreaseRate,
         );
 
         const otherAdditionalIncomeStreams: Income = new Income(
             TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS,
             this.txnBuilderReq.otherAdditionalIncomeStreams,
-            this.txnBuilderReq.growthProjections.getOtherAdditionalIncomeStreamsIncreaseRate(),
+            this.txnBuilderReq.growthProjections.otherAdditionalIncomeStreamsIncreaseRate,
         );
 
         const downPayment: InitialCost = this.downPayment;
@@ -174,20 +180,19 @@ export class TransactionBuilder {
             recurringOperationalCostMap
         );
 
-
     }
 
     get purchasePrice(): PurchasePrice {
         return new PurchasePrice(
             this.txnBuilderReq.purchasePrice,
-            this.txnBuilderReq.growthProjections.getAnnualAppreciationRate(),
+            this.txnBuilderReq.growthProjections.annualAppreciationRate,
         );
     }
 
     get rentEstimate(): RentEstimate {
         return new RentEstimate(
             this.txnBuilderReq.rentEstimate,
-            this.txnBuilderReq.growthProjections.getAnnualRentIncreaseRate(),
+            this.txnBuilderReq.growthProjections.annualRentIncreaseRate,
         );
     }
 

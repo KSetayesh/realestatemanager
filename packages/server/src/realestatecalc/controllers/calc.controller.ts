@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import {
-    InvestmentScenarioRequest,
-    ListingWithScenariosDTO,
     CreateRentCastApiRequest,
     RentCastDetailsResponseDTO,
-    CreateListingDetailsRequest
+    CreateListingDetailsRequest,
+    CreateInvestmentScenarioRequest,
+    ListingWithScenariosResponseDTO
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
@@ -16,8 +16,8 @@ export class CalcController {
 
     @Get()
     async getAllProperties(
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
-    ): Promise<ListingWithScenariosDTO[]> {
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: CreateInvestmentScenarioRequest
+    ): Promise<ListingWithScenariosResponseDTO[]> {
 
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
@@ -28,8 +28,8 @@ export class CalcController {
     @Get('property')
     async getPropertyByZillowUrl(
         @Query('zillowURL') zillowURL: string,
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: InvestmentScenarioRequest
-    ): Promise<ListingWithScenariosDTO> {
+        @Query('investmentScenarioRequest') investmentScenarioRequest?: CreateInvestmentScenarioRequest
+    ): Promise<ListingWithScenariosResponseDTO> {
 
         if (!zillowURL) {
             throw new Error('zillowURL query parameter is required');
@@ -62,13 +62,13 @@ export class CalcController {
 
     @Post('calculate')
     async calculate(
-        @Body() investmentScenarioRequest: InvestmentScenarioRequest,
-    ): Promise<ListingWithScenariosDTO> {
+        @Body() investmentScenarioRequest: CreateInvestmentScenarioRequest,
+    ): Promise<ListingWithScenariosResponseDTO> {
         console.log(investmentScenarioRequest);
         return this.calcService.calculate(investmentScenarioRequest);
     }
 
-    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: InvestmentScenarioRequest): boolean {
+    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
         if (investmentScenarioRequest) {
             if (investmentScenarioRequest.useDefaultRequest) {
                 return true;

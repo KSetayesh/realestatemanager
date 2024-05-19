@@ -1,8 +1,8 @@
 import {
-    ListingWithScenariosDTO,
     ValueInput,
-    InvestmentScenarioRequest,
-    MonthlyInvestmentDetailsDTO
+    CreateInvestmentScenarioRequest,
+    ListingWithScenariosResponseDTO,
+    MonthlyInvestmentDetailsResponseDTO
 } from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -117,11 +117,11 @@ export interface TablesConfig<T> {
 
 const InvestmentBreakdown: React.FC = () => {
 
-    const [property, setProperty] = useState<ListingWithScenariosDTO>(
-        useLocation().state.data as ListingWithScenariosDTO
+    const [property, setProperty] = useState<ListingWithScenariosResponseDTO>(
+        useLocation().state.data as ListingWithScenariosResponseDTO
     );
 
-    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosDTO | null>(null);
+    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
 
     const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.STANDARD_BREAKDOWN);
 
@@ -130,7 +130,7 @@ const InvestmentBreakdown: React.FC = () => {
         setTableType(TableTypeEnum[input]);
     };
 
-    const tablesConfig: TablesConfig<MonthlyInvestmentDetailsDTO> = {
+    const tablesConfig: TablesConfig<MonthlyInvestmentDetailsResponseDTO> = {
         [TableTypeEnum.STANDARD_BREAKDOWN]: {
             columns: [
                 {
@@ -240,7 +240,7 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false
                 },
             ],
-            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+            data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
                 return {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
                     month: ammortizationDetail.monthlyDateData.monthMod12,
@@ -369,7 +369,7 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false,
                 },
             ],
-            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+            data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
                 return {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
                     month: ammortizationDetail.monthlyDateData.monthMod12,
@@ -537,7 +537,7 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false
                 },
             ],
-            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+            data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
                 //TODO - Maybe move monthlyPayment calculation to backend
                 return {
                     year: ammortizationDetail.monthlyDateData.yearCounter,
@@ -714,7 +714,7 @@ const InvestmentBreakdown: React.FC = () => {
                     isSortable: false,
                 },
             ],
-            data: (ammortizationDetail: MonthlyInvestmentDetailsDTO): TableRow => {
+            data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
                 const mortgageAmount = ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.amount;
                 const fixedCosts = ammortizationDetail.monthlyBreakdown.transactions.breakdown['Fixed Recurring Expense'].totalAmount.amount;
                 //TODO - Maybe move monthlyPayment calculation to backend
@@ -803,7 +803,7 @@ const InvestmentBreakdown: React.FC = () => {
         }
     }, [property]);  // Ensure useEffect depends on `property`
 
-    const handleRowClick = (property: ListingWithScenariosDTO) => {
+    const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
     };
 
@@ -811,15 +811,15 @@ const InvestmentBreakdown: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const tableData: TableDataItem<ListingWithScenariosDTO> = {
+    const tableData: TableDataItem<ListingWithScenariosResponseDTO> = {
         objectData: {
             key: property,
         },
         rowData: createDefaultRowData(property),
     };
 
-    const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsDTO>[] => {
-        const ammortizationDetails: MonthlyInvestmentDetailsDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
+    const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] => {
+        const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,
@@ -1110,7 +1110,7 @@ const InvestmentBreakdown: React.FC = () => {
         }
     };
 
-    const getCalculateRequest = (): InvestmentScenarioRequest => {
+    const getCalculateRequest = (): CreateInvestmentScenarioRequest => {
 
         const convertToValueInput = (type: PercentageAndAmount, value: number): ValueInput | undefined => {
             if (type === PercentageAndAmount.AMOUNT) {
@@ -1239,7 +1239,7 @@ const InvestmentBreakdown: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        const data: ListingWithScenariosDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
+        const data: ListingWithScenariosResponseDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
         console.log("Calculation result:", data);
         setProperty(data);
     };

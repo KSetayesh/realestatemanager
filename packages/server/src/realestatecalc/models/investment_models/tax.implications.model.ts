@@ -1,7 +1,7 @@
-import { TaxImplicationsDTO } from "@realestatemanager/shared";
+import { TaxImplicationsResponseDTO } from "@realestatemanager/shared";
 import { IDTOConvertible } from "../idtoconvertible.model";
 
-export class TaxImplications implements IDTOConvertible<TaxImplicationsDTO> {
+export class TaxImplications implements IDTOConvertible<TaxImplicationsResponseDTO> {
 
     private depreciation: number;
     private mortgageInterest: number;
@@ -15,7 +15,7 @@ export class TaxImplications implements IDTOConvertible<TaxImplicationsDTO> {
         this.propertyTaxes = propertyTaxes;
     }
 
-    toDTO(): TaxImplicationsDTO {
+    toDTO(): TaxImplicationsResponseDTO {
         return {
             depreciation: this.depreciation,
             mortgageInterest: this.mortgageInterest,

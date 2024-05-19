@@ -44,23 +44,23 @@ export type PropertyIdentifier = {
     zillowURL: string; // URL to the property's Zillow listing for more details.
 };
 
-export interface InvestmentScenarioRequest {
+export interface CreateInvestmentScenarioRequest {
     propertyIdentifier: PropertyIdentifier;
     useDefaultRequest: boolean;
-    investmentDetails?: InvestmentDetailsRequest;
+    investmentDetails?: CreateInvestmentDetailsRequest;
 };
 
-export interface InvestmentDetailsRequest {
-    mortgageDetails: MortgageDetailsRequest;
-    operatingExpenses: OperatingExpensesRequest;
+export interface CreateInvestmentDetailsRequest {
+    mortgageDetails: CreateMortgageDetailsRequest;
+    operatingExpenses: CreateOperatingExpensesRequest;
     rentEstimate: ValueAmountInput;
     purchasePrice: ValueAmountInput;
-    growthProjections?: GrowthProjectionsRequest;
-    additionalIncomeStreams?: AdditionalIncomeStreamsRequest;
-    taxImplications?: TaxImplicationsRequest;
+    growthProjections?: CreateGrowthProjectionsRequest;
+    additionalIncomeStreams?: CreateAdditionalIncomeStreamsRequest;
+    taxImplications?: CreateTaxImplicationsRequest;
 };
 
-export interface TaxImplicationsRequest {
+export interface CreateTaxImplicationsRequest {
     depreciation: number; // Annual depreciation expense that can be deducted.
     mortgageInterest?: number; // Deductible mortgage interest expense.
     operatingExpenses?: number; // Deductible operating expenses.
@@ -68,14 +68,14 @@ export interface TaxImplicationsRequest {
 };
 
 // Represents additional sources of income from the property besides rent.
-export type AdditionalIncomeStreamsRequest = {
+export type CreateAdditionalIncomeStreamsRequest = {
     parkingFees?: ValueAmountInput; // Income from parking facilities, if available.
     laundryServices?: ValueAmountInput; // Income from on-site laundry services.
     storageUnitFees?: ValueAmountInput; // Income from storage units, if available.
     other?: ValueAmountInput; // Any other sources of income not covered above.
 };
 
-export type GrowthProjectionsRequest = {
+export type CreateGrowthProjectionsRequest = {
     annualAppreciationRate: ValueRateInput;
     annualTaxIncreaseRate?: ValueRateInput;
     annualHomeInsuranceIncreaseRate?: ValueRateInput;
@@ -87,13 +87,13 @@ export type GrowthProjectionsRequest = {
     otherAdditionalIncomeStreamsIncreaseRate?: ValueRateInput;
 };
 
-export interface LoanDetailsRequest {
+export interface CreateLoanDetailsRequest {
     annualInterestRate: ValueRateInput;
     termInYears: number;
     interestType: InterestType;
 };
 
-export interface MortgageDetailsRequest extends LoanDetailsRequest {
+export interface CreateMortgageDetailsRequest extends CreateLoanDetailsRequest {
     downPayment: ValueInput; // Now accepts both amount and rate.
     pmiRate?: ValueRateInput; // Now accepts both amount and rate.
     pmiDropoffPoint?: number;
@@ -102,7 +102,7 @@ export interface MortgageDetailsRequest extends LoanDetailsRequest {
     monthlyHOAFeesAmount?: ValueInput; // Now accepts both amount and rate.
 };
 
-export interface OperatingExpensesRequest {
+export interface CreateOperatingExpensesRequest {
     propertyManagementRate?: ValueRateInput;
     vacancyRate?: ValueRateInput;
     maintenanceRate?: ValueRateInput;
@@ -117,7 +117,7 @@ export interface OperatingExpensesRequest {
 
 //------------------------------ Investment Related Response ------------------------------
 
-export interface TaxImplicationsDTO {
+export interface TaxImplicationsResponseDTO {
     depreciation: number;
     mortgageInterest: number;
     operatingExpenses: number;
@@ -129,7 +129,7 @@ export type TotalAmount = {
     description: string;
 };
 
-export interface TxnDTO {
+export interface TxnResponseDTO {
     key: TransactionKey;
     amount: number;
     percentage: number;
@@ -137,7 +137,7 @@ export interface TxnDTO {
     cumulatedAmount?: number;
 };
 
-export interface MortgageTxnDTO extends TxnDTO {
+export interface MortgageTxnResponseDTO extends TxnResponseDTO {
     interestType: InterestType;
     termLength: number;
     mortgageAmount: number;
@@ -155,50 +155,50 @@ export interface MortgageTxnDTO extends TxnDTO {
     pmiDropOffPoint: number;
 };
 
-export interface RecurringFixedExpensesDTO {
+export interface RecurringFixedExpensesResponseDTO {
     type: TransactionType.FIXED_RECURRING_EXPENSE;
     totalAmount: TotalAmount;
     breakdown: {
-        [TransactionKey.PROPERTY_TAX]: TxnDTO;
-        [TransactionKey.HOA_FEE]: TxnDTO;
-        [TransactionKey.HOME_INSURANCE]: TxnDTO;
+        [TransactionKey.PROPERTY_TAX]: TxnResponseDTO;
+        [TransactionKey.HOA_FEE]: TxnResponseDTO;
+        [TransactionKey.HOME_INSURANCE]: TxnResponseDTO;
     };
 };
 
-export interface InitialCostsExpensesDTO {
+export interface InitialCostsExpensesResponseDTO {
     type: TransactionType.INITIAL_EXPENSE;
     totalAmount: TotalAmount;
     breakdown: {
-        [TransactionKey.DOWN_PAYMENT]: TxnDTO,
-        [TransactionKey.CLOSING_COST]: TxnDTO,
-        [TransactionKey.INITIAL_REPAIR_COST]: TxnDTO,
-        [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: TxnDTO,
-        [TransactionKey.TRAVELING_COST]: TxnDTO,
-        [TransactionKey.OTHER_INITIAL_EXPENSES]: TxnDTO,
+        [TransactionKey.DOWN_PAYMENT]: TxnResponseDTO,
+        [TransactionKey.CLOSING_COST]: TxnResponseDTO,
+        [TransactionKey.INITIAL_REPAIR_COST]: TxnResponseDTO,
+        [TransactionKey.LEGAL_AND_PROFESSIONAL_FEES]: TxnResponseDTO,
+        [TransactionKey.TRAVELING_COST]: TxnResponseDTO,
+        [TransactionKey.OTHER_INITIAL_EXPENSES]: TxnResponseDTO,
     };
 };
 
-export interface IncomeStreamsDTO {
+export interface IncomeStreamsResponseDTO {
     type: TransactionType.INCOME_STREAMS;
     totalAmount: TotalAmount;
     breakdown: {
-        [TransactionKey.RENTAL_INCOME]: TxnDTO,
-        [TransactionKey.STORAGE_UNIT_FEES]: TxnDTO,
-        [TransactionKey.PARKING_FEES]: TxnDTO,
-        [TransactionKey.LAUNDRY_SERVICES]: TxnDTO,
-        [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: TxnDTO,
+        [TransactionKey.RENTAL_INCOME]: TxnResponseDTO,
+        [TransactionKey.STORAGE_UNIT_FEES]: TxnResponseDTO,
+        [TransactionKey.PARKING_FEES]: TxnResponseDTO,
+        [TransactionKey.LAUNDRY_SERVICES]: TxnResponseDTO,
+        [TransactionKey.OTHER_ADDITIONAL_INCOME_STREAMS]: TxnResponseDTO,
     };
 }
 
-export interface RecurringOperationalCostsDTO {
+export interface RecurringOperationalCostsResponseDTO {
     type: TransactionType.OPERATIONAL_RECURRING_EXPENSE;
     totalAmount: TotalAmount;
     breakdown: {
-        [TransactionKey.CAP_EX_RESERVE_EXPENSE]: TxnDTO,
-        [TransactionKey.MAINTENANCE_EXPENSE]: TxnDTO,
-        [TransactionKey.OTHER_EXPENSES]: TxnDTO,
-        [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: TxnDTO,
-        [TransactionKey.VACANCY_EXPENSE]: TxnDTO,
+        [TransactionKey.CAP_EX_RESERVE_EXPENSE]: TxnResponseDTO,
+        [TransactionKey.MAINTENANCE_EXPENSE]: TxnResponseDTO,
+        [TransactionKey.OTHER_EXPENSES]: TxnResponseDTO,
+        [TransactionKey.PROPERTY_MANAGEMENT_EXPENSE]: TxnResponseDTO,
+        [TransactionKey.VACANCY_EXPENSE]: TxnResponseDTO,
     };
 };
 
@@ -208,45 +208,45 @@ export type MonthlyDateData = {
     yearCounter: number;
 };
 
-export interface MortgageDTO {
+export interface MortgageResponseDTO {
     type: TransactionType.MORTGAGE;
     totalAmount: TotalAmount;
-    breakdown: MortgageTxnDTO;
+    breakdown: MortgageTxnResponseDTO;
 };
 
-export interface FinancingDTO {
+export interface FinancingResponseDTO {
     type: TransactionType;
     breakdown: {
-        [TransactionKey.PURCHASE_PRICE]: TxnDTO;
+        [TransactionKey.PURCHASE_PRICE]: TxnResponseDTO;
         [TransactionKey.LOAN_AMOUNT]: number;
     },
 };
 
-export interface MonthlyInvestmentBreakdownDTO {
+export interface MonthlyInvestmentBreakdownResponseDTO {
     appreciation: {
         appreciationRate: number;
         homeValue: number;
     },
-    investmentBreakdown: InvestmentBreakdownDTO,
+    investmentBreakdown: InvestmentBreakdownResponseDTO,
     transactions: {
         expenseAmount: number;
         incomeAmount: number;
         cashFlow: number;
         breakdown: {
-            [TransactionType.MORTGAGE]: MortgageDTO;
-            [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
-            [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
-            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+            [TransactionType.MORTGAGE]: MortgageResponseDTO;
+            [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesResponseDTO;
+            [TransactionType.INCOME_STREAMS]: IncomeStreamsResponseDTO;
+            [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsResponseDTO;
         }
     }
 };
 
-export interface MonthlyInvestmentDetailsDTO {
+export interface MonthlyInvestmentDetailsResponseDTO {
     monthlyDateData: MonthlyDateData;
-    monthlyBreakdown: MonthlyInvestmentBreakdownDTO;
+    monthlyBreakdown: MonthlyInvestmentBreakdownResponseDTO;
 };
 
-export interface InvestmentBreakdownDTO {
+export interface InvestmentBreakdownResponseDTO {
     NOI: number;
     accumulatedNOI: number;
     capRate: number;
@@ -260,19 +260,19 @@ export interface InvestmentBreakdownDTO {
     equityAmount: number;
 };
 
-export interface InitialInvestmentBreakdownDTO {
-    investmentBreakdown: InvestmentBreakdownDTO,
+export interface InitialInvestmentBreakdownResponseDTO {
+    investmentBreakdown: InvestmentBreakdownResponseDTO,
     transactions: {
-        [TransactionType.FINANCING]: FinancingDTO;
-        [TransactionType.MORTGAGE]: MortgageDTO;
-        [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesDTO;
-        [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesDTO;
-        [TransactionType.INCOME_STREAMS]: IncomeStreamsDTO;
-        [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsDTO;
+        [TransactionType.FINANCING]: FinancingResponseDTO;
+        [TransactionType.MORTGAGE]: MortgageResponseDTO;
+        [TransactionType.FIXED_RECURRING_EXPENSE]: RecurringFixedExpensesResponseDTO;
+        [TransactionType.INITIAL_EXPENSE]: InitialCostsExpensesResponseDTO;
+        [TransactionType.INCOME_STREAMS]: IncomeStreamsResponseDTO;
+        [TransactionType.OPERATIONAL_RECURRING_EXPENSE]: RecurringOperationalCostsResponseDTO;
     }
 };
 
-export type GrowthProjectionsDTO = {
+export type GrowthProjectionsResponseDTO = {
     annualAppreciationRate: number;
     annualTaxIncreaseRate?: number;
     annualHomeInsuranceIncreaseRate?: number;
@@ -284,16 +284,16 @@ export type GrowthProjectionsDTO = {
     otherAdditionalIncomeStreamsIncreaseRate?: number;
 };
 
-export interface AmortizationBreakdownDTO {
-    initialInvestmenDetails: InitialInvestmentBreakdownDTO;
-    growthProjections: GrowthProjectionsDTO;
-    taxImplications: TaxImplicationsDTO;
-    amortizationData: MonthlyInvestmentDetailsDTO[];
+export interface AmortizationBreakdownResponseDTO {
+    initialInvestmenDetails: InitialInvestmentBreakdownResponseDTO;
+    growthProjections: GrowthProjectionsResponseDTO;
+    taxImplications: TaxImplicationsResponseDTO;
+    amortizationData: MonthlyInvestmentDetailsResponseDTO[];
 };
 
-export interface ListingWithScenariosDTO {
+export interface ListingWithScenariosResponseDTO {
     listingDetails: ListingDetailsResponseDTO;
-    metrics: AmortizationBreakdownDTO;
+    metrics: AmortizationBreakdownResponseDTO;
 };
 
 
