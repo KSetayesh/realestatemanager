@@ -23,10 +23,12 @@ export abstract class RealEstateDAO {
             insertString += ') RETURNING id;';
         }
 
-        console.log(`Insert Query: ${insertString}`);
+        const fullQuery = `${query} ${insertString}`;
+        console.log(`Insert Query: ${fullQuery}`);
+        console.log(`Values: ${values}`);
 
         try {
-            const res = await pool.query(`${query} ${insertString}`, values);
+            const res = await pool.query(`${fullQuery}`, values);
             if (res.rowCount === 0) {
                 console.log(`No new row was added - duplicate ${uniqueColumn} id found`);
                 return -1;

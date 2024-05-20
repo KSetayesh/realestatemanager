@@ -143,6 +143,7 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
     }
 
     protected createListingPrice(): number {
+        console.log("Listing Price is:", (this.listingDetailsRequest?.listingPrice ?? -1));
         return this.listingDetailsRequest?.listingPrice ?? -1;
     }
 

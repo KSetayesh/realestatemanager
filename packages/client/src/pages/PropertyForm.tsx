@@ -260,7 +260,7 @@ const PropertyForm: React.FC = () => {
 
         return {
             zillowURL: formData.zillowURL,
-            listingPrice: formData.listingPrice,
+            listingPrice: parseInt(formData.listingPrice),
             // dateListed: getDateNDaysAgo(parseInt(formData.numberOfDaysOnMarket)),
             numberOfDaysOnMarket: parseInt(formData.numberOfDaysOnMarket),
             propertyStatus: formData.propertyStatus as PropertyStatus,
