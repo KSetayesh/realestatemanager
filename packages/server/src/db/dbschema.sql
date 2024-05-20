@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS school_rating (
     id SERIAL PRIMARY KEY,
     elementary_school_rating INT,
     middle_school_rating INT,
-    high_school_rating INT
+    high_school_rating INT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 -- EndQuery
 

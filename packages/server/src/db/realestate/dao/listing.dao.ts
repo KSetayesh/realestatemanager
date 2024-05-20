@@ -34,6 +34,8 @@ export class ListingDAO extends RealEstateDAO {
         JOIN address ad ON pd.address_id = ad.id 
         JOIN school_rating sr ON pd.school_rating_id = sr.id`;
 
+    //----------------------------------------------------------------------------------------------------
+
     private INSERT_LISTING_DETAILS_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
             property_details_id, 
@@ -42,6 +44,19 @@ export class ListingDAO extends RealEstateDAO {
             property_status,
             date_listed,
             creation_type)`;
+
+    private UPDATE_LISTING_DETAILS_QUERY = `UPDATE listing_details
+            SET zillow_url = $1,
+                property_details_id = $2,
+                zillow_market_estimates_id = $3,
+                listing_price = $4,
+                property_status = $5,
+                date_listed = $6,
+                creation_type = $7,
+                updated_at = $8,
+            WHERE id = $9;`;
+
+    //----------------------------------------------------------------------------------------------------
 
     private INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
@@ -52,6 +67,20 @@ export class ListingDAO extends RealEstateDAO {
             date_listed,
             creation_type,
             rent_cast_sale_response_id)`;
+
+    private UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY = `UPDATE listing_details
+            SET zillow_url = $1,
+                property_details_id = $2,
+                zillow_market_estimates_id = $3,
+                listing_price = $4,
+                property_status = $5,
+                date_listed = $6,
+                creation_type = $7,
+                rent_cast_sale_response_id = $8,
+                updated_at = $9,
+            WHERE id = $10;`;
+
+    //----------------------------------------------------------------------------------------------------
 
     private INSERT_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY = `INSERT INTO listing_details 
             (zillow_url, 
@@ -64,10 +93,34 @@ export class ListingDAO extends RealEstateDAO {
             rent_cast_sale_response_id,
             rent_cast_property_response_id)`;
 
+    private UPDATE_LISTING_DETAILS_WITH_MULTIPLE_RENT_CAST_ID_QUERY = `UPDATE listing_details
+            SET zillow_url = $1,
+                property_details_id = $2,
+                zillow_market_estimates_id = $3,
+                listing_price = $4,
+                property_status = $5,
+                date_listed = $6,
+                creation_type = $7,
+                rent_cast_sale_response_id = $8,
+                rent_cast_property_response_id = $9,
+                updated_at = $10,
+            WHERE id = $11;`;
+
+    //----------------------------------------------------------------------------------------------------
+
     private INSERT_SCHOOL_RATING_QUERY = `INSERT INTO school_rating 
             (elementary_school_rating, 
             middle_school_rating, 
             high_school_rating)`;
+
+    private UPDATE_SCHOOL_RATING_QUERY = `UPDATE school_rating
+            SET elementary_school_rating = $1,
+                middle_school_rating = $2,
+                high_school_rating = $3,
+                updated_at = $4,
+            WHERE id = $5;`;
+
+    //----------------------------------------------------------------------------------------------------
 
     private INSERT_ADDRESS_QUERY = `INSERT INTO address 
             (full_address, 
@@ -80,6 +133,22 @@ export class ListingDAO extends RealEstateDAO {
             apartment_number,
             longitude,
             latitude)`;
+
+    private UPDATE_ADDRESS_QUERY = `UPDATE address
+            SET full_address = $1,
+                state = $2,
+                zipcode = $3,
+                city = $4,
+                county = $5,
+                country = $6,
+                street_address = $7,
+                apartment_number = $8,
+                longitude = $9,
+                latitude = $10,
+                updated_at = $11,
+            WHERE id = $12;`;
+
+    //----------------------------------------------------------------------------------------------------
 
     private INSERT_PROPERTY_DETAILS_QUERY = `INSERT INTO property_details 
                 (address_id, 
@@ -96,6 +165,25 @@ export class ListingDAO extends RealEstateDAO {
                 property_type,
                 _description)`;
 
+    private UPDATE_PROPERTY_DETAILS_QUERY = `UPDATE property_details
+            SET address_id = $1,
+                school_rating_id = $2,
+                number_of_bedrooms = $3,
+                number_of_full_bathrooms = $4,
+                number_of_half_bathrooms = $5,
+                square_feet = $6,
+                acres = $7,
+                year_built = $8,
+                has_garage = $9,
+                has_pool = $10,
+                has_basement = $11,
+                property_type = $12,
+                _description = $13,
+                updated_at = $14,
+            WHERE id = $15;`;
+
+    //----------------------------------------------------------------------------------------------------
+
     private INSERT_ZILLOW_MARKET_ESTIMATES_QUERY = `INSERT INTO zillow_market_estimates 
             (zestimate, 
             zestimate_low, 
@@ -104,6 +192,19 @@ export class ListingDAO extends RealEstateDAO {
             zillow_monthly_property_tax_amount,
             zillow_monthly_home_insurance_amount,
             zillow_monthly_hoa_fees_amount)`;
+
+    private UPDATE_ZILLOW_MARKET_ESTIMATES_QUERY = `UPDATE zillow_market_estimates
+            SET zestimate = $1,
+                zestimate_low = $2,
+                zestimate_high = $3,
+                zillow_rent_estimate = $4,
+                zillow_monthly_property_tax_amount = $5,
+                zillow_monthly_home_insurance_amount = $6,
+                zillow_monthly_hoa_fees_amount = $7,
+                updated_at = $8,
+            WHERE id = $9;`;
+
+    //----------------------------------------------------------------------------------------------------
 
     async getAllListings(pool: Pool): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
@@ -341,7 +442,6 @@ export class ListingDAO extends RealEstateDAO {
         const dateUpdated: Date = new Date(row.updated_at);
         const rentCastSaleResponseId: number = row.rent_cast_sale_response_id;
         const rentCastPropertyResponseId: number = row.rent_cast_property_response_id;
-
 
         return new ListingDetails(
             listingDetailsId,
