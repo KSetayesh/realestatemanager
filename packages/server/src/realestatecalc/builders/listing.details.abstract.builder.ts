@@ -170,7 +170,9 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createRentCastPropertyResponseId(): number;
 
-    protected abstract get defaultZillowURL(): string;
+    protected get defaultZillowURL(): string {
+        throw new Error('Must have ZillowURL');
+    }
 
     protected get defaultListingDetailsId(): number {
         return -1;

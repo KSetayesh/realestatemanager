@@ -10,10 +10,6 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
         this.listingDetailsRequest = listingDetailsRequest;
     }
 
-    protected get defaultZillowURL(): string {
-        throw new Error('Must have ZillowURL');
-    }
-
     protected createListingDetailsId(): number {
         return this.defaultListingDetailsId;
     }

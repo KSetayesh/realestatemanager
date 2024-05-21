@@ -1,12 +1,12 @@
 import { State, Country, PropertyType, ListingCreationType, PropertyStatus, Utility } from "@realestatemanager/shared";
 import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../services/rentcast.service";
+import { RentCastPropertyResponseType } from "../services/rentcast.service";
 import { convertSquareFeetToAcres } from "src/shared/Constants";
 
 /* 
     The order of creating the properties in this Builder class is 
-    1) listingDetails
+    1) listingDetails (this is fetched from the database)
     2) rentCastPropertyType
 */
 
@@ -27,180 +27,243 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
         this.rentCastPropertyType = rentCastPropertyType;
     }
 
-    protected get defaultZillowURL(): string {
-        throw new Error('Must have ZillowURL');
-    }
-
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createListingDetailsId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.id;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowURL(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowURL;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createAddressId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.addressId;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createFullAddress(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.fullAddress ?? this.rentCastPropertyType.formattedAddress;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createState(): State {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.state ?? this.rentCastPropertyType.state;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZipCode(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zipcode ?? this.rentCastPropertyType.zipCode;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createCity(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.city ?? this.rentCastPropertyType.city;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createCounty(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.county ?? this.rentCastPropertyType.county;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createCountry(): Country {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.country;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createStreetAddress(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.streetAddress ?? this.rentCastPropertyType.addressLine1;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createApartmentNumber(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.apartmentNumber ?? this.rentCastPropertyType.addressLine2;
     }
-
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createLongitude(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.longitude ?? this.rentCastPropertyType.longitude;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createLatitude(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.latitude ?? this.rentCastPropertyType.latitude;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createSchoolRatingId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.schoolRatingId;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createElementarySchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.elementarySchoolRating;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createMiddleSchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.middleSchoolRating;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createHighSchoolRating(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.highSchoolRating;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createPropertyDetailsId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.propertyDetailsId;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createNumberOfBedrooms(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.numberOfBedrooms ?? this.rentCastPropertyType.bedrooms;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createNumberOfFullBathrooms(): number {
-        throw new Error("Method not implemented.");
+        const numberOfBathrooms = this.listingDetails.numberOfFullBathrooms ??
+            this.rentCastPropertyType.bathrooms;
+        return Math.floor(numberOfBathrooms);
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createNumberOfHalfBathrooms(): number {
-        throw new Error("Method not implemented.");
+        let numberOfHalfBathrooms = this.listingDetails.numberOfHalfBathrooms ?? -1;
+
+        if (numberOfHalfBathrooms > -1) {
+            return numberOfHalfBathrooms;
+        }
+
+        numberOfHalfBathrooms = this.rentCastPropertyType.bathrooms ?? -1;
+
+        if (numberOfHalfBathrooms > -1) {
+            return Utility.isDecimal(this.rentCastPropertyType.bathrooms) ? 1 : 0;
+        }
+
+        return this.listingDetails.numberOfHalfBathrooms;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createSquareFeet(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.squareFeet ?? this.rentCastPropertyType.squareFootage;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createAcres(): number {
-        throw new Error("Method not implemented.");
+        const acres = this.listingDetails.acres ?? -1;
+        if (acres > -1) {
+            return acres;
+        }
+
+        const lotSize = this.rentCastPropertyType.lotSize ?? -1;
+        if (lotSize > -1) {
+            return convertSquareFeetToAcres(lotSize);
+        }
+        return acres;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createYearBuilt(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.yearBuilt ?? this.rentCastPropertyType.yearBuilt;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createHasGarage(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.hasGarage ?? this.rentCastPropertyType.features.garage;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createHasPool(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.hasPool ?? this.rentCastPropertyType.features.pool;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createHasBasement(): boolean {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.hasBasement;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createPropertyType(): PropertyType {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.propertyType ?? this.rentCastPropertyType.propertyType;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createDescription(): string {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.description;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowMarketEstimatesId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowMarketEstimatesId;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZestimate(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zestimate;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZestimateRangeLow(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zestimateRangeLow;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZestimateRangeHigh(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zestimateRangeHigh;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowRentEstimate(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowRentEstimate;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowMonthlyPropertyTaxAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowMonthlyPropertyTaxAmount ?? this.rentCastPropertyType.previousYearPropertyTaxes;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowMonthlyHomeInsuranceAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowMonthlyHomeInsuranceAmount;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createZillowMonthlyHOAFeesAmount(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.zillowMonthlyHOAFeesAmount;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createListingPrice(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.listingPrice;
     }
 
+    // Come back to this
     protected createCreationType(): ListingCreationType {
-        throw new Error("Method not implemented.");
+        return ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createDateListed(): Date {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.dateListed;
     }
 
+    // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createPropertyStatus(): PropertyStatus {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.propertyStatus;
     }
 
     protected createRentCastSaleResponseId(): number {
-        throw new Error("Method not implemented.");
+        return this.listingDetails.rentCastSaleResponseId ?? this.defaultRentCastSaleResponseId;
     }
 
     protected createRentCastPropertyResponseId(): number {
-        throw new Error("Method not implemented.");
+        return this._rentCastPropertyResponseId;
+    }
+
+    protected get defaultRentCastSaleResponseId(): number {
+        throw new Error('Need to have RentCastSaleResponseId');
     }
 
 
