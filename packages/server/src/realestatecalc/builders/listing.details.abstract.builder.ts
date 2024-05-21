@@ -335,11 +335,11 @@ export abstract class AbstractListingDetailsBuilder {
     }
 
     protected get defaultRentCastSaleResponseId(): number {
-        return -1;
+        return; // let it be undefined 
     }
 
     protected get defaultRentCastPropertyResponseId(): number {
-        return -1;
+        return; // let it be undefined 
     }
 
 }

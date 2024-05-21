@@ -77,15 +77,11 @@ export class CalcService {
     async insertListingDetails(
         listingDetails: ListingDetails,
         listingCreationType: ListingCreationType,
-        saleResponseId?: number,
-        propertyResponseId?: number,
     ): Promise<number> {
         return this.listingManager.insertListingDetails(
             this.pool,
             listingDetails,
             listingCreationType,
-            saleResponseId,
-            propertyResponseId
         );
     }
 

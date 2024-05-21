@@ -14,15 +14,21 @@ import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builde
 export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
 
     private rentCastSalesResponseType: RentCastSaleResponseType;
+    private _rentCastSalesResponseId: number;
     private rentCastPropertyType?: RentCastPropertyResponseType;
+    private _rentCastPropertyResponseId?: number;
 
     constructor(
         rentCastSalesResponseType: RentCastSaleResponseType,
+        rentCastSalesResponseId: number,
         rentCastPropertyType?: RentCastPropertyResponseType,
+        rentCastPropertyResponseId?: number,
     ) {
         super();
         this.rentCastSalesResponseType = rentCastSalesResponseType;
+        this._rentCastSalesResponseId = rentCastSalesResponseId;
         this.rentCastPropertyType = rentCastPropertyType;
+        this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
 
     protected get defaultZillowURL(): string {
@@ -225,11 +231,15 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     }
 
     protected createRentCastSaleResponseId(): number {
-        return this.defaultRentCastSaleResponseId;
+        return this._rentCastSalesResponseId ?? this.defaultRentCastSaleResponseId;
     }
 
     protected createRentCastPropertyResponseId(): number {
-        return this.defaultRentCastPropertyResponseId;
+        return this._rentCastPropertyResponseId ?? this.defaultRentCastPropertyResponseId;
+    }
+
+    protected get defaultRentCastSaleResponseId(): number {
+        throw new Error('Need to have RentCastSaleResponseId');
     }
 
 }

@@ -256,8 +256,8 @@ export class ListingDAO extends RealEstateDAO {
         // listingDetails: ListingDetailsDTO,
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
-        saleResponseId?: number,
-        propertyResponseId?: number,
+        // saleResponseId?: number,
+        // propertyResponseId?: number,
     ): Promise<number> {
         let newListingId = -1;
         try {
@@ -270,12 +270,7 @@ export class ListingDAO extends RealEstateDAO {
                 schoolRatingId
             );
 
-            let zillowMarketEstimatesId: number | null = null;
-
-            // Come back to this and update
-            if (listingDetails.hasZillowMarketUpdates) {
-                zillowMarketEstimatesId = await this.insertZillowMarketEstimates(pool, listingDetails);
-            }
+            const zillowMarketEstimatesId: number = await this.insertZillowMarketEstimates(pool, listingDetails);
 
             const values: any[] = [
                 listingDetails.zillowURL,
@@ -290,14 +285,11 @@ export class ListingDAO extends RealEstateDAO {
             const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
+            
+            const saleResponseId = listingDetails.rentCastSaleResponseId;
+            const propertyResponseId = listingDetails.rentCastPropertyResponseId;
 
-            // Should probably move this logic elsewhere
-            const insertWithRentCastResponseIds: boolean =
-                (ListingCreationType.RENT_CAST_API === creationType || ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA === creationType)
-                && isValidRentCastResponseId(saleResponseId);
-
-            if (insertWithRentCastResponseIds) {
-
+            if (isValidRentCastResponseId(saleResponseId)) {
                 values.push(saleResponseId);
                 if (isValidRentCastResponseId(propertyResponseId)) {
                     values.push(propertyResponseId);

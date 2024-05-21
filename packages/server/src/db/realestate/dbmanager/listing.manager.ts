@@ -30,8 +30,6 @@ export class ListingManager extends DatabaseManager {
         // listingDetails: ListingDetailsDTO,
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
-        saleResponseId?: number,
-        propertyResponseId?: number,
     ): Promise<number> {
         if (!this.commit) {
             console.log(this.commitMessage);
@@ -41,8 +39,6 @@ export class ListingManager extends DatabaseManager {
             pool,
             listingDetails,
             creationType,
-            saleResponseId,
-            propertyResponseId,
         );
     }
 

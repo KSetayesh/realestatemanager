@@ -159,11 +159,6 @@ export class RentCastService {
             if (listingsWithRentCastIds.has(rentCastMatch.rentCastSaleResponseId)) {
                 // Update current listing in database
                 const preExistingListing: ListingDetails = listingsWithRentCastIds.get(rentCastMatch.rentCastSaleResponseId);
-                // const listingDetail: ListingDetails = this.buildListingDetails(
-                //     rentCastSaleResponseType,
-                //     rentCastPropertyResponseType,
-                //     preExistingListing,
-                // );
                 const listingDetail: ListingDetails = new ListingDetailsPropertyResponseBuilder(
                     rentCastMatch.rentCastPropertyResponseId,
                     preExistingListing,
@@ -171,19 +166,18 @@ export class RentCastService {
                 ).build();
 
                 await this.listingManager.updateListingDetails(this.pool, listingDetail);
-                // Need to create an update listingdetails sql function 
             }
             else {
                 // Create new listing in database
                 const listingDetail: ListingDetails = this.buildListingDetails(
                     rentCastSaleResponseType,
+                    rentCastMatch.rentCastSaleResponseId,
                     rentCastPropertyResponseType,
+                    rentCastMatch.rentCastPropertyResponseId,
                 );
                 const newListingId = await new CalcService().insertListingDetails(
                     listingDetail,
                     ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA,
-                    rentCastMatch.rentCastSaleResponseId,
-                    rentCastMatch.rentCastPropertyResponseId,
                 );
 
                 if (newListingId > -1) {
@@ -291,33 +285,34 @@ export class RentCastService {
 
                 const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
 
-                let rentCastPropertyResponseId = -1;
-
                 let listingDetail: ListingDetails;
 
                 const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSaleResponse);
 
                 if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.addressId];
-                    rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
+                    const rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
 
                     listingDetail = this.buildListingDetails(
                         rentCastSaleResponseType,
-                        this.createRentCastPropertyResponseType(rentCastProperty)
+                        rentCastSaleResponseId,
+                        this.createRentCastPropertyResponseType(rentCastProperty),
+                        rentCastPropertyResponseId,
                     );
                     addressIdOfMatchesFound.add(rentCastSaleResponse.addressId);
                 }
                 else {
                     listingDetail = this.buildListingDetails(
-                        rentCastSaleResponseType
+                        rentCastSaleResponseType,
+                        rentCastSaleResponseId,
                     );
                 }
 
                 const newListingId = await new CalcService().insertListingDetails(
                     listingDetail,
                     ListingCreationType.RENT_CAST_API,
-                    rentCastSaleResponseId,
-                    rentCastPropertyResponseId,
+                    // rentCastSaleResponseId,
+                    // rentCastPropertyResponseId,
                 );
 
                 if (newListingId > -1) {
@@ -438,11 +433,15 @@ export class RentCastService {
 
     private buildListingDetails(
         rentCastSalesResponseTyped: RentCastSaleResponseType,
+        rentCastSaleResponseId: number,
         rentCastPropertyTyped?: RentCastPropertyResponseType,
+        rentCastPropertyResponseId?: number,
     ): ListingDetails {
         return new ListingDetailsBuilder(
             rentCastSalesResponseTyped,
+            rentCastSaleResponseId,
             rentCastPropertyTyped,
+            rentCastPropertyResponseId,
         ).build();
     }
 
