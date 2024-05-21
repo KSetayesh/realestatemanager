@@ -1,45 +1,46 @@
-import { State, Country, PropertyType, ListingCreationType, PropertyStatus } from "@realestatemanager/shared";
+import { State, Country, PropertyType, ListingCreationType, PropertyStatus, Utility } from "@realestatemanager/shared";
 import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../services/rentcast.service";
+import { convertSquareFeetToAcres } from "src/shared/Constants";
 
 /* 
     The order of creating the properties in this Builder class is 
-    1) rentCastPropertyType
-    2) listingDetails
-    3) rentCastSaleResponseType
+    1) listingDetails
+    2) rentCastPropertyType
 */
 
 export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetailsBuilder {
 
     private _rentCastPropertyResponseId: number;
-    private rentCastPropertyType: RentCastPropertyResponseType;
     private listingDetails: ListingDetails;
-    private rentCastSaleResponseType: RentCastSaleResponseType;
+    private rentCastPropertyType: RentCastPropertyResponseType;
 
     constructor(
         rentCastPropertyResponseId: number,
-        rentCastPropertyType: RentCastPropertyResponseType,
         listingDetails: ListingDetails,
-        rentCastSaleResponseType: RentCastSaleResponseType,
+        rentCastPropertyType: RentCastPropertyResponseType,
     ) {
         super();
         this._rentCastPropertyResponseId = rentCastPropertyResponseId;
-        this.rentCastPropertyType = rentCastPropertyType;
         this.listingDetails = listingDetails;
-        this.rentCastSaleResponseType = rentCastSaleResponseType;
+        this.rentCastPropertyType = rentCastPropertyType;
+    }
+
+    protected get defaultZillowURL(): string {
+        throw new Error('Must have ZillowURL');
     }
 
     protected createListingDetailsId(): number {
-        return this.listingDetails.id;
+        throw new Error("Method not implemented.");
     }
 
     protected createZillowURL(): string {
-        return this.listingDetails.zillowURL;
+        throw new Error("Method not implemented.");
     }
 
     protected createAddressId(): number {
-        return this.listingDetails.addressId;
+        throw new Error("Method not implemented.");
     }
 
     protected createFullAddress(): string {
@@ -50,7 +51,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
         throw new Error("Method not implemented.");
     }
 
-    protected createzipCode(): string {
+    protected createZipCode(): string {
         throw new Error("Method not implemented.");
     }
 
@@ -83,7 +84,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
     }
 
     protected createSchoolRatingId(): number {
-        return this.listingDetails.schoolRatingId;
+        throw new Error("Method not implemented.");
     }
 
     protected createElementarySchoolRating(): number {
@@ -99,7 +100,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
     }
 
     protected createPropertyDetailsId(): number {
-        return this.listingDetails.propertyDetailsId;
+        throw new Error("Method not implemented.");
     }
 
     protected createNumberOfBedrooms(): number {
@@ -147,7 +148,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
     }
 
     protected createZillowMarketEstimatesId(): number {
-        return this.listingDetails.zillowMarketEstimatesId;
+        throw new Error("Method not implemented.");
     }
 
     protected createZestimate(): number {
@@ -194,12 +195,13 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
         throw new Error("Method not implemented.");
     }
 
-    protected rentCastSaleResponseId(): number {
-        throw this.listingDetails.rentCastSaleResponseId;
+    protected createRentCastSaleResponseId(): number {
+        throw new Error("Method not implemented.");
     }
 
-    protected rentCastPropertyResponseId(): number {
-        return this._rentCastPropertyResponseId;
+    protected createRentCastPropertyResponseId(): number {
+        throw new Error("Method not implemented.");
     }
+
 
 }

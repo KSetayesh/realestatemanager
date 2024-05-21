@@ -15,212 +15,193 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
 
     private rentCastSalesResponseType: RentCastSaleResponseType;
     private rentCastPropertyType?: RentCastPropertyResponseType;
-    private listingDetails?: ListingDetails;
 
     constructor(
         rentCastSalesResponseType: RentCastSaleResponseType,
         rentCastPropertyType?: RentCastPropertyResponseType,
-        listingDetails?: ListingDetails,
     ) {
         super();
         this.rentCastSalesResponseType = rentCastSalesResponseType;
         this.rentCastPropertyType = rentCastPropertyType;
-        this.listingDetails = listingDetails;
+    }
+
+    protected get defaultZillowURL(): string {
+        throw `NEED TO UPDATE_${this.rentCastSalesResponseType.id}`;
     }
 
     protected createListingDetailsId(): number {
-        return this.listingDetails?.id ?? -1;
+        return this.defaultListingDetailsId;
     }
 
     protected createAddressId(): number {
-        return this.listingDetails?.addressId ?? -1;
+        return this.defaultAddressId;
     }
 
     protected createSchoolRatingId(): number {
-        return this.listingDetails?.schoolRatingId ?? -1;
+        return this.defaultSchoolRatingId;
     }
 
     protected createPropertyDetailsId(): number {
-        return this.listingDetails?.propertyDetailsId ?? -1;
+        return this.defaultPropertyDetailsId;
     }
 
     protected createZillowMarketEstimatesId(): number {
-        return this.listingDetails?.zillowMarketEstimatesId ?? -1;
+        return this.defaultZillowMarketEstimatesId;
     }
 
     protected createZillowURL(): string {
-        return this.listingDetails?.zillowURL ??
-            `NEED TO UPDATE_${this.rentCastSalesResponseType.id}`;
+        return this.defaultZillowURL;
     }
 
     protected createFullAddress(): string {
-        return this.listingDetails?.fullAddress ??
-            this.rentCastSalesResponseType.formattedAddress ??
-            this.rentCastPropertyType?.formattedAddress ?? '';
+        return this.rentCastSalesResponseType.formattedAddress ??
+            this.rentCastPropertyType?.formattedAddress ?? this.defaultFullAddress;
     }
 
     protected createState(): State {
-        return this.listingDetails?.state ??
-            this.rentCastSalesResponseType.state ??
-            this.rentCastPropertyType?.state; // let it be undefined
+        return this.rentCastSalesResponseType.state ??
+            this.rentCastPropertyType?.state ?? this.defaultState;
     }
 
-    protected createzipCode(): string {
-        return this.listingDetails?.zipcode ??
-            this.rentCastSalesResponseType.zipCode ??
-            this.rentCastPropertyType?.zipCode ?? '';
+    protected createZipCode(): string {
+        return this.rentCastSalesResponseType.zipCode ??
+            this.rentCastPropertyType?.zipCode ?? this.defaultZipCode;
     }
 
     protected createCity(): string {
-        return this.listingDetails?.city ??
-            this.rentCastSalesResponseType.city ??
-            this.rentCastPropertyType?.city ?? '';
+        return this.rentCastSalesResponseType.city ??
+            this.rentCastPropertyType?.city ?? this.defaultCity;
     }
 
     protected createCounty(): string {
-        return this.listingDetails?.county ??
-            this.rentCastSalesResponseType.county ??
-            this.rentCastPropertyType?.county ?? '';
+        return this.rentCastSalesResponseType.county ??
+            this.rentCastPropertyType?.county ?? this.defaultCounty;
     }
 
     protected createCountry(): Country {
-        return Country.UnitedStates;
+        return this.defaultCountry;
     }
 
     protected createStreetAddress(): string {
-        return this.listingDetails?.streetAddress ??
-            this.rentCastSalesResponseType.addressLine1 ??
-            this.rentCastPropertyType?.addressLine1 ?? '';
+        return this.rentCastSalesResponseType.addressLine1 ??
+            this.rentCastPropertyType?.addressLine1 ?? this.defaultStreetAddress;
     }
 
     protected createApartmentNumber(): string {
-        return this.listingDetails?.apartmentNumber ??
-            this.rentCastSalesResponseType.addressLine2 ??
-            this.rentCastPropertyType?.addressLine2 ?? '';
+        return this.rentCastSalesResponseType.addressLine2 ??
+            this.rentCastPropertyType?.addressLine2 ?? this.defaultApartmentNumber;
     }
 
     protected createLongitude(): number {
-        return this.listingDetails?.longitude ??
-            this.rentCastSalesResponseType.longitude ??
-            this.rentCastPropertyType?.longitude ?? -1;
+        return this.rentCastSalesResponseType.longitude ??
+            this.rentCastPropertyType?.longitude ?? this.defaultLongitude;
     }
 
     protected createLatitude(): number {
-        return this.listingDetails?.latitude ??
-            this.rentCastSalesResponseType.latitude ??
-            this.rentCastPropertyType?.latitude ?? -1;
+        return this.rentCastSalesResponseType.latitude ??
+            this.rentCastPropertyType?.latitude ?? this.defaultLatitude;
     }
 
     protected createElementarySchoolRating(): number {
-        return this.listingDetails?.elementarySchoolRating ?? -1;
+        return this.defaultElementarySchoolRating;
     }
 
     protected createMiddleSchoolRating(): number {
-        return this.listingDetails?.middleSchoolRating ?? -1;
+        return this.defaultMiddleSchoolRating;
     }
 
     protected createHighSchoolRating(): number {
-        return this.listingDetails?.highSchoolRating ?? -1;
+        return this.defaultHighSchoolRating;
     }
 
     protected createNumberOfBedrooms(): number {
-        return this.listingDetails?.numberOfBedrooms ??
-            this.rentCastSalesResponseType.bedrooms ??
-            this.rentCastPropertyType?.bedrooms ?? -1;
+        return this.rentCastSalesResponseType.bedrooms ??
+            this.rentCastPropertyType?.bedrooms ?? this.defaultNumberOfBedrooms;
     }
 
     protected createNumberOfFullBathrooms(): number {
-        const numberOfBathrooms = this.listingDetails?.numberOfFullBathrooms ??
-            this.rentCastSalesResponseType.bathrooms ??
-            this.rentCastPropertyType?.bathrooms ?? -1;
+        const numberOfBathrooms = this.rentCastSalesResponseType.bathrooms ??
+            this.rentCastPropertyType?.bathrooms ?? this.defaultNumberOfFullBathrooms;
         return Math.floor(numberOfBathrooms);
     }
 
     protected createNumberOfHalfBathrooms(): number {
-        return this.listingDetails?.numberOfHalfBathrooms ??
-            (Utility.isDecimal(this.rentCastSalesResponseType.bathrooms ??
-                this.rentCastPropertyType?.bathrooms ?? -1) ? 1 : 0);
+        return (Utility.isDecimal(this.rentCastSalesResponseType.bathrooms ??
+            this.rentCastPropertyType?.bathrooms ?? this.defaultNumberOfHalfBathrooms) ? 1 : 0);
     }
 
     protected createSquareFeet(): number {
-        return this.listingDetails?.squareFeet ??
-            this.rentCastSalesResponseType.squareFootage ??
-            this.rentCastPropertyType?.squareFootage ?? -1;
+        return this.rentCastSalesResponseType.squareFootage ??
+            this.rentCastPropertyType?.squareFootage ?? this.defaultSquareFeet;
     }
 
     protected createAcres(): number {
-        const lotSize = this.rentCastSalesResponseType.lotSize ??
-            this.rentCastPropertyType?.lotSize;
+        const lotSize = this.rentCastSalesResponseType.lotSize ?? this.rentCastPropertyType?.lotSize;
 
-        return this.listingDetails?.acres ?? (lotSize ? convertSquareFeetToAcres(lotSize) : -1);
+        return (lotSize ?? this.defaultAcres) !== this.defaultAcres ? convertSquareFeetToAcres(lotSize) : this.defaultAcres;
     }
 
+
     protected createYearBuilt(): number {
-        return this.listingDetails?.yearBuilt ??
-            this.rentCastSalesResponseType.yearBuilt ??
-            this.rentCastPropertyType?.yearBuilt ?? -1;
+        return this.rentCastSalesResponseType.yearBuilt ??
+            this.rentCastPropertyType?.yearBuilt ?? this.defaultYearBuilt;
     }
 
     protected createHasGarage(): boolean {
-        return this.listingDetails?.hasGarage ??
-            this.rentCastPropertyType?.features?.garage ?? false;
+        return this.rentCastPropertyType?.features?.garage ?? this.defaultHasGarage;
     }
 
     protected createHasPool(): boolean {
-        return this.listingDetails?.hasPool ??
-            this.rentCastPropertyType?.features?.pool ?? false;
+        return this.rentCastPropertyType?.features?.pool ?? this.defaultHasPool;
     }
 
     protected createHasBasement(): boolean {
-        return this.listingDetails?.hasBasement ?? false;
+        return this.defaultHasBasement;
     }
 
     protected createPropertyType(): PropertyType {
-        return this.listingDetails?.propertyType ??
-            this.rentCastSalesResponseType.propertyType ??
-            this.rentCastPropertyType?.propertyType; // Let it be undefined
+        return this.rentCastSalesResponseType.propertyType ??
+            this.rentCastPropertyType?.propertyType ?? this.defaultPropertyType;
     }
 
     protected createDescription(): string {
-        return this.listingDetails?.description ?? '';
+        return this.defaultDescription;
     }
 
     protected createZestimate(): number {
-        return this.listingDetails?.zestimate ?? -1;
+        return this.defaultZestimate;
     }
 
     protected createZestimateRangeLow(): number {
-        return this.listingDetails?.zestimateRangeLow ?? -1;
+        return this.defaultZestimateRangeLow;
     }
 
     protected createZestimateRangeHigh(): number {
-        return this.listingDetails?.zestimateRangeHigh ?? -1;
+        return this.defaultZestimateRangeHigh;
     }
 
     protected createZillowRentEstimate(): number {
-        return this.listingDetails?.zillowRentEstimate ?? -1;
+        return this.defaultZillowRentEstimate;
     }
 
     protected createZillowMonthlyPropertyTaxAmount(): number {
-        let propertyTax = -1;
-        if (this.rentCastPropertyType && this.rentCastPropertyType.previousYearPropertyTaxes > -1) {
-            propertyTax = Utility.round(this.rentCastPropertyType.previousYearPropertyTaxes / 12);
+        if (this.rentCastPropertyType?.previousYearPropertyTaxes > -1) {
+            return Utility.round(this.rentCastPropertyType.previousYearPropertyTaxes / 12);
         }
 
-        return this.listingDetails?.zillowMonthlyPropertyTaxAmount ?? propertyTax;
+        return this.defaultZillowMonthlyPropertyTaxAmount;
     }
 
     protected createZillowMonthlyHomeInsuranceAmount(): number {
-        return this.listingDetails?.zillowMonthlyHomeInsuranceAmount ?? -1;
+        return this.defaultZillowMonthlyHomeInsuranceAmount;
     }
 
     protected createZillowMonthlyHOAFeesAmount(): number {
-        return this.listingDetails?.zillowMonthlyHOAFeesAmount ?? -1;
+        return this.defaultZillowMonthlyHOAFeesAmount;
     }
 
     protected createListingPrice(): number {
-        return this.listingDetails?.listingPrice ??
-            this.rentCastSalesResponseType.price ?? -1;
+        return this.rentCastSalesResponseType.price ?? this.defaultListingPrice;
     }
 
     // Come back to this and make sure its the right type
@@ -229,27 +210,26 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     }
 
     protected createDateListed(): Date {
-        const daysOnMarket = this.rentCastSalesResponseType.daysOnMarket ?? 0;
-        const listedDate = this.rentCastSalesResponseType.listedDate ?? Utility.getDateNDaysAgo(daysOnMarket);
+        const numberOfDaysOnMarket = this.rentCastSalesResponseType.daysOnMarket ?? 0;
 
-        // Need to figure out what to do with below code
-        // return this.listingDetails?.dateListed ?? listedDate;
+        if (numberOfDaysOnMarket) {
+            const listedDate = Utility.getDateNDaysAgo(numberOfDaysOnMarket);
+            return new Date(listedDate); // Come back to this and make sure the string is being parsed correctly
+        }
 
-        // Come back to this and make sure the string is being parsed correctly
-        return new Date(listedDate);
+        return this.defaultDateListed;
     }
 
     protected createPropertyStatus(): PropertyStatus {
-        return this.listingDetails?.propertyStatus ??
-            this.rentCastSalesResponseType.status;
+        return this.rentCastSalesResponseType.status ?? this.defaultPropertyStatus;
     }
 
-    protected rentCastSaleResponseId(): number {
-        return -1; // change this
+    protected createRentCastSaleResponseId(): number {
+        return this.defaultRentCastSaleResponseId;
     }
 
-    protected rentCastPropertyResponseId(): number {
-        return -1; // change this
+    protected createRentCastPropertyResponseId(): number {
+        return this.defaultRentCastPropertyResponseId;
     }
 
 }

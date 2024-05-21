@@ -19,7 +19,7 @@ export abstract class AbstractListingDetailsBuilder {
             this.createAddressId(),
             this.createFullAddress(),
             this.createState(),
-            this.createzipCode(),
+            this.createZipCode(),
             this.createCity(),
             this.createCounty(),
             this.createCountry(),
@@ -73,10 +73,10 @@ export abstract class AbstractListingDetailsBuilder {
             this.createPropertyStatus(),
             this.createCreationType(),
             this.createDateListed(),
-            new Date(),
-            new Date(),
-            -1,
-            -1,
+            undefined, // When we insert into database we will create the date
+            undefined, // When we insert into database we will create the date
+            this.createRentCastSaleResponseId(),
+            this.createRentCastPropertyResponseId(),
         );
 
         console.log("listingDetails:", listingDetail);
@@ -94,7 +94,7 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createState(): State;
 
-    protected abstract createzipCode(): string;
+    protected abstract createZipCode(): string;
 
     protected abstract createCity(): string;
 
@@ -166,8 +166,178 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createPropertyStatus(): PropertyStatus;
 
-    protected abstract rentCastSaleResponseId(): number;
+    protected abstract createRentCastSaleResponseId(): number;
 
-    protected abstract rentCastPropertyResponseId(): number;
+    protected abstract createRentCastPropertyResponseId(): number;
+
+    protected abstract get defaultZillowURL(): string;
+
+    protected get defaultListingDetailsId(): number {
+        return -1;
+    }
+
+    protected get defaultAddressId(): number {
+        return -1;
+    }
+
+    protected get defaultFullAddress(): string {
+        return '';
+    }
+
+    protected get defaultState(): State {
+        return; // Let it be undefined
+    }
+
+    protected get defaultZipCode(): string {
+        return '';
+    }
+
+    protected get defaultCity(): string {
+        return '';
+    }
+
+    protected get defaultCounty(): string {
+        return '';
+    }
+
+    protected get defaultCountry(): Country {
+        return Country.UnitedStates;
+    }
+
+    protected get defaultStreetAddress(): string {
+        return '';
+    }
+
+    protected get defaultApartmentNumber(): string {
+        return '';
+    }
+
+    protected get defaultLongitude(): number {
+        return -1;
+    }
+
+    protected get defaultLatitude(): number {
+        return -1;
+    }
+
+    protected get defaultSchoolRatingId(): number {
+        return -1;
+    }
+
+    protected get defaultElementarySchoolRating(): number {
+        return -1;
+    }
+
+    protected get defaultMiddleSchoolRating(): number {
+        return -1;
+    }
+
+    protected get defaultHighSchoolRating(): number {
+        return -1;
+    }
+
+    protected get defaultPropertyDetailsId(): number {
+        return -1;
+    }
+
+    protected get defaultNumberOfBedrooms(): number {
+        return -1;
+    }
+
+    protected get defaultNumberOfFullBathrooms(): number {
+        return -1;
+    }
+
+    protected get defaultNumberOfHalfBathrooms(): number {
+        return -1;
+    }
+
+    protected get defaultSquareFeet(): number {
+        return -1;
+    }
+
+    protected get defaultAcres(): number {
+        return -1;
+    }
+
+    protected get defaultYearBuilt(): number {
+        return -1;
+    }
+
+    protected get defaultHasGarage(): boolean {
+        return; // let it be undefined 
+    }
+
+    protected get defaultHasPool(): boolean {
+        return; // let it be undefined 
+    }
+
+    protected get defaultHasBasement(): boolean {
+        return; // let it be undefined 
+    }
+
+    protected get defaultPropertyType(): PropertyType {
+        return; // let it be undefined 
+    }
+
+    protected get defaultDescription(): string {
+        return '';
+    }
+
+    protected get defaultZillowMarketEstimatesId(): number {
+        return -1;
+    }
+
+    protected get defaultZestimate(): number {
+        return -1;
+    }
+
+    protected get defaultZestimateRangeLow(): number {
+        return -1;
+    }
+
+    protected get defaultZestimateRangeHigh(): number {
+        return -1;
+    }
+
+    protected get defaultZillowRentEstimate(): number {
+        return -1;
+    }
+
+    protected get defaultZillowMonthlyPropertyTaxAmount(): number {
+        return -1;
+    }
+
+    protected get defaultZillowMonthlyHomeInsuranceAmount(): number {
+        return -1;
+    }
+
+    protected get defaultZillowMonthlyHOAFeesAmount(): number {
+        return -1;
+    }
+
+    protected get defaultListingPrice(): number {
+        return -1;
+    }
+
+    protected get defaultCreationType(): ListingCreationType {
+        return; // let it be undefined 
+    }
+
+    protected get defaultDateListed(): Date {
+        return; // let it be undefined 
+    }
+
+    protected get defaultPropertyStatus(): PropertyStatus {
+        return; // let it be undefined 
+    }
+
+    protected get defaultRentCastSaleResponseId(): number {
+        return -1;
+    }
+
+    protected get defaultRentCastPropertyResponseId(): number {
+        return -1;
+    }
 
 }

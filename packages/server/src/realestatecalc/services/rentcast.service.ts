@@ -166,9 +166,8 @@ export class RentCastService {
                 // );
                 const listingDetail: ListingDetails = new ListingDetailsPropertyResponseBuilder(
                     rentCastMatch.rentCastPropertyResponseId,
-                    rentCastPropertyResponseType,
                     preExistingListing,
-                    rentCastSaleResponseType,
+                    rentCastPropertyResponseType,
                 ).build();
 
                 await this.listingManager.updateListingDetails(this.pool, listingDetail);
@@ -440,12 +439,10 @@ export class RentCastService {
     private buildListingDetails(
         rentCastSalesResponseTyped: RentCastSaleResponseType,
         rentCastPropertyTyped?: RentCastPropertyResponseType,
-        listingDetails?: ListingDetails,
     ): ListingDetails {
         return new ListingDetailsBuilder(
             rentCastSalesResponseTyped,
             rentCastPropertyTyped,
-            listingDetails,
         ).build();
     }
 
