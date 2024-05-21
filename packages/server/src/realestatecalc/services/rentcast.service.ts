@@ -111,6 +111,7 @@ export class RentCastService {
 
     async addNewPropertyWithRentCastAPI(rentCastApiRequest: CreateRentCastApiRequest): Promise<number> {
         let numberOfPropertiesAdded = await this._addNewPropertyWithRentCastAPI(rentCastApiRequest);
+        console.log(`Number of properties added: ${numberOfPropertiesAdded}`);
 
         // Come back and create a return type with additional data instead of just returning a number
         numberOfPropertiesAdded += await this.matchAndCreateListing();
@@ -144,6 +145,7 @@ export class RentCastService {
         };
 
         let numberOfPropertiesAdded = 0;
+        let numberOfPropertiesUpdated = 0;
         for (const rentCastMatch of rentCastMatchingData) {
             const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
             const rentCastPropertyResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
@@ -166,6 +168,7 @@ export class RentCastService {
                 ).build();
 
                 await this.listingManager.updateListingDetails(this.pool, listingDetail);
+                numberOfPropertiesUpdated++;
             }
             else {
                 // Create new listing in database
@@ -186,6 +189,9 @@ export class RentCastService {
 
             }
         }
+
+        console.log(`Number of properties updated: ${numberOfPropertiesUpdated}`);
+        console.log(`Number of properties matched and created: ${numberOfPropertiesAdded}`);
 
         return numberOfPropertiesAdded;
     }
@@ -311,8 +317,6 @@ export class RentCastService {
                 const newListingId = await new CalcService().insertListingDetails(
                     listingDetail,
                     ListingCreationType.RENT_CAST_API,
-                    // rentCastSaleResponseId,
-                    // rentCastPropertyResponseId,
                 );
 
                 if (newListingId > -1) {
