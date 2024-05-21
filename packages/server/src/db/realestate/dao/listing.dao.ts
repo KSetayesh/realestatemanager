@@ -45,17 +45,6 @@ export class ListingDAO extends RealEstateDAO {
             date_listed,
             creation_type)`;
 
-    private UPDATE_LISTING_DETAILS_QUERY = `UPDATE listing_details
-            SET zillow_url = $1,
-                property_details_id = $2,
-                zillow_market_estimates_id = $3,
-                listing_price = $4,
-                property_status = $5,
-                date_listed = $6,
-                creation_type = $7,
-                updated_at = $8,
-            WHERE id = $9;`;
-
     //----------------------------------------------------------------------------------------------------
 
     private INSERT_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY = `INSERT INTO listing_details 
@@ -77,8 +66,9 @@ export class ListingDAO extends RealEstateDAO {
                 date_listed = $6,
                 creation_type = $7,
                 rent_cast_sale_response_id = $8,
-                updated_at = $9,
-            WHERE id = $10;`;
+                rent_cast_property_response_id = $9,
+                updated_at = $10,
+            WHERE id = $11;`;
 
     //----------------------------------------------------------------------------------------------------
 
@@ -343,19 +333,22 @@ export class ListingDAO extends RealEstateDAO {
 
     async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
         const query = this.UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY;
-        // const values = [
-        //     zestimate,
-        //     zestimateLow,
-        //     zestimateHigh,
-        //     zillowRentEstimate,
-        //     zillowMonthlyPropertyTaxAmount,
-        //     zillowMonthlyHomeInsuranceAmount,
-        //     zillowMonthlyHOAFeesAmount,
-        //     zillowMarketEstimatesId
-        // ];
+
+        const values = [
+            listingDetails.propertyDetailsId,
+            listingDetails.zillowMarketEstimatesId,
+            listingDetails.listingPrice,
+            listingDetails.propertyStatus,
+            listingDetails.dateListed,
+            listingDetails.creationType,
+            listingDetails.rentCastSaleResponseId,
+            listingDetails.rentCastPropertyResponseId,
+            new Date(),
+            listingDetails.id,
+        ];
 
         try {
-            // await pool.query(query, values);
+            await pool.query(query, values);
             console.log('Zillow market estimates updated successfully');
         } catch (err) {
             console.error('Error updating Zillow market estimates', err);
@@ -482,19 +475,64 @@ export class ListingDAO extends RealEstateDAO {
 
     }
 
+    private async _updateSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+
+        const query = this.UPDATE_SCHOOL_RATING_QUERY;
+
+        const values: any[] = this.getSchoolRatingValues(listingDetails);
+        values.push(new Date());
+        values.push(listingDetails.schoolRatingId);
+
+        try {
+            await pool.query(query, values);
+            console.log('Zillow market estimates updated successfully');
+        } catch (err) {
+            console.error('Error updating Zillow market estimates', err);
+            throw err;
+        }
+    }
+
     private async _insertSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
-        const values: any[] = [
-            listingDetails.elementarySchoolRating,
-            listingDetails.middleSchoolRating,
-            listingDetails.highSchoolRating]
+        const values: any[] = this.getSchoolRatingValues(listingDetails);
 
         return this.genericInsertQuery(pool, this.INSERT_SCHOOL_RATING_QUERY, values);
     }
 
+    private getSchoolRatingValues(listingDetails: ListingDetails): any[] {
+        return [
+            listingDetails.elementarySchoolRating,
+            listingDetails.middleSchoolRating,
+            listingDetails.highSchoolRating
+        ];
+    }
+
+    private async updateAddress(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+
+        const query = this.UPDATE_ADDRESS_QUERY;
+
+        const values: any[] = this.getAddressValues(listingDetails);
+        values.push(new Date());
+        values.push(listingDetails.addressId);
+
+        try {
+            await pool.query(query, values);
+            console.log('Zillow market estimates updated successfully');
+        } catch (err) {
+            console.error('Error updating Zillow market estimates', err);
+            throw err;
+        }
+    }
+
     private async insertAddress(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
-        const values: any[] = [
+        const values: any[] = this.getAddressValues(listingDetails);
+
+        return this.genericInsertQuery(pool, this.INSERT_ADDRESS_QUERY, values);
+    }
+
+    private getAddressValues(listingDetails: ListingDetails): any[] {
+        return [
             listingDetails.fullAddress,
             listingDetails.state,
             listingDetails.zipcode,
@@ -504,9 +542,25 @@ export class ListingDAO extends RealEstateDAO {
             listingDetails.streetAddress,
             listingDetails.apartmentNumber,
             listingDetails.longitude,
-            listingDetails.latitude];
+            listingDetails.latitude
+        ];
+    }
 
-        return this.genericInsertQuery(pool, this.INSERT_ADDRESS_QUERY, values);
+    private async updatePropertyDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+
+        const query = this.UPDATE_PROPERTY_DETAILS_QUERY;
+
+        const values: any[] = this.getPropertyDetailsValues(listingDetails);
+        values.push(new Date());
+        values.push(listingDetails.propertyDetailsId);
+
+        try {
+            await pool.query(query, values);
+            console.log('Zillow market estimates updated successfully');
+        } catch (err) {
+            console.error('Error updating Zillow market estimates', err);
+            throw err;
+        }
     }
 
     private async insertPropertyDetails(
@@ -518,7 +572,16 @@ export class ListingDAO extends RealEstateDAO {
 
         const values: any[] = [
             addressId,
-            schoolRatingId,
+            schoolRatingId
+        ];
+        values.push(this.getPropertyDetailsValues(listingDetails));
+
+        return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
+
+    }
+
+    private getPropertyDetailsValues(listingDetails: ListingDetails): any[] {
+        return [
             listingDetails.numberOfBedrooms,
             listingDetails.numberOfFullBathrooms,
             listingDetails.numberOfHalfBathrooms,
@@ -529,23 +592,43 @@ export class ListingDAO extends RealEstateDAO {
             listingDetails.hasPool,
             listingDetails.hasBasement,
             listingDetails.propertyType,
-            listingDetails.description];
+            listingDetails.description
+        ];
+    }
 
-        return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
+    private async updateZillowMarketEstimates(pool: Pool, listingDetails: ListingDetails): Promise<void> {
 
+        const query = this.UPDATE_ZILLOW_MARKET_ESTIMATES_QUERY;
+
+        const values: any[] = this.getZillowMarketEstimatesValues(listingDetails);
+        values.push(new Date());
+        values.push(listingDetails.zillowMarketEstimatesId);
+
+        try {
+            await pool.query(query, values);
+            console.log('Zillow market estimates updated successfully');
+        } catch (err) {
+            console.error('Error updating Zillow market estimates', err);
+            throw err;
+        }
     }
 
     private async insertZillowMarketEstimates(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
-        const values: any[] = [
+        const values: any[] = this.getZillowMarketEstimatesValues(listingDetails);
+
+        return this.genericInsertQuery(pool, this.INSERT_ZILLOW_MARKET_ESTIMATES_QUERY, values);
+    }
+
+    private getZillowMarketEstimatesValues(listingDetails: ListingDetails): any[] {
+        return [
             listingDetails.zestimate,
             listingDetails.zestimateRangeLow,
             listingDetails.zestimateRangeHigh,
             listingDetails.zillowRentEstimate,
             listingDetails.zillowMonthlyPropertyTaxAmount,
             listingDetails.zillowMonthlyHomeInsuranceAmount,
-            listingDetails.zillowMonthlyHOAFeesAmount];
-
-        return this.genericInsertQuery(pool, this.INSERT_ZILLOW_MARKET_ESTIMATES_QUERY, values);
+            listingDetails.zillowMonthlyHOAFeesAmount
+        ];
     }
 }

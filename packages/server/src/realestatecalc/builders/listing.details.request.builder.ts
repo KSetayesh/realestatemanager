@@ -182,5 +182,12 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
         return this.listingDetailsRequest.propertyStatus; // let it be undefined
     }
 
+    protected rentCastSaleResponseId(): number {
+        return -1;
+    }
+
+    protected rentCastPropertyResponseId(): number {
+        return -1;
+    }
 
 }

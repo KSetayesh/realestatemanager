@@ -42,7 +42,7 @@ export class ListingManager extends DatabaseManager {
             listingDetails,
             creationType,
             saleResponseId,
-            propertyResponseId
+            propertyResponseId,
         );
     }
 
@@ -50,7 +50,14 @@ export class ListingManager extends DatabaseManager {
         pool: Pool,
         listingDetails: ListingDetails,
     ): Promise<void> {
-        
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
+        this.listingDAO.updateListingDetails(
+            pool,
+            listingDetails,
+        );
     }
 
 }

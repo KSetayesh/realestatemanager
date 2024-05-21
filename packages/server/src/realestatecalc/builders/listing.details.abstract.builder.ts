@@ -166,4 +166,8 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createPropertyStatus(): PropertyStatus;
 
+    protected abstract rentCastSaleResponseId(): number;
+
+    protected abstract rentCastPropertyResponseId(): number;
+
 }

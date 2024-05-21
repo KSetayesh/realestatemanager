@@ -18,6 +18,7 @@ import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { ListingDetailsBuilder } from '../builders/listing.details.builder';
+import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
 
 export type RentCastSaleResponseType = {
     id: string;
@@ -158,11 +159,18 @@ export class RentCastService {
             if (listingsWithRentCastIds.has(rentCastMatch.rentCastSaleResponseId)) {
                 // Update current listing in database
                 const preExistingListing: ListingDetails = listingsWithRentCastIds.get(rentCastMatch.rentCastSaleResponseId);
-                const listingDetail: ListingDetails = this.buildListingDetails(
-                    rentCastSaleResponseType,
+                // const listingDetail: ListingDetails = this.buildListingDetails(
+                //     rentCastSaleResponseType,
+                //     rentCastPropertyResponseType,
+                //     preExistingListing,
+                // );
+                const listingDetail: ListingDetails = new ListingDetailsPropertyResponseBuilder(
+                    rentCastMatch.rentCastPropertyResponseId,
                     rentCastPropertyResponseType,
                     preExistingListing,
-                );
+                    rentCastSaleResponseType,
+                ).build();
+
                 await this.listingManager.updateListingDetails(this.pool, listingDetail);
                 // Need to create an update listingdetails sql function 
             }
