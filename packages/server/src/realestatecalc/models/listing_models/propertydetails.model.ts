@@ -9,7 +9,7 @@ import { IDTOConvertible } from "../idtoconvertible.model";
 import { SchoolRating } from "./schoolrating.model";
 import { Entity } from "src/shared/entity";
 
-export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsResponseDTO>{
+export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsResponseDTO> {
     private _address?: Address;
     private _schoolRating?: SchoolRating;
     private _numberOfBedrooms?: number;
@@ -54,6 +54,14 @@ export class PropertyDetails extends Entity implements IDTOConvertible<PropertyD
         this._hasBasement = hasBasement;
         this._propertyType = propertyType;
         this._description = description;
+    }
+
+    get addressId(): number {
+        return this._address.id;
+    }
+
+    get schoolRatingId(): number {
+        return this._schoolRating.id;
     }
 
     get fullAddress(): string {

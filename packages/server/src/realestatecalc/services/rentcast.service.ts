@@ -163,6 +163,7 @@ export class RentCastService {
                     rentCastPropertyResponseType,
                     preExistingListing,
                 );
+                await this.listingManager.updateListingDetails(this.pool, listingDetail);
                 // Need to create an update listingdetails sql function 
             }
             else {

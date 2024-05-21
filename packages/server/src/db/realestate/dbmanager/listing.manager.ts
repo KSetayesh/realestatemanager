@@ -46,4 +46,11 @@ export class ListingManager extends DatabaseManager {
         );
     }
 
+    async updateListingDetails(
+        pool: Pool,
+        listingDetails: ListingDetails,
+    ): Promise<void> {
+        
+    }
+
 }

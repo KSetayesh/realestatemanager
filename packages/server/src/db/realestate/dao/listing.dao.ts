@@ -341,6 +341,28 @@ export class ListingDAO extends RealEstateDAO {
         return newListingId;
     }
 
+    async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+        const query = this.UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY;
+        // const values = [
+        //     zestimate,
+        //     zestimateLow,
+        //     zestimateHigh,
+        //     zillowRentEstimate,
+        //     zillowMonthlyPropertyTaxAmount,
+        //     zillowMonthlyHomeInsuranceAmount,
+        //     zillowMonthlyHOAFeesAmount,
+        //     zillowMarketEstimatesId
+        // ];
+
+        try {
+            // await pool.query(query, values);
+            console.log('Zillow market estimates updated successfully');
+        } catch (err) {
+            console.error('Error updating Zillow market estimates', err);
+            throw err;
+        }
+    }
+
     private mapRowToListingDetails(row: any): ListingDetails {
 
         const addressId: number = row.address_id;

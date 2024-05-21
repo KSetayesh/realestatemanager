@@ -10,6 +10,26 @@ export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder 
         this.listingDetailsRequest = listingDetailsRequest;
     }
 
+    protected createListingDetailsId(): number {
+        return -1;
+    }
+
+    protected createAddressId(): number {
+        return -1;
+    }
+
+    protected createSchoolRatingId(): number {
+        return -1;
+    }
+
+    protected createPropertyDetailsId(): number {
+        return -1;
+    }
+
+    protected createZillowMarketEstimatesId(): number {
+        return -1;
+    }
+
     protected createZillowURL(): string {
         const zillowUrl = this.listingDetailsRequest.zillowURL;
         if (!zillowUrl) {

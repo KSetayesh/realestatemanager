@@ -12,7 +12,7 @@ import { IDTOConvertible } from "../idtoconvertible.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 import { Entity } from "src/shared/entity";
 
-export class ListingDetails extends Entity implements IDTOConvertible<ListingDetailsResponseDTO>{
+export class ListingDetails extends Entity implements IDTOConvertible<ListingDetailsResponseDTO> {
 
     private _zillowURL: string;
     private _propertyDetails: PropertyDetails;
@@ -50,6 +50,21 @@ export class ListingDetails extends Entity implements IDTOConvertible<ListingDet
         this._rentCastPropertyResponseId = rentCastPropertyResponseId;
     }
 
+    get propertyDetailsId(): number {
+        return this._propertyDetails.id;
+    }
+
+    get zillowMarketEstimatesId(): number {
+        return this._zillowMarketEstimates.id;
+    }
+
+    get schoolRatingId(): number {
+        return this._propertyDetails.schoolRatingId;
+    }
+
+    get addressId(): number {
+        return this._propertyDetails.addressId;
+    }
 
     // Come back to this and remove
     get hasZillowMarketUpdates(): boolean {

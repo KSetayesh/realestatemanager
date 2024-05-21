@@ -16,7 +16,7 @@ export abstract class AbstractListingDetailsBuilder {
     build(): ListingDetails {
 
         const address: Address = new Address(
-            -1,
+            this.createAddressId(),
             this.createFullAddress(),
             this.createState(),
             this.createzipCode(),
@@ -30,14 +30,14 @@ export abstract class AbstractListingDetailsBuilder {
         );
 
         const schoolRating: SchoolRating = new SchoolRating(
-            -1,
+            this.createSchoolRatingId(),
             this.createElementarySchoolRating(),
             this.createMiddleSchoolRating(),
             this.createHighSchoolRating(),
         );
 
         const propertyDetails: PropertyDetails = new PropertyDetails(
-            -1,
+            this.createPropertyDetailsId(),
             address,
             schoolRating,
             this.createNumberOfBedrooms(),
@@ -54,7 +54,7 @@ export abstract class AbstractListingDetailsBuilder {
         );
 
         const zillowMarketEstimates: ZillowMarketEstimates = new ZillowMarketEstimates(
-            -1,
+            this.createZillowMarketEstimatesId(),
             this.createZestimate(),
             this.createZestimateRangeLow(),
             this.createZestimateRangeHigh(),
@@ -65,7 +65,7 @@ export abstract class AbstractListingDetailsBuilder {
         );
 
         const listingDetail: ListingDetails = new ListingDetails(
-            -1,
+            this.createListingDetailsId(),
             this.createZillowURL(),
             propertyDetails,
             zillowMarketEstimates,
@@ -84,7 +84,11 @@ export abstract class AbstractListingDetailsBuilder {
         return listingDetail;
     }
 
+    protected abstract createListingDetailsId(): number;
+
     protected abstract createZillowURL(): string;
+
+    protected abstract createAddressId(): number;
 
     protected abstract createFullAddress(): string;
 
@@ -106,11 +110,15 @@ export abstract class AbstractListingDetailsBuilder {
 
     protected abstract createLatitude(): number;
 
+    protected abstract createSchoolRatingId(): number;
+
     protected abstract createElementarySchoolRating(): number;
 
     protected abstract createMiddleSchoolRating(): number;
 
     protected abstract createHighSchoolRating(): number;
+
+    protected abstract createPropertyDetailsId(): number;
 
     protected abstract createNumberOfBedrooms(): number;
 
@@ -133,6 +141,8 @@ export abstract class AbstractListingDetailsBuilder {
     protected abstract createPropertyType(): PropertyType;
 
     protected abstract createDescription(): string;
+
+    protected abstract createZillowMarketEstimatesId(): number;
 
     protected abstract createZestimate(): number;
 
