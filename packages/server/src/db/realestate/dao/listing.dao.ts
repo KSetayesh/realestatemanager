@@ -319,7 +319,10 @@ export class ListingDAO extends RealEstateDAO {
                 );
             }
 
-            console.log('Listing information inserted successfully');
+            if (newListingId > -1) {
+                console.log('Listing information inserted successfully');
+                console.log(`New ListingDetails id: ${newListingId}`);
+            }
         } catch (err) {
             console.error('Error inserting listing information', err);
             throw err;

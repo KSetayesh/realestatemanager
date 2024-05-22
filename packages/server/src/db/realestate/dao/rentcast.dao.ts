@@ -229,7 +229,7 @@ export class RentCastDAO extends RealEstateDAO {
         const query = `${this.RESET_NUMBER_OF_API_CALLS_QUERY};`;
         try {
             await pool.query(query, [id]);
-            console.log('Listing information inserted successfully');
+            console.log('Number of api calls set to 0');
 
         } catch (err) {
             console.error('Error inserting listing information', err);
@@ -241,7 +241,7 @@ export class RentCastDAO extends RealEstateDAO {
         const query = `${this.UPDATE_NUMBER_OF_API_CALLS_QUERY};`;
         try {
             await pool.query(query, [rentCastConfigDetailsId]);
-            console.log('Listing information inserted successfully');
+            console.log('Number of api calls has been incremented');
 
         } catch (err) {
             console.error('Error inserting listing information', err);

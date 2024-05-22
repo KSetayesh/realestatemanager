@@ -38,7 +38,7 @@ export class AgentDAO extends RealEstateDAO {
 
             await this.genericInsertQuery(pool, this.INSERT_AGENT_QUERY, values);
 
-            console.log('Listing information inserted successfully');
+            console.log('Agent information inserted successfully');
         } catch (err) {
             console.error('Error inserting listing information', err);
             throw err;

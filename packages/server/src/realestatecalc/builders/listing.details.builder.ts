@@ -6,7 +6,6 @@ import {
     State,
     Utility
 } from "@realestatemanager/shared";
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../services/rentcast.service";
 import { convertSquareFeetToAcres } from "src/shared/Constants";
 import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";

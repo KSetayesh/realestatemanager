@@ -1,667 +1,863 @@
 [
   {
-    "id": "110-Overlook-Dr,-Mastic,-NY-11950",
-    "formattedAddress": "110 Overlook Dr, Mastic, NY 11950",
-    "addressLine1": "110 Overlook Dr",
+    "id": "1-Beach-St,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "1 Beach St, Port Jefferson, NY 11777",
+    "addressLine1": "1 Beach St",
     "addressLine2": null,
-    "city": "Mastic",
+    "city": "Port Jefferson",
     "state": "NY",
-    "zipCode": "11950",
+    "zipCode": "11777",
     "county": "Suffolk",
-    "latitude": 40.792205,
-    "longitude": -72.831811,
-    "propertyType": "Single Family",
-    "lotSize": 15246,
-    "assessorID": "0200-910.00-02.00-017.000",
-    "legalDescription": "MASTIC ACRES 1464 UNIT 4 2415 & 2416",
-    "subdivision": "MASTIC ACRES",
-    "lastSaleDate": "2021-11-23T00:00:00.000Z",
-    "lastSalePrice": 400000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2020": {
-        "value": 225,
-        "land": 225
-      },
-      "2022": {
-        "value": 2700,
-        "land": 225,
-        "improvements": 2475
-      }
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 3707
-      }
-    },
-    "owner": {
-      "names": [
-        "110 OVERLOOK DRIVE LLC"
-      ],
-      "mailingAddress": {
-        "id": "110-Overlook-Dr,-Mastic,-NY-11950",
-        "formattedAddress": "110 Overlook Dr, Mastic, NY 11950",
-        "addressLine1": "110 Overlook Dr",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "126-Overlook-Dr,-Mastic,-NY-11950",
-    "formattedAddress": "126 Overlook Dr, Mastic, NY 11950",
-    "addressLine1": "126 Overlook Dr",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.791402,
-    "longitude": -72.830961,
-    "propertyType": "Single Family",
-    "lotSize": 19602,
-    "assessorID": "0200-910.00-03.00-022.001",
-    "legalDescription": "LOT:22.001 BLK:3 SEC:910.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "features": {},
-    "taxAssessments": {
-      "2020": {
-        "value": 2250,
-        "land": 250,
-        "improvements": 2000
-      },
-      "2022": {
-        "value": 2250,
-        "land": 250,
-        "improvements": 2000
-      }
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 9365
-      }
-    },
-    "owner": {
-      "names": [
-        "Oudry Dennis Belle",
-        "MARIOL BELLE"
-      ],
-      "mailingAddress": {
-        "id": "126-Overlook-Dr,-Mastic,-NY-11950",
-        "formattedAddress": "126 Overlook Dr, Mastic, NY 11950",
-        "addressLine1": "126 Overlook Dr",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "127-Neptune-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "127 Neptune Ave, Mastic, NY 11950",
-    "addressLine1": "127 Neptune Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.791881,
-    "longitude": -72.832754,
-    "propertyType": "Single Family",
-    "lotSize": 9148,
-    "assessorID": "0200-910.00-02.00-020.001",
-    "legalDescription": "LOT:20.001 BLK:2 SEC:910.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "features": {},
-    "taxAssessments": {
-      "2020": {
-        "value": 2200,
-        "land": 200,
-        "improvements": 2000
-      },
-      "2022": {
-        "value": 2200,
-        "land": 200,
-        "improvements": 2000
-      }
-    },
-    "owner": {
-      "names": [
-        "Thomas Theresa"
-      ],
-      "mailingAddress": {
-        "id": "127-Neptune-Ave,-Mastic,-NY-11950",
-        "formattedAddress": "127 Neptune Ave, Mastic, NY 11950",
-        "addressLine1": "127 Neptune Ave",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "209-Madison-St,-Mastic,-NY-11950",
-    "formattedAddress": "209 Madison St, Mastic, NY 11950",
-    "addressLine1": "209 Madison St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.787547,
-    "longitude": -72.850323,
-    "propertyType": "Single Family",
-    "lotSize": 17424,
-    "assessorID": "0200-938.00-04.00-006.001",
-    "features": {}
-  },
-  {
-    "id": "264-Hawthorne-St,-Mastic,-NY-11950",
-    "formattedAddress": "264 Hawthorne St, Mastic, NY 11950",
-    "addressLine1": "264 Hawthorne St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.784061,
-    "longitude": -72.847548,
-    "propertyType": "Single Family",
-    "lotSize": 28750,
-    "assessorID": "0200-938.00-07.00-032.000",
-    "legalDescription": "LOT:32.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "MASTIC ACRES",
-    "lastSaleDate": "2004-08-26T00:00:00.000Z",
-    "lastSalePrice": 313500,
-    "features": {},
-    "taxAssessments": {
-      "2022": {
-        "value": 2390,
-        "land": 200,
-        "improvements": 2190
-      }
-    },
-    "owner": {
-      "names": [
-        "Julia E Fuentes",
-        "RUTH V FUENTES"
-      ],
-      "mailingAddress": {
-        "id": "264-Hawthorne-St,-Mastic,-NY-11950",
-        "formattedAddress": "264 Hawthorne St, Mastic, NY 11950",
-        "addressLine1": "264 Hawthorne St",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "268-Hawthorne-St,-Mastic,-NY-11950",
-    "formattedAddress": "268 Hawthorne St, Mastic, NY 11950",
-    "addressLine1": "268 Hawthorne St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.783753,
-    "longitude": -72.847472,
-    "propertyType": "Single Family",
-    "lotSize": 43560,
-    "assessorID": "0200-969.00-08.00-001.000",
-    "legalDescription": "LOT:1.000 BLK:8 SEC:969.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "lastSaleDate": "2002-10-31T00:00:00.000Z",
-    "lastSalePrice": 199990,
-    "features": {},
-    "taxAssessments": {
-      "2022": {
-        "value": 2420,
-        "land": 400,
-        "improvements": 2020
-      }
-    },
-    "owner": {
-      "names": [
-        "Donald White",
-        "JUDY A WHITE"
-      ],
-      "mailingAddress": {
-        "id": "268-Hawthorne-St,-Mastic,-NY-11950",
-        "formattedAddress": "268 Hawthorne St, Mastic, NY 11950",
-        "addressLine1": "268 Hawthorne St",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "228-Madison-St,-Mastic,-NY-11950",
-    "formattedAddress": "228 Madison St, Mastic, NY 11950",
-    "addressLine1": "228 Madison St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.785928,
-    "longitude": -72.850487,
-    "propertyType": "Single Family",
-    "lotSize": 64381680,
-    "assessorID": "0209001000100002000",
-    "legalDescription": "MASTIC ACRES 1478 UNIT 6 3006 & 300",
-    "features": {
-      "unitCount": 1
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 5637
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ]
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "106-Meadowmere-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "106 Meadowmere Ave, Mastic, NY 11950",
-    "addressLine1": "106 Meadowmere Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.787169,
-    "longitude": -72.846611,
-    "propertyType": "Single Family",
-    "lotSize": 63815400,
-    "assessorID": "0200939000100017001",
-    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2899 TO 29",
-    "features": {
-      "unitCount": 1
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 11944
-      }
-    },
-    "owner": {
-      "names": [
-        "",
-        ""
-      ]
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "229-Hawthorne-St,-Mastic,-NY-11950",
-    "formattedAddress": "229 Hawthorne St, Mastic, NY 11950",
-    "addressLine1": "229 Hawthorne St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.78644,
-    "longitude": -72.847114,
-    "propertyType": "Single Family",
-    "lotSize": 64381680,
-    "assessorID": "0200939000100021000",
-    "legalDescription": "MASTIC ACRES 1478 UNIT 6 3096 & 309",
-    "features": {},
-    "propertyTaxes": {
-      "2016": {
-        "total": 10135
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ]
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "259-Madison-St,-Mastic,-NY-11950",
-    "formattedAddress": "259 Madison St, Mastic, NY 11950",
-    "addressLine1": "259 Madison St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.783834,
-    "longitude": -72.848929,
-    "propertyType": "Single Family",
-    "lotSize": 28750,
-    "assessorID": "0200-938.00-07.00-012.000",
-    "legalDescription": "LOT:12.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "lastSaleDate": "2005-10-26T00:00:00.000Z",
-    "lastSalePrice": 274540,
-    "features": {},
-    "taxAssessments": {
-      "2022": {
-        "value": 1450,
-        "land": 250,
-        "improvements": 1200
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ],
-      "mailingAddress": {
-        "id": "259-Madison-St,-Mastic,-NY-11950",
-        "formattedAddress": "259 Madison St, Mastic, NY 11950",
-        "addressLine1": "259 Madison St",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "199-Madison-St,-Mastic,-NY-11950",
-    "formattedAddress": "199 Madison St, Mastic, NY 11950",
-    "addressLine1": "199 Madison St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.788483,
-    "longitude": -72.850383,
-    "propertyType": "Single Family",
-    "lotSize": 10890,
-    "assessorID": "0200-938.00-04.00-003.000",
-    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2736",
-    "subdivision": "MASTIC ACRES",
-    "lastSaleDate": "2015-12-09T00:00:00.000Z",
-    "lastSalePrice": 234000,
-    "features": {},
-    "taxAssessments": {
-      "2022": {
-        "value": 2000,
-        "land": 135,
-        "improvements": 1865
-      }
-    },
-    "owner": {
-      "names": [
-        "ESPOSITO FRANK",
-        "VICTORIA PEPK"
-      ],
-      "mailingAddress": {
-        "id": "199-Madison-St,-Mastic,-NY-11950",
-        "addressLine1": "199 Madison St",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "52-Meadowmere-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "52 Meadowmere Ave, Mastic, NY 11950",
-    "addressLine1": "52 Meadowmere Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.786853,
-    "longitude": -72.851589,
-    "propertyType": "Single Family",
-    "lotSize": 10890,
-    "assessorID": "0200-938.00-05.00-027.000",
-    "features": {}
-  },
-  {
-    "id": "675-Mastic-Rd,-Mastic,-NY-11950",
-    "formattedAddress": "675 Mastic Rd, Mastic, NY 11950",
-    "addressLine1": "675 Mastic Rd",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.788309,
-    "longitude": -72.844631,
-    "propertyType": "Single Family",
-    "lotSize": 63815400,
-    "assessorID": "0200939000200006000",
-    "legalDescription": "MASTIC ACRES 1465 UNIT 5 2929 & 293",
-    "features": {
-      "unitCount": 1
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 5417
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ]
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "232-Madison-St,-Mastic,-NY-11950",
-    "formattedAddress": "232 Madison St, Mastic, NY 11950",
-    "addressLine1": "232 Madison St",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.785695,
-    "longitude": -72.850346,
-    "propertyType": "Single Family",
-    "lotSize": 21780,
-    "assessorID": "0200-938.00-07.00-003.000",
-    "legalDescription": "LOT:3.000 BLK:7 SEC:938.00 DIST:0200-9 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "MASTIC ACRES",
-    "lastSaleDate": "2016-07-22T00:00:00.000Z",
-    "lastSalePrice": 54600,
-    "features": {},
-    "taxAssessments": {
-      "2022": {
-        "value": 1275,
-        "land": 200,
-        "improvements": 1075
-      }
-    },
-    "owner": {
-      "names": [
-        "LUIS HUMBERTO PENAFIEL"
-      ],
-      "mailingAddress": {
-        "id": "232-Madison-St,-Mastic,-NY-11950",
-        "addressLine1": "232 Madison St",
-        "addressLine2": null,
-        "city": "Mastic",
-        "state": "NY",
-        "zipCode": "11950"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "133-Shinnecock-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "133 Shinnecock Ave, Mastic, NY 11950",
-    "addressLine1": "133 Shinnecock Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.797495,
-    "longitude": -72.843014,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0200882000200086000",
-    "legalDescription": "MASTIC PARK 109 SEC 10 10329 TO 103",
-    "features": {
-      "unitCount": 1
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 7539
-      }
-    },
-    "owner": {
-      "names": [
-        ""
-      ]
-    },
-    "ownerOccupied": false
-  },
-  {
-    "id": "58-Wills-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "58 Wills Ave, Mastic, NY 11950",
-    "addressLine1": "58 Wills Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.797539,
-    "longitude": -72.832682,
-    "propertyType": "Single Family",
-    "lotSize": 3920,
-    "assessorID": "0200-883.00-04.00-003.000",
-    "features": {}
-  },
-  {
-    "id": "86-Riviera-Dr,---A,-Mastic,-NY-11950",
-    "formattedAddress": "86 Riviera Dr, # A, Mastic, NY 11950",
-    "addressLine1": "86 Riviera Dr",
-    "addressLine2": "# A",
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.795563,
-    "longitude": -72.834606,
+    "latitude": 40.851528,
+    "longitude": -72.560707,
     "propertyType": "Single Family",
     "lotSize": 10019,
-    "assessorID": "0200-883.00-03.00-060.000",
-    "features": {}
-  },
-  {
-    "id": "174-Southaven-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "174 Southaven Ave, Mastic, NY 11950",
-    "addressLine1": "174 Southaven Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.798363,
-    "longitude": -72.83766,
-    "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0200-882.00-03.00-054.000",
-    "features": {}
-  },
-  {
-    "id": "173-Somerset-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "173 Somerset Ave, Mastic, NY 11950",
-    "addressLine1": "173 Somerset Ave",
-    "addressLine2": null,
-    "city": "Mastic",
-    "state": "NY",
-    "zipCode": "11950",
-    "county": "Suffolk",
-    "latitude": 40.796112,
-    "longitude": -72.841785,
-    "propertyType": "Single Family",
-    "lotSize": 16117,
-    "assessorID": "0200-882.00-05.00-027.001",
-    "legalDescription": "MASTIC ACRES 1443 UNIT 3 1480 TO 1482 S 100 X 138",
-    "subdivision": "MASTIC ACRES",
-    "lastSaleDate": "2019-07-01T00:00:00.000Z",
-    "lastSalePrice": 309000,
-    "features": {
-      "unitCount": 1
-    },
+    "assessorID": "0200-208.00-04.00-021.000",
+    "legalDescription": "ONAWAY PARK 260 MAP 3 1202 TO 1206 INC",
+    "subdivision": "ONAWAY PARK",
+    "lastSaleDate": "2017-11-13T00:00:00.000Z",
+    "lastSalePrice": 469872,
+    "features": {},
     "taxAssessments": {
-      "2022": {
-        "value": 2300,
-        "land": 200,
-        "improvements": 2100
-      },
-      "2023": {
-        "value": 2300,
-        "land": 200,
-        "improvements": 2100
+      "2019": {
+        "value": 3700,
+        "land": 100,
+        "improvements": 3600
+      }
+    },
+    "propertyTaxes": {
+      "2016": {
+        "total": 356
       }
     },
     "owner": {
       "names": [
-        "C Jimenezencarnacion",
-        "Jose Jimenezalmonte"
+        "CAROLINE J MAHER"
       ],
       "mailingAddress": {
-        "id": "173-Somerset-Ave,-Mastic,-NY-11950",
-        "formattedAddress": "173 Somerset Ave, Mastic, NY 11950",
-        "addressLine1": "173 Somerset Ave",
+        "id": "1-Beach-St,-Port-Jefferson-Station,-NY-11777",
+        "addressLine1": "1 Beach St",
         "addressLine2": null,
-        "city": "Mastic",
+        "city": "Port Jefferson Station",
         "state": "NY",
-        "zipCode": "11950"
+        "zipCode": "11777"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "15-Wills-Ave,-Mastic,-NY-11950",
-    "formattedAddress": "15 Wills Ave, Mastic, NY 11950",
-    "addressLine1": "15 Wills Ave",
+    "id": "12-Edgewood-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "12 Edgewood Ave, Port Jefferson, NY 11777",
+    "addressLine1": "12 Edgewood Ave",
     "addressLine2": null,
-    "city": "Mastic",
+    "city": "Port Jefferson",
     "state": "NY",
-    "zipCode": "11950",
+    "zipCode": "11777",
     "county": "Suffolk",
-    "latitude": 40.797333,
-    "longitude": -72.838208,
+    "latitude": 40.939169,
+    "longitude": -73.047483,
     "propertyType": "Single Family",
-    "lotSize": 3920,
-    "assessorID": "0200882000700022000",
-    "legalDescription": "MASTIC PARK 109 SEC 10 10739 & 1074",
+    "lotSize": 39204,
+    "assessorID": "0206-018.00-03.00-017.000",
+    "legalDescription": "LOT:17.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "AMENDED MAP/LAUREL CENTRE SEC",
+    "lastSaleDate": "2002-06-04T00:00:00.000Z",
+    "lastSalePrice": 495000,
     "features": {
       "unitCount": 1
     },
-    "propertyTaxes": {
-      "2016": {
-        "total": 8664
+    "taxAssessments": {
+      "2022": {
+        "value": 5100,
+        "land": 600,
+        "improvements": 4500
       }
     },
     "owner": {
       "names": [
-        ""
-      ]
+        "MICHAEL AYOTTE",
+        "AMY AYOTTE"
+      ],
+      "mailingAddress": {
+        "id": "12-Edgewood-Ave,-Port-Jefferson,-NY-11777",
+        "addressLine1": "12 Edgewood Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "4-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "4 Sea Court Ln, Port Jefferson, NY 11777",
+    "addressLine1": "4 Sea Court Ln",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936907,
+    "longitude": -73.050461,
+    "propertyType": "Single Family",
+    "lotSize": 2614,
+    "assessorID": "0206-022.00-05.00-004.000",
+    "legalDescription": "LOT:4.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "TOWN & COUNTRY",
+    "lastSaleDate": "1998-07-10T00:00:00.000Z",
+    "lastSalePrice": 171000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3150,
+        "land": 100,
+        "improvements": 3050
+      },
+      "2023": {
+        "value": 3150,
+        "land": 100,
+        "improvements": 3050
+      }
+    },
+    "owner": {
+      "names": [
+        "Joseph Burger",
+        "KATHERINE BURGER"
+      ],
+      "mailingAddress": {
+        "id": "4-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "4 Sea Court Ln, Port Jefferson, NY 11777",
+        "addressLine1": "4 Sea Court Ln",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "107-Pine-Hill-Rd,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "107 Pine Hill Rd, Port Jefferson, NY 11777",
+    "addressLine1": "107 Pine Hill Rd",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.942104,
+    "longitude": -73.042131,
+    "propertyType": "Single Family",
+    "lotSize": 23522,
+    "assessorID": "0206-018.00-01.00-030.000",
+    "legalDescription": "LOT:30.000 BLK:1 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "JEFFERSON HILLS",
+    "lastSaleDate": "2017-06-02T00:00:00.000Z",
+    "lastSalePrice": 598250,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 5385,
+        "land": 375,
+        "improvements": 5010
+      },
+      "2023": {
+        "value": 5385,
+        "land": 375,
+        "improvements": 5010
+      }
+    },
+    "owner": {
+      "names": [
+        "Yoon K Bae"
+      ],
+      "mailingAddress": {
+        "id": "107-Pine-Hill-Rd,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "107 Pine Hill Rd, Port Jefferson, NY 11777",
+        "addressLine1": "107 Pine Hill Rd",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "17-Hillcrest-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "17 Hillcrest Ave, Port Jefferson, NY 11777",
+    "addressLine1": "17 Hillcrest Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.940467,
+    "longitude": -73.04551,
+    "propertyType": "Single Family",
+    "lotSize": 23086,
+    "assessorID": "0206-018.00-04.00-088.000",
+    "legalDescription": "LOT:88.000 BLK:4 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "BROOK HOLW",
+    "lastSaleDate": "2019-07-17T00:00:00.000Z",
+    "lastSalePrice": 200000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 4050,
+        "land": 350,
+        "improvements": 3700
+      }
+    },
+    "owner": {
+      "names": [
+        "KENNETH D MILAU",
+        "MICHAEL MILAU",
+        "DOROTHY L MILAU"
+      ],
+      "mailingAddress": {
+        "id": "17-Hillcrest-Ave,-Port-Jefferson,-NY-11777",
+        "addressLine1": "17 Hillcrest Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "1-Laurita-Gate,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "1 Laurita Gate, Port Jefferson, NY 11777",
+    "addressLine1": "1 Laurita Gate",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936855,
+    "longitude": -73.042648,
+    "propertyType": "Single Family",
+    "lotSize": 22651,
+    "assessorID": "0206-018.00-04.00-043.000",
+    "features": {}
+  },
+  {
+    "id": "6-Edgewood-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "6 Edgewood Ave, Port Jefferson, NY 11777",
+    "addressLine1": "6 Edgewood Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.939542,
+    "longitude": -73.047613,
+    "propertyType": "Single Family",
+    "lotSize": 19602,
+    "assessorID": "0206-018.00-03.00-018.000",
+    "legalDescription": "LOT:18.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "LAUREL CENTRE",
+    "lastSaleDate": "2020-10-26T00:00:00.000Z",
+    "lastSalePrice": 517500,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3410,
+        "land": 300,
+        "improvements": 3110
+      }
+    },
+    "owner": {
+      "names": [
+        "ELISA MENSE",
+        "STEVEN M MENSE"
+      ],
+      "mailingAddress": {
+        "id": "6-Edgewood-Ave,-Port-Jefferson,-NY-11777",
+        "addressLine1": "6 Edgewood Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "11-Ellen-Dr,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "11 Ellen Dr, Port Jefferson, NY 11777",
+    "addressLine1": "11 Ellen Dr",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.942728,
+    "longitude": -73.046381,
+    "propertyType": "Single Family",
+    "lotSize": 22651,
+    "assessorID": "0206-014.00-03.00-005.000",
+    "legalDescription": "LOT:5.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "JEFFERSON HILLS SEC 1",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 5330,
+        "land": 375,
+        "improvements": 4955
+      }
+    },
+    "owner": {
+      "names": [
+        "LEO B HARRINGTON"
+      ],
+      "mailingAddress": {
+        "id": "11-Ellen-Dr,-Port-Jefferson,-NY-11777",
+        "addressLine1": "11 Ellen Dr",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "8-Ellen-Dr,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "8 Ellen Dr, Port Jefferson, NY 11777",
+    "addressLine1": "8 Ellen Dr",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.941788,
+    "longitude": -73.046993,
+    "propertyType": "Single Family",
+    "lotSize": 22651,
+    "assessorID": "0206-018.00-01.00-015.000",
+    "legalDescription": "LOT:15.000 BLK:1 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "JEFFERSON HILLS",
+    "lastSaleDate": "1996-08-09T00:00:00.000Z",
+    "lastSalePrice": 205000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3595,
+        "land": 375,
+        "improvements": 3220
+      }
+    },
+    "owner": {
+      "names": [
+        "JOHN ARDOLINI"
+      ],
+      "mailingAddress": {
+        "id": "8-Ellen-Dr,-Port-Jefferson,-NY-11777",
+        "addressLine1": "8 Ellen Dr",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "11-Shady-Tree-Ln,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "11 Shady Tree Ln, Port Jefferson, NY 11777",
+    "addressLine1": "11 Shady Tree Ln",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.943157,
+    "longitude": -73.044156,
+    "propertyType": "Single Family",
+    "lotSize": 27007,
+    "assessorID": "0206-014.00-03.00-013.000",
+    "legalDescription": "LOT:13.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "features": {
+      "unitCount": 1,
+      "viewType": "Water"
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 4900,
+        "land": 400,
+        "improvements": 4500
+      }
+    },
+    "owner": {
+      "names": [
+        "LEO FAMILY 2006"
+      ],
+      "mailingAddress": {
+        "id": "11-Shady-Tree-Ln,-Port-Jeff-Sta,-NY-11777",
+        "addressLine1": "11 Shady Tree Ln",
+        "addressLine2": null,
+        "city": "Port Jeff Sta",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "25-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "25 Sea Court Ln, Port Jefferson, NY 11777",
+    "addressLine1": "25 Sea Court Ln",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936095,
+    "longitude": -73.050915,
+    "propertyType": "Single Family",
+    "lotSize": 2614,
+    "assessorID": "0206-022.00-05.00-025.000",
+    "legalDescription": "LOT:25.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "TOWN & COUNTRY",
+    "lastSaleDate": "2017-03-01T00:00:00.000Z",
+    "lastSalePrice": 319000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 2650,
+        "land": 100,
+        "improvements": 2550
+      },
+      "2023": {
+        "value": 2650,
+        "land": 100,
+        "improvements": 2550
+      }
+    },
+    "owner": {
+      "names": [
+        "Matthew R Doohan",
+        "HALLIE JURGENSEN"
+      ],
+      "mailingAddress": {
+        "id": "25-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "25 Sea Court Ln, Port Jefferson, NY 11777",
+        "addressLine1": "25 Sea Court Ln",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "26-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "26 Sea Court Ln, Port Jefferson, NY 11777",
+    "addressLine1": "26 Sea Court Ln",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936096,
+    "longitude": -73.050812,
+    "propertyType": "Single Family",
+    "lotSize": 2614,
+    "assessorID": "0206-022.00-05.00-026.000",
+    "legalDescription": "LOT:26.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "lastSaleDate": "1997-05-06T00:00:00.000Z",
+    "lastSalePrice": 165000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 2825,
+        "land": 100,
+        "improvements": 2725
+      },
+      "2023": {
+        "value": 2825,
+        "land": 100,
+        "improvements": 2725
+      }
+    },
+    "owner": {
+      "names": [
+        "DIANE LAPORTE RET",
+        "Diane Laporte"
+      ],
+      "mailingAddress": {
+        "id": "26-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "26 Sea Court Ln, Port Jefferson, NY 11777",
+        "addressLine1": "26 Sea Court Ln",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "9-2nd-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "9 2nd Ave, Port Jefferson, NY 11777",
+    "addressLine1": "9 2nd Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.938428,
+    "longitude": -73.048095,
+    "propertyType": "Single Family",
+    "lotSize": 17860,
+    "assessorID": "0206-018.00-03.00-006.000",
+    "legalDescription": "LOT:6.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3950,
+        "land": 300,
+        "improvements": 3650
+      }
+    },
+    "owner": {
+      "names": [
+        "ANTHONY SANTO",
+        "DEBORAH SANTO"
+      ],
+      "mailingAddress": {
+        "id": "9-2nd-Ave,-Port-Jefferson,-NY-11777",
+        "addressLine1": "9 2nd Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "2-Laurita-Gate,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "2 Laurita Gate, Port Jefferson, NY 11777",
+    "addressLine1": "2 Laurita Gate",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936943,
+    "longitude": -73.043388,
+    "propertyType": "Single Family",
+    "lotSize": 22216,
+    "assessorID": "0206-018.00-04.00-042.000",
+    "features": {}
+  },
+  {
+    "id": "15-Jamaica-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "15 Jamaica Ave, Port Jefferson, NY 11777",
+    "addressLine1": "15 Jamaica Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.93566,
+    "longitude": -73.04478,
+    "propertyType": "Single Family",
+    "lotSize": 9148,
+    "assessorID": "0206-022.00-02.00-022.000",
+    "legalDescription": "LOT:22.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "lastSaleDate": "2000-03-24T00:00:00.000Z",
+    "lastSalePrice": 128500,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 2875,
+        "land": 225,
+        "improvements": 2650
+      },
+      "2023": {
+        "value": 2875,
+        "land": 225,
+        "improvements": 2650
+      }
+    },
+    "owner": {
+      "names": [
+        "Dean Spanos"
+      ],
+      "mailingAddress": {
+        "id": "PO-BOX-312,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "PO BOX 312, Port Jefferson, NY 11777",
+        "addressLine1": "PO BOX 312",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
     },
     "ownerOccupied": false
+  },
+  {
+    "id": "138-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "138 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
+    "addressLine1": "138 Crystal Brook Hollow Rd",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.943095,
+    "longitude": -73.041013,
+    "propertyType": "Single Family",
+    "lotSize": 23958,
+    "assessorID": "0206-014.00-03.00-042.003",
+    "legalDescription": "LOT:42.003 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "features": {},
+    "taxAssessments": {
+      "2022": {
+        "value": 4000,
+        "land": 360,
+        "improvements": 3640
+      },
+      "2023": {
+        "value": 4000,
+        "land": 360,
+        "improvements": 3640
+      }
+    },
+    "owner": {
+      "names": [
+        "James Daccordo",
+        "CAROL DACCORDO"
+      ],
+      "mailingAddress": {
+        "id": "138-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "138 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
+        "addressLine1": "138 Crystal Brook Hollow Rd",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "26-Woodside-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "26 Woodside Ave, Port Jefferson, NY 11777",
+    "addressLine1": "26 Woodside Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.935965,
+    "longitude": -73.044327,
+    "propertyType": "Single Family",
+    "lotSize": 6098,
+    "assessorID": "0206-022.00-02.00-019.000",
+    "legalDescription": "LOT:19.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "LAWN TERRACE DEV",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1750,
+        "land": 150,
+        "improvements": 1600
+      },
+      "2023": {
+        "value": 1750,
+        "land": 150,
+        "improvements": 1600
+      }
+    },
+    "owner": {
+      "names": [
+        "Janhsen Karl",
+        "KAREN COOK"
+      ],
+      "mailingAddress": {
+        "id": "26-Woodside-Ave,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "26 Woodside Ave, Port Jefferson, NY 11777",
+        "addressLine1": "26 Woodside Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "4-Chuck-Ct,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "4 Chuck Ct, Port Jefferson, NY 11777",
+    "addressLine1": "4 Chuck Ct",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.938208,
+    "longitude": -73.04128,
+    "propertyType": "Single Family",
+    "lotSize": 22651,
+    "assessorID": "0206-018.00-04.00-053.000",
+    "legalDescription": "LOT:53.000 BLK:4 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "lastSaleDate": "2007-12-06T00:00:00.000Z",
+    "lastSalePrice": 575000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3780,
+        "land": 375,
+        "improvements": 3405
+      },
+      "2023": {
+        "value": 3780,
+        "land": 375,
+        "improvements": 3405
+      }
+    },
+    "owner": {
+      "names": [
+        "DAMBECK J"
+      ],
+      "mailingAddress": {
+        "id": "4-Chuck-Ct,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "4 Chuck Ct, Port Jefferson, NY 11777",
+        "addressLine1": "4 Chuck Ct",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "144-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "144 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
+    "addressLine1": "144 Crystal Brook Hollow Rd",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.943366,
+    "longitude": -73.041442,
+    "propertyType": "Single Family",
+    "lotSize": 21780,
+    "assessorID": "0206-014.00-03.00-040.000",
+    "legalDescription": "LOT:40.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "features": {
+      "unitCount": 1,
+      "viewType": "Water"
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3950,
+        "land": 350,
+        "improvements": 3600
+      },
+      "2023": {
+        "value": 3950,
+        "land": 350,
+        "improvements": 3600
+      }
+    },
+    "owner": {
+      "names": [
+        "Albert Coringrato",
+        "JEANNE CORINGRATO"
+      ],
+      "mailingAddress": {
+        "id": "144-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "144 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
+        "addressLine1": "144 Crystal Brook Hollow Rd",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "25-Woodside-Ave,-Port-Jefferson,-NY-11777",
+    "formattedAddress": "25 Woodside Ave, Port Jefferson, NY 11777",
+    "addressLine1": "25 Woodside Ave",
+    "addressLine2": null,
+    "city": "Port Jefferson",
+    "state": "NY",
+    "zipCode": "11777",
+    "county": "Suffolk",
+    "latitude": 40.936396,
+    "longitude": -73.044329,
+    "propertyType": "Single Family",
+    "lotSize": 4356,
+    "assessorID": "0206-022.00-02.00-007.000",
+    "legalDescription": "LOT:7.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "subdivision": "LAWN TERRACE DEV",
+    "lastSaleDate": "2017-08-08T00:00:00.000Z",
+    "lastSalePrice": 325000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 3020,
+        "land": 120,
+        "improvements": 2900
+      },
+      "2023": {
+        "value": 3020,
+        "land": 120,
+        "improvements": 2900
+      }
+    },
+    "owner": {
+      "names": [
+        "Stella J Russo"
+      ],
+      "mailingAddress": {
+        "id": "25-Woodside-Ave,-Port-Jefferson,-NY-11777",
+        "formattedAddress": "25 Woodside Ave, Port Jefferson, NY 11777",
+        "addressLine1": "25 Woodside Ave",
+        "addressLine2": null,
+        "city": "Port Jefferson",
+        "state": "NY",
+        "zipCode": "11777"
+      }
+    },
+    "ownerOccupied": true
   }
 ]
