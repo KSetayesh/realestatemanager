@@ -1,0 +1,11 @@
+.random-photo {
+    width: 500px;
+    height: 600px;
+    /* Maintain aspect ratio */
+    border: 2px solid #000;
+    /* Example border */
+    border-radius: 10px;
+    /* Example border radius */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    /* Example shadow */
+}
