@@ -1,17 +1,6 @@
-import dotenv from 'dotenv';
 import { Injectable } from '@nestjs/common';
 import ImageKit from 'imagekit';
 import { FileObject } from 'imagekit/dist/libs/interfaces';
-
-dotenv.config();
-
-export type ImageInfo = {
-    fileId: string,
-    name: string,
-    filePath: string,
-    url: string,
-    thumbnailUrl: string,
-};
 
 @Injectable()
 export class ImageKitApiClient {

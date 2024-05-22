@@ -16,6 +16,7 @@ export class PhotosService {
 
     async getAllPhotoUrls(): Promise<string[]> {
         if (this.imagesCache.length === 0) {
+            console.log('Fetching photos from cache');
             const images: FileObject[] = await this.imageKitApiClient.getAllImages(this.folderName);
             this.imagesCache.push(...images);
         }
