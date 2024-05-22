@@ -214,12 +214,16 @@ export class ListingDAO extends RealEstateDAO {
     }
 
     async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
+        if (rentCastSaleResponseIds.length === 0) {
+            console.log('No rentCastSaleResponseIds provided.');
+            return [];
+        }
+
         const listings: ListingDetails[] = [];
 
         // Generate the placeholder for the parameterized query
         const placeholders = rentCastSaleResponseIds.map((_, index) => `$${index + 1}`).join(', ');
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.rent_cast_sale_response_id IN (${placeholders});`;
-
         // Generate the placeholder for the parameterized query
 
         try {
@@ -285,7 +289,7 @@ export class ListingDAO extends RealEstateDAO {
             const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
                 return rentCastResponseId && rentCastResponseId > -1;
             }
-            
+
             const saleResponseId = listingDetails.rentCastSaleResponseId;
             const propertyResponseId = listingDetails.rentCastPropertyResponseId;
 

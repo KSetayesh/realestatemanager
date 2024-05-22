@@ -211,7 +211,7 @@ export class RentCastDAO extends RealEstateDAO {
         const matchingRentCastDataList: RentCastMatchingData[] = [];
         try {
             const query = `${this.MATCHING_RENT_CAST_DATA_QUERY};`;
-            const res = await pool.query(query, [saleEndPoint], [propertyEndPoint]);
+            const res = await pool.query(query, [saleEndPoint, propertyEndPoint]);
             res.rows.forEach(row => {
                 matchingRentCastDataList.push(
                     this.mapRowToMatchingRentingCastData(row)
