@@ -1,861 +1,1946 @@
 [
   {
-    "id": "1-Beach-St,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "1 Beach St, Port Jefferson, NY 11777",
-    "addressLine1": "1 Beach St",
+    "id": "34-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "34 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "34 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.851528,
-    "longitude": -72.560707,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976742,
+    "longitude": -73.777587,
     "propertyType": "Single Family",
-    "lotSize": 10019,
-    "assessorID": "0200-208.00-04.00-021.000",
-    "legalDescription": "ONAWAY PARK 260 MAP 3 1202 TO 1206 INC",
-    "subdivision": "ONAWAY PARK",
-    "lastSaleDate": "2017-11-13T00:00:00.000Z",
-    "lastSalePrice": 469872,
-    "features": {},
-    "taxAssessments": {
-      "2019": {
-        "value": 3700,
-        "land": 100,
-        "improvements": 3600
-      }
-    },
-    "propertyTaxes": {
-      "2016": {
-        "total": 356
-      }
-    },
-    "owner": {
-      "names": [
-        "CAROLINE J MAHER"
-      ],
-      "mailingAddress": {
-        "id": "1-Beach-St,-Port-Jefferson-Station,-NY-11777",
-        "addressLine1": "1 Beach St",
-        "addressLine2": null,
-        "city": "Port Jefferson Station",
-        "state": "NY",
-        "zipCode": "11777"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "12-Edgewood-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "12 Edgewood Ave, Port Jefferson, NY 11777",
-    "addressLine1": "12 Edgewood Ave",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.939169,
-    "longitude": -73.047483,
-    "propertyType": "Single Family",
-    "lotSize": 39204,
-    "assessorID": "0206-018.00-03.00-017.000",
-    "legalDescription": "LOT:17.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "AMENDED MAP/LAUREL CENTRE SEC",
-    "lastSaleDate": "2002-06-04T00:00:00.000Z",
-    "lastSalePrice": 495000,
+    "lotSize": 7841,
+    "assessorID": "5510000000083281000024",
+    "legalDescription": "BUILT: 1963; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 02",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 5100,
-        "land": 600,
-        "improvements": 4500
-      }
-    },
     "owner": {
       "names": [
-        "MICHAEL AYOTTE",
-        "AMY AYOTTE"
-      ],
-      "mailingAddress": {
-        "id": "12-Edgewood-Ave,-Port-Jefferson,-NY-11777",
-        "addressLine1": "12 Edgewood Ave",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "4-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "4 Sea Court Ln, Port Jefferson, NY 11777",
-    "addressLine1": "4 Sea Court Ln",
+    "id": "10-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "10 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "10 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936907,
-    "longitude": -73.050461,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.975929,
+    "longitude": -73.777297,
     "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0206-022.00-05.00-004.000",
-    "legalDescription": "LOT:4.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "TOWN & COUNTRY",
-    "lastSaleDate": "1998-07-10T00:00:00.000Z",
-    "lastSalePrice": 171000,
+    "lotSize": 9583,
+    "assessorID": "5510000000083281000010",
+    "legalDescription": "BUILT: 1966; ZONE: R-1B",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 3150,
-        "land": 100,
-        "improvements": 3050
-      },
-      "2023": {
-        "value": 3150,
-        "land": 100,
-        "improvements": 3050
-      }
-    },
     "owner": {
       "names": [
-        "Joseph Burger",
-        "KATHERINE BURGER"
-      ],
-      "mailingAddress": {
-        "id": "4-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "4 Sea Court Ln, Port Jefferson, NY 11777",
-        "addressLine1": "4 Sea Court Ln",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "107-Pine-Hill-Rd,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "107 Pine Hill Rd, Port Jefferson, NY 11777",
-    "addressLine1": "107 Pine Hill Rd",
+    "id": "19-Shepherds-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "19 Shepherds Dr, Scarsdale, NY 10583",
+    "addressLine1": "19 Shepherds Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.942104,
-    "longitude": -73.042131,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.97679,
+    "longitude": -73.776187,
     "propertyType": "Single Family",
-    "lotSize": 23522,
-    "assessorID": "0206-018.00-01.00-030.000",
-    "legalDescription": "LOT:30.000 BLK:1 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "JEFFERSON HILLS",
-    "lastSaleDate": "2017-06-02T00:00:00.000Z",
-    "lastSalePrice": 598250,
+    "lotSize": 10462,
+    "assessorID": "5510000000083296000071",
+    "features": {
+      "unitCount": 1
+    }
+  },
+  {
+    "id": "380-Daisy-Farms-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "380 Daisy Farms Dr, Scarsdale, NY 10583",
+    "addressLine1": "380 Daisy Farms Dr",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976232,
+    "longitude": -73.77554,
+    "propertyType": "Single Family",
+    "lotSize": 6167,
+    "assessorID": "5510000000083296000002",
+    "features": {
+      "unitCount": 1
+    }
+  },
+  {
+    "id": "37-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "37 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "37 Greentree Dr",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976979,
+    "longitude": -73.777095,
+    "propertyType": "Single Family",
+    "lotSize": 7841,
+    "assessorID": "5510000000083285000004",
+    "legalDescription": "BUILT: 1962; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 02",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 5385,
-        "land": 375,
-        "improvements": 5010
-      },
-      "2023": {
-        "value": 5385,
-        "land": 375,
-        "improvements": 5010
-      }
-    },
     "owner": {
       "names": [
-        "Yoon K Bae"
-      ],
-      "mailingAddress": {
-        "id": "107-Pine-Hill-Rd,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "107 Pine Hill Rd, Port Jefferson, NY 11777",
-        "addressLine1": "107 Pine Hill Rd",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "17-Hillcrest-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "17 Hillcrest Ave, Port Jefferson, NY 11777",
-    "addressLine1": "17 Hillcrest Ave",
+    "id": "75-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "75 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "75 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.940467,
-    "longitude": -73.04551,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.977871,
+    "longitude": -73.776904,
     "propertyType": "Single Family",
-    "lotSize": 23086,
-    "assessorID": "0206-018.00-04.00-088.000",
-    "legalDescription": "LOT:88.000 BLK:4 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "BROOK HOLW",
-    "lastSaleDate": "2019-07-17T00:00:00.000Z",
-    "lastSalePrice": 200000,
+    "lotSize": 8712,
+    "assessorID": "5510000000083285000024",
+    "legalDescription": "BUILT: 1966; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 03",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 4050,
-        "land": 350,
-        "improvements": 3700
-      }
-    },
     "owner": {
       "names": [
-        "KENNETH D MILAU",
-        "MICHAEL MILAU",
-        "DOROTHY L MILAU"
-      ],
-      "mailingAddress": {
-        "id": "17-Hillcrest-Ave,-Port-Jefferson,-NY-11777",
-        "addressLine1": "17 Hillcrest Ave",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "1-Laurita-Gate,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "1 Laurita Gate, Port Jefferson, NY 11777",
-    "addressLine1": "1 Laurita Gate",
+    "id": "22-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "22 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "22 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936855,
-    "longitude": -73.042648,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.97634,
+    "longitude": -73.777461,
     "propertyType": "Single Family",
-    "lotSize": 22651,
-    "assessorID": "0206-018.00-04.00-043.000",
-    "features": {}
-  },
-  {
-    "id": "6-Edgewood-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "6 Edgewood Ave, Port Jefferson, NY 11777",
-    "addressLine1": "6 Edgewood Ave",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.939542,
-    "longitude": -73.047613,
-    "propertyType": "Single Family",
-    "lotSize": 19602,
-    "assessorID": "0206-018.00-03.00-018.000",
-    "legalDescription": "LOT:18.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "LAUREL CENTRE",
-    "lastSaleDate": "2020-10-26T00:00:00.000Z",
-    "lastSalePrice": 517500,
+    "lotSize": 7841,
+    "assessorID": "5510000000083281000018",
+    "subdivision": "HEARCOTE WOODS SEC 01",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 3410,
-        "land": 300,
-        "improvements": 3110
-      }
-    },
     "owner": {
       "names": [
-        "ELISA MENSE",
-        "STEVEN M MENSE"
-      ],
-      "mailingAddress": {
-        "id": "6-Edgewood-Ave,-Port-Jefferson,-NY-11777",
-        "addressLine1": "6 Edgewood Ave",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "11-Ellen-Dr,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "11 Ellen Dr, Port Jefferson, NY 11777",
-    "addressLine1": "11 Ellen Dr",
+    "id": "28-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "28 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "28 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.942728,
-    "longitude": -73.046381,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976542,
+    "longitude": -73.777524,
     "propertyType": "Single Family",
-    "lotSize": 22651,
-    "assessorID": "0206-014.00-03.00-005.000",
-    "legalDescription": "LOT:5.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "JEFFERSON HILLS SEC 1",
+    "lotSize": 7841,
+    "assessorID": "5510000000083281000021",
+    "legalDescription": "BUILT: 1965; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 02",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 5330,
-        "land": 375,
-        "improvements": 4955
-      }
-    },
     "owner": {
       "names": [
-        "LEO B HARRINGTON"
-      ],
-      "mailingAddress": {
-        "id": "11-Ellen-Dr,-Port-Jefferson,-NY-11777",
-        "addressLine1": "11 Ellen Dr",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "8-Ellen-Dr,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "8 Ellen Dr, Port Jefferson, NY 11777",
-    "addressLine1": "8 Ellen Dr",
+    "id": "11-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "11 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "11 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.941788,
-    "longitude": -73.046993,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976156,
+    "longitude": -73.776793,
     "propertyType": "Single Family",
-    "lotSize": 22651,
-    "assessorID": "0206-018.00-01.00-015.000",
-    "legalDescription": "LOT:15.000 BLK:1 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "JEFFERSON HILLS",
-    "lastSaleDate": "1996-08-09T00:00:00.000Z",
-    "lastSalePrice": 205000,
+    "lotSize": 8276,
+    "assessorID": "5510000000083296000085",
+    "legalDescription": "BUILT: 1962; ZONE: R-1B",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 3595,
-        "land": 375,
-        "improvements": 3220
-      }
-    },
     "owner": {
       "names": [
-        "JOHN ARDOLINI"
-      ],
-      "mailingAddress": {
-        "id": "8-Ellen-Dr,-Port-Jefferson,-NY-11777",
-        "addressLine1": "8 Ellen Dr",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "11-Shady-Tree-Ln,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "11 Shady Tree Ln, Port Jefferson, NY 11777",
-    "addressLine1": "11 Shady Tree Ln",
+    "id": "4-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "4 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "4 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.943157,
-    "longitude": -73.044156,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.975752,
+    "longitude": -73.777061,
     "propertyType": "Single Family",
-    "lotSize": 27007,
-    "assessorID": "0206-014.00-03.00-013.000",
-    "legalDescription": "LOT:13.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "features": {
-      "unitCount": 1,
-      "viewType": "Water"
-    },
-    "taxAssessments": {
-      "2022": {
-        "value": 4900,
-        "land": 400,
-        "improvements": 4500
-      }
-    },
-    "owner": {
-      "names": [
-        "LEO FAMILY 2006"
-      ],
-      "mailingAddress": {
-        "id": "11-Shady-Tree-Ln,-Port-Jeff-Sta,-NY-11777",
-        "addressLine1": "11 Shady Tree Ln",
-        "addressLine2": null,
-        "city": "Port Jeff Sta",
-        "state": "NY",
-        "zipCode": "11777"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "25-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "25 Sea Court Ln, Port Jefferson, NY 11777",
-    "addressLine1": "25 Sea Court Ln",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936095,
-    "longitude": -73.050915,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0206-022.00-05.00-025.000",
-    "legalDescription": "LOT:25.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "TOWN & COUNTRY",
-    "lastSaleDate": "2017-03-01T00:00:00.000Z",
-    "lastSalePrice": 319000,
+    "lotSize": 8276,
+    "assessorID": "5510000000083281000006",
+    "legalDescription": "BUILT: 1962; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 01",
     "features": {
       "unitCount": 1
     },
-    "taxAssessments": {
-      "2022": {
-        "value": 2650,
-        "land": 100,
-        "improvements": 2550
-      },
-      "2023": {
-        "value": 2650,
-        "land": 100,
-        "improvements": 2550
-      }
-    },
     "owner": {
       "names": [
-        "Matthew R Doohan",
-        "HALLIE JURGENSEN"
-      ],
-      "mailingAddress": {
-        "id": "25-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "25 Sea Court Ln, Port Jefferson, NY 11777",
-        "addressLine1": "25 Sea Court Ln",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
+        ""
+      ]
     },
-    "ownerOccupied": true
+    "ownerOccupied": false
   },
   {
-    "id": "26-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "26 Sea Court Ln, Port Jefferson, NY 11777",
-    "addressLine1": "26 Sea Court Ln",
+    "id": "19-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "19 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "19 Greentree Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936096,
-    "longitude": -73.050812,
-    "propertyType": "Single Family",
-    "lotSize": 2614,
-    "assessorID": "0206-022.00-05.00-026.000",
-    "legalDescription": "LOT:26.000 BLK:5 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "lastSaleDate": "1997-05-06T00:00:00.000Z",
-    "lastSalePrice": 165000,
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2022": {
-        "value": 2825,
-        "land": 100,
-        "improvements": 2725
-      },
-      "2023": {
-        "value": 2825,
-        "land": 100,
-        "improvements": 2725
-      }
-    },
-    "owner": {
-      "names": [
-        "DIANE LAPORTE RET",
-        "Diane Laporte"
-      ],
-      "mailingAddress": {
-        "id": "26-Sea-Court-Ln,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "26 Sea Court Ln, Port Jefferson, NY 11777",
-        "addressLine1": "26 Sea Court Ln",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "9-2nd-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "9 2nd Ave, Port Jefferson, NY 11777",
-    "addressLine1": "9 2nd Ave",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.938428,
-    "longitude": -73.048095,
-    "propertyType": "Single Family",
-    "lotSize": 17860,
-    "assessorID": "0206-018.00-03.00-006.000",
-    "legalDescription": "LOT:6.000 BLK:3 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "features": {
-      "unitCount": 1
-    },
-    "taxAssessments": {
-      "2022": {
-        "value": 3950,
-        "land": 300,
-        "improvements": 3650
-      }
-    },
-    "owner": {
-      "names": [
-        "ANTHONY SANTO",
-        "DEBORAH SANTO"
-      ],
-      "mailingAddress": {
-        "id": "9-2nd-Ave,-Port-Jefferson,-NY-11777",
-        "addressLine1": "9 2nd Ave",
-        "addressLine2": null,
-        "city": "Port Jefferson",
-        "state": "NY",
-        "zipCode": "11777"
-      }
-    },
-    "ownerOccupied": true
-  },
-  {
-    "id": "2-Laurita-Gate,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "2 Laurita Gate, Port Jefferson, NY 11777",
-    "addressLine1": "2 Laurita Gate",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936943,
-    "longitude": -73.043388,
-    "propertyType": "Single Family",
-    "lotSize": 22216,
-    "assessorID": "0206-018.00-04.00-042.000",
-    "features": {}
-  },
-  {
-    "id": "15-Jamaica-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "15 Jamaica Ave, Port Jefferson, NY 11777",
-    "addressLine1": "15 Jamaica Ave",
-    "addressLine2": null,
-    "city": "Port Jefferson",
-    "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.93566,
-    "longitude": -73.04478,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.976357,
+    "longitude": -73.776896,
     "propertyType": "Single Family",
     "lotSize": 9148,
-    "assessorID": "0206-022.00-02.00-022.000",
-    "legalDescription": "LOT:22.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "lastSaleDate": "2000-03-24T00:00:00.000Z",
-    "lastSalePrice": 128500,
+    "assessorID": "5510000000083296000081",
+    "legalDescription": "BUILT: 1961; ZONE: R-1B",
+    "subdivision": "HEATHCOTE WOODS SEC 02",
+    "features": {
+      "unitCount": 1
+    },
+    "owner": {
+      "names": [
+        ""
+      ]
+    },
+    "ownerOccupied": false
+  },
+  {
+    "id": "49-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "49 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "49 Greentree Dr",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.977381,
+    "longitude": -73.77721,
+    "propertyType": "Single Family",
+    "lotSize": 8276,
+    "assessorID": "5510000000083285000012",
+    "legalDescription": "BUILT: 1965; ZONE: R-1B",
+    "features": {
+      "unitCount": 1
+    },
+    "owner": {
+      "names": [
+        ""
+      ]
+    },
+    "ownerOccupied": false
+  },
+  {
+    "id": "43-Greentree-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "43 Greentree Dr, Scarsdale, NY 10583",
+    "addressLine1": "43 Greentree Dr",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.977179,
+    "longitude": -73.777151,
+    "propertyType": "Single Family",
+    "lotSize": 7841,
+    "assessorID": "8-3285-0008",
+    "features": {}
+  },
+  {
+    "id": "8-Leone-Close,-Scarsdale,-NY-10583",
+    "formattedAddress": "8 Leone Close, Scarsdale, NY 10583",
+    "addressLine1": "8 Leone Close",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.994429,
+    "longitude": -73.829502,
+    "propertyType": "Single Family",
+    "lotSize": 20909,
+    "assessorID": "552689 8.520-357-16",
+    "legalDescription": "LOT:16.000 BLK:357 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE WOODS SEC TWO",
+    "zoning": "R-20",
     "features": {
       "unitCount": 1
     },
     "taxAssessments": {
       "2022": {
-        "value": 2875,
-        "land": 225,
-        "improvements": 2650
+        "value": 1075300,
+        "land": 502700,
+        "improvements": 572600
       },
       "2023": {
-        "value": 2875,
-        "land": 225,
-        "improvements": 2650
+        "value": 1135000,
+        "land": 502700,
+        "improvements": 632300
       }
     },
     "owner": {
       "names": [
-        "Dean Spanos"
+        "ROBERT BERENGARTEN",
+        "Rosalyn Kutcher Berengarten",
+        "ROBERT BERENGARTEN REVOCABLE TRUST"
       ],
       "mailingAddress": {
-        "id": "PO-BOX-312,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "PO BOX 312, Port Jefferson, NY 11777",
-        "addressLine1": "PO BOX 312",
+        "id": "8-LEONE-CLOSE,-Scarsdale,-NY-10583",
+        "formattedAddress": "8 LEONE CLOSE, Scarsdale, NY 10583",
+        "addressLine1": "8 LEONE CLOSE",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "26-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "26 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "26 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995449,
+    "longitude": -73.833557,
+    "propertyType": "Single Family",
+    "lotSize": 23958,
+    "assessorID": "552689 8.450-313-22",
+    "legalDescription": "LOT:22.000 BLK:313 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 849500,
+        "land": 459900,
+        "improvements": 389600
+      }
+    },
+    "owner": {
+      "names": [
+        "ESKAY (BY-PASS TRUST , MAR"
+      ],
+      "mailingAddress": {
+        "id": "26-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "26 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "89-Highland-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "89 Highland Rd, Scarsdale, NY 10583",
+    "addressLine1": "89 Highland Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.997118,
+    "longitude": -73.828288,
+    "propertyType": "Single Family",
+    "lotSize": 27443,
+    "assessorID": "552689 8.450-316-7",
+    "legalDescription": "LOT:7.000 BLK:316 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SUBDIVISION MAP OF GREENVILLE HEIGHTS",
+    "subdivision": "SUBDIVISION MAP OF GREENVILLE HEIGHTS",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 860100,
+        "land": 518300,
+        "improvements": 341800
+      },
+      "2023": {
+        "value": 907900,
+        "land": 518300,
+        "improvements": 389600
+      }
+    },
+    "owner": {
+      "names": [
+        "Argie Tiliakos",
+        "EMMANUEL TILIAKOS"
+      ],
+      "mailingAddress": {
+        "id": "89-Highland-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "89 Highland Rd, Scarsdale, NY 10583",
+        "addressLine1": "89 Highland Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "49-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "49 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "49 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992515,
+    "longitude": -73.834734,
+    "propertyType": "Single Family",
+    "lotSize": 30056,
+    "assessorID": "552689 8.520-355-11",
+    "legalDescription": "LOT:11.000 BLK:355 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1042500,
+        "land": 474400,
+        "improvements": 568100
+      },
+      "2023": {
+        "value": 1100400,
+        "land": 474400,
+        "improvements": 626000
+      }
+    },
+    "owner": {
+      "names": [
+        "Brian Wolpert",
+        "Gloria Wolpert"
+      ],
+      "mailingAddress": {
+        "id": "49-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "49 Sprain Valley Rd, Scarsdale, NY 10583",
+        "addressLine1": "49 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "464-Ardsley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "464 Ardsley Rd, Scarsdale, NY 10583",
+    "addressLine1": "464 Ardsley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995924,
+    "longitude": -73.826181,
+    "propertyType": "Single Family",
+    "lotSize": 23087,
+    "assessorID": "552689 8.460-318-16",
+    "legalDescription": "LOT:16.000 BLK:318 SEC:8.460 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SUBDIVISION MAP OF ALBARINO PROPERTY",
+    "subdivision": "SUBDIVISION MAP OF ALBARINO PROPERTY",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1728900,
+        "land": 457800,
+        "improvements": 1271100
+      },
+      "2023": {
+        "value": 1825000,
+        "land": 457800,
+        "improvements": 1367200
+      }
+    },
+    "owner": {
+      "names": [
+        "Sana Sayegh"
+      ],
+      "mailingAddress": {
+        "id": "464-Ardsley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "464 Ardsley Rd, Scarsdale, NY 10583",
+        "addressLine1": "464 Ardsley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "33-Andrea-Ln,-Scarsdale,-NY-10583",
+    "formattedAddress": "33 Andrea Ln, Scarsdale, NY 10583",
+    "addressLine1": "33 Andrea Ln",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.993726,
+    "longitude": -73.829764,
+    "propertyType": "Single Family",
+    "lotSize": 22216,
+    "assessorID": "552689 8.520-357-23",
+    "legalDescription": "LOT:23.000 BLK:357 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE WOODS SEC 03",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 991200,
+        "land": 505800,
+        "improvements": 485400
+      }
+    },
+    "owner": {
+      "names": [
+        "LINDA KALBSCHWEITZER"
+      ],
+      "mailingAddress": {
+        "id": "33-Andrea-Ln,-Scarsdale,-NY-10583",
+        "addressLine1": "33 Andrea Ln",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "451-Ardsley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "451 Ardsley Rd, Scarsdale, NY 10583",
+    "addressLine1": "451 Ardsley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.994476,
+    "longitude": -73.827439,
+    "propertyType": "Single Family",
+    "lotSize": 22215,
+    "assessorID": "55268934 51 00000  49B",
+    "features": {
+      "unitCount": 1
+    }
+  },
+  {
+    "id": "39-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "39 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "39 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.993681,
+    "longitude": -73.835048,
+    "propertyType": "Single Family",
+    "lotSize": 29621,
+    "assessorID": "552689 8.520-355-15",
+    "legalDescription": "LOT:15.000 BLK:355 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SECTION 8520",
+    "zoning": "R-20",
+    "lastSaleDate": "2018-08-23T00:00:00.000Z",
+    "lastSalePrice": 690000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 791100,
+        "land": 473400,
+        "improvements": 317700
+      }
+    },
+    "owner": {
+      "names": [
+        "WILLIAM C SEGURA"
+      ],
+      "mailingAddress": {
+        "id": "39-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "39 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "5-Warnke-Ln,-Scarsdale,-NY-10583",
+    "formattedAddress": "5 Warnke Ln, Scarsdale, NY 10583",
+    "addressLine1": "5 Warnke Ln",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995024,
+    "longitude": -73.829002,
+    "propertyType": "Single Family",
+    "lotSize": 29185,
+    "assessorID": "552689 8.450-317-5",
+    "legalDescription": "LOT:5.000 BLK:317 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE WOODS SEC 01",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 959200,
+        "land": 497400,
+        "improvements": 461800
+      },
+      "2023": {
+        "value": 1012500,
+        "land": 497400,
+        "improvements": 515100
+      }
+    },
+    "owner": {
+      "names": [
+        "Darren Gordon",
+        "Nancy Gordon"
+      ],
+      "mailingAddress": {
+        "id": "5-Warnke-Ln,-Scarsdale,-NY-10583",
+        "formattedAddress": "5 Warnke Ln, Scarsdale, NY 10583",
+        "addressLine1": "5 Warnke Ln",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "3-High-Point-Ter,-Scarsdale,-NY-10583",
+    "formattedAddress": "3 High Point Ter, Scarsdale, NY 10583",
+    "addressLine1": "3 High Point Ter",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992137,
+    "longitude": -73.830764,
+    "propertyType": "Single Family",
+    "lotSize": 33541,
+    "assessorID": "552689 8.520-356-63",
+    "legalDescription": "LOT:63.000 BLK:356 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SUBDIVISION MAP OF HIGH POINT",
+    "subdivision": "SUBDIVISION MAP OF HIGH POINT",
+    "zoning": "R-20",
+    "lastSaleDate": "2016-11-09T00:00:00.000Z",
+    "lastSalePrice": 1150000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1233000,
+        "land": 532700,
+        "improvements": 700300
+      }
+    },
+    "owner": {
+      "names": [
+        "PHILIPPE GERARD B JEAN",
+        "BERNIER WINNIE"
+      ],
+      "mailingAddress": {
+        "id": "3-High-Point-Ter,-Scarsdale,-NY-10583",
+        "addressLine1": "3 High Point Ter",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "274-Fort-Hill-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "274 Fort Hill Rd, Scarsdale, NY 10583",
+    "addressLine1": "274 Fort Hill Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992924,
+    "longitude": -73.826764,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.520-357-1",
+    "legalDescription": "LOT:1.000 BLK:357 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1639300,
+        "land": 500700,
+        "improvements": 1138600
+      }
+    },
+    "owner": {
+      "names": [
+        "TUNG CHIEH TOM LIN",
+        "CHING CHING JESS KAM"
+      ],
+      "mailingAddress": {
+        "id": "274-Fort-Hill-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "274 Fort Hill Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "6-Laura-Ln,-Scarsdale,-NY-10583",
+    "formattedAddress": "6 Laura Ln, Scarsdale, NY 10583",
+    "addressLine1": "6 Laura Ln",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.998149,
+    "longitude": -73.829364,
+    "propertyType": "Single Family",
+    "lotSize": 23958,
+    "assessorID": "552689 8.450-315-7",
+    "legalDescription": "LOT:7.000 BLK:315 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 776000,
+        "land": 459900,
+        "improvements": 316100
+      },
+      "2023": {
+        "value": 819100,
+        "land": 459900,
+        "improvements": 359200
+      }
+    },
+    "owner": {
+      "names": [
+        "Colleen E Maughan",
+        "Nicole Greenridg Hoskins"
+      ],
+      "mailingAddress": {
+        "id": "6-Laura-Ln,-Scarsdale,-NY-10583",
+        "formattedAddress": "6 Laura Ln, Scarsdale, NY 10583",
+        "addressLine1": "6 Laura Ln",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "5-Leone-Close,-Scarsdale,-NY-10583",
+    "formattedAddress": "5 Leone Close, Scarsdale, NY 10583",
+    "addressLine1": "5 Leone Close",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995105,
+    "longitude": -73.830265,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.450-317-10",
+    "legalDescription": "LOT:10.000 BLK:317 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE WOODS SEC 02",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1199000,
+        "land": 488800,
+        "improvements": 710200
+      },
+      "2023": {
+        "value": 1265600,
+        "land": 488800,
+        "improvements": 776800
+      }
+    },
+    "owner": {
+      "names": [
+        "NANCY P KREINIK"
+      ],
+      "mailingAddress": {
+        "id": "5-LEONE-CLOSE,-Scarsdale,-NY-10583",
+        "formattedAddress": "5 LEONE CLOSE, Scarsdale, NY 10583",
+        "addressLine1": "5 LEONE CLOSE",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "3-Leone-Close,-Scarsdale,-NY-10583",
+    "formattedAddress": "3 Leone Close, Scarsdale, NY 10583",
+    "addressLine1": "3 Leone Close",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995059,
+    "longitude": -73.830651,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.450-317-9",
+    "legalDescription": "LOT:9.000 BLK:317 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 940900,
+        "land": 500700,
+        "improvements": 440200
+      },
+      "2023": {
+        "value": 993200,
+        "land": 500700,
+        "improvements": 492500
+      }
+    },
+    "owner": {
+      "names": [
+        "William Ju"
+      ],
+      "mailingAddress": {
+        "id": "435-Bernardsville-Rd,-Mendham,-NJ-07945",
+        "formattedAddress": "435 Bernardsville Rd, Mendham, NJ 07945",
+        "addressLine1": "435 Bernardsville Rd",
+        "addressLine2": null,
+        "city": "Mendham",
+        "state": "NJ",
+        "zipCode": "07945"
       }
     },
     "ownerOccupied": false
   },
   {
-    "id": "138-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "138 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
-    "addressLine1": "138 Crystal Brook Hollow Rd",
+    "id": "266-Fort-Hill-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "266 Fort Hill Rd, Scarsdale, NY 10583",
+    "addressLine1": "266 Fort Hill Rd",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.943095,
-    "longitude": -73.041013,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.9925,
+    "longitude": -73.827075,
     "propertyType": "Single Family",
-    "lotSize": 23958,
-    "assessorID": "0206-014.00-03.00-042.003",
-    "legalDescription": "LOT:42.003 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "lotSize": 20038,
+    "assessorID": "552689 8.520-356-12",
+    "legalDescription": "LOT:12.000 BLK:356 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 847500,
+        "land": 500700,
+        "improvements": 346800
+      }
+    },
+    "owner": {
+      "names": [
+        "NEAL LERNER",
+        "SUSAN LERNER"
+      ],
+      "mailingAddress": {
+        "id": "266-Fort-Hill-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "266 Fort Hill Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "8-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "8 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "8 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.996997,
+    "longitude": -73.831433,
+    "propertyType": "Single Family",
+    "lotSize": 31799,
+    "assessorID": "552689 8.450-313-15",
+    "legalDescription": "LOT:15.000 BLK:313 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "lastSaleDate": "2006-06-28T00:00:00.000Z",
+    "lastSalePrice": 999999,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1205500,
+        "land": 456000,
+        "improvements": 749500
+      },
+      "2023": {
+        "value": 1272400,
+        "land": 456000,
+        "improvements": 816400
+      }
+    },
+    "owner": {
+      "names": [
+        "Corey B Burak",
+        "Kathleen Kelly Burak"
+      ],
+      "mailingAddress": {
+        "id": "8-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "8 Sprain Valley Rd, Scarsdale, NY 10583",
+        "addressLine1": "8 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "3-Warnke-Ln,-Scarsdale,-NY-10583",
+    "formattedAddress": "3 Warnke Ln, Scarsdale, NY 10583",
+    "addressLine1": "3 Warnke Ln",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.995348,
+    "longitude": -73.828702,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.450-317-4",
+    "legalDescription": "LOT:4.000 BLK:317 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE WOODS SECS 1",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1076200,
+        "land": 475600,
+        "improvements": 600600
+      },
+      "2023": {
+        "value": 1136000,
+        "land": 475600,
+        "improvements": 660400
+      }
+    },
+    "owner": {
+      "names": [
+        "Mara-lee Bierman"
+      ],
+      "mailingAddress": {
+        "id": "3-Warnke-Ln,-Scarsdale,-NY-10583",
+        "formattedAddress": "3 Warnke Ln, Scarsdale, NY 10583",
+        "addressLine1": "3 Warnke Ln",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "40-Andrea-Ln,-Scarsdale,-NY-10583",
+    "formattedAddress": "40 Andrea Ln, Scarsdale, NY 10583",
+    "addressLine1": "40 Andrea Ln",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992951,
+    "longitude": -73.829033,
+    "propertyType": "Single Family",
+    "lotSize": 25265,
+    "assessorID": "552689 8.520-356-17",
+    "legalDescription": "LOT:17.000 BLK:356 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "lastSaleDate": "2020-12-11T00:00:00.000Z",
+    "lastSalePrice": 1250000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1387300,
+        "land": 513100,
+        "improvements": 874200
+      }
+    },
+    "owner": {
+      "names": [
+        "CONSTANTINOS RENTOULIS",
+        "STEPHANIE RENTOULIS"
+      ],
+      "mailingAddress": {
+        "id": "40-Andrea-Ln,-Scarsdale,-NY-10583",
+        "addressLine1": "40 Andrea Ln",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "55-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "55 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "55 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.99154,
+    "longitude": -73.835827,
+    "propertyType": "Single Family",
+    "lotSize": 45738,
+    "assessorID": "552689 8.520-355-8",
+    "legalDescription": "LOT:8.000 BLK:355 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1097000,
+        "land": 511700,
+        "improvements": 585300
+      },
+      "2023": {
+        "value": 1157900,
+        "land": 511700,
+        "improvements": 646200
+      }
+    },
+    "owner": {
+      "names": [
+        "Leon Mizrahi",
+        "Joan Mizrahi"
+      ],
+      "mailingAddress": {
+        "id": "55-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "55 Sprain Valley Rd, Scarsdale, NY 10583",
+        "addressLine1": "55 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "25-Greenville-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "25 Greenville Rd, Scarsdale, NY 10583",
+    "addressLine1": "25 Greenville Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.998532,
+    "longitude": -73.829299,
+    "propertyType": "Single Family",
+    "lotSize": 20909,
+    "assessorID": "552689 8.450-315-14",
+    "legalDescription": "LOT:14.000 BLK:315 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE MDWS INC PROP",
+    "zoning": "R-20",
+    "lastSaleDate": "2020-02-25T00:00:00.000Z",
+    "lastSalePrice": 700000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1109100,
+        "land": 502700,
+        "improvements": 606400
+      },
+      "2023": {
+        "value": 1170700,
+        "land": 502700,
+        "improvements": 668000
+      }
+    },
+    "owner": {
+      "names": [
+        "Saroj Ajmera",
+        "Rakesh Ajmera"
+      ],
+      "mailingAddress": {
+        "id": "25-Greenville-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "25 Greenville Rd, Scarsdale, NY 10583",
+        "addressLine1": "25 Greenville Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "90-Highland-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "90 Highland Rd, Scarsdale, NY 10583",
+    "addressLine1": "90 Highland Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.997197,
+    "longitude": -73.828879,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.450-315-3",
+    "legalDescription": "LOT:3.000 BLK:315 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SUBDIVISION MAP OF GREENVILLE HEIGHTS",
+    "subdivision": "SUBDIVISION MAP OF GREENVILLE HEIGHTS",
+    "zoning": "R-20",
+    "lastSaleDate": "2016-07-29T00:00:00.000Z",
+    "lastSalePrice": 980000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 932300,
+        "land": 500700,
+        "improvements": 431600
+      },
+      "2023": {
+        "value": 984100,
+        "land": 500700,
+        "improvements": 483400
+      }
+    },
+    "owner": {
+      "names": [
+        "John Stephen Coulthard",
+        "Allen Coulthard Julite"
+      ],
+      "mailingAddress": {
+        "id": "90-Highland-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "90 Highland Rd, Scarsdale, NY 10583",
+        "addressLine1": "90 Highland Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "91-Highland-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "91 Highland Rd, Scarsdale, NY 10583",
+    "addressLine1": "91 Highland Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.997338,
+    "longitude": -73.82841,
+    "propertyType": "Single Family",
+    "lotSize": 20038,
+    "assessorID": "552689 8.450-316-6",
+    "legalDescription": "LOT:6.000 BLK:316 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "GREENVILLE HEIGHTS",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 996100,
+        "land": 500700,
+        "improvements": 495400
+      },
+      "2023": {
+        "value": 1051500,
+        "land": 500700,
+        "improvements": 550800
+      }
+    },
+    "owner": {
+      "names": [
+        "Ellen Schaeffer Brody"
+      ],
+      "mailingAddress": {
+        "id": "91-Highland-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "91 Highland Rd, Scarsdale, NY 10583",
+        "addressLine1": "91 Highland Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "10-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "10 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "10 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.996799,
+    "longitude": -73.831948,
+    "propertyType": "Single Family",
+    "lotSize": 39640,
+    "assessorID": "552689 8.450-313-16",
+    "legalDescription": "LOT:16.000 BLK:313 SEC:8.450 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 984100,
+        "land": 497200,
+        "improvements": 486900
+      },
+      "2023": {
+        "value": 1038700,
+        "land": 497200,
+        "improvements": 541500
+      }
+    },
+    "owner": {
+      "names": [
+        "Heller Trust , Beatrice"
+      ],
+      "mailingAddress": {
+        "id": "10-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "10 Sprain Valley Rd, Scarsdale, NY 10583",
+        "addressLine1": "10 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "45-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "45 Sprain Valley Rd, Scarsdale, NY 10583",
+    "addressLine1": "45 Sprain Valley Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992932,
+    "longitude": -73.834959,
+    "propertyType": "Single Family",
+    "lotSize": 41818,
+    "assessorID": "552689 8.520-355-13",
+    "legalDescription": "LOT:13.000 BLK:355 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SECTION 2 PROPERTY OF SPRAIN VALLEY CORP",
+    "subdivision": "SECTION 2 PROPERTY OF SPRAIN VALLEY CORP",
+    "zoning": "R-20",
+    "lastSaleDate": "2007-08-30T00:00:00.000Z",
+    "lastSalePrice": 1300000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1184700,
+        "land": 502300,
+        "improvements": 682400
+      },
+      "2023": {
+        "value": 1250600,
+        "land": 502300,
+        "improvements": 748300
+      }
+    },
+    "owner": {
+      "names": [
+        "BERNARD W LEE",
+        "HYUN J LEE"
+      ],
+      "mailingAddress": {
+        "id": "45-Sprain-Valley-Rd,-Scarsdale,-NY-10583",
+        "formattedAddress": "45 Sprain Valley Rd, Scarsdale, NY 10583",
+        "addressLine1": "45 Sprain Valley Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "1-High-Point-Ter,-Scarsdale,-NY-10583",
+    "formattedAddress": "1 High Point Ter, Scarsdale, NY 10583",
+    "addressLine1": "1 High Point Ter",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.991746,
+    "longitude": -73.831021,
+    "propertyType": "Single Family",
+    "lotSize": 30056,
+    "assessorID": "552689 8.520-356-62",
+    "legalDescription": "LOT:62.000 BLK:356 SEC:8.520 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SECTION 8520",
+    "lastSaleDate": "2020-10-22T00:00:00.000Z",
+    "lastSalePrice": 1853636,
     "features": {},
     "taxAssessments": {
       "2022": {
-        "value": 4000,
-        "land": 360,
-        "improvements": 3640
+        "value": 1984800,
+        "land": 524500,
+        "improvements": 1460300
       },
       "2023": {
-        "value": 4000,
-        "land": 360,
-        "improvements": 3640
+        "value": 2095000,
+        "land": 524500,
+        "improvements": 1570500
       }
     },
     "owner": {
       "names": [
-        "James Daccordo",
-        "CAROL DACCORDO"
+        "Mitchell Cohen",
+        "SARAH COHEN"
       ],
       "mailingAddress": {
-        "id": "138-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "138 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
-        "addressLine1": "138 Crystal Brook Hollow Rd",
+        "id": "1-High-Point-Ter,-Scarsdale,-NY-10583",
+        "formattedAddress": "1 High Point Ter, Scarsdale, NY 10583",
+        "addressLine1": "1 High Point Ter",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "26-Woodside-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "26 Woodside Ave, Port Jefferson, NY 11777",
-    "addressLine1": "26 Woodside Ave",
+    "id": "2-Longview-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "2 Longview Dr, Scarsdale, NY 10583",
+    "addressLine1": "2 Longview Dr",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.935965,
-    "longitude": -73.044327,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.998433,
+    "longitude": -73.820969,
     "propertyType": "Single Family",
-    "lotSize": 6098,
-    "assessorID": "0206-022.00-02.00-019.000",
-    "legalDescription": "LOT:19.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "LAWN TERRACE DEV",
+    "lotSize": 13068,
+    "assessorID": "552689 8.460-319-33",
+    "legalDescription": "LOT:33.000 BLK:319 SEC:8.460 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-10",
     "features": {
       "unitCount": 1
     },
     "taxAssessments": {
       "2022": {
-        "value": 1750,
-        "land": 150,
-        "improvements": 1600
-      },
-      "2023": {
-        "value": 1750,
-        "land": 150,
-        "improvements": 1600
+        "value": 933700,
+        "land": 412800,
+        "improvements": 520900
       }
     },
     "owner": {
       "names": [
-        "Janhsen Karl",
-        "KAREN COOK"
+        "POSNER TRUST , RITA"
       ],
       "mailingAddress": {
-        "id": "26-Woodside-Ave,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "26 Woodside Ave, Port Jefferson, NY 11777",
-        "addressLine1": "26 Woodside Ave",
+        "id": "2-Longview-Dr,-Scarsdale,-NY-10583",
+        "addressLine1": "2 Longview Dr",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "4-Chuck-Ct,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "4 Chuck Ct, Port Jefferson, NY 11777",
-    "addressLine1": "4 Chuck Ct",
+    "id": "38-Argyle-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "38 Argyle Rd, Scarsdale, NY 10583",
+    "addressLine1": "38 Argyle Rd",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.938208,
-    "longitude": -73.04128,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.998848,
+    "longitude": -73.819392,
     "propertyType": "Single Family",
-    "lotSize": 22651,
-    "assessorID": "0206-018.00-04.00-053.000",
-    "legalDescription": "LOT:53.000 BLK:4 SEC:18.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "lastSaleDate": "2007-12-06T00:00:00.000Z",
-    "lastSalePrice": 575000,
+    "lotSize": 7405,
+    "assessorID": "552689 8.460-323-6",
+    "legalDescription": "LOT:6.000 BLK:323 SEC:8.460 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-7.5",
     "features": {
       "unitCount": 1
     },
     "taxAssessments": {
       "2022": {
-        "value": 3780,
-        "land": 375,
-        "improvements": 3405
-      },
-      "2023": {
-        "value": 3780,
-        "land": 375,
-        "improvements": 3405
+        "value": 1026000,
+        "land": 342700,
+        "improvements": 683300
       }
     },
     "owner": {
       "names": [
-        "DAMBECK J"
+        "MARK A BARONE",
+        "JOAN M MARKOWITZ"
       ],
       "mailingAddress": {
-        "id": "4-Chuck-Ct,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "4 Chuck Ct, Port Jefferson, NY 11777",
-        "addressLine1": "4 Chuck Ct",
+        "id": "38-Argyle-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "38 Argyle Rd",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "144-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "144 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
-    "addressLine1": "144 Crystal Brook Hollow Rd",
+    "id": "135-Old-Army-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "135 Old Army Rd, Scarsdale, NY 10583",
+    "addressLine1": "135 Old Army Rd",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.943366,
-    "longitude": -73.041442,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992031,
+    "longitude": -73.8145,
     "propertyType": "Single Family",
-    "lotSize": 21780,
-    "assessorID": "0206-014.00-03.00-040.000",
-    "legalDescription": "LOT:40.000 BLK:3 SEC:14.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
+    "lotSize": 53143,
+    "assessorID": "552689 8.540-370-5",
+    "legalDescription": "LOT:5.000 BLK:370 SEC:8.540 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-20",
     "features": {
-      "unitCount": 1,
-      "viewType": "Water"
+      "unitCount": 1
     },
     "taxAssessments": {
       "2022": {
-        "value": 3950,
-        "land": 350,
-        "improvements": 3600
-      },
-      "2023": {
-        "value": 3950,
-        "land": 350,
-        "improvements": 3600
+        "value": 1897900,
+        "land": 892000,
+        "improvements": 1005900
       }
     },
     "owner": {
       "names": [
-        "Albert Coringrato",
-        "JEANNE CORINGRATO"
+        "MICHELE PAOLUCCI",
+        "GALLOUSIS FRANCENE"
       ],
       "mailingAddress": {
-        "id": "144-Crystal-Brook-Hollow-Rd,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "144 Crystal Brook Hollow Rd, Port Jefferson, NY 11777",
-        "addressLine1": "144 Crystal Brook Hollow Rd",
+        "id": "135-Old-Army-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "135 Old Army Rd",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
       }
     },
     "ownerOccupied": true
   },
   {
-    "id": "25-Woodside-Ave,-Port-Jefferson,-NY-11777",
-    "formattedAddress": "25 Woodside Ave, Port Jefferson, NY 11777",
-    "addressLine1": "25 Woodside Ave",
+    "id": "20-Edgemont-Cir,-Scarsdale,-NY-10583",
+    "formattedAddress": "20 Edgemont Cir, Scarsdale, NY 10583",
+    "addressLine1": "20 Edgemont Cir",
     "addressLine2": null,
-    "city": "Port Jefferson",
+    "city": "Scarsdale",
     "state": "NY",
-    "zipCode": "11777",
-    "county": "Suffolk",
-    "latitude": 40.936396,
-    "longitude": -73.044329,
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.997567,
+    "longitude": -73.814712,
+    "propertyType": "Single Family",
+    "lotSize": 21790,
+    "assessorID": "55268931 40 01721  39",
+    "features": {
+      "unitCount": 1
+    }
+  },
+  {
+    "id": "140-Edgemont-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "140 Edgemont Rd, Scarsdale, NY 10583",
+    "addressLine1": "140 Edgemont Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.994696,
+    "longitude": -73.808266,
+    "propertyType": "Single Family",
+    "lotSize": 10890,
+    "assessorID": "552689 8.470-345-32",
+    "legalDescription": "LOT:32.000 BLK:345 SEC:8.470 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:FINAL MAP OF SUBDIVISION OF SECTION #4",
+    "subdivision": "FINAL MAP OF SUBDIVISION OF SECTION #4",
+    "zoning": "R-7.5",
+    "lastSaleDate": "2001-08-02T00:00:00.000Z",
+    "lastSalePrice": 605000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1026000,
+        "land": 464700,
+        "improvements": 561300
+      }
+    },
+    "owner": {
+      "names": [
+        "RONALD J KATTER",
+        "KAREN KATTER"
+      ],
+      "mailingAddress": {
+        "id": "140-Edgemont-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "140 Edgemont Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "28-Byron-Pl,-Scarsdale,-NY-10583",
+    "formattedAddress": "28 Byron Pl, Scarsdale, NY 10583",
+    "addressLine1": "28 Byron Pl",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.999892,
+    "longitude": -73.820275,
+    "propertyType": "Single Family",
+    "lotSize": 7405,
+    "assessorID": "552689 8.460-321-4",
+    "legalDescription": "LOT:4.000 BLK:321 SEC:8.460 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SCARSDALE LONGVIEW SEC 03 AMD",
+    "zoning": "R-7.5",
+    "lastSaleDate": "2015-07-06T00:00:00.000Z",
+    "lastSalePrice": 1121000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1198700,
+        "land": 380900,
+        "improvements": 817800
+      }
+    },
+    "owner": {
+      "names": [
+        "SUMIT GAUR",
+        "JULIE NAGPAL"
+      ],
+      "mailingAddress": {
+        "id": "28-Byron-Pl,-Scarsdale,-NY-10583",
+        "addressLine1": "28 Byron Pl",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "30-Barclay-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "30 Barclay Rd, Scarsdale, NY 10583",
+    "addressLine1": "30 Barclay Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.996986,
+    "longitude": -73.808053,
+    "propertyType": "Single Family",
+    "lotSize": 8712,
+    "assessorID": "552689 8.470-337-6.2",
+    "legalDescription": "LOT:6.002 BLK:337 SEC:8.470 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SECTION 8470",
+    "lastSaleDate": "2018-11-13T00:00:00.000Z",
+    "lastSalePrice": 1656000,
+    "features": {},
+    "taxAssessments": {
+      "2022": {
+        "value": 1665500,
+        "land": 491000,
+        "improvements": 1174500
+      }
+    },
+    "owner": {
+      "names": [
+        "JAMES WYSOCK",
+        "HEE C WYSOCK"
+      ],
+      "mailingAddress": {
+        "id": "30-Barclay-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "30 Barclay Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "27-Doris-Dr,-Scarsdale,-NY-10583",
+    "formattedAddress": "27 Doris Dr, Scarsdale, NY 10583",
+    "addressLine1": "27 Doris Dr",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.992913,
+    "longitude": -73.811577,
     "propertyType": "Single Family",
     "lotSize": 4356,
-    "assessorID": "0206-022.00-02.00-007.000",
-    "legalDescription": "LOT:7.000 BLK:2 SEC:22.00 DIST:0206-0 CITY/MUNI/TWP:BROOKHAVEN",
-    "subdivision": "LAWN TERRACE DEV",
-    "lastSaleDate": "2017-08-08T00:00:00.000Z",
-    "lastSalePrice": 325000,
+    "assessorID": "552689 8.540-372-8",
+    "legalDescription": "LOT:8.000 BLK:372 SEC:8.540 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:SUBDIVISION MAP OF EDGEMONT HOMES",
+    "subdivision": "SUBDIVISION MAP OF EDGEMONT HOMES",
+    "zoning": "R-7.5",
+    "lastSaleDate": "2000-07-18T00:00:00.000Z",
+    "lastSalePrice": 735000,
     "features": {
       "unitCount": 1
     },
     "taxAssessments": {
       "2022": {
-        "value": 3020,
-        "land": 120,
-        "improvements": 2900
-      },
-      "2023": {
-        "value": 3020,
-        "land": 120,
-        "improvements": 2900
+        "value": 1266300,
+        "land": 384000,
+        "improvements": 882300
       }
     },
     "owner": {
       "names": [
-        "Stella J Russo"
+        "ANDREW E BLOTNER",
+        "SARA B BLOTNER"
       ],
       "mailingAddress": {
-        "id": "25-Woodside-Ave,-Port-Jefferson,-NY-11777",
-        "formattedAddress": "25 Woodside Ave, Port Jefferson, NY 11777",
-        "addressLine1": "25 Woodside Ave",
+        "id": "27-Doris-Dr,-Scarsdale,-NY-10583",
+        "addressLine1": "27 Doris Dr",
         "addressLine2": null,
-        "city": "Port Jefferson",
+        "city": "Scarsdale",
         "state": "NY",
-        "zipCode": "11777"
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "2-Mount-Joy-Ave,-Scarsdale,-NY-10583",
+    "formattedAddress": "2 Mount Joy Ave, Scarsdale, NY 10583",
+    "addressLine1": "2 Mount Joy Ave",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.99532,
+    "longitude": -73.812512,
+    "propertyType": "Single Family",
+    "lotSize": 7405,
+    "assessorID": "552689 8.470-340-5",
+    "legalDescription": "LOT:5.000 BLK:340 SEC:8.470 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-15",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1107000,
+        "land": 460900,
+        "improvements": 646100
+      }
+    },
+    "owner": {
+      "names": [
+        "ROGER A ADLER",
+        "VICKI ADLER"
+      ],
+      "mailingAddress": {
+        "id": "2-Mount-Joy-Ave,-Scarsdale,-NY-10583",
+        "addressLine1": "2 Mount Joy Ave",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "60-Seely-Pl,-Scarsdale,-NY-10583",
+    "formattedAddress": "60 Seely Pl, Scarsdale, NY 10583",
+    "addressLine1": "60 Seely Pl",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 40.99385,
+    "longitude": -73.814538,
+    "propertyType": "Single Family",
+    "lotSize": 28314,
+    "assessorID": "552689 8.540-370-15",
+    "legalDescription": "LOT:15.000 BLK:370 SEC:8.540 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "subdivision": "SECTION 8540",
+    "zoning": "R-15",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1550000,
+        "land": 703900,
+        "improvements": 846100
+      }
+    },
+    "owner": {
+      "names": [
+        "ANNA ELISE WALTON"
+      ],
+      "mailingAddress": {
+        "id": "60-Seely-Pl,-Scarsdale,-NY-10583",
+        "addressLine1": "60 Seely Pl",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "35-Sheridan-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "35 Sheridan Rd, Scarsdale, NY 10583",
+    "addressLine1": "35 Sheridan Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 41.003929,
+    "longitude": -73.818446,
+    "propertyType": "Single Family",
+    "lotSize": 37462,
+    "assessorID": "552689 8.400-281-41",
+    "legalDescription": "LOT:41.000 BLK:281 SEC:8.400 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV) SUBD:FORT HILL ESTATES",
+    "subdivision": "FORT HILL ESTATES",
+    "zoning": "R-30",
+    "lastSaleDate": "2019-10-29T00:00:00.000Z",
+    "lastSalePrice": 1430000,
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1375800,
+        "land": 770000,
+        "improvements": 605800
+      }
+    },
+    "owner": {
+      "names": [
+        "XIANG XIA",
+        "JING XU"
+      ],
+      "mailingAddress": {
+        "id": "35-Sheridan-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "35 Sheridan Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
+      }
+    },
+    "ownerOccupied": true
+  },
+  {
+    "id": "2-Sheridan-Rd,-Scarsdale,-NY-10583",
+    "formattedAddress": "2 Sheridan Rd, Scarsdale, NY 10583",
+    "addressLine1": "2 Sheridan Rd",
+    "addressLine2": null,
+    "city": "Scarsdale",
+    "state": "NY",
+    "zipCode": "10583",
+    "county": "Westchester",
+    "latitude": 41.003184,
+    "longitude": -73.818342,
+    "propertyType": "Single Family",
+    "lotSize": 17424,
+    "assessorID": "552689 8.400-287-9",
+    "legalDescription": "LOT:9.000 BLK:287 SEC:8.400 DIST:552689 CITY/MUNI/TWP:GREENBURGH (TOV)",
+    "zoning": "R-10",
+    "features": {
+      "unitCount": 1
+    },
+    "taxAssessments": {
+      "2022": {
+        "value": 1053000,
+        "land": 407200,
+        "improvements": 645800
+      }
+    },
+    "owner": {
+      "names": [
+        "MARTIN WEINSTEIN",
+        "LYNN WEINSTEIN"
+      ],
+      "mailingAddress": {
+        "id": "2-Sheridan-Rd,-Scarsdale,-NY-10583",
+        "addressLine1": "2 Sheridan Rd",
+        "addressLine2": null,
+        "city": "Scarsdale",
+        "state": "NY",
+        "zipCode": "10583"
       }
     },
     "ownerOccupied": true

@@ -9,9 +9,14 @@ export class GetAllAddressIds {
         try {
             propertyData = await fs.readFile(this.rentCastSaleFilePath, { encoding: 'utf8' });
             propertyData = JSON.parse(propertyData);
+            console.log();
+            let counter = 0;
             for (const property of propertyData) {
                 console.log("'" + property.id + "', ");
+                counter++;
             }
+            console.log();
+            console.log(`${counter} properties in json file`);
         } catch (error) {
             console.error('Error reading file:', error);
             return null;

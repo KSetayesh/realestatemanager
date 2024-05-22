@@ -285,7 +285,7 @@ export class RentCastService {
                 const addressIdFound = await this.rentCastManager.checkIfAddressIdExists(this.pool, rentCastSaleResponse.addressId);
                 console.log("addressIdFound:", addressIdFound);
                 if (addressIdFound) {
-                    console.log(`${addressIdFound} already exists in the database, skipping`);
+                    console.log(`${rentCastSaleResponse.addressId} already exists in the database, skipping`);
                     continue;
                 }
 
