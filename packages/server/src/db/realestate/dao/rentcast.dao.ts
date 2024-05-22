@@ -112,7 +112,6 @@ export class RentCastDAO extends RealEstateDAO {
                 pool,
                 this.INSERT_RENT_CAST_API_RESPONSE_QUERY,
                 values,
-                'address_id'
             );
 
             console.log('RentCast Response information inserted successfully');
