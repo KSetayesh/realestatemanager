@@ -27,13 +27,10 @@ export class ImageKitApiClient {
 
     }
 
-    async getAllImages(folderName: string): Promise<string[]> {
-
-        const fileObjects: FileObject[] = await this.imageKit.listFiles({
+    async getAllImages(folderName: string): Promise<FileObject[]> {
+        return this.imageKit.listFiles({
             path: folderName,
         });
-
-        return fileObjects.map(fileObject => fileObject.url);
     }
 
 

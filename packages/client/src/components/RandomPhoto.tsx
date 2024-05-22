@@ -6,15 +6,14 @@ const RandomPhoto: React.FC = () => {
     const [currentImage, setCurrentImage] = useState<string>();
     const photosApi: PhotosApi = new PhotosApi();
 
-    const getPhotos = async (): Promise<string[]> => {
-        const images = await photosApi.getPhotos();
-        return images;
+    const getAllPhotoUrls = async (): Promise<string[]> => {
+        return photosApi.getAllPhotoUrls();
     }
 
     useEffect(() => {
         const fetchPhotosAndSetImage = async () => {
-            const images: string[] = await getPhotos();
-            setCurrentImage(images[Math.floor(Math.random() * images.length)]);
+            const photoUrls: string[] = await getAllPhotoUrls();
+            setCurrentImage(photoUrls[Math.floor(Math.random() * photoUrls.length)]);
         };
 
         fetchPhotosAndSetImage();

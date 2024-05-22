@@ -1,26 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import imageKitConfig from '../../config/imageKitConfig';
 import { ImageKitApiClient } from 'src/realestatecalc/api/image.kit.api.client';
+import { FileObject } from 'imagekit/dist/libs/interfaces';
 
 @Injectable()
 export class PhotosService {
 
     private imageKitApiClient: ImageKitApiClient;
-    private imageCache: string[];
+    private imagesCache: FileObject[];
     private folderName = 'Real_Estate_Images';
 
     constructor() {
         this.imageKitApiClient = new ImageKitApiClient();
-        this.imageCache = [];
+        this.imagesCache = [];
     }
 
-    async getPhotos(): Promise<string[]> {
-        if (this.imageCache.length > 0) {
-            return this.imageCache;
+    async getAllPhotoUrls(): Promise<string[]> {
+        if (this.imagesCache.length === 0) {
+            const images: FileObject[] = await this.imageKitApiClient.getAllImages(this.folderName);
+            this.imagesCache.push(...images);
         }
-        const images: string[] = await this.imageKitApiClient.getAllImages(this.folderName);
-        this.imageCache.push(...images);
-        return images;
+        return this.imagesCache.map(fileObj => fileObj.url);
     }
 
 }

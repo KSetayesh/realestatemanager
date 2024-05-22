@@ -3,7 +3,7 @@ import { CalcApi } from "./calcapi";
 
 export class PhotosApi extends CalcApi {
 
-    async getPhotos(): Promise<string[]> {
+    async getAllPhotoUrls(): Promise<string[]> {
 
         try {
             const response = await axios.get(this.getURL());
