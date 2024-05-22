@@ -257,11 +257,8 @@ export class ListingDAO extends RealEstateDAO {
 
     async insertListingDetails(
         pool: Pool,
-        // listingDetails: ListingDetailsDTO,
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
-        // saleResponseId?: number,
-        // propertyResponseId?: number,
     ): Promise<number> {
         let newListingId = -1;
         try {
@@ -573,7 +570,7 @@ export class ListingDAO extends RealEstateDAO {
             addressId,
             schoolRatingId
         ];
-        values.push(this.getPropertyDetailsValues(listingDetails));
+        values.push(...this.getPropertyDetailsValues(listingDetails));
 
         return this.genericInsertQuery(pool, this.INSERT_PROPERTY_DETAILS_QUERY, values);
 

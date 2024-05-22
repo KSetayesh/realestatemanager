@@ -75,8 +75,6 @@ export class RentCastApiClient {
         rentCastApiRequest: CreateRentCastApiRequest,
     ): Promise<RentCastApiResponse> {
 
-        console.log("filePath: ", (__dirname + '../../../src/data/latestRentCastSale.json'));
-
         const apiCallDetails = await this.getApiCallDetails();
         if (!apiCallDetails.canCallRentCastApi) {
             throw new Error('API call not permitted at this time.');
@@ -121,44 +119,75 @@ export class RentCastApiClient {
 
         const url = new RentClassApiUrlCreator().createURL(endPoint, rentCastApiRequest);
 
-        console.log("URL for RentCast Api:", url);
+        const response = await this.makeApiCall(apiCallDetails, url);
+        if (response.status === 200) {
+            const executionTime = new Date();
+            console.log("RentCastApi call is successful!");
+            const rentCastDetailsId = apiCallDetails.rentCastDetailsId;
+            await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
+            const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
+                this.pool,
+                endPoint,
+                url,
+                rentCastDetailsId,
+                executionTime
+            );
+            const data = await response.json();
+            console.log("_data1:", data); // Log the response data
 
+            // Write response data to JSON file
+            await this.writeResponseToJsonFile(filePath, data);
+            console.log(`Api response written to ${filePath}`);
+            return {
+                rentCastApiCallId,
+                jsonData: data,
+                endPoint: endPoint,
+            };
+
+        } else {
+            console.log("Is NOT successful!");
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+    }
+
+    private async makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
         try {
+            console.log("URL for RentCast Api:", url);
             const options: RentCastApiHeader = await this.getHeadersForRentCastApiCall(apiCallDetails);
-            const response = await fetch(url, options);
-            if (response.status === 200) {
-                const executionTime = new Date();
-                console.log("Is successful!");
-                const rentCastDetailsId = apiCallDetails.rentCastDetailsId;
-                await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
-                const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
-                    this.pool,
-                    endPoint,
-                    url,
-                    rentCastDetailsId,
-                    executionTime
-                );
-                const data = await response.json();
-                console.log("_data1:", data); // Log the response data
-
-                // Write response data to JSON file
-                await this.writeResponseToJsonFile(filePath, data);
-                console.log(`Api response written to ${filePath}`);
-                return {
-                    rentCastApiCallId,
-                    jsonData: data,
-                    endPoint: endPoint,
-                };
-
-            } else {
-                console.log("Is NOT successful!");
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-        } catch (error) {
-            console.error('Error:', error);
+            return fetch(url, options);
+        }
+        catch (error) {
+            console.error('RentCast Api Call Error:', error);
             throw new Error(error);// Re-throw the error if needed or handle it as needed
         }
     }
+
+    // private async makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
+    //     try {
+    //         let propertyData;
+    //         try {
+    //             propertyData = await fs.readFile(this.endPointMap.PROPERTIES.responseFilePath, { encoding: 'utf8' });
+    //             propertyData = JSON.parse(propertyData);
+    //         } catch (error) {
+    //             console.error('Error reading file:', error);
+    //             return null;
+    //         }
+
+    //         let saleData;
+    //         try {
+    //             saleData = await fs.readFile(this.endPointMap.SALE.responseFilePath, { encoding: 'utf8' });
+    //             saleData = JSON.parse(saleData);
+    //         } catch (error) {
+    //             console.error('Error reading file:', error);
+    //             return null;
+    //         }
+    //     }
+    //     catch (error) {
+    //         console.error('RentCast Api Call Error:', error);
+    //         throw new Error(error);// Re-throw the error if needed or handle it as needed
+    //     }
+    // }
 
     private async getApiCallDetails(): Promise<ApiCallDetails> {
         if (!apiKeysConfig.canMakeRentCastApiCall) {

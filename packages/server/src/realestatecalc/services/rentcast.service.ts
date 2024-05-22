@@ -298,7 +298,6 @@ export class RentCastService {
                 if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.addressId];
                     const rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
-
                     listingDetail = this.buildListingDetails(
                         rentCastSaleResponseType,
                         rentCastSaleResponseId,
@@ -324,7 +323,6 @@ export class RentCastService {
                 }
             }
 
-            console.log("rentCastPropertyApiCallId:", rentCastPropertyApiCallId);
             for (const addressId of rentCastPropertyMap.keys()) {
                 if (!addressIdOfMatchesFound.has(addressId)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap.get(addressId);

@@ -31,7 +31,7 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     }
 
     protected get defaultZillowURL(): string {
-        throw `NEED TO UPDATE_${this.rentCastSalesResponseType.id}`;
+        return `NEED TO UPDATE_${this.rentCastSalesResponseType.id}`;
     }
 
     protected createListingDetailsId(): number {

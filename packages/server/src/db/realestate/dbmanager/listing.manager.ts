@@ -27,7 +27,6 @@ export class ListingManager extends DatabaseManager {
 
     async insertListingDetails(
         pool: Pool,
-        // listingDetails: ListingDetailsDTO,
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
     ): Promise<number> {
