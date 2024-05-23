@@ -1,5 +1,12 @@
 import fs from 'fs/promises';  // Use promise-based fs
 
+
+
+/*
+    Grab a list of addressIds from the database and it will compare it against the addressIds in "latestRentCastSale.json". 
+    It will return the addressIds in "latestRentCastSale.json" that were not found in the persisted set of addressIds.
+*/
+
 export class PropertiesThatWereNotPersisted {
 
     private rentCastSaleFilePath = '/Users/kevinsetayesh/Repos/realestatemanager/packages/server/src/data/latestRentCastSale.json';

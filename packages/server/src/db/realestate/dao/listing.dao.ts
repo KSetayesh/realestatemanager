@@ -227,7 +227,7 @@ export class ListingDAO extends RealEstateDAO {
         // Generate the placeholder for the parameterized query
 
         try {
-            const res = await pool.query(query);
+            const res = await pool.query(query, rentCastSaleResponseIds);
             res.rows.forEach(row => {
                 const listing: ListingDetails = this.mapRowToListingDetails(row);
                 listings.push(listing);
@@ -328,6 +328,15 @@ export class ListingDAO extends RealEstateDAO {
     }
 
     async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+        await this.updateAddress(pool, listingDetails);
+        await this.updateZillowMarketEstimates(pool, listingDetails);
+        await this._updateSchoolRating(pool, listingDetails);
+        await this.updatePropertyDetails(pool, listingDetails);
+        await this._updateListingDetails(pool, listingDetails);
+    }
+
+    private async _updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+
         const query = this.UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY;
 
         const values = [
