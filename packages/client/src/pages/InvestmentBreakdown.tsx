@@ -14,7 +14,7 @@ import {
     getAnnualHOAFeesIncreaseRate,
     getAnnualHomeInsuranceIncreaseRate
 } from '../components/TableColumn';
-import '../styles/InvestmentForm.css'; // Make sure to create this CSS file
+import '../styles/StandardForm.css'; // Make sure to create this CSS file
 import {
     getAnnualAppreciationRate,
     getAnnualInterestRate,
@@ -51,7 +51,8 @@ import {
 } from '../components/TableColumn';
 import { InputType, InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import CalculateForm, { FormProperty } from '../components/CalculateForm';
+import { FormProperty } from '../components/CalculateForm';
+import StandardForm from '../components/StandardForm';
 
 export type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
@@ -1250,7 +1251,7 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && <CalculateForm
+            {formData && <StandardForm //<CalculateForm
                 formDetails={formDetails}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}

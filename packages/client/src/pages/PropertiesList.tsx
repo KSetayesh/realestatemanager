@@ -1,15 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
+import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import { InputType, PropertyType, State } from '../constants/Constant';
+import { FormProperty } from '../components/CalculateForm';
+import StandardForm from '../components/StandardForm';
 
 enum TableTypeEnum {
     ALL = 'ALL',
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
+};
+
+export type PropertyFilterData = {
+    state: State,
+    zipCode: string,
+    city: string,
+    rentEstimate: number,
+    listedPrice: number,
+    numberOfBedrooms: number,
+    numberOfBathrooms: number,
+    squareFeet: number,
+    yearBuilt: number,
+    maxHoa: number,
+    monthlyPropertyTaxAmount: number,
+    homeType: PropertyType,
+    hasGarage: boolean,
+    hasBasement: boolean,
+    hasPool: boolean,
+    isActive: boolean,
 };
 
 const PropertiesList: React.FC = () => {
@@ -17,6 +40,7 @@ const PropertiesList: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.STANDARD_BREAKDOWN);
+
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +55,7 @@ const PropertiesList: React.FC = () => {
                 setIsLoading(true); // Set loading state to true before fetching data
                 const propertiesData: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties();
                 setProperties(propertiesData); // Update state with fetched data
+                setFormData(getDefaultFilterPropertiesFormData());
                 console.log("Fetched data:", propertiesData);
             } catch (error) {
                 // Error handling if fetchProperties fails
@@ -40,6 +65,189 @@ const PropertiesList: React.FC = () => {
             }
         })();
     }, []); // Empty dependency array means this effect runs once on mount
+
+    // Create a state to store the form data.
+    const getDefaultFilterPropertiesFormData = (): PropertyFilterData => {
+        return {
+            state: State.AL,
+            zipCode: '',
+            city: '',
+            rentEstimate: 0,
+            listedPrice: 0,
+            numberOfBedrooms: 0,
+            numberOfBathrooms: 0,
+            squareFeet: 0,
+            yearBuilt: 0,
+            maxHoa: 0,
+            monthlyPropertyTaxAmount: 0,
+            homeType: PropertyType.APARTMENT,
+            hasGarage: true,
+            hasBasement: true,
+            hasPool: true,
+            isActive: true,
+        };
+    };
+
+    const [formData, setFormData] = useState<PropertyFilterData>(getDefaultFilterPropertiesFormData());
+
+    const formDetails: FormProperty[] = [
+        {
+            title: 'State',
+            name: 'state',
+            value: formData?.state,
+            type: InputType.SELECT,
+            options: Object.values(State).map((enumValue => {
+                return {
+                    value: enumValue,
+                    label: enumValue,
+                };
+            })),
+        },
+        {
+            title: 'ZipCode',
+            name: 'zipCode',
+            value: formData?.zipCode,
+            type: InputType.STRING,
+        },
+        {
+            title: 'City',
+            name: 'city',
+            value: formData?.city,
+            type: InputType.STRING,
+        },
+        {
+            title: 'Rent Estimate',
+            name: 'rentEstimate',
+            value: formData?.rentEstimate,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Listed Price',
+            name: 'listedPrice',
+            value: formData?.listedPrice,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Number Of Bedrooms',
+            name: 'numberOfBedrooms',
+            value: formData?.numberOfBedrooms,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Number Of Bathrooms',
+            name: 'numberOfBathrooms',
+            value: formData?.numberOfBathrooms,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Square Feet',
+            name: 'squareFeet',
+            value: formData?.squareFeet,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Year Built',
+            name: 'yearBuilt',
+            value: formData?.yearBuilt,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Max Hoa',
+            name: 'maxHoa',
+            value: formData?.maxHoa,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Monthly Property Tax Amount',
+            name: 'monthlyPropertyTaxAmount',
+            value: formData?.monthlyPropertyTaxAmount,
+            type: InputType.NUMBER,
+            hasFilterOption: true,
+        },
+        {
+            title: 'Home Type',
+            name: 'homeType',
+            value: formData?.homeType,
+            type: InputType.SELECT,
+            options: Object.values(PropertyType).map((enumValue => {
+                return {
+                    value: enumValue,
+                    label: enumValue,
+                };
+            })),
+        },
+        {
+            title: 'Has Garage',
+            name: 'hasGarage',
+            value: formData?.hasGarage ? "true" : "false",
+            type: InputType.CHECKBOX,
+            options: [
+                {
+                    value: 'true',
+                    label: 'true'
+                },
+                {
+                    value: 'false',
+                    label: 'false'
+                }
+            ],
+        },
+        {
+            title: 'Has Basement',
+            name: 'hasBasement',
+            value: formData?.hasBasement ? "true" : "false",
+            type: InputType.CHECKBOX,
+            options: [
+                {
+                    value: 'true',
+                    label: 'true'
+                },
+                {
+                    value: 'false',
+                    label: 'false'
+                }
+            ],
+        },
+        {
+            title: 'Has Pool',
+            name: 'hasPool',
+            value: formData?.hasPool ? "true" : "false",
+            type: InputType.CHECKBOX,
+            options: [
+                {
+                    value: 'true',
+                    label: 'true'
+                },
+                {
+                    value: 'false',
+                    label: 'false'
+                }
+            ],
+        },
+        {
+            title: 'Is Active',
+            name: 'isActive',
+            value: formData?.isActive ? "true" : "false",
+            type: InputType.CHECKBOX,
+            options: [
+                {
+                    value: 'true',
+                    label: 'true'
+                },
+                {
+                    value: 'false',
+                    label: 'false'
+                }
+            ],
+        },
+    ];
 
     const getAllColumns = (): TableColumn[] => {
         return defaultColumns.map(column => ({
@@ -75,11 +283,47 @@ const PropertiesList: React.FC = () => {
     }
     ));
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type } = event.target;
+        if (InputType.RADIO === type) {
+            // Radio buttons have names like "{propertyName}_radio"
+            // Extract the propertyName to update the corresponding state 
+
+            const propertyName = name.replace("_radio", "");
+            setFormData((prevFormData: PropertyFilterData) => ({
+                ...prevFormData,
+                [propertyName]: value,
+            }));
+        } else {
+            // For number and select inputs, simply update based on name and value
+            setFormData((prevFormData: PropertyFilterData) => ({
+                ...prevFormData,
+                [name]: value,
+            }));
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        // const data: ListingWithScenariosResponseDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
+        // console.log("Calculation result:", data);
+        // setProperty(data);
+    };
+
     // Inside PropertiesList component
 
     // Assuming your ReusableTable component and TableColumn interface are set up to handle this
     return (
         <div>
+            <h2> Filter Properties </h2>
+            {formData && <StandardForm
+                formDetails={formDetails}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                buttonTitle='Submit'
+            />
+            }
             <h2> Properties List </h2>
             {isLoading ? (
                 <p>Loading properties...</p>

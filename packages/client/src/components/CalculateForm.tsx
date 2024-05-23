@@ -4,22 +4,23 @@ import { InputType, PercentageAndAmount } from '../constants/Constant'; // Impor
 export type FormProperty = {
     title: string;
     name: string;
-    value: number | string;
+    value: number | string | undefined;
     type: InputType;
     hasRadioOptions?: boolean;
     radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
     options?: { value: string; label: string }[]; // Correct structure for select options
     step?: string;
+    hasFilterOption?: boolean;
 };
 
-interface InvestmentFormProps {
+export interface FormProps {
     formDetails: FormProperty[];
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
     buttonTitle: string;
 };
 
-const CalculateForm: React.FC<InvestmentFormProps> = ({ formDetails, handleChange, handleSubmit, buttonTitle }) => {
+const CalculateForm: React.FC<FormProps> = ({ formDetails, handleChange, handleSubmit, buttonTitle }) => {
     return (
         <form onSubmit={handleSubmit} className="investment-form">
             <div className="form-row">
