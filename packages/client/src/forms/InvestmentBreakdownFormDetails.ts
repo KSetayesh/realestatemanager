@@ -395,6 +395,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<InvestmentF
                 type: InputType.NUMBER,
             },
         ];
-    };
+    }
+
 }
 

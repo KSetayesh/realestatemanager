@@ -19,7 +19,7 @@ export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavin
             years: 30,
             monthlyDeposit: 0,
         };
-    };
+    }
 
     getFormDetails(formData: HighYieldSavingsFormData): FormProperty[] {
         return [
@@ -48,6 +48,7 @@ export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavin
                 type: InputType.NUMBER,
             },
         ];
-    };
+    }
+
 }
 

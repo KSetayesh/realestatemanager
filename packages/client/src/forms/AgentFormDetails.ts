@@ -15,7 +15,7 @@ export type AgentFormData = {
 };
 
 export class AgentFormDetails implements FormInterface<AgentFormData> {
-    
+
     // Create a state to store the form data.
     getDefaultFormData(): AgentFormData {
         return {
@@ -28,7 +28,7 @@ export class AgentFormDetails implements FormInterface<AgentFormData> {
             state: State.AL,
             agentType: AgentType.REAL_ESTATE_AGENT,
         };
-    };
+    }
 
     getFormDetails(formData: AgentFormData): FormProperty[] {
         return [
@@ -105,6 +105,7 @@ export class AgentFormDetails implements FormInterface<AgentFormData> {
                 })),
             },
         ];
-    };
+    }
+
 }
 

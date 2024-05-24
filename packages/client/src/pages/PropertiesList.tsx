@@ -3,7 +3,7 @@ import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
-import { createDefaultRowData, defaultColumns } from '../components/TableColumn';
+import { createDefaultRowData } from '../components/TableColumn';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
@@ -12,8 +12,9 @@ import {
     PropertiesListFormDetails,
     PropertyFilterFormFields
 } from '../forms/PropertiesListFormDetails';
+import { PropertiesListTable } from '../tables/PropertiesListTable';
 
-enum TableTypeEnum {
+export enum PropertiesListTableType {
     ALL = 'ALL',
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
 };
@@ -21,17 +22,18 @@ enum TableTypeEnum {
 const PropertiesList: React.FC = () => {
 
     const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
+    const propertiesListTable: PropertiesListTable = new PropertiesListTable();
 
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
-    const [tableType, setTableType] = useState<TableTypeEnum>(TableTypeEnum.STANDARD_BREAKDOWN);
+    const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value as keyof typeof TableTypeEnum;
-        setTableType(TableTypeEnum[input]);
+        const input = event.target.value as keyof typeof PropertiesListTableType;
+        setTableType(PropertiesListTableType[input]);
     };
 
     console.log('PropertiesList mounted');
@@ -56,23 +58,7 @@ const PropertiesList: React.FC = () => {
 
     const formDetails: FormProperty[] = propertiesListFormDetails.getFormDetails(formData);
 
-    const getAllColumns = (): TableColumn[] => {
-        return defaultColumns.map(column => ({
-            ...column,
-            showColumn: true  // Set showColumn to true for each object
-        }));
-    }
-
-    const tablesConfig: TablesConfig<ListingWithScenariosResponseDTO> = {
-        [TableTypeEnum.STANDARD_BREAKDOWN]: {
-            columns: defaultColumns,
-            data: createDefaultRowData,
-        },
-        [TableTypeEnum.ALL]: {
-            columns: getAllColumns(),
-            data: createDefaultRowData,
-        },
-    };
+    const tablesConfig: TablesConfig<ListingWithScenariosResponseDTO> = propertiesListTable.getTablesConfig();
 
     const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
@@ -82,13 +68,7 @@ const PropertiesList: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const tableData: TableDataItem<ListingWithScenariosResponseDTO>[] = properties.map(property => ({
-        objectData: {
-            key: property,
-        },
-        rowData: tablesConfig[tableType].data(property),
-    }
-    ));
+    const tableData: TableDataItem<ListingWithScenariosResponseDTO>[] = propertiesListTable.getTableData(properties, tableType);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -97,6 +77,19 @@ const PropertiesList: React.FC = () => {
         // console.log("Calculation result:", data);
         // setProperty(data);
     };
+
+    const getDefaultColumns = (): TableColumn[] => {
+        const investmentBreakdownColumn: TableColumn = {
+            header: "Investment Breakdown",
+            accessor: "investmentBreakdown",
+            isURL: false,
+            showColumn: true,
+            routeTo: 'investmentBreakdown',
+            isDollarAmount: false,
+            isSortable: false,
+        };
+        return propertiesListTable.getDefaultColumns([investmentBreakdownColumn]);
+    }
 
     // Inside PropertiesList component
 
@@ -122,8 +115,8 @@ const PropertiesList: React.FC = () => {
                         <label>
                             <input
                                 type="radio"
-                                value={TableTypeEnum.STANDARD_BREAKDOWN}
-                                checked={tableType === TableTypeEnum.STANDARD_BREAKDOWN}
+                                value={PropertiesListTableType.STANDARD_BREAKDOWN}
+                                checked={tableType === PropertiesListTableType.STANDARD_BREAKDOWN}
                                 onChange={handleTableTypeChange}
                             />
                             Standard Breakdown
@@ -131,8 +124,8 @@ const PropertiesList: React.FC = () => {
                         <label>
                             <input
                                 type="radio"
-                                value={TableTypeEnum.ALL}
-                                checked={tableType === TableTypeEnum.ALL}
+                                value={PropertiesListTableType.ALL}
+                                checked={tableType === PropertiesListTableType.ALL}
                                 onChange={handleTableTypeChange}
                             />
                             All
@@ -147,7 +140,7 @@ const PropertiesList: React.FC = () => {
                         property={selectedProperty}
                         rowData={createDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
-                        columns={defaultColumns}
+                        columns={getDefaultColumns()}
                     />}
                 </>
             )}

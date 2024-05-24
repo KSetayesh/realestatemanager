@@ -42,7 +42,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             hasPool: true,
             isActive: true,
         };
-    };
+    }
 
     getFormDetails(formData: PropertyFilterFormFields): FormProperty[] {
         return [
@@ -203,6 +203,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                 ],
             },
         ];
-    };
+    }
+
 }
 
