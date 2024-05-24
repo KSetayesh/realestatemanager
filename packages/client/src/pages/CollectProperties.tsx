@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { State, InputType, PropertyType, PropertyStatus } from '../constants/Constant';
 import '../styles/PropertyForm.css';
 import '../styles/CollectProperties.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { FormFieldConfig } from "./PropertyForm";
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
-import AddPropertyForm from '../components/AddPropertyForm';
+import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
+import StandardForm, { FormProperty } from '../components/StandardForm';
 
 const CollectProperties: React.FC = () => {
+    const rentCastApi: RentCastApi = new RentCastApi();
+    const collectPropertiesFormDetails: CollectPropertiesFormDetails = new CollectPropertiesFormDetails();
 
     const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsResponseDTO[]>();
     const [isLoading, setIsLoading] = useState(true);
-    const rentCastApi: RentCastApi = new RentCastApi();
 
     useEffect(() => {
         (async () => {
@@ -31,109 +31,7 @@ const CollectProperties: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const formFieldsConfig: FormFieldConfig[] = [
-        {
-            name: 'address',
-            label: 'Address',
-            type: InputType.TEXT,
-            defaultValue: ''
-        },
-        {
-            name: 'city',
-            label: 'City',
-            type: InputType.TEXT,
-            defaultValue: ''
-        },
-        {
-            name: 'state',
-            label: 'State',
-            type: InputType.SELECT,
-            defaultValue: State.AL,
-            selections: Object.values(State)
-        },
-        {
-            name: 'zipcode',
-            label: 'Zipcode',
-            type: InputType.TEXT,
-            defaultValue: ''
-        },
-        {
-            name: 'latitude',
-            label: 'Latitude',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'longitude',
-            label: 'Longitude',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'radius',
-            label: 'Radius',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'propertyType',
-            label: 'Property Type',
-            type: InputType.SELECT,
-            defaultValue: PropertyType.SINGLE_FAMILY,
-            selections: Object.values(PropertyType)
-        },
-        {
-            name: 'bedrooms',
-            label: 'Bedrooms',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'bathrooms',
-            label: 'Bathrooms',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'status',
-            label: 'Status',
-            type: InputType.SELECT,
-            defaultValue: PropertyStatus.ACTIVE,
-            selections: Object.values(PropertyStatus)
-        },
-        {
-            name: 'daysOld',
-            label: 'Days Old',
-            type: InputType.NUMBER,
-            defaultValue: ''
-        },
-        {
-            name: 'limit',
-            label: 'Limit',
-            type: InputType.NUMBER,
-            defaultValue: '5',
-        },
-        {
-            name: 'offset',
-            label: 'Offset',
-            type: InputType.NUMBER,
-            defaultValue: '',
-        },
-        {
-            name: 'retrieveExtraData',
-            label: 'Retrieve Extra Data',
-            type: InputType.CHECKBOX,
-            defaultValue: false,
-        },
-    ];
-
-    const initialFormState = formFieldsConfig.reduce((acc, { name, defaultValue }) => {
-        acc[name] = defaultValue;
-        return acc;
-    }, {} as { [key: string]: any });
-
-
-    const [formData, setFormData] = useState(initialFormState);
+    const [formData, setFormData] = useState(collectPropertiesFormDetails.getDefaultFormData()); //useState(initialFormState);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -152,23 +50,11 @@ const CollectProperties: React.FC = () => {
     };
 
     const getRequestData = (): CreateRentCastApiRequest => {
-        return {
-            address: formData.address,
-            city: formData.city,
-            state: formData.state as State,
-            zipCode: formData.zipcode,
-            latitude: parseFloat(formData.latitude),
-            longitude: parseFloat(formData.longitude),
-            radius: parseFloat(formData.radius),
-            propertyType: formData.propertyType as PropertyType,
-            bedrooms: parseFloat(formData.bedrooms),
-            bathrooms: parseFloat(formData.bathrooms),
-            status: formData.status as PropertyStatus,
-            daysOld: parseInt(formData.daysOld),
-            limit: parseInt(formData.limit),
-            offset: parseInt(formData.offset),
-            retrieveExtraData: formData.retrieveExtraData,
-        };
+        return collectPropertiesFormDetails.createRequest(formData);
+    };
+
+    const getFormDetails = (): FormProperty[] => {
+        return collectPropertiesFormDetails.getFormDetails(formData);
     };
 
     const buttonDisableLogic = (): boolean => {
@@ -181,7 +67,7 @@ const CollectProperties: React.FC = () => {
             }
         }
         return true;
-    }
+    };
 
     // Content based on loading state
     const getPageContent = () => {
@@ -206,14 +92,16 @@ const CollectProperties: React.FC = () => {
                     </div>
                     <hr />
                     <br />
-                    <AddPropertyForm
-                        formFieldsConfig={formFieldsConfig}
-                        formData={formData}
-                        setFormData={setFormData}
-                        // handleChange={handleChange}
+
+                    {formData && <StandardForm
+                        formDetails={getFormDetails()}
                         handleSubmit={handleSubmit}
+                        setFormData={setFormData}
+                        buttonTitle='Submit'
+                        columnsPerRow={3}
                         buttonDisableLogic={buttonDisableLogic}
                     />
+                    }
                 </>
             );
         }

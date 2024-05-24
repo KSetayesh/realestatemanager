@@ -17,7 +17,7 @@ export type FormProperty = {
     type: InputType;
     hasRadioOptions?: boolean;
     radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
-    options?: { value: string; label: string }[]; // Correct structure for select options
+    options?: { value: string | number, label: string }[]; // Correct structure for select options
     step?: string;
     hasFilterOption?: boolean;
 };
@@ -41,20 +41,44 @@ const StandardForm = <T,>({
 }: FormProps<T>) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = event.target;
-        if (InputType.RADIO === type) {
-            const propertyName = name.replace("_radio", "");
-            setFormData((prevFormData: T) => ({
-                ...prevFormData,
-                [propertyName]: value,
-            }));
-        } else {
-            setFormData((prevFormData: T) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
+
+        let _name: string = event.target.name;
+        let _value: string | boolean = event.target.value;
+        let _type: string = event.target.value;
+
+        if (InputType.RADIO === _type) {
+            _name = _name.replace("_radio", "");
         }
+        else if (InputType.CHECKBOX === _type) {
+            if (event.target instanceof HTMLInputElement && event.target.type === InputType.CHECKBOX) {
+                _value = event.target.checked;
+            } else {
+                _value = event.target.value;
+            }
+        }
+        setFormData((prevFormData: T) => ({
+            ...prevFormData,
+            [_name]: _value,
+        }));
+
     };
+
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    //     let value: string | boolean;
+    //     const name = e.target.name;
+
+    //     if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
+    //         value = e.target.checked;
+    //     } else {
+    //         value = e.target.value;
+    //     }
+
+    //     setFormData((prevFormData: FormData) => ({
+    //         ...prevFormData,
+    //         [name]: value
+    //     }));
+
+    // };
 
     const stringOption = (detail: FormProperty) => {
         return (
@@ -64,7 +88,7 @@ const StandardForm = <T,>({
                         <div className="form-check">
                             <input
                                 className="form-check-input"
-                                type="radio"
+                                type={InputType.RADIO}
                                 name={`${detail.radioDetails.name}_radio`}
                                 id={`${detail.radioDetails.name}_percentage`}
                                 value={PercentageAndAmount.PERCENTAGE}
@@ -78,7 +102,7 @@ const StandardForm = <T,>({
                         <div className="form-check">
                             <input
                                 className="form-check-input"
-                                type="radio"
+                                type={InputType.RADIO}
                                 name={`${detail.radioDetails.name}_radio`}
                                 id={`${detail.radioDetails.name}_amount`}
                                 value={PercentageAndAmount.AMOUNT}
@@ -92,7 +116,7 @@ const StandardForm = <T,>({
                     </div>
                 )}
                 <input
-                    type="string"
+                    type={InputType.STRING}
                     name={detail.name}
                     value={detail.value}
                     onChange={handleChange}
@@ -110,7 +134,7 @@ const StandardForm = <T,>({
                         <div className="form-check">
                             <input
                                 className="form-check-input"
-                                type="radio"
+                                type={InputType.RADIO}
                                 name={`${detail.radioDetails.name}_radio`}
                                 id={`${detail.radioDetails.name}_percentage`}
                                 value={PercentageAndAmount.PERCENTAGE}
@@ -124,7 +148,7 @@ const StandardForm = <T,>({
                         <div className="form-check">
                             <input
                                 className="form-check-input"
-                                type="radio"
+                                type={InputType.RADIO}
                                 name={`${detail.radioDetails.name}_radio`}
                                 id={`${detail.radioDetails.name}_amount`}
                                 value={PercentageAndAmount.AMOUNT}
@@ -138,7 +162,7 @@ const StandardForm = <T,>({
                     </div>
                 )}
                 <input
-                    type="number"
+                    type={InputType.NUMBER}
                     name={detail.name}
                     value={detail.value}
                     onChange={handleChange}
@@ -166,13 +190,48 @@ const StandardForm = <T,>({
         );
     };
 
+    const checkBoxOption = (detail: FormProperty) => {
+        let isChecked: boolean = false;
+        if (detail.value && detail.value.toString().toLocaleLowerCase() === 'true') {
+            isChecked = true;
+        }
+
+        return (
+            <input
+                type={InputType.CHECKBOX}
+                name={detail.name}
+                checked={isChecked}
+                onChange={handleChange}
+                className="form-input"
+            />
+        );
+    };
+
+    // // TODO
+    // const checkBoxOption = (detail: FormProperty) => {
+    //     return (
+    //         <input
+    //             type={InputType.CHECKBOX}
+    //             name={detail.name}
+    //             checked={formData[name]}
+    //             value={formData[name]}
+    //             onChange={handleChange}
+    //             className="form-input" />
+    //     );
+    // };
+
     const renderInputField = (detail: FormProperty) => {
         if (detail.type === InputType.STRING) {
             return stringOption(detail);
-        } else if (detail.type === InputType.NUMBER) {
+        }
+        else if (detail.type === InputType.NUMBER) {
             return numberOption(detail);
-        } else if (detail.type === InputType.SELECT) {
+        }
+        else if (detail.type === InputType.SELECT) {
             return selectOption(detail);
+        }
+        else if (detail.type === InputType.CHECKBOX) {
+            return checkBoxOption(detail);
         }
         return null;
     };

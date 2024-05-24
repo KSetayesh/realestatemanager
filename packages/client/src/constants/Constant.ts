@@ -107,12 +107,33 @@ export enum ListingCreationType {
     MATCHED_PRE_EXISTING_RENT_CAST_DATA = 'Matched Pre Existing Rent Cast Data',
 };
 
-export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-// const round = (num: number, places: number = 2): number => {
-//     const multiplier = Math.pow(10, places);
-//     return Math.round((num + Number.EPSILON) * multiplier) / multiplier;
-// }
+export const ratingSelections = (from: number = 1, limit: number = 10): { value: string | number; label: string }[] => {
+    const array = [];
+
+    for (let i = from; i <= limit; i++) {
+        array.push({
+            label: i.toString(),
+            value: i,
+        });
+    }
+
+    return array;
+};
+
+export const trueAndFalseSelections = (): { value: string | number; label: string }[] => {
+    return [
+        {
+            label: 'true',
+            value: 'true',
+        },
+        {
+            label: 'false',
+            value: 'false',
+        },
+    ];
+};
 
 const formatDollarAmount = (amount: number): string => {
     return amount.toLocaleString('en-US', {
