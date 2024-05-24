@@ -104,7 +104,6 @@ const PropertiesList: React.FC = () => {
             <h2> Filter Properties </h2>
             {formData && <StandardForm
                 formDetails={getFormDetails()}
-                // handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Submit'

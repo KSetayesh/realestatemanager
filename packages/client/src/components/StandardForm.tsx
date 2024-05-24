@@ -24,27 +24,22 @@ export type FormProperty = {
 
 export interface FormProps<T> {
     formDetails: FormProperty[];
-    // handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-    setFormData: React.Dispatch<React.SetStateAction<T>>; // React.Dispatch<React.SetStateAction<{ [key: string]: any }>>;
+    setFormData: React.Dispatch<React.SetStateAction<T>>;
     buttonTitle: string;
+    columnsPerRow?: number; // Optional prop for number of columns per row
 };
 
-const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle }: FormProps<T>) => {
-
+const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle, columnsPerRow = 3 }: FormProps<T>) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = event.target;
         if (InputType.RADIO === type) {
-            // Radio buttons have names like "{propertyName}_radio"
-            // Extract the propertyName to update the corresponding state 
-
             const propertyName = name.replace("_radio", "");
             setFormData((prevFormData: T) => ({
                 ...prevFormData,
                 [propertyName]: value,
             }));
         } else {
-            // For number and select inputs, simply update based on name and value
             setFormData((prevFormData: T) => ({
                 ...prevFormData,
                 [name]: value,
@@ -92,7 +87,7 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle 
                     name={detail.name}
                     value={detail.value}
                     onChange={handleChange}
-                    className="form-check-input"//"form-control" //{`form-control ${detail.hasFilterOption ? 'has-filter' : ''}`}
+                    className="form-check-input"
                 />
             </div>
         );
@@ -138,7 +133,7 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle 
                     name={detail.name}
                     value={detail.value}
                     onChange={handleChange}
-                    className="form-check-input" //"form-control"//{`form-control ${detail.hasFilterOption ? 'has-filter' : ''}`}
+                    className="form-check-input"
                     step={detail.step || "1"}
                 />
             </div>
@@ -181,7 +176,6 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle 
                     <div className="input-group">
                         <select
                             name={`${detail.name}_filter`}
-                            // value={detail.filterValue}
                             onChange={handleChange}
                             className="form-control filter-select"
                         >
@@ -207,7 +201,7 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle 
 
     return (
         <form onSubmit={handleSubmit} className="investment-form">
-            <div className="form-row">
+            <div className="form-row" style={{ gridTemplateColumns: `repeat(${columnsPerRow}, 1fr)` }}>
                 {formDetails.map((detail: FormProperty, index: number) => (
                     <div className="form-group" key={index}>
                         {createFormProperty(detail, index)}
