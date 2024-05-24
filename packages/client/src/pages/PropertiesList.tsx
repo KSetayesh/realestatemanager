@@ -3,7 +3,6 @@ import PropertyDetailsModal from './PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
-import { createDefaultRowData } from '../components/TableColumn';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
@@ -138,7 +137,7 @@ const PropertiesList: React.FC = () => {
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}
-                        rowData={createDefaultRowData(selectedProperty)}
+                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)} // createDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
                         columns={getDefaultColumns()}
                     />}
