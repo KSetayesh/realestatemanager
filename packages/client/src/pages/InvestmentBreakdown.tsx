@@ -16,7 +16,7 @@ import '../styles/StandardForm.css'; // Make sure to create this CSS file
 import { InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { InvestmentFormData, getDefaultInvestmentFormData, getInvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
+import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';
 
 enum TableTypeEnum {
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
@@ -35,6 +35,8 @@ export interface TablesConfig<T> {
 }
 
 const InvestmentBreakdown: React.FC = () => {
+
+    const investmentBreakdownFormDetails: InvestmentBreakdownFormDetails = new InvestmentBreakdownFormDetails();
 
     const [property, setProperty] = useState<ListingWithScenariosResponseDTO>(
         useLocation().state.data as ListingWithScenariosResponseDTO
@@ -662,12 +664,12 @@ const InvestmentBreakdown: React.FC = () => {
         },
     };
 
-    const [formData, setFormData] = useState<InvestmentFormData>(getDefaultInvestmentFormData(property));
+    const [formData, setFormData] = useState<InvestmentFormData>(investmentBreakdownFormDetails.getDefaultFormData(property));
 
     useEffect(() => {
         if (property) {
             setProperty(property);
-            setFormData(getDefaultInvestmentFormData(property));
+            setFormData(investmentBreakdownFormDetails.getDefaultFormData(property));
         }
     }, [property]);  // Ensure useEffect depends on `property`
 
@@ -699,7 +701,7 @@ const InvestmentBreakdown: React.FC = () => {
 
     //-----------------------------------------------------------------------------------------------------------
 
-    const formDetails: FormProperty[] = getInvestmentBreakdownFormDetails(formData);
+    const formDetails: FormProperty[] = investmentBreakdownFormDetails.getFormDetails(formData);
 
     //-----------------------------------------------------------------------------------------------------------
 

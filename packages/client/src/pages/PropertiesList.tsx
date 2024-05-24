@@ -9,9 +9,8 @@ import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
-    PropertyFilterFormFields,
-    getDefaultFilterPropertiesFormData,
-    getPropertiesListFormDetails
+    PropertiesListFormDetails,
+    PropertyFilterFormFields
 } from '../forms/PropertiesListFormDetails';
 
 enum TableTypeEnum {
@@ -20,6 +19,9 @@ enum TableTypeEnum {
 };
 
 const PropertiesList: React.FC = () => {
+
+    const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
+
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
@@ -39,7 +41,7 @@ const PropertiesList: React.FC = () => {
                 setIsLoading(true); // Set loading state to true before fetching data
                 const propertiesData: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties();
                 setProperties(propertiesData); // Update state with fetched data
-                setFormData(getDefaultFilterPropertiesFormData());
+                setFormData(propertiesListFormDetails.getDefaultFormData());
                 console.log("Fetched data:", propertiesData);
             } catch (error) {
                 // Error handling if fetchProperties fails
@@ -50,9 +52,9 @@ const PropertiesList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const [formData, setFormData] = useState<PropertyFilterFormFields>(getDefaultFilterPropertiesFormData());
+    const [formData, setFormData] = useState<PropertyFilterFormFields>(propertiesListFormDetails.getDefaultFormData());
 
-    const formDetails: FormProperty[] = getPropertiesListFormDetails(formData);
+    const formDetails: FormProperty[] = propertiesListFormDetails.getFormDetails(formData);
 
     const getAllColumns = (): TableColumn[] => {
         return defaultColumns.map(column => ({

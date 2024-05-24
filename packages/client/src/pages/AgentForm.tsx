@@ -3,13 +3,15 @@ import { CreateAgentRequest } from '@realestatemanager/shared';
 import { AgentType, Country, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { AgentFormData, getAgentFormDetails, getDefaultAgentFormData } from '../forms/AgentFormDetails';
+import { AgentFormData, AgentFormDetails } from '../forms/AgentFormDetails';
 
 const AgentForm: React.FC = () => {
 
     const agentApi: AgentApi = new AgentApi();
 
-    const [formData, setFormData] = useState<AgentFormData>(getDefaultAgentFormData());
+    const agentFormDetails: AgentFormDetails = new AgentFormDetails();
+
+    const [formData, setFormData] = useState<AgentFormData>(agentFormDetails.getDefaultFormData());
 
     const getAgentRequest = (): CreateAgentRequest => {
         return {
@@ -37,7 +39,7 @@ const AgentForm: React.FC = () => {
         }
     };
 
-    const formDetails: FormProperty[] = getAgentFormDetails(formData);
+    const formDetails: FormProperty[] = agentFormDetails.getFormDetails(formData);
 
     return (
         <div>

@@ -5,14 +5,15 @@ import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../componen
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     HighYieldSavingsFormData,
-    getDefaultHighYieldSavingsFormData,
-    getHighYieldSavingsFormDetails
+    HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
 
 
 const HighYieldSavings: React.FC = () => {
 
-    const [formData, setFormData] = useState<HighYieldSavingsFormData>(getDefaultHighYieldSavingsFormData());
+    const highYieldSavingsFormDetails: HighYieldSavingsFormDetails = new HighYieldSavingsFormDetails();
+
+    const [formData, setFormData] = useState<HighYieldSavingsFormData>(highYieldSavingsFormDetails.getDefaultFormData());
 
     const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>();
 
@@ -33,7 +34,7 @@ const HighYieldSavings: React.FC = () => {
         setMetrics(data);
     };
 
-    const formDetails: FormProperty[] = getHighYieldSavingsFormDetails(formData);
+    const formDetails: FormProperty[] = highYieldSavingsFormDetails.getFormDetails(formData);
 
     const columnsForMetrics: TableColumn[] = [
         {
