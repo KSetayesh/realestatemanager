@@ -11,94 +11,12 @@ import PropertyDetailsModal from './PropertyDetailsModal';
 import {
     createDefaultRowData,
     defaultColumns,
-    getAnnualHOAFeesIncreaseRate,
-    getAnnualHomeInsuranceIncreaseRate
 } from '../components/TableColumn';
 import '../styles/StandardForm.css'; // Make sure to create this CSS file
-import {
-    getAnnualAppreciationRate,
-    getAnnualInterestRate,
-    getAnnualRentIncreaseRate,
-    getAnnualTaxIncreaseRate,
-    getCapExReserveRate,
-    getClosingCosts,
-    getDownPaymentPercentage,
-    getInitialRepairCosts,
-    getInterestType,
-    getLaundryServices,
-    getLegalAndProfessionalFees,
-    getMaintenanceRate,
-    getMonthlyHOAFeesAmount,
-    getMonthlyHomeInsuranceAmount,
-    getMonthlyPropertyTax,
-    getMortgageInterest,
-    getOperatingExpenses,
-    getOtherAdditionalIncomeStreams,
-    getOtherExpensesRate,
-    getOtherInitialExpenses,
-    getPMIDropoffPoint,
-    getPMIRate,
-    getParkingFees,
-    getPrice,
-    getPropertyManagementRate,
-    getPropertyTaxes,
-    getRentEstimate,
-    getStorageUnitFees,
-    getTaxDepreciation,
-    getTermInYears,
-    getTravelingCosts,
-    getVacancyRate
-} from '../components/TableColumn';
 import { InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { getInvestmentBreakdownFormDetails } from '../constants/FormFields';
-
-export type InvestmentFormData = {
-    downPaymentType: PercentageAndAmount,
-    downPaymentPercentage: number,
-    pmiRate: number,
-    pmiDropoffPoint: number,
-    monthlyPropertyTaxType: PercentageAndAmount,
-    monthlyPropertyTax: number,
-    monthlyHomeInsuranceAmountType: PercentageAndAmount,
-    monthlyHomeInsuranceAmount: number,
-    monthlyHOAFeesAmountType: PercentageAndAmount,
-    monthlyHOAFeesAmount: number,
-    annualInterestRate: number,
-    termInYears: number,
-    interestType: string,
-    propertyManagementRate: number,
-    vacancyRate: number,
-    maintenanceRate: number,
-    otherExpensesRate: number,
-    capExReserveRate: number,
-    legalAndProfessionalFeesType: PercentageAndAmount,
-    legalAndProfessionalFees: number,
-    initialRepairCostsType: PercentageAndAmount,
-    initialRepairCosts: number,
-    travelingCostsType: PercentageAndAmount,
-    travelingCosts: number,
-    closingCostsType: PercentageAndAmount,
-    closingCosts: number,
-    otherInitialExpensesType: PercentageAndAmount,
-    otherInitialExpenses: number,
-    rentEstimate: number,
-    purchasePrice: number,
-    annualRentIncreaseRate: number,
-    annualAppreciationRate: number,
-    annualTaxIncreaseRate: number,
-    annualHomeInsuranceIncreaseRate: number,
-    annualHOAFeesIncreaseRate: number,
-    parkingFees: number,
-    laundryServices: number,
-    storageUnitFees: number,
-    other: number,
-    depreciation: number,
-    mortgageInterest: number,
-    operatingExpenses: number,
-    propertyTaxes: number,
-};
+import { InvestmentFormData, getDefaultInvestmentFormData, getInvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
 
 enum TableTypeEnum {
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
@@ -744,63 +662,12 @@ const InvestmentBreakdown: React.FC = () => {
         },
     };
 
-
-    // Create a state to store the form data.
-    const getInvestmentFormData = (): InvestmentFormData => {
-        return {
-            downPaymentType: PercentageAndAmount.PERCENTAGE,
-            downPaymentPercentage: getDownPaymentPercentage(property),
-            pmiRate: getPMIRate(property),
-            pmiDropoffPoint: getPMIDropoffPoint(property),
-            monthlyPropertyTaxType: PercentageAndAmount.AMOUNT,
-            monthlyPropertyTax: getMonthlyPropertyTax(property),
-            monthlyHomeInsuranceAmountType: PercentageAndAmount.AMOUNT,
-            monthlyHomeInsuranceAmount: getMonthlyHomeInsuranceAmount(property),
-            monthlyHOAFeesAmountType: PercentageAndAmount.AMOUNT,
-            monthlyHOAFeesAmount: getMonthlyHOAFeesAmount(property),
-            annualInterestRate: getAnnualInterestRate(property),
-            termInYears: getTermInYears(property),
-            interestType: getInterestType(property),
-            propertyManagementRate: getPropertyManagementRate(property),
-            vacancyRate: getVacancyRate(property),
-            maintenanceRate: getMaintenanceRate(property),
-            otherExpensesRate: getOtherExpensesRate(property),
-            capExReserveRate: getCapExReserveRate(property),
-            legalAndProfessionalFeesType: PercentageAndAmount.AMOUNT,
-            legalAndProfessionalFees: getLegalAndProfessionalFees(property),
-            initialRepairCostsType: PercentageAndAmount.AMOUNT,
-            initialRepairCosts: getInitialRepairCosts(property),
-            travelingCostsType: PercentageAndAmount.AMOUNT,
-            travelingCosts: getTravelingCosts(property),
-            closingCostsType: PercentageAndAmount.AMOUNT,
-            closingCosts: getClosingCosts(property),
-            otherInitialExpensesType: PercentageAndAmount.AMOUNT,
-            otherInitialExpenses: getOtherInitialExpenses(property),
-            rentEstimate: getRentEstimate(property),
-            purchasePrice: getPrice(property),
-            annualRentIncreaseRate: getAnnualRentIncreaseRate(property),
-            annualAppreciationRate: getAnnualAppreciationRate(property),
-            annualTaxIncreaseRate: getAnnualTaxIncreaseRate(property),
-            annualHomeInsuranceIncreaseRate: getAnnualHomeInsuranceIncreaseRate(property),
-            annualHOAFeesIncreaseRate: getAnnualHOAFeesIncreaseRate(property),
-            parkingFees: getParkingFees(property),
-            laundryServices: getLaundryServices(property),
-            storageUnitFees: getStorageUnitFees(property),
-            other: getOtherAdditionalIncomeStreams(property),
-            depreciation: getTaxDepreciation(property),
-            mortgageInterest: getMortgageInterest(property),
-            operatingExpenses: getOperatingExpenses(property),
-            propertyTaxes: getPropertyTaxes(property),
-            // setNewDefaultValues: false,
-        };
-    }
-
-    const [formData, setFormData] = useState<InvestmentFormData>(getInvestmentFormData());
+    const [formData, setFormData] = useState<InvestmentFormData>(getDefaultInvestmentFormData(property));
 
     useEffect(() => {
         if (property) {
             setProperty(property);
-            setFormData(getInvestmentFormData());
+            setFormData(getDefaultInvestmentFormData(property));
         }
     }, [property]);  // Ensure useEffect depends on `property`
 

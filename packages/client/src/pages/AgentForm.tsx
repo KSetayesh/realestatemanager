@@ -3,39 +3,13 @@ import { CreateAgentRequest } from '@realestatemanager/shared';
 import { AgentType, Country, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { getAgentFormDetails } from '../constants/FormFields';
-
-export type AgentFormData = {
-    firstName: string;
-    lastName: string;
-    website?: string;
-    companyName: string,
-    phoneNumber: string;
-    email: string;
-    country: string;
-    state: string;
-    agentType: string;
-};
+import { AgentFormData, getAgentFormDetails, getDefaultAgentFormData } from '../forms/AgentFormDetails';
 
 const AgentForm: React.FC = () => {
 
     const agentApi: AgentApi = new AgentApi();
 
-    // Create a state to store the form data.
-    const getAgentFormData = (): AgentFormData => {
-        return {
-            firstName: '',
-            lastName: '',
-            companyName: '',
-            phoneNumber: '',
-            email: '',
-            country: Country.UnitedStates,
-            state: State.AL,
-            agentType: AgentType.REAL_ESTATE_AGENT,
-        };
-    };
-
-    const [formData, setFormData] = useState<AgentFormData>(getAgentFormData());
+    const [formData, setFormData] = useState<AgentFormData>(getDefaultAgentFormData());
 
     const getAgentRequest = (): CreateAgentRequest => {
         return {

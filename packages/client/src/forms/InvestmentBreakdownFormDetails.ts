@@ -1,115 +1,138 @@
 import { FormProperty } from "../components/StandardForm";
-import { AgentFormData } from "../pages/AgentForm";
-import { HighYieldSavingsFormData } from "../pages/HighYieldSavings";
-import { InvestmentFormData } from "../pages/InvestmentBreakdown";
-import { PropertyFilterFormFields } from "../pages/PropertiesList";
-import { AgentType, Country, InputType, InterestType, PropertyType, State } from "./Constant";
+import { InputType, InterestType, PercentageAndAmount } from "../constants/Constant";
+import {
+    getAnnualAppreciationRate,
+    getAnnualHOAFeesIncreaseRate,
+    getAnnualHomeInsuranceIncreaseRate,
+    getAnnualInterestRate,
+    getAnnualRentIncreaseRate,
+    getAnnualTaxIncreaseRate,
+    getCapExReserveRate,
+    getClosingCosts,
+    getDownPaymentPercentage,
+    getInitialRepairCosts,
+    getInterestType,
+    getLaundryServices,
+    getLegalAndProfessionalFees,
+    getMaintenanceRate,
+    getMonthlyHOAFeesAmount,
+    getMonthlyHomeInsuranceAmount,
+    getMonthlyPropertyTax,
+    getMortgageInterest,
+    getOperatingExpenses,
+    getOtherAdditionalIncomeStreams,
+    getOtherExpensesRate,
+    getOtherInitialExpenses,
+    getPMIDropoffPoint,
+    getPMIRate,
+    getParkingFees,
+    getPrice,
+    getPropertyManagementRate,
+    getPropertyTaxes,
+    getRentEstimate,
+    getStorageUnitFees,
+    getTaxDepreciation,
+    getTermInYears,
+    getTravelingCosts,
+    getVacancyRate
+} from '../components/TableColumn';
+import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 
-export const getAgentFormDetails = (formData: AgentFormData): FormProperty[] => {
-    return [
-        {
-            title: 'First Name',
-            name: 'firstName',
-            value: formData.firstName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Last Name',
-            name: 'lastName',
-            value: formData.lastName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Website',
-            name: 'website',
-            value: formData.website!,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Company Name',
-            name: 'companyName',
-            value: formData.companyName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Phone Number',
-            name: 'phoneNumber',
-            value: formData.phoneNumber,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Email',
-            name: 'email',
-            value: formData.email,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Country',
-            name: 'country',
-            value: formData.country,
-            type: InputType.SELECT,
-            options: Object.values(Country).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'State',
-            name: 'state',
-            value: formData.state,
-            type: InputType.SELECT,
-            options: Object.values(State).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'Agent Type',
-            name: 'agentType',
-            value: formData.agentType,
-            type: InputType.SELECT,
-            options: Object.values(AgentType).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-    ];
+export type InvestmentFormData = {
+    downPaymentType: PercentageAndAmount,
+    downPaymentPercentage: number,
+    pmiRate: number,
+    pmiDropoffPoint: number,
+    monthlyPropertyTaxType: PercentageAndAmount,
+    monthlyPropertyTax: number,
+    monthlyHomeInsuranceAmountType: PercentageAndAmount,
+    monthlyHomeInsuranceAmount: number,
+    monthlyHOAFeesAmountType: PercentageAndAmount,
+    monthlyHOAFeesAmount: number,
+    annualInterestRate: number,
+    termInYears: number,
+    interestType: string,
+    propertyManagementRate: number,
+    vacancyRate: number,
+    maintenanceRate: number,
+    otherExpensesRate: number,
+    capExReserveRate: number,
+    legalAndProfessionalFeesType: PercentageAndAmount,
+    legalAndProfessionalFees: number,
+    initialRepairCostsType: PercentageAndAmount,
+    initialRepairCosts: number,
+    travelingCostsType: PercentageAndAmount,
+    travelingCosts: number,
+    closingCostsType: PercentageAndAmount,
+    closingCosts: number,
+    otherInitialExpensesType: PercentageAndAmount,
+    otherInitialExpenses: number,
+    rentEstimate: number,
+    purchasePrice: number,
+    annualRentIncreaseRate: number,
+    annualAppreciationRate: number,
+    annualTaxIncreaseRate: number,
+    annualHomeInsuranceIncreaseRate: number,
+    annualHOAFeesIncreaseRate: number,
+    parkingFees: number,
+    laundryServices: number,
+    storageUnitFees: number,
+    other: number,
+    depreciation: number,
+    mortgageInterest: number,
+    operatingExpenses: number,
+    propertyTaxes: number,
 };
 
-export const getHighYieldSavingsFormDetails = (formData: HighYieldSavingsFormData): FormProperty[] => {
-    return [
-        {
-            title: 'Initial Deposit',
-            name: 'initialDeposit',
-            value: formData.initialDeposit,
-            type: InputType.NUMBER,
-        },
-        {
-            title: 'Annual Interest Rate (%)',
-            name: 'annualInterestRate',
-            value: formData.annualInterestRate,
-            type: InputType.NUMBER,
-        },
-        {
-            title: 'Years',
-            name: 'years',
-            value: formData.years,
-            type: InputType.NUMBER,
-        },
-        {
-            title: 'Monthly Deposit',
-            name: 'monthlyDeposit',
-            value: formData.monthlyDeposit ?? 0,
-            type: InputType.NUMBER,
-        },
-    ];
-};
+// Create a state to store the form data.
+export const getDefaultInvestmentFormData = (property: ListingWithScenariosResponseDTO): InvestmentFormData => {
+    return {
+        downPaymentType: PercentageAndAmount.PERCENTAGE,
+        downPaymentPercentage: getDownPaymentPercentage(property),
+        pmiRate: getPMIRate(property),
+        pmiDropoffPoint: getPMIDropoffPoint(property),
+        monthlyPropertyTaxType: PercentageAndAmount.AMOUNT,
+        monthlyPropertyTax: getMonthlyPropertyTax(property),
+        monthlyHomeInsuranceAmountType: PercentageAndAmount.AMOUNT,
+        monthlyHomeInsuranceAmount: getMonthlyHomeInsuranceAmount(property),
+        monthlyHOAFeesAmountType: PercentageAndAmount.AMOUNT,
+        monthlyHOAFeesAmount: getMonthlyHOAFeesAmount(property),
+        annualInterestRate: getAnnualInterestRate(property),
+        termInYears: getTermInYears(property),
+        interestType: getInterestType(property),
+        propertyManagementRate: getPropertyManagementRate(property),
+        vacancyRate: getVacancyRate(property),
+        maintenanceRate: getMaintenanceRate(property),
+        otherExpensesRate: getOtherExpensesRate(property),
+        capExReserveRate: getCapExReserveRate(property),
+        legalAndProfessionalFeesType: PercentageAndAmount.AMOUNT,
+        legalAndProfessionalFees: getLegalAndProfessionalFees(property),
+        initialRepairCostsType: PercentageAndAmount.AMOUNT,
+        initialRepairCosts: getInitialRepairCosts(property),
+        travelingCostsType: PercentageAndAmount.AMOUNT,
+        travelingCosts: getTravelingCosts(property),
+        closingCostsType: PercentageAndAmount.AMOUNT,
+        closingCosts: getClosingCosts(property),
+        otherInitialExpensesType: PercentageAndAmount.AMOUNT,
+        otherInitialExpenses: getOtherInitialExpenses(property),
+        rentEstimate: getRentEstimate(property),
+        purchasePrice: getPrice(property),
+        annualRentIncreaseRate: getAnnualRentIncreaseRate(property),
+        annualAppreciationRate: getAnnualAppreciationRate(property),
+        annualTaxIncreaseRate: getAnnualTaxIncreaseRate(property),
+        annualHomeInsuranceIncreaseRate: getAnnualHomeInsuranceIncreaseRate(property),
+        annualHOAFeesIncreaseRate: getAnnualHOAFeesIncreaseRate(property),
+        parkingFees: getParkingFees(property),
+        laundryServices: getLaundryServices(property),
+        storageUnitFees: getStorageUnitFees(property),
+        other: getOtherAdditionalIncomeStreams(property),
+        depreciation: getTaxDepreciation(property),
+        mortgageInterest: getMortgageInterest(property),
+        operatingExpenses: getOperatingExpenses(property),
+        propertyTaxes: getPropertyTaxes(property),
+        // setNewDefaultValues: false,
+    };
+}
 
 export const getInvestmentBreakdownFormDetails = (formData: InvestmentFormData): FormProperty[] => {
     return [
@@ -368,167 +391,6 @@ export const getInvestmentBreakdownFormDetails = (formData: InvestmentFormData):
             name: 'propertyTaxes',
             value: formData.propertyTaxes,
             type: InputType.NUMBER,
-        },
-    ];
-};
-
-export const getPropertiesListFormDetails = (formData: PropertyFilterFormFields): FormProperty[] => {
-    return [
-        {
-            title: 'State',
-            name: 'state',
-            value: formData?.state,
-            type: InputType.SELECT,
-            options: Object.values(State).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'ZipCode',
-            name: 'zipCode',
-            value: formData?.zipCode,
-            type: InputType.STRING,
-        },
-        {
-            title: 'City',
-            name: 'city',
-            value: formData?.city,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Rent Estimate',
-            name: 'rentEstimate',
-            value: formData?.rentEstimate,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Listed Price',
-            name: 'listedPrice',
-            value: formData?.listedPrice,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Number Of Bedrooms',
-            name: 'numberOfBedrooms',
-            value: formData?.numberOfBedrooms,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Number Of Bathrooms',
-            name: 'numberOfBathrooms',
-            value: formData?.numberOfBathrooms,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Square Feet',
-            name: 'squareFeet',
-            value: formData?.squareFeet,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Year Built',
-            name: 'yearBuilt',
-            value: formData?.yearBuilt,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Max Hoa',
-            name: 'maxHoa',
-            value: formData?.maxHoa,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Monthly Property Tax Amount',
-            name: 'monthlyPropertyTaxAmount',
-            value: formData?.monthlyPropertyTaxAmount,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Home Type',
-            name: 'homeType',
-            value: formData?.homeType,
-            type: InputType.SELECT,
-            options: Object.values(PropertyType).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'Has Garage',
-            name: 'hasGarage',
-            value: formData?.hasGarage ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Has Basement',
-            name: 'hasBasement',
-            value: formData?.hasBasement ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Has Pool',
-            name: 'hasPool',
-            value: formData?.hasPool ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Is Active',
-            name: 'isActive',
-            value: formData?.isActive ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
         },
     ];
 };

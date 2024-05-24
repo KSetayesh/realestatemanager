@@ -7,32 +7,16 @@ import { createDefaultRowData, defaultColumns } from '../components/TableColumn'
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
-import { PropertyType, State } from '../constants/Constant';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { getPropertiesListFormDetails } from '../constants/FormFields';
+import {
+    PropertyFilterFormFields,
+    getDefaultFilterPropertiesFormData,
+    getPropertiesListFormDetails
+} from '../forms/PropertiesListFormDetails';
 
 enum TableTypeEnum {
     ALL = 'ALL',
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
-};
-
-export type PropertyFilterFormFields = {
-    state: State,
-    zipCode: string,
-    city: string,
-    rentEstimate: number,
-    listedPrice: number,
-    numberOfBedrooms: number,
-    numberOfBathrooms: number,
-    squareFeet: number,
-    yearBuilt: number,
-    maxHoa: number,
-    monthlyPropertyTaxAmount: number,
-    homeType: PropertyType,
-    hasGarage: boolean,
-    hasBasement: boolean,
-    hasPool: boolean,
-    isActive: boolean,
 };
 
 const PropertiesList: React.FC = () => {
@@ -65,28 +49,6 @@ const PropertiesList: React.FC = () => {
             }
         })();
     }, []); // Empty dependency array means this effect runs once on mount
-
-    // Create a state to store the form data.
-    const getDefaultFilterPropertiesFormData = (): PropertyFilterFormFields => {
-        return {
-            state: State.AL,
-            zipCode: '',
-            city: '',
-            rentEstimate: 0,
-            listedPrice: 0,
-            numberOfBedrooms: 0,
-            numberOfBathrooms: 0,
-            squareFeet: 0,
-            yearBuilt: 0,
-            maxHoa: 0,
-            monthlyPropertyTaxAmount: 0,
-            homeType: PropertyType.APARTMENT,
-            hasGarage: true,
-            hasBasement: true,
-            hasPool: true,
-            isActive: true,
-        };
-    };
 
     const [formData, setFormData] = useState<PropertyFilterFormFields>(getDefaultFilterPropertiesFormData());
 

@@ -3,28 +3,16 @@ import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
 import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { getHighYieldSavingsFormDetails } from '../constants/FormFields';
+import {
+    HighYieldSavingsFormData,
+    getDefaultHighYieldSavingsFormData,
+    getHighYieldSavingsFormDetails
+} from '../forms/HighYieldSavingsFormDetails';
 
-export type HighYieldSavingsFormData = {
-    initialDeposit: number;
-    annualInterestRate: number;
-    years: number;
-    monthlyDeposit?: number;
-};
 
 const HighYieldSavings: React.FC = () => {
 
-    // Create a state to store the form data.
-    const getHighYieldSavingsFormData = (): HighYieldSavingsFormData => {
-        return {
-            initialDeposit: 1000,
-            annualInterestRate: 5,
-            years: 30,
-            monthlyDeposit: 0,
-        };
-    };
-
-    const [formData, setFormData] = useState<HighYieldSavingsFormData>(getHighYieldSavingsFormData());
+    const [formData, setFormData] = useState<HighYieldSavingsFormData>(getDefaultHighYieldSavingsFormData());
 
     const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>();
 
