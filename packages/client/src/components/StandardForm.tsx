@@ -1,6 +1,5 @@
 import React from 'react';
 import { InputType, PercentageAndAmount } from '../constants/Constant'; // Import constants as needed
-import { FormProperty, FormProps } from './CalculateForm';
 
 enum Filter {
     all = 'All',
@@ -11,7 +10,47 @@ enum Filter {
     lteq = '<=',
 };
 
-const StandardForm: React.FC<FormProps> = ({ formDetails, handleChange, handleSubmit, buttonTitle }) => {
+export type FormProperty = {
+    title: string;
+    name: string;
+    value: number | string | undefined;
+    type: InputType;
+    hasRadioOptions?: boolean;
+    radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
+    options?: { value: string; label: string }[]; // Correct structure for select options
+    step?: string;
+    hasFilterOption?: boolean;
+};
+
+export interface FormProps<T> {
+    formDetails: FormProperty[];
+    // handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+    setFormData: React.Dispatch<React.SetStateAction<T>>; // React.Dispatch<React.SetStateAction<{ [key: string]: any }>>;
+    buttonTitle: string;
+};
+
+const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle }: FormProps<T>) => {
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type } = event.target;
+        if (InputType.RADIO === type) {
+            // Radio buttons have names like "{propertyName}_radio"
+            // Extract the propertyName to update the corresponding state 
+
+            const propertyName = name.replace("_radio", "");
+            setFormData((prevFormData: T) => ({
+                ...prevFormData,
+                [propertyName]: value,
+            }));
+        } else {
+            // For number and select inputs, simply update based on name and value
+            setFormData((prevFormData: T) => ({
+                ...prevFormData,
+                [name]: value,
+            }));
+        }
+    };
 
     const stringOption = (detail: FormProperty) => {
         return (

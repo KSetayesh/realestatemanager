@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
 import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
-import CalculateForm, { FormProperty } from '../components/CalculateForm';
 import { InputType } from '../constants/Constant';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
+import StandardForm, { FormProperty } from '../components/StandardForm';
 
 type HighYieldSavingsFormData = {
     initialDeposit: number;
@@ -43,27 +43,6 @@ const HighYieldSavings: React.FC = () => {
         const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
         console.log("Calculation result:", data);
         setMetrics(data);
-    };
-
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = event.target;
-        if (InputType.RADIO === type) {
-            // Radio buttons have names like "{propertyName}_radio"
-            // Extract the propertyName to update the corresponding state 
-
-            const propertyName = name.replace("_radio", "");
-            setFormData((prevFormData: HighYieldSavingsFormData) => ({
-                ...prevFormData,
-                [propertyName]: value,
-            }));
-        } else {
-            // For number and select inputs, simply update based on name and value
-            setFormData((prevFormData: HighYieldSavingsFormData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
-        }
     };
 
     const formDetails: FormProperty[] = [
@@ -199,10 +178,10 @@ const HighYieldSavings: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && <CalculateForm
+            {formData && <StandardForm
                 formDetails={formDetails}
-                handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                setFormData={setFormData}
                 buttonTitle='Calculate'
             />
             }

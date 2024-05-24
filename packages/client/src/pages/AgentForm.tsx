@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { CreateAgentRequest } from '@realestatemanager/shared';
-import CalculateForm, { FormProperty } from '../components/CalculateForm';
 import { AgentType, Country, InputType, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
+import StandardForm, { FormProperty } from '../components/StandardForm';
 
 type AgentFormData = {
     firstName: string;
@@ -59,27 +59,6 @@ const AgentForm: React.FC = () => {
         }
         else {
             alert('Failed to submit data.');
-        }
-    };
-
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = event.target;
-        if (InputType.RADIO === type) {
-            // Radio buttons have names like "{propertyName}_radio"
-            // Extract the propertyName to update the corresponding state 
-
-            const propertyName = name.replace("_radio", "");
-            setFormData((prevFormData: AgentFormData) => ({
-                ...prevFormData,
-                [propertyName]: value,
-            }));
-        } else {
-            // For number and select inputs, simply update based on name and value
-            setFormData((prevFormData: AgentFormData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
         }
     };
 
@@ -162,10 +141,11 @@ const AgentForm: React.FC = () => {
         <div>
             <h2> Add New Agent </h2>
             {formData && (
-                <CalculateForm
+                <StandardForm
                     formDetails={formDetails}
-                    handleChange={handleChange}
+                    // handleChange={handleChange}
                     handleSubmit={handleSubmit}
+                    setFormData={setFormData}
                     buttonTitle='Submit'
                 />
             )}

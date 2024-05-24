@@ -51,8 +51,7 @@ import {
 } from '../components/TableColumn';
 import { InputType, InterestType, PercentageAndAmount, ValueType } from '../constants/Constant';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { FormProperty } from '../components/CalculateForm';
-import StandardForm from '../components/StandardForm';
+import StandardForm, { FormProperty } from '../components/StandardForm';
 
 export type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
@@ -1091,26 +1090,6 @@ const InvestmentBreakdown: React.FC = () => {
         },
     ];
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = event.target;
-        if (InputType.RADIO === type) {
-            // Radio buttons have names like "{propertyName}_radio"
-            // Extract the propertyName to update the corresponding state 
-
-            const propertyName = name.replace("_radio", "");
-            setFormData((prevFormData: InvestmentFormData) => ({
-                ...prevFormData,
-                [propertyName]: value,
-            }));
-        } else {
-            // For number and select inputs, simply update based on name and value
-            setFormData((prevFormData: InvestmentFormData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
-        }
-    };
-
     const getCalculateRequest = (): CreateInvestmentScenarioRequest => {
 
         const convertToValueInput = (type: PercentageAndAmount, value: number): ValueInput | undefined => {
@@ -1253,8 +1232,9 @@ const InvestmentBreakdown: React.FC = () => {
             <h2> Investment Breakdown </h2>
             {formData && <StandardForm //<CalculateForm
                 formDetails={formDetails}
-                handleChange={handleChange}
+                // handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                setFormData={setFormData}
                 buttonTitle='Calculate'
             />
             }

@@ -8,8 +8,7 @@ import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 import { InputType, PropertyType, State } from '../constants/Constant';
-import { FormProperty } from '../components/CalculateForm';
-import StandardForm from '../components/StandardForm';
+import StandardForm, { FormProperty } from '../components/StandardForm';
 
 enum TableTypeEnum {
     ALL = 'ALL',
@@ -283,26 +282,6 @@ const PropertiesList: React.FC = () => {
     }
     ));
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type } = event.target;
-        if (InputType.RADIO === type) {
-            // Radio buttons have names like "{propertyName}_radio"
-            // Extract the propertyName to update the corresponding state 
-
-            const propertyName = name.replace("_radio", "");
-            setFormData((prevFormData: PropertyFilterData) => ({
-                ...prevFormData,
-                [propertyName]: value,
-            }));
-        } else {
-            // For number and select inputs, simply update based on name and value
-            setFormData((prevFormData: PropertyFilterData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
@@ -319,8 +298,9 @@ const PropertiesList: React.FC = () => {
             <h2> Filter Properties </h2>
             {formData && <StandardForm
                 formDetails={formDetails}
-                handleChange={handleChange}
+                // handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                setFormData={setFormData}
                 buttonTitle='Submit'
             />
             }
