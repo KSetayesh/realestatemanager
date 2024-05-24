@@ -28,9 +28,18 @@ export interface FormProps<T> {
     setFormData: React.Dispatch<React.SetStateAction<T>>;
     buttonTitle: string;
     columnsPerRow?: number; // Optional prop for number of columns per row
+    buttonDisableLogic?: () => boolean;
 };
 
-const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle, columnsPerRow = 3 }: FormProps<T>) => {
+const StandardForm = <T,>({
+    formDetails,
+    handleSubmit,
+    setFormData,
+    buttonTitle,
+    columnsPerRow = 3,
+    buttonDisableLogic
+}: FormProps<T>) => {
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = event.target;
         if (InputType.RADIO === type) {
@@ -199,6 +208,11 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle,
         );
     };
 
+    // Determine if the submit button should be disabled
+    const isButtonDisabled = (): boolean => {
+        return buttonDisableLogic ? buttonDisableLogic() : false;
+    };
+
     return (
         <form onSubmit={handleSubmit} className="investment-form">
             <div className="form-row" style={{ gridTemplateColumns: `repeat(${columnsPerRow}, 1fr)` }}>
@@ -208,7 +222,7 @@ const StandardForm = <T,>({ formDetails, handleSubmit, setFormData, buttonTitle,
                     </div>
                 ))}
             </div>
-            <button type="submit">{buttonTitle}</button>
+            <button type="submit" disabled={isButtonDisabled()}>{buttonTitle}</button>
         </form>
     );
 };
