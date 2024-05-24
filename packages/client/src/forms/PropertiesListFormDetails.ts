@@ -1,5 +1,5 @@
 import { FormProperty } from "../components/StandardForm";
-import { InputType, PropertyType, State } from "../constants/Constant";
+import { InputType, PropertyType, State, trueAndFalseSelections } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 
 export type PropertyFilterFormFields = {
@@ -44,7 +44,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             yearBuilt: 0,
             maxHoa: 0,
             monthlyPropertyTaxAmount: 0,
-            homeType: PropertyType.APARTMENT,
+            homeType: PropertyType.SINGLE_FAMILY,
             hasGarage: true,
             hasBasement: true,
             hasPool: true,
@@ -151,64 +151,28 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                 name: 'hasGarage',
                 value: formData?.hasGarage ? "true" : "false",
                 type: InputType.CHECKBOX,
-                options: [
-                    {
-                        value: 'true',
-                        label: 'true'
-                    },
-                    {
-                        value: 'false',
-                        label: 'false'
-                    }
-                ],
+                options: trueAndFalseSelections(),
             },
             {
                 title: 'Has Basement',
                 name: 'hasBasement',
                 value: formData?.hasBasement ? "true" : "false",
                 type: InputType.CHECKBOX,
-                options: [
-                    {
-                        value: 'true',
-                        label: 'true'
-                    },
-                    {
-                        value: 'false',
-                        label: 'false'
-                    }
-                ],
+                options: trueAndFalseSelections(),
             },
             {
                 title: 'Has Pool',
                 name: 'hasPool',
                 value: formData?.hasPool ? "true" : "false",
                 type: InputType.CHECKBOX,
-                options: [
-                    {
-                        value: 'true',
-                        label: 'true'
-                    },
-                    {
-                        value: 'false',
-                        label: 'false'
-                    }
-                ],
+                options: trueAndFalseSelections(),
             },
             {
                 title: 'Is Active',
                 name: 'isActive',
                 value: formData?.isActive ? "true" : "false",
                 type: InputType.CHECKBOX,
-                options: [
-                    {
-                        value: 'true',
-                        label: 'true'
-                    },
-                    {
-                        value: 'false',
-                        label: 'false'
-                    }
-                ],
+                options: trueAndFalseSelections(),
             },
         ];
     }
