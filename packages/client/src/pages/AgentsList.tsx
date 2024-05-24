@@ -1,12 +1,18 @@
 import { AgentResponseDTO } from "@realestatemanager/shared";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
-import ReusableTable, { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
+import ReusableTable, { TableColumn, TableDataItem } from "../components/ReusableTable";
+import { AgentTable } from "../tables/AgentTable";
+
+export enum DefaultTableType {
+    DEFAULT = 'DEFAULT',
+};
 
 const AgentsList: React.FC = () => {
+    const agentApi: AgentApi = new AgentApi();
+    const agentTable: AgentTable = new AgentTable();
     const [agents, setAgents] = useState<AgentResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const agentApi: AgentApi = new AgentApi();
 
     useEffect(() => {
         (async () => {
@@ -24,111 +30,13 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const createRowData = (agent: AgentResponseDTO): TableRow => {
-        return {
-            firstName: agent.firstName,
-            lastName: agent.lastName,
-            fullName: agent.fullName,
-            website: agent.website,
-            companyName: agent.companyName,
-            phoneNumber: agent.phoneNumber,
-            email: agent.email,
-            country: agent.country,
-            state: agent.state,
-            agentType: agent.agentType,
-        };
+    const getTableData = (): TableDataItem<AgentResponseDTO>[] => {
+        return agentTable.getTableData(agents, DefaultTableType.DEFAULT);
     };
 
-    const tableData: TableDataItem<AgentResponseDTO>[] = agents.map(agent => ({
-        objectData: {
-            key: agent,
-        },
-        rowData: createRowData(agent),
+    const getTableColumns = (): TableColumn[] => {
+        return agentTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
     }
-    ));
-
-    const columns: TableColumn[] = [
-        {
-            header: "First Name",
-            accessor: "firstName",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Last Name",
-            accessor: "lastName",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Full Name",
-            accessor: "fullName",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Website",
-            accessor: "website",
-            isURL: true,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Company Name",
-            accessor: "companyName",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Phone Number",
-            accessor: "phoneNumber",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Email",
-            accessor: "email",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Country",
-            accessor: "country",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "State",
-            accessor: "state",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-        {
-            header: "Agent Type",
-            accessor: "agentType",
-            isURL: false,
-            showColumn: true,
-            isDollarAmount: false,
-            isSortable: true,
-        },
-    ];
 
     // Inside PropertiesList component
 
@@ -141,8 +49,8 @@ const AgentsList: React.FC = () => {
             ) : (
                 <>
                     <ReusableTable
-                        columns={columns} // Filter columns based on showColumn
-                        tableData={tableData}
+                        columns={getTableColumns()} // Filter columns based on showColumn
+                        tableData={getTableData()}
                     />
                 </>
             )}

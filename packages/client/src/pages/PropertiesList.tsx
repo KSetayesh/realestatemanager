@@ -4,7 +4,6 @@ import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
@@ -59,10 +58,6 @@ const PropertiesList: React.FC = () => {
         return propertiesListFormDetails.getFormDetails(formData);
     };
 
-    const getTablesConfig = (): TablesConfig<ListingWithScenariosResponseDTO> => {
-        return propertiesListTable.getTablesConfig();
-    };
-
     const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
     };
@@ -73,6 +68,10 @@ const PropertiesList: React.FC = () => {
 
     const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO>[] => {
         return propertiesListTable.getTableData(properties, tableType);
+    };
+
+    const getTableColumns = (): TableColumn[] => {
+        return propertiesListTable.getTablesConfig()[tableType].columns;
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,7 +93,8 @@ const PropertiesList: React.FC = () => {
             isSortable: false,
         };
         return propertiesListTable.getDefaultColumns([investmentBreakdownColumn]);
-    }
+    };
+    
 
     // Inside PropertiesList component
 
@@ -137,7 +137,7 @@ const PropertiesList: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        columns={getTablesConfig()[tableType].columns} //{defaultColumns} // Filter columns based on showColumn
+                        columns={getTableColumns()} //{defaultColumns} // Filter columns based on showColumn
                         tableData={getTableData()}
                         onRowClick={handleRowClick}
                     />

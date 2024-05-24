@@ -1,0 +1,77 @@
+import { TableColumn } from "../../components/ReusableTable";
+
+export const highYieldSavingsDefaultColumns: TableColumn[] = [
+    {
+        header: "Year",
+        accessor: "year",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+    {
+        header: "Month",
+        accessor: "month",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+    {
+        header: "Date",
+        accessor: "date",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: false,
+        isSortable: false,
+    },
+
+    {
+        header: "Start Principal",
+        accessor: "startPrincipal",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+    {
+        header: "Start Balance",
+        accessor: "startBalance",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+    {
+        header: "Interest",
+        accessor: "interest",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+    {
+        header: "Accumulated Interest",
+        accessor: "accumulatedInterest",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+    {
+        header: "End Balance",
+        accessor: "endBalance",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+    {
+        header: "End Principal",
+        accessor: "endPrincipal",
+        isURL: false,
+        showColumn: true,
+        isDollarAmount: true,
+        isSortable: false,
+    },
+];
