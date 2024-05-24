@@ -21,7 +21,15 @@ export type PropertyFilterFormFields = {
     isActive: boolean,
 };
 
-export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields> {
+// replace undefined with a type
+export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields, undefined> {
+
+    // TODO
+    createRequest(formData: PropertyFilterFormFields): undefined {
+        console.log('State:', formData.state);
+        return;
+    }
+
     // Create a state to store the form data.
     getDefaultFormData(): PropertyFilterFormFields {
         return {

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CreateAgentRequest } from '@realestatemanager/shared';
-import { AgentType, Country, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AgentFormData, AgentFormDetails } from '../forms/AgentFormDetails';
@@ -14,17 +13,7 @@ const AgentForm: React.FC = () => {
     const [formData, setFormData] = useState<AgentFormData>(agentFormDetails.getDefaultFormData());
 
     const getAgentRequest = (): CreateAgentRequest => {
-        return {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            website: formData.website ?? '',
-            companyName: formData.companyName,
-            phoneNumber: formData.phoneNumber,
-            email: formData.email,
-            state: formData.state as State,
-            country: formData.country as Country,
-            agentType: formData.agentType as AgentType,
-        };
+        return agentFormDetails.createRequest(formData);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

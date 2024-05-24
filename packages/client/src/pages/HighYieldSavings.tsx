@@ -18,12 +18,7 @@ const HighYieldSavings: React.FC = () => {
     const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>();
 
     const getCalculateRequest = (): HighYeildSavingsRequest => {
-        return {
-            initialDeposit: formData.initialDeposit,
-            annualInterestRate: formData.annualInterestRate,
-            years: formData.years,
-            monthlyDeposit: formData.monthlyDeposit,
-        };
+        return highYieldSavingsFormDetails.createRequest(formData);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

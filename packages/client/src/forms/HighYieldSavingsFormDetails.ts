@@ -1,3 +1,4 @@
+import { HighYeildSavingsRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
@@ -9,7 +10,16 @@ export type HighYieldSavingsFormData = {
     monthlyDeposit?: number;
 };
 
-export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavingsFormData> {
+export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavingsFormData, HighYeildSavingsRequest> {
+
+    createRequest(formData: HighYieldSavingsFormData): HighYeildSavingsRequest {
+        return {
+            initialDeposit: formData.initialDeposit,
+            annualInterestRate: formData.annualInterestRate,
+            years: formData.years,
+            monthlyDeposit: formData.monthlyDeposit,
+        };
+    }
 
     // Create a state to store the form data.
     getDefaultFormData(): HighYieldSavingsFormData {

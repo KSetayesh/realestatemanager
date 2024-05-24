@@ -1,3 +1,4 @@
+import { CreateAgentRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { AgentType, Country, InputType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
@@ -14,7 +15,21 @@ export type AgentFormData = {
     agentType: string;
 };
 
-export class AgentFormDetails implements FormInterface<AgentFormData> {
+export class AgentFormDetails implements FormInterface<AgentFormData, CreateAgentRequest> {
+
+    createRequest(formData: AgentFormData): CreateAgentRequest {
+        return {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            website: formData.website ?? '',
+            companyName: formData.companyName,
+            phoneNumber: formData.phoneNumber,
+            email: formData.email,
+            state: formData.state as State,
+            country: formData.country as Country,
+            agentType: formData.agentType as AgentType,
+        };
+    }
 
     // Create a state to store the form data.
     getDefaultFormData(): AgentFormData {
