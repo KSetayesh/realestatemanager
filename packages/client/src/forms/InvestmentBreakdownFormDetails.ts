@@ -35,7 +35,7 @@ import {
     getTermInYears,
     getTravelingCosts,
     getVacancyRate
-} from '../components/TableColumn';
+} from '../utilities/PropertyResponseHelper';
 import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO, ValueInput } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 

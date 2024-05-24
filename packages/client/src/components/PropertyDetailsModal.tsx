@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import '../styles/PropertyDetailsModal.css';
-import { TableColumn, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
 import { renderCellData } from '../constants/Constant';
 

@@ -55,7 +55,7 @@ import {
     hasBasement,
     hasGarage,
     hasPool
-} from "../components/TableColumn";
+} from "../utilities/PropertyResponseHelper";
 
 export class PropertiesListTable implements AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType, ListingWithScenariosResponseDTO> {
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropertyDetailsModal from './PropertyDetailsModal';
+import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
@@ -94,7 +94,7 @@ const PropertiesList: React.FC = () => {
         };
         return propertiesListTable.getDefaultColumns([investmentBreakdownColumn]);
     };
-    
+
 
     // Inside PropertiesList component
 
