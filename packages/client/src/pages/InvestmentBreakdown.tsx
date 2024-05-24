@@ -79,7 +79,9 @@ const InvestmentBreakdown: React.FC = () => {
         return investmentBreakdownTable.getTableData([property], tableType);
     };
 
-    const formDetails: FormProperty[] = investmentBreakdownFormDetails.getFormDetails(formData);
+    const getFormDetails = (): FormProperty[] => {
+        return investmentBreakdownFormDetails.getFormDetails(formData);
+    };
 
     const getCalculateRequest = (): CreateInvestmentScenarioRequest => {
         return investmentBreakdownFormDetails.createRequest(formData, property);
@@ -100,7 +102,7 @@ const InvestmentBreakdown: React.FC = () => {
         <div>
             <h2> Investment Breakdown </h2>
             {formData && <StandardForm //<CalculateForm
-                formDetails={formDetails}
+                formDetails={getFormDetails()}
                 // handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}

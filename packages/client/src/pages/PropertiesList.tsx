@@ -55,9 +55,13 @@ const PropertiesList: React.FC = () => {
 
     const [formData, setFormData] = useState<PropertyFilterFormFields>(propertiesListFormDetails.getDefaultFormData());
 
-    const formDetails: FormProperty[] = propertiesListFormDetails.getFormDetails(formData);
+    const getFormDetails = (): FormProperty[] => {
+        return propertiesListFormDetails.getFormDetails(formData);
+    };
 
-    const tablesConfig: TablesConfig<ListingWithScenariosResponseDTO> = propertiesListTable.getTablesConfig();
+    const getTablesConfig = (): TablesConfig<ListingWithScenariosResponseDTO> => {
+        return propertiesListTable.getTablesConfig();
+    };
 
     const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
@@ -67,7 +71,9 @@ const PropertiesList: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const tableData: TableDataItem<ListingWithScenariosResponseDTO>[] = propertiesListTable.getTableData(properties, tableType);
+    const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO>[] => {
+        return propertiesListTable.getTableData(properties, tableType);
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -97,7 +103,7 @@ const PropertiesList: React.FC = () => {
         <div>
             <h2> Filter Properties </h2>
             {formData && <StandardForm
-                formDetails={formDetails}
+                formDetails={getFormDetails()}
                 // handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
@@ -131,8 +137,8 @@ const PropertiesList: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        columns={tablesConfig[tableType].columns} //{defaultColumns} // Filter columns based on showColumn
-                        tableData={tableData}
+                        columns={getTablesConfig()[tableType].columns} //{defaultColumns} // Filter columns based on showColumn
+                        tableData={getTableData()}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal

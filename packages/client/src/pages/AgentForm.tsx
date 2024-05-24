@@ -12,13 +12,15 @@ const AgentForm: React.FC = () => {
 
     const [formData, setFormData] = useState<AgentFormData>(agentFormDetails.getDefaultFormData());
 
-    const getAgentRequest = (): CreateAgentRequest => {
-        return agentFormDetails.createRequest(formData);
-    };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const getAgentRequest = (): CreateAgentRequest => {
+            return agentFormDetails.createRequest(formData);
+        };
+
         const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
+
         if (postSuccess) {
             alert('Agent has been successfully added!');
             window.location.reload();
@@ -28,14 +30,16 @@ const AgentForm: React.FC = () => {
         }
     };
 
-    const formDetails: FormProperty[] = agentFormDetails.getFormDetails(formData);
+    const getFormDetails = (): FormProperty[] => {
+        return agentFormDetails.getFormDetails(formData);
+    };
 
     return (
         <div>
             <h2> Add New Agent </h2>
             {formData && (
                 <StandardForm
-                    formDetails={formDetails}
+                    formDetails={getFormDetails()}
                     // handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFormData={setFormData}

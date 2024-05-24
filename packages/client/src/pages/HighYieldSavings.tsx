@@ -17,19 +17,20 @@ const HighYieldSavings: React.FC = () => {
 
     const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>();
 
-    const getCalculateRequest = (): HighYeildSavingsRequest => {
-        return highYieldSavingsFormDetails.createRequest(formData);
-    };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const getCalculateRequest = (): HighYeildSavingsRequest => {
+            return highYieldSavingsFormDetails.createRequest(formData);
+        };
         const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
         const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
         console.log("Calculation result:", data);
         setMetrics(data);
     };
 
-    const formDetails: FormProperty[] = highYieldSavingsFormDetails.getFormDetails(formData);
+    const getFormDetails = (): FormProperty[] => {
+        return highYieldSavingsFormDetails.getFormDetails(formData);
+    };
 
     const columnsForMetrics: TableColumn[] = [
         {
@@ -138,7 +139,7 @@ const HighYieldSavings: React.FC = () => {
         <div>
             <h2> Investment Breakdown </h2>
             {formData && <StandardForm
-                formDetails={formDetails}
+                formDetails={getFormDetails()}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Calculate'
