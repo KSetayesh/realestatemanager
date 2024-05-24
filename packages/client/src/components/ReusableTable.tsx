@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/PropertiesList.css';
 import '../styles/Tooltip.css';
-import { renderCellData } from '../constants/Constant';
+import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import Tooltip from '../components/Tooltip';
 
 enum SortDirection {
@@ -65,13 +65,6 @@ const ReusableTable = <T,>({ columns, tableData, onRowClick, includeTableSeparat
             direction = SortDirection.DESCENDING;
         }
         setSortConfig({ key, direction });
-    };
-
-    const ensureAbsoluteUrl = (url: string): string => {
-        if (!url.startsWith('http://') && !url.startsWith('https://')) {
-            return 'http://' + url;  // Defaulting to http if no protocol is specified
-        }
-        return url;
     };
 
     const visibleColumnsCount = columns.filter(column => column.showColumn).length;

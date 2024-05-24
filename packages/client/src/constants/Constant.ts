@@ -151,6 +151,13 @@ export const getDateNDaysAgo = (daysAgo: number): string => {
     return today.toISOString();
 };
 
+export const ensureAbsoluteUrl = (url: string): string => {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return 'http://' + url;  // Defaulting to http if no protocol is specified
+    }
+    return url;
+};
+
 // Function to render the cell data based on its type
 export const renderCellData = (cellData: any, isDollarAmount: boolean = false, addSuffix?: string): string => {
     let toReturn = '';

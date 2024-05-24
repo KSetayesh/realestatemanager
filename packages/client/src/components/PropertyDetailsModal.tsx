@@ -3,7 +3,7 @@ import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import '../styles/PropertyDetailsModal.css';
 import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
-import { renderCellData } from '../constants/Constant';
+import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 
 const PropertyDetailsModal: React.FC<{
     property: ListingWithScenariosResponseDTO | null;
@@ -31,7 +31,8 @@ const PropertyDetailsModal: React.FC<{
                         </Link></span>;
                     }
                     else if (column.isURL) {
-                        content = <a href={cellData} target="_blank" rel="noopener noreferrer">View</a>;
+                        const formattedUrl = ensureAbsoluteUrl(cellData);
+                        content = <a href={formattedUrl} target="_blank" rel="noopener noreferrer">View</a>;
                     }
                     else {
                         content = <span> {cellData}</span>;
