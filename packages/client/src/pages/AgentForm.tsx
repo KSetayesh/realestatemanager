@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { CreateAgentRequest } from '@realestatemanager/shared';
-import { AgentType, Country, InputType, State } from '../constants/Constant';
+import { AgentType, Country, State } from '../constants/Constant';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
+import { getAgentFormDetails } from '../constants/FormFields';
 
-type AgentFormData = {
+export type AgentFormData = {
     firstName: string;
     lastName: string;
     website?: string;
@@ -62,80 +63,7 @@ const AgentForm: React.FC = () => {
         }
     };
 
-    const formDetails: FormProperty[] = [
-        {
-            title: 'First Name',
-            name: 'firstName',
-            value: formData.firstName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Last Name',
-            name: 'lastName',
-            value: formData.lastName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Website',
-            name: 'website',
-            value: formData.website!,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Company Name',
-            name: 'companyName',
-            value: formData.companyName,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Phone Number',
-            name: 'phoneNumber',
-            value: formData.phoneNumber,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Email',
-            name: 'email',
-            value: formData.email,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Country',
-            name: 'country',
-            value: formData.country,
-            type: InputType.SELECT,
-            options: Object.values(Country).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'State',
-            name: 'state',
-            value: formData.state,
-            type: InputType.SELECT,
-            options: Object.values(State).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'Agent Type',
-            name: 'agentType',
-            value: formData.agentType,
-            type: InputType.SELECT,
-            options: Object.values(AgentType).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-    ];
+    const formDetails: FormProperty[] = getAgentFormDetails(formData);
 
     return (
         <div>

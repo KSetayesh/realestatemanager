@@ -7,15 +7,16 @@ import { createDefaultRowData, defaultColumns } from '../components/TableColumn'
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { TablesConfig } from './InvestmentBreakdown';
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
-import { InputType, PropertyType, State } from '../constants/Constant';
+import { PropertyType, State } from '../constants/Constant';
 import StandardForm, { FormProperty } from '../components/StandardForm';
+import { getPropertiesListFormDetails } from '../constants/FormFields';
 
 enum TableTypeEnum {
     ALL = 'ALL',
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
 };
 
-export type PropertyFilterData = {
+export type PropertyFilterFormFields = {
     state: State,
     zipCode: string,
     city: string,
@@ -66,7 +67,7 @@ const PropertiesList: React.FC = () => {
     }, []); // Empty dependency array means this effect runs once on mount
 
     // Create a state to store the form data.
-    const getDefaultFilterPropertiesFormData = (): PropertyFilterData => {
+    const getDefaultFilterPropertiesFormData = (): PropertyFilterFormFields => {
         return {
             state: State.AL,
             zipCode: '',
@@ -87,166 +88,9 @@ const PropertiesList: React.FC = () => {
         };
     };
 
-    const [formData, setFormData] = useState<PropertyFilterData>(getDefaultFilterPropertiesFormData());
+    const [formData, setFormData] = useState<PropertyFilterFormFields>(getDefaultFilterPropertiesFormData());
 
-    const formDetails: FormProperty[] = [
-        {
-            title: 'State',
-            name: 'state',
-            value: formData?.state,
-            type: InputType.SELECT,
-            options: Object.values(State).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'ZipCode',
-            name: 'zipCode',
-            value: formData?.zipCode,
-            type: InputType.STRING,
-        },
-        {
-            title: 'City',
-            name: 'city',
-            value: formData?.city,
-            type: InputType.STRING,
-        },
-        {
-            title: 'Rent Estimate',
-            name: 'rentEstimate',
-            value: formData?.rentEstimate,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Listed Price',
-            name: 'listedPrice',
-            value: formData?.listedPrice,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Number Of Bedrooms',
-            name: 'numberOfBedrooms',
-            value: formData?.numberOfBedrooms,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Number Of Bathrooms',
-            name: 'numberOfBathrooms',
-            value: formData?.numberOfBathrooms,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Square Feet',
-            name: 'squareFeet',
-            value: formData?.squareFeet,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Year Built',
-            name: 'yearBuilt',
-            value: formData?.yearBuilt,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Max Hoa',
-            name: 'maxHoa',
-            value: formData?.maxHoa,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Monthly Property Tax Amount',
-            name: 'monthlyPropertyTaxAmount',
-            value: formData?.monthlyPropertyTaxAmount,
-            type: InputType.NUMBER,
-            hasFilterOption: true,
-        },
-        {
-            title: 'Home Type',
-            name: 'homeType',
-            value: formData?.homeType,
-            type: InputType.SELECT,
-            options: Object.values(PropertyType).map((enumValue => {
-                return {
-                    value: enumValue,
-                    label: enumValue,
-                };
-            })),
-        },
-        {
-            title: 'Has Garage',
-            name: 'hasGarage',
-            value: formData?.hasGarage ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Has Basement',
-            name: 'hasBasement',
-            value: formData?.hasBasement ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Has Pool',
-            name: 'hasPool',
-            value: formData?.hasPool ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-        {
-            title: 'Is Active',
-            name: 'isActive',
-            value: formData?.isActive ? "true" : "false",
-            type: InputType.CHECKBOX,
-            options: [
-                {
-                    value: 'true',
-                    label: 'true'
-                },
-                {
-                    value: 'false',
-                    label: 'false'
-                }
-            ],
-        },
-    ];
+    const formDetails: FormProperty[] = getPropertiesListFormDetails(formData);
 
     const getAllColumns = (): TableColumn[] => {
         return defaultColumns.map(column => ({
