@@ -174,3 +174,12 @@ export enum ListingCreationType {
     RENT_CAST_API = 'Rent Cast Api',
     MATCHED_PRE_EXISTING_RENT_CAST_DATA = 'Matched Pre Existing Rent Cast Data',
 };
+
+export enum Filter {
+    all = 'All',
+    gt = '>',
+    lt = '<',
+    eq = '=',
+    gteq = '>=',
+    lteq = '<=',
+};

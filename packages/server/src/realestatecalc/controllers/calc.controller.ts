@@ -4,7 +4,8 @@ import {
     RentCastDetailsResponseDTO,
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
-    ListingWithScenariosResponseDTO
+    ListingWithScenariosResponseDTO,
+    CreateGetAllPropertiesRequest
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
@@ -16,8 +17,10 @@ export class CalcController {
 
     @Get()
     async getAllProperties(
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: CreateInvestmentScenarioRequest
+        @Query('getAllPropertiesRequest') getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
+
+        const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
 
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');

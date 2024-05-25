@@ -1,54 +1,75 @@
+import { CreateFilteredPropertyListRequest, FilterOn } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { InputType, PropertyType, State, trueAndFalseSelections } from "../constants/Constant";
+import { Filter, InputType, PropertyType, State, trueAndFalseSelections } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 
 export type PropertyFilterFormFields = {
-    state: State,
-    zipCode: string,
-    city: string,
-    rentEstimate: number,
-    listedPrice: number,
-    numberOfBedrooms: number,
-    numberOfBathrooms: number,
-    squareFeet: number,
-    yearBuilt: number,
-    maxHoa: number,
-    monthlyPropertyTaxAmount: number,
-    homeType: PropertyType,
-    hasGarage: boolean,
-    hasBasement: boolean,
-    hasPool: boolean,
-    isActive: boolean,
+    state: State;
+    zipCode: string;
+    city: string;
+    rentEstimate: FilterOn;
+    listedPrice: FilterOn;
+    numberOfBedrooms: FilterOn;
+    numberOfBathrooms: FilterOn;
+    squareFeet: FilterOn;
+    yearBuilt: FilterOn;
+    maxHoa: FilterOn;
+    monthlyPropertyTaxAmount: FilterOn;
+    homeType: PropertyType;
+    hasGarage: boolean;
+    hasBasement: boolean;
+    hasPool: boolean;
+    isActive: boolean;
+    limit: number;
 };
 
 // replace undefined with a type
-export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields, undefined> {
+export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields, CreateFilteredPropertyListRequest> {
 
     // TODO
-    createRequest(formData: PropertyFilterFormFields): undefined {
-        console.log('State:', formData.state);
-        return;
+    createRequest(formData: PropertyFilterFormFields): CreateFilteredPropertyListRequest {
+        return {
+            state: formData.state,
+            zipCode: formData.zipCode,
+            city: formData.city,
+            rentEstimate: formData.rentEstimate,
+            listedPrice: formData.listedPrice,
+            numberOfBedrooms: formData.numberOfBedrooms,
+            numberOfBathrooms: formData.numberOfBathrooms,
+            squareFeet: formData.squareFeet,
+            yearBuilt: formData.yearBuilt,
+            maxHoa: formData.maxHoa,
+            monthlyPropertyTaxAmount: formData.monthlyPropertyTaxAmount,
+            homeType: formData.homeType,
+            hasGarage: formData.hasGarage,
+            hasBasement: formData.hasBasement,
+            hasPool: formData.hasPool,
+            isActive: formData.isActive,
+            limit: formData.limit,
+        }
     }
 
     // Create a state to store the form data.
     getDefaultFormData(): PropertyFilterFormFields {
+        const defaultFilter: FilterOn = this.getDefaultFilter();
         return {
             state: State.AL,
             zipCode: '',
             city: '',
-            rentEstimate: 0,
-            listedPrice: 0,
-            numberOfBedrooms: 0,
-            numberOfBathrooms: 0,
-            squareFeet: 0,
-            yearBuilt: 0,
-            maxHoa: 0,
-            monthlyPropertyTaxAmount: 0,
+            rentEstimate: defaultFilter,
+            listedPrice: defaultFilter,
+            numberOfBedrooms: defaultFilter,
+            numberOfBathrooms: defaultFilter,
+            squareFeet: defaultFilter,
+            yearBuilt: defaultFilter,
+            maxHoa: defaultFilter,
+            monthlyPropertyTaxAmount: defaultFilter,
             homeType: PropertyType.SINGLE_FAMILY,
             hasGarage: true,
             hasBasement: true,
             hasPool: true,
             isActive: true,
+            limit: 100,
         };
     }
 
@@ -81,58 +102,106 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Rent Estimate',
                 name: 'rentEstimate',
-                value: formData?.rentEstimate,
+                value: formData?.rentEstimate?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Listed Price',
                 name: 'listedPrice',
-                value: formData?.listedPrice,
+                value: formData?.listedPrice?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Number Of Bedrooms',
                 name: 'numberOfBedrooms',
-                value: formData?.numberOfBedrooms,
+                value: formData?.numberOfBedrooms?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Number Of Bathrooms',
                 name: 'numberOfBathrooms',
-                value: formData?.numberOfBathrooms,
+                value: formData?.numberOfBathrooms?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Square Feet',
                 name: 'squareFeet',
-                value: formData?.squareFeet,
+                value: formData?.squareFeet?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Year Built',
                 name: 'yearBuilt',
-                value: formData?.yearBuilt,
+                value: formData?.yearBuilt?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Max Hoa',
                 name: 'maxHoa',
-                value: formData?.maxHoa,
+                value: formData?.maxHoa.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Monthly Property Tax Amount',
                 name: 'monthlyPropertyTaxAmount',
-                value: formData?.monthlyPropertyTaxAmount,
+                value: formData?.monthlyPropertyTaxAmount?.value,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
+                options: Object.values(Filter).map((enumValue => {
+                    return {
+                        value: enumValue,
+                        label: enumValue,
+                    };
+                })),
             },
             {
                 title: 'Home Type',
@@ -175,6 +244,13 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                 options: trueAndFalseSelections(),
             },
         ];
+    }
+
+    private getDefaultFilter(): FilterOn {
+        return {
+            value: 0,
+            filter: Filter.gteq,
+        };
     }
 
 }

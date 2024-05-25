@@ -4,7 +4,11 @@ import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import {
+    CreateFilteredPropertyListRequest,
+    CreateGetAllPropertiesRequest,
+    ListingWithScenariosResponseDTO
+} from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     PropertiesListFormDetails,
@@ -74,12 +78,26 @@ const PropertiesList: React.FC = () => {
         return propertiesListTable.getTablesConfig()[tableType].columns;
     };
 
+    const getRequestData = (): CreateFilteredPropertyListRequest => {
+        return propertiesListFormDetails.createRequest(formData);
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        // const data: ListingWithScenariosResponseDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
-        // console.log("Calculation result:", data);
-        // setProperty(data);
+        const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
+        const dataToSubmit: CreateGetAllPropertiesRequest = {
+            filteredPropertyListRequest: filteredPropertyListRequest,
+        };
+
+        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        const postSuccess = await realEstateCalcApi.getAllProperties(dataToSubmit);
+        if (postSuccess) {
+            alert('Data submitted successfully!');
+            window.location.reload();
+        }
+        else {
+            alert('Failed to submit data.');
+        }
     };
 
     const getDefaultColumns = (): TableColumn[] => {

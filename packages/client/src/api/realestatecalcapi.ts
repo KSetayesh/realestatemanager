@@ -1,18 +1,21 @@
-import { 
+import {
     CreateRentCastApiRequest,
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
-    ListingWithScenariosResponseDTO
+    ListingWithScenariosResponseDTO,
+    CreateGetAllPropertiesRequest
 } from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 
 export class RealEstateCalcApi extends CalcApi {
 
-    async getAllProperties(): Promise<ListingWithScenariosResponseDTO[]> {
+    async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
 
         try {
-            const response = await axios.get(this.getURL());
+            const response = await axios.post(this.getURL(), getAllPropertiesRequest, {
+                headers: this.getHeaders(),
+            });
             return response.data;
         } catch (error) {
             const message = `Error fetching properties:, ${error}`;

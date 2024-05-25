@@ -107,6 +107,15 @@ export enum ListingCreationType {
     MATCHED_PRE_EXISTING_RENT_CAST_DATA = 'Matched Pre Existing Rent Cast Data',
 };
 
+export enum Filter {
+    all = 'All',
+    gt = '>',
+    lt = '<',
+    eq = '=',
+    gteq = '>=',
+    lteq = '<=',
+};
+
 // export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 export const ratingSelections = (from: number = 1, limit: number = 10): { value: string | number; label: string }[] => {

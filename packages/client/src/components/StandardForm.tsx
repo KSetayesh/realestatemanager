@@ -1,14 +1,5 @@
 import React from 'react';
-import { InputType, PercentageAndAmount } from '../constants/Constant'; // Import constants as needed
-
-enum Filter {
-    all = 'All',
-    gt = '>',
-    lt = '<',
-    eq = '=',
-    gteq = '>=',
-    lteq = '<=',
-};
+import { Filter, InputType, PercentageAndAmount } from '../constants/Constant'; // Import constants as needed
 
 export type FormProperty = {
     title: string;
