@@ -1,7 +1,8 @@
 import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { Filter, InputType, PropertyType, State, trueAndFalseSelections } from "../constants/Constant";
+import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
+import { BasicCheckBoxForm, BasicStringForm, StateForm } from "./ReusableFormFields";
 
 export type PropertyFilterFormFields = {
     state: State;
@@ -114,174 +115,197 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
 
     getFormDetails(formData: PropertyFilterFormFields): FormProperty[] {
         return [
-            {
-                title: 'State',
-                name: 'state',
-                value: formData?.state,
-                type: InputType.SELECT,
-                options: Object.values(State).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
-            },
-            {
-                title: 'ZipCode',
-                name: 'zipCode',
-                value: formData?.zipCode,
-                type: InputType.STRING,
-            },
-            {
-                title: 'City',
-                name: 'city',
-                value: formData?.city,
-                type: InputType.STRING,
-            },
+            StateForm(formData.state),
+            BasicStringForm('ZipCode', 'zipCode', formData.zipCode),
+            BasicStringForm('City', 'city', formData.city),
             {
                 title: 'Rent Estimate',
-                name: 'rentEstimate',
-                value: formData?.rentEstimate,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'rentEstimateFilter',
+                        type: InputType.SELECT,
+                        value: formData.rentEstimateFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'rentEstimate',
+                        type: InputType.NUMBER,
+                        value: formData.rentEstimate,
+                    },
+                ],
             },
             {
                 title: 'Listed Price',
-                name: 'listedPrice',
-                value: formData?.listedPrice,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'listedPriceFilter',
+                        type: InputType.SELECT,
+                        value: formData.listedPriceFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'listedPrice',
+                        type: InputType.NUMBER,
+                        value: formData.listedPrice,
+                    },
+                ],
             },
             {
                 title: 'Number Of Bedrooms',
-                name: 'numberOfBedrooms',
-                value: formData?.numberOfBedrooms,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'numberOfBedroomsFilter',
+                        type: InputType.SELECT,
+                        value: formData.numberOfBedroomsFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'numberOfBedrooms',
+                        type: InputType.NUMBER,
+                        value: formData.numberOfBedrooms,
+                    },
+                ],
             },
             {
                 title: 'Number Of Bathrooms',
-                name: 'numberOfBathrooms',
-                value: formData?.numberOfBathrooms,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'numberOfBathroomsFilter',
+                        type: InputType.SELECT,
+                        value: formData.numberOfBathroomsFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'numberOfBathrooms',
+                        type: InputType.NUMBER,
+                        value: formData.numberOfBathrooms,
+                    },
+                ],
             },
             {
                 title: 'Square Feet',
-                name: 'squareFeet',
-                value: formData?.squareFeet,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'squareFeetFilter',
+                        type: InputType.SELECT,
+                        value: formData.squareFeetFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'squareFeet',
+                        type: InputType.NUMBER,
+                        value: formData.squareFeet,
+                    },
+                ],
             },
             {
                 title: 'Year Built',
-                name: 'yearBuilt',
-                value: formData?.yearBuilt,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'yearBuiltFilter',
+                        type: InputType.SELECT,
+                        value: formData.yearBuiltFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'yearBuilt',
+                        type: InputType.NUMBER,
+                        value: formData.yearBuilt,
+                    },
+                ],
             },
             {
                 title: 'Max Hoa',
-                name: 'maxHoa',
-                value: formData?.maxHoa,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'maxHoaFilter',
+                        type: InputType.SELECT,
+                        value: formData.maxHoaFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'maxHoa',
+                        type: InputType.NUMBER,
+                        value: formData.maxHoa,
+                    },
+                ],
             },
             {
                 title: 'Monthly Property Tax Amount',
-                name: 'monthlyPropertyTaxAmount',
-                value: formData?.monthlyPropertyTaxAmount,
-                type: InputType.NUMBER,
-                hasFilterOption: true,
-                options: Object.values(Filter).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'monthlyPropertyTaxAmountFilter',
+                        type: InputType.SELECT,
+                        value: formData.monthlyPropertyTaxAmountFilter,
+                        options: Object.values(Filter).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'monthlyPropertyTaxAmount',
+                        type: InputType.NUMBER,
+                        value: formData.monthlyPropertyTaxAmount,
+                    },
+                ],
             },
             {
                 title: 'Home Type',
-                name: 'homeType',
-                value: formData?.homeType,
-                type: InputType.SELECT,
-                options: Object.values(PropertyType).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'homeType',
+                        type: InputType.SELECT,
+                        value: formData.homeType,
+                        options: Object.values(PropertyType).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                ],
             },
-            {
-                title: 'Has Garage',
-                name: 'hasGarage',
-                value: formData?.hasGarage ? "true" : "false",
-                type: InputType.CHECKBOX,
-                options: trueAndFalseSelections(),
-            },
-            {
-                title: 'Has Basement',
-                name: 'hasBasement',
-                value: formData?.hasBasement ? "true" : "false",
-                type: InputType.CHECKBOX,
-                options: trueAndFalseSelections(),
-            },
-            {
-                title: 'Has Pool',
-                name: 'hasPool',
-                value: formData?.hasPool ? "true" : "false",
-                type: InputType.CHECKBOX,
-                options: trueAndFalseSelections(),
-            },
-            {
-                title: 'Is Active',
-                name: 'isActive',
-                value: formData?.isActive ? "true" : "false",
-                type: InputType.CHECKBOX,
-                options: trueAndFalseSelections(),
-            },
+            BasicCheckBoxForm('Has Garage', 'hasGarage', formData.hasGarage),
+            BasicCheckBoxForm('Has Basement', 'hasBasement', formData.hasBasement),
+            BasicCheckBoxForm('Has Pool', 'hasPool', formData.hasPool),
+            BasicCheckBoxForm('Is Active', 'isActive', formData.isActive),
         ];
     }
 

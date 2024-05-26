@@ -38,6 +38,7 @@ import {
 } from '../utilities/PropertyResponseHelper';
 import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO, ValueInput } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
+import { BasicNumberForm } from "./ReusableFormFields";
 
 export type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
@@ -267,265 +268,225 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
         };
     }
 
+    // Come back to this
     getFormDetails(formData: InvestmentFormData): FormProperty[] {
         return [
             {
                 title: 'Down Payment (%)',
-                name: 'downPaymentPercentage',
-                value: formData.downPaymentPercentage,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'downPaymentType',
-                    radioValue: formData.downPaymentType,
-                },
+                values: [
+                    {
+                        name: 'downPaymentType',
+                        value: formData.downPaymentType, // Default selected value
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                    {
+                        name: 'downPaymentPercentage',
+                        value: formData.downPaymentPercentage,
+                        type: InputType.STRING
+                    }
+                ]
             },
+
             {
                 title: 'Monthly Property Tax',
-                name: 'monthlyPropertyTax',
-                value: formData.monthlyPropertyTax,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'monthlyPropertyTaxType',
-                    radioValue: formData.monthlyPropertyTaxType,
-                },
+                values: [
+                    {
+                        name: 'monthlyPropertyTaxType',
+                        value: formData.monthlyPropertyTaxType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'monthlyPropertyTax',
+                        value: formData.monthlyPropertyTax,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Monthly Home Insurance Amount',
-                name: 'monthlyHomeInsuranceAmount',
-                value: formData.monthlyHomeInsuranceAmount,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'monthlyHomeInsuranceAmountType',
-                    radioValue: formData.monthlyHomeInsuranceAmountType,
-                }
+                values: [
+                    {
+                        name: 'monthlyHomeInsuranceAmountType',
+                        value: formData.monthlyHomeInsuranceAmountType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'monthlyHomeInsuranceAmount',
+                        value: formData.monthlyHomeInsuranceAmount,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Monthly HOA Fees Amount',
-                name: 'monthlyHOAFeesAmount',
-                value: formData.monthlyHOAFeesAmount,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'monthlyHOAFeesAmountType',
-                    radioValue: formData.monthlyHOAFeesAmountType,
-                }
+                values: [
+                    {
+                        name: 'monthlyHOAFeesAmountType',
+                        value: formData.monthlyHOAFeesAmountType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'monthlyHOAFeesAmount',
+                        value: formData.monthlyHOAFeesAmount,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Legal And Professional Fees (%)',
-                name: 'legalAndProfessionalFees',
-                value: formData.legalAndProfessionalFees,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'legalAndProfessionalFeesType',
-                    radioValue: formData.legalAndProfessionalFeesType,
-                }
+                values: [
+                    {
+                        name: 'legalAndProfessionalFeesType',
+                        value: formData.legalAndProfessionalFeesType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'legalAndProfessionalFees',
+                        value: formData.legalAndProfessionalFees,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Initial Repair Costs (%)',
-                name: 'initialRepairCosts',
-                value: formData.initialRepairCosts,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'initialRepairCostsType',
-                    radioValue: formData.initialRepairCostsType,
-                }
+                values: [
+                    {
+                        name: 'initialRepairCostsType',
+                        value: formData.initialRepairCostsType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'initialRepairCosts',
+                        value: formData.initialRepairCosts,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Traveling Costs',
-                name: 'travelingCosts',
-                value: formData.travelingCosts,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'travelingCostsType',
-                    radioValue: formData.travelingCostsType,
-                }
+                values: [
+                    {
+                        name: 'travelingCostsType',
+                        value: formData.travelingCostsType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'travelingCosts',
+                        value: formData.travelingCosts,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Closing Costs',
-                name: 'closingCosts',
-                value: formData.closingCosts,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'closingCostsType',
-                    radioValue: formData.closingCostsType,
-                }
+                values: [
+                    {
+                        name: 'closingCostsType',
+                        value: formData.closingCostsType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'closingCosts',
+                        value: formData.closingCosts,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
             {
                 title: 'Other Initial Expenses (%)',
-                name: 'otherInitialExpenses',
-                value: formData.otherInitialExpenses,
-                type: InputType.NUMBER,
-                hasRadioOptions: true,
-                radioDetails: {
-                    name: 'otherInitialExpensesType',
-                    radioValue: formData.otherInitialExpensesType,
-                }
+                values: [
+                    {
+                        name: 'otherInitialExpensesType',
+                        value: formData.otherInitialExpensesType,
+                        type: InputType.RADIO,
+                        options: Object.values(PercentageAndAmount).map(enumValue => ({
+                            value: enumValue,
+                            label: enumValue,
+                        })),
+                    },
+                    {
+                        name: 'otherInitialExpenses',
+                        value: formData.otherInitialExpenses,
+                        type: InputType.NUMBER,
+                    }
+                ]
             },
-            {
-                title: 'PMI Rate (%)',
-                name: 'pmiRate',
-                value: formData.pmiRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'PMI Dropoff Point',
-                name: 'pmiDropoffPoint',
-                value: formData.pmiDropoffPoint,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Interest Rate (%)',
-                name: 'annualInterestRate',
-                value: formData.annualInterestRate,
-                type: InputType.NUMBER,
-                step: "0.01",
-            },
-            {
-                title: 'Term In Years',
-                name: 'termInYears',
-                value: formData.termInYears,
-                type: InputType.NUMBER,
-            },
+            BasicNumberForm('PMI Rate (%)', 'pmiRate', formData.pmiRate),
+            BasicNumberForm('PMI Dropoff Point', 'pmiDropoffPoint', formData.pmiDropoffPoint),
+            BasicNumberForm('Annual Interest Rate (%)', 'annualInterestRate', formData.annualInterestRate, '0.01'),
+            BasicNumberForm('Term In Years', 'termInYears', formData.termInYears),
             {
                 title: 'Interest Type',
-                name: 'interestType',
-                value: formData.interestType,
-                type: InputType.SELECT,
-                options: Object.values(InterestType).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'interestType',
+                        type: InputType.SELECT,
+                        value: formData.interestType,
+                        options: Object.values(InterestType).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                ],
             },
-            {
-                title: 'Property Management (%)',
-                name: 'propertyManagementRate',
-                value: formData.propertyManagementRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Vacancy (%)',
-                name: 'vacancyRate',
-                value: formData.vacancyRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Maintenance (%)',
-                name: 'maintenanceRate',
-                value: formData.maintenanceRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Other Expenses (%)',
-                name: 'otherExpensesRate',
-                value: formData.otherExpensesRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Cap Ex Reserve (%)',
-                name: 'capExReserveRate',
-                value: formData.capExReserveRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Rent Estimate',
-                name: 'rentEstimate',
-                value: formData.rentEstimate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Purchase Price',
-                name: 'purchasePrice',
-                value: formData.purchasePrice,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Rent Increase Rate (%)',
-                name: 'annualRentIncreaseRate',
-                value: formData.annualRentIncreaseRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Appreciation Rate (%)',
-                name: 'annualAppreciationRate',
-                value: formData.annualAppreciationRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Tax Increase Rate (%)',
-                name: 'annualTaxIncreaseRate',
-                value: formData.annualTaxIncreaseRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Home Insurance Increase Rate (%)',
-                name: 'annualHomeInsuranceIncreaseRate',
-                value: formData.annualHomeInsuranceIncreaseRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual HOA Fees Increase Rate (%)',
-                name: 'annualHOAFeesIncreaseRate',
-                value: formData.annualHOAFeesIncreaseRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Parking Fees',
-                name: 'parkingFees',
-                value: formData.parkingFees,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Laundry Services',
-                name: 'laundryServices',
-                value: formData.laundryServices,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Storage Unit Fees',
-                name: 'storageUnitFees',
-                value: formData.storageUnitFees,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Other',
-                name: 'other',
-                value: formData.other,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Depreciation',
-                name: 'depreciation',
-                value: formData.depreciation,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Mortgage Interest',
-                name: 'mortgageInterest',
-                value: formData.mortgageInterest,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Operating Expenses',
-                name: 'operatingExpenses',
-                value: formData.operatingExpenses,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Property Taxes',
-                name: 'propertyTaxes',
-                value: formData.propertyTaxes,
-                type: InputType.NUMBER,
-            },
+            BasicNumberForm('Property Management (%)', 'propertyManagementRate', formData.propertyManagementRate),
+            BasicNumberForm('Vacancy (%)', 'vacancyRate', formData.vacancyRate),
+            BasicNumberForm('Maintenance (%)', 'maintenanceRate', formData.maintenanceRate),
+            BasicNumberForm('Other Expenses (%)', 'otherExpensesRate', formData.otherExpensesRate),
+            BasicNumberForm('Cap Ex Reserve (%)', 'capExReserveRate', formData.capExReserveRate),
+            BasicNumberForm('Rent Estimate', 'rentEstimate', formData.rentEstimate),
+            BasicNumberForm('Purchase Price', 'purchasePrice', formData.purchasePrice),
+            BasicNumberForm('Annual Rent Increase Rate (%)', 'annualRentIncreaseRate', formData.annualRentIncreaseRate),
+            BasicNumberForm('Annual Appreciation Rate (%)', 'annualAppreciationRate', formData.annualAppreciationRate),
+            BasicNumberForm('Annual Tax Increase Rate (%)', 'annualTaxIncreaseRate', formData.annualTaxIncreaseRate),
+            BasicNumberForm('Annual Home Insurance Increase Rate (%)', 'annualHomeInsuranceIncreaseRate', formData.annualHomeInsuranceIncreaseRate),
+            BasicNumberForm('Annual HOA Fees Increase Rate (%)', 'annualHOAFeesIncreaseRate', formData.annualHOAFeesIncreaseRate),
+            BasicNumberForm('Parking Fees', 'parkingFees', formData.parkingFees),
+            BasicNumberForm('Laundry Services', 'laundryServices', formData.laundryServices),
+            BasicNumberForm('Storage Unit Fees', 'storageUnitFees', formData.storageUnitFees),
+            BasicNumberForm('Other', 'other', formData.other),
+            BasicNumberForm('Depreciation', 'depreciation', formData.depreciation),
+            BasicNumberForm('Mortgage Interest', 'mortgageInterest', formData.mortgageInterest),
+            BasicNumberForm('Operating Expenses', 'operatingExpenses', formData.operatingExpenses),
+            BasicNumberForm('Property Taxes', 'propertyTaxes', formData.propertyTaxes),
         ];
+
     }
 
 }

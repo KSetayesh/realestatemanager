@@ -1,16 +1,19 @@
 import React from 'react';
-import { Filter, InputType, PercentageAndAmount } from '../constants/Constant'; // Import constants as needed
+import { InputType } from '../constants/Constant'; // Import constants as needed
+
+export type Options = { value: string | number, label: string }[];
+
+export type FormValue = {
+    name: string;
+    value: number | string | undefined;
+    options?: Options;
+    type: InputType;
+    step?: string;
+};
 
 export type FormProperty = {
     title: string;
-    name: string;
-    value: number | string | undefined;
-    type: InputType;
-    hasRadioOptions?: boolean;
-    radioDetails?: { name: string, radioValue: PercentageAndAmount }; // 'Percentage' | 'Amount'; // Assuming these are the only two options
-    options?: { value: string | number, label: string }[]; // Correct structure for select options
-    step?: string;
-    hasFilterOption?: boolean;
+    values: FormValue[];
 };
 
 export interface FormProps<T> {
@@ -43,11 +46,9 @@ const StandardForm = <T,>({
 
         if (_name.endsWith('_filter')) {
             _name = _name.replace("_filter", "");
-        }
-        else if (InputType.RADIO === type) {
+        } else if (InputType.RADIO === type) {
             _name = _name.replace("_radio", "");
-        }
-        else if (InputType.CHECKBOX === type && event.target instanceof HTMLInputElement) {
+        } else if (InputType.CHECKBOX === type && event.target instanceof HTMLInputElement) {
             _value = event.target.checked;
         } else if (InputType.NUMBER === type) {
             _value = parseFloat(value);
@@ -60,78 +61,78 @@ const StandardForm = <T,>({
     };
 
     const getRadioButton = (
-        detail: FormProperty,
+        name: string,
         radioButtonIdentifier: string,
         value: string,
         radioButtonLabel: string,
+        checked: boolean
     ) => {
         return (
             <div className="form-check">
                 <input
                     className="form-check-input"
                     type={InputType.RADIO}
-                    name={`${detail.radioDetails!.name}_radio`}
-                    id={`${detail.radioDetails!.name}_${radioButtonIdentifier}`}
+                    name={`${name}_radio`}
+                    id={`${name}_${radioButtonIdentifier}`}
                     value={value}
-                    checked={value === detail.radioDetails!.radioValue}
+                    checked={checked}
                     onChange={handleChange}
                 />
-                <label className="form-check-label" htmlFor={`${detail.radioDetails!.name}_${radioButtonIdentifier}`}>
+                <label className="form-check-label" htmlFor={`${name}_${radioButtonIdentifier}`}>
                     {radioButtonLabel}
                 </label>
             </div>
         );
-    }
+    };
 
-    const getRadioOptionDetails = (detail: FormProperty) => {
+    const renderRadioOptions = (valueDetail: FormValue) => {
         return (
             <div className="radio-group">
-                {getRadioButton(detail, 'percentage', PercentageAndAmount.PERCENTAGE, 'Percentage')}
-                {getRadioButton(detail, 'amount', PercentageAndAmount.AMOUNT, 'Amount')}
+                {(valueDetail.options || []).map(option => getRadioButton(
+                    valueDetail.name,
+                    option.value.toString(),
+                    option.value.toString(),
+                    option.label,
+                    valueDetail.value === option.value
+                ))}
             </div>
         );
     };
 
-    const stringOption = (detail: FormProperty) => {
+    const renderStringOption = (valueDetail: FormValue) => {
         return (
-            <div>
-                {detail.hasRadioOptions && detail.radioDetails && getRadioOptionDetails(detail)}
-                <input
-                    type={InputType.STRING}
-                    name={detail.name}
-                    value={detail.value as string}
-                    onChange={handleChange}
-                    className="form-check-input"
-                />
-            </div>
+            <input
+                type={InputType.STRING}
+                name={valueDetail.name}
+                value={valueDetail.value as string}
+                onChange={handleChange}
+                className="form-check-input"
+            />
         );
     };
 
-    const numberOption = (detail: FormProperty) => {
+    const renderNumberOption = (valueDetail: FormValue) => {
         return (
-            <div>
-                {detail.hasRadioOptions && detail.radioDetails && getRadioOptionDetails(detail)}
-                <input
-                    type={InputType.NUMBER}
-                    name={detail.name}
-                    value={detail.value as number}
-                    onChange={handleChange}
-                    className="form-check-input"
-                    step={detail.step || "1"}
-                />
-            </div>
+            <input
+                type={InputType.NUMBER}
+                name={valueDetail.name}
+                value={valueDetail.value as number}
+                onChange={handleChange}
+                className="form-check-input"
+                step={valueDetail.step || "1"}
+            />
         );
     };
 
-    const selectOption = (detail: FormProperty) => {
+    const renderSelectOption = (valueDetail: FormValue) => {
         return (
             <select
-                name={detail.name}
-                value={detail.value as string | number}
+                name={valueDetail.name}
+                value={valueDetail.value as string | number}
                 onChange={handleChange}
                 className="form-check-input"
             >
-                {detail.options?.map((option, optionIndex) => (
+                {(valueDetail.options || []).map((option, optionIndex) => (
                     <option key={optionIndex} value={option.value}>
                         {option.label}
                     </option>
@@ -140,13 +141,13 @@ const StandardForm = <T,>({
         );
     };
 
-    const checkBoxOption = (detail: FormProperty) => {
-        const isChecked: boolean = detail.value ? detail.value.toString().toLowerCase() === 'true' : false;
+    const renderCheckBoxOption = (valueDetail: FormValue) => {
+        const isChecked: boolean = valueDetail.value ? valueDetail.value.toString().toLowerCase() === 'true' : false;
 
         return (
             <input
                 type={InputType.CHECKBOX}
-                name={detail.name}
+                name={valueDetail.name}
                 checked={isChecked}
                 onChange={handleChange}
                 className="form-input"
@@ -154,48 +155,32 @@ const StandardForm = <T,>({
         );
     };
 
-    const renderInputField = (detail: FormProperty) => {
-        switch (detail.type) {
+    const renderInputField = (valueDetail: FormValue) => {
+        switch (valueDetail.type) {
             case InputType.STRING:
-                return stringOption(detail);
+                return renderStringOption(valueDetail);
             case InputType.NUMBER:
-                return numberOption(detail);
+                return renderNumberOption(valueDetail);
             case InputType.SELECT:
-                return selectOption(detail);
+                return renderSelectOption(valueDetail);
             case InputType.CHECKBOX:
-                return checkBoxOption(detail);
+                return renderCheckBoxOption(valueDetail);
+            case InputType.RADIO:
+                return renderRadioOptions(valueDetail);
             default:
                 return null;
         }
     };
 
     const createFormProperty = (detail: FormProperty, index: number) => {
-        if (detail.hasFilterOption) {
-            return (
-                <div className="form-group" key={index}>
-                    <label>{detail.title}</label>
-                    <div className="input-group">
-                        <select
-                            name={`${detail.name}_filter`}
-                            onChange={handleChange}
-                            className="form-control filter-select"
-                        >
-                            {Object.entries(Filter).map(([key, value]) => (
-                                <option key={key} value={value}>
-                                    {value}
-                                </option>
-                            ))}
-                        </select>
-                        {renderInputField(detail)}
-                    </div>
-                </div>
-            );
-        }
-
         return (
             <div className="form-group" key={index}>
                 <label>{detail.title}</label>
-                {renderInputField(detail)}
+                {detail.values.map((valueDetail, idx) => (
+                    <div key={idx}>
+                        {renderInputField(valueDetail)}
+                    </div>
+                ))}
             </div>
         );
     };

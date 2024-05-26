@@ -2,6 +2,7 @@ import { CreateAgentRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { AgentType, Country, InputType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
+import { BasicStringForm, CountryForm, StateForm } from "./ReusableFormFields";
 
 export type AgentFormData = {
     firstName: string;
@@ -47,77 +48,29 @@ export class AgentFormDetails implements FormInterface<AgentFormData, CreateAgen
 
     getFormDetails(formData: AgentFormData): FormProperty[] {
         return [
-            {
-                title: 'First Name',
-                name: 'firstName',
-                value: formData.firstName,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Last Name',
-                name: 'lastName',
-                value: formData.lastName,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Website',
-                name: 'website',
-                value: formData.website!,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Company Name',
-                name: 'companyName',
-                value: formData.companyName,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Phone Number',
-                name: 'phoneNumber',
-                value: formData.phoneNumber,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Email',
-                name: 'email',
-                value: formData.email,
-                type: InputType.STRING,
-            },
-            {
-                title: 'Country',
-                name: 'country',
-                value: formData.country,
-                type: InputType.SELECT,
-                options: Object.values(Country).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
-            },
-            {
-                title: 'State',
-                name: 'state',
-                value: formData.state,
-                type: InputType.SELECT,
-                options: Object.values(State).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
-            },
+            BasicStringForm('First Name', 'firstName', formData.firstName),
+            BasicStringForm('Last Name', 'lastName', formData.lastName),
+            BasicStringForm('Website', 'website', formData.website),
+            BasicStringForm('Company Name', 'companyName', formData.companyName),
+            BasicStringForm('Phone Number', 'phoneNumber', formData.phoneNumber),
+            BasicStringForm('Email', 'email', formData.email),
+            CountryForm(formData.country),
+            StateForm(formData.state),
             {
                 title: 'Agent Type',
-                name: 'agentType',
-                value: formData.agentType,
-                type: InputType.SELECT,
-                options: Object.values(AgentType).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'agentType',
+                        type: InputType.SELECT,
+                        value: formData.agentType,
+                        options: Object.values(AgentType).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                ],
             },
         ];
     }

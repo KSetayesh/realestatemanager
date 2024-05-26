@@ -1,7 +1,21 @@
 import { CreateListingDetailsRequest } from "@realestatemanager/shared";
-import { Country, InputType, PropertyStatus, PropertyType, State, ratingSelections, trueAndFalseSelections } from "../constants/Constant";
+import {
+    Country,
+    InputType,
+    PropertyStatus,
+    PropertyType,
+    State,
+    ratingSelections
+} from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { FormProperty } from "../components/StandardForm";
+import {
+    BasicCheckBoxForm,
+    BasicNumberForm,
+    BasicStringForm,
+    CountryForm,
+    StateForm
+} from "./ReusableFormFields";
 
 export type AddPropertyFormData = {
     zillowURL: string;
@@ -43,251 +57,108 @@ export type AddPropertyFormData = {
 
 export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData, CreateListingDetailsRequest> {
 
+    // name: string;
+    // value: number | string | Options | undefined;
+    // type: InputType;
+    // step?: string;
+
     getFormDetails(formData: AddPropertyFormData): FormProperty[] {
         return [
-            {
-                title: 'Zillow URL',
-                name: 'zillowURL',
-                type: InputType.STRING,
-                value: formData.zillowURL,
-            },
-            {
-                title: 'Full Address',
-                name: 'fullAddress',
-                type: InputType.STRING,
-                value: formData.fullAddress,
-            },
-            {
-                title: 'State',
-                name: 'state',
-                type: InputType.SELECT,
-                value: formData.state,
-                options: Object.values(State).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
-            },
-            {
-                title: 'Zipcode',
-                name: 'zipcode',
-                type: InputType.STRING,
-                value: formData.zipcode,
-            },
-            {
-                title: 'City',
-                name: 'city',
-                type: InputType.STRING,
-                value: formData.city,
-            },
-            {
-                title: 'County',
-                name: 'county',
-                type: InputType.STRING,
-                value: formData.county,
-            },
-            {
-                title: 'Country',
-                name: 'country',
-                type: InputType.SELECT,
-                value: formData.country,
-                options: Object.values(Country).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
-            },
-            {
-                title: 'Street Address',
-                name: 'streetAddress',
-                type: InputType.STRING,
-                value: formData.streetAddress,
-            },
-            {
-                title: 'Apartment Number',
-                name: 'apartmentNumber',
-                type: InputType.STRING,
-                value: formData.apartmentNumber,
-            },
-            {
-                title: 'Longitude',
-                name: 'longitude',
-                type: InputType.NUMBER,
-                value: formData.longitude,
-            },
-            {
-                title: 'Latitude',
-                name: 'latitude',
-                type: InputType.NUMBER,
-                value: formData.latitude,
-            },
-            {
-                title: 'Number Of Days On Market',
-                name: 'numberOfDaysOnMarket',
-                type: InputType.NUMBER,
-                value: formData.numberOfDaysOnMarket,
-            },
+            BasicStringForm('Zillow URL', 'zillowURL', formData.zillowURL),
+            BasicStringForm('Full Address', 'fullAddress', formData.fullAddress),
+            StateForm(formData.country),
+            BasicStringForm('Zipcode', 'zipcode', formData.zipcode),
+            BasicStringForm('City', 'city', formData.city),
+            BasicStringForm('County', 'county', formData.county),
+            CountryForm(formData.country),
+            BasicStringForm('Street Address', 'streetAddress', formData.streetAddress),
+            BasicStringForm('Apartment Number', 'apartmentNumber', formData.apartmentNumber),
+            BasicNumberForm('Longitude', 'longitude', formData.longitude),
+            BasicNumberForm('Latitude', 'latitude', formData.latitude),
+            BasicNumberForm('Number Of Days On Market', 'numberOfDaysOnMarket', formData.numberOfDaysOnMarket),
             {
                 title: 'Elementary School Rating',
-                name: 'elementarySchoolRating',
-                type: InputType.SELECT,
-                value: formData.elementarySchoolRating,
-                options: ratingSelections(),
+                values: [
+                    {
+                        name: 'elementarySchoolRating',
+                        type: InputType.SELECT,
+                        value: formData.elementarySchoolRating,
+                        options: ratingSelections(),
+                    },
+                ],
             },
             {
                 title: 'Middle School Rating',
-                name: 'middleSchoolRating',
-                type: InputType.SELECT,
-                value: formData.middleSchoolRating,
-                options: ratingSelections(),
+                values: [
+                    {
+                        name: 'middleSchoolRating',
+                        type: InputType.SELECT,
+                        value: formData.middleSchoolRating,
+                        options: ratingSelections(),
+                    },
+                ],
             },
             {
                 title: 'High School Rating',
-                name: 'highSchoolRating',
-                type: InputType.SELECT,
-                value: formData.highSchoolRating,
-                options: ratingSelections(),
+                values: [
+                    {
+                        name: 'highSchoolRating',
+                        type: InputType.SELECT,
+                        value: formData.highSchoolRating,
+                        options: ratingSelections(),
+                    },
+                ],
             },
-            {
-                title: 'Number Of Bedrooms',
-                name: 'numberOfBedrooms',
-                type: InputType.SELECT,
-                value: formData.numberOfBedrooms,
-                options: ratingSelections(0),
-            },
-            {
-                title: 'Number Of Full Bathrooms',
-                name: 'numberOfFullBathrooms',
-                type: InputType.SELECT,
-                value: formData.numberOfFullBathrooms,
-                options: ratingSelections(0),
-            },
-            {
-                title: 'Number Of Half Bathrooms',
-                name: 'numberOfHalfBathrooms',
-                type: InputType.SELECT,
-                value: formData.numberOfHalfBathrooms,
-                options: ratingSelections(0),
-            },
-            {
-                title: 'Square Feet',
-                name: 'squareFeet',
-                type: InputType.NUMBER,
-                value: formData.squareFeet,
-            },
-            {
-                title: 'Acres',
-                name: 'acres',
-                type: InputType.NUMBER,
-                value: formData.acres,
-            },
-            {
-                title: 'Year Built',
-                name: 'yearBuilt',
-                type: InputType.NUMBER,
-                value: formData.yearBuilt,
-            },
-            {
-                title: 'Has Garage',
-                name: 'hasGarage',
-                type: InputType.SELECT,
-                value: formData.hasGarage.toString(),
-                options: trueAndFalseSelections(),
-            },
-            {
-                title: 'Has Pool',
-                name: 'hasPool',
-                type: InputType.SELECT,
-                value: formData.hasPool.toString(),
-                options: trueAndFalseSelections(),
-            },
-            {
-                title: 'Has Basement',
-                name: 'hasBasement',
-                type: InputType.SELECT,
-                value: formData.hasBasement.toString(),
-                options: trueAndFalseSelections(),
-            },
+            BasicNumberForm('Number Of Bedrooms', 'numberOfBedrooms', formData.numberOfBedrooms),
+            BasicNumberForm('Number Of Full Bathrooms', 'numberOfFullBathrooms', formData.numberOfFullBathrooms),
+            BasicNumberForm('Number Of Half Bathrooms', 'numberOfHalfBathrooms', formData.numberOfHalfBathrooms),
+            BasicNumberForm('Square Feet', 'squareFeet', formData.squareFeet),
+            BasicNumberForm('Acres', 'acres', formData.acres),
+            BasicNumberForm('Year Built', 'yearBuilt', formData.yearBuilt),
+            BasicCheckBoxForm('Has Garage', 'hasGarage', formData.hasGarage),
+            BasicCheckBoxForm('Has Pool', 'hasPool', formData.hasPool),
+            BasicCheckBoxForm('Has Basement', 'hasBasement', formData.hasBasement),
             {
                 title: 'Property Type',
-                name: 'propertyType',
-                type: InputType.SELECT,
-                value: formData.propertyType,
-                options: Object.values(PropertyType).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'propertyType',
+                        type: InputType.SELECT,
+                        value: formData.propertyType,
+                        options: Object.values(PropertyType).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                ],
             },
             {
                 title: 'Property Status',
-                name: 'propertyStatus',
-                type: InputType.SELECT,
-                value: formData.propertyStatus,
-                options: Object.values(PropertyStatus).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                values: [
+                    {
+                        name: 'propertyStatus',
+                        type: InputType.SELECT,
+                        value: formData.propertyStatus,
+                        options: Object.values(PropertyType).map((enumValue => {
+                            return {
+                                value: enumValue,
+                                label: enumValue,
+                            };
+                        })),
+                    },
+                ],
             },
-            {
-                title: 'Listing Price',
-                name: 'listingPrice',
-                type: InputType.NUMBER,
-                value: formData.listingPrice,
-            },
-            {
-                title: 'Zestimate',
-                name: 'zestimate',
-                type: InputType.NUMBER,
-                value: formData.zestimate,
-            },
-            {
-                title: 'Zillow Rent Estimate',
-                name: 'zillowRentEstimate',
-                type: InputType.NUMBER,
-                value: formData.zillowRentEstimate,
-            },
-            {
-                title: 'Zillow Range Low',
-                name: 'zestimateRangeLow',
-                type: InputType.NUMBER,
-                value: formData.zestimateRangeLow,
-            },
-            {
-                title: 'Zillow Range High',
-                name: 'zestimateRangeHigh',
-                type: InputType.NUMBER,
-                value: formData.zestimateRangeHigh,
-            },
-            {
-                title: 'Zillow Monthly Property Tax Amount',
-                name: 'zillowMonthlyPropertyTaxAmount',
-                type: InputType.NUMBER,
-                value: formData.zillowMonthlyPropertyTaxAmount,
-            },
-            {
-                title: 'Zillow Monthly Home Insurance Amount',
-                name: 'zillowMonthlyHomeInsuranceAmount',
-                type: InputType.NUMBER,
-                value: formData.zillowMonthlyHomeInsuranceAmount,
-            },
-            {
-                title: 'Zillow Monthly HOA Fees Amount',
-                name: 'zillowMonthlyHOAFeesAmount',
-                type: InputType.NUMBER,
-                value: formData.zillowMonthlyHOAFeesAmount,
-            },
-            {
-                title: 'Discription',
-                name: 'description',
-                type: InputType.STRING,
-                value: formData.description,
-            },
+            BasicNumberForm('Listing Price', 'listingPrice', formData.listingPrice),
+            BasicNumberForm('Zestimate', 'zestimate', formData.zestimate),
+            BasicNumberForm('Zillow Rent Estimate', 'zillowRentEstimate', formData.zillowRentEstimate),
+            BasicNumberForm('Zillow Range Low', 'zestimateRangeLow', formData.zestimateRangeLow),
+            BasicNumberForm('Zillow Range High', 'zestimateRangeHigh', formData.zestimateRangeHigh),
+            BasicNumberForm('Zillow Monthly Property Tax Amount', 'zillowMonthlyPropertyTaxAmount', formData.zillowMonthlyPropertyTaxAmount),
+            BasicNumberForm('Zillow Monthly Home Insurance Amount', 'zillowMonthlyHomeInsuranceAmount', formData.zillowMonthlyHomeInsuranceAmount),
+            BasicNumberForm('Zillow Monthly HOA Fees Amount', 'zillowMonthlyHOAFeesAmount', formData.zillowMonthlyHOAFeesAmount),
+            BasicStringForm('Discription', 'description', formData.description),
         ];
     }
 
@@ -383,5 +254,5 @@ export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData
             description: '',
         };
     }
-    
+
 } 

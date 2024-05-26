@@ -1,7 +1,7 @@
 import { HighYeildSavingsRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
+import { BasicNumberForm } from "./ReusableFormFields";
 
 export type HighYieldSavingsFormData = {
     initialDeposit: number;
@@ -33,30 +33,10 @@ export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavin
 
     getFormDetails(formData: HighYieldSavingsFormData): FormProperty[] {
         return [
-            {
-                title: 'Initial Deposit',
-                name: 'initialDeposit',
-                value: formData.initialDeposit,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Annual Interest Rate (%)',
-                name: 'annualInterestRate',
-                value: formData.annualInterestRate,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Years',
-                name: 'years',
-                value: formData.years,
-                type: InputType.NUMBER,
-            },
-            {
-                title: 'Monthly Deposit',
-                name: 'monthlyDeposit',
-                value: formData.monthlyDeposit ?? 0,
-                type: InputType.NUMBER,
-            },
+            BasicNumberForm('Initial Deposit', 'initialDeposit', formData.initialDeposit),
+            BasicNumberForm('Annual Interest Rate (%)', 'annualInterestRate', formData.annualInterestRate),
+            BasicNumberForm('Years', 'years', formData.years),
+            BasicNumberForm('Monthly Deposit', 'monthlyDeposit', formData.monthlyDeposit ?? 0),
         ];
     }
 
