@@ -1,4 +1,4 @@
-import { CreateFilteredPropertyListRequest, FilterOn } from "@realestatemanager/shared";
+import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { Filter, InputType, PropertyType, State, trueAndFalseSelections } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
@@ -7,14 +7,22 @@ export type PropertyFilterFormFields = {
     state: State;
     zipCode: string;
     city: string;
-    rentEstimate: FilterOn;
-    listedPrice: FilterOn;
-    numberOfBedrooms: FilterOn;
-    numberOfBathrooms: FilterOn;
-    squareFeet: FilterOn;
-    yearBuilt: FilterOn;
-    maxHoa: FilterOn;
-    monthlyPropertyTaxAmount: FilterOn;
+    rentEstimateFilter: Filter;
+    rentEstimate: number;
+    listedPriceFilter: Filter;
+    listedPrice: number;
+    numberOfBedroomsFilter: Filter;
+    numberOfBedrooms: number;
+    numberOfBathroomsFilter: Filter;
+    numberOfBathrooms: number;
+    squareFeetFilter: Filter;
+    squareFeet: number;
+    yearBuiltFilter: Filter;
+    yearBuilt: number;
+    maxHoaFilter: Filter;
+    maxHoa: number;
+    monthlyPropertyTaxAmountFilter: Filter;
+    monthlyPropertyTaxAmount: number;
     homeType: PropertyType;
     hasGarage: boolean;
     hasBasement: boolean;
@@ -32,14 +40,38 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             state: formData.state,
             zipCode: formData.zipCode,
             city: formData.city,
-            rentEstimate: formData.rentEstimate,
-            listedPrice: formData.listedPrice,
-            numberOfBedrooms: formData.numberOfBedrooms,
-            numberOfBathrooms: formData.numberOfBathrooms,
-            squareFeet: formData.squareFeet,
-            yearBuilt: formData.yearBuilt,
-            maxHoa: formData.maxHoa,
-            monthlyPropertyTaxAmount: formData.monthlyPropertyTaxAmount,
+            rentEstimate: {
+                filter: formData.rentEstimateFilter,
+                value: formData.rentEstimate
+            },
+            listedPrice: {
+                filter: formData.listedPriceFilter,
+                value: formData.listedPrice,
+            },
+            numberOfBedrooms: {
+                filter: formData.numberOfBathroomsFilter,
+                value: formData.numberOfBedrooms,
+            },
+            numberOfBathrooms: {
+                filter: formData.numberOfBathroomsFilter,
+                value: formData.numberOfBathrooms,
+            },
+            squareFeet: {
+                filter: formData.squareFeetFilter,
+                value: formData.squareFeet,
+            },
+            yearBuilt: {
+                filter: formData.yearBuiltFilter,
+                value: formData.yearBuilt,
+            },
+            maxHoa: {
+                filter: formData.maxHoaFilter,
+                value: formData.maxHoa,
+            },
+            monthlyPropertyTaxAmount: {
+                filter: formData.monthlyPropertyTaxAmountFilter,
+                value: formData.monthlyPropertyTaxAmount,
+            },
             homeType: formData.homeType,
             hasGarage: formData.hasGarage,
             hasBasement: formData.hasBasement,
@@ -51,19 +83,26 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
 
     // Create a state to store the form data.
     getDefaultFormData(): PropertyFilterFormFields {
-        const defaultFilter: FilterOn = this.getDefaultFilter();
         return {
             state: State.AL,
             zipCode: '',
             city: '',
-            rentEstimate: defaultFilter,
-            listedPrice: defaultFilter,
-            numberOfBedrooms: defaultFilter,
-            numberOfBathrooms: defaultFilter,
-            squareFeet: defaultFilter,
-            yearBuilt: defaultFilter,
-            maxHoa: defaultFilter,
-            monthlyPropertyTaxAmount: defaultFilter,
+            rentEstimateFilter: Filter.gteq,
+            rentEstimate: 0,
+            listedPriceFilter: Filter.gteq,
+            listedPrice: 0,
+            numberOfBedroomsFilter: Filter.gteq,
+            numberOfBedrooms: 0,
+            numberOfBathroomsFilter: Filter.gteq,
+            numberOfBathrooms: 0,
+            squareFeetFilter: Filter.gteq,
+            squareFeet: 0,
+            yearBuiltFilter: Filter.gteq,
+            yearBuilt: 0,
+            maxHoaFilter: Filter.gteq,
+            maxHoa: 0,
+            monthlyPropertyTaxAmountFilter: Filter.gteq,
+            monthlyPropertyTaxAmount: 0,
             homeType: PropertyType.SINGLE_FAMILY,
             hasGarage: true,
             hasBasement: true,
@@ -102,7 +141,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Rent Estimate',
                 name: 'rentEstimate',
-                value: formData?.rentEstimate?.value,
+                value: formData?.rentEstimate,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -115,7 +154,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Listed Price',
                 name: 'listedPrice',
-                value: formData?.listedPrice?.value,
+                value: formData?.listedPrice,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -128,7 +167,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Number Of Bedrooms',
                 name: 'numberOfBedrooms',
-                value: formData?.numberOfBedrooms?.value,
+                value: formData?.numberOfBedrooms,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -141,7 +180,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Number Of Bathrooms',
                 name: 'numberOfBathrooms',
-                value: formData?.numberOfBathrooms?.value,
+                value: formData?.numberOfBathrooms,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -154,7 +193,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Square Feet',
                 name: 'squareFeet',
-                value: formData?.squareFeet?.value,
+                value: formData?.squareFeet,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -167,7 +206,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Year Built',
                 name: 'yearBuilt',
-                value: formData?.yearBuilt?.value,
+                value: formData?.yearBuilt,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -180,7 +219,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Max Hoa',
                 name: 'maxHoa',
-                value: formData?.maxHoa.value,
+                value: formData?.maxHoa,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -193,7 +232,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             {
                 title: 'Monthly Property Tax Amount',
                 name: 'monthlyPropertyTaxAmount',
-                value: formData?.monthlyPropertyTaxAmount?.value,
+                value: formData?.monthlyPropertyTaxAmount,
                 type: InputType.NUMBER,
                 hasFilterOption: true,
                 options: Object.values(Filter).map((enumValue => {
@@ -244,13 +283,6 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                 options: trueAndFalseSelections(),
             },
         ];
-    }
-
-    private getDefaultFilter(): FilterOn {
-        return {
-            value: 0,
-            filter: Filter.gteq,
-        };
     }
 
 }

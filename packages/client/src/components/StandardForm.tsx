@@ -32,84 +32,74 @@ const StandardForm = <T,>({
 }: FormProps<T>) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value, type } = event.target;
 
-        let _name: string = event.target.name;
-        let _value: string | boolean = event.target.value;
-        let _type: string = event.target.value;
+        let _name = name;
+        let _value: string | boolean | number = value;
 
-        if (InputType.RADIO === _type) {
+        console.log("_name:", _name);
+        console.log("_value:", _value);
+        console.log("_type:", type);
+
+        if (_name.endsWith('_filter')) {
+            _name = _name.replace("_filter", "");
+        }
+        else if (InputType.RADIO === type) {
             _name = _name.replace("_radio", "");
         }
-        else if (InputType.CHECKBOX === _type) {
-            if (event.target instanceof HTMLInputElement && event.target.type === InputType.CHECKBOX) {
-                _value = event.target.checked;
-            } else {
-                _value = event.target.value;
-            }
+        else if (InputType.CHECKBOX === type && event.target instanceof HTMLInputElement) {
+            _value = event.target.checked;
+        } else if (InputType.NUMBER === type) {
+            _value = parseFloat(value);
         }
+
         setFormData((prevFormData: T) => ({
             ...prevFormData,
             [_name]: _value,
         }));
-
     };
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     let value: string | boolean;
-    //     const name = e.target.name;
+    const getRadioButton = (
+        detail: FormProperty,
+        radioButtonIdentifier: string,
+        value: string,
+        radioButtonLabel: string,
+    ) => {
+        return (
+            <div className="form-check">
+                <input
+                    className="form-check-input"
+                    type={InputType.RADIO}
+                    name={`${detail.radioDetails!.name}_radio`}
+                    id={`${detail.radioDetails!.name}_${radioButtonIdentifier}`}
+                    value={value}
+                    checked={value === detail.radioDetails!.radioValue}
+                    onChange={handleChange}
+                />
+                <label className="form-check-label" htmlFor={`${detail.radioDetails!.name}_${radioButtonIdentifier}`}>
+                    {radioButtonLabel}
+                </label>
+            </div>
+        );
+    }
 
-    //     if (e.target instanceof HTMLInputElement && e.target.type === InputType.CHECKBOX) {
-    //         value = e.target.checked;
-    //     } else {
-    //         value = e.target.value;
-    //     }
-
-    //     setFormData((prevFormData: FormData) => ({
-    //         ...prevFormData,
-    //         [name]: value
-    //     }));
-
-    // };
+    const getRadioOptionDetails = (detail: FormProperty) => {
+        return (
+            <div className="radio-group">
+                {getRadioButton(detail, 'percentage', PercentageAndAmount.PERCENTAGE, 'Percentage')}
+                {getRadioButton(detail, 'amount', PercentageAndAmount.AMOUNT, 'Amount')}
+            </div>
+        );
+    };
 
     const stringOption = (detail: FormProperty) => {
         return (
             <div>
-                {detail.hasRadioOptions && detail.radioDetails && (
-                    <div className="radio-group">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type={InputType.RADIO}
-                                name={`${detail.radioDetails.name}_radio`}
-                                id={`${detail.radioDetails.name}_percentage`}
-                                value={PercentageAndAmount.PERCENTAGE}
-                                checked={PercentageAndAmount.PERCENTAGE === detail.radioDetails.radioValue}
-                                onChange={handleChange}
-                            />
-                            <label className="form-check-label" htmlFor={`${detail.radioDetails.name}_percentage`}>
-                                Percentage
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type={InputType.RADIO}
-                                name={`${detail.radioDetails.name}_radio`}
-                                id={`${detail.radioDetails.name}_amount`}
-                                value={PercentageAndAmount.AMOUNT}
-                                checked={PercentageAndAmount.AMOUNT === detail.radioDetails.radioValue}
-                                onChange={handleChange}
-                            />
-                            <label className="form-check-label" htmlFor={`${detail.radioDetails.name}_amount`}>
-                                Amount
-                            </label>
-                        </div>
-                    </div>
-                )}
+                {detail.hasRadioOptions && detail.radioDetails && getRadioOptionDetails(detail)}
                 <input
                     type={InputType.STRING}
                     name={detail.name}
-                    value={detail.value}
+                    value={detail.value as string}
                     onChange={handleChange}
                     className="form-check-input"
                 />
@@ -120,42 +110,11 @@ const StandardForm = <T,>({
     const numberOption = (detail: FormProperty) => {
         return (
             <div>
-                {detail.hasRadioOptions && detail.radioDetails && (
-                    <div className="radio-group">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type={InputType.RADIO}
-                                name={`${detail.radioDetails.name}_radio`}
-                                id={`${detail.radioDetails.name}_percentage`}
-                                value={PercentageAndAmount.PERCENTAGE}
-                                checked={PercentageAndAmount.PERCENTAGE === detail.radioDetails.radioValue}
-                                onChange={handleChange}
-                            />
-                            <label className="form-check-label" htmlFor={`${detail.radioDetails.name}_percentage`}>
-                                Percentage
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type={InputType.RADIO}
-                                name={`${detail.radioDetails.name}_radio`}
-                                id={`${detail.radioDetails.name}_amount`}
-                                value={PercentageAndAmount.AMOUNT}
-                                checked={PercentageAndAmount.AMOUNT === detail.radioDetails.radioValue}
-                                onChange={handleChange}
-                            />
-                            <label className="form-check-label" htmlFor={`${detail.radioDetails.name}_amount`}>
-                                Amount
-                            </label>
-                        </div>
-                    </div>
-                )}
+                {detail.hasRadioOptions && detail.radioDetails && getRadioOptionDetails(detail)}
                 <input
                     type={InputType.NUMBER}
                     name={detail.name}
-                    value={detail.value}
+                    value={detail.value as number}
                     onChange={handleChange}
                     className="form-check-input"
                     step={detail.step || "1"}
@@ -168,7 +127,7 @@ const StandardForm = <T,>({
         return (
             <select
                 name={detail.name}
-                value={detail.value}
+                value={detail.value as string | number}
                 onChange={handleChange}
                 className="form-check-input"
             >
@@ -182,10 +141,7 @@ const StandardForm = <T,>({
     };
 
     const checkBoxOption = (detail: FormProperty) => {
-        let isChecked: boolean = false;
-        if (detail.value && detail.value.toString().toLocaleLowerCase() === 'true') {
-            isChecked = true;
-        }
+        const isChecked: boolean = detail.value ? detail.value.toString().toLowerCase() === 'true' : false;
 
         return (
             <input
@@ -198,33 +154,19 @@ const StandardForm = <T,>({
         );
     };
 
-    // // TODO
-    // const checkBoxOption = (detail: FormProperty) => {
-    //     return (
-    //         <input
-    //             type={InputType.CHECKBOX}
-    //             name={detail.name}
-    //             checked={formData[name]}
-    //             value={formData[name]}
-    //             onChange={handleChange}
-    //             className="form-input" />
-    //     );
-    // };
-
     const renderInputField = (detail: FormProperty) => {
-        if (detail.type === InputType.STRING) {
-            return stringOption(detail);
+        switch (detail.type) {
+            case InputType.STRING:
+                return stringOption(detail);
+            case InputType.NUMBER:
+                return numberOption(detail);
+            case InputType.SELECT:
+                return selectOption(detail);
+            case InputType.CHECKBOX:
+                return checkBoxOption(detail);
+            default:
+                return null;
         }
-        else if (detail.type === InputType.NUMBER) {
-            return numberOption(detail);
-        }
-        else if (detail.type === InputType.SELECT) {
-            return selectOption(detail);
-        }
-        else if (detail.type === InputType.CHECKBOX) {
-            return checkBoxOption(detail);
-        }
-        return null;
     };
 
     const createFormProperty = (detail: FormProperty, index: number) => {
@@ -258,7 +200,6 @@ const StandardForm = <T,>({
         );
     };
 
-    // Determine if the submit button should be disabled
     const isButtonDisabled = (): boolean => {
         return buttonDisableLogic ? buttonDisableLogic() : false;
     };

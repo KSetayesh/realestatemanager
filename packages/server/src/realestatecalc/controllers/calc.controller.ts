@@ -17,10 +17,17 @@ export class CalcController {
 
     @Get()
     async getAllProperties(
-        @Query('getAllPropertiesRequest') getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
+        @Query() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
-
+        console.log('In getAllProperties endpoint');
         const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
+
+        if (getAllPropertiesRequest) {
+            console.log('---filteredPropertyListRequest:', getAllPropertiesRequest.filteredPropertyListRequest);
+        }
+        else {
+            console.log('---getAllPropertiesRequest is undefined');
+        }
 
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');

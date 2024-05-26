@@ -31,7 +31,8 @@ const PropertiesList: React.FC = () => {
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
-    const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+    //uncomment this
+    //const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value as keyof typeof PropertiesListTableType;
@@ -43,7 +44,9 @@ const PropertiesList: React.FC = () => {
         (async () => {
             try {
                 setIsLoading(true); // Set loading state to true before fetching data
-                const propertiesData: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties();
+
+                //uncomment this
+                const propertiesData: ListingWithScenariosResponseDTO[] = [];// await realEstateCalcApi.getAllProperties();
                 setProperties(propertiesData); // Update state with fetched data
                 setFormData(propertiesListFormDetails.getDefaultFormData());
                 console.log("Fetched data:", propertiesData);
@@ -93,7 +96,9 @@ const PropertiesList: React.FC = () => {
         const postSuccess = await realEstateCalcApi.getAllProperties(dataToSubmit);
         if (postSuccess) {
             alert('Data submitted successfully!');
-            window.location.reload();
+            // uncomment this 
+
+            // window.location.reload();
         }
         else {
             alert('Failed to submit data.');

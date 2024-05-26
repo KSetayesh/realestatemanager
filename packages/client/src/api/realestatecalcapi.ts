@@ -11,12 +11,16 @@ import { CalcApi } from "./calcapi";
 export class RealEstateCalcApi extends CalcApi {
 
     async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
-
+        console.log('getAllPropertiesRequest:', getAllPropertiesRequest);
         try {
-            const response = await axios.post(this.getURL(), getAllPropertiesRequest, {
-                headers: this.getHeaders(),
-            });
-            return response.data;
+            // uncomment this
+
+            // const response = await axios.get(this.getURL(), {
+            //     headers: this.getHeaders(),
+            //     params: getAllPropertiesRequest, // Use params to include the request data as query parameters
+            // });
+            // return response.data;
+            return [];
         } catch (error) {
             const message = `Error fetching properties:, ${error}`;
             console.error(message);
