@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { ListingDAO } from '../dao/listing.dao';
-import { ListingCreationType } from '@realestatemanager/shared';
+import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realestatemanager/shared';
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 import { DatabaseManager } from './db.manager';
 
@@ -13,8 +13,8 @@ export class ListingManager extends DatabaseManager {
         this.listingDAO = listingDAO;
     }
 
-    async getAllListings(pool: Pool): Promise<ListingDetails[]> {
-        return this.listingDAO.getAllListings(pool);
+    async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
+        return this.listingDAO.getAllListings(pool, filteredPropertyListRequest);
     }
 
     async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {

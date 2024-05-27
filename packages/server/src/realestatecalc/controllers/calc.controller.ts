@@ -15,12 +15,13 @@ export class CalcController {
 
     constructor(private readonly calcService: CalcService, private readonly rentCastService: RentCastService) { }
 
-    @Get()
+    // Had to change this from a GET to a POST
+    @Post()
     async getAllProperties(
-        @Query() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
+        @Body() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
         console.log('In getAllProperties endpoint');
-        const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
+        // const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
 
         if (getAllPropertiesRequest) {
             console.log('---filteredPropertyListRequest:', getAllPropertiesRequest.filteredPropertyListRequest);
@@ -28,11 +29,7 @@ export class CalcController {
         else {
             console.log('---getAllPropertiesRequest is undefined');
         }
-
-        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
-            throw new Error('Not a valid Investment Scenario Request');
-        }
-        return this.calcService.getAllProperties(investmentScenarioRequest);
+        return this.calcService.getAllProperties(getAllPropertiesRequest); //(investmentScenarioRequest);
     }
 
     @Get('property')
@@ -41,12 +38,6 @@ export class CalcController {
         @Query('investmentScenarioRequest') investmentScenarioRequest?: CreateInvestmentScenarioRequest
     ): Promise<ListingWithScenariosResponseDTO> {
 
-        if (!zillowURL) {
-            throw new Error('zillowURL query parameter is required');
-        }
-        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
-            throw new Error('Not a valid Investment Scenario Request');
-        }
         return this.calcService.getPropertyByZillowURL(zillowURL, investmentScenarioRequest);
     }
 
@@ -78,16 +69,16 @@ export class CalcController {
         return this.calcService.calculate(investmentScenarioRequest);
     }
 
-    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
-        if (investmentScenarioRequest) {
-            if (investmentScenarioRequest.useDefaultRequest) {
-                return true;
-            }
-            else if (!investmentScenarioRequest.investmentDetails) {
-                return false;
-            }
-        }
-        return true;
-    }
+    // private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
+    //     if (investmentScenarioRequest) {
+    //         if (investmentScenarioRequest.useDefaultRequest) {
+    //             return true;
+    //         }
+    //         else if (!investmentScenarioRequest.investmentDetails) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 
 }

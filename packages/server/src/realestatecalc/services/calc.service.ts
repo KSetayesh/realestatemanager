@@ -2,6 +2,8 @@ import { Pool } from 'pg';
 import { Injectable } from '@nestjs/common';
 import {
     AmortizationBreakdownResponseDTO,
+    CreateFilteredPropertyListRequest,
+    CreateGetAllPropertiesRequest,
     CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
     ListingCreationType,
@@ -25,9 +27,16 @@ export class CalcService {
         this.pool = DatabaseManagerFactory.getDbPool();
     }
 
-    async getAllProperties(investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO[]> {
+    // async getAllProperties(investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO[]> {
+    async getAllProperties(getAllPropertiesRequest: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+        const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
+        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+            throw new Error('Not a valid Investment Scenario Request');
+        }
+        const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
+
         const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
-        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
+        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
         for (const listingDetails of listingDetailsArr) {
             const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
             const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
@@ -44,6 +53,12 @@ export class CalcService {
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
+        if (!zillowURL) {
+            throw new Error('zillowURL query parameter is required');
+        }
+        if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+            throw new Error('Not a valid Investment Scenario Request');
+        }
         const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
@@ -95,6 +110,18 @@ export class CalcService {
             listingDetails: listingDetails.toDTO(),
             metrics: metrics,
         };
+    }
+
+    private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
+        if (investmentScenarioRequest) {
+            if (investmentScenarioRequest.useDefaultRequest) {
+                return true;
+            }
+            else if (!investmentScenarioRequest.investmentDetails) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

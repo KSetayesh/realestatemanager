@@ -2,7 +2,7 @@ import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
-import { BasicCheckBoxForm, BasicStringForm, StateForm } from "./ReusableFormFields";
+import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, StateForm } from "./ReusableFormFields";
 
 export type PropertyFilterFormFields = {
     state: State;
@@ -105,9 +105,9 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             monthlyPropertyTaxAmountFilter: Filter.gteq,
             monthlyPropertyTaxAmount: 0,
             homeType: PropertyType.SINGLE_FAMILY,
-            hasGarage: true,
-            hasBasement: true,
-            hasPool: true,
+            hasGarage: false,
+            hasBasement: false,
+            hasPool: false,
             isActive: true,
             limit: 100,
         };
@@ -306,6 +306,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             BasicCheckBoxForm('Has Basement', 'hasBasement', formData.hasBasement),
             BasicCheckBoxForm('Has Pool', 'hasPool', formData.hasPool),
             BasicCheckBoxForm('Is Active', 'isActive', formData.isActive),
+            BasicNumberForm('Limit', 'limit', formData.limit),
         ];
     }
 

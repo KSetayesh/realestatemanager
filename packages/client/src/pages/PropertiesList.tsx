@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
@@ -27,39 +27,22 @@ const PropertiesList: React.FC = () => {
     const propertiesListTable: PropertiesListTable = new PropertiesListTable();
 
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
-    //uncomment this
-    //const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+    const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value as keyof typeof PropertiesListTableType;
         setTableType(PropertiesListTableType[input]);
     };
 
-    console.log('PropertiesList mounted');
-    useEffect(() => {
-        (async () => {
-            try {
-                setIsLoading(true); // Set loading state to true before fetching data
+    const getDefaultFormData = (): PropertyFilterFormFields => {
+        return propertiesListFormDetails.getDefaultFormData();
+    };
 
-                //uncomment this
-                const propertiesData: ListingWithScenariosResponseDTO[] = [];// await realEstateCalcApi.getAllProperties();
-                setProperties(propertiesData); // Update state with fetched data
-                setFormData(propertiesListFormDetails.getDefaultFormData());
-                console.log("Fetched data:", propertiesData);
-            } catch (error) {
-                // Error handling if fetchProperties fails
-                console.error('Failed to fetch properties:', error);
-            } finally {
-                setIsLoading(false); // Ensure loading state is updated regardless of success or failure
-            }
-        })();
-    }, []); // Empty dependency array means this effect runs once on mount
-
-    const [formData, setFormData] = useState<PropertyFilterFormFields>(propertiesListFormDetails.getDefaultFormData());
+    const [formData, setFormData] = useState<PropertyFilterFormFields>(getDefaultFormData());
 
     const getFormDetails = (): FormProperty[] => {
         return propertiesListFormDetails.getFormDetails(formData);
@@ -88,20 +71,29 @@ const PropertiesList: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
+        console.log('---filteredPropertyListRequest:', filteredPropertyListRequest);
         const dataToSubmit: CreateGetAllPropertiesRequest = {
             filteredPropertyListRequest: filteredPropertyListRequest,
         };
+        console.log('---dataToSubmit:', dataToSubmit);
 
-        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        const postSuccess = await realEstateCalcApi.getAllProperties(dataToSubmit);
-        if (postSuccess) {
-            alert('Data submitted successfully!');
-            // uncomment this 
+        setIsLoading(true);
+        try {
+            const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
+            setProperties(properties);
 
-            // window.location.reload();
-        }
-        else {
+            if (properties.length > 0) {
+                alert('Data submitted successfully!');
+            } else {
+                alert('No properties found with the applied filters.');
+            }
+        } catch (error) {
+            console.error('Failed to submit data.', error);
             alert('Failed to submit data.');
+        } finally {
+            setFormData(getDefaultFormData());
+            setIsLoading(false);
+            window.location.reload();
         }
     };
 
@@ -118,10 +110,6 @@ const PropertiesList: React.FC = () => {
         return propertiesListTable.getDefaultColumns([investmentBreakdownColumn]);
     };
 
-
-    // Inside PropertiesList component
-
-    // Assuming your ReusableTable component and TableColumn interface are set up to handle this
     return (
         <div>
             <h2> Filter Properties </h2>
@@ -130,8 +118,7 @@ const PropertiesList: React.FC = () => {
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Submit'
-            />
-            }
+            />}
             <h2> Properties List </h2>
             {isLoading ? (
                 <p>Loading properties...</p>
@@ -159,13 +146,13 @@ const PropertiesList: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        columns={getTableColumns()} //{defaultColumns} // Filter columns based on showColumn
+                        columns={getTableColumns()}
                         tableData={getTableData()}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}
-                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)} // createDefaultRowData(selectedProperty)}
+                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
                         columns={getDefaultColumns()}
                     />}
@@ -174,6 +161,5 @@ const PropertiesList: React.FC = () => {
         </div>
     );
 };
-
 
 export default PropertiesList;

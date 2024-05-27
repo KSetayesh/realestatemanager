@@ -10,6 +10,7 @@ import {
     PropertyStatus,
     State,
     ListingCreationType,
+    CreateFilteredPropertyListRequest,
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 
@@ -196,12 +197,117 @@ export class ListingDAO extends RealEstateDAO {
 
     //----------------------------------------------------------------------------------------------------
 
-    async getAllListings(pool: Pool): Promise<ListingDetails[]> {
+    async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
-        const query = `${this.GET_LISTINGS_QUERY};`;
+        let query = `${this.GET_LISTINGS_QUERY}`;
+        let counter = 1;
+        const params: (string | number | boolean)[] = [];
+
+        const beginWith = (counter: number): string => {
+            return counter === 1 ? '\n WHERE ' : '\n AND ';
+        };
+
+        if (filteredPropertyListRequest) {
+            console.log('filteredPropertyListRequest:', filteredPropertyListRequest);
+            if (filteredPropertyListRequest.state) {
+                query += `${beginWith(counter)} ad.state = $${counter} `;
+                params.push(filteredPropertyListRequest.state);
+                counter++;
+            }
+            if (filteredPropertyListRequest.zipCode) {
+                query += `${beginWith(counter)} ad.zipcode = $${counter} `;
+                params.push(filteredPropertyListRequest.zipCode);
+                counter++;
+            }
+            if (filteredPropertyListRequest.city) {
+                query += `${beginWith(counter)} ad.city = $${counter} `;
+                params.push(filteredPropertyListRequest.city);
+                counter++;
+            }
+            if (filteredPropertyListRequest.rentEstimate) {
+                query += `${beginWith(counter)} zme.zillow_rent_estimate ${filteredPropertyListRequest.rentEstimate.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.rentEstimate.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.listedPrice) {
+                query += `${beginWith(counter)} ld.listing_price ${filteredPropertyListRequest.listedPrice.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.listedPrice.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.numberOfBedrooms) {
+                query += `${beginWith(counter)} pd.number_of_bedrooms ${filteredPropertyListRequest.numberOfBedrooms.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.numberOfBedrooms.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.numberOfBathrooms) {
+                query += `${beginWith(counter)} pd.number_of_full_bathrooms ${filteredPropertyListRequest.numberOfBathrooms.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.numberOfBathrooms.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.squareFeet) {
+                query += `${beginWith(counter)} pd.square_feet ${filteredPropertyListRequest.squareFeet.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.squareFeet.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.yearBuilt) {
+                query += `${beginWith(counter)} pd.year_built ${filteredPropertyListRequest.yearBuilt.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.yearBuilt.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.maxHoa) {
+                query += `${beginWith(counter)} zme.zillow_monthly_hoa_fees_amount ${filteredPropertyListRequest.maxHoa.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.maxHoa.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.monthlyPropertyTaxAmount) {
+                query += `${beginWith(counter)} zme.zillow_monthly_property_tax_amount ${filteredPropertyListRequest.monthlyPropertyTaxAmount.filter} $${counter} `;
+                params.push(filteredPropertyListRequest.monthlyPropertyTaxAmount.value);
+                counter++;
+            }
+            if (filteredPropertyListRequest.homeType) {
+                query += `${beginWith(counter)} pd.property_type = $${counter} `;
+                params.push(filteredPropertyListRequest.homeType);
+                counter++;
+            }
+            if (filteredPropertyListRequest.hasGarage !== undefined) {
+                query += `${beginWith(counter)} pd.has_garage = $${counter} `;
+                params.push(filteredPropertyListRequest.hasGarage);
+                counter++;
+            }
+            if (filteredPropertyListRequest.hasBasement !== undefined) {
+                query += `${beginWith(counter)} pd.has_basement = $${counter} `;
+                params.push(filteredPropertyListRequest.hasBasement);
+                counter++;
+            }
+            if (filteredPropertyListRequest.hasPool !== undefined) {
+                query += `${beginWith(counter)} pd.has_pool = $${counter} `;
+                params.push(filteredPropertyListRequest.hasPool);
+                counter++;
+            }
+            if (filteredPropertyListRequest.isActive !== undefined) {
+                query += `${beginWith(counter)} ld.property_status = $${counter} `;
+                params.push(filteredPropertyListRequest.isActive ? 'Active' : 'Inactive');
+                counter++;
+            }
+            if (filteredPropertyListRequest.limit) {
+                query += `\n LIMIT $${counter}`;
+                params.push(filteredPropertyListRequest.limit);
+                counter++;
+            }
+        }
+
+        query += ';';
+
+        // for (let q of params) {
+        //     console.log(typeof q === 'number');
+        //     console.log(q);
+        // }
+
+        // const queryWithParams = query.replace(/\$(\d+)/g, (_, idx) => JSON.stringify(params[idx - 1]));
+        // console.log(queryWithParams);
 
         try {
-            const res = await pool.query(query);
+            const res = await pool.query(query, params);
             res.rows.forEach(row => {
                 const listing: ListingDetails = this.mapRowToListingDetails(row);
                 listings.push(listing);
@@ -212,6 +318,7 @@ export class ListingDAO extends RealEstateDAO {
             throw err;
         }
     }
+
 
     async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
         if (rentCastSaleResponseIds.length === 0) {
