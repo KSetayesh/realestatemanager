@@ -49,7 +49,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
 
     // Don't want to default to anything, whatever was stored in the db for the property will remain the same
     protected createState(): State {
-        return this.listingDetails.state ?? this.rentCastPropertyType.state;
+        return this.listingDetails.state ?? Utility.getEnumValue(State, this.rentCastPropertyType.state);
     }
 
     // Don't want to default to anything, whatever was stored in the db for the property will remain the same

@@ -77,6 +77,7 @@ export class CalcService {
             console.log('BEGIN QUERY');
 
             const listingDetails: ListingDetails = new ListingDetailsRequestBuilder(listingDetailsRequest).build();
+            console.log('listingDetails:', listingDetails);
             const newListingId = await this.insertListingDetails(listingDetails, ListingCreationType.MANUAL);
 
             await client.query('COMMIT');

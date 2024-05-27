@@ -39,11 +39,23 @@ export class Utility {
             NY = 'New York'
         };
 
-        In this example the function below would take in (State, State.NY) and it will return "NY"
+        In this example the function below would take in (State, State.NY) and it will return "NY" as a string
     */
-    static getEnumNameFromValue(enumObj: any, enumValue: string): string | undefined {
-        const keys = Object.keys(enumObj).find(key => enumObj[key] === enumValue);
-        return keys;
+    static getEnumNameFromValue<T extends object>(enumObj: T, enumValue: T[keyof T]): keyof T | undefined {
+        const keys = Object.keys(enumObj) as Array<keyof T>;
+        return keys.find(key => enumObj[key] === enumValue);
+    }
+
+    /*
+        enum State {
+            NY = 'New York'
+        };
+
+        In this example the function below would take in (State, "NY") and it will return "New York" as a string
+    */
+    static getEnumValue<T extends object>(enumType: T, enumKey: string): T[keyof T] | undefined {
+        const key = enumKey as keyof T;
+        return enumType[key];
     }
 }
 

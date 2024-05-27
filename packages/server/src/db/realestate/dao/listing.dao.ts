@@ -269,26 +269,29 @@ export class ListingDAO extends RealEstateDAO {
                 params.push(filteredPropertyListRequest.homeType);
                 counter++;
             }
-            if (filteredPropertyListRequest.hasGarage !== undefined) {
+            if (filteredPropertyListRequest.hasGarage) {
                 query += `${beginWith(counter)} pd.has_garage = $${counter} `;
                 params.push(filteredPropertyListRequest.hasGarage);
                 counter++;
             }
-            if (filteredPropertyListRequest.hasBasement !== undefined) {
+            if (filteredPropertyListRequest.hasBasement) {
                 query += `${beginWith(counter)} pd.has_basement = $${counter} `;
                 params.push(filteredPropertyListRequest.hasBasement);
                 counter++;
             }
-            if (filteredPropertyListRequest.hasPool !== undefined) {
+            if (filteredPropertyListRequest.hasPool) {
                 query += `${beginWith(counter)} pd.has_pool = $${counter} `;
                 params.push(filteredPropertyListRequest.hasPool);
                 counter++;
             }
-            if (filteredPropertyListRequest.isActive !== undefined) {
+            if (filteredPropertyListRequest.isActive) {
                 query += `${beginWith(counter)} ld.property_status = $${counter} `;
                 params.push(filteredPropertyListRequest.isActive ? 'Active' : 'Inactive');
                 counter++;
             }
+
+            query += ' ORDER BY ld.created_at ';
+
             if (filteredPropertyListRequest.limit) {
                 query += `\n LIMIT $${counter}`;
                 params.push(filteredPropertyListRequest.limit);
@@ -303,8 +306,8 @@ export class ListingDAO extends RealEstateDAO {
         //     console.log(q);
         // }
 
-        // const queryWithParams = query.replace(/\$(\d+)/g, (_, idx) => JSON.stringify(params[idx - 1]));
-        // console.log(queryWithParams);
+        const queryWithParams = query.replace(/\$(\d+)/g, (_, idx) => JSON.stringify(params[idx - 1]));
+        console.log(queryWithParams);
 
         try {
             const res = await pool.query(query, params);

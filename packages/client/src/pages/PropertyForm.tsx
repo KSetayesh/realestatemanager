@@ -22,7 +22,7 @@ const PropertyForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const dataToSubmit: CreateListingDetailsRequest = getRequestData();
-
+        console.log('dataToSubmit:', dataToSubmit);
         const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
         const postSuccess = await realEstateCalcApi.addNewProperty(dataToSubmit);
         if (postSuccess) {

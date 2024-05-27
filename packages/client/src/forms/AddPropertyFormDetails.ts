@@ -66,7 +66,7 @@ export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData
         return [
             BasicStringForm('Zillow URL', 'zillowURL', formData.zillowURL),
             BasicStringForm('Full Address', 'fullAddress', formData.fullAddress),
-            StateForm(formData.country),
+            StateForm(formData.state),
             BasicStringForm('Zipcode', 'zipcode', formData.zipcode),
             BasicStringForm('City', 'city', formData.city),
             BasicStringForm('County', 'county', formData.county),
@@ -163,7 +163,6 @@ export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData
     }
 
     createRequest(formData: AddPropertyFormData): CreateListingDetailsRequest {
-
         return {
             zillowURL: formData.zillowURL,
             listingPrice: formData.listingPrice,

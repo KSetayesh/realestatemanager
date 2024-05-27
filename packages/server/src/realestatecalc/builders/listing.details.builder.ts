@@ -64,8 +64,8 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     }
 
     protected createState(): State {
-        return this.rentCastSalesResponseType.state ??
-            this.rentCastPropertyType?.state ?? this.defaultState;
+        return Utility.getEnumValue(State, this.rentCastSalesResponseType.state) ??
+            Utility.getEnumValue(State, this.rentCastPropertyType?.state) ?? this.defaultState;
     }
 
     protected createZipCode(): string {

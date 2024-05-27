@@ -51,6 +51,7 @@ export class CalcController {
     async addNewProperty(
         @Body() listingDetails: CreateListingDetailsRequest,
     ): Promise<void> {
+        console.log('New listing:', listingDetails);
         await this.calcService.addNewProperty(listingDetails);
     }
 

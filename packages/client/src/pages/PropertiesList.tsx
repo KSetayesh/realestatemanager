@@ -93,7 +93,6 @@ const PropertiesList: React.FC = () => {
         } finally {
             setFormData(getDefaultFormData());
             setIsLoading(false);
-            window.location.reload();
         }
     };
 
