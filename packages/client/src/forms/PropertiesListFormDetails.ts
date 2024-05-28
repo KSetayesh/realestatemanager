@@ -1,6 +1,6 @@
 import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { Any, Filter, InputType, PropertyType, State } from "../constants/Constant";
+import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
@@ -9,21 +9,21 @@ export type PropertyFilterFormFields = {
     zipCode: string;
     city: string;
     rentEstimateFilter: Filter | string;
-    rentEstimate: number | undefined;
+    rentEstimate: number | string;
     listedPriceFilter: Filter | string;
-    listedPrice: number | undefined;
+    listedPrice: number | string;
     numberOfBedroomsFilter: Filter | string;
-    numberOfBedrooms: number | undefined;
+    numberOfBedrooms: number | string;
     numberOfBathroomsFilter: Filter | string;
-    numberOfBathrooms: number | undefined;
+    numberOfBathrooms: number | string;
     squareFeetFilter: Filter | string;
-    squareFeet: number | undefined;
+    squareFeet: number | string;
     yearBuiltFilter: Filter | string;
-    yearBuilt: number | undefined;
+    yearBuilt: number | string;
     maxHoaFilter: Filter | string;
-    maxHoa: number | undefined;
+    maxHoa: number | string;
     monthlyPropertyTaxAmountFilter: Filter | string;
-    monthlyPropertyTaxAmount: number | undefined;
+    monthlyPropertyTaxAmount: number | string;
     homeType: PropertyType | string;
     hasGarage: boolean;
     hasBasement: boolean;
@@ -48,6 +48,10 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             limit: formData.limit,
         };
 
+        const getDefaultNumberValue = (value: number | string): number => {
+            return typeof value === 'string' ? 0 : Number(value);
+        };
+
         if (formData.state !== '') {
             request.state = formData.state as State;
         }
@@ -55,56 +59,56 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
         if (formData.rentEstimateFilter !== '') {
             request.rentEstimate = {
                 filter: formData.rentEstimateFilter as Filter,
-                value: formData.rentEstimate ?? 0,
+                value: getDefaultNumberValue(formData.rentEstimate),
             };
         }
 
         if (formData.listedPriceFilter !== '') {
             request.listedPrice = {
                 filter: formData.listedPriceFilter as Filter,
-                value: formData.listedPrice ?? 0
+                value: getDefaultNumberValue(formData.listedPrice),
             };
         }
 
         if (formData.numberOfBedroomsFilter !== '') {
             request.numberOfBedrooms = {
                 filter: formData.numberOfBedroomsFilter as Filter,
-                value: formData.numberOfBedrooms ?? 0
+                value: getDefaultNumberValue(formData.numberOfBedrooms),
             };
         }
 
         if (formData.numberOfBathroomsFilter !== '') {
             request.numberOfBathrooms = {
                 filter: formData.numberOfBathroomsFilter as Filter,
-                value: formData.numberOfBathrooms ?? 0
+                value: getDefaultNumberValue(formData.numberOfBathrooms),
             };
         }
 
         if (formData.squareFeetFilter !== '') {
             request.squareFeet = {
                 filter: formData.squareFeetFilter as Filter,
-                value: formData.squareFeet ?? 0
+                value: getDefaultNumberValue(formData.squareFeet)
             };
         }
 
         if (formData.yearBuiltFilter !== '') {
             request.yearBuilt = {
                 filter: formData.yearBuiltFilter as Filter,
-                value: formData.yearBuilt ?? 0
+                value: getDefaultNumberValue(formData.yearBuilt),
             };
         }
 
         if (formData.maxHoaFilter !== '') {
             request.maxHoa = {
                 filter: formData.maxHoaFilter as Filter,
-                value: formData.maxHoa ?? 0
+                value: getDefaultNumberValue(formData.maxHoa),
             };
         }
 
         if (formData.monthlyPropertyTaxAmountFilter !== '') {
             request.monthlyPropertyTaxAmount = {
                 filter: formData.monthlyPropertyTaxAmountFilter as Filter,
-                value: formData.monthlyPropertyTaxAmount ?? 0
+                value: getDefaultNumberValue(formData.monthlyPropertyTaxAmount),
             };
         }
 
@@ -122,21 +126,21 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
             zipCode: '',
             city: '',
             rentEstimateFilter: '',
-            rentEstimate: undefined,
+            rentEstimate: '',
             listedPriceFilter: '',
-            listedPrice: undefined,
+            listedPrice: '',
             numberOfBedroomsFilter: '',
-            numberOfBedrooms: undefined,
+            numberOfBedrooms: '',
             numberOfBathroomsFilter: '',
-            numberOfBathrooms: undefined,
+            numberOfBathrooms: '',
             squareFeetFilter: '',
-            squareFeet: undefined,
+            squareFeet: '',
             yearBuiltFilter: '',
-            yearBuilt: undefined,
+            yearBuilt: '',
             maxHoaFilter: '',
-            maxHoa: undefined,
+            maxHoa: '',
             monthlyPropertyTaxAmountFilter: '',
-            monthlyPropertyTaxAmount: undefined,
+            monthlyPropertyTaxAmount: '',
             homeType: '',
             hasGarage: false,
             hasBasement: false,

@@ -61,7 +61,7 @@ const PropertiesList: React.FC = () => {
     };
 
     const getTableColumns = (): TableColumn[] => {
-        return propertiesListTable.getTablesConfig()[tableType].columns;
+        return propertiesListTable.getTablesConfig(getAdditionalColumns())[tableType].columns;
     };
 
     const getRequestData = (): CreateFilteredPropertyListRequest => {
@@ -80,7 +80,7 @@ const PropertiesList: React.FC = () => {
         setIsLoading(true);
         try {
             const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
-            // setProperties(properties);
+            setProperties(properties);
 
             if (properties.length > 0) {
                 alert('Data submitted successfully!');
@@ -94,33 +94,26 @@ const PropertiesList: React.FC = () => {
         } finally {
             setFormData(getDefaultFormData());
             setIsLoading(false);
-            // window.location.reload();
-            setProperties(properties);
         }
 
-
-        // const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
-
-        // if (postSuccess) {
-        //     alert('Agent has been successfully added!');
-        //     window.location.reload();
-        // }
-        // else {
-        //     alert('Failed to submit data.');
-        // }
     };
 
+    const getAdditionalColumns = (): TableColumn[] => {
+        return [
+            {
+                header: "Investment Breakdown",
+                accessor: "investmentBreakdown",
+                isURL: false,
+                showColumn: true,
+                routeTo: 'investmentBreakdown',
+                isDollarAmount: false,
+                isSortable: false,
+            }
+        ];
+    }
+
     const getDefaultColumns = (): TableColumn[] => {
-        const investmentBreakdownColumn: TableColumn = {
-            header: "Investment Breakdown",
-            accessor: "investmentBreakdown",
-            isURL: false,
-            showColumn: true,
-            routeTo: 'investmentBreakdown',
-            isDollarAmount: false,
-            isSortable: false,
-        };
-        return propertiesListTable.getDefaultColumns([investmentBreakdownColumn]);
+        return propertiesListTable.getDefaultColumns(getAdditionalColumns());
     };
 
     return (
