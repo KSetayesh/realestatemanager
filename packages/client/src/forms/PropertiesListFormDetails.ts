@@ -2,7 +2,7 @@ import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
-import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, StateForm } from "./ReusableFormFields";
+import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
 export type PropertyFilterFormFields = {
     state: State;
@@ -125,12 +125,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'rentEstimateFilter',
                         type: InputType.SELECT,
                         value: formData.rentEstimateFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'rentEstimate',
@@ -146,12 +141,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'listedPriceFilter',
                         type: InputType.SELECT,
                         value: formData.listedPriceFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'listedPrice',
@@ -167,12 +157,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'numberOfBedroomsFilter',
                         type: InputType.SELECT,
                         value: formData.numberOfBedroomsFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'numberOfBedrooms',
@@ -188,12 +173,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'numberOfBathroomsFilter',
                         type: InputType.SELECT,
                         value: formData.numberOfBathroomsFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'numberOfBathrooms',
@@ -209,12 +189,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'squareFeetFilter',
                         type: InputType.SELECT,
                         value: formData.squareFeetFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'squareFeet',
@@ -230,12 +205,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'yearBuiltFilter',
                         type: InputType.SELECT,
                         value: formData.yearBuiltFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'yearBuilt',
@@ -251,12 +221,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'maxHoaFilter',
                         type: InputType.SELECT,
                         value: formData.maxHoaFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'maxHoa',
@@ -272,12 +237,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'monthlyPropertyTaxAmountFilter',
                         type: InputType.SELECT,
                         value: formData.monthlyPropertyTaxAmountFilter,
-                        options: Object.values(Filter).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(Filter),
                     },
                     {
                         name: 'monthlyPropertyTaxAmount',
@@ -293,12 +253,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'homeType',
                         type: InputType.SELECT,
                         value: formData.homeType,
-                        options: Object.values(PropertyType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PropertyType),
                     },
                 ],
             },

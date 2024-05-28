@@ -2,7 +2,7 @@ import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 import { InputType, PropertyStatus, PropertyType, State } from "../constants/Constant";
 import { FormProperty } from "../components/StandardForm";
-import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, StateForm } from "./ReusableFormFields";
+import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
 export type CollectPropertiesFormData = {
     address: string;
@@ -60,15 +60,10 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                         name: 'propertyType',
                         type: InputType.SELECT,
                         value: formData.propertyType,
-                        options: Object.values(PropertyType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PropertyType),
                     },
                 ],
-            }, 
+            },
             BasicNumberForm('Bedrooms', 'bedrooms', formData.bedrooms),
             BasicNumberForm('Bathrooms', 'bathrooms', formData.bathrooms),
             {
@@ -78,15 +73,10 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                         name: 'status',
                         type: InputType.SELECT,
                         value: formData.status,
-                        options: Object.values(PropertyStatus).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PropertyStatus),
                     },
                 ],
-            }, 
+            },
             BasicNumberForm('Days Old', 'daysOld', formData.daysOld),
             BasicNumberForm('Limit', 'limit', formData.limit),
             BasicNumberForm('Offset', 'offset', formData.offset),

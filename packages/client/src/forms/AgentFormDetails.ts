@@ -2,7 +2,7 @@ import { CreateAgentRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { AgentType, Country, InputType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
-import { BasicStringForm, CountryForm, StateForm } from "./ReusableFormFields";
+import { BasicStringForm, CountryForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
 export type AgentFormData = {
     firstName: string;
@@ -63,12 +63,7 @@ export class AgentFormDetails implements FormInterface<AgentFormData, CreateAgen
                         name: 'agentType',
                         type: InputType.SELECT,
                         value: formData.agentType,
-                        options: Object.values(AgentType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(AgentType),
                     },
                 ],
             },

@@ -118,32 +118,6 @@ export enum Filter {
 
 // export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const ratingSelections = (from: number = 1, limit: number = 10): { value: string | number; label: string }[] => {
-    const array = [];
-
-    for (let i = from; i <= limit; i++) {
-        array.push({
-            label: i.toString(),
-            value: i,
-        });
-    }
-
-    return array;
-};
-
-export const trueAndFalseSelections = (): { value: string | number; label: string }[] => {
-    return [
-        {
-            label: 'true',
-            value: 'true',
-        },
-        {
-            label: 'false',
-            value: 'false',
-        },
-    ];
-};
-
 const formatDollarAmount = (amount: number): string => {
     return amount.toLocaleString('en-US', {
         style: 'currency',

@@ -4,8 +4,7 @@ import {
     InputType,
     PropertyStatus,
     PropertyType,
-    State,
-    ratingSelections
+    State
 } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { FormProperty } from "../components/StandardForm";
@@ -14,7 +13,9 @@ import {
     BasicNumberForm,
     BasicStringForm,
     CountryForm,
-    StateForm
+    GetOptionsForFormProperty,
+    StateForm,
+    ratingSelections
 } from "./ReusableFormFields";
 
 export type AddPropertyFormData = {
@@ -125,12 +126,7 @@ export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData
                         name: 'propertyType',
                         type: InputType.SELECT,
                         value: formData.propertyType,
-                        options: Object.values(PropertyType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PropertyType),
                     },
                 ],
             },
@@ -141,12 +137,7 @@ export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData
                         name: 'propertyStatus',
                         type: InputType.SELECT,
                         value: formData.propertyStatus,
-                        options: Object.values(PropertyType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PropertyStatus),
                     },
                 ],
             },

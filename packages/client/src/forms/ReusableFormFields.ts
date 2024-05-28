@@ -1,5 +1,18 @@
-import { FormProperty } from "../components/StandardForm";
-import { Country, InputType, State, trueAndFalseSelections } from "../constants/Constant";
+import { FormProperty, Options } from "../components/StandardForm";
+import { Country, InputType, State } from "../constants/Constant";
+
+export const ratingSelections = (from: number = 1, limit: number = 10): Options => {
+    const array = [];
+
+    for (let i = from; i <= limit; i++) {
+        array.push({
+            label: i.toString(),
+            value: i,
+        });
+    }
+
+    return array;
+};
 
 export const BasicTrueFalseSelectOption = (title: string, name: string, formInput: boolean | undefined): FormProperty => {
     return {
@@ -9,7 +22,16 @@ export const BasicTrueFalseSelectOption = (title: string, name: string, formInpu
                 name: name,
                 type: InputType.SELECT,
                 value: formInput?.toString(),
-                options: trueAndFalseSelections(),
+                options: [
+                    {
+                        label: 'true',
+                        value: 'true',
+                    },
+                    {
+                        label: 'false',
+                        value: 'false',
+                    },
+                ],
             },
         ],
     };
@@ -56,7 +78,7 @@ export const BasicNumberForm = (title: string, name: string, formInput: number |
 
 }
 
-export const CountryForm = (formInput: string | undefined): FormProperty => {
+export const CountryForm = (formInput: string | undefined, addAnyOption: boolean = false): FormProperty => {
     return {
         title: 'Country',
         values: [
@@ -64,18 +86,13 @@ export const CountryForm = (formInput: string | undefined): FormProperty => {
                 name: 'state',
                 type: InputType.SELECT,
                 value: formInput,
-                options: Object.values(Country).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                options: GetOptionsForFormProperty(Country, addAnyOption),
             },
         ],
     };
 };
 
-export const StateForm = (formInput: string | undefined): FormProperty => {
+export const StateForm = (formInput: string | undefined, addAnyOption: boolean = false): FormProperty => {
     return {
         title: 'State',
         values: [
@@ -83,13 +100,23 @@ export const StateForm = (formInput: string | undefined): FormProperty => {
                 name: 'state',
                 type: InputType.SELECT,
                 value: formInput,
-                options: Object.values(State).map((enumValue => {
-                    return {
-                        value: enumValue,
-                        label: enumValue,
-                    };
-                })),
+                options: GetOptionsForFormProperty(State, addAnyOption),
             },
         ],
     };
 };
+
+export const GetOptionsForFormProperty = <T extends Object>(enumType: T, addAnyOption: boolean = false): Options => {
+
+    const optionsList = Object.values(enumType).map((enumValue => {
+        return {
+            value: enumValue,
+            label: enumValue,
+        };
+    }));
+
+    if (addAnyOption) {
+        optionsList.unshift({ value: 'Any', label: 'Any' });
+    }
+    return optionsList;
+}

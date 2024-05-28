@@ -38,7 +38,7 @@ import {
 } from '../utilities/PropertyResponseHelper';
 import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO, ValueInput } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
-import { BasicNumberForm } from "./ReusableFormFields";
+import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";
 
 export type InvestmentFormData = {
     downPaymentType: PercentageAndAmount,
@@ -278,12 +278,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'downPaymentType',
                         value: formData.downPaymentType, // Default selected value
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'downPaymentPercentage',
@@ -300,10 +295,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'monthlyPropertyTaxType',
                         value: formData.monthlyPropertyTaxType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'monthlyPropertyTax',
@@ -319,10 +311,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'monthlyHomeInsuranceAmountType',
                         value: formData.monthlyHomeInsuranceAmountType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'monthlyHomeInsuranceAmount',
@@ -338,10 +327,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'monthlyHOAFeesAmountType',
                         value: formData.monthlyHOAFeesAmountType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'monthlyHOAFeesAmount',
@@ -357,10 +343,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'legalAndProfessionalFeesType',
                         value: formData.legalAndProfessionalFeesType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'legalAndProfessionalFees',
@@ -376,10 +359,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'initialRepairCostsType',
                         value: formData.initialRepairCostsType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'initialRepairCosts',
@@ -395,10 +375,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'travelingCostsType',
                         value: formData.travelingCostsType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'travelingCosts',
@@ -414,10 +391,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'closingCostsType',
                         value: formData.closingCostsType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'closingCosts',
@@ -433,10 +407,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'otherInitialExpensesType',
                         value: formData.otherInitialExpensesType,
                         type: InputType.RADIO,
-                        options: Object.values(PercentageAndAmount).map(enumValue => ({
-                            value: enumValue,
-                            label: enumValue,
-                        })),
+                        options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
                         name: 'otherInitialExpenses',
@@ -456,12 +427,7 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
                         name: 'interestType',
                         type: InputType.SELECT,
                         value: formData.interestType,
-                        options: Object.values(InterestType).map((enumValue => {
-                            return {
-                                value: enumValue,
-                                label: enumValue,
-                            };
-                        })),
+                        options: GetOptionsForFormProperty(InterestType),
                     },
                 ],
             },
