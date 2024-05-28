@@ -29,6 +29,8 @@ export enum AgentType {
     CONTRACTOR = "Contractor",
 };
 
+export const Any: string = 'Any';
+
 export enum State {
     AL = "Alabama",
     AK = "Alaska",
@@ -108,7 +110,7 @@ export enum ListingCreationType {
 };
 
 export enum Filter {
-    all = 'All',
+    // all = 'All',
     gt = '>',
     lt = '<',
     eq = '=',

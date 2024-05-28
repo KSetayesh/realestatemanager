@@ -80,20 +80,34 @@ const PropertiesList: React.FC = () => {
         setIsLoading(true);
         try {
             const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
-            setProperties(properties);
+            // setProperties(properties);
 
             if (properties.length > 0) {
                 alert('Data submitted successfully!');
             } else {
                 alert('No properties found with the applied filters.');
             }
+            // window.location.reload();
         } catch (error) {
             console.error('Failed to submit data.', error);
             alert('Failed to submit data.');
         } finally {
             setFormData(getDefaultFormData());
             setIsLoading(false);
+            // window.location.reload();
+            setProperties(properties);
         }
+
+
+        // const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
+
+        // if (postSuccess) {
+        //     alert('Agent has been successfully added!');
+        //     window.location.reload();
+        // }
+        // else {
+        //     alert('Failed to submit data.');
+        // }
     };
 
     const getDefaultColumns = (): TableColumn[] => {

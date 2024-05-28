@@ -1,30 +1,30 @@
 import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { Filter, InputType, PropertyType, State } from "../constants/Constant";
+import { Any, Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
 export type PropertyFilterFormFields = {
-    state: State;
+    state: State | string;
     zipCode: string;
     city: string;
-    rentEstimateFilter: Filter;
-    rentEstimate: number;
-    listedPriceFilter: Filter;
-    listedPrice: number;
-    numberOfBedroomsFilter: Filter;
-    numberOfBedrooms: number;
-    numberOfBathroomsFilter: Filter;
-    numberOfBathrooms: number;
-    squareFeetFilter: Filter;
-    squareFeet: number;
-    yearBuiltFilter: Filter;
-    yearBuilt: number;
-    maxHoaFilter: Filter;
-    maxHoa: number;
-    monthlyPropertyTaxAmountFilter: Filter;
-    monthlyPropertyTaxAmount: number;
-    homeType: PropertyType;
+    rentEstimateFilter: Filter | string;
+    rentEstimate: number | undefined;
+    listedPriceFilter: Filter | string;
+    listedPrice: number | undefined;
+    numberOfBedroomsFilter: Filter | string;
+    numberOfBedrooms: number | undefined;
+    numberOfBathroomsFilter: Filter | string;
+    numberOfBathrooms: number | undefined;
+    squareFeetFilter: Filter | string;
+    squareFeet: number | undefined;
+    yearBuiltFilter: Filter | string;
+    yearBuilt: number | undefined;
+    maxHoaFilter: Filter | string;
+    maxHoa: number | undefined;
+    monthlyPropertyTaxAmountFilter: Filter | string;
+    monthlyPropertyTaxAmount: number | undefined;
+    homeType: PropertyType | string;
     hasGarage: boolean;
     hasBasement: boolean;
     hasPool: boolean;
@@ -36,75 +36,108 @@ export type PropertyFilterFormFields = {
 export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields, CreateFilteredPropertyListRequest> {
 
     // TODO
+
     createRequest(formData: PropertyFilterFormFields): CreateFilteredPropertyListRequest {
-        return {
-            state: formData.state,
+        const request: CreateFilteredPropertyListRequest = {
             zipCode: formData.zipCode,
             city: formData.city,
-            rentEstimate: {
-                filter: formData.rentEstimateFilter,
-                value: formData.rentEstimate
-            },
-            listedPrice: {
-                filter: formData.listedPriceFilter,
-                value: formData.listedPrice,
-            },
-            numberOfBedrooms: {
-                filter: formData.numberOfBathroomsFilter,
-                value: formData.numberOfBedrooms,
-            },
-            numberOfBathrooms: {
-                filter: formData.numberOfBathroomsFilter,
-                value: formData.numberOfBathrooms,
-            },
-            squareFeet: {
-                filter: formData.squareFeetFilter,
-                value: formData.squareFeet,
-            },
-            yearBuilt: {
-                filter: formData.yearBuiltFilter,
-                value: formData.yearBuilt,
-            },
-            maxHoa: {
-                filter: formData.maxHoaFilter,
-                value: formData.maxHoa,
-            },
-            monthlyPropertyTaxAmount: {
-                filter: formData.monthlyPropertyTaxAmountFilter,
-                value: formData.monthlyPropertyTaxAmount,
-            },
-            homeType: formData.homeType,
             hasGarage: formData.hasGarage,
             hasBasement: formData.hasBasement,
             hasPool: formData.hasPool,
             isActive: formData.isActive,
             limit: formData.limit,
+        };
+
+        if (formData.state !== '') {
+            request.state = formData.state as State;
         }
+
+        if (formData.rentEstimateFilter !== '') {
+            request.rentEstimate = {
+                filter: formData.rentEstimateFilter as Filter,
+                value: formData.rentEstimate ?? 0,
+            };
+        }
+
+        if (formData.listedPriceFilter !== '') {
+            request.listedPrice = {
+                filter: formData.listedPriceFilter as Filter,
+                value: formData.listedPrice ?? 0
+            };
+        }
+
+        if (formData.numberOfBedroomsFilter !== '') {
+            request.numberOfBedrooms = {
+                filter: formData.numberOfBedroomsFilter as Filter,
+                value: formData.numberOfBedrooms ?? 0
+            };
+        }
+
+        if (formData.numberOfBathroomsFilter !== '') {
+            request.numberOfBathrooms = {
+                filter: formData.numberOfBathroomsFilter as Filter,
+                value: formData.numberOfBathrooms ?? 0
+            };
+        }
+
+        if (formData.squareFeetFilter !== '') {
+            request.squareFeet = {
+                filter: formData.squareFeetFilter as Filter,
+                value: formData.squareFeet ?? 0
+            };
+        }
+
+        if (formData.yearBuiltFilter !== '') {
+            request.yearBuilt = {
+                filter: formData.yearBuiltFilter as Filter,
+                value: formData.yearBuilt ?? 0
+            };
+        }
+
+        if (formData.maxHoaFilter !== '') {
+            request.maxHoa = {
+                filter: formData.maxHoaFilter as Filter,
+                value: formData.maxHoa ?? 0
+            };
+        }
+
+        if (formData.monthlyPropertyTaxAmountFilter !== '') {
+            request.monthlyPropertyTaxAmount = {
+                filter: formData.monthlyPropertyTaxAmountFilter as Filter,
+                value: formData.monthlyPropertyTaxAmount ?? 0
+            };
+        }
+
+        if (formData.homeType !== '') {
+            request.homeType = formData.homeType as PropertyType;
+        }
+
+        return request;
     }
 
     // Create a state to store the form data.
     getDefaultFormData(): PropertyFilterFormFields {
         return {
-            state: State.AL,
+            state: '',
             zipCode: '',
             city: '',
-            rentEstimateFilter: Filter.gteq,
-            rentEstimate: -1,
-            listedPriceFilter: Filter.gteq,
-            listedPrice: -1,
-            numberOfBedroomsFilter: Filter.gteq,
-            numberOfBedrooms: -1,
-            numberOfBathroomsFilter: Filter.gteq,
-            numberOfBathrooms: -1,
-            squareFeetFilter: Filter.gteq,
-            squareFeet: -1,
-            yearBuiltFilter: Filter.gteq,
-            yearBuilt: -1,
-            maxHoaFilter: Filter.gteq,
-            maxHoa: -1,
-            monthlyPropertyTaxAmountFilter: Filter.gteq,
-            monthlyPropertyTaxAmount: -1,
-            homeType: PropertyType.SINGLE_FAMILY,
+            rentEstimateFilter: '',
+            rentEstimate: undefined,
+            listedPriceFilter: '',
+            listedPrice: undefined,
+            numberOfBedroomsFilter: '',
+            numberOfBedrooms: undefined,
+            numberOfBathroomsFilter: '',
+            numberOfBathrooms: undefined,
+            squareFeetFilter: '',
+            squareFeet: undefined,
+            yearBuiltFilter: '',
+            yearBuilt: undefined,
+            maxHoaFilter: '',
+            maxHoa: undefined,
+            monthlyPropertyTaxAmountFilter: '',
+            monthlyPropertyTaxAmount: undefined,
+            homeType: '',
             hasGarage: false,
             hasBasement: false,
             hasPool: false,
@@ -114,8 +147,9 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
     }
 
     getFormDetails(formData: PropertyFilterFormFields): FormProperty[] {
+
         return [
-            StateForm(formData.state),
+            StateForm(formData.state, true),
             BasicStringForm('ZipCode', 'zipCode', formData.zipCode),
             BasicStringForm('City', 'city', formData.city),
             {
@@ -125,7 +159,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'rentEstimateFilter',
                         type: InputType.SELECT,
                         value: formData.rentEstimateFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'rentEstimate',
@@ -141,7 +175,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'listedPriceFilter',
                         type: InputType.SELECT,
                         value: formData.listedPriceFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'listedPrice',
@@ -157,7 +191,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'numberOfBedroomsFilter',
                         type: InputType.SELECT,
                         value: formData.numberOfBedroomsFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'numberOfBedrooms',
@@ -173,7 +207,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'numberOfBathroomsFilter',
                         type: InputType.SELECT,
                         value: formData.numberOfBathroomsFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'numberOfBathrooms',
@@ -189,7 +223,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'squareFeetFilter',
                         type: InputType.SELECT,
                         value: formData.squareFeetFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'squareFeet',
@@ -205,7 +239,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'yearBuiltFilter',
                         type: InputType.SELECT,
                         value: formData.yearBuiltFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'yearBuilt',
@@ -221,7 +255,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'maxHoaFilter',
                         type: InputType.SELECT,
                         value: formData.maxHoaFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'maxHoa',
@@ -237,7 +271,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'monthlyPropertyTaxAmountFilter',
                         type: InputType.SELECT,
                         value: formData.monthlyPropertyTaxAmountFilter,
-                        options: GetOptionsForFormProperty(Filter),
+                        options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
                         name: 'monthlyPropertyTaxAmount',
@@ -253,7 +287,7 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
                         name: 'homeType',
                         type: InputType.SELECT,
                         value: formData.homeType,
-                        options: GetOptionsForFormProperty(PropertyType),
+                        options: GetOptionsForFormProperty(PropertyType, true),
                     },
                 ],
             },

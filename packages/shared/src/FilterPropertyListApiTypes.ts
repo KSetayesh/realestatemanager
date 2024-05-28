@@ -6,18 +6,18 @@ export interface FilterOn {
 };
 
 export interface CreateFilteredPropertyListRequest {
-    state: State;
+    state?: State;
     zipCode: string;
     city: string;
-    rentEstimate: FilterOn;
-    listedPrice: FilterOn,
-    numberOfBedrooms: FilterOn,
-    numberOfBathrooms: FilterOn,
-    squareFeet: FilterOn,
-    yearBuilt: FilterOn,
-    maxHoa: FilterOn,
-    monthlyPropertyTaxAmount: FilterOn,
-    homeType: PropertyType,
+    rentEstimate?: FilterOn;
+    listedPrice?: FilterOn;
+    numberOfBedrooms?: FilterOn;
+    numberOfBathrooms?: FilterOn;
+    squareFeet?: FilterOn;
+    yearBuilt?: FilterOn;
+    maxHoa?: FilterOn;
+    monthlyPropertyTaxAmount?: FilterOn;
+    homeType?: PropertyType;
     hasGarage: boolean,
     hasBasement: boolean,
     hasPool: boolean,
