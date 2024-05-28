@@ -204,7 +204,7 @@ export class ListingDAO extends RealEstateDAO {
         const params: (string | number | boolean)[] = [];
 
         const beginWith = (counter: number): string => {
-            return counter === 1 ? '\n WHERE ' : '\n AND ';
+            return `\n ${(counter === 1 ? 'WHERE' : 'AND')} `;
         };
 
         if (filteredPropertyListRequest) {
