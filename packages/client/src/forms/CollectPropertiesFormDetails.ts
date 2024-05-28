@@ -1,107 +1,111 @@
 import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
-import { InputType, PropertyStatus, PropertyType, State } from "../constants/Constant";
-import { FormProperty } from "../components/StandardForm";
+import { InputType, PropertyStatus, PropertyType } from "../constants/Constant";
+import { FormProperty, FormPropertyMap } from "../components/StandardForm";
 import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
 
 export type CollectPropertiesFormData = {
-    address: string;
-    city: string;
-    state: State;
-    zipcode: string;
-    latitude: number;
-    longitude: number;
-    radius: number;
-    propertyType: PropertyType;
-    bedrooms: number;
-    bathrooms: number;
-    status: PropertyStatus;
-    daysOld: number;
-    limit: number;
-    offset: number;
-    retrieveExtraData: boolean;
+    address: FormProperty;
+    city: FormProperty;
+    state: FormProperty;
+    zipcode: FormProperty;
+    latitude: FormProperty;
+    longitude: FormProperty;
+    radius: FormProperty;
+    propertyType: FormProperty;
+    bedrooms: FormProperty;
+    bathrooms: FormProperty;
+    status: FormProperty;
+    daysOld: FormProperty;
+    limit: FormProperty;
+    offset: FormProperty;
+    retrieveExtraData: FormProperty;
 };
 
 export class CollectPropertiesFormDetails implements FormInterface<CollectPropertiesFormData, CreateRentCastApiRequest> {
 
-    getDefaultFormData(): CollectPropertiesFormData {
-        return {
-            address: '',
-            city: '',
-            state: State.AL,
-            zipcode: '',
-            latitude: NaN,
-            longitude: NaN,
-            radius: NaN,
-            propertyType: PropertyType.SINGLE_FAMILY,
-            bedrooms: NaN,
-            bathrooms: NaN,
-            status: PropertyStatus.ACTIVE,
-            daysOld: NaN,
-            limit: 5,
-            offset: NaN,
-            retrieveExtraData: false,
-        };
-    }
+    // getDefaultFormData(): CollectPropertiesFormData {
+    //     return {
+    //         address: '',
+    //         city: '',
+    //         state: State.AL,
+    //         zipcode: '',
+    //         latitude: NaN,
+    //         longitude: NaN,
+    //         radius: NaN,
+    //         propertyType: PropertyType.SINGLE_FAMILY,
+    //         bedrooms: NaN,
+    //         bathrooms: NaN,
+    //         status: PropertyStatus.ACTIVE,
+    //         daysOld: NaN,
+    //         limit: 5,
+    //         offset: NaN,
+    //         retrieveExtraData: false,
+    //     };
+    // }
 
-    getFormDetails(formData: CollectPropertiesFormData): FormProperty[] {
-        return [
-            BasicStringForm('Address', 'address', formData.city),
-            BasicStringForm('City', 'city', formData.city),
-            StateForm(formData.state),
-            BasicStringForm('Zipcode', 'zipcode', formData.zipcode),
-            BasicNumberForm('Latitude', 'latitude', formData.latitude),
-            BasicNumberForm('Longitude', 'longitude', formData.longitude),
-            BasicNumberForm('Radius', 'radius', formData.radius),
-            {
+    getFormDetails(): FormPropertyMap<CollectPropertiesFormData> {//FormProperty[] {
+        return {
+            address: BasicStringForm('Address', 'address'), //, formData.city),
+            city: BasicStringForm('City', 'city'), // formData.city),
+            state: StateForm(),//formData.state),
+            zipcode: BasicStringForm('Zipcode', 'zipcode'), //formData.zipcode),
+            latitude: BasicNumberForm('Latitude', 'latitude'), //formData.latitude),
+            longitude: BasicNumberForm('Longitude', 'longitude'), //formData.longitude),
+            radius: BasicNumberForm('Radius', 'radius'), //formData.radius),
+            propertyType: {
                 title: 'Property Type',
-                values: [
-                    {
+                values: {
+                    propertyType: {
                         name: 'propertyType',
                         type: InputType.SELECT,
-                        value: formData.propertyType,
-                        options: GetOptionsForFormProperty(PropertyType),
+                        //value: formData.propertyType,
+                        defaultValue: 'Any',
+                        value: undefined,
+                        options: GetOptionsForFormProperty(PropertyType, true),
                     },
-                ],
+                },
             },
-            BasicNumberForm('Bedrooms', 'bedrooms', formData.bedrooms),
-            BasicNumberForm('Bathrooms', 'bathrooms', formData.bathrooms),
-            {
+            bedrooms: BasicNumberForm('Bedrooms', 'bedrooms'), // formData.bedrooms),
+            bathrooms: BasicNumberForm('Bathrooms', 'bathrooms'), //formData.bathrooms),
+            status: {
                 title: 'Status',
-                values: [
-                    {
+                values: {
+                    status: {
                         name: 'status',
                         type: InputType.SELECT,
-                        value: formData.status,
+                        // value: formData.status,
+                        defaultValue: PropertyStatus.ACTIVE,
+                        value: undefined,
                         options: GetOptionsForFormProperty(PropertyStatus),
                     },
-                ],
+                },
             },
-            BasicNumberForm('Days Old', 'daysOld', formData.daysOld),
-            BasicNumberForm('Limit', 'limit', formData.limit),
-            BasicNumberForm('Offset', 'offset', formData.offset),
-            BasicCheckBoxForm('Retrieve Extra Data', 'retrieveExtraData', formData.retrieveExtraData),
-        ];
-    }
-
-    createRequest(formData: CollectPropertiesFormData): CreateRentCastApiRequest {
-        return {
-            address: formData.address,
-            city: formData.city,
-            state: formData.state as State,
-            zipCode: formData.zipcode,
-            latitude: formData.latitude,
-            longitude: formData.longitude,
-            radius: formData.radius,
-            propertyType: formData.propertyType as PropertyType,
-            bedrooms: formData.bedrooms,
-            bathrooms: formData.bathrooms,
-            status: formData.status as PropertyStatus,
-            daysOld: formData.daysOld,
-            limit: formData.limit,
-            offset: formData.offset,
-            retrieveExtraData: formData.retrieveExtraData,
+            daysOld: BasicNumberForm('Days Old', 'daysOld'), // formData.daysOld),
+            limit: BasicNumberForm('Limit', 'limit'), // formData.limit),
+            offset: BasicNumberForm('Offset', 'offset'), // formData.offset),
+            retrieveExtraData: BasicCheckBoxForm('Retrieve Extra Data', 'retrieveExtraData'), // formData.retrieveExtraData),
         };
     }
+
+    // createRequest(formData: CollectPropertiesFormData): CreateRentCastApiRequest {
+    //     return {
+    //         address: formData.address,
+    //         city: formData.city,
+    //         state: formData.state as State,
+    //         zipCode: formData.zipcode,
+    //         latitude: formData.latitude,
+    //         longitude: formData.longitude,
+    //         radius: formData.radius,
+    //         propertyType: formData.propertyType as PropertyType,
+    //         bedrooms: formData.bedrooms,
+    //         bathrooms: formData.bathrooms,
+    //         status: formData.status as PropertyStatus,
+    //         daysOld: formData.daysOld,
+    //         limit: formData.limit,
+    //         offset: formData.offset,
+    //         retrieveExtraData: formData.retrieveExtraData,
+    //     };
+    // }
 
 }

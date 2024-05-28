@@ -1,5 +1,4 @@
 import {
-    CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO
 } from '@realestatemanager/shared';
@@ -8,8 +7,7 @@ import { useLocation } from 'react-router-dom';
 import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/StandardForm.css'; // Make sure to create this CSS file
-import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import StandardForm, { FormProperty } from '../components/StandardForm';
+import StandardForm, { FormPropertyMap } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';
 import { PropertiesListTable } from '../tables/PropertiesListTable';
 import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
@@ -37,6 +35,10 @@ const InvestmentBreakdown: React.FC = () => {
     const propertiesListTable: PropertiesListTable = new PropertiesListTable();
     const investmentBreakdownTable: InvestmentBreakdownTable = new InvestmentBreakdownTable();
 
+    const getFormDetails = (property: ListingWithScenariosResponseDTO): FormPropertyMap<InvestmentFormData> => {
+        return investmentBreakdownFormDetails.getFormDetails(property);
+    };
+
     const [property, setProperty] = useState<ListingWithScenariosResponseDTO>(
         useLocation().state.data as ListingWithScenariosResponseDTO
     );
@@ -54,12 +56,12 @@ const InvestmentBreakdown: React.FC = () => {
         return investmentBreakdownTable.getTablesConfig();
     };
 
-    const [formData, setFormData] = useState<InvestmentFormData>(investmentBreakdownFormDetails.getDefaultFormData(property));
+    const [formData, setFormData] = useState<InvestmentFormData>(getFormDetails(property));
 
     useEffect(() => {
         if (property) {
             setProperty(property);
-            setFormData(investmentBreakdownFormDetails.getDefaultFormData(property));
+            setFormData(getFormDetails(property));
         }
     }, [property]);  // Ensure useEffect depends on `property`
 
@@ -79,20 +81,16 @@ const InvestmentBreakdown: React.FC = () => {
         return investmentBreakdownTable.getTableData([property], tableType);
     };
 
-    const getFormDetails = (): FormProperty[] => {
-        return investmentBreakdownFormDetails.getFormDetails(formData);
-    };
-
-    const getCalculateRequest = (): CreateInvestmentScenarioRequest => {
-        return investmentBreakdownFormDetails.createRequest(formData, property);
-    };
+    // const getCalculateRequest = (): CreateInvestmentScenarioRequest => {
+    //     return investmentBreakdownFormDetails.createRequest(formData, property);
+    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        const data: ListingWithScenariosResponseDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
-        console.log("Calculation result:", data);
-        setProperty(data);
+        // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        // const data: ListingWithScenariosResponseDTO = await realEstateCalcApi.realEstateCalculator(getCalculateRequest());
+        // console.log("Calculation result:", data);
+        // setProperty(data);
     };
 
     //-----------------------------------------------------------------------------------------------------------
@@ -101,8 +99,8 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && <StandardForm //<CalculateForm
-                formDetails={getFormDetails()}
+            {formData && <StandardForm<InvestmentFormData> //<CalculateForm
+                formPropertyMap={getFormDetails(property)}
                 // handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}

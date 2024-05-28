@@ -14,14 +14,22 @@ export const ratingSelections = (from: number = 1, limit: number = 10): Options 
     return array;
 };
 
-export const BasicTrueFalseSelectOption = (title: string, name: string, formInput: boolean | undefined): FormProperty => {
+export const BasicTrueFalseSelectOption = (
+    title: string,
+    name: string,
+    // formInput: boolean | undefined,
+    defaultValue?: boolean
+): FormProperty => {
+
     return {
         title: title,
-        values: [
-            {
+        values: {
+            [name]: {
                 name: name,
                 type: InputType.SELECT,
-                value: formInput?.toString(),
+                // value: formInput?.toString(),
+                value: undefined,
+                defaultValue: defaultValue ? 'true' : 'false',
                 options: [
                     {
                         label: 'true',
@@ -33,76 +41,104 @@ export const BasicTrueFalseSelectOption = (title: string, name: string, formInpu
                     },
                 ],
             },
-        ],
+        }
+
     };
 };
 
-export const BasicCheckBoxForm = (title: string, name: string, formInput: boolean | undefined): FormProperty => {
+export const BasicCheckBoxForm = (
+    title: string,
+    name: string,
+    // formInput: boolean | undefined,
+    defaultValue?: boolean
+): FormProperty => {
+
     return {
         title: title,
-        values: [
-            {
+        values: {
+            [name]: {
                 name: name,
                 type: InputType.CHECKBOX,
-                value: formInput?.toString(),
+                value: undefined,
+                // value: formInput?.toString(),
+                defaultValue: defaultValue ? 'true' : 'false',
             },
-        ],
+        }
     };
 };
 
-export const BasicStringForm = (title: string, name: string, formInput: string | undefined): FormProperty => {
+export const BasicStringForm = (
+    title: string,
+    name: string,
+    // formInput: string | undefined,
+    defaultValue?: string): FormProperty => {
+
     return {
         title: title,
-        values: [
-            {
+        values: {
+            [name]: {
                 name: name,
                 type: InputType.STRING,
-                value: formInput,
+                value: undefined,
+                // value: formInput,
+                defaultValue: defaultValue ? defaultValue : '',
             },
-        ],
+        },
     };
 };
 
-export const BasicNumberForm = (title: string, name: string, formInput: number | undefined, step?: string): FormProperty => {
+export const BasicNumberForm = (
+    title: string,
+    name: string,
+    // formInput: number | undefined,
+    defaultValue?: number,
+    step?: string
+): FormProperty => {
     return {
         title: title,
-        values: [
-            {
+        values: {
+            [name]: {
                 name: name,
                 type: InputType.NUMBER,
-                value: formInput,
+                value: undefined,
+                // value: formInput,
+                defaultValue: defaultValue ? defaultValue : -1,
                 step: step,
             },
-        ],
+        },
     };
 
 }
 
-export const CountryForm = (formInput: string | undefined, addAnyOption: boolean = false): FormProperty => {
+export const CountryForm = (addAnyOption: boolean = false): FormProperty => {
     return {
         title: 'Country',
-        values: [
-            {
-                name: 'state',
+        values: {
+            country: {
+                name: 'country',
                 type: InputType.SELECT,
-                value: formInput,
+                value: undefined,
+                // value: formInput,
+                defaultValue: Country.UnitedStates,
                 options: GetOptionsForFormProperty(Country, addAnyOption),
             },
-        ],
+        },
     };
 };
 
-export const StateForm = (formInput: string | undefined, addAnyOption: boolean = false): FormProperty => {
+export const StateForm = (addAnyOption: boolean = false): FormProperty => {
     return {
         title: 'State',
-        values: [
-            {
+        values: {
+            state: {
                 name: 'state',
                 type: InputType.SELECT,
-                value: formInput,
+                value: undefined,
+                // value: formInput,
+                defaultValue: addAnyOption ? 'Any' : State.AL,
                 options: GetOptionsForFormProperty(State, addAnyOption),
             },
-        ],
+        },
     };
 };
 

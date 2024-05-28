@@ -1,55 +1,34 @@
 import React, { useState } from 'react';
-import { CreateAgentRequest } from '@realestatemanager/shared';
-import { AgentApi } from '../api/agentapi';
-import StandardForm, { FormProperty } from '../components/StandardForm';
-import { AgentFormData, AgentFormDetails } from '../forms/AgentFormDetails';
+import { AgentFormDetails, AgentFormData } from '../forms/AgentFormDetails';
+import StandardForm, { FormPropertyMap } from '../components/StandardForm';
 
 const AgentForm: React.FC = () => {
-
-    const agentApi: AgentApi = new AgentApi();
-
     const agentFormDetails: AgentFormDetails = new AgentFormDetails();
+
+    const getFormDetails = (): FormPropertyMap<AgentFormData> => {
+        return agentFormDetails.getFormDetails();
+    };
 
     const [formData, setFormData] = useState<AgentFormData>(agentFormDetails.getDefaultFormData());
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const getAgentRequest = (): CreateAgentRequest => {
-            return agentFormDetails.createRequest(formData);
-        };
-
-        const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
-
-        if (postSuccess) {
-            alert('Agent has been successfully added!');
-            window.location.reload();
-        }
-        else {
-            alert('Failed to submit data.');
-        }
-    };
-
-    const getFormDetails = (): FormProperty[] => {
-        return agentFormDetails.getFormDetails(formData);
+        // Handle form submission
     };
 
     return (
         <div>
             <h2> Add New Agent </h2>
             {formData && (
-                <StandardForm
-                    formDetails={getFormDetails()}
-                    // handleChange={handleChange}
+                <StandardForm<AgentFormData>
+                    formPropertyMap={getFormDetails()}
                     handleSubmit={handleSubmit}
                     setFormData={setFormData}
-                    buttonTitle='Submit'
+                    buttonTitle="Submit"
                 />
             )}
         </div>
     );
-
 };
-
 
 export default AgentForm;

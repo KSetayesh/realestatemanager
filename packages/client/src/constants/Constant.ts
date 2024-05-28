@@ -108,7 +108,7 @@ export enum ListingCreationType {
 };
 
 export enum Filter {
-    all = 'All',
+    // all = 'All',
     gt = '>',
     lt = '<',
     eq = '=',

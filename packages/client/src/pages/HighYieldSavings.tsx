@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
-import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
-import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
-import StandardForm, { FormProperty } from '../components/StandardForm';
+import ReusableTable, { TableColumn } from '../components/ReusableTable';
+import StandardForm, { FormPropertyMap } from '../components/StandardForm';
 import {
     HighYieldSavingsFormData,
     HighYieldSavingsFormDetails,
@@ -16,28 +14,28 @@ const HighYieldSavings: React.FC = () => {
     const highYieldSavingsFormDetails: HighYieldSavingsFormDetails = new HighYieldSavingsFormDetails();
     const highYieldSavingsTable: HighYieldSavingsTable = new HighYieldSavingsTable();
 
-    const [formData, setFormData] = useState<HighYieldSavingsFormData>(highYieldSavingsFormDetails.getDefaultFormData());
+    const getFormDetails = (): FormPropertyMap<HighYieldSavingsFormData> => {
+        return highYieldSavingsFormDetails.getFormDetails();
+    };
 
-    const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>([]);
+    const [formData, setFormData] = useState<HighYieldSavingsFormData>(getFormDetails());
+
+    // const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>([]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const getCalculateRequest = (): HighYeildSavingsRequest => {
-            return highYieldSavingsFormDetails.createRequest(formData);
-        };
-        const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
-        const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
-        console.log("Calculation result:", data);
-        setMetrics(data);
+        // const getCalculateRequest = (): HighYeildSavingsRequest => {
+        //     return highYieldSavingsFormDetails.createRequest(formData);
+        // };
+        // const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
+        // const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
+        // console.log("Calculation result:", data);
+        // setMetrics(data);
     };
 
-    const getFormDetails = (): FormProperty[] => {
-        return highYieldSavingsFormDetails.getFormDetails(formData);
-    };
-
-    const getTableData = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
-        return highYieldSavingsTable.getTableData(metrics, DefaultTableType.DEFAULT);
-    };
+    // const getTableData = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
+    //     return highYieldSavingsTable.getTableData(metrics, DefaultTableType.DEFAULT);
+    // };
 
     const getTableColumns = (): TableColumn[] => {
         return highYieldSavingsTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
@@ -46,8 +44,8 @@ const HighYieldSavings: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && <StandardForm
-                formDetails={getFormDetails()}
+            {formData && <StandardForm<HighYieldSavingsFormData>
+                formPropertyMap={getFormDetails()}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Calculate'
@@ -58,7 +56,7 @@ const HighYieldSavings: React.FC = () => {
             <br />
             <ReusableTable
                 columns={getTableColumns()} // Adjust based on your needs
-                tableData={getTableData()}
+                tableData={[]} //getTableData()}
                 includeTableSeparator={true}
             />
         </div>

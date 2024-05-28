@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/PropertiesList.css';
 import '../styles/StandardForm.css';
-import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
-import { RealEstateCalcApi } from '../api/realestatecalcapi';
+import ReusableTable, { TableColumn } from '../components/ReusableTable';
 import {
-    CreateFilteredPropertyListRequest,
-    CreateGetAllPropertiesRequest,
     ListingWithScenariosResponseDTO
 } from '@realestatemanager/shared';
-import StandardForm, { FormProperty } from '../components/StandardForm';
+import StandardForm, { FormPropertyMap } from '../components/StandardForm';
 import {
     PropertiesListFormDetails,
     PropertyFilterFormFields
@@ -26,27 +23,27 @@ const PropertiesList: React.FC = () => {
     const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
     const propertiesListTable: PropertiesListTable = new PropertiesListTable();
 
-    const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
+    const getFormDetails = (): FormPropertyMap<PropertyFilterFormFields> => {
+        return propertiesListFormDetails.getFormDetails();
+    };
+
+    // const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
-    const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+    // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
     const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value as keyof typeof PropertiesListTableType;
         setTableType(PropertiesListTableType[input]);
     };
 
-    const getDefaultFormData = (): PropertyFilterFormFields => {
-        return propertiesListFormDetails.getDefaultFormData();
-    };
+    // const getDefaultFormData = (): PropertyFilterFormFields => {
+    //     return propertiesListFormDetails.getDefaultFormData();
+    // };
 
-    const [formData, setFormData] = useState<PropertyFilterFormFields>(getDefaultFormData());
-
-    const getFormDetails = (): FormProperty[] => {
-        return propertiesListFormDetails.getFormDetails(formData);
-    };
+    const [formData, setFormData] = useState<PropertyFilterFormFields>(getFormDetails());
 
     const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
@@ -56,44 +53,44 @@ const PropertiesList: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO>[] => {
-        return propertiesListTable.getTableData(properties, tableType);
-    };
+    // const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO>[] => {
+    //     return propertiesListTable.getTableData(properties, tableType);
+    // };
 
     const getTableColumns = (): TableColumn[] => {
         return propertiesListTable.getTablesConfig()[tableType].columns;
     };
 
-    const getRequestData = (): CreateFilteredPropertyListRequest => {
-        return propertiesListFormDetails.createRequest(formData);
-    };
+    // const getRequestData = (): CreateFilteredPropertyListRequest => {
+    //     return propertiesListFormDetails.createRequest(formData);
+    // };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
-        console.log('---filteredPropertyListRequest:', filteredPropertyListRequest);
-        const dataToSubmit: CreateGetAllPropertiesRequest = {
-            filteredPropertyListRequest: filteredPropertyListRequest,
-        };
-        console.log('---dataToSubmit:', dataToSubmit);
+        // const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
+        // console.log('---filteredPropertyListRequest:', filteredPropertyListRequest);
+        // const dataToSubmit: CreateGetAllPropertiesRequest = {
+        //     filteredPropertyListRequest: filteredPropertyListRequest,
+        // };
+        // console.log('---dataToSubmit:', dataToSubmit);
 
         setIsLoading(true);
-        try {
-            const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
-            setProperties(properties);
+        // try {
+        //     const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
+        //     setProperties(properties);
 
-            if (properties.length > 0) {
-                alert('Data submitted successfully!');
-            } else {
-                alert('No properties found with the applied filters.');
-            }
-        } catch (error) {
-            console.error('Failed to submit data.', error);
-            alert('Failed to submit data.');
-        } finally {
-            setFormData(getDefaultFormData());
-            setIsLoading(false);
-        }
+        //     if (properties.length > 0) {
+        //         alert('Data submitted successfully!');
+        //     } else {
+        //         alert('No properties found with the applied filters.');
+        //     }
+        // } catch (error) {
+        //     console.error('Failed to submit data.', error);
+        //     alert('Failed to submit data.');
+        // } finally {
+        //     setFormData(getDefaultFormData());
+        //     setIsLoading(false);
+        // }
     };
 
     const getDefaultColumns = (): TableColumn[] => {
@@ -112,8 +109,8 @@ const PropertiesList: React.FC = () => {
     return (
         <div>
             <h2> Filter Properties </h2>
-            {formData && <StandardForm
-                formDetails={getFormDetails()}
+            {formData && <StandardForm<PropertyFilterFormFields>
+                formPropertyMap={getFormDetails()}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Submit'
@@ -146,7 +143,7 @@ const PropertiesList: React.FC = () => {
                     </div>
                     <ReusableTable
                         columns={getTableColumns()}
-                        tableData={getTableData()}
+                        tableData={[]} //getTableData()}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal

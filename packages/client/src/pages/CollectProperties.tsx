@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/PropertyForm.css';
 import '../styles/CollectProperties.css';
-import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
+import { RentCastDetailsResponseDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
-import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
-import StandardForm, { FormProperty } from '../components/StandardForm';
+import { CollectPropertiesFormData, CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
+import StandardForm, { FormPropertyMap } from '../components/StandardForm';
 
 const CollectProperties: React.FC = () => {
     const rentCastApi: RentCastApi = new RentCastApi();
@@ -31,30 +30,30 @@ const CollectProperties: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const [formData, setFormData] = useState(collectPropertiesFormDetails.getDefaultFormData()); //useState(initialFormState);
+    const [formData, setFormData] = useState<CollectPropertiesFormData>(collectPropertiesFormDetails.getFormDetails()); //useState(initialFormState);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const dataToSubmit: CreateRentCastApiRequest = getRequestData();
-        console.log('dataToSubmit:', dataToSubmit);
+        // const dataToSubmit: CreateRentCastApiRequest = getRequestData();
+        // console.log('dataToSubmit:', dataToSubmit);
 
-        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        const postSuccess = await realEstateCalcApi.addNewPropertyWithRentCastAPI(dataToSubmit);
-        if (postSuccess) {
-            alert('Data submitted successfully!');
-            window.location.reload();
-        }
-        else {
-            alert('Failed to submit data.');
-        }
+        // const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+        // const postSuccess = await realEstateCalcApi.addNewPropertyWithRentCastAPI(dataToSubmit);
+        // if (postSuccess) {
+        //     alert('Data submitted successfully!');
+        //     window.location.reload();
+        // }
+        // else {
+        //     alert('Failed to submit data.');
+        // }
     };
 
-    const getRequestData = (): CreateRentCastApiRequest => {
-        return collectPropertiesFormDetails.createRequest(formData);
-    };
+    // const getRequestData = (): CreateRentCastApiRequest => {
+    //     return collectPropertiesFormDetails.createRequest(formData);
+    // };
 
-    const getFormDetails = (): FormProperty[] => {
-        return collectPropertiesFormDetails.getFormDetails(formData);
+    const getFormDetails = (): FormPropertyMap<CollectPropertiesFormData> => {
+        return collectPropertiesFormDetails.getFormDetails(); //formData);
     };
 
     const buttonDisableLogic = (): boolean => {
@@ -93,8 +92,8 @@ const CollectProperties: React.FC = () => {
                     <hr />
                     <br />
 
-                    {formData && <StandardForm
-                        formDetails={getFormDetails()}
+                    {formData && <StandardForm<CollectPropertiesFormData>
+                        formPropertyMap={getFormDetails()}
                         handleSubmit={handleSubmit}
                         setFormData={setFormData}
                         buttonTitle='Submit'
