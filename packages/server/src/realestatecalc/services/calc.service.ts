@@ -30,8 +30,15 @@ export class CalcService {
         this.cache = new Map<number, ListingWithScenariosResponseDTO>();
     }
 
-    // async getAllProperties(investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO[]> {
-    async getAllProperties(getAllPropertiesRequest: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+    async setCache(): Promise<void> {
+        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
+        for (const listingDetails of listingDetailsArr) {
+            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails);
+            investmentCalculationManager.setCache();
+        }
+    }
+
+    async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
 
         const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
@@ -43,9 +50,8 @@ export class CalcService {
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
 
         for (const listingDetails of listingDetailsArr) {
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO =
-                new InvestmentCalculationManager(this.cache, listingDetails, investmentScenarioRequest).
-                    getListingDetailsCalculations();
+            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails, investmentScenarioRequest);
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = investmentCalculationManager.getListingDetailsCalculations();
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }
 

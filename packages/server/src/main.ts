@@ -28,6 +28,7 @@ import './db/dbManager';
 
 // dotenv.config();
 import express, { Express, Request, Response } from 'express';
+import { CalcService } from './realestatecalc/services/calc.service';
 
 // const app: Express = express();
 const port = process.env.API_PORT || '3000';
@@ -41,6 +42,13 @@ async function bootstrap() {
 
     console.log(`App is now listening on port ${port}`);
     console.log(`URL: http://localhost:${port}`);
+
+    // pre-load property calculations
+    console.log('\n---Setting property cache---\n');
+    const calcService: CalcService = app.get(CalcService);
+    await calcService.setCache();
+    console.log('\n---Property cache has been set---\n');
 }
+
 
 bootstrap();
