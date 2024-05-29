@@ -1,5 +1,6 @@
 export class Utility {
 
+    // Basically just pass in "Date.now()"
     static getTimeSpent(startTime: number): number {
         const endTime = Date.now();
         return (endTime - startTime) / 1000;

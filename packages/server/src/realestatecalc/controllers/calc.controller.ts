@@ -20,8 +20,8 @@ export class CalcController {
     async getAllProperties(
         @Body() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
+
         console.log('In getAllProperties endpoint');
-        // const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
 
         if (getAllPropertiesRequest) {
             console.log('---filteredPropertyListRequest:', getAllPropertiesRequest.filteredPropertyListRequest);
@@ -29,7 +29,9 @@ export class CalcController {
         else {
             console.log('---getAllPropertiesRequest is undefined');
         }
-        return this.calcService.getAllProperties(getAllPropertiesRequest); //(investmentScenarioRequest);
+
+        return this.calcService.getAllProperties(getAllPropertiesRequest);
+
     }
 
     @Get('property')

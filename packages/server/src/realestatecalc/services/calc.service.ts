@@ -15,20 +15,24 @@ import { InvestmentCalculator } from '../models/investment_models/investment.cal
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
+import { InvestmentCalculationManager } from '../models/investment_models/investment.calculation.manager';
 
 @Injectable()
 export class CalcService {
 
     private listingManager: ListingManager;
     private pool: Pool;
+    private cache: Map<number, ListingWithScenariosResponseDTO>;
 
     constructor() {
         this.listingManager = DatabaseManagerFactory.createListingManager();
         this.pool = DatabaseManagerFactory.getDbPool();
+        this.cache = new Map<number, ListingWithScenariosResponseDTO>();
     }
 
     // async getAllProperties(investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO[]> {
     async getAllProperties(getAllPropertiesRequest: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+
         const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
@@ -37,18 +41,14 @@ export class CalcService {
 
         const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
+
         for (const listingDetails of listingDetailsArr) {
-            const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
-            const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-            const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();
-
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = {
-                listingDetails: listingDetails.toDTO(),
-                metrics: metrics,
-            };
-
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO =
+                new InvestmentCalculationManager(this.cache, listingDetails, investmentScenarioRequest).
+                    getListingDetailsCalculations();
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }
+
         return listingWithScenariosArr;
     }
 
