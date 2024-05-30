@@ -118,6 +118,10 @@ export enum Filter {
     lteq = '<=',
 };
 
+export enum DefaultTableType {
+    DEFAULT = 'DEFAULT',
+};
+
 // export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const formatDollarAmount = (amount: number): string => {

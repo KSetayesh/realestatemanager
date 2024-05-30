@@ -1,9 +1,9 @@
 import { HighYeildSavingsResponseDTO } from "@realestatemanager/shared";
-import { DefaultTableType } from "../pages/AgentsList";
 import { AbstractTable } from "./AbstractTable";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 import { TablesConfig } from "../pages/InvestmentBreakdown";
 import { highYieldSavingsDefaultColumns } from "./columns/HighYieldSavingsColumns";
+import { DefaultTableType } from "../constants/Constant";
 
 export class HighYieldSavingsTable implements AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType, HighYeildSavingsResponseDTO> {
 

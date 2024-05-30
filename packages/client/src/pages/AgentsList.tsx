@@ -3,10 +3,7 @@ import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableColumn, TableDataItem } from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
-
-export enum DefaultTableType {
-    DEFAULT = 'DEFAULT',
-};
+import { DefaultTableType } from "../constants/Constant";
 
 const AgentsList: React.FC = () => {
     const agentApi: AgentApi = new AgentApi();

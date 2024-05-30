@@ -1,9 +1,9 @@
 import { AgentResponseDTO } from "@realestatemanager/shared";
-import { DefaultTableType } from "../pages/AgentsList";
 import { AbstractTable } from "./AbstractTable";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 import { TablesConfig } from "../pages/InvestmentBreakdown";
 import { agentDefaultColumns } from "./columns/AgentColumns";
+import { DefaultTableType } from "../constants/Constant";
 
 export class AgentTable implements AbstractTable<AgentResponseDTO, DefaultTableType, AgentResponseDTO> {
 

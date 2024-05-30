@@ -8,8 +8,7 @@ import {
     HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
 import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
-import { DefaultTableType } from './AgentsList';
-
+import { DefaultTableType } from '../constants/Constant';
 
 const HighYieldSavings: React.FC = () => {
 
