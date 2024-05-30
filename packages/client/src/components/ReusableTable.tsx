@@ -61,18 +61,23 @@ const ReusableTable = <T,>({
     const [editableData, setEditableData] = useState<TableDataItem<T>[]>(tableData);
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<T> | null>(null);
 
-    let sortedData = [...editableData];
+    const deepCopy = (obj: TableDataItem<T>): TableDataItem<T> => {
+        return JSON.parse(JSON.stringify(obj));
+    };
 
-    if (sortConfig !== null) {
-        sortedData.sort((a, b) => {
-            if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
-                return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
-            } else if (a.rowData[sortConfig.key] > b.rowData[sortConfig.key]) {
-                return sortConfig.direction === SortDirection.ASCENDING ? 1 : -1;
-            }
-            return 0;
-        });
-    }
+    const sortData = (data: TableDataItem<T>[]) => {
+        if (sortConfig !== null) {
+            return [...data].sort((a, b) => {
+                if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
+                    return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
+                } else if (a.rowData[sortConfig.key] > b.rowData[sortConfig.key]) {
+                    return sortConfig.direction === SortDirection.ASCENDING ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+        return data;
+    };
 
     const requestSort = (column: TableColumn) => {
         if (!column.isSortable || isEditing) {
@@ -89,13 +94,14 @@ const ReusableTable = <T,>({
     const handleEditClick = (index: number) => {
         setEditMode(index);
         setIsEditing(true);
-        setCurrentEdit(editableData[index]);
+        setCurrentEdit(deepCopy(editableData[index])); // Backup the current state before editing
     };
 
     const handleCancelClick = () => {
         if (editMode !== null && currentEdit) {
             const newData = [...editableData];
             newData[editMode] = currentEdit;
+            console.log('currentEdit:', currentEdit);
             setEditableData(newData);
         }
         setEditMode(null);
@@ -110,6 +116,7 @@ const ReusableTable = <T,>({
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, accessor: string) => {
+        console.log('accessor is:', accessor);
         const newData = [...editableData];
         newData[rowIndex].rowData[accessor] = e.target.value;
         setEditableData(newData);
@@ -152,7 +159,11 @@ const ReusableTable = <T,>({
         );
     };
 
-    const visibleColumnsCount = columns.filter(column => column.showColumn).length;
+    const getVisibleColumnCount = (): number => {
+        return columns.filter(column => column.showColumn).length;
+    };
+
+    const sortedData = sortData(editableData);
 
     return (
         <div>
@@ -220,7 +231,7 @@ const ReusableTable = <T,>({
                                 </tr>
                                 {includeTableSeparator && ((sortedIndex + 1) % 12 === 0) && (
                                     <tr key={`separator_${originalIndex}`}>
-                                        <td colSpan={visibleColumnsCount + 1} style={{ textAlign: 'center' }}>
+                                        <td colSpan={getVisibleColumnCount() + 1} style={{ textAlign: 'center' }}>
                                             <b>End of Year {(sortedIndex + 1) / 12}</b>
                                         </td>
                                     </tr>

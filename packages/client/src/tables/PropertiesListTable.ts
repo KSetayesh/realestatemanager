@@ -96,7 +96,7 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
         const columns: TableColumn[] = [];
         columns.push(...propertiesListColumns);
         columns.push(...additionalTableColumns);
-        console.log("columns:", columns);
+        // console.log("columns:", columns);
         return columns;
     }
 
