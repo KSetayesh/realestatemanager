@@ -84,7 +84,7 @@ const CollectProperties: React.FC = () => {
                                     <p><b>Api Key Name:</b> {rentCastDetail.apiKeyName}</p>
                                     <p><b>Remaining number of free API calls left:</b> {rentCastDetail.remainingNumberOfFreeApiCalls}</p>
                                     <p><b>Can make API call:</b> {rentCastDetail.canMakeApiCalls.toString()}</p>
-                                    <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod}</p>
+                                    <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod} / {rentCastDetail.billingPeriod}</p>
                                     <p><b>Most recent billing date:</b> {new Date(rentCastDetail.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
                                     <hr />
                                 </div>
