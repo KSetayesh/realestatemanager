@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import '../styles/PropertiesList.css';
 import '../styles/Tooltip.css';
-import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
+import { InputType, ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import Tooltip from '../components/Tooltip';
 import ExportCSVButton from './ExportCSVButton';  // Import the new component
 
@@ -30,6 +30,7 @@ export interface TableColumn {
     isURL: boolean;
     isDollarAmount: boolean;
     showColumn: boolean;
+    inputType: InputType;
     isSortable: boolean;
     routeTo?: string;
     addSuffix?: string;
@@ -101,7 +102,6 @@ const ReusableTable = <T,>({
         if (editMode !== null && currentEdit) {
             const newData = [...editableData];
             newData[editMode] = currentEdit;
-            console.log('currentEdit:', currentEdit);
             setEditableData(newData);
         }
         setEditMode(null);
@@ -115,10 +115,16 @@ const ReusableTable = <T,>({
         setCurrentEdit(null);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, accessor: string) => {
-        console.log('accessor is:', accessor);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => { //accessor: string) => {
+        const accessor = column.accessor;
         const newData = [...editableData];
-        newData[rowIndex].rowData[accessor] = e.target.value;
+        let value = e.target.value; // renderCellData(e.target.value, column.isDollarAmount, column.addSuffix);
+        if (InputType.NUMBER === column.inputType) {
+            newData[rowIndex].rowData[accessor] = Number(value);
+        }
+        else {
+            newData[rowIndex].rowData[accessor] = value;
+        }
         setEditableData(newData);
     };
 
@@ -202,7 +208,7 @@ const ReusableTable = <T,>({
                                                 <input
                                                     type="text"
                                                     value={editableData[originalIndex].rowData[column.accessor]}
-                                                    onChange={(e) => handleInputChange(e, originalIndex, column.accessor)}
+                                                    onChange={(e) => handleInputChange(e, originalIndex, column)}
                                                 />
                                             );
                                         } else if (column.isURL) {

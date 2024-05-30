@@ -1,9 +1,11 @@
 import { TableColumn } from "../../components/ReusableTable";
+import { InputType } from "../../constants/Constant";
 
 export const propertiesListColumns: TableColumn[] = [
     {
         header: "Property Type",
         accessor: "propertyType",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -12,6 +14,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Full Address",
         accessor: "fullAddress",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -20,6 +23,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "State",
         accessor: "state",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -28,6 +32,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zip Code",
         accessor: "zipcode",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -36,6 +41,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow URL",
         accessor: "zillowURL",
+        inputType: InputType.STRING,
         isURL: true,
         showColumn: true,
         isDollarAmount: false,
@@ -44,6 +50,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Price",
         accessor: "price",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -53,6 +60,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Rent Estimate",
         accessor: "rentEstimate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -62,6 +70,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Initial Costs",
         accessor: "initialCosts",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -76,6 +85,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Loan Amount",
         accessor: "loanAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -84,6 +94,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Down Payment",
         accessor: "downPaymentAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -92,6 +103,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Annual Interest Rate",
         accessor: "annualInterestRate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -101,6 +113,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "ROI",
         accessor: "ROI",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -110,6 +123,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Cap Rate",
         accessor: "capRate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -119,6 +133,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Recurring Costs",
         accessor: "recurringCosts",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -132,6 +147,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Monthly Payment",
         accessor: "initialMonthlyAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -144,6 +160,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Mortgage Amount",
         accessor: "mortgage",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -152,6 +169,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Monthly Cash Flow",
         accessor: "monthlyCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -160,6 +178,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Yearly Cash Flow",
         accessor: "yearlyCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -168,6 +187,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Number of Days On Market",
         accessor: "numberOfDaysOnMarket",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -176,6 +196,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Date Listed",
         accessor: "dateListed",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -184,6 +205,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Date Created",
         accessor: "dateCreated",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -192,6 +214,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "City",
         accessor: "city",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -200,6 +223,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "County",
         accessor: "county",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -208,6 +232,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Country",
         accessor: "country",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -215,7 +240,8 @@ export const propertiesListColumns: TableColumn[] = [
     },
     {
         header: "Street Address",
-        accessor: "streetAddress",
+        accessor: "streetAddress", 
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -224,6 +250,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Apartment Number",
         accessor: "apartmentNumber",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -232,6 +259,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Longitude",
         accessor: "longitude",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -240,6 +268,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Latitude",
         accessor: "latitude",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -248,6 +277,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Elementary School Rating",
         accessor: "elementarySchoolRating",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -257,6 +287,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Middle School Rating",
         accessor: "middleSchoolRating",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -266,6 +297,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "High School Rating",
         accessor: "highSchoolRating",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -275,6 +307,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Number Of Bedrooms",
         accessor: "numberOfBedrooms",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -284,6 +317,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Number Of Full Bathrooms",
         accessor: "numberOfFullBathrooms",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -293,6 +327,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Number Of Half Bathrooms",
         accessor: "numberOfHalfBathrooms",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -302,6 +337,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Square Feet",
         accessor: "squareFeet",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -311,6 +347,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Acres",
         accessor: "acres",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -320,6 +357,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Year Built",
         accessor: "yearBuilt",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -329,6 +367,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Has Garage",
         accessor: "hasGarage",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -338,6 +377,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Has Pool",
         accessor: "hasPool",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -347,6 +387,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Has Basement",
         accessor: "hasBasement",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -356,6 +397,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Listing Price",
         accessor: "listingPrice",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -365,6 +407,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zestimate",
         accessor: "zestimate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -374,6 +417,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Rent Estimate",
         accessor: "zillowRentEstimate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -383,6 +427,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Range Low",
         accessor: "zestimateRangeLow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -392,6 +437,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Range High",
         accessor: "zestimateRangeHigh",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -401,6 +447,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Monthly Property Tax Amount",
         accessor: "zillowMonthlyPropertyTaxAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -410,6 +457,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Monthly Home Insurance Amount",
         accessor: "zillowMonthlyHomeInsuranceAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -419,6 +467,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Zillow Monthly HOA Fees Amount",
         accessor: "zillowMonthlyHOAFeesAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
         isDollarAmount: true,
@@ -428,6 +477,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Creation Type",
         accessor: "creationType",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
@@ -436,6 +486,7 @@ export const propertiesListColumns: TableColumn[] = [
     {
         header: "Description",
         accessor: "description",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
         isDollarAmount: false,

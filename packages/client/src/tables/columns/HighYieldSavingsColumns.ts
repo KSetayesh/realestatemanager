@@ -1,9 +1,11 @@
 import { TableColumn } from "../../components/ReusableTable";
+import { InputType } from "../../constants/Constant";
 
 export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Year",
         accessor: "year",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -12,6 +14,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Month",
         accessor: "month",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -20,6 +23,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Date",
         accessor: "date",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -29,6 +33,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Start Principal",
         accessor: "startPrincipal",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -37,6 +42,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Start Balance",
         accessor: "startBalance",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -45,6 +51,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Interest",
         accessor: "interest",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -53,6 +60,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "Accumulated Interest",
         accessor: "accumulatedInterest",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -61,6 +69,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "End Balance",
         accessor: "endBalance",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -69,6 +78,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
         header: "End Principal",
         accessor: "endPrincipal",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,

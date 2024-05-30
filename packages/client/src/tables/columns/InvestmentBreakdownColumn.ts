@@ -1,11 +1,13 @@
 // InvestmentBreakdownColumns.ts
 
 import { TableColumn } from "../../components/ReusableTable";
+import { InputType } from "../../constants/Constant";
 
 export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Year",
         accessor: "year",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -14,6 +16,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Month",
         accessor: "month",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -22,6 +25,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Date",
         accessor: "date",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -30,6 +34,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Mortgage Amount",
         accessor: "mortgageAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -39,6 +44,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Total Interest Paid",
         accessor: "totalInterestPaid",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -47,6 +53,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Total Principal Paid",
         accessor: "totalPrincipalPaid",
+        inputType: InputType.NUMBER, 
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -55,6 +62,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Remaining Balance",
         accessor: "remainingBalance",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -63,6 +71,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Rent Estimate",
         accessor: "rentEstimate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -71,6 +80,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Income",
         accessor: "monthlyIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -79,6 +89,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Expenses",
         accessor: "monthlyExpenses",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -87,6 +98,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Cash Flow",
         accessor: "monthlyCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -96,6 +108,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Accumulated Cash Flow",
         accessor: "accumulatedCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -104,6 +117,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Appreciation Amount",
         accessor: "appreciationAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -115,6 +129,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Year",
         accessor: "year",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -123,6 +138,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Month",
         accessor: "month",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -131,6 +147,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Date",
         accessor: "date",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -139,6 +156,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Mortgage Amount",
         accessor: "mortgageAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -148,6 +166,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "PMI Amount",
         accessor: "pmiAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -156,6 +175,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Interest Payment",
         accessor: "interestPayment",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -164,6 +184,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Principal Payment",
         accessor: "principalPayment",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -172,6 +193,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Interest Payment",
         accessor: "interestPayment",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -180,6 +202,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Percentage of Interest (%)",
         accessor: "percentageOfInterest",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -189,6 +212,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Percentage of Principal (%)",
         accessor: "percentageOfPrincipal",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -198,6 +222,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Total Interest Paid",
         accessor: "totalInterestPaid",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -206,6 +231,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Total Principal Paid",
         accessor: "totalPrincipalPaid",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -214,6 +240,7 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Remaining Balance",
         accessor: "remainingBalance",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -225,6 +252,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Year",
         accessor: "year",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -233,6 +261,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Month",
         accessor: "month",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -241,6 +270,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Date",
         accessor: "date",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -249,6 +279,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Rent Estimate",
         accessor: "rentEstimate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -257,6 +288,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Income",
         accessor: "monthlyIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -265,6 +297,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Expenses",
         accessor: "monthlyExpenses",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -273,6 +306,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Cash Flow",
         accessor: "monthlyCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -282,6 +316,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Accumulated Cash Flow",
         accessor: "accumulatedCashFlow",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -290,6 +325,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Equity Amount",
         accessor: "equityAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -299,6 +335,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Net Operating Income (NOI)",
         accessor: "netOperatingIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -308,6 +345,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Accumulated Net Operating Income (NOI)",
         accessor: "accumulatedNetOperatingIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -317,6 +355,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Cap Rate (%)",
         accessor: "capRate",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -327,6 +366,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Return On Investment (ROI %)",
         accessor: "returnOnInvestment",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -337,6 +377,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Cash On Cash Return (COC %)",
         accessor: "cashOnCashReturn",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -347,6 +388,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Net Income",
         accessor: "monthlyNetIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -356,6 +398,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Accumulated Net Income",
         accessor: "accumulatedNetIncome",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -365,6 +408,7 @@ export const investmentBreakdownColumns: TableColumn[] = [
     {
         header: "Appreciation Amount",
         accessor: "appreciationAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -376,6 +420,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Year",
         accessor: "year",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -384,6 +429,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Month",
         accessor: "month",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -392,6 +438,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Date",
         accessor: "date",
+        inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
@@ -400,6 +447,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Property Management Amount",
         accessor: "propertyManagementAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -408,6 +456,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Vacancy Amount",
         accessor: "vacancyAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -416,6 +465,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Maintenance Amount",
         accessor: "maintenanceAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -424,6 +474,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Cap Ex Reserve Amount",
         accessor: "capExReserveAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -432,6 +483,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Other Expense Amount",
         accessor: "otherExpenseAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -440,6 +492,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Operational Costs",
         accessor: "operationalCosts",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -453,6 +506,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Property Tax Amount",
         accessor: "propertyTaxAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -461,6 +515,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Home Insurance Amount",
         accessor: "monthlyHomeInsuranceAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -469,6 +524,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly HOA Fees Amount",
         accessor: "monthlyHOAFeesAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -477,6 +533,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Fixed Costs",
         accessor: "fixedCosts",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -488,6 +545,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Mortgage Amount",
         accessor: "mortgageAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -497,6 +555,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "PMI Amount",
         accessor: "pmiAmount",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -505,6 +564,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Payment",
         accessor: "monthlyPayment",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -517,6 +577,7 @@ export const expensesBreakdownColumns: TableColumn[] = [
     {
         header: "Monthly Payment + Operational Costs",
         accessor: "monthlyPaymentAndOperationalCosts",
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,

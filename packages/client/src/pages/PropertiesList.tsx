@@ -15,6 +15,7 @@ import {
     PropertyFilterFormFields
 } from '../forms/PropertiesListFormDetails';
 import { PropertiesListTable } from '../tables/PropertiesListTable';
+import { InputType } from '../constants/Constant';
 
 export enum PropertiesListTableType {
     ALL = 'ALL',
@@ -105,6 +106,7 @@ const PropertiesList: React.FC = () => {
                 accessor: "investmentBreakdown",
                 isURL: false,
                 showColumn: true,
+                inputType: InputType.STRING,
                 routeTo: 'investmentBreakdown',
                 isDollarAmount: false,
                 isSortable: false,
