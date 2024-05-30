@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/PropertyForm.css';
 import '../styles/CollectProperties.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
@@ -77,31 +76,32 @@ const CollectProperties: React.FC = () => {
         } else {
             content = (
                 <>
-                    <hr />
-                    <div className="scrollable-container">
-                        {rentCastDetails ? rentCastDetails.map((rentCastDetail, index) => (
-                            <div key={index}>
-                                <p><b>Api Key Name:</b> {rentCastDetail.apiKeyName}</p>
-                                <p><b>Remaining number of free API calls left:</b> {rentCastDetail.remainingNumberOfFreeApiCalls}</p>
-                                <p><b>Can make API call:</b> {rentCastDetail.canMakeApiCalls.toString()}</p>
-                                <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod}</p>
-                                <p><b>Most recent billing date:</b> {new Date(rentCastDetail.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
-                                <hr />
-                            </div>
-                        )) : []}
-                    </div>
-                    <hr />
-                    <br />
+                    <div className="content-container">
+                        <hr className="content-separator" /> {/* Add a class for styling */}
+                        <div className="scrollable-container">
+                            {rentCastDetails ? rentCastDetails.map((rentCastDetail, index) => (
+                                <div key={index}>
+                                    <p><b>Api Key Name:</b> {rentCastDetail.apiKeyName}</p>
+                                    <p><b>Remaining number of free API calls left:</b> {rentCastDetail.remainingNumberOfFreeApiCalls}</p>
+                                    <p><b>Can make API call:</b> {rentCastDetail.canMakeApiCalls.toString()}</p>
+                                    <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod}</p>
+                                    <p><b>Most recent billing date:</b> {new Date(rentCastDetail.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
+                                    <hr />
+                                </div>
+                            )) : []}
+                        </div>
+                        <hr className="content-separator" /> {/* Add a class for styling */}
+                        <br />
 
-                    {formData && <StandardForm
-                        formDetails={getFormDetails()}
-                        handleSubmit={handleSubmit}
-                        setFormData={setFormData}
-                        buttonTitle='Submit'
-                        columnsPerRow={3}
-                        buttonDisableLogic={buttonDisableLogic}
-                    />
-                    }
+                        {formData && <StandardForm
+                            formDetails={getFormDetails()}
+                            handleSubmit={handleSubmit}
+                            setFormData={setFormData}
+                            buttonTitle='Submit'
+                            columnsPerRow={3}
+                            buttonDisableLogic={buttonDisableLogic}
+                        />}
+                    </div>
                 </>
             );
         }
@@ -110,7 +110,7 @@ const CollectProperties: React.FC = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className="container">
             <h2>Collect Properties Request Form</h2>
             {getPageContent()}
         </div>

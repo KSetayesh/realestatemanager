@@ -1,4 +1,8 @@
 .scrollable-container {
+    max-width: 900px;
+    /* Ensure the width matches the form's width */
+    margin: 0 auto 20px;
+    /* Center align and add bottom margin for spacing */
     height: 200px;
     /* Set the height of the container */
     border: 2px solid #ccc;
@@ -9,4 +13,22 @@
     /* Enable vertical scrolling */
     overflow-x: hidden;
     /* Hide horizontal scrolling */
+}
+
+.content-container {
+    max-width: 900px;
+    /* Ensure the width matches the form and scrollable container */
+    margin: 0 auto;
+    /* Center align */
+}
+
+.content-separator {
+    width: 100%;
+    /* Match the width of the content container */
+    margin: 20px 0;
+    /* Add vertical spacing */
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    /* Optional: Add a color for the separator */
 }

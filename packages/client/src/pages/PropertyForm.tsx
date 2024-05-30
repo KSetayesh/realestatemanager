@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/PropertyForm.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { CreateListingDetailsRequest } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
