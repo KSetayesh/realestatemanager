@@ -50,7 +50,11 @@ export class CalcService {
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
 
         for (const listingDetails of listingDetailsArr) {
-            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails, investmentScenarioRequest);
+            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(
+                this.cache, 
+                listingDetails, 
+                investmentScenarioRequest
+            );
             const listingWithScenariosDTO: ListingWithScenariosResponseDTO = investmentCalculationManager.getListingDetailsCalculations();
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }

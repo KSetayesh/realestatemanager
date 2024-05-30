@@ -168,6 +168,7 @@ const InvestmentBreakdown: React.FC = () => {
                         columns={getTablesConfig()[tableType].columns} //{columnsForInvestmentMetrics} 
                         tableData={createTableDataForInvestmentMetrics()}
                         includeTableSeparator={true}
+                        canExportIntoCSV={true}
                     />
                 </>
             ) : (

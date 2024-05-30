@@ -155,6 +155,8 @@ const PropertiesList: React.FC = () => {
                         columns={getTableColumns()}
                         tableData={getTableData()}
                         onRowClick={handleRowClick}
+                        includeTableSeparator={false}
+                        canExportIntoCSV={true}
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}

@@ -59,7 +59,9 @@ const HighYieldSavings: React.FC = () => {
             <ReusableTable
                 columns={getTableColumns()} // Adjust based on your needs
                 tableData={getTableData()}
+                onRowClick={undefined}
                 includeTableSeparator={true}
+                canExportIntoCSV={true}
             />
         </div>
     );

@@ -20,5 +20,8 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "@types/papaparse": "^5.3.14"
+  }
 }
