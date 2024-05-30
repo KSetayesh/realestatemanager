@@ -198,12 +198,18 @@ export class RentCastApiClient {
         const rentCastDetails: RentCastDetails[] = await this.rentCastManager.getRentCastApiDetails(this.pool);
         for (const rentCastDetail of rentCastDetails) {
             if (rentCastDetail.canMakeFreeApiCall) {
-                return { canCallRentCastApi: true, rentCastDetailsId: rentCastDetail.id };
+                return {
+                    canCallRentCastApi: true,
+                    rentCastDetailsId: rentCastDetail.id
+                };
             }
         }
 
         console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
-        return { canCallRentCastApi: false };
+        
+        return {
+            canCallRentCastApi: false
+        };
     }
 
     private async getHeadersForRentCastApiCall(apiCallDetails: ApiCallDetails): Promise<RentCastApiHeader> {

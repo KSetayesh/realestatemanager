@@ -13,6 +13,7 @@ export class RentCastManager extends DatabaseManager {
     private rentCastDetailsMap: { [key: number]: string } = {
         1: apiKeysConfig.rentCastApiKey,
         2: apiKeysConfig.backUpRentCastApiKey,
+        3: apiKeysConfig.backUpbackUpRentCastApiKey,
     };
 
     constructor(rentCastDAO: RentCastDAO, commit: boolean) {
