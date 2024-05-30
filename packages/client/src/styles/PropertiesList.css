@@ -10,7 +10,6 @@
     text-align: left;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
-    font-size: 2;
     /* Add left border to each cell */
 }
 
@@ -42,4 +41,19 @@
 .properties-table a {
     color: #04AA6D;
     text-decoration: none;
+}
+
+.button-icon {
+    border: none;
+    background: none;
+    padding: 0;
+    margin-right: 5px;
+}
+
+.button-icon:last-child {
+    margin-right: 0;
+}
+
+.icon-small {
+    font-size: 16px;
 }

@@ -15,7 +15,7 @@ export const propertiesListColumns: TableColumn[] = [
         isURL: false,
         showColumn: true,
         isDollarAmount: false,
-        isSortable: true
+        isSortable: true,
     },
     {
         header: "State",
@@ -48,6 +48,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Rent Estimate",
@@ -56,6 +57,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Initial Costs",
@@ -250,6 +252,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Middle School Rating",
@@ -258,6 +261,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "High School Rating",
@@ -266,6 +270,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Number Of Bedrooms",
@@ -274,6 +279,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Number Of Full Bathrooms",
@@ -282,6 +288,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Number Of Half Bathrooms",
@@ -290,6 +297,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Square Feet",
@@ -298,6 +306,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Acres",
@@ -306,6 +315,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Year Built",
@@ -314,6 +324,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Has Garage",
@@ -322,6 +333,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Has Pool",
@@ -330,6 +342,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Has Basement",
@@ -338,6 +351,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Listing Price",
@@ -345,7 +359,8 @@ export const propertiesListColumns: TableColumn[] = [
         isURL: false,
         showColumn: false,
         isDollarAmount: false,
-        isSortable: true
+        isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zestimate",
@@ -354,6 +369,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Rent Estimate",
@@ -362,6 +378,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Range Low",
@@ -370,6 +387,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Range High",
@@ -378,6 +396,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Monthly Property Tax Amount",
@@ -386,6 +405,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Monthly Home Insurance Amount",
@@ -394,6 +414,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Zillow Monthly HOA Fees Amount",
@@ -402,6 +423,7 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: true,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Creation Type",
@@ -418,5 +440,6 @@ export const propertiesListColumns: TableColumn[] = [
         showColumn: false,
         isDollarAmount: false,
         isSortable: false,
+        isEditable: true,
     },
 ];
