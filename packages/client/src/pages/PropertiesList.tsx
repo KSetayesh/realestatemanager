@@ -7,6 +7,7 @@ import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
     CreateFilteredPropertyListRequest,
     CreateGetAllPropertiesRequest,
+    CreateUpdatePropertyRequest,
     ListingWithScenariosResponseDTO
 } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
@@ -100,15 +101,8 @@ const PropertiesList: React.FC = () => {
     };
 
     const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
-        const property: ListingWithScenariosResponseDTO = tableDataItem.objectData.key;
-        console.log('tableDataItem:', tableDataItem);
-
-        // Uncomment code below when ready
-        // const createUpdatePropertyRequest: CreateUpdatePropertyRequest = propertiesListTable.createUpdatePropertyRequest(tableDataItem);
-        // return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
-
-        return property;
-
+        const createUpdatePropertyRequest: CreateUpdatePropertyRequest = propertiesListTable.createUpdatePropertyRequest(tableDataItem);
+        return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
     };
 
     const getAdditionalColumns = (): TableColumn[] => {

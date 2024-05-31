@@ -6,6 +6,7 @@ import {
     CreateGetAllPropertiesRequest,
     CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
+    CreateUpdatePropertyRequest,
     ListingCreationType,
     ListingWithScenariosResponseDTO,
 } from '@realestatemanager/shared';
@@ -16,6 +17,7 @@ import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { InvestmentCalculationManager } from '../models/investment_models/investment.calculation.manager';
+import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
 
 @Injectable()
 export class CalcService {
@@ -51,8 +53,8 @@ export class CalcService {
 
         for (const listingDetails of listingDetailsArr) {
             const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(
-                this.cache, 
-                listingDetails, 
+                this.cache,
+                listingDetails,
                 investmentScenarioRequest
             );
             const listingWithScenariosDTO: ListingWithScenariosResponseDTO = investmentCalculationManager.getListingDetailsCalculations();
@@ -60,6 +62,32 @@ export class CalcService {
         }
 
         return listingWithScenariosArr;
+    }
+
+    async updateProperty(createUpdatePropertyRequest: CreateUpdatePropertyRequest): Promise<ListingWithScenariosResponseDTO> {
+        const zillowURL = createUpdatePropertyRequest.propertyIdentifier.zillowURL;
+
+        // Fetch the listing details before update
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+
+        // TODO implement all the methods in ListingDetailsUpdateBuilder
+        // Update the listing details 
+        const updatedListingDetails: ListingDetails = new ListingDetailsUpdateBuilder(
+            listingDetails,
+            createUpdatePropertyRequest,
+        ).build();
+
+        await this.listingManager.updateListingDetails(this.pool, updatedListingDetails);
+
+        // Fetch the updated data
+        const updatedListingDetailsFromDb: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+
+        const createInvestmentScenarioRequest: CreateInvestmentScenarioRequest = {
+            propertyIdentifier: createUpdatePropertyRequest.propertyIdentifier,
+            useDefaultRequest: true,
+        };
+
+        return this.calculate(createInvestmentScenarioRequest, updatedListingDetailsFromDb);
     }
 
     async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
@@ -111,9 +139,16 @@ export class CalcService {
         );
     }
 
-    async calculate(investmentScenarioRequest: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
-        const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
-        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+    async calculate(
+        investmentScenarioRequest: CreateInvestmentScenarioRequest,
+        listingDetails?: ListingDetails
+    ): Promise<ListingWithScenariosResponseDTO> {
+
+        if (!listingDetails) {
+            const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
+            listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+        }
+
         const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
         const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
         const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();

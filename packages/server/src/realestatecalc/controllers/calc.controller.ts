@@ -35,12 +35,12 @@ export class CalcController {
 
     }
 
-    @Post()
+    @Post('updateProperty')
     async updateProperty(
         @Body() createUpdatePropertyRequest: CreateUpdatePropertyRequest,
     ): Promise<ListingWithScenariosResponseDTO> {
         console.log('createUpdatePropertyRequest:', createUpdatePropertyRequest);
-        return;
+        return this.calcService.updateProperty(createUpdatePropertyRequest);
     }
 
     @Get('property')
