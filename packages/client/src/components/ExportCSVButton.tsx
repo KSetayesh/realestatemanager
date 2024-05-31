@@ -5,12 +5,13 @@ import Papa from 'papaparse';
 export interface ExportDataProps<T> {
     columns: TableColumn[];
     tableData: TableDataItem<T>[];
+    disabled: boolean;
 };
-
 
 const ExportCSVButton = <T,>({
     columns,
     tableData,
+    disabled = false
 }: ExportDataProps<T>) => {
 
     const preprocessDataForCSV = (data: TableDataItem<T>[], columns: TableColumn[]) => {
@@ -45,7 +46,8 @@ const ExportCSVButton = <T,>({
 
     return (
         <button
-            onClick={() => exportToCSV(tableData, columns, 'table-data.csv')}
+            disabled={disabled}
+            onClick={() => !disabled && exportToCSV(tableData, columns, 'table-data.csv')}
             style={{ marginBottom: '20px' }}  // Add margin bottom
         >
             Export CSV

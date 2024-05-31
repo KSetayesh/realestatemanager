@@ -174,7 +174,7 @@ const ReusableTable = <T,>({
     return (
         <div>
             {canExportIntoCSV && (
-                <ExportCSVButton columns={columns} tableData={editableData} />  // Use the new component
+                <ExportCSVButton columns={columns} tableData={editableData} disabled={isEditing} />  // Use the new component
             )}
             <table className="properties-table">
                 <thead>
