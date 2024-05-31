@@ -9,6 +9,7 @@ import '../styles/Tooltip.css';
 import { InputType, ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import Tooltip from '../components/Tooltip';
 import ExportCSVButton from './ExportCSVButton';  // Import the new component
+import { AbstractTable } from '../tables/AbstractTable';
 
 enum SortDirection {
     ASCENDING = 'ascending',
@@ -38,9 +39,20 @@ export interface TableColumn {
     isEditable?: boolean;
 };
 
-export interface ReusableTableProps<T> {
+/* ----For PropertiesListTable---- 
+    T = ListingWithScenariosResponseDTO
+    X = PropertiesListTableType
+    Y = ListingWithScenariosResponseDTO
+
+   ----For InvestmentBreakdownTable---- 
+    T = ListingWithScenariosResponseDTO
+    X = InvestmentBreakdownTableType
+    Y = MonthlyInvestmentDetailsResponseDTO
+*/
+export interface ReusableTableProps<Y, X, T> {
     columns: TableColumn[];
     tableData: TableDataItem<T>[];
+    tableHandler: AbstractTable<Y, X, T>;
     onRowClick?: (item: T) => void;
     includeTableSeparator?: boolean;
     canExportIntoCSV?: boolean;
@@ -48,15 +60,16 @@ export interface ReusableTableProps<T> {
     handleUpdate?: (tableDataItem: TableDataItem<T>) => Promise<T>;
 };
 
-const ReusableTable = <T,>({
+const ReusableTable = <Y, X, T>({
     columns,
     tableData,
+    tableHandler,
     onRowClick,
     includeTableSeparator = false,
     canExportIntoCSV = false,
     isEditable = false,
     handleUpdate,
-}: ReusableTableProps<T>) => {
+}: ReusableTableProps<Y, X, T>) => {
 
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
@@ -119,7 +132,7 @@ const ReusableTable = <T,>({
                 try {
                     // Send the editedRow to the backend
                     console.log('Sending edited row to backend:', editedRow);
-                    await handleUpdate(editedRow);
+                    const updatedRow: T = await handleUpdate(editedRow);
                 } catch (error) {
                     console.error('Error updating row:', error);
                 }

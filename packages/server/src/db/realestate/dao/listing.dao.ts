@@ -68,7 +68,7 @@ export class ListingDAO extends RealEstateDAO {
                 creation_type = $7,
                 rent_cast_sale_response_id = $8,
                 rent_cast_property_response_id = $9,
-                updated_at = $10,
+                updated_at = $10
             WHERE id = $11;`;
 
     //----------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ export class ListingDAO extends RealEstateDAO {
                 creation_type = $7,
                 rent_cast_sale_response_id = $8,
                 rent_cast_property_response_id = $9,
-                updated_at = $10,
+                updated_at = $10
             WHERE id = $11;`;
 
     //----------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ export class ListingDAO extends RealEstateDAO {
             SET elementary_school_rating = $1,
                 middle_school_rating = $2,
                 high_school_rating = $3,
-                updated_at = $4,
+                updated_at = $4
             WHERE id = $5;`;
 
     //----------------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ export class ListingDAO extends RealEstateDAO {
             longitude,
             latitude)`;
 
-    private UPDATE_ADDRESS_QUERY = `UPDATE address
+    private UPDATE_ADDRESS_QUERY = `UPDATE address 
             SET full_address = $1,
                 state = $2,
                 zipcode = $3,
@@ -136,7 +136,7 @@ export class ListingDAO extends RealEstateDAO {
                 apartment_number = $8,
                 longitude = $9,
                 latitude = $10,
-                updated_at = $11,
+                updated_at = $11 
             WHERE id = $12;`;
 
     //----------------------------------------------------------------------------------------------------
@@ -157,21 +157,19 @@ export class ListingDAO extends RealEstateDAO {
                 _description)`;
 
     private UPDATE_PROPERTY_DETAILS_QUERY = `UPDATE property_details
-            SET address_id = $1,
-                school_rating_id = $2,
-                number_of_bedrooms = $3,
-                number_of_full_bathrooms = $4,
-                number_of_half_bathrooms = $5,
-                square_feet = $6,
-                acres = $7,
-                year_built = $8,
-                has_garage = $9,
-                has_pool = $10,
-                has_basement = $11,
-                property_type = $12,
-                _description = $13,
-                updated_at = $14,
-            WHERE id = $15;`;
+            SET number_of_bedrooms = $1,
+                number_of_full_bathrooms = $2,
+                number_of_half_bathrooms = $3,
+                square_feet = $4,
+                acres = $5,
+                year_built = $6,
+                has_garage = $7,
+                has_pool = $8,
+                has_basement = $9,
+                property_type = $10,
+                _description = $11,
+                updated_at = $12
+            WHERE id = $13;`;
 
     //----------------------------------------------------------------------------------------------------
 
@@ -192,7 +190,7 @@ export class ListingDAO extends RealEstateDAO {
                 zillow_monthly_property_tax_amount = $5,
                 zillow_monthly_home_insurance_amount = $6,
                 zillow_monthly_hoa_fees_amount = $7,
-                updated_at = $8,
+                updated_at = $8
             WHERE id = $9;`;
 
     //----------------------------------------------------------------------------------------------------
@@ -300,11 +298,6 @@ export class ListingDAO extends RealEstateDAO {
         }
 
         query += ';';
-
-        // for (let q of params) {
-        //     console.log(typeof q === 'number');
-        //     console.log(q);
-        // }
 
         const queryWithParams = query.replace(/\$(\d+)/g, (_, idx) => JSON.stringify(params[idx - 1]));
         console.log(queryWithParams);
@@ -450,6 +443,7 @@ export class ListingDAO extends RealEstateDAO {
         const query = this.UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY;
 
         const values = [
+            listingDetails.zillowURL,
             listingDetails.propertyDetailsId,
             listingDetails.zillowMarketEstimatesId,
             listingDetails.listingPrice,
@@ -464,9 +458,9 @@ export class ListingDAO extends RealEstateDAO {
 
         try {
             await pool.query(query, values);
-            console.log('Zillow market estimates updated successfully');
+            console.log('Listing Details updated successfully');
         } catch (err) {
-            console.error('Error updating Zillow market estimates', err);
+            console.error('Error updating Listing Details', err);
             throw err;
         }
     }
@@ -600,9 +594,9 @@ export class ListingDAO extends RealEstateDAO {
 
         try {
             await pool.query(query, values);
-            console.log('Zillow market estimates updated successfully');
+            console.log('School Rating updated successfully');
         } catch (err) {
-            console.error('Error updating Zillow market estimates', err);
+            console.error('Error updating School Rating', err);
             throw err;
         }
     }
@@ -632,9 +626,9 @@ export class ListingDAO extends RealEstateDAO {
 
         try {
             await pool.query(query, values);
-            console.log('Zillow market estimates updated successfully');
+            console.log('Address updated successfully');
         } catch (err) {
-            console.error('Error updating Zillow market estimates', err);
+            console.error('Error updating Address', err);
             throw err;
         }
     }
@@ -657,7 +651,7 @@ export class ListingDAO extends RealEstateDAO {
             listingDetails.streetAddress,
             listingDetails.apartmentNumber,
             listingDetails.longitude,
-            listingDetails.latitude
+            listingDetails.latitude,
         ];
     }
 
@@ -671,9 +665,9 @@ export class ListingDAO extends RealEstateDAO {
 
         try {
             await pool.query(query, values);
-            console.log('Zillow market estimates updated successfully');
+            console.log('Property Details updated successfully');
         } catch (err) {
-            console.error('Error updating Zillow market estimates', err);
+            console.error('Error updating Property Details', err);
             throw err;
         }
     }

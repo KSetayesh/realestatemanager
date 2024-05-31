@@ -162,6 +162,7 @@ const PropertiesList: React.FC = () => {
                     <ReusableTable
                         columns={getTableColumns()}
                         tableData={getTableData()}
+                        tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                         includeTableSeparator={false}
                         canExportIntoCSV={true}

@@ -114,6 +114,7 @@ const InvestmentBreakdown: React.FC = () => {
                     <ReusableTable
                         columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
                         tableData={[getTableData()]}
+                        tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <PropertyDetailsModal
@@ -167,6 +168,7 @@ const InvestmentBreakdown: React.FC = () => {
                     <ReusableTable
                         columns={getTablesConfig()[tableType].columns} //{columnsForInvestmentMetrics} 
                         tableData={createTableDataForInvestmentMetrics()}
+                        tableHandler={investmentBreakdownTable}
                         includeTableSeparator={true}
                         canExportIntoCSV={true}
                     />
