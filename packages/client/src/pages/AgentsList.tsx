@@ -49,6 +49,7 @@ const AgentsList: React.FC = () => {
                         columns={getTableColumns()} // Filter columns based on showColumn
                         tableData={getTableData()}
                         tableHandler={agentTable}
+                        tableType={DefaultTableType.DEFAULT}
                         onRowClick={undefined}
                         includeTableSeparator={false}
                         canExportIntoCSV={true}

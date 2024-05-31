@@ -59,6 +59,7 @@ const HighYieldSavings: React.FC = () => {
                 columns={getTableColumns()} // Adjust based on your needs
                 tableData={getTableData()}
                 tableHandler={highYieldSavingsTable}
+                tableType={DefaultTableType.DEFAULT}
                 onRowClick={undefined}
                 includeTableSeparator={true}
                 canExportIntoCSV={true}

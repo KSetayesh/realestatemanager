@@ -59,6 +59,19 @@ import {
 
 export class PropertiesListTable implements AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType, ListingWithScenariosResponseDTO> {
 
+    getRowData(
+        property: ListingWithScenariosResponseDTO,
+        tableType: PropertiesListTableType,
+    ): TableDataItem<ListingWithScenariosResponseDTO> {
+        const tablesConfig = this.getTablesConfig();
+        return {
+            objectData: {
+                key: property,
+            },
+            rowData: tablesConfig[tableType].data(property),
+        };
+    }
+
     getTableData(
         properties: ListingWithScenariosResponseDTO[],
         tableType: PropertiesListTableType
@@ -83,11 +96,11 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
         return {
             [PropertiesListTableType.STANDARD_BREAKDOWN]: {
                 columns: this.getDefaultColumns(additionalTableColumns),
-                data: (ammortizationDetail: ListingWithScenariosResponseDTO) => this.getDefaultRowData(ammortizationDetail),
+                data: (listingDetail: ListingWithScenariosResponseDTO) => this.getDefaultRowData(listingDetail),
             },
             [PropertiesListTableType.ALL]: {
                 columns: getAllColumns(),
-                data: (ammortizationDetail: ListingWithScenariosResponseDTO) => this.getDefaultRowData(ammortizationDetail),
+                data: (listingDetail: ListingWithScenariosResponseDTO) => this.getDefaultRowData(listingDetail),
             },
         };
     }

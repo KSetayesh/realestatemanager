@@ -18,9 +18,9 @@ enum SortDirection {
 
 export interface TableRow { [key: string]: any };
 
-export interface TableDataItem<T> {
+export interface TableDataItem<Y> {
     objectData: {
-        key: T;
+        key: Y;
     };
     rowData: TableRow;
 };
@@ -40,30 +40,32 @@ export interface TableColumn {
 };
 
 /* ----For PropertiesListTable---- 
-    T = ListingWithScenariosResponseDTO
-    X = PropertiesListTableType
     Y = ListingWithScenariosResponseDTO
+    X = PropertiesListTableType
+    T = ListingWithScenariosResponseDTO
 
    ----For InvestmentBreakdownTable---- 
-    T = ListingWithScenariosResponseDTO
-    X = InvestmentBreakdownTableType
     Y = MonthlyInvestmentDetailsResponseDTO
+    X = InvestmentBreakdownTableType
+    T = ListingWithScenariosResponseDTO
 */
 export interface ReusableTableProps<Y, X, T> {
     columns: TableColumn[];
-    tableData: TableDataItem<T>[];
+    tableData: TableDataItem<Y>[];
     tableHandler: AbstractTable<Y, X, T>;
-    onRowClick?: (item: T) => void;
+    tableType: X;
+    onRowClick?: (item: Y) => void;
     includeTableSeparator?: boolean;
     canExportIntoCSV?: boolean;
     isEditable?: boolean;
-    handleUpdate?: (tableDataItem: TableDataItem<T>) => Promise<T>;
+    handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
 
 const ReusableTable = <Y, X, T>({
     columns,
     tableData,
     tableHandler,
+    tableType,
     onRowClick,
     includeTableSeparator = false,
     canExportIntoCSV = false,
@@ -74,14 +76,14 @@ const ReusableTable = <Y, X, T>({
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editableData, setEditableData] = useState<TableDataItem<T>[]>(tableData);
-    const [currentEdit, setCurrentEdit] = useState<TableDataItem<T> | null>(null);
+    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(tableData);
+    const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
 
-    const deepCopy = (obj: TableDataItem<T>): TableDataItem<T> => {
+    const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
     };
 
-    const sortData = (data: TableDataItem<T>[]) => {
+    const sortData = (data: TableDataItem<Y>[]) => {
         if (sortConfig !== null) {
             return [...data].sort((a, b) => {
                 if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
@@ -132,7 +134,20 @@ const ReusableTable = <Y, X, T>({
                 try {
                     // Send the editedRow to the backend
                     console.log('Sending edited row to backend:', editedRow);
-                    const updatedRow: T = await handleUpdate(editedRow);
+                    const updatedRow: Y = await handleUpdate(editedRow);
+
+                    // Update the editableData state with the new data
+                    const updatedEditableData = [...editableData];
+                   
+                    const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
+                  
+                    updatedEditableData[editMode] = rowDataItem;
+                  
+                    // updatedEditableData[editMode] = {
+                    //     objectData: { key: updatedRow },
+                    //     rowData: tableHandler.getTablesConfig(), //updatedRow as unknown as TableRow // assuming updatedRow has the same structure as rowData
+                    // };
+                    setEditableData(updatedEditableData);
                 } catch (error) {
                     console.error('Error updating row:', error);
                 }

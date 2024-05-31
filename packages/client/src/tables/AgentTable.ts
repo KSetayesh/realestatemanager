@@ -7,6 +7,19 @@ import { DefaultTableType } from "../constants/Constant";
 
 export class AgentTable implements AbstractTable<AgentResponseDTO, DefaultTableType, AgentResponseDTO> {
 
+    getRowData(
+        agent: AgentResponseDTO, 
+        tableType: DefaultTableType
+    ): TableDataItem<AgentResponseDTO> {
+        const tablesConfig = this.getTablesConfig();
+        return {
+            objectData: {
+                key: agent,
+            },
+            rowData: tablesConfig[tableType].data(agent),
+        };
+    }
+
     getTableData(listOfData: AgentResponseDTO[], tableType: DefaultTableType): TableDataItem<AgentResponseDTO>[] {
         const tablesConfig = this.getTablesConfig();
         return listOfData.map(data => ({

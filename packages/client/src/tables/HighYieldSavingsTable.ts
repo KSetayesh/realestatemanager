@@ -7,6 +7,19 @@ import { DefaultTableType } from "../constants/Constant";
 
 export class HighYieldSavingsTable implements AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType, HighYeildSavingsResponseDTO> {
 
+    getRowData(
+        highYieldSavings: HighYeildSavingsResponseDTO,
+        tableType: DefaultTableType
+    ): TableDataItem<HighYeildSavingsResponseDTO> {
+        const tablesConfig = this.getTablesConfig();
+        return {
+            objectData: {
+                key: highYieldSavings,
+            },
+            rowData: tablesConfig[tableType].data(highYieldSavings),
+        };
+    }
+
     getTableData(listOfData: HighYeildSavingsResponseDTO[], tableType: DefaultTableType): TableDataItem<HighYeildSavingsResponseDTO>[] {
         const tablesConfig = this.getTablesConfig();
         return listOfData.map(data => ({

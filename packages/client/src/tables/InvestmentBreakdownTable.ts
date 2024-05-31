@@ -4,7 +4,20 @@ import { TableDataItem, TableRow } from "../components/ReusableTable";
 import { AbstractTable } from "./AbstractTable";
 import { expensesBreakdownColumns, investmentBreakdownColumns, mortgageBreakdownColumns, standardBreakdownColumns } from "./columns/InvestmentBreakdownColumn";
 
-export class InvestmentBreakdownTable implements AbstractTable<ListingWithScenariosResponseDTO, InvestmentBreakdownTableType, MonthlyInvestmentDetailsResponseDTO> {
+export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType, ListingWithScenariosResponseDTO> {
+
+    getRowData(
+        monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO,
+        tableType: InvestmentBreakdownTableType
+    ): TableDataItem<MonthlyInvestmentDetailsResponseDTO> {
+        const tablesConfig = this.getTablesConfig();
+        return {
+            objectData: {
+                key: monthlyInvestmentDetails,
+            },
+            rowData: tablesConfig[tableType].data(monthlyInvestmentDetails),
+        };
+    }
 
     getTablesConfig(): TablesConfig<MonthlyInvestmentDetailsResponseDTO> {
         return {

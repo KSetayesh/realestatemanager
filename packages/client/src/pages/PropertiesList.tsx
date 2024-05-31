@@ -163,11 +163,13 @@ const PropertiesList: React.FC = () => {
                         columns={getTableColumns()}
                         tableData={getTableData()}
                         tableHandler={propertiesListTable}
+                        tableType={tableType}
                         onRowClick={handleRowClick}
                         includeTableSeparator={false}
                         canExportIntoCSV={true}
                         isEditable={true}
                         handleUpdate={handleUpdate}
+
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}

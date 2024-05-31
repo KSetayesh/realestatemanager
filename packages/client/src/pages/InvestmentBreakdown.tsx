@@ -101,9 +101,8 @@ const InvestmentBreakdown: React.FC = () => {
     return (
         <div>
             <h2> Investment Breakdown </h2>
-            {formData && <StandardForm //<CalculateForm
+            {formData && <StandardForm
                 formDetails={getFormDetails()}
-                // handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 setFormData={setFormData}
                 buttonTitle='Calculate'
@@ -114,6 +113,7 @@ const InvestmentBreakdown: React.FC = () => {
                     <ReusableTable
                         columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
                         tableData={[getTableData()]}
+                        tableType={PropertiesListTableType.STANDARD_BREAKDOWN}
                         tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                     />
@@ -169,6 +169,7 @@ const InvestmentBreakdown: React.FC = () => {
                         columns={getTablesConfig()[tableType].columns} //{columnsForInvestmentMetrics} 
                         tableData={createTableDataForInvestmentMetrics()}
                         tableHandler={investmentBreakdownTable}
+                        tableType={tableType}
                         includeTableSeparator={true}
                         canExportIntoCSV={true}
                     />
