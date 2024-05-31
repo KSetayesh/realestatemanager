@@ -3,7 +3,8 @@ import {
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
-    CreateGetAllPropertiesRequest
+    CreateGetAllPropertiesRequest,
+    CreateUpdatePropertyRequest
 } from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
@@ -24,22 +25,18 @@ export class RealEstateCalcApi extends CalcApi {
         }
     }
 
-
-    // async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
-    //     console.log('getAllPropertiesRequest:', getAllPropertiesRequest);
-    //     try {
-    //         const response = await axios.get(this.getURL(), {
-    //             headers: this.getHeaders(),
-    //             params: getAllPropertiesRequest, // Use params to include the request data as query parameters
-    //         });
-    //         return response.data;
-    //     } catch (error) {
-    //         const message = `Error fetching properties:, ${error}`;
-    //         console.error(message);
-    //         throw new Error(message);
-    //     }
-
-    // }
+    async updateProperty(createUpdatePropertyRequest: CreateUpdatePropertyRequest): Promise<ListingWithScenariosResponseDTO> {
+        try {
+            const response = await axios.post(`${this.getURL()}/updateProperty`, createUpdatePropertyRequest, {
+                headers: this.getHeaders(), // Use post method and include data in the body
+            });
+            return response.data;
+        } catch (error) {
+            const message = `Error fetching properties:, ${error}`;
+            console.error(message);
+            throw new Error(message);
+        }
+    }
 
     async realEstateCalculator(dataToSubmit: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
 

@@ -1,4 +1,4 @@
-import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
+import { CreateUpdatePropertyRequest, ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import { TablesConfig } from "../pages/InvestmentBreakdown";
 import { PropertiesListTableType } from "../pages/PropertiesList";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
@@ -153,6 +153,40 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
             description: getDescription(property),
             creationType: getCreationType(property),
             investmentBreakdown: 'View',
+        };
+    }
+
+    createUpdatePropertyRequest(tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): CreateUpdatePropertyRequest {
+        const property: ListingWithScenariosResponseDTO = tableDataItem.objectData.key;
+        console.log('tableDataItem:', tableDataItem);
+        return {
+            propertyIdentifier: {
+                fullAddress: getFullAddress(property),
+                zillowURL: getZillowURL(property),
+            },
+            price: 0,
+            rentEstimate: 0,
+            elementarySchoolRating: 0,
+            middleSchoolRating: 0,
+            highSchoolRating: 0,
+            numberOfBedrooms: 0,
+            numberOfFullBathrooms: 0,
+            numberOfHalfBathrooms: 0,
+            squareFeet: 0,
+            acres: 0,
+            yearBuilt: 0,
+            hasGarage: true,
+            hasPool: true,
+            hasBasement: true,
+            listingPrice: 0,
+            zestimate: 0,
+            zillowRentEstimate: 0,
+            zestimateRangeLow: 0,
+            zestimateRangeHigh: 0,
+            zillowMonthlyPropertyTaxAmount: 0,
+            zillowMonthlyHomeInsuranceAmount: 0,
+            zillowMonthlyHOAFeesAmount: 0,
+            description: '',
         };
     }
 

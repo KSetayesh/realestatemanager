@@ -5,7 +5,8 @@ import {
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
-    CreateGetAllPropertiesRequest
+    CreateGetAllPropertiesRequest,
+    CreateUpdatePropertyRequest
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
@@ -32,6 +33,14 @@ export class CalcController {
 
         return this.calcService.getAllProperties(getAllPropertiesRequest);
 
+    }
+
+    @Post()
+    async updateProperty(
+        @Body() createUpdatePropertyRequest: CreateUpdatePropertyRequest,
+    ): Promise<ListingWithScenariosResponseDTO> {
+        console.log('createUpdatePropertyRequest:', createUpdatePropertyRequest);
+        return;
     }
 
     @Get('property')

@@ -45,6 +45,7 @@ export interface ReusableTableProps<T> {
     includeTableSeparator?: boolean;
     canExportIntoCSV?: boolean;
     isEditable?: boolean;
+    handleUpdate?: (tableDataItem: TableDataItem<T>) => Promise<T>;
 };
 
 const ReusableTable = <T,>({
@@ -53,7 +54,8 @@ const ReusableTable = <T,>({
     onRowClick,
     includeTableSeparator = false,
     canExportIntoCSV = false,
-    isEditable = false
+    isEditable = false,
+    handleUpdate,
 }: ReusableTableProps<T>) => {
 
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
@@ -109,11 +111,31 @@ const ReusableTable = <T,>({
         setCurrentEdit(null);
     };
 
-    const handleSaveClick = () => {
+    const handleSaveClick = async () => {
+        if (editMode !== null) {
+            const editedRow = editableData[editMode];
+            // Send the editedRow to the backend
+            if (handleUpdate) {
+                try {
+                    // Send the editedRow to the backend
+                    console.log('Sending edited row to backend:', editedRow);
+                    await handleUpdate(editedRow);
+                } catch (error) {
+                    console.error('Error updating row:', error);
+                }
+            }
+        }
+
         setEditMode(null);
         setIsEditing(false);
         setCurrentEdit(null);
     };
+
+    // const handleSaveClick = () => {
+    //     setEditMode(null);
+    //     setIsEditing(false);
+    //     setCurrentEdit(null);
+    // };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => { //accessor: string) => {
         const accessor = column.accessor;

@@ -99,6 +99,18 @@ const PropertiesList: React.FC = () => {
 
     };
 
+    const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
+        const property: ListingWithScenariosResponseDTO = tableDataItem.objectData.key;
+        console.log('tableDataItem:', tableDataItem);
+
+        // Uncomment code below when ready
+        // const createUpdatePropertyRequest: CreateUpdatePropertyRequest = propertiesListTable.createUpdatePropertyRequest(tableDataItem);
+        // return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
+
+        return property;
+
+    };
+
     const getAdditionalColumns = (): TableColumn[] => {
         return [
             {
@@ -160,6 +172,7 @@ const PropertiesList: React.FC = () => {
                         includeTableSeparator={false}
                         canExportIntoCSV={true}
                         isEditable={true}
+                        handleUpdate={handleUpdate}
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}

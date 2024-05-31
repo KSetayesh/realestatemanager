@@ -122,6 +122,33 @@ export interface CreateOperatingExpensesRequest {
     otherInitialExpenses?: ValueInput;
 };
 
+export interface CreateUpdatePropertyRequest {
+    propertyIdentifier: PropertyIdentifier;
+    price: number;
+    rentEstimate: number;
+    elementarySchoolRating: number;
+    middleSchoolRating: number;
+    highSchoolRating: number;
+    numberOfBedrooms: number;
+    numberOfFullBathrooms: number;
+    numberOfHalfBathrooms: number;
+    squareFeet: number;
+    acres: number;
+    yearBuilt: number;
+    hasGarage: boolean;
+    hasPool: boolean;
+    hasBasement: boolean;
+    listingPrice: number;
+    zestimate: number;
+    zillowRentEstimate: number;
+    zestimateRangeLow: number;
+    zestimateRangeHigh: number;
+    zillowMonthlyPropertyTaxAmount: number;
+    zillowMonthlyHomeInsuranceAmount: number;
+    zillowMonthlyHOAFeesAmount: number;
+    description: string;
+};
+
 //------------------------------ Investment Related Response ------------------------------
 
 export interface TaxImplicationsResponseDTO {
