@@ -1,4 +1,8 @@
-import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
+import {
+    TableColumn,
+    TableDataItem,
+    TableRow
+} from "../components/ReusableTable";
 
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
@@ -11,19 +15,19 @@ import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTabl
     T = ListingWithScenariosResponseDTO
 */
 
-export interface TableConfig<T> {
+export interface TableConfig<Y> { //<T> {
     columns: TableColumn[];
-    data: (data: T) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
+    data: (data: Y) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
 };
 
-export interface TablesConfig<T> {
-    [type: string]: TableConfig<T>;
+export interface TablesConfig<Y> { //<T> {
+    [type: string]: TableConfig<Y>; //<T>;
 };
 
-export interface AbstractTable<Y, X, T> {
+export interface AbstractTable<Y, X> { //, T> {
 
     getTableData(
-        listOfData: T[],
+        listOfData: Y[], //T[],
         tableType: X,
     ): TableDataItem<Y>[];
 
@@ -31,4 +35,4 @@ export interface AbstractTable<Y, X, T> {
 
     getRowData(data: Y, tableType: X): TableDataItem<Y>;
 
-}
+};

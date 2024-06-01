@@ -1,7 +1,7 @@
 import { AgentResponseDTO } from "@realestatemanager/shared";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
-import ReusableTable, { TableColumn, TableDataItem } from "../components/ReusableTable";
+import ReusableTable from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
 import { DefaultTableType } from "../constants/Constant";
 
@@ -27,13 +27,13 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const getTableData = (): TableDataItem<AgentResponseDTO>[] => {
-        return agentTable.getTableData(agents, DefaultTableType.DEFAULT);
-    };
+    // const getTableData = (): TableDataItem<AgentResponseDTO>[] => {
+    //     return agentTable.getTableData(agents, DefaultTableType.DEFAULT);
+    // };
 
-    const getTableColumns = (): TableColumn[] => {
-        return agentTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
-    }
+    // const getTableColumns = (): TableColumn[] => {
+    //     return agentTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
+    // }
 
     // Inside PropertiesList component
 
@@ -46,8 +46,9 @@ const AgentsList: React.FC = () => {
             ) : (
                 <>
                     <ReusableTable
-                        columns={getTableColumns()} // Filter columns based on showColumn
-                        tableData={getTableData()}
+                        // columns={getTableColumns()} // Filter columns based on showColumn
+                        // tableData={getTableData()}
+                        data={agents}
                         tableHandler={agentTable}
                         tableType={DefaultTableType.DEFAULT}
                         onRowClick={undefined}

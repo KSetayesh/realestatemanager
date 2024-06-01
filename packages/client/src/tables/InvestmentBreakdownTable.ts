@@ -1,10 +1,15 @@
-import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/shared";
-import { InvestmentBreakdownTableType, TablesConfig } from "../pages/InvestmentBreakdown";
+import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/shared";
+import { InvestmentBreakdownTableType } from "../pages/InvestmentBreakdown";
 import { TableDataItem, TableRow } from "../components/ReusableTable";
-import { AbstractTable } from "./AbstractTable";
-import { expensesBreakdownColumns, investmentBreakdownColumns, mortgageBreakdownColumns, standardBreakdownColumns } from "./columns/InvestmentBreakdownColumn";
+import { AbstractTable, TablesConfig } from "./AbstractTable";
+import {
+    expensesBreakdownColumns,
+    investmentBreakdownColumns,
+    mortgageBreakdownColumns,
+    standardBreakdownColumns
+} from "./columns/InvestmentBreakdownColumn";
 
-export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType, ListingWithScenariosResponseDTO> {
+export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> { //, ListingWithScenariosResponseDTO> {
 
     getRowData(
         monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO,
@@ -120,11 +125,11 @@ export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestment
     }
 
     getTableData(
-        properties: ListingWithScenariosResponseDTO[],
+        ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[],
         tableType: InvestmentBreakdownTableType
     ): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] {
-        const property: ListingWithScenariosResponseDTO = properties[0];
-        const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
+        // const property: ListingWithScenariosResponseDTO = properties[0];
+        // const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,
@@ -134,5 +139,22 @@ export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestment
         }));
 
     };
+
+
+    // getTableData(
+    //     properties: ListingWithScenariosResponseDTO[],
+    //     tableType: InvestmentBreakdownTableType
+    // ): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] {
+    //     const property: ListingWithScenariosResponseDTO = properties[0];
+    //     const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
+    //     return ammortizationDetails.map(ammortizationDetail => ({
+    //         objectData: {
+    //             key: ammortizationDetail,
+    //         },
+    //         // Change createRowDataForInvestmentMetrics to the proper function for radio type
+    //         rowData: this.getTablesConfig()[tableType].data(ammortizationDetail), //createRowDataForInvestmentMetrics(ammortizationDetail),
+    //     }));
+
+    // };
 
 }

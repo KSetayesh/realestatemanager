@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
 import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
-import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
+import ReusableTable from '../components/ReusableTable';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     HighYieldSavingsFormData,
@@ -34,13 +34,13 @@ const HighYieldSavings: React.FC = () => {
         return highYieldSavingsFormDetails.getFormDetails(formData);
     };
 
-    const getTableData = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
-        return highYieldSavingsTable.getTableData(metrics, DefaultTableType.DEFAULT);
-    };
+    // const getTableData = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
+    //     return highYieldSavingsTable.getTableData(metrics, DefaultTableType.DEFAULT);
+    // };
 
-    const getTableColumns = (): TableColumn[] => {
-        return highYieldSavingsTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
-    };
+    // const getTableColumns = (): TableColumn[] => {
+    //     return highYieldSavingsTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
+    // };
 
     return (
         <div>
@@ -56,8 +56,9 @@ const HighYieldSavings: React.FC = () => {
             <hr />
             <br />
             <ReusableTable
-                columns={getTableColumns()} // Adjust based on your needs
-                tableData={getTableData()}
+                // columns={getTableColumns()} // Adjust based on your needs
+                // tableData={getTableData()}
+                data={metrics}
                 tableHandler={highYieldSavingsTable}
                 tableType={DefaultTableType.DEFAULT}
                 onRowClick={undefined}

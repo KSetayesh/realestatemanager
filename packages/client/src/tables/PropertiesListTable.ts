@@ -56,7 +56,7 @@ import {
     hasPool
 } from "../utilities/PropertyResponseHelper";
 
-export class PropertiesListTable implements AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType, ListingWithScenariosResponseDTO> {
+export class PropertiesListTable implements AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType> { //, ListingWithScenariosResponseDTO> {
 
     getRowData(
         property: ListingWithScenariosResponseDTO,

@@ -9,7 +9,7 @@ import '../styles/Tooltip.css';
 import { InputType, ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import Tooltip from '../components/Tooltip';
 import ExportCSVButton from './ExportCSVButton';  // Import the new component
-import { AbstractTable } from '../tables/AbstractTable';
+import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
 
 enum SortDirection {
     ASCENDING = 'ascending',
@@ -49,10 +49,12 @@ export interface TableColumn {
     X = InvestmentBreakdownTableType
     T = ListingWithScenariosResponseDTO
 */
-export interface ReusableTableProps<Y, X, T> {
-    columns: TableColumn[];
-    tableData: TableDataItem<Y>[];
-    tableHandler: AbstractTable<Y, X, T>;
+// export interface ReusableTableProps<Y, X, T> {
+export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> { //, T> {
+    // columns: TableColumn[];
+    // tableData: TableDataItem<Y>[];
+    data: Y[];
+    tableHandler: AbstractTable<Y, X>; //, T>;
     tableType: X;
     onRowClick?: (item: Y) => void;
     includeTableSeparator?: boolean;
@@ -61,9 +63,12 @@ export interface ReusableTableProps<Y, X, T> {
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
 
-const ReusableTable = <Y, X, T>({
-    columns,
-    tableData,
+// const ReusableTable = <Y, X, T>({
+// const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({ //, T>({
+const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
+    // columns,
+    // tableData,
+    data,
     tableHandler,
     tableType,
     onRowClick,
@@ -71,17 +76,26 @@ const ReusableTable = <Y, X, T>({
     canExportIntoCSV = false,
     isEditable = false,
     handleUpdate,
-}: ReusableTableProps<Y, X, T>) => {
+}: ReusableTableProps<Y, X>) => { //, T>) => {
+
+    const getTableColumns = (): TableColumn[] => {
+        const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig(); //[tableType].columns;
+        return tablesConfig[tableType].columns;
+    };
+
+    const getTableData = (): TableDataItem<Y>[] => {
+        return tableHandler.getTableData(data, tableType);
+    };
 
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(tableData);
+    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData())// tableData);
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
 
     const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
-    }; 
+    };
 
     const sortData = (data: TableDataItem<Y>[]) => {
         if (sortConfig !== null) {
@@ -138,11 +152,11 @@ const ReusableTable = <Y, X, T>({
 
                     // Update the editableData state with the new data
                     const updatedEditableData = [...editableData];
-                   
+
                     const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
-                  
+
                     updatedEditableData[editMode] = rowDataItem;
-                  
+
                     // updatedEditableData[editMode] = {
                     //     objectData: { key: updatedRow },
                     //     rowData: tableHandler.getTablesConfig(), //updatedRow as unknown as TableRow // assuming updatedRow has the same structure as rowData
@@ -158,7 +172,7 @@ const ReusableTable = <Y, X, T>({
         setIsEditing(false);
         setCurrentEdit(null);
     };
- 
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => { //accessor: string) => {
         const accessor = column.accessor;
         const newData = [...editableData];
@@ -210,6 +224,7 @@ const ReusableTable = <Y, X, T>({
     };
 
     const getVisibleColumnCount = (): number => {
+        const columns: TableColumn[] = getTableColumns();
         return columns.filter(column => column.showColumn).length;
     };
 
@@ -218,13 +233,13 @@ const ReusableTable = <Y, X, T>({
     return (
         <div>
             {canExportIntoCSV && (
-                <ExportCSVButton columns={columns} tableData={editableData} disabled={isEditing} />  // Use the new component
+                <ExportCSVButton columns={getTableColumns()} tableData={editableData} disabled={isEditing} />  // Use the new component
             )}
             <table className="properties-table">
                 <thead>
                     <tr>
                         {isEditable && <th>Actions</th>}
-                        {columns.filter(column => column.showColumn).map((column) => (
+                        {getTableColumns().filter(column => column.showColumn).map((column) => (
                             <th key={column.accessor} onClick={() => requestSort(column)}>
                                 <Tooltip content={column.detailedDescription || column.header}>
                                     {column.header}
@@ -243,7 +258,7 @@ const ReusableTable = <Y, X, T>({
                                     onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
                                 >
                                     {isEditable && <td>{displayActionButton(originalIndex)}</td>}
-                                    {columns.filter(column => column.showColumn).map((column, colIndex) => {
+                                    {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
                                         const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
 
                                         let cellContent;

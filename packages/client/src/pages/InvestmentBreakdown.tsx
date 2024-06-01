@@ -5,7 +5,7 @@ import {
 } from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
+import ReusableTable from '../components/ReusableTable';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/StandardForm.css'; // Make sure to create this CSS file
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
@@ -41,9 +41,13 @@ const InvestmentBreakdown: React.FC = () => {
         setTableType(InvestmentBreakdownTableType[input]);
     };
 
-    const getTableColumns = (): TableColumn[] => {
-        return investmentBreakdownTable.getTablesConfig()[tableType].columns;
-    };
+    const getAmmortizationDetails = (): MonthlyInvestmentDetailsResponseDTO[] => {
+        return property.metrics.amortizationData;
+    }
+
+    // const getTableColumns = (): TableColumn[] => {
+    //     return investmentBreakdownTable.getTablesConfig()[tableType].columns;
+    // };
 
     const [formData, setFormData] = useState<InvestmentFormData>(investmentBreakdownFormDetails.getDefaultFormData(property));
 
@@ -62,13 +66,13 @@ const InvestmentBreakdown: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO> => {
-        return propertiesListTable.getTableData([property], PropertiesListTableType.STANDARD_BREAKDOWN)[0];
-    };
+    // const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO> => {
+    //     return propertiesListTable.getTableData([property], PropertiesListTableType.STANDARD_BREAKDOWN)[0];
+    // };
 
-    const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] => {
-        return investmentBreakdownTable.getTableData([property], tableType);
-    };
+    // const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] => {
+    //     return investmentBreakdownTable.getTableData(getAmmortizationDetails(), tableType);
+    // };
 
     const getFormDetails = (): FormProperty[] => {
         return investmentBreakdownFormDetails.getFormDetails(formData);
@@ -102,8 +106,9 @@ const InvestmentBreakdown: React.FC = () => {
             {property ? (
                 <>
                     <ReusableTable
-                        columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
-                        tableData={[getTableData()]}
+                        // columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
+                        // tableData={[getTableData()]}
+                        data={[property]}
                         tableType={PropertiesListTableType.STANDARD_BREAKDOWN}
                         tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
@@ -157,8 +162,9 @@ const InvestmentBreakdown: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        columns={getTableColumns()} //{columnsForInvestmentMetrics} 
-                        tableData={createTableDataForInvestmentMetrics()}
+                        // columns={getTableColumns()} //{columnsForInvestmentMetrics} 
+                        // tableData={createTableDataForInvestmentMetrics()}
+                        data={getAmmortizationDetails()}
                         tableHandler={investmentBreakdownTable}
                         tableType={tableType}
                         includeTableSeparator={true}
