@@ -1,3 +1,4 @@
+import { PropertyIdentifier } from "./ApiTypes";
 import { Country, ListingCreationType, PropertyStatus, PropertyType, State } from "./Constants";
 
 export interface CreateListingDetailsRequest {
@@ -56,6 +57,33 @@ export interface CreateZillowMarketEstimatesRequest {
     zillowMonthlyPropertyTaxAmount?: number;
     zillowMonthlyHomeInsuranceAmount?: number;
     zillowMonthlyHOAFeesAmount?: number;
+};
+
+export interface CreateUpdatePropertyRequest {
+    propertyIdentifier: PropertyIdentifier;
+    price: number;
+    rentEstimate: number;
+    elementarySchoolRating: number;
+    middleSchoolRating: number;
+    highSchoolRating: number;
+    numberOfBedrooms: number;
+    numberOfFullBathrooms: number;
+    numberOfHalfBathrooms: number;
+    squareFeet: number;
+    acres: number;
+    yearBuilt: number;
+    hasGarage: boolean;
+    hasPool: boolean;
+    hasBasement: boolean;
+    listingPrice: number;
+    zestimate: number;
+    zillowRentEstimate: number;
+    zestimateRangeLow: number;
+    zestimateRangeHigh: number;
+    zillowMonthlyPropertyTaxAmount: number;
+    zillowMonthlyHomeInsuranceAmount: number;
+    zillowMonthlyHOAFeesAmount: number;
+    description: string;
 };
 
 //------------------------------------------------------------------------------------------------
