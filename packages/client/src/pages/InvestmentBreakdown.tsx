@@ -5,7 +5,7 @@ import {
 } from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ReusableTable, { TableColumn, TableDataItem, TableRow } from '../components/ReusableTable';
+import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/StandardForm.css'; // Make sure to create this CSS file
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
@@ -21,15 +21,6 @@ export enum InvestmentBreakdownTableType {
     EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
     INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
 };
-
-export interface TableConfig<T> {
-    columns: TableColumn[];
-    data: (ammortizationDetail: T) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
-}
-
-export interface TablesConfig<T> {
-    [type: string]: TableConfig<T>;
-}
 
 const InvestmentBreakdown: React.FC = () => {
 
@@ -50,8 +41,8 @@ const InvestmentBreakdown: React.FC = () => {
         setTableType(InvestmentBreakdownTableType[input]);
     };
 
-    const getTablesConfig = (): TablesConfig<MonthlyInvestmentDetailsResponseDTO> => {
-        return investmentBreakdownTable.getTablesConfig();
+    const getTableColumns = (): TableColumn[] => {
+        return investmentBreakdownTable.getTablesConfig()[tableType].columns;
     };
 
     const [formData, setFormData] = useState<InvestmentFormData>(investmentBreakdownFormDetails.getDefaultFormData(property));
@@ -166,7 +157,7 @@ const InvestmentBreakdown: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        columns={getTablesConfig()[tableType].columns} //{columnsForInvestmentMetrics} 
+                        columns={getTableColumns()} //{columnsForInvestmentMetrics} 
                         tableData={createTableDataForInvestmentMetrics()}
                         tableHandler={investmentBreakdownTable}
                         tableType={tableType}

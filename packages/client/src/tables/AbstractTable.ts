@@ -1,6 +1,4 @@
-import { TableDataItem } from "../components/ReusableTable";
-import { TablesConfig } from "../pages/InvestmentBreakdown";
-
+import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
@@ -12,6 +10,15 @@ import { TablesConfig } from "../pages/InvestmentBreakdown";
     X = InvestmentBreakdownTableType
     T = ListingWithScenariosResponseDTO
 */
+
+export interface TableConfig<T> {
+    columns: TableColumn[];
+    data: (data: T) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
+};
+
+export interface TablesConfig<T> {
+    [type: string]: TableConfig<T>;
+};
 
 export interface AbstractTable<Y, X, T> {
 

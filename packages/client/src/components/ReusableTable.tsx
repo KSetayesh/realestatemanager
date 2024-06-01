@@ -81,7 +81,7 @@ const ReusableTable = <Y, X, T>({
 
     const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
-    };
+    }; 
 
     const sortData = (data: TableDataItem<Y>[]) => {
         if (sortConfig !== null) {
@@ -158,13 +158,7 @@ const ReusableTable = <Y, X, T>({
         setIsEditing(false);
         setCurrentEdit(null);
     };
-
-    // const handleSaveClick = () => {
-    //     setEditMode(null);
-    //     setIsEditing(false);
-    //     setCurrentEdit(null);
-    // };
-
+ 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => { //accessor: string) => {
         const accessor = column.accessor;
         const newData = [...editableData];

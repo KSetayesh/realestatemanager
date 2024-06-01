@@ -1,8 +1,7 @@
 import { CreateUpdatePropertyRequest, ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
-import { TablesConfig } from "../pages/InvestmentBreakdown";
 import { PropertiesListTableType } from "../pages/PropertiesList";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TablesConfig } from "./AbstractTable";
 import { propertiesListColumns } from "./columns/PropertiesListColumns";
 import {
     getAcres,
