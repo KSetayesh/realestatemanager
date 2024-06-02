@@ -27,14 +27,6 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    // const getTableData = (): TableDataItem<AgentResponseDTO>[] => {
-    //     return agentTable.getTableData(agents, DefaultTableType.DEFAULT);
-    // };
-
-    // const getTableColumns = (): TableColumn[] => {
-    //     return agentTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
-    // }
-
     // Inside PropertiesList component
 
     // Assuming your ReusableTable component and TableColumn interface are set up to handle this
@@ -46,8 +38,6 @@ const AgentsList: React.FC = () => {
             ) : (
                 <>
                     <ReusableTable
-                        // columns={getTableColumns()} // Filter columns based on showColumn
-                        // tableData={getTableData()}
                         data={agents}
                         tableHandler={agentTable}
                         tableType={DefaultTableType.DEFAULT}

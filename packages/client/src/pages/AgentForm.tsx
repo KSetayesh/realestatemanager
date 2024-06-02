@@ -40,7 +40,6 @@ const AgentForm: React.FC = () => {
             {formData && (
                 <StandardForm
                     formDetails={getFormDetails()}
-                    // handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     setFormData={setFormData}
                     buttonTitle='Submit'
@@ -50,6 +49,5 @@ const AgentForm: React.FC = () => {
     );
 
 };
-
 
 export default AgentForm;

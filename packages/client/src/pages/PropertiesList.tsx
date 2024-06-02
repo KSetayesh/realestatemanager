@@ -58,14 +58,6 @@ const PropertiesList: React.FC = () => {
         setSelectedProperty(null);
     };
 
-    // const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO>[] => {
-    //     return propertiesListTable.getTableData(properties, tableType);
-    // };
-
-    // const getTableColumns = (): TableColumn[] => {
-    //     return propertiesListTable.getTablesConfig(getAdditionalColumns())[tableType].columns;
-    // };
-
     const getRequestData = (): CreateFilteredPropertyListRequest => {
         return propertiesListFormDetails.createRequest(formData);
     };
@@ -160,8 +152,6 @@ const PropertiesList: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        // columns={getTableColumns()}
-                        // tableData={getTableData()}
                         data={properties}
                         tableHandler={propertiesListTable}
                         tableType={tableType}

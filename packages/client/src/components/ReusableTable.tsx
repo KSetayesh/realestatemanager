@@ -42,17 +42,12 @@ export interface TableColumn {
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
     X = PropertiesListTableType
-    T = ListingWithScenariosResponseDTO
 
    ----For InvestmentBreakdownTable---- 
     Y = MonthlyInvestmentDetailsResponseDTO
     X = InvestmentBreakdownTableType
-    T = ListingWithScenariosResponseDTO
 */
-// export interface ReusableTableProps<Y, X, T> {
-export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> { //, T> {
-    // columns: TableColumn[];
-    // tableData: TableDataItem<Y>[];
+export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     data: Y[];
     tableHandler: AbstractTable<Y, X>; //, T>;
     tableType: X;
@@ -63,11 +58,7 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> { //, T>
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
 
-// const ReusableTable = <Y, X, T>({
-// const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({ //, T>({
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
-    // columns,
-    // tableData,
     data,
     tableHandler,
     tableType,
@@ -76,7 +67,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     canExportIntoCSV = false,
     isEditable = false,
     handleUpdate,
-}: ReusableTableProps<Y, X>) => { //, T>) => {
+}: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
         const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig(); //[tableType].columns;
@@ -152,15 +143,9 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
                     // Update the editableData state with the new data
                     const updatedEditableData = [...editableData];
-
                     const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
-
                     updatedEditableData[editMode] = rowDataItem;
 
-                    // updatedEditableData[editMode] = {
-                    //     objectData: { key: updatedRow },
-                    //     rowData: tableHandler.getTablesConfig(), //updatedRow as unknown as TableRow // assuming updatedRow has the same structure as rowData
-                    // };
                     setEditableData(updatedEditableData);
                 } catch (error) {
                     console.error('Error updating row:', error);
@@ -173,10 +158,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setCurrentEdit(null);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => { //accessor: string) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => {
         const accessor = column.accessor;
         const newData = [...editableData];
-        let value = e.target.value; // renderCellData(e.target.value, column.isDollarAmount, column.addSuffix);
+        const value = e.target.value;
         if (InputType.NUMBER === column.inputType) {
             newData[rowIndex].rowData[accessor] = Number(value);
         }
@@ -228,83 +213,131 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         return columns.filter(column => column.showColumn).length;
     };
 
+    const getExportCSVButton = () => {
+        return (
+            <ExportCSVButton columns={getTableColumns()} tableData={editableData} disabled={isEditing} />
+        );
+    };
+
+    const getCellContent = (
+        originalIndex: number,
+        column: TableColumn,
+        item: TableDataItem<Y>,
+    ) => {
+        const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+
+        let cellContent;
+        if (editMode === originalIndex && column.isEditable) {
+            cellContent = getEditableCellContent(originalIndex, column);
+        } else if (column.isURL) {
+            cellContent = getUrlCellContent(cellData);
+        } else {
+            cellContent = cellData;
+        }
+
+        if (column.routeTo) {
+            cellContent = getRouteToCellContent(cellData, column, item);
+        }
+
+        return cellContent;
+    };
+
+    const getRouteToCellContent = (cellData: string, column: TableColumn, item: TableDataItem<Y>) => {
+        return (
+            <span>
+                <Link to={`/${column.routeTo}/${cellData}`} state={{ data: item.objectData.key }}>
+                    {cellData}
+                </Link>
+            </span>
+        );
+    };
+
+    const getEditableCellContent = (originalIndex: number, column: TableColumn) => {
+        return (
+            <input
+                type="text"
+                value={editableData[originalIndex].rowData[column.accessor]}
+                onChange={(e) => handleInputChange(e, originalIndex, column)}
+            />
+        );
+    };
+
+    const getUrlCellContent = (cellData: string) => {
+        const formattedUrl = ensureAbsoluteUrl(cellData);
+        return (
+            <a href={formattedUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                View
+            </a>
+        );
+    };
+
+    const getTableSeparator = (originalIndex: number, sortedIndex: number) => {
+        return ((sortedIndex + 1) % 12 === 0) && (
+            <tr key={`separator_${originalIndex}`}>
+                <td colSpan={getVisibleColumnCount() + 1} style={{ textAlign: 'center' }}>
+                    <b>End of Year {(sortedIndex + 1) / 12}</b>
+                </td>
+            </tr>
+        );
+    };
+
+    const getTableRow = (originalIndex: number, item: TableDataItem<Y>) => {
+        return (
+            <tr
+                style={{ cursor: isEditing ? 'default' : 'pointer' }}
+                onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
+            >
+                {isEditable && <td>{displayActionButton(originalIndex)}</td>}
+                {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
+                    const cellContent = getCellContent(originalIndex, column, item);
+                    return <td key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</td>;
+                })}
+            </tr>);
+    }
+
+    const getTableHead = () => {
+        return (
+            <thead>
+                <tr>
+                    {isEditable && <th>Actions</th>}
+                    {getTableColumns().filter(column => column.showColumn).map((column) => (
+                        <th key={column.accessor} onClick={() => requestSort(column)}>
+                            <Tooltip content={column.detailedDescription || column.header}>
+                                {column.header}
+                            </Tooltip>
+                        </th>
+                    ))}
+                </tr>
+            </thead>
+        );
+    };
+
+    const getTableBody = () => {
+        return (
+            <tbody>
+                {sortedData.map((item, sortedIndex) => {
+                    const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
+                    return (
+                        <React.Fragment key={originalIndex}>
+                            {getTableRow(originalIndex, item)}
+                            {includeTableSeparator && getTableSeparator(originalIndex, sortedIndex)}
+                        </React.Fragment>
+                    );
+                })}
+            </tbody>
+        );
+    };
+
     const sortedData = sortData(editableData);
 
     return (
         <div>
             {canExportIntoCSV && (
-                <ExportCSVButton columns={getTableColumns()} tableData={editableData} disabled={isEditing} />  // Use the new component
+                getExportCSVButton()
             )}
             <table className="properties-table">
-                <thead>
-                    <tr>
-                        {isEditable && <th>Actions</th>}
-                        {getTableColumns().filter(column => column.showColumn).map((column) => (
-                            <th key={column.accessor} onClick={() => requestSort(column)}>
-                                <Tooltip content={column.detailedDescription || column.header}>
-                                    {column.header}
-                                </Tooltip>
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedData.map((item, sortedIndex) => {
-                        const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
-                        return (
-                            <React.Fragment key={originalIndex}>
-                                <tr
-                                    style={{ cursor: isEditing ? 'default' : 'pointer' }}
-                                    onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
-                                >
-                                    {isEditable && <td>{displayActionButton(originalIndex)}</td>}
-                                    {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
-                                        const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
-
-                                        let cellContent;
-                                        if (editMode === originalIndex && column.isEditable) {
-                                            cellContent = (
-                                                <input
-                                                    type="text"
-                                                    value={editableData[originalIndex].rowData[column.accessor]}
-                                                    onChange={(e) => handleInputChange(e, originalIndex, column)}
-                                                />
-                                            );
-                                        } else if (column.isURL) {
-                                            const formattedUrl = ensureAbsoluteUrl(cellData);
-                                            cellContent = (
-                                                <a href={formattedUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                                                    View
-                                                </a>
-                                            );
-                                        } else {
-                                            cellContent = cellData;
-                                        }
-
-                                        if (column.routeTo) {
-                                            cellContent = (
-                                                <span>
-                                                    <Link to={`/${column.routeTo}/${cellData}`} state={{ data: item.objectData.key }}>
-                                                        {cellData}
-                                                    </Link>
-                                                </span>
-                                            );
-                                        }
-
-                                        return <td key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</td>;
-                                    })}
-                                </tr>
-                                {includeTableSeparator && ((sortedIndex + 1) % 12 === 0) && (
-                                    <tr key={`separator_${originalIndex}`}>
-                                        <td colSpan={getVisibleColumnCount() + 1} style={{ textAlign: 'center' }}>
-                                            <b>End of Year {(sortedIndex + 1) / 12}</b>
-                                        </td>
-                                    </tr>
-                                )}
-                            </React.Fragment>
-                        );
-                    })}
-                </tbody>
+                {getTableHead()}
+                {getTableBody()}
             </table>
         </div>
     );

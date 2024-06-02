@@ -7,27 +7,25 @@ import {
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
     X = PropertiesListTableType
-    T = ListingWithScenariosResponseDTO
 
    ----For InvestmentBreakdownTable---- 
     Y = MonthlyInvestmentDetailsResponseDTO
     X = InvestmentBreakdownTableType
-    T = ListingWithScenariosResponseDTO
 */
 
-export interface TableConfig<Y> { //<T> {
+export interface TableConfig<Y> {
     columns: TableColumn[];
-    data: (data: Y) => TableRow //MonthlyInvestmentDetailsDTO) => TableRow;
+    data: (data: Y) => TableRow;
 };
 
-export interface TablesConfig<Y> { //<T> {
-    [type: string]: TableConfig<Y>; //<T>;
+export interface TablesConfig<Y> {
+    [type: string]: TableConfig<Y>;
 };
 
-export interface AbstractTable<Y, X> { //, T> {
+export interface AbstractTable<Y, X> {
 
     getTableData(
-        listOfData: Y[], //T[],
+        listOfData: Y[],
         tableType: X,
     ): TableDataItem<Y>[];
 

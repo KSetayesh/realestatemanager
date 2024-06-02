@@ -43,11 +43,7 @@ const InvestmentBreakdown: React.FC = () => {
 
     const getAmmortizationDetails = (): MonthlyInvestmentDetailsResponseDTO[] => {
         return property.metrics.amortizationData;
-    }
-
-    // const getTableColumns = (): TableColumn[] => {
-    //     return investmentBreakdownTable.getTablesConfig()[tableType].columns;
-    // };
+    };
 
     const [formData, setFormData] = useState<InvestmentFormData>(investmentBreakdownFormDetails.getDefaultFormData(property));
 
@@ -65,14 +61,6 @@ const InvestmentBreakdown: React.FC = () => {
     const handleCloseModal = () => {
         setSelectedProperty(null);
     };
-
-    // const getTableData = (): TableDataItem<ListingWithScenariosResponseDTO> => {
-    //     return propertiesListTable.getTableData([property], PropertiesListTableType.STANDARD_BREAKDOWN)[0];
-    // };
-
-    // const createTableDataForInvestmentMetrics = (): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] => {
-    //     return investmentBreakdownTable.getTableData(getAmmortizationDetails(), tableType);
-    // };
 
     const getFormDetails = (): FormProperty[] => {
         return investmentBreakdownFormDetails.getFormDetails(formData);
@@ -106,8 +94,6 @@ const InvestmentBreakdown: React.FC = () => {
             {property ? (
                 <>
                     <ReusableTable
-                        // columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
-                        // tableData={[getTableData()]}
                         data={[property]}
                         tableType={PropertiesListTableType.STANDARD_BREAKDOWN}
                         tableHandler={propertiesListTable}
@@ -115,9 +101,9 @@ const InvestmentBreakdown: React.FC = () => {
                     />
                     {selectedProperty && <PropertyDetailsModal
                         property={selectedProperty}
-                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)} // createDefaultRowData(selectedProperty)}
+                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
-                        columns={propertiesListTable.getDefaultColumns()} //{defaultColumns.slice(0, defaultColumns.length - 1)}
+                        columns={propertiesListTable.getDefaultColumns()}
                     />}
                     <br />
                     <hr />
@@ -162,8 +148,6 @@ const InvestmentBreakdown: React.FC = () => {
                         </label>
                     </div>
                     <ReusableTable
-                        // columns={getTableColumns()} //{columnsForInvestmentMetrics} 
-                        // tableData={createTableDataForInvestmentMetrics()}
                         data={getAmmortizationDetails()}
                         tableHandler={investmentBreakdownTable}
                         tableType={tableType}
@@ -178,7 +162,6 @@ const InvestmentBreakdown: React.FC = () => {
     );
 
 };
-
 
 export default InvestmentBreakdown;
 

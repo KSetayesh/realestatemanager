@@ -34,14 +34,6 @@ const HighYieldSavings: React.FC = () => {
         return highYieldSavingsFormDetails.getFormDetails(formData);
     };
 
-    // const getTableData = (): TableDataItem<HighYeildSavingsResponseDTO>[] => {
-    //     return highYieldSavingsTable.getTableData(metrics, DefaultTableType.DEFAULT);
-    // };
-
-    // const getTableColumns = (): TableColumn[] => {
-    //     return highYieldSavingsTable.getTablesConfig()[DefaultTableType.DEFAULT].columns;
-    // };
-
     return (
         <div>
             <h2> Investment Breakdown </h2>
@@ -56,8 +48,6 @@ const HighYieldSavings: React.FC = () => {
             <hr />
             <br />
             <ReusableTable
-                // columns={getTableColumns()} // Adjust based on your needs
-                // tableData={getTableData()}
                 data={metrics}
                 tableHandler={highYieldSavingsTable}
                 tableType={DefaultTableType.DEFAULT}
