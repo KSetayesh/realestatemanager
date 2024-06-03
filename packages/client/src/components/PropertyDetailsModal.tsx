@@ -5,13 +5,21 @@ import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
 import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 
-const PropertyDetailsModal: React.FC<{
-    property: ListingWithScenariosResponseDTO | null;
+export interface PropertyDetailsModalType<T> {
+    data: T | null;
     rowData: TableRow;
     onClose: () => void;
     columns: TableColumn[];
-}> = ({ property, rowData, onClose, columns }) => {
-    if (!property) return null;
+};
+
+const PropertyDetailsModal = <T,>({
+    data,
+    rowData,
+    onClose,
+    columns,
+}: PropertyDetailsModalType<T>) => {
+
+    if (!data) return null;
 
     const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -26,7 +34,7 @@ const PropertyDetailsModal: React.FC<{
 
                     let content;
                     if (column.routeTo) {
-                        content = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: property }}>
+                        content = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: data }}>
                             {column.routeTo}
                         </Link></span>;
                     }

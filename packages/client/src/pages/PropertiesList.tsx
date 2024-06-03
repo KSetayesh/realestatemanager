@@ -163,7 +163,7 @@ const PropertiesList: React.FC = () => {
 
                     />
                     {selectedProperty && <PropertyDetailsModal
-                        property={selectedProperty}
+                        data={selectedProperty}
                         rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
                         columns={getDefaultColumns()}

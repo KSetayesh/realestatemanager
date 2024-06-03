@@ -49,7 +49,7 @@ export interface TableColumn {
 */
 export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     data: Y[];
-    tableHandler: AbstractTable<Y, X>; //, T>;
+    tableHandler: AbstractTable<Y, X>;
     tableType: X;
     onRowClick?: (item: Y) => void;
     includeTableSeparator?: boolean;

@@ -9,7 +9,7 @@ import {
     standardBreakdownColumns
 } from "./columns/InvestmentBreakdownColumn";
 
-export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> { //, ListingWithScenariosResponseDTO> {
+export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> {
 
     getRowData(
         monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO,

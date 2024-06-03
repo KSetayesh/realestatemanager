@@ -162,33 +162,7 @@ export class RentCastApiClient {
             throw new Error(error);// Re-throw the error if needed or handle it as needed
         }
     }
-
-    // private async makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
-    //     try {
-    //         let propertyData;
-    //         try {
-    //             propertyData = await fs.readFile(this.endPointMap.PROPERTIES.responseFilePath, { encoding: 'utf8' });
-    //             propertyData = JSON.parse(propertyData);
-    //         } catch (error) {
-    //             console.error('Error reading file:', error);
-    //             return null;
-    //         }
-
-    //         let saleData;
-    //         try {
-    //             saleData = await fs.readFile(this.endPointMap.SALE.responseFilePath, { encoding: 'utf8' });
-    //             saleData = JSON.parse(saleData);
-    //         } catch (error) {
-    //             console.error('Error reading file:', error);
-    //             return null;
-    //         }
-    //     }
-    //     catch (error) {
-    //         console.error('RentCast Api Call Error:', error);
-    //         throw new Error(error);// Re-throw the error if needed or handle it as needed
-    //     }
-    // }
-
+    
     private async getApiCallDetails(): Promise<ApiCallDetails> {
         if (!apiKeysConfig.canMakeRentCastApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
