@@ -29,8 +29,10 @@ export class DatabaseService implements OnModuleInit {
 
     private async initializeDatabase() {
         const sqlFilePath = PathUtil.getDbSchemaPath();  //join(__dirname, this.dbSchema);
+        console.log('sqlFilePath:', sqlFilePath);
         const sql = readFileSync(sqlFilePath).toString();
         try {
+            console.log('Running dbschema.sql script...');
             const client = await this.pool.connect();
             await client.query(sql);
             client.release();

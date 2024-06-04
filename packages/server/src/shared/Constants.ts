@@ -1,4 +1,8 @@
-import { InterestType, ValueInput, ValueType } from "@realestatemanager/shared"
+import {
+    InterestType,
+    ValueInput,
+    ValueType
+} from "@realestatemanager/shared"
 import apiKeysConfig from '../config/apiKeysConfig';
 
 export const getAmountFromValueInput = (input: ValueInput, baseValue?: number): number => {
