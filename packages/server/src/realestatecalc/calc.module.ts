@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CalcController } from './controllers/calc.controller';
 import { CalcService } from './services/calc.service';
 import { RentCastService } from './services/rentcast.service';
@@ -9,8 +9,10 @@ import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import applicationConfig from 'src/config/applicationConfig';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { RentCastApiClient } from './api/rent.cast.api.client';
+import { AppModule } from '../app.module';  // Import AppModule to access DatabaseService
 
 @Module({
+    imports: [forwardRef(() => AppModule)],  // Ensure AppModule is imported using forwardRef to avoid circular dependency
     controllers: [CalcController],
     providers: [
         CalcService,
@@ -35,6 +37,6 @@ import { RentCastApiClient } from './api/rent.cast.api.client';
             inject: [RentCastDAO],
         },
     ],
+    exports: [CalcService],  // Export CalcService if it's used in other modules
 })
 export class CalcModule { }
-

@@ -6,7 +6,6 @@ import { rentCastDetailsMap } from 'src/shared/Constants';
 import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.model';
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
-import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { PathUtil } from 'src/shared/PathUtil';
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/db/database.service';
@@ -211,6 +210,7 @@ export class RentCastApiClient {
 
     private async writeResponseToJsonFile(filePath: string, data: any): Promise<void> {
         try {
+            console.log(`Writing rentcast api response to ${filePath}`);
             await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
             console.log('File has been saved successfully.');
         } catch (err) {

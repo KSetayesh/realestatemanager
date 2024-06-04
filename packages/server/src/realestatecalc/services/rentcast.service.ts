@@ -155,16 +155,16 @@ export class RentCastService {
         }
 
         const isValidData = (rentCastSalesResponses: RentCastResponse[], rentCastPropertyResponses: RentCastResponse[]): boolean => {
-            return rentCastSalesResponses.length == 1 && rentCastPropertyResponses.length == 1
+            return rentCastSalesResponses.length == 1 && rentCastPropertyResponses.length == 1;
         };
 
         let numberOfPropertiesAdded = 0;
         let numberOfPropertiesUpdated = 0;
         for (const rentCastMatch of rentCastMatchingData) {
             const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
-            const rentCastPropertyResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
+            const rentCastPropertyResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiPropertyJsonData); //rentCastApiSaleJsonData);
 
-            if (isValidData(rentCastSalesResponses, rentCastPropertyResponses)) {
+            if (!isValidData(rentCastSalesResponses, rentCastPropertyResponses)) {
                 throw new Error('There should only be 1 listing response per "rent_cast_api_response" table row');
             }
 

@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
-// import { ServeStaticModule } from '@nestjs/serve-static';
-// import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CalcModule } from './realestatecalc/calc.module';
 import { HighYieldSavingsModule } from './highyieldsavingscalc/highyieldsavings.module';
 import { AgentModule } from './agents/agent.module';
 import { PhotosModule } from './photos/photos.module';
-import { ConfigModule } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { PathUtil } from './shared/PathUtil';
 import { DatabaseService } from './db/database.service';
 
@@ -21,10 +19,10 @@ import { DatabaseService } from './db/database.service';
         CalcModule,
         HighYieldSavingsModule,
         AgentModule,
-        PhotosModule
+        PhotosModule,
     ],
     controllers: [AppController],
     providers: [AppService, DatabaseService],
-    exports: [DatabaseService], // Export DatabaseService so it's available to other modules
+    exports: [DatabaseService],
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import './users/dao/dbManager';
+// import './users/dao/dbManager';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ServeStaticMiddleware } from './serve-static.middleware';
 import { PathUtil } from './shared/PathUtil';
