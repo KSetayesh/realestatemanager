@@ -84,9 +84,9 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
         }));
     }
 
-    getTablesConfig(additionalTableColumns: TableColumn[] = []): TablesConfig<ListingWithScenariosResponseDTO> {
+    getTablesConfig(): TablesConfig<ListingWithScenariosResponseDTO> {
         const getAllColumns = (): TableColumn[] => {
-            return this.getDefaultColumns(additionalTableColumns).map(column => ({
+            return this.getDefaultColumns().map(column => ({
                 ...column,
                 showColumn: true  // Set showColumn to true for each object
             }));
@@ -94,7 +94,7 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
 
         return {
             [PropertiesListTableType.STANDARD_BREAKDOWN]: {
-                columns: this.getDefaultColumns(additionalTableColumns),
+                columns: this.getDefaultColumns(),
                 data: (listingDetail: ListingWithScenariosResponseDTO) => this.getDefaultRowData(listingDetail),
             },
             [PropertiesListTableType.ALL]: {
@@ -104,12 +104,8 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
         };
     }
 
-    getDefaultColumns(additionalTableColumns: TableColumn[] = []): TableColumn[] {
-        const columns: TableColumn[] = [];
-        columns.push(...propertiesListColumns);
-        columns.push(...additionalTableColumns);
-        // console.log("columns:", columns);
-        return columns;
+    getDefaultColumns(): TableColumn[] {
+        return propertiesListColumns;
     }
 
     getDefaultRowData(property: ListingWithScenariosResponseDTO): TableRow {

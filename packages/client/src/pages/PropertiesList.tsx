@@ -15,8 +15,7 @@ import {
     PropertiesListFormDetails,
     PropertyFilterFormFields
 } from '../forms/PropertiesListFormDetails';
-import { PropertiesListTable } from '../tables/PropertiesListTable';
-import { InputType } from '../constants/Constant';
+import { PropertiesListWithInvestmentBreakdownTable } from '../tables/PropertiesListWithInvestmentBreakdownTable';
 
 export enum PropertiesListTableType {
     ALL = 'ALL',
@@ -26,7 +25,8 @@ export enum PropertiesListTableType {
 const PropertiesList: React.FC = () => {
 
     const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
-    const propertiesListTable: PropertiesListTable = new PropertiesListTable();
+    const propertiesListWithInvestmentBreakdownTable: PropertiesListWithInvestmentBreakdownTable =
+        new PropertiesListWithInvestmentBreakdownTable();
 
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -93,27 +93,13 @@ const PropertiesList: React.FC = () => {
     };
 
     const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
-        const createUpdatePropertyRequest: CreateUpdatePropertyRequest = propertiesListTable.createUpdatePropertyRequest(tableDataItem);
+        const createUpdatePropertyRequest: CreateUpdatePropertyRequest =
+            propertiesListWithInvestmentBreakdownTable.createUpdatePropertyRequest(tableDataItem);
         return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
     };
 
-    const getAdditionalColumns = (): TableColumn[] => {
-        return [
-            {
-                header: "Investment Breakdown",
-                accessor: "investmentBreakdown",
-                isURL: false,
-                showColumn: true,
-                inputType: InputType.STRING,
-                routeTo: 'investmentBreakdown',
-                isDollarAmount: false,
-                isSortable: false,
-            }
-        ];
-    }
-
     const getDefaultColumns = (): TableColumn[] => {
-        return propertiesListTable.getDefaultColumns(getAdditionalColumns());
+        return propertiesListWithInvestmentBreakdownTable.getDefaultColumns();
     };
 
     return (
@@ -153,7 +139,7 @@ const PropertiesList: React.FC = () => {
                     </div>
                     <ReusableTable
                         data={properties}
-                        tableHandler={propertiesListTable}
+                        tableHandler={propertiesListWithInvestmentBreakdownTable}
                         tableType={tableType}
                         onRowClick={handleRowClick}
                         includeTableSeparator={false}
@@ -164,7 +150,7 @@ const PropertiesList: React.FC = () => {
                     />
                     {selectedProperty && <PropertyDetailsModal
                         data={selectedProperty}
-                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
+                        rowData={propertiesListWithInvestmentBreakdownTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}
                         columns={getDefaultColumns()}
                     />}

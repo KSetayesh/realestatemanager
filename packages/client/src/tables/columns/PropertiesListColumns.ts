@@ -240,7 +240,7 @@ export const propertiesListColumns: TableColumn[] = [
     },
     {
         header: "Street Address",
-        accessor: "streetAddress", 
+        accessor: "streetAddress",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: false,
@@ -493,4 +493,18 @@ export const propertiesListColumns: TableColumn[] = [
         isSortable: false,
         isEditable: true,
     },
+];
+
+export const propertiesListWithInvestmentBreakdownColumns: TableColumn[] = [
+    ...propertiesListColumns,
+    {
+        header: "Investment Breakdown",
+        accessor: "investmentBreakdown",
+        isURL: false,
+        showColumn: true,
+        inputType: InputType.STRING,
+        routeTo: 'investmentBreakdown',
+        isDollarAmount: false,
+        isSortable: false,
+    }
 ];
