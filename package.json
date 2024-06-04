@@ -12,7 +12,9 @@
         "build:client": "cd packages/client && npm run build",
         "start:server": "cd packages/server && npm run start:dev",
         "start:client": "cd packages/client && npm run dev",
-        "start": "npm run start:server & npm run start:client"
+        "start:client:prod": "cd packages/client && npm run preview",
+        "start": "npm run start:server & npm run start:client",
+        "start:prod": "npm run start:server & npm run start:client:prod"
     },
     "keywords": [],
     "author": "",
