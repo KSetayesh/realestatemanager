@@ -2,6 +2,7 @@ const { exec } = require('child_process');
 import { Pool } from 'pg';
 import dbConfig from '../config/dbConfig';
 import fs from 'fs';
+import { PathUtil } from 'src/shared/PathUtil';
 
 export const pool = new Pool(dbConfig);
 
@@ -18,7 +19,7 @@ enum SQLTable {
     INSERT_INTO_RENT_CAST_CONFIG_DETAILS_TABLE = 'InsertIntoRentCastConfigDetailsTable',
 };
 
-const dbschemaFile = `${__dirname}/../../src/db/dbschema.sql`;
+const dbschemaFile = PathUtil.getDbSchemaPath(); // `${__dirname}/../../src/db/dbschema.sql`;
 
 // Function to create the database if it doesn't exist
 function createDatabase() {

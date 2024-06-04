@@ -90,7 +90,10 @@ export class CalcService {
         return this.calculate(createInvestmentScenarioRequest, updatedListingDetailsFromDb);
     }
 
-    async getPropertyByZillowURL(zillowURL: string, investmentScenarioRequest?: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
+    async getPropertyByZillowURL(
+        zillowURL: string,
+        investmentScenarioRequest?: CreateInvestmentScenarioRequest
+    ): Promise<ListingWithScenariosResponseDTO> {
         if (!zillowURL) {
             throw new Error('zillowURL query parameter is required');
         }

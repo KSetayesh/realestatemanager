@@ -7,7 +7,7 @@ import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
-import path from 'path';
+import { PathUtil } from 'src/shared/PathUtil';
 
 export enum RentCastEndPoint {
     SALE = 'SALE',
@@ -45,11 +45,11 @@ export class RentCastApiClient {
     private endPointMap: Record<RentCastEndPoint, EndpointDetails> = {
         [RentCastEndPoint.SALE]: {
             endPoint: 'https://api.rentcast.io/v1/listings/sale',
-            responseFilePath: path.join(__dirname, '../../../src/data/latestRentCastSale.json'),
+            responseFilePath: PathUtil.getLatestRentCastSalePath(), //path.join(__dirname, '../../../src/data/latestRentCastSale.json'),
         },
         [RentCastEndPoint.PROPERTIES]: {
             endPoint: 'https://api.rentcast.io/v1/properties',
-            responseFilePath: path.join(__dirname, '../../../src/data/latestRentCastProperty.json'),
+            responseFilePath: PathUtil.getLatestRentCastPropertyPath(), //path.join(__dirname, '../../../src/data/latestRentCastProperty.json'),
         },
     };
 
@@ -162,7 +162,7 @@ export class RentCastApiClient {
             throw new Error(error);// Re-throw the error if needed or handle it as needed
         }
     }
-    
+
     private async getApiCallDetails(): Promise<ApiCallDetails> {
         if (!apiKeysConfig.canMakeRentCastApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
@@ -180,7 +180,7 @@ export class RentCastApiClient {
         }
 
         console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
-        
+
         return {
             canCallRentCastApi: false
         };

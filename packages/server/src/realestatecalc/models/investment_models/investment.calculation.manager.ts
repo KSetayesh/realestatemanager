@@ -1,4 +1,9 @@
-import { AmortizationBreakdownResponseDTO, CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO, Utility } from "@realestatemanager/shared";
+import {
+    AmortizationBreakdownResponseDTO,
+    CreateInvestmentScenarioRequest,
+    ListingWithScenariosResponseDTO,
+    Utility
+} from "@realestatemanager/shared";
 import { ListingDetails } from "../listing_models/listingdetails.model";
 import { InvestmentCalculator } from "./investment.calculator";
 import { InvestmentMetricBuilder } from "src/realestatecalc/builders/investment.metric.builder";
