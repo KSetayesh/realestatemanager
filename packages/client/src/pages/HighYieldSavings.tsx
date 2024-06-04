@@ -15,8 +15,12 @@ const HighYieldSavings: React.FC = () => {
     const highYieldSavingsFormDetails: HighYieldSavingsFormDetails = new HighYieldSavingsFormDetails();
     const highYieldSavingsTable: HighYieldSavingsTable = new HighYieldSavingsTable();
 
-    const [formData, setFormData] = useState<HighYieldSavingsFormData>(highYieldSavingsFormDetails.getDefaultFormData());
+    const getDefaultFormData = (): HighYieldSavingsFormData => {
+        return highYieldSavingsFormDetails.getDefaultFormData();
+    }
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState<HighYieldSavingsFormData>(getDefaultFormData());
     const [metrics, setMetrics] = useState<HighYeildSavingsResponseDTO[]>([]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,9 +29,20 @@ const HighYieldSavings: React.FC = () => {
             return highYieldSavingsFormDetails.createRequest(formData);
         };
         const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
-        const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
-        console.log("Calculation result:", data);
-        setMetrics(data);
+
+        setIsLoading(true);
+        try {
+            const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
+            setMetrics(data);
+            console.log("Calculation result:", data);
+            // window.location.reload();
+        } catch (error) {
+            console.error('Failed to submit data.', error);
+            alert('Failed to submit data.');
+        } finally {
+            setFormData(getDefaultFormData());
+            setIsLoading(false);
+        }
     };
 
     const getFormDetails = (): FormProperty[] => {
@@ -47,14 +62,20 @@ const HighYieldSavings: React.FC = () => {
             <br />
             <hr />
             <br />
-            <ReusableTable
-                data={metrics}
-                tableHandler={highYieldSavingsTable}
-                tableType={DefaultTableType.DEFAULT}
-                onRowClick={undefined}
-                includeTableSeparator={true}
-                canExportIntoCSV={true}
-            />
+            {isLoading ? (
+                <p>Loading properties...</p>
+            ) : (
+                <>
+                    <ReusableTable
+                        data={metrics}
+                        tableHandler={highYieldSavingsTable}
+                        tableType={DefaultTableType.DEFAULT}
+                        onRowClick={undefined}
+                        includeTableSeparator={true}
+                        canExportIntoCSV={true}
+                    />
+                </>
+            )}
         </div>
     );
 };
