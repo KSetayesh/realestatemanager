@@ -5,10 +5,12 @@ import { RentCastDAO } from '../dao/rentcast.dao';
 import { RentCastResponse } from 'src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
 import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 import { DatabaseManager } from './db.manager';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class RentCastManager extends DatabaseManager {
 
-    private rentCastDAO: RentCastDAO;
+    // private rentCastDAO: RentCastDAO;
 
     private rentCastDetailsMap: { [key: number]: string } = {
         1: apiKeysConfig.rentCastApiKey,
@@ -16,10 +18,17 @@ export class RentCastManager extends DatabaseManager {
         3: apiKeysConfig.backUpbackUpRentCastApiKey,
     };
 
-    constructor(rentCastDAO: RentCastDAO, commit: boolean) {
-        super(commit);
-        this.rentCastDAO = rentCastDAO;
+    constructor(
+        private readonly rentCastDAO: RentCastDAO,
+        commit: boolean,
+    ) {
+        super(commit)
     }
+
+    // constructor(rentCastDAO: RentCastDAO, commit: boolean) {
+    //     super(commit);
+    //     this.rentCastDAO = rentCastDAO;
+    // }
 
     // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, addressId: string): Promise<boolean> {

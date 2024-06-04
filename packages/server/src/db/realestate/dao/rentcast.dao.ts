@@ -4,7 +4,9 @@ import { RealEstateDAO } from "./realestate.dao";
 import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
 import { RentCastApiResponse } from 'src/realestatecalc/api/rent.cast.api.client';
 import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class RentCastDAO extends RealEstateDAO {
 
     private CHECK_FOR_EXISTING_ADDRESS_ID =

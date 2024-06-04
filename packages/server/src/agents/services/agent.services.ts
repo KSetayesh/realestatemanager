@@ -4,16 +4,24 @@ import { AgentResponseDTO, CreateAgentRequest } from "@realestatemanager/shared"
 import { Agent } from "../models/agent.model";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
+import { DatabaseService } from 'src/db/database.service';
 
 @Injectable()
 export class AgentService {
 
-    private agentManager: AgentManager;
+    // private agentManager: AgentManager;
     private pool: Pool;
 
-    constructor() {
-        this.agentManager = DatabaseManagerFactory.createAgentManager();
-        this.pool = DatabaseManagerFactory.getDbPool();
+    // constructor() {
+    //     this.agentManager = DatabaseManagerFactory.createAgentManager();
+    //     this.pool = DatabaseManagerFactory.getDbPool();
+    // }
+
+    constructor(
+        private readonly databaseService: DatabaseService,
+        private readonly agentManager: AgentManager
+    ) {
+        this.pool = this.databaseService.getPool();
     }
 
     async getAllAgents(): Promise<AgentResponseDTO[]> {

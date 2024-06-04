@@ -1,8 +1,10 @@
 import { Pool } from 'pg';
 import { Agent } from "src/agents/models/agent.model";
 import { RealEstateDAO } from "./realestate.dao";
-import { AgentResponseDTO, AgentType, Country, State } from "@realestatemanager/shared";
+import { AgentType, Country, State } from "@realestatemanager/shared";
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class AgentDAO extends RealEstateDAO {
 
     private GET_AGENTS_QUERY = `SELECT

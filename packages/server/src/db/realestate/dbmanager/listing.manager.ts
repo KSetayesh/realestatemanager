@@ -3,14 +3,23 @@ import { ListingDAO } from '../dao/listing.dao';
 import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realestatemanager/shared';
 import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 import { DatabaseManager } from './db.manager';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ListingManager extends DatabaseManager {
 
-    private listingDAO: ListingDAO;
+    // private listingDAO: ListingDAO;
 
-    constructor(listingDAO: ListingDAO, commit: boolean) {
-        super(commit);
-        this.listingDAO = listingDAO;
+    // constructor(listingDAO: ListingDAO, commit: boolean) {
+    //     super(commit);
+    //     this.listingDAO = listingDAO;
+    // }
+
+    constructor(
+        private readonly listingDAO: ListingDAO,
+        commit: boolean,
+    ) {
+        super(commit)
     }
 
     async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {

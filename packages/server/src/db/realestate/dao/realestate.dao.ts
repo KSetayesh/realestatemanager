@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import { Pool } from 'pg';
 
+@Injectable()
 export abstract class RealEstateDAO {
 
     protected async genericInsertQuery(

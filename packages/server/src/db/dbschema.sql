@@ -1,7 +1,3 @@
--- Query: CreateRealEstateDB
-CREATE DATABASE realestate;
--- EndQuery
-
 -- Query: CreateSchoolRatingTable
 CREATE TABLE IF NOT EXISTS school_rating (
     id SERIAL PRIMARY KEY,
@@ -82,9 +78,7 @@ CREATE TABLE IF NOT EXISTS listing_details (
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
-    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE,
-    FOREIGN KEY (rent_cast_sale_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE,
-    FOREIGN KEY (rent_cast_property_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE
+    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
 );
 -- EndQuery
 
@@ -128,6 +122,7 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_call (
     execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    rent_cast_config_detail_id INT,
     FOREIGN KEY (rent_cast_config_detail_id) REFERENCES rent_cast_config_details(id) ON DELETE CASCADE
 );
 -- EndQuery
@@ -139,12 +134,16 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_response (
     api_response_data JSONB,
     execution_time TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    rent_cast_api_call_id INT,
     FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
 );
 -- EndQuery
 
 -- Query: InsertIntoRentCastConfigDetailsTable
 INSERT INTO rent_cast_config_details (
+    api_key_name,
+    email,
     api_calls_this_month, 
     number_of_free_api_calls, 
     billing_period, 
@@ -152,6 +151,6 @@ INSERT INTO rent_cast_config_details (
     most_recent_billing_date, 
     created_at, 
     updated_at
-) SELECT 0, 50, 31, NOW(), NOW(), NOW(), NOW()
+) SELECT 'Kevins RentCast API Key', 'kevinsetayesh@gmail.com', 0, 50, 31, NOW(), NOW(), NOW(), NOW()
 WHERE NOT EXISTS (SELECT 1 FROM rent_cast_config_details);
 -- EndQuery

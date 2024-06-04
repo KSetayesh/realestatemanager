@@ -8,6 +8,8 @@ import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { PathUtil } from 'src/shared/PathUtil';
+import { Injectable } from '@nestjs/common';
+import { DatabaseService } from 'src/db/database.service';
 
 export enum RentCastEndPoint {
     SALE = 'SALE',
@@ -39,6 +41,7 @@ interface EndpointDetails {
     responseFilePath: string;
 };
 
+@Injectable()
 export class RentCastApiClient {
 
 
@@ -53,12 +56,19 @@ export class RentCastApiClient {
         },
     };
 
-    private rentCastManager: RentCastManager;
+    // private rentCastManager: RentCastManager;
     private pool: Pool;
 
-    constructor() {
-        this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-        this.pool = DatabaseManagerFactory.getDbPool();
+    // constructor() {
+    //     this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
+    //     this.pool = DatabaseManagerFactory.getDbPool();
+    // }
+
+    constructor(
+        private readonly databaseService: DatabaseService,
+        private readonly rentCastManager: RentCastManager,
+    ) {
+        this.pool = this.databaseService.getPool();
     }
 
     getEndpoint(rentCastEndPoint: RentCastEndPoint): string {

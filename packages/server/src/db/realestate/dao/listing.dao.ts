@@ -13,7 +13,9 @@ import {
     CreateFilteredPropertyListRequest,
 } from '@realestatemanager/shared';
 import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class ListingDAO extends RealEstateDAO {
 
     private GET_LISTINGS_QUERY = `SELECT 

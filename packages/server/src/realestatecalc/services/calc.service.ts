@@ -18,17 +18,27 @@ import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { InvestmentCalculationManager } from '../models/investment_models/investment.calculation.manager';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
+import { DatabaseService } from 'src/db/database.service';
 
 @Injectable()
 export class CalcService {
 
-    private listingManager: ListingManager;
+    // private listingManager: ListingManager;
     private pool: Pool;
     private cache: Map<number, ListingWithScenariosResponseDTO>;
 
-    constructor() {
-        this.listingManager = DatabaseManagerFactory.createListingManager();
-        this.pool = DatabaseManagerFactory.getDbPool();
+    // constructor() {
+    //     // this.listingManager = DatabaseManagerFactory.createListingManager();
+    //     // this.pool = DatabaseManagerFactory.getDbPool();
+    //     this.cache = new Map<number, ListingWithScenariosResponseDTO>();
+    // }
+
+
+    constructor(
+        private readonly databaseService: DatabaseService,
+        private readonly listingManager: ListingManager
+    ) {
+        this.pool = this.databaseService.getPool();
         this.cache = new Map<number, ListingWithScenariosResponseDTO>();
     }
 

@@ -9,7 +9,6 @@ import {
     RentCastDetailsResponseDTO,
     State,
 } from "@realestatemanager/shared";
-import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
 import { CalcService } from './calc.service';
 import { RentCastApiClient, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api.client';
@@ -19,6 +18,7 @@ import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmat
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { ListingDetailsBuilder } from '../builders/listing.details.builder';
 import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
+import { DatabaseService } from 'src/db/database.service';
 
 export type RentCastSaleResponseType = {
     id: string;
@@ -91,16 +91,30 @@ export type RentCastPropertyResponseType = {
 @Injectable()
 export class RentCastService {
 
-    private rentCastManager: RentCastManager;
-    private listingManager: ListingManager;
-    private rentCastApiClient: RentCastApiClient;
+    // private listingManager: ListingManager;
+    // private rentCastManager: RentCastManager;
+    // private rentCastApiClient: RentCastApiClient;
     private pool: Pool;
 
-    constructor() {
-        this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-        this.listingManager = DatabaseManagerFactory.createListingManager();
-        this.pool = DatabaseManagerFactory.getDbPool();
-        this.rentCastApiClient = new RentCastApiClient();
+    // constructor() {
+    //     this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
+    //     this.listingManager = DatabaseManagerFactory.createListingManager();
+    //     this.pool = DatabaseManagerFactory.getDbPool();
+    //     this.rentCastApiClient = new RentCastApiClient();
+    // }
+
+    constructor(
+        private readonly calcService: CalcService,
+        private readonly databaseService: DatabaseService,
+        private readonly rentCastApiClient: RentCastApiClient,
+        private readonly listingManager: ListingManager,
+        private readonly rentCastManager: RentCastManager,
+    ) {
+        this.pool = this.databaseService.getPool();
+        // this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
+        // this.listingManager = DatabaseManagerFactory.createListingManager();
+        // this.pool = DatabaseManagerFactory.getDbPool();
+        // this.rentCastApiClient = new RentCastApiClient();
     }
 
     async getRentCastApiDetailsDTO(): Promise<RentCastDetailsResponseDTO[]> {
@@ -178,7 +192,7 @@ export class RentCastService {
                     rentCastPropertyResponseType,
                     rentCastMatch.rentCastPropertyResponseId,
                 );
-                const newListingId = await new CalcService().insertListingDetails(
+                const newListingId = await this.calcService.insertListingDetails(
                     listingDetail,
                     ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA,
                 );
@@ -313,7 +327,7 @@ export class RentCastService {
                     );
                 }
 
-                const newListingId = await new CalcService().insertListingDetails(
+                const newListingId = await this.calcService.insertListingDetails(
                     listingDetail,
                     ListingCreationType.RENT_CAST_API,
                 );
