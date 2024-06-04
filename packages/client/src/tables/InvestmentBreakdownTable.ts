@@ -128,8 +128,6 @@ export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestment
         ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[],
         tableType: InvestmentBreakdownTableType
     ): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] {
-        // const property: ListingWithScenariosResponseDTO = properties[0];
-        // const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
         return ammortizationDetails.map(ammortizationDetail => ({
             objectData: {
                 key: ammortizationDetail,
@@ -139,22 +137,5 @@ export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestment
         }));
 
     };
-
-
-    // getTableData(
-    //     properties: ListingWithScenariosResponseDTO[],
-    //     tableType: InvestmentBreakdownTableType
-    // ): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] {
-    //     const property: ListingWithScenariosResponseDTO = properties[0];
-    //     const ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[] = property.metrics.amortizationData; // investmentProjections.ammortizationDetails!;
-    //     return ammortizationDetails.map(ammortizationDetail => ({
-    //         objectData: {
-    //             key: ammortizationDetail,
-    //         },
-    //         // Change createRowDataForInvestmentMetrics to the proper function for radio type
-    //         rowData: this.getTablesConfig()[tableType].data(ammortizationDetail), //createRowDataForInvestmentMetrics(ammortizationDetail),
-    //     }));
-
-    // };
 
 }

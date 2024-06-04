@@ -19,7 +19,10 @@ export class HighYieldSavingsTable implements AbstractTable<HighYeildSavingsResp
         };
     }
 
-    getTableData(listOfData: HighYeildSavingsResponseDTO[], tableType: DefaultTableType): TableDataItem<HighYeildSavingsResponseDTO>[] {
+    getTableData(
+        listOfData: HighYeildSavingsResponseDTO[],
+        tableType: DefaultTableType
+    ): TableDataItem<HighYeildSavingsResponseDTO>[] {
         const tablesConfig = this.getTablesConfig();
         return listOfData.map(data => ({
             objectData: {

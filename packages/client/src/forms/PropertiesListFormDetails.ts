@@ -2,7 +2,13 @@ import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
-import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
+import {
+    BasicCheckBoxForm,
+    BasicNumberForm,
+    BasicStringForm,
+    GetOptionsForFormProperty,
+    StateForm
+} from "./ReusableFormFields";
 
 export type PropertyFilterFormFields = {
     state: State | string;

@@ -2,7 +2,13 @@ import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 import { InputType, PropertyStatus, PropertyType, State } from "../constants/Constant";
 import { FormProperty } from "../components/StandardForm";
-import { BasicCheckBoxForm, BasicNumberForm, BasicStringForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
+import {
+    BasicCheckBoxForm,
+    BasicNumberForm,
+    BasicStringForm,
+    GetOptionsForFormProperty,
+    StateForm
+} from "./ReusableFormFields";
 
 export type CollectPropertiesFormData = {
     address: string;
