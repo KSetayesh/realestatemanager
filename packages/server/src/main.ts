@@ -10,6 +10,7 @@ import { CalcService } from './realestatecalc/services/calc.service';
 const port = process.env.PORT || 3000;
 
 async function bootstrap() {
+    console.log('---Starting application---');
     const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
     app.enableCors();
 
