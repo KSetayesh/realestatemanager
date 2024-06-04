@@ -53,7 +53,7 @@ export const standardBreakdownColumns: TableColumn[] = [
     {
         header: "Total Principal Paid",
         accessor: "totalPrincipalPaid",
-        inputType: InputType.NUMBER, 
+        inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
         isDollarAmount: true,
@@ -184,15 +184,6 @@ export const mortgageBreakdownColumns: TableColumn[] = [
     {
         header: "Principal Payment",
         accessor: "principalPayment",
-        inputType: InputType.NUMBER,
-        isURL: false,
-        showColumn: true,
-        isDollarAmount: true,
-        isSortable: false,
-    },
-    {
-        header: "Interest Payment",
-        accessor: "interestPayment",
         inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
