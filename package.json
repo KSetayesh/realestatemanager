@@ -15,7 +15,7 @@
         "start": "npm run start:server & npm run start:client",
         "start:client:prod": "cd packages/client && npm run preview",
         "start:server:prod": "cd packages/server && npm run start:prod",
-        "start:prod": "npm run start:server:prod & npm run start:client:prod"
+        "start:prod": "npm run start:server:prod"
     },
     "keywords": [],
     "author": "",
