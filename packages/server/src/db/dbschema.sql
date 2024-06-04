@@ -1,3 +1,18 @@
+-- Query: CreateRentCastConfigDetailsTable
+CREATE TABLE IF NOT EXISTS rent_cast_config_details (
+    id SERIAL PRIMARY KEY,
+    api_key_name VARCHAR(250),
+    email VARCHAR(250),
+    api_calls_this_month INT,
+    number_of_free_api_calls INT,
+    billing_period INT,
+    first_billed_on TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    most_recent_billing_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+);
+-- EndQuery
+
 -- Query: CreateSchoolRatingTable
 CREATE TABLE IF NOT EXISTS school_rating (
     id SERIAL PRIMARY KEY,
@@ -27,29 +42,6 @@ CREATE TABLE IF NOT EXISTS address (
 );
 -- EndQuery
 
--- Query: CreatePropertyDetailsTable
-CREATE TABLE IF NOT EXISTS property_details (
-    id SERIAL PRIMARY KEY,
-    address_id INT,
-    school_rating_id INT,
-    number_of_bedrooms INT,
-    number_of_full_bathrooms INT,
-    number_of_half_bathrooms INT,
-    square_feet INT,
-    acres DECIMAL,
-    year_built INT,
-    has_garage BOOLEAN,
-    has_pool BOOLEAN,
-    has_basement BOOLEAN,
-    property_type VARCHAR(50),
-    _description TEXT,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (school_rating_id) REFERENCES school_rating(id) ON DELETE CASCADE,
-    FOREIGN KEY (address_id) REFERENCES address(id) ON DELETE CASCADE
-);
--- EndQuery
-
 -- Query: CreateZillowMarketEstimatesTable
 CREATE TABLE IF NOT EXISTS zillow_market_estimates (
     id SERIAL PRIMARY KEY,
@@ -65,23 +57,6 @@ CREATE TABLE IF NOT EXISTS zillow_market_estimates (
 );
 -- EndQuery
 
--- Query: CreateListingDetailsTable
-CREATE TABLE IF NOT EXISTS listing_details (
-    id SERIAL PRIMARY KEY,
-    zillow_url VARCHAR(255) UNIQUE,
-    property_details_id INT,
-    zillow_market_estimates_id INT,
-    listing_price INT,
-    property_status VARCHAR(50),
-    date_listed TIMESTAMP WITHOUT TIME ZONE DEFAULT '1970-01-01 00:00:00',
-    creation_type VARCHAR(50),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
-    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE
-);
--- EndQuery
-
 -- Query: CreateAgentsTable
 CREATE TABLE IF NOT EXISTS agent (
     id SERIAL PRIMARY KEY,
@@ -94,21 +69,6 @@ CREATE TABLE IF NOT EXISTS agent (
     state VARCHAR(50),
     country VARCHAR(50),
     agent_type VARCHAR(50),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
-);
--- EndQuery
-
--- Query: CreateRentCastConfigDetailsTable
-CREATE TABLE IF NOT EXISTS rent_cast_config_details (
-    id SERIAL PRIMARY KEY,
-    api_key_name VARCHAR(250),
-    email VARCHAR(250),
-    api_calls_this_month INT,
-    number_of_free_api_calls INT,
-    billing_period INT,
-    first_billed_on TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-    most_recent_billing_date TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
@@ -137,6 +97,48 @@ CREATE TABLE IF NOT EXISTS rent_cast_api_response (
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     rent_cast_api_call_id INT,
     FOREIGN KEY (rent_cast_api_call_id) REFERENCES rent_cast_api_call(id) ON DELETE CASCADE
+);
+-- EndQuery
+
+-- Query: CreatePropertyDetailsTable
+CREATE TABLE IF NOT EXISTS property_details (
+    id SERIAL PRIMARY KEY,
+    address_id INT,
+    school_rating_id INT,
+    number_of_bedrooms INT,
+    number_of_full_bathrooms INT,
+    number_of_half_bathrooms INT,
+    square_feet INT,
+    acres DECIMAL,
+    year_built INT,
+    has_garage BOOLEAN,
+    has_pool BOOLEAN,
+    has_basement BOOLEAN,
+    property_type VARCHAR(50),
+    _description TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (school_rating_id) REFERENCES school_rating(id) ON DELETE CASCADE,
+    FOREIGN KEY (address_id) REFERENCES address(id) ON DELETE CASCADE
+);
+-- EndQuery
+
+-- Query: CreateListingDetailsTable
+CREATE TABLE IF NOT EXISTS listing_details (
+    id SERIAL PRIMARY KEY,
+    zillow_url VARCHAR(255) UNIQUE,
+    property_details_id INT,
+    zillow_market_estimates_id INT,
+    listing_price INT,
+    property_status VARCHAR(50),
+    date_listed TIMESTAMP WITHOUT TIME ZONE DEFAULT '1970-01-01 00:00:00',
+    creation_type VARCHAR(50),
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+    FOREIGN KEY (property_details_id) REFERENCES property_details(id) ON DELETE CASCADE,
+    FOREIGN KEY (zillow_market_estimates_id) REFERENCES zillow_market_estimates(id) ON DELETE CASCADE,
+    FOREIGN KEY (rent_cast_sale_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE,
+    FOREIGN KEY (rent_cast_property_response_id) REFERENCES rent_cast_api_response(id) ON DELETE CASCADE
 );
 -- EndQuery
 
