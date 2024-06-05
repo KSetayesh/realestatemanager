@@ -4,6 +4,7 @@ export * from './HighYieldSavingsApiTypes';
 export * from './AgentApiTypes';
 export * from './RentCastApiTypes';
 export * from './ListingTypes';
+export * from './InvestmentTypes';
 export * from './FilterPropertyListApiTypes';
 export * from './utilities/Utility';
 
