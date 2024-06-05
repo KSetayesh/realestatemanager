@@ -7,7 +7,6 @@ import UploadCSVFile from '../components/UploadCSVFile';
 import ReusableTable from '../components/ReusableTable';
 import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
 import { DefaultTableType } from '../constants/Constant';
-import '../styles/UploadCSVFile.css';
 
 export enum AddPropertyType {
     SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
@@ -33,7 +32,7 @@ const PropertyForm: React.FC = () => {
     const dummyCSVDataTable: DummyCSVDataTable = new DummyCSVDataTable();
 
     const [formData, setFormData] = useState(addPropertyFormDetails.getDefaultFormData());
-    const [formType, setFormType] = useState<AddPropertyType>(AddPropertyType.SINGLE_PROPERTY_INPUT);
+    const [formType, setFormType] = useState<AddPropertyType>((AddPropertyType.SINGLE_PROPERTY_INPUT))
 
     const handleFormTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const input = event.target.value as keyof typeof AddPropertyType;
@@ -63,10 +62,15 @@ const PropertyForm: React.FC = () => {
         }
     };
 
-    const handleCSVUpload = async (data: any): Promise<number> => {
+    const handleCSVUpload = async (data: any): Promise<void> => {
         console.log('CSV Data:', data);
-        // Process the CSV data as needed
-        return data.length;
+        const numberOfPropertiesUploaded = data.length; // Replace this with an actual API call
+        if (numberOfPropertiesUploaded > 0) {
+            alert(`${numberOfPropertiesUploaded} new properties added!`);
+        } else {
+            alert('No properties added');
+        }
+        window.location.reload(); // Reset the page
     };
 
     const getExampleData = (): DummyCSVDataType[] => {
@@ -120,7 +124,6 @@ const PropertyForm: React.FC = () => {
             {formType === AddPropertyType.BULK_UPLOAD && (
                 <div>
                     <hr></hr>
-
                     <h2>Template CSV</h2>
                     <ReusableTable
                         data={getExampleData()}
@@ -142,7 +145,6 @@ const PropertyForm: React.FC = () => {
             )}
         </div>
     );
-
 };
 
 export default PropertyForm;
