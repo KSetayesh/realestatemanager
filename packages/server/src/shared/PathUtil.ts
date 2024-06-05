@@ -24,4 +24,3 @@ export class PathUtil {
 
 }
 
-console.log(__dirname);

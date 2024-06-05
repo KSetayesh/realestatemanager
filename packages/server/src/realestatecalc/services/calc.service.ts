@@ -13,7 +13,6 @@ import {
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { InvestmentMetricBuilder } from '../builders/investment.metric.builder';
 import { InvestmentCalculator } from '../models/investment_models/investment.calculator';
-import { DatabaseManagerFactory } from 'src/db/realestate/dbfactory';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { InvestmentCalculationManager } from '../models/investment_models/investment.calculation.manager';

@@ -55,7 +55,6 @@ export class InvestmentCalculator {
         const year = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
         const nextMonth = (today.getMonth() + 1) % 12;
 
-
         for (let monthCounter = 1; monthCounter <= totalPayments; monthCounter++) {
             const monthlyDateData: MonthlyDateData = this.getDateData(year, nextMonth, monthCounter);
             const monthlyInvestmentDetailsDTO: MonthlyInvestmentDetailsResponseDTO = {
