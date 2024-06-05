@@ -49,7 +49,6 @@ export class InvestmentBreakdownTable implements AbstractTable<MonthlyInvestment
             [InvestmentBreakdownTableType.MORTGAGE_BREAKDOWN]: {
                 columns: mortgageBreakdownColumns,
                 data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
-                    console.log('interestAmountForp:', ammortizationDetail.monthlyBreakdown.transactions.breakdown.Mortgage.breakdown.interestAmountForPayment);
                     return {
                         year: ammortizationDetail.monthlyDateData.yearCounter,
                         month: ammortizationDetail.monthlyDateData.monthMod12,

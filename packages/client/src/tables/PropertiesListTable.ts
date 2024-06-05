@@ -166,9 +166,6 @@ export class PropertiesListTable implements AbstractTable<ListingWithScenariosRe
 
     createUpdatePropertyRequest(tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): CreateUpdatePropertyRequest {
         const property: ListingWithScenariosResponseDTO = tableDataItem.objectData.key;
-        console.log('tableDataItem:', tableDataItem);
-        console.log('type of price:', (typeof tableDataItem.rowData.price));
-        console.log('price:', (tableDataItem.rowData.price));
         return {
             propertyIdentifier: {
                 fullAddress: getFullAddress(property),

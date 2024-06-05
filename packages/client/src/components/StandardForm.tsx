@@ -40,10 +40,6 @@ const StandardForm = <T,>({
         let _name = name;
         let _value: string | boolean | number = value;
 
-        console.log("_name:", _name);
-        console.log("_value:", _value);
-        console.log("_type:", type);
-
         if (_name.endsWith('_filter')) {
             _name = _name.replace("_filter", "");
         } else if (InputType.RADIO === type) {

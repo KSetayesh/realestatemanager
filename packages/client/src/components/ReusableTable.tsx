@@ -79,7 +79,6 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const getTableData = (): TableDataItem<Y>[] => {
-        console.log('tableType:', tableType);
         return tableHandler.getTableData(data, tableType);
     };
 
