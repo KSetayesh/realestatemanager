@@ -1,8 +1,3 @@
-import {
-    CreateInvestmentScenarioRequest,
-    ListingWithScenariosResponseDTO,
-    MonthlyInvestmentDetailsResponseDTO
-} from '@realestatemanager/shared';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable from '../components/ReusableTable';
@@ -14,6 +9,11 @@ import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/Inv
 import { PropertiesListTable } from '../tables/PropertiesListTable';
 import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
 import { PropertiesListTableType } from './PropertiesList';
+import {
+    CreateInvestmentScenarioRequest,
+    ListingWithScenariosResponseDTO,
+    MonthlyInvestmentDetailsResponseDTO
+} from '@realestatemanager/shared';
 
 export enum InvestmentBreakdownTableType {
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
@@ -36,11 +36,6 @@ const InvestmentBreakdown: React.FC = () => {
 
     const [tableType, setTableType] = useState<InvestmentBreakdownTableType>(InvestmentBreakdownTableType.STANDARD_BREAKDOWN);
 
-    const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value as keyof typeof InvestmentBreakdownTableType;
-        setTableType(InvestmentBreakdownTableType[input]);
-    };
-
     const getAmmortizationDetails = (): MonthlyInvestmentDetailsResponseDTO[] => {
         return property.metrics.amortizationData;
     };
@@ -52,7 +47,7 @@ const InvestmentBreakdown: React.FC = () => {
             setProperty(property);
             setFormData(investmentBreakdownFormDetails.getDefaultFormData(property));
         }
-    }, [property]);  // Ensure useEffect depends on `property`
+    }, [property]);
 
     const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
         setSelectedProperty(property);
@@ -78,9 +73,6 @@ const InvestmentBreakdown: React.FC = () => {
         setProperty(data);
     };
 
-    //-----------------------------------------------------------------------------------------------------------
-
-    // Only render the component dependent on properties if properties are loaded
     return (
         <div>
             <h2> Investment Breakdown </h2>
@@ -108,49 +100,17 @@ const InvestmentBreakdown: React.FC = () => {
                     <br />
                     <hr />
                     <br />
-                    <div className="radio-button-group">
-                        <h2>Select Table Type</h2>
-                        <label>
-                            <input
-                                type="radio"
-                                value={InvestmentBreakdownTableType.STANDARD_BREAKDOWN}
-                                checked={tableType === InvestmentBreakdownTableType.STANDARD_BREAKDOWN}
-                                onChange={handleTableTypeChange}
-                            />
-                            Standard Breakdown
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value={InvestmentBreakdownTableType.MORTGAGE_BREAKDOWN}
-                                checked={tableType === InvestmentBreakdownTableType.MORTGAGE_BREAKDOWN}
-                                onChange={handleTableTypeChange}
-                            />
-                            Mortgage Breakdown
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value={InvestmentBreakdownTableType.INVESTMENT_BREAKDOWN}
-                                checked={tableType === InvestmentBreakdownTableType.INVESTMENT_BREAKDOWN}
-                                onChange={handleTableTypeChange}
-                            />
-                            Investment Breakdown
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value={InvestmentBreakdownTableType.EXPENSES_BREAKDOWN}
-                                checked={tableType === InvestmentBreakdownTableType.EXPENSES_BREAKDOWN}
-                                onChange={handleTableTypeChange}
-                            />
-                            Expenses Breakdown
-                        </label>
-                    </div>
                     <ReusableTable
                         data={getAmmortizationDetails()}
                         tableHandler={investmentBreakdownTable}
                         tableType={tableType}
+                        setTableType={setTableType}
+                        tableTypeOptions={[
+                            InvestmentBreakdownTableType.STANDARD_BREAKDOWN,
+                            InvestmentBreakdownTableType.MORTGAGE_BREAKDOWN,
+                            InvestmentBreakdownTableType.INVESTMENT_BREAKDOWN,
+                            InvestmentBreakdownTableType.EXPENSES_BREAKDOWN
+                        ]}
                         includeTableSeparator={true}
                         canExportIntoCSV={true}
                     />
@@ -160,9 +120,6 @@ const InvestmentBreakdown: React.FC = () => {
             )}
         </div>
     );
-
 };
 
 export default InvestmentBreakdown;
-
-

@@ -400,7 +400,7 @@ export const propertiesListColumns: TableColumn[] = [
         inputType: InputType.NUMBER,
         isURL: false,
         showColumn: false,
-        isDollarAmount: false,
+        isDollarAmount: true,
         isSortable: true,
         isEditable: true,
     },

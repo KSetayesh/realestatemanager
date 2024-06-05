@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
@@ -51,6 +51,8 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     data: Y[];
     tableHandler: AbstractTable<Y, X>;
     tableType: X;
+    setTableType?: React.Dispatch<React.SetStateAction<X>>;
+    tableTypeOptions?: X[];
     onRowClick?: (item: Y) => void;
     includeTableSeparator?: boolean;
     canExportIntoCSV?: boolean;
@@ -62,6 +64,8 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     data,
     tableHandler,
     tableType,
+    setTableType,
+    tableTypeOptions,
     onRowClick,
     includeTableSeparator = false,
     canExportIntoCSV = false,
@@ -70,19 +74,24 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 }: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
-        const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig(); //[tableType].columns;
+        const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig();
         return tablesConfig[tableType].columns;
     };
 
     const getTableData = (): TableDataItem<Y>[] => {
+        console.log('tableType:', tableType);
         return tableHandler.getTableData(data, tableType);
     };
 
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData())// tableData);
+    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData());
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
+
+    useEffect(() => {
+        setEditableData(getTableData());
+    }, [data, tableType]);
 
     const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
@@ -332,6 +341,22 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     return (
         <div>
+            {setTableType && tableTypeOptions && (
+                <div className="radio-button-group">
+                    <h2>Select Table Type</h2>
+                    {tableTypeOptions.map((option) => (
+                        <label key={option}>
+                            <input
+                                type="radio"
+                                value={option}
+                                checked={tableType === option}
+                                onChange={() => setTableType(option)}
+                            />
+                            {option}
+                        </label>
+                    ))}
+                </div>
+            )}
             {canExportIntoCSV && (
                 getExportCSVButton()
             )}

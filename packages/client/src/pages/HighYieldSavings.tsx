@@ -70,6 +70,8 @@ const HighYieldSavings: React.FC = () => {
                         data={metrics}
                         tableHandler={highYieldSavingsTable}
                         tableType={DefaultTableType.DEFAULT}
+                        setTableType={undefined}
+                        tableTypeOptions={undefined}
                         onRowClick={undefined}
                         includeTableSeparator={true}
                         canExportIntoCSV={true}

@@ -35,11 +35,6 @@ const PropertiesList: React.FC = () => {
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
-    const handleTableTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const input = event.target.value as keyof typeof PropertiesListTableType;
-        setTableType(PropertiesListTableType[input]);
-    };
-
     const getDefaultFormData = (): PropertyFilterFormFields => {
         return propertiesListFormDetails.getDefaultFormData();
     };
@@ -89,7 +84,6 @@ const PropertiesList: React.FC = () => {
             setFormData(getDefaultFormData());
             setIsLoading(false);
         }
-
     };
 
     const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
@@ -116,37 +110,20 @@ const PropertiesList: React.FC = () => {
                 <p>Loading properties...</p>
             ) : (
                 <>
-                    <div className="radio-button-group">
-                        <h2>Select Table Type</h2>
-                        <label>
-                            <input
-                                type="radio"
-                                value={PropertiesListTableType.STANDARD_BREAKDOWN}
-                                checked={tableType === PropertiesListTableType.STANDARD_BREAKDOWN}
-                                onChange={handleTableTypeChange}
-                            />
-                            Standard Breakdown
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                value={PropertiesListTableType.ALL}
-                                checked={tableType === PropertiesListTableType.ALL}
-                                onChange={handleTableTypeChange}
-                            />
-                            All
-                        </label>
-                    </div>
                     <ReusableTable
                         data={properties}
                         tableHandler={propertiesListWithInvestmentBreakdownTable}
                         tableType={tableType}
+                        setTableType={setTableType}
+                        tableTypeOptions={[
+                            PropertiesListTableType.STANDARD_BREAKDOWN,
+                            PropertiesListTableType.ALL
+                        ]}
                         onRowClick={handleRowClick}
                         includeTableSeparator={false}
                         canExportIntoCSV={true}
                         isEditable={true}
                         handleUpdate={handleUpdate}
-
                     />
                     {selectedProperty && <PropertyDetailsModal
                         data={selectedProperty}
