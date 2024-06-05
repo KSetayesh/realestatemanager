@@ -3,7 +3,7 @@ import Papa from 'papaparse';
 import '../styles/UploadCSVFile.css';
 
 interface UploadCSVFileProps {
-    onFileUpload: (data: any) => Promise<void>;
+    onFileUpload: (data: Record<string, string | number>[]) => Promise<void>;
 }
 
 const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
@@ -31,7 +31,7 @@ const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
             skipEmptyLines: true,
             complete: async function (results) {
                 try {
-                    await onFileUpload(results.data);
+                    await onFileUpload(results.data as Record<string, string | number>[]);
                 } catch (err) {
                     setError('Failed to upload data');
                 }

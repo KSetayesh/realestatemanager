@@ -154,7 +154,7 @@ export class RentCastService {
             }
         }
 
-        const isValidData = (rentCastSalesResponses: RentCastResponse[], rentCastPropertyResponses: RentCastResponse[]): boolean => {
+        const isValidMatch = (rentCastSalesResponses: RentCastResponse[], rentCastPropertyResponses: RentCastResponse[]): boolean => {
             return rentCastSalesResponses.length == 1 && rentCastPropertyResponses.length == 1;
         };
 
@@ -164,7 +164,7 @@ export class RentCastService {
             const rentCastSalesResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiSaleJsonData);
             const rentCastPropertyResponses: RentCastResponse[] = this.parseApiResponse(rentCastMatch.rentCastApiPropertyJsonData); //rentCastApiSaleJsonData);
 
-            if (!isValidData(rentCastSalesResponses, rentCastPropertyResponses)) {
+            if (!isValidMatch(rentCastSalesResponses, rentCastPropertyResponses)) {
                 throw new Error('There should only be 1 listing response per "rent_cast_api_response" table row');
             }
 

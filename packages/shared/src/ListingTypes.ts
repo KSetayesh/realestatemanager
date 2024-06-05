@@ -1,6 +1,10 @@
 import { PropertyIdentifier } from "./ApiTypes";
 import { Country, ListingCreationType, PropertyStatus, PropertyType, State } from "./Constants";
 
+export interface CreatePropertiesInBulkRequest {
+    csvData: Record<string, string | number>[];
+};
+
 export interface CreateListingDetailsRequest {
     zillowURL: string;
     propertyDetails: CreatePropertyDetailsRequest;

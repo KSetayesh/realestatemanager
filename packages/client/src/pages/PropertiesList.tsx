@@ -107,7 +107,7 @@ const PropertiesList: React.FC = () => {
             />}
             <h2> Properties List </h2>
             {isLoading ? (
-                <p>Loading properties...</p>
+                <p><h3>Loading properties...</h3></p>
             ) : (
                 <>
                     <ReusableTable

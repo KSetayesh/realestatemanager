@@ -4,7 +4,8 @@ import {
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
     CreateGetAllPropertiesRequest,
-    CreateUpdatePropertyRequest
+    CreateUpdatePropertyRequest,
+    CreatePropertiesInBulkRequest
 } from "@realestatemanager/shared";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
@@ -51,6 +52,20 @@ export class RealEstateCalcApi extends CalcApi {
             console.error(message);
             throw new Error(message);
         }
+    }
+
+    async addPropertiesInBulk(dataToSubmit: CreatePropertiesInBulkRequest): Promise<number> {
+        try {
+            const response = await axios.post(`${this.getURL()}/addPropertiesInBulk`, dataToSubmit, {
+                headers: this.getHeaders(),
+            });
+            return response.data;
+        } catch (error) {
+            const message = `Error sending form data to backend:", ${error}`;
+            console.error(message);
+            throw new Error(message);
+        }
+
     }
 
     async addNewProperty(dataToSubmit: CreateListingDetailsRequest): Promise<boolean> {

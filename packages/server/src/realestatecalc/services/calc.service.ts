@@ -6,6 +6,7 @@ import {
     CreateGetAllPropertiesRequest,
     CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
+    CreatePropertiesInBulkRequest,
     CreateUpdatePropertyRequest,
     ListingCreationType,
     ListingWithScenariosResponseDTO,
@@ -117,6 +118,11 @@ export class CalcService {
             listingDetails: listingDetails.toDTO(),
             metrics: metrics,
         };
+    }
+
+    async addPropertiesInBulk(propertiesInBulk: CreatePropertiesInBulkRequest): Promise<number> {
+        console.log('propertiesInBulk:', propertiesInBulk);
+        return 0;
     }
 
 

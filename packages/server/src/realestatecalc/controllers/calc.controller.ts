@@ -6,7 +6,8 @@ import {
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
     CreateGetAllPropertiesRequest,
-    CreateUpdatePropertyRequest
+    CreateUpdatePropertyRequest,
+    CreatePropertiesInBulkRequest
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 import { RentCastService } from '../services/rentcast.service';
@@ -73,6 +74,13 @@ export class CalcController {
         await this.rentCastService.addNewPropertyWithRentCastAPI(rentCastApiRequest);
     }
 
+    @Post('addPropertiesInBulk')
+    async addPropertiesInBulk(
+        @Body() propertiesInBulk: CreatePropertiesInBulkRequest,
+    ): Promise<number> {
+        return this.calcService.addPropertiesInBulk(propertiesInBulk);
+    }
+
     @Post('calculate')
     async calculate(
         @Body() investmentScenarioRequest: CreateInvestmentScenarioRequest,
@@ -80,17 +88,5 @@ export class CalcController {
         console.log(investmentScenarioRequest);
         return this.calcService.calculate(investmentScenarioRequest);
     }
-
-    // private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
-    //     if (investmentScenarioRequest) {
-    //         if (investmentScenarioRequest.useDefaultRequest) {
-    //             return true;
-    //         }
-    //         else if (!investmentScenarioRequest.investmentDetails) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
 
 }
