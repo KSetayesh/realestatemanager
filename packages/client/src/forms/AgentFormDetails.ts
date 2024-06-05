@@ -2,7 +2,12 @@ import { CreateAgentRequest } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { AgentType, Country, InputType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
-import { BasicStringForm, CountryForm, GetOptionsForFormProperty, StateForm } from "./ReusableFormFields";
+import {
+    BasicStringForm,
+    CountryForm,
+    GetOptionsForFormProperty,
+    StateForm
+} from "./ReusableFormFields";
 
 export type AgentFormData = {
     firstName: string;
