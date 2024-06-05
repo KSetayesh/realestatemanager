@@ -82,7 +82,7 @@ const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
                 View CSV File
             </button>
             <button onClick={handleFileUpload} className={'uploadButton'}>
-                Upload
+                Upload Properties
             </button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
 

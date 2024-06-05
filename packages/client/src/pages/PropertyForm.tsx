@@ -4,15 +4,33 @@ import { CreateListingDetailsRequest } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
 import UploadCSVFile from '../components/UploadCSVFile';
+import ReusableTable from '../components/ReusableTable';
+import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
+import { DefaultTableType } from '../constants/Constant';
+import '../styles/UploadCSVFile.css';
 
 export enum AddPropertyType {
     SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
     BULK_UPLOAD = 'BULK_UPLOAD',
 };
 
+export interface DummyCSVDataType {
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    website: string;
+    companyName: string;
+    phoneNumber: string;
+    email: string;
+    country: string;
+    state: string;
+    agentType: string;
+};
+
 const PropertyForm: React.FC = () => {
 
     const addPropertyFormDetails: AddPropertyFormDetails = new AddPropertyFormDetails();
+    const dummyCSVDataTable: DummyCSVDataTable = new DummyCSVDataTable();
 
     const [formData, setFormData] = useState(addPropertyFormDetails.getDefaultFormData());
     const [formType, setFormType] = useState<AddPropertyType>(AddPropertyType.SINGLE_PROPERTY_INPUT);
@@ -51,23 +69,20 @@ const PropertyForm: React.FC = () => {
         return data.length;
     };
 
-    const expectedHeaders: string[] = [
-        'Property Name',
-        'Address',
-        'Price',
-        'Bedrooms',
-        'Bathrooms',
-        'Square Feet'
-    ];
-
-    const exampleData: { [key: string]: string }[] = [{
-        'Property Name': 'Example Property',
-        'Address': '123 Example St',
-        'Price': '500000',
-        'Bedrooms': '3',
-        'Bathrooms': '2',
-        'Square Feet': '1500'
-    }];
+    const getExampleData = (): DummyCSVDataType[] => {
+        return [{
+            firstName: 'Example First Name',
+            lastName: 'Example Last Name',
+            fullName: 'Example FullName',
+            website: 'Example Website',
+            companyName: 'Example Company Name',
+            phoneNumber: 'Example Phone Number',
+            email: 'Example Email',
+            country: 'Example Country',
+            state: 'Example State',
+            agentType: 'Example Agent Type',
+        }];
+    };
 
     return (
         <div className="form-container">
@@ -104,23 +119,24 @@ const PropertyForm: React.FC = () => {
             )}
             {formType === AddPropertyType.BULK_UPLOAD && (
                 <div>
-                    <h3>Expected CSV Headers</h3>
-                    <table className="expected-headers-table">
-                        <thead>
-                            <tr>
-                                {expectedHeaders.map((header, index) => (
-                                    <th key={index}>{header}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {expectedHeaders.map((header, index) => (
-                                    <td key={index}>{exampleData[0][header]}</td>
-                                ))}
-                            </tr>
-                        </tbody>
-                    </table>
+                    <hr></hr>
+
+                    <h2>Template CSV</h2>
+                    <ReusableTable
+                        data={getExampleData()}
+                        tableHandler={dummyCSVDataTable}
+                        tableType={DefaultTableType.DEFAULT}
+                        setTableType={undefined}
+                        tableTypeOptions={undefined}
+                        onRowClick={undefined}
+                        includeTableSeparator={false}
+                        canExportIntoCSV={true}
+                        exportCSVButtonTitle='Export Template CSV'
+                        isEditable={false}
+                        handleUpdate={undefined}
+                    />
+                    <br></br>
+                    <hr></hr>
                     <UploadCSVFile onFileUpload={handleCSVUpload} />
                 </div>
             )}

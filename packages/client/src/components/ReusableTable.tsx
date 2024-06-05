@@ -56,6 +56,7 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     onRowClick?: (item: Y) => void;
     includeTableSeparator?: boolean;
     canExportIntoCSV?: boolean;
+    exportCSVButtonTitle?: string;
     isEditable?: boolean;
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
@@ -69,6 +70,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     onRowClick,
     includeTableSeparator = false,
     canExportIntoCSV = false,
+    exportCSVButtonTitle,
     isEditable = false,
     handleUpdate,
 }: ReusableTableProps<Y, X>) => {
@@ -223,7 +225,12 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const getExportCSVButton = () => {
         return (
-            <ExportCSVButton columns={getTableColumns()} tableData={editableData} disabled={isEditing} />
+            <ExportCSVButton
+                columns={getTableColumns()}
+                tableData={editableData}
+                disabled={isEditing}
+                buttonTitle={exportCSVButtonTitle}
+            />
         );
     };
 

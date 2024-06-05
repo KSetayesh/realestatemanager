@@ -122,6 +122,7 @@ const PropertiesList: React.FC = () => {
                         onRowClick={handleRowClick}
                         includeTableSeparator={false}
                         canExportIntoCSV={true}
+                        exportCSVButtonTitle=''
                         isEditable={true}
                         handleUpdate={handleUpdate}
                     />

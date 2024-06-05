@@ -6,12 +6,14 @@ export interface ExportDataProps<T> {
     columns: TableColumn[];
     tableData: TableDataItem<T>[];
     disabled: boolean;
+    buttonTitle: string | undefined;
 };
 
 const ExportCSVButton = <T,>({
     columns,
     tableData,
-    disabled = false
+    disabled = false,
+    buttonTitle,
 }: ExportDataProps<T>) => {
 
     const preprocessDataForCSV = (data: TableDataItem<T>[], columns: TableColumn[]) => {
@@ -50,7 +52,7 @@ const ExportCSVButton = <T,>({
             onClick={() => !disabled && exportToCSV(tableData, columns, 'table-data.csv')}
             style={{ marginBottom: '20px' }}  // Add margin bottom
         >
-            Export CSV
+            {buttonTitle ? buttonTitle : 'Export CSV'}
         </button>
     );
 };
