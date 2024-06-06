@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import '../styles/UploadCSVFile.css';
+import { Box, TextField, Typography } from '@mui/material';
 import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
 
 interface UploadCSVFileProps {
     onFileUpload: (data: Record<string, string | number>[]) => Promise<void>;
-}
+};
 
 const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
     const [file, setFile] = useState<File | null>(null);
@@ -64,48 +64,52 @@ const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
 
     return (
         <div>
-            <h2>Upload CSV File</h2>
-            <div style={{ marginBottom: '10px' }}>
-                <input
+            <Box>
+                <Typography variant="h4" gutterBottom>Upload CSV File</Typography>
+                <TextField
                     type="file"
-                    accept=".csv"
+                    inputProps={{ accept: ".csv" }}
                     onChange={handleFileChange}
-                    className={'fileInput'}
+                    variant="outlined"
                 />
-            </div>
-            <CustomButtonComponent
-                onClick={handleViewCSVFile}
-                buttonTitle={'View CSV File'}
-            />
-            <CustomButtonComponent
-                onClick={handleFileUpload}
-                buttonTitle={'Upload Properties'}
-            />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+                <Box marginTop={2}>
+                    <CustomButtonComponent
+                        onClick={handleViewCSVFile}
+                        buttonTitle={'View CSV File'}
+                    />
+                    <CustomButtonComponent
+                        onClick={handleFileUpload}
+                        buttonTitle={'Upload Properties'}
+                    />
+                </Box>
+                {error && <Typography color="error" variant="body1">{error}</Typography>}
 
-            {viewCSV && data.length > 0 && (
-                <div style={{ marginTop: '20px' }}>
-                    <h3>Uploaded Data:</h3>
-                    <table className="properties-table">
-                        <thead>
-                            <tr>
-                                {Object.keys(data[0]).map((key) => (
-                                    <th key={key}>{key}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row, index) => (
-                                <tr key={index}>
-                                    {Object.values(row).map((value, i) => (
-                                        <td key={i}>{String(value)}</td> // Typecast value to string
+                {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
+
+                {viewCSV && data.length > 0 && (
+                    <Box marginTop={4}>
+                        <Typography variant="h5" gutterBottom>Uploaded Data:</Typography>
+                        <table className="properties-table">
+                            <thead>
+                                <tr>
+                                    {Object.keys(data[0]).map((key) => (
+                                        <th key={key}>{key}</th>
                                     ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+                            </thead>
+                            <tbody>
+                                {data.map((row, index) => (
+                                    <tr key={index}>
+                                        {Object.values(row).map((value, i) => (
+                                            <td key={i}>{String(value)}</td> // Typecast value to string
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Box>
+                )}
+            </Box>
         </div>
     );
 };
