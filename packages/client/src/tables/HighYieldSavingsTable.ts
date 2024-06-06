@@ -15,7 +15,7 @@ export class HighYieldSavingsTable extends AbstractTable<HighYeildSavingsRespons
             [DefaultTableType.DEFAULT]: {
                 columns: this.getDefaultColumns(),
                 data: (highYieldSavingsData: HighYeildSavingsResponseDTO): TableRow => {
-                    return this.createRowData(highYieldSavingsData);
+                    return highYieldSavingsData;
                 },
             },
         };
@@ -24,21 +24,5 @@ export class HighYieldSavingsTable extends AbstractTable<HighYeildSavingsRespons
     getDefaultColumns(): TableColumn[] {
         return highYieldSavingsDefaultColumns;
     }
-
-    private createRowData(highYieldSavingsData: HighYeildSavingsResponseDTO) {
-        return {
-            year: highYieldSavingsData.year,
-            month: highYieldSavingsData.month,
-            date: highYieldSavingsData.date,
-            startPrincipal: highYieldSavingsData.startPrincipal,
-            startBalance: highYieldSavingsData.startBalance,
-            interest: highYieldSavingsData.interest,
-            accumulatedInterest: highYieldSavingsData.accumulatedInterest,
-            endBalance: highYieldSavingsData.endBalance,
-            endPrincipal: highYieldSavingsData.endPrincipal,
-        };
-    }
-
-
 
 } 

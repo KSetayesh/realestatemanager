@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/CollectProperties.css';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
 import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
 import StandardForm, { FormProperty } from '../components/StandardForm';
+import ReusableTable from '../components/ReusableTable';
+import { RentCastDetailsTable } from '../tables/RentCastDetailsTable';
 
 const CollectProperties: React.FC = () => {
     const rentCastApi: RentCastApi = new RentCastApi();
     const collectPropertiesFormDetails: CollectPropertiesFormDetails = new CollectPropertiesFormDetails();
+    const rentCastTableHandler: RentCastDetailsTable = new RentCastDetailsTable();
 
     const [rentCastDetails, setRentCastDetails] = useState<RentCastDetailsResponseDTO[]>();
     const [isLoading, setIsLoading] = useState(true);
@@ -76,21 +78,15 @@ const CollectProperties: React.FC = () => {
         } else {
             content = (
                 <>
-                    <div className="content-container">
-                        <hr className="content-separator" /> {/* Add a class for styling */}
-                        <div className="scrollable-container">
-                            {rentCastDetails ? rentCastDetails.map((rentCastDetail, index) => (
-                                <div key={index}>
-                                    <p><b>Api Key Name:</b> {rentCastDetail.apiKeyName}</p>
-                                    <p><b>Remaining number of free API calls left:</b> {rentCastDetail.remainingNumberOfFreeApiCalls}</p>
-                                    <p><b>Can make API call:</b> {rentCastDetail.canMakeApiCalls.toString()}</p>
-                                    <p><b>Days into billing period:</b> {rentCastDetail.daysIntoBillingPeriod} / {rentCastDetail.billingPeriod}</p>
-                                    <p><b>Most recent billing date:</b> {new Date(rentCastDetail.mostRecentBillingDate).toLocaleDateString('en-US')}</p>
-                                    <hr />
-                                </div>
-                            )) : []}
-                        </div>
-                        <hr className="content-separator" /> {/* Add a class for styling */}
+                    <div>
+                        <hr></hr>
+                        {rentCastDetails && <ReusableTable
+                            data={rentCastDetails}
+                            tableHandler={rentCastTableHandler}
+                        />
+                        }
+                        <br />
+                        <hr></hr>
                         <br />
 
                         {formData && <StandardForm

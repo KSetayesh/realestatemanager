@@ -29,7 +29,6 @@ const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
-    // const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 

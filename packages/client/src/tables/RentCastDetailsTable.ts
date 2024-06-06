@@ -1,20 +1,20 @@
-import { AgentResponseDTO } from "@realestatemanager/shared";
+import { RentCastDetailsResponseDTO } from "@realestatemanager/shared";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import { TableColumn, TableRow } from "../components/ReusableTable";
-import { agentDefaultColumns } from "./columns/AgentColumns";
 import { DefaultTableType } from "../constants/Constant";
+import { rentCastDetailsColumns } from "./columns/RentCastDetailsColumns";
 
-export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType> {
+export class RentCastDetailsTable extends AbstractTable<RentCastDetailsResponseDTO, DefaultTableType> {
 
     getDefaultTableType(): DefaultTableType {
         return DefaultTableType.DEFAULT;
     }
 
-    getTablesConfig(): TablesConfig<AgentResponseDTO> {
+    getTablesConfig(): TablesConfig<RentCastDetailsResponseDTO> {
         return {
             [DefaultTableType.DEFAULT]: {
                 columns: this.getDefaultColumns(),
-                data: (data: AgentResponseDTO): TableRow => {
+                data: (data: RentCastDetailsResponseDTO): TableRow => {
                     return data;
                 },
             },
@@ -22,7 +22,7 @@ export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType
     }
 
     getDefaultColumns(): TableColumn[] {
-        return agentDefaultColumns;
+        return rentCastDetailsColumns;
     }
 
 }
