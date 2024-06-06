@@ -68,8 +68,6 @@ const HighYieldSavings: React.FC = () => {
                     <ReusableTable
                         data={metrics}
                         tableHandler={highYieldSavingsTable}
-                        // tableType={DefaultTableType.DEFAULT}
-                        // setTableType={undefined}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{

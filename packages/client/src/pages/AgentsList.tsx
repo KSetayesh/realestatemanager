@@ -39,8 +39,6 @@ const AgentsList: React.FC = () => {
                     <ReusableTable
                         data={agents}
                         tableHandler={agentTable}
-                        // tableType={DefaultTableType.DEFAULT}
-                        // setTableType={undefined}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{

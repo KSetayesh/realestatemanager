@@ -104,8 +104,6 @@ const PropertiesList: React.FC = () => {
                     <ReusableTable
                         data={properties}
                         tableHandler={propertiesListWithInvestmentBreakdownTable}
-                        // tableType={tableType}
-                        // setTableType={setTableType}
                         onRowClick={handleRowClick}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{

@@ -162,8 +162,6 @@ const PropertyForm: React.FC = () => {
                             <ReusableTable
                                 data={getExampleData()}
                                 tableHandler={dummyCSVDataTable}
-                                // tableType={DefaultTableType.DEFAULT}
-                                // setTableType={undefined}
                                 onRowClick={undefined}
                                 tableSeperatorDetails={undefined}
                                 exportIntoCSV={{
