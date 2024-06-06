@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
-import '../styles/PropertiesList.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
