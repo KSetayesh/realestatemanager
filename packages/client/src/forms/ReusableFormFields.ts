@@ -83,7 +83,7 @@ export const CountryForm = (formInput: string | undefined, addAnyOption: boolean
         title: 'Country',
         values: [
             {
-                name: 'state',
+                name: 'country',
                 type: InputType.SELECT,
                 value: formInput,
                 options: GetOptionsForFormProperty(Country, addAnyOption),

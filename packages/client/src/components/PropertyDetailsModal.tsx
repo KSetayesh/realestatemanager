@@ -4,7 +4,7 @@ import { Modal, Box, Typography, Link as MuiLink } from '@mui/material';
 import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
 import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
-import CustomButtonComponent from './BasicButton';
+import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
 
 export interface PropertyDetailsModalType<T> {
     data: T | null;

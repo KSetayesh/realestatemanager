@@ -152,7 +152,6 @@ const PropertyForm: React.FC = () => {
                     handleSubmit={handleSubmit}
                     setFormData={setFormData}
                     buttonTitle='Submit'
-                    columnsPerRow={5}
                 />
             )}
             {formType === AddPropertyType.BULK_UPLOAD && (

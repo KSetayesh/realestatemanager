@@ -1,5 +1,5 @@
 import { renderCellData } from "../constants/Constant";
-import CustomButtonComponent from "./BasicButton";
+import CustomButtonComponent from "../basicdatadisplaycomponents/ButtonComponent";
 import { TableColumn, TableDataItem, TableRow } from "./ReusableTable";
 import Papa from 'papaparse';
 

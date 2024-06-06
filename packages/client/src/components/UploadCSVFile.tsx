@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import '../styles/UploadCSVFile.css';
-import CustomButtonComponent from './BasicButton';
+import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
 
 interface UploadCSVFileProps {
     onFileUpload: (data: Record<string, string | number>[]) => Promise<void>;
