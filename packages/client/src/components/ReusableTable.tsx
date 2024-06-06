@@ -426,7 +426,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                         </StyledTable>
                     </StyledTableContainer>
                     <TablePagination
-                        rowsPerPageOptions={[10, 25, 50]}
+                        rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
                         count={editableData.length}
                         rowsPerPage={rowsPerPage}

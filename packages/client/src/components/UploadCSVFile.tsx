@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import {
-    Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled,
+    Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled,
     TextField
 } from '@mui/material';
 import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
@@ -14,7 +14,7 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
     marginTop: theme.spacing(2),
 }));
 
-const StyledTable = styled(Table)(({ theme }) => ({
+const StyledTable = styled(Table)(() => ({
     minWidth: 700,
     borderCollapse: 'collapse',
 }));
@@ -43,11 +43,11 @@ const StyledTableBody = styled(TableBody)(({ theme }) => ({
     },
 }));
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(2),
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-    borderRadius: '10px',
-}));
+// const StyledPaper = styled(Paper)(({ theme }) => ({
+//     padding: theme.spacing(2),
+//     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+//     borderRadius: '10px',
+// }));
 
 const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
     const [file, setFile] = useState<File | null>(null);
