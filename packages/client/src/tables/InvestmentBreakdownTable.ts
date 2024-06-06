@@ -11,6 +11,10 @@ import {
 
 export class InvestmentBreakdownTable extends AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> {
 
+    getDefaultTableType(): InvestmentBreakdownTableType {
+        return InvestmentBreakdownTableType.STANDARD_BREAKDOWN;
+    }
+
     getDefaultColumns(): TableColumn[] {
         return standardBreakdownColumns;
     }

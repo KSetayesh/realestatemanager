@@ -8,7 +8,6 @@ import {
     HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
 import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
-import { DefaultTableType } from '../constants/Constant';
 
 const HighYieldSavings: React.FC = () => {
 
@@ -69,8 +68,8 @@ const HighYieldSavings: React.FC = () => {
                     <ReusableTable
                         data={metrics}
                         tableHandler={highYieldSavingsTable}
-                        tableType={DefaultTableType.DEFAULT}
-                        setTableType={undefined}
+                        // tableType={DefaultTableType.DEFAULT}
+                        // setTableType={undefined}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{

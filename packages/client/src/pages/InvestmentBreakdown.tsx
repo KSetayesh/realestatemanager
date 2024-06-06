@@ -7,7 +7,6 @@ import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';
 import { PropertiesListTable } from '../tables/PropertiesListTable';
 import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
-import { PropertiesListTableType } from './PropertiesList';
 import {
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
@@ -33,7 +32,7 @@ const InvestmentBreakdown: React.FC = () => {
 
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
 
-    const [tableType, setTableType] = useState<InvestmentBreakdownTableType>(InvestmentBreakdownTableType.STANDARD_BREAKDOWN);
+    // const [tableType, setTableType] = useState<InvestmentBreakdownTableType>(InvestmentBreakdownTableType.STANDARD_BREAKDOWN);
 
     const getAmmortizationDetails = (): MonthlyInvestmentDetailsResponseDTO[] => {
         return property.metrics.amortizationData;
@@ -86,15 +85,14 @@ const InvestmentBreakdown: React.FC = () => {
                 <>
                     <ReusableTable
                         data={[property]}
-                        tableType={PropertiesListTableType.STANDARD_BREAKDOWN}
+                        // tableType={PropertiesListTableType.STANDARD_BREAKDOWN}
                         tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}
-                        rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
+                        tableHandler={propertiesListTable}
                         onClose={handleCloseModal}
-                        columns={propertiesListTable.getDefaultColumns()}
                     />}
                     <br />
                     <hr />
@@ -102,8 +100,8 @@ const InvestmentBreakdown: React.FC = () => {
                     <ReusableTable
                         data={getAmmortizationDetails()}
                         tableHandler={investmentBreakdownTable}
-                        tableType={tableType}
-                        setTableType={setTableType}
+                        // tableType={tableType}
+                        // setTableType={setTableType}
                         tableSeperatorDetails={{
                             separatorText: (rowCounter: number) => {
                                 const intervalCount = (rowCounter + 1) / 12;

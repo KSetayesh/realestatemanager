@@ -6,6 +6,10 @@ import { DefaultTableType } from "../constants/Constant";
 
 export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType> {
 
+    getDefaultTableType(): DefaultTableType {
+        return DefaultTableType.DEFAULT;
+    }
+
     getTablesConfig(): TablesConfig<AgentResponseDTO> {
         return {
             [DefaultTableType.DEFAULT]: {

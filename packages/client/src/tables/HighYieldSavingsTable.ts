@@ -6,6 +6,10 @@ import { DefaultTableType } from "../constants/Constant";
 
 export class HighYieldSavingsTable extends AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType> {
 
+    getDefaultTableType(): DefaultTableType {
+        return DefaultTableType.DEFAULT;
+    }
+
     getTablesConfig(): TablesConfig<HighYeildSavingsResponseDTO> {
         return {
             [DefaultTableType.DEFAULT]: {

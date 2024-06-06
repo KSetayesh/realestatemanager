@@ -58,6 +58,10 @@ import {
 
 export class PropertiesListTable extends AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType> {
 
+    getDefaultTableType(): PropertiesListTableType {
+        return PropertiesListTableType.STANDARD_BREAKDOWN;
+    }
+
     getTablesConfig(): TablesConfig<ListingWithScenariosResponseDTO> {
         const getAllColumns = (): TableColumn[] => {
             return this.getDefaultColumns().map(column => ({

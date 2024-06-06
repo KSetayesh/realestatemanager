@@ -28,6 +28,8 @@ export abstract class AbstractTable<Y, X extends keyof TablesConfig<Y>> {
 
     abstract getDefaultColumns(): TableColumn[];
 
+    abstract getDefaultTableType(): X;
+
     getRowData(data: Y, tableType: X): TableDataItem<Y> {
         const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
         return {

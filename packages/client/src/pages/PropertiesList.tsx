@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DetailsModal from '../components/DetailsModal';
-import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
+import ReusableTable, { TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
     CreateFilteredPropertyListRequest,
@@ -29,7 +29,7 @@ const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
-    const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
+    // const [tableType, setTableType] = useState<PropertiesListTableType>(PropertiesListTableType.STANDARD_BREAKDOWN);
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
 
@@ -88,10 +88,6 @@ const PropertiesList: React.FC = () => {
         return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
     };
 
-    const getDefaultColumns = (): TableColumn[] => {
-        return propertiesListWithInvestmentBreakdownTable.getDefaultColumns();
-    };
-
     return (
         <div>
             <h2> Filter Properties </h2>
@@ -109,8 +105,8 @@ const PropertiesList: React.FC = () => {
                     <ReusableTable
                         data={properties}
                         tableHandler={propertiesListWithInvestmentBreakdownTable}
-                        tableType={tableType}
-                        setTableType={setTableType}
+                        // tableType={tableType}
+                        // setTableType={setTableType}
                         onRowClick={handleRowClick}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{
@@ -121,9 +117,8 @@ const PropertiesList: React.FC = () => {
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}
-                        rowData={propertiesListWithInvestmentBreakdownTable.getDefaultRowData(selectedProperty)}
+                        tableHandler={propertiesListWithInvestmentBreakdownTable}
                         onClose={handleCloseModal}
-                        columns={getDefaultColumns()}
                     />}
                 </>
             )}

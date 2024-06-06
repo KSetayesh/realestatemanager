@@ -1,28 +1,42 @@
 import React from 'react';
 import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import { Modal, Box, Typography, Link as MuiLink } from '@mui/material';
-import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
 import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
+import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
+import { TableColumn, TableDataItem, TableRow } from './ReusableTable';
 
-export interface PropertyDetailsModalType<T> {
-    data: T | null;
-    rowData: TableRow;
+export interface PropertyDetailsModalProps<Y, X extends keyof TablesConfig<Y>> {
+    data: Y | null;
+    tableHandler: AbstractTable<Y, X>;
     onClose: () => void;
-    columns: TableColumn[];
 };
 
-const PropertyDetailsModal = <T,>({
+const PropertyDetailsModal = <Y, X extends keyof TablesConfig<Y>>({
     data,
-    rowData,
+    tableHandler,
     onClose,
-    columns,
-}: PropertyDetailsModalType<T>) => {
+}: PropertyDetailsModalProps<Y, X>) => {
 
     if (!data) return null;
 
     const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+
+    const tableType: X = tableHandler.getDefaultTableType();
+
+    const getTableColumns = (): TableColumn[] => {
+        const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig();
+        return tablesConfig[tableType].columns;
+    };
+
+    const getTableData = (): TableDataItem<Y> => {
+        if (!data) {
+            throw Error('Data missing for modal');
+        }
+        const tableData: TableDataItem<Y>[] = tableHandler.getTableData([data], tableType);
+        return tableData[0];
+    };
 
     return (
         <Modal
@@ -59,7 +73,8 @@ const PropertyDetailsModal = <T,>({
                     </Typography>
                     <hr />
                 </Box>
-                {columns.map((column, colIndex) => {
+                {getTableColumns().map((column, colIndex) => {
+                    const rowData: TableRow = getTableData().rowData;
                     const cellData = renderCellData(rowData[column.accessor as keyof ListingWithScenariosResponseDTO],
                         column.isDollarAmount,
                         column.addSuffix);

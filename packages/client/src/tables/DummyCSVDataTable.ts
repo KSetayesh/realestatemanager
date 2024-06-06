@@ -6,6 +6,10 @@ import { dummyDataDefaultColumns } from "./columns/DummyCSVDataColumns";
 
 export class DummyCSVDataTable extends AbstractTable<DummyCSVDataType, DefaultTableType> {
 
+    getDefaultTableType(): DefaultTableType {
+        return DefaultTableType.DEFAULT;
+    }
+
     getTablesConfig(): TablesConfig<DummyCSVDataType> {
         return {
             [DefaultTableType.DEFAULT]: {

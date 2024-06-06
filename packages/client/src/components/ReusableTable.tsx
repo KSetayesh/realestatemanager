@@ -62,8 +62,6 @@ export type ExportIntoCSV = {
 export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     data: Y[];
     tableHandler: AbstractTable<Y, X>;
-    tableType: X;
-    setTableType?: React.Dispatch<React.SetStateAction<X>>;
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
     exportIntoCSV?: ExportIntoCSV;
@@ -113,8 +111,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     data,
     tableHandler,
-    tableType,
-    setTableType,
     onRowClick,
     tableSeperatorDetails,
     exportIntoCSV,
@@ -131,6 +127,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         return tableHandler.getTableData(data, tableType);
     };
 
+    const [tableType, setTableType] = useState<X>(tableHandler.getDefaultTableType());
     const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);

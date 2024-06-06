@@ -6,7 +6,6 @@ import { AddPropertyFormData, AddPropertyFormDetails } from '../forms/AddPropert
 import UploadCSVFile from '../components/UploadCSVFile';
 import ReusableTable from '../components/ReusableTable';
 import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
-import { DefaultTableType } from '../constants/Constant';
 import RadioButtonComponent from '../basicdatadisplaycomponents/RadioButtonComponent';
 import { Box, Paper, Typography } from '@mui/material';
 
@@ -163,8 +162,8 @@ const PropertyForm: React.FC = () => {
                             <ReusableTable
                                 data={getExampleData()}
                                 tableHandler={dummyCSVDataTable}
-                                tableType={DefaultTableType.DEFAULT}
-                                setTableType={undefined}
+                                // tableType={DefaultTableType.DEFAULT}
+                                // setTableType={undefined}
                                 onRowClick={undefined}
                                 tableSeperatorDetails={undefined}
                                 exportIntoCSV={{

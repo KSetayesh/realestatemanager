@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
-import { DefaultTableType } from "../constants/Constant";
 
 const AgentsList: React.FC = () => {
     const agentApi: AgentApi = new AgentApi();
@@ -40,8 +39,8 @@ const AgentsList: React.FC = () => {
                     <ReusableTable
                         data={agents}
                         tableHandler={agentTable}
-                        tableType={DefaultTableType.DEFAULT}
-                        setTableType={undefined}
+                        // tableType={DefaultTableType.DEFAULT}
+                        // setTableType={undefined}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
                         exportIntoCSV={{
