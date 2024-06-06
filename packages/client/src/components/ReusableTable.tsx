@@ -99,7 +99,7 @@ const StyledTableBodyCell = styled(TableCell)(({ theme }) => ({
 const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Increased shadow
-    borderRadius: '15px', // Curved edges
+    borderRadius: '5px', // Curved edges
 }));
 
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
