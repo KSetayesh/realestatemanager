@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
 import '../styles/UploadCSVFile.css';
+import CustomButtonComponent from './BasicButton';
 
 interface UploadCSVFileProps {
     onFileUpload: (data: Record<string, string | number>[]) => Promise<void>;
@@ -72,12 +73,14 @@ const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
                     className={'fileInput'}
                 />
             </div>
-            <button onClick={handleViewCSVFile} className={'uploadButton'}>
-                View CSV File
-            </button>
-            <button onClick={handleFileUpload} className={'uploadButton'}>
-                Upload Properties
-            </button>
+            <CustomButtonComponent
+                onClick={handleViewCSVFile}
+                buttonTitle={'View CSV File'}
+            />
+            <CustomButtonComponent
+                onClick={handleFileUpload}
+                buttonTitle={'Upload Properties'}
+            />
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {viewCSV && data.length > 0 && (

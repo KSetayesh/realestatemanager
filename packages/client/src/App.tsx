@@ -1,11 +1,10 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Link
-} from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link as RouterLink } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, createTheme, Box } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Home from './pages/Home';
 import PropertiesList from './pages/PropertiesList';
 import PropertyForm from './pages/PropertyForm';
@@ -16,27 +15,71 @@ import AgentForm from './pages/AgentForm';
 import AgentsList from './pages/AgentsList';
 import CollectProperties from './pages/CollectProperties';
 
-console.log("App component is rendering");
-console.log("Client is running on http://localhost:5173/");
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#1976d2',
+        },
+        secondary: {
+            main: '#dc004e',
+        },
+    },
+    typography: {
+        fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+        h1: {
+            fontSize: '3.2em',
+            lineHeight: 1.1,
+        },
+        h2: {
+            fontSize: '2.2em',
+        },
+        body1: {
+            lineHeight: 1.5,
+            fontWeight: 400,
+        },
+        button: {
+            textTransform: 'none',
+        },
+    },
+});
 
 const App: React.FC = () => {
     return (
-        <div className="App">
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Router>
-                <nav className="navbar">
-                    <br></br>
-                    {/* You could also put a navigation link here if you like */}
-                    <Link to="/">Home</Link> &nbsp;|&nbsp;
-                    <Link to="/agentForm">AgentForm</Link> &nbsp;|&nbsp;
-                    <Link to="/agentsList">Agents List</Link> &nbsp;|&nbsp;
-                    <Link to="/propertyForm">Property Form</Link> &nbsp;|&nbsp;
-                    <Link to="/collectProperties">Collect Properties</Link> &nbsp;|&nbsp;
-                    <Link to="/propertiesList">Properties List</Link> &nbsp;|&nbsp;
-                    <Link to="/highYieldSavings">High Yield Savings</Link> &nbsp;|&nbsp;
-                    {/* <Link to="/investmentBreakdown">Investment Breakdown</Link> &nbsp;|&nbsp; */}
-                    <Link to="/projections">Projections</Link>
-                </nav>
-                <div className='pages'>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                            Real Estate Manager
+                        </Typography>
+                        <Button component={RouterLink} to="/" color="inherit">
+                            Home
+                        </Button>
+                        <Button component={RouterLink} to="/agentForm" color="inherit">
+                            Agent Form
+                        </Button>
+                        <Button component={RouterLink} to="/agentsList" color="inherit">
+                            Agents List
+                        </Button>
+                        <Button component={RouterLink} to="/propertyForm" color="inherit">
+                            Property Form
+                        </Button>
+                        <Button component={RouterLink} to="/collectProperties" color="inherit">
+                            Collect Properties
+                        </Button>
+                        <Button component={RouterLink} to="/propertiesList" color="inherit">
+                            Properties List
+                        </Button>
+                        <Button component={RouterLink} to="/highYieldSavings" color="inherit">
+                            High Yield Savings
+                        </Button>
+                        <Button component={RouterLink} to="/projections" color="inherit">
+                            Projections
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <Box className="pages" sx={{ maxWidth: '1900px', margin: '0 auto', padding: '2rem', textAlign: 'center' }}>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/agentForm" element={<AgentForm />} />
@@ -47,15 +90,11 @@ const App: React.FC = () => {
                         <Route path="/highYieldSavings" element={<HighYieldSavings />} />
                         <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} />
                         <Route path="/projections" element={<Projections />} />
-                        {/* <Route path="/propertiesList" element={<PropertiesList />} /> */}
-                        {/* Add other routes here */}
                     </Routes>
-                </div>
+                </Box>
             </Router>
-        </div>
+        </ThemeProvider>
     );
 };
 
 export default App;
-
-

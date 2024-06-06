@@ -1,9 +1,10 @@
 import React from 'react';
 import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
-import '../styles/PropertyDetailsModal.css';
+import { Modal, Box, Typography, Link as MuiLink } from '@mui/material';
 import { TableColumn, TableRow } from "./ReusableTable";
 import { Link } from 'react-router-dom';
 import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
+import CustomButtonComponent from './BasicButton';
 
 export interface PropertyDetailsModalType<T> {
     data: T | null;
@@ -24,9 +25,40 @@ const PropertyDetailsModal = <T,>({
     const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
     return (
-        <div className="modal-backdrop" onClick={onClose}>
-            <div className="modal" onClick={stopPropagation}>
-                <h2>Property Details</h2>
+        <Modal
+            open={!!data}
+            onClose={onClose}
+            onClick={onClose}
+            aria-labelledby="property-details-title"
+            aria-describedby="property-details-description"
+        >
+            <Box
+                onClick={stopPropagation}
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 900,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: 1,
+                    maxHeight: '80vh',
+                    overflowY: 'auto',
+                }}
+            >
+                <Box
+                    sx={{
+                        textAlign: 'center', // Center the title
+                    }}
+                >
+                    <Typography id="property-details-title" variant="h4" component="h2" gutterBottom>
+                        Property Details
+                    </Typography>
+                    <hr />
+                </Box>
                 {columns.map((column, colIndex) => {
                     const cellData = renderCellData(rowData[column.accessor as keyof ListingWithScenariosResponseDTO],
                         column.isDollarAmount,
@@ -34,29 +66,32 @@ const PropertyDetailsModal = <T,>({
 
                     let content;
                     if (column.routeTo) {
-                        content = <span><Link to={`/${column.routeTo}/${cellData}`} state={{ data: data }}>
-                            {column.routeTo}
-                        </Link></span>;
-                    }
-                    else if (column.isURL) {
+                        content = (
+                            <MuiLink component={Link} to={`/${column.routeTo}/${cellData}`} state={{ data: data }}>
+                                {column.routeTo}
+                            </MuiLink>
+                        );
+                    } else if (column.isURL) {
                         const formattedUrl = ensureAbsoluteUrl(cellData);
-                        content = <a href={formattedUrl} target="_blank" rel="noopener noreferrer">View</a>;
-                    }
-                    else {
-                        content = <span> {cellData}</span>;
+                        content = <MuiLink href={formattedUrl} target="_blank" rel="noopener noreferrer">View</MuiLink>;
+                    } else {
+                        content = <Typography component="span"> {cellData}</Typography>;
                     }
                     return (
-                        <p key={colIndex}>
-                            <span className="modal-label">{column.header}: </span>
+                        <Typography key={colIndex} variant="body1" paragraph>
+                            <strong>{column.header}: </strong>
                             {content}
-                        </p>
+                        </Typography>
                     );
                 })}
-                <button onClick={onClose}>Close</button>
-            </div>
-        </div>
+                <CustomButtonComponent
+                    buttonTitle={'Close'}
+                    onClick={onClose}
+                    style={{ display: 'block', margin: '20px auto 0' }}
+                />
+            </Box>
+        </Modal>
     );
-
 };
 
 export default PropertyDetailsModal;

@@ -1,4 +1,5 @@
 import { renderCellData } from "../constants/Constant";
+import CustomButtonComponent from "./BasicButton";
 import { TableColumn, TableDataItem, TableRow } from "./ReusableTable";
 import Papa from 'papaparse';
 
@@ -47,13 +48,12 @@ const ExportCSVButton = <T,>({
     };
 
     return (
-        <button
+        <CustomButtonComponent
             disabled={disabled}
             onClick={() => !disabled && exportToCSV(tableData, columns, 'table-data.csv')}
             style={{ marginBottom: '20px' }}  // Add margin bottom
-        >
-            {buttonTitle ? buttonTitle : 'Export CSV'}
-        </button>
+            buttonTitle={buttonTitle ? buttonTitle : 'Export CSV'}
+        />
     );
 };
 

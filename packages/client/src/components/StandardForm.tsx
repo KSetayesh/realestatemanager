@@ -1,5 +1,6 @@
 import React from 'react';
 import { InputType } from '../constants/Constant'; // Import constants as needed
+import CustomButtonComponent from './BasicButton';
 
 export type Options = { value: string | number, label: string }[];
 
@@ -194,7 +195,12 @@ const StandardForm = <T,>({
                     </div>
                 ))}
             </div>
-            <button type="submit" disabled={isButtonDisabled()}>{buttonTitle}</button>
+            <CustomButtonComponent
+                buttonTitle={buttonTitle}
+                type="submit"
+                disabled={isButtonDisabled()}
+            >
+            </CustomButtonComponent>
         </form>
     );
 };
