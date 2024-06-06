@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable from '../components/ReusableTable';
-import PropertyDetailsModal from '../components/PropertyDetailsModal';
+import DetailsModal from '../components/DetailsModal';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';
@@ -90,7 +90,7 @@ const InvestmentBreakdown: React.FC = () => {
                         tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                     />
-                    {selectedProperty && <PropertyDetailsModal
+                    {selectedProperty && <DetailsModal
                         data={selectedProperty}
                         rowData={propertiesListTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}

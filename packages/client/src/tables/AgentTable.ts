@@ -1,33 +1,10 @@
 import { AgentResponseDTO } from "@realestatemanager/shared";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
-import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "../components/ReusableTable";
 import { agentDefaultColumns } from "./columns/AgentColumns";
 import { DefaultTableType } from "../constants/Constant";
 
 export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType> {
-
-    getRowData(
-        agent: AgentResponseDTO,
-        tableType: DefaultTableType
-    ): TableDataItem<AgentResponseDTO> {
-        const tablesConfig = this.getTablesConfig();
-        return {
-            objectData: {
-                key: agent,
-            },
-            rowData: tablesConfig[tableType].data(agent),
-        };
-    }
-
-    getTableData(listOfData: AgentResponseDTO[], tableType: DefaultTableType): TableDataItem<AgentResponseDTO>[] {
-        const tablesConfig = this.getTablesConfig();
-        return listOfData.map(data => ({
-            objectData: {
-                key: data,
-            },
-            rowData: tablesConfig[tableType].data(data),
-        }));
-    }
 
     getTablesConfig(): TablesConfig<AgentResponseDTO> {
         return {

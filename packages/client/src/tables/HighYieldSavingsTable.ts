@@ -1,36 +1,10 @@
 import { HighYeildSavingsResponseDTO } from "@realestatemanager/shared";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
-import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "../components/ReusableTable";
 import { highYieldSavingsDefaultColumns } from "./columns/HighYieldSavingsColumns";
 import { DefaultTableType } from "../constants/Constant";
 
 export class HighYieldSavingsTable extends AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType> {
-
-    getRowData(
-        highYieldSavings: HighYeildSavingsResponseDTO,
-        tableType: DefaultTableType
-    ): TableDataItem<HighYeildSavingsResponseDTO> {
-        const tablesConfig = this.getTablesConfig();
-        return {
-            objectData: {
-                key: highYieldSavings,
-            },
-            rowData: tablesConfig[tableType].data(highYieldSavings),
-        };
-    }
-
-    getTableData(
-        listOfData: HighYeildSavingsResponseDTO[],
-        tableType: DefaultTableType
-    ): TableDataItem<HighYeildSavingsResponseDTO>[] {
-        const tablesConfig = this.getTablesConfig();
-        return listOfData.map(data => ({
-            objectData: {
-                key: data,
-            },
-            rowData: tablesConfig[tableType].data(data),
-        }));
-    }
 
     getTablesConfig(): TablesConfig<HighYeildSavingsResponseDTO> {
         return {

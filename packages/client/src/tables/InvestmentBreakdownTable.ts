@@ -1,6 +1,6 @@
 import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/shared";
 import { InvestmentBreakdownTableType } from "../pages/InvestmentBreakdown";
-import { TableDataItem, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "../components/ReusableTable";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import {
     expensesBreakdownColumns,
@@ -11,23 +11,14 @@ import {
 
 export class InvestmentBreakdownTable extends AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> {
 
-    getRowData(
-        monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO,
-        tableType: InvestmentBreakdownTableType
-    ): TableDataItem<MonthlyInvestmentDetailsResponseDTO> {
-        const tablesConfig = this.getTablesConfig();
-        return {
-            objectData: {
-                key: monthlyInvestmentDetails,
-            },
-            rowData: tablesConfig[tableType].data(monthlyInvestmentDetails),
-        };
+    getDefaultColumns(): TableColumn[] {
+        return standardBreakdownColumns;
     }
 
     getTablesConfig(): TablesConfig<MonthlyInvestmentDetailsResponseDTO> {
         return {
             [InvestmentBreakdownTableType.STANDARD_BREAKDOWN]: {
-                columns: standardBreakdownColumns,
+                columns: this.getDefaultColumns(),
                 data: (ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): TableRow => {
                     return {
                         year: ammortizationDetail.monthlyDateData.yearCounter,
@@ -123,19 +114,5 @@ export class InvestmentBreakdownTable extends AbstractTable<MonthlyInvestmentDet
             },
         };
     }
-
-    getTableData(
-        ammortizationDetails: MonthlyInvestmentDetailsResponseDTO[],
-        tableType: InvestmentBreakdownTableType
-    ): TableDataItem<MonthlyInvestmentDetailsResponseDTO>[] {
-        return ammortizationDetails.map(ammortizationDetail => ({
-            objectData: {
-                key: ammortizationDetail,
-            },
-            // Change createRowDataForInvestmentMetrics to the proper function for radio type
-            rowData: this.getTablesConfig()[tableType].data(ammortizationDetail), //createRowDataForInvestmentMetrics(ammortizationDetail),
-        }));
-
-    };
 
 }

@@ -58,32 +58,6 @@ import {
 
 export class PropertiesListTable extends AbstractTable<ListingWithScenariosResponseDTO, PropertiesListTableType> {
 
-    getRowData(
-        property: ListingWithScenariosResponseDTO,
-        tableType: PropertiesListTableType,
-    ): TableDataItem<ListingWithScenariosResponseDTO> {
-        const tablesConfig = this.getTablesConfig();
-        return {
-            objectData: {
-                key: property,
-            },
-            rowData: tablesConfig[tableType].data(property),
-        };
-    }
-
-    getTableData(
-        properties: ListingWithScenariosResponseDTO[],
-        tableType: PropertiesListTableType
-    ): TableDataItem<ListingWithScenariosResponseDTO>[] {
-        const tablesConfig = this.getTablesConfig();
-        return properties.map(property => ({
-            objectData: {
-                key: property,
-            },
-            rowData: tablesConfig[tableType].data(property),
-        }));
-    }
-
     getTablesConfig(): TablesConfig<ListingWithScenariosResponseDTO> {
         const getAllColumns = (): TableColumn[] => {
             return this.getDefaultColumns().map(column => ({

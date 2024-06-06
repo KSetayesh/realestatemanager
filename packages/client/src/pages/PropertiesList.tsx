@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropertyDetailsModal from '../components/PropertyDetailsModal';
+import DetailsModal from '../components/DetailsModal';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
@@ -119,7 +119,7 @@ const PropertiesList: React.FC = () => {
                         isEditable={true}
                         handleUpdate={handleUpdate}
                     />
-                    {selectedProperty && <PropertyDetailsModal
+                    {selectedProperty && <DetailsModal
                         data={selectedProperty}
                         rowData={propertiesListWithInvestmentBreakdownTable.getDefaultRowData(selectedProperty)}
                         onClose={handleCloseModal}

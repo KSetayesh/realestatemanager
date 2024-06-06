@@ -1,33 +1,10 @@
 import { AbstractTable, TablesConfig } from "./AbstractTable";
-import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableRow } from "../components/ReusableTable";
 import { DefaultTableType } from "../constants/Constant";
 import { DummyCSVDataType } from "../pages/PropertyForm";
 import { dummyDataDefaultColumns } from "./columns/DummyCSVDataColumns";
 
 export class DummyCSVDataTable extends AbstractTable<DummyCSVDataType, DefaultTableType> {
-
-    getRowData(
-        dummyData: DummyCSVDataType,
-        tableType: DefaultTableType
-    ): TableDataItem<DummyCSVDataType> {
-        const tablesConfig = this.getTablesConfig();
-        return {
-            objectData: {
-                key: dummyData,
-            },
-            rowData: tablesConfig[tableType].data(dummyData),
-        };
-    }
-
-    getTableData(listOfData: DummyCSVDataType[], tableType: DefaultTableType): TableDataItem<DummyCSVDataType>[] {
-        const tablesConfig = this.getTablesConfig();
-        return listOfData.map(data => ({
-            objectData: {
-                key: data,
-            },
-            rowData: tablesConfig[tableType].data(data),
-        }));
-    }
 
     getTablesConfig(): TablesConfig<DummyCSVDataType> {
         return {
