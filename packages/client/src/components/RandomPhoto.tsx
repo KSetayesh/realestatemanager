@@ -1,6 +1,15 @@
+// RandomPhoto.tsx
 import { useEffect, useState } from "react";
 import { PhotosApi } from "../api/photosapi";
-import '../styles/RandomPhoto.css';
+import { Box, Card, CardMedia, styled } from '@mui/material';
+
+const StyledCard = styled(Card)(({ theme }) => ({
+    maxWidth: 500,
+    height: 600,
+    margin: 'auto',
+    borderRadius: theme.spacing(2),
+    boxShadow: theme.shadows[5],
+}));
 
 const RandomPhoto: React.FC = () => {
     const [currentImage, setCurrentImage] = useState<string>();
@@ -26,9 +35,18 @@ const RandomPhoto: React.FC = () => {
     }, []);
 
     return (
-        <div>
-            {<img className="random-photo" src={currentImage} alt="Random" />}
-        </div>
+        <Box mt={4}>
+            {currentImage && (
+                <StyledCard>
+                    <CardMedia
+                        component="img"
+                        image={currentImage}
+                        alt="Random"
+                        style={{ height: '100%', width: '100%' }}
+                    />
+                </StyledCard>
+            )}
+        </Box>
     );
 }
 
