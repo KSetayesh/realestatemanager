@@ -1,6 +1,6 @@
-import { AgentResponseDTO } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/shared";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
-import { TableColumn, TableRow } from "../components/ReusableTable";
+import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 import { agentDefaultColumns } from "./columns/AgentColumns";
 import { DefaultTableType } from "../constants/Constant";
 
@@ -23,6 +23,18 @@ export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType
 
     getDefaultColumns(): TableColumn[] {
         return agentDefaultColumns;
+    }
+
+    createUpdateAgentRequest(tableDataItem: TableDataItem<AgentResponseDTO>): CreateUpdateAgentRequest {
+        const agent: AgentResponseDTO = tableDataItem.objectData.key;
+        return {
+            firstName: agent.firstName,
+            lastName: agent.lastName,
+            website: agent.website,
+            companyName: agent.companyName,
+            phoneNumber: agent.phoneNumber,
+            email: agent.email,
+        };
     }
 
 }

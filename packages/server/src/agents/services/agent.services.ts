@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { Injectable } from "@nestjs/common";
-import { AgentResponseDTO, CreateAgentRequest } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/shared";
 import { Agent } from "../models/agent.model";
 import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
@@ -47,6 +47,11 @@ export class AgentService {
         } finally {
             client.release();
         }
+    }
+
+    async updateAgent(createUpdateAgentRequest: CreateUpdateAgentRequest): Promise<AgentResponseDTO> {
+        console.log('Need to work updateAgent logic');
+        return;
     }
 
     private buildAgent(agent: CreateAgentRequest): Agent {

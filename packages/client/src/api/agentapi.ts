@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CalcApi } from "./calcapi";
-import { AgentResponseDTO, CreateAgentRequest } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/shared";
 
 export class AgentApi extends CalcApi {
 
@@ -28,6 +28,19 @@ export class AgentApi extends CalcApi {
         }
 
         return true;
+    }
+
+    async updateAgent(dataToSubmit: CreateUpdateAgentRequest): Promise<AgentResponseDTO> {
+        try {
+            const response = await axios.post(`${this.getURL()}/updateAgent`, dataToSubmit, {
+                headers: this.getHeaders(), // Use post method and include data in the body
+            });
+            return response.data;
+        } catch (error) {
+            const message = `Error fetching properties:, ${error}`;
+            console.error(message);
+            throw new Error(message);
+        }
     }
 
     protected getURL(): string {

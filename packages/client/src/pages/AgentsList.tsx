@@ -1,7 +1,7 @@
-import { AgentResponseDTO } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/shared";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
-import ReusableTable from "../components/ReusableTable";
+import ReusableTable, { TableDataItem } from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
 
 const AgentsList: React.FC = () => {
@@ -26,6 +26,12 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
+    const handleUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<AgentResponseDTO> => {
+        const createUpdateAgentRequest: CreateUpdateAgentRequest =
+            agentTable.createUpdateAgentRequest(tableDataItem);
+        return agentApi.updateAgent(createUpdateAgentRequest);
+    };
+
     // Inside PropertiesList component
 
     // Assuming your ReusableTable component and TableColumn interface are set up to handle this
@@ -44,6 +50,8 @@ const AgentsList: React.FC = () => {
                         exportIntoCSV={{
                             buttonTitle: 'Export CSV'
                         }}
+                        isEditable={true}
+                        handleUpdate={handleUpdate}
                     />
                 </>
             )}

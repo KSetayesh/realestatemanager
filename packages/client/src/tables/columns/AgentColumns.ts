@@ -10,6 +10,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Last Name",
@@ -19,6 +20,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Full Name",
@@ -37,6 +39,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Company Name",
@@ -46,6 +49,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Phone Number",
@@ -55,6 +59,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Email",
@@ -64,6 +69,7 @@ export const agentDefaultColumns: TableColumn[] = [
         showColumn: true,
         isDollarAmount: false,
         isSortable: true,
+        isEditable: true,
     },
     {
         header: "Country",

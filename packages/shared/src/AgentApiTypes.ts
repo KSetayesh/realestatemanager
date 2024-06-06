@@ -32,3 +32,12 @@ export interface AgentResponseDTO {
     country: Country;
     agentType: AgentType;
 };
+
+export interface CreateUpdateAgentRequest {
+    firstName: string;
+    lastName: string;
+    website: string;
+    companyName: string;
+    phoneNumber: string;
+    email: string;
+};
