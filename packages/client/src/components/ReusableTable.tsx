@@ -415,7 +415,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                         {tableOptions.map((option) => (
                             <Box key={option} mr={2}>
                                 <Button
-                                    variant="outlined"
+                                    variant={tableType === option ? "contained" : "outlined"}
                                     color="primary"
                                     onClick={() => setTableType(option)}
                                 >
