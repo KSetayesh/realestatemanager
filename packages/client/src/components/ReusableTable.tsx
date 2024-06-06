@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tooltip, Button, Box, Typography, IconButton, styled,
-    TextField
+    TextField, TablePagination
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -69,17 +69,37 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
 
 const StyledTable = styled(Table)(({ theme }) => ({
     minWidth: 1000,
+    borderCollapse: 'separate',
+    borderSpacing: '0 10px',
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: '#04AA6D',
     color: 'white',
     borderRight: '1px solid #ddd',
+    borderBottom: '1px solid #ddd',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
     '&:hover': {
         backgroundColor: '#037f58',
     },
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+    fontWeight: 'bold',
+    padding: theme.spacing(1),
+    textAlign: 'center',
+}));
+
+const StyledTableBodyCell = styled(TableCell)(({ theme }) => ({
+    borderRight: '1px solid #ddd',
+    borderBottom: '1px solid #ddd',
+    padding: theme.spacing(1),
+    textAlign: 'center',
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(2),
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Increased shadow
+    borderRadius: '15px', // Curved edges
 }));
 
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
@@ -110,6 +130,8 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData());
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(50);
 
     useEffect(() => {
         setEditableData(getTableData());
@@ -198,6 +220,15 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setEditableData(newData);
     };
 
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     const displayActionButton = (rowIndex: number) => {
         if (editMode === rowIndex) {
             return (
@@ -281,6 +312,9 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                 fullWidth
                 size="small"
                 variant="outlined"
+                InputProps={{
+                    style: { fontSize: '0.9rem' }, // Adjust font size to match table data
+                }}
             />
         );
     };
@@ -312,10 +346,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                 style={{ cursor: isEditing ? 'default' : 'pointer' }}
                 onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
             >
-                {isEditable && <TableCell>{displayActionButton(originalIndex)}</TableCell>}
+                {isEditable && <StyledTableBodyCell>{displayActionButton(originalIndex)}</StyledTableBodyCell>}
                 {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
                     const cellContent = getCellContent(originalIndex, column, item);
-                    return <TableCell key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</TableCell>;
+                    return <StyledTableBodyCell key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</StyledTableBodyCell>;
                 })}
             </TableRow>
         );
@@ -340,9 +374,11 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const getTableBody = () => {
         const sortedData = sortData(editableData);
+        const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
         return (
             <TableBody>
-                {sortedData.map((item, sortedIndex) => {
+                {paginatedData.map((item, sortedIndex) => {
                     const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
                     return (
                         <React.Fragment key={originalIndex}>
@@ -381,14 +417,23 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                 </Box>
             )}
             <Box width="95%">
-                <Paper>
+                <StyledPaper>
                     <StyledTableContainer>
                         <StyledTable>
                             {getTableHead()}
                             {getTableBody()}
                         </StyledTable>
                     </StyledTableContainer>
-                </Paper>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 50]}
+                        component="div"
+                        count={editableData.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </StyledPaper>
             </Box>
         </Box>
     );
