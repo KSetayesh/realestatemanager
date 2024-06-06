@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
-import '../styles/Tooltip.css';
 import { InputType, ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
 import ExportCSVButton from './ExportCSVButton';
 import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
