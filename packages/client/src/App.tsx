@@ -23,6 +23,9 @@ const theme = createTheme({
         secondary: {
             main: '#dc004e',
         },
+        background: {
+            default: '#f5f5f5', // Light gray background color
+        },
     },
     typography: {
         fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
