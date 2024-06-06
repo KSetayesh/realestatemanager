@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import {
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tooltip, Button, Box, Typography, IconButton, styled,
+    TextField
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
-import '../styles/PropertiesList.css';
 import '../styles/Tooltip.css';
 import { InputType, ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
-import Tooltip from '../components/Tooltip';
-import ExportCSVButton from './ExportCSVButton';  // Import the new component
+import ExportCSVButton from './ExportCSVButton';
 import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
 
 enum SortDirection {
@@ -60,6 +62,25 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     isEditable?: boolean;
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+    overflowX: 'auto',
+}));
+
+const StyledTable = styled(Table)(({ theme }) => ({
+    minWidth: 1000,
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    backgroundColor: '#04AA6D',
+    color: 'white',
+    borderRight: '1px solid #ddd',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    '&:hover': {
+        backgroundColor: '#037f58',
+    },
+}));
 
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     data,
@@ -144,14 +165,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     const handleSaveClick = async () => {
         if (editMode !== null) {
             const editedRow = editableData[editMode];
-            // Send the editedRow to the backend
             if (handleUpdate) {
                 try {
-                    // Send the editedRow to the backend
-                    console.log('Sending edited row to backend:', editedRow);
                     const updatedRow: Y = await handleUpdate(editedRow);
 
-                    // Update the editableData state with the new data
                     const updatedEditableData = [...editableData];
                     const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
                     updatedEditableData[editMode] = rowDataItem;
@@ -185,35 +202,23 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         if (editMode === rowIndex) {
             return (
                 <>
-                    <button
-                        className="button-icon"
-                        onClick={(e) => { e.stopPropagation(); handleSaveClick(); }}
-                    >
-                        <CheckIcon className="icon-small" />
-                    </button>
-                    <button
-                        className="button-icon"
-                        onClick={(e) => { e.stopPropagation(); handleCancelClick(); }}
-                    >
-                        <CloseIcon className="icon-small" />
-                    </button>
+                    <IconButton onClick={(e) => { e.stopPropagation(); handleSaveClick(); }}>
+                        <CheckIcon />
+                    </IconButton>
+                    <IconButton onClick={(e) => { e.stopPropagation(); handleCancelClick(); }}>
+                        <CloseIcon />
+                    </IconButton>
                 </>
             );
         }
         return (
             <>
-                <button
-                    className="button-icon"
-                    onClick={(e) => { e.stopPropagation(); handleEditClick(rowIndex); }}
-                >
-                    <EditIcon className="icon-small" />
-                </button>
-                <button
-                    className="button-icon"
-                    onClick={(e) => { e.stopPropagation(); /* Add delete action here */ }}
-                >
-                    <DeleteIcon className="icon-small" />
-                </button>
+                <IconButton onClick={(e) => { e.stopPropagation(); handleEditClick(rowIndex); }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton onClick={(e) => { e.stopPropagation(); /* Add delete action here */ }}>
+                    <DeleteIcon />
+                </IconButton>
             </>
         );
     };
@@ -269,10 +274,13 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const getEditableCellContent = (originalIndex: number, column: TableColumn) => {
         return (
-            <input
-                type="text"
+            <TextField
+                type={column.inputType === InputType.NUMBER ? 'number' : 'text'}
                 value={editableData[originalIndex].rowData[column.accessor]}
-                onChange={(e) => handleInputChange(e, originalIndex, column)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, originalIndex, column)}
+                fullWidth
+                size="small"
+                variant="outlined"
             />
         );
     };
@@ -288,48 +296,52 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const getTableSeparator = (originalIndex: number, sortedIndex: number) => {
         return ((sortedIndex + 1) % 12 === 0) && (
-            <tr key={`separator_${originalIndex}`}>
-                <td colSpan={getVisibleColumnCount() + 1} style={{ textAlign: 'center' }}>
-                    <b>End of Year {(sortedIndex + 1) / 12}</b>
-                </td>
-            </tr>
+            <TableRow key={`separator_${originalIndex}`}>
+                <TableCell colSpan={getVisibleColumnCount() + 1} align="center">
+                    <Typography variant="subtitle1"><b>End of Year {(sortedIndex + 1) / 12}</b></Typography>
+                </TableCell>
+            </TableRow>
         );
     };
 
     const getTableRow = (originalIndex: number, item: TableDataItem<Y>) => {
         return (
-            <tr
+            <TableRow
+                key={originalIndex}
+                hover
                 style={{ cursor: isEditing ? 'default' : 'pointer' }}
                 onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
             >
-                {isEditable && <td>{displayActionButton(originalIndex)}</td>}
+                {isEditable && <TableCell>{displayActionButton(originalIndex)}</TableCell>}
                 {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
                     const cellContent = getCellContent(originalIndex, column, item);
-                    return <td key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</td>;
+                    return <TableCell key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</TableCell>;
                 })}
-            </tr>);
-    }
+            </TableRow>
+        );
+    };
 
     const getTableHead = () => {
         return (
-            <thead>
-                <tr>
-                    {isEditable && <th>Actions</th>}
+            <TableHead>
+                <TableRow>
+                    {isEditable && <StyledTableCell>Actions</StyledTableCell>}
                     {getTableColumns().filter(column => column.showColumn).map((column) => (
-                        <th key={column.accessor} onClick={() => requestSort(column)}>
-                            <Tooltip content={column.detailedDescription || column.header}>
-                                {column.header}
+                        <StyledTableCell key={column.accessor} onClick={() => requestSort(column)}>
+                            <Tooltip title={column.detailedDescription || column.header}>
+                                <Typography variant="subtitle2">{column.header}</Typography>
                             </Tooltip>
-                        </th>
+                        </StyledTableCell>
                     ))}
-                </tr>
-            </thead>
+                </TableRow>
+            </TableHead>
         );
     };
 
     const getTableBody = () => {
+        const sortedData = sortData(editableData);
         return (
-            <tbody>
+            <TableBody>
                 {sortedData.map((item, sortedIndex) => {
                     const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
                     return (
@@ -339,38 +351,46 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                         </React.Fragment>
                     );
                 })}
-            </tbody>
+            </TableBody>
         );
     };
 
-    const sortedData = sortData(editableData);
-
     return (
-        <div>
+        <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
             {setTableType && tableTypeOptions && (
-                <div className="radio-button-group">
-                    <h2>Select Table Type</h2>
-                    {tableTypeOptions.map((option) => (
-                        <label key={option}>
-                            <input
-                                type="radio"
-                                value={option}
-                                checked={tableType === option}
-                                onChange={() => setTableType(option)}
-                            />
-                            {option}
-                        </label>
-                    ))}
-                </div>
+                <Box mb={2}>
+                    <Typography variant="h6" gutterBottom>Select Table Type</Typography>
+                    <Box display="flex" flexDirection="row">
+                        {tableTypeOptions.map((option) => (
+                            <Box key={option} mr={2}>
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    onClick={() => setTableType(option)}
+                                >
+                                    {option}
+                                </Button>
+                            </Box>
+                        ))}
+                    </Box>
+                </Box>
             )}
             {canExportIntoCSV && (
-                getExportCSVButton()
+                <Box mb={2}>
+                    {getExportCSVButton()}
+                </Box>
             )}
-            <table className="properties-table">
-                {getTableHead()}
-                {getTableBody()}
-            </table>
-        </div>
+            <Box width="95%">
+                <Paper>
+                    <StyledTableContainer>
+                        <StyledTable>
+                            {getTableHead()}
+                            {getTableBody()}
+                        </StyledTable>
+                    </StyledTableContainer>
+                </Paper>
+            </Box>
+        </Box>
     );
 };
 
