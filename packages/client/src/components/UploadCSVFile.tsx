@@ -1,11 +1,53 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { Box, TextField, Typography } from '@mui/material';
+import {
+    Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled,
+    TextField
+} from '@mui/material';
 import CustomButtonComponent from '../basicdatadisplaycomponents/ButtonComponent';
 
 interface UploadCSVFileProps {
     onFileUpload: (data: Record<string, string | number>[]) => Promise<void>;
 };
+
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+    marginTop: theme.spacing(2),
+}));
+
+const StyledTable = styled(Table)(({ theme }) => ({
+    minWidth: 700,
+    borderCollapse: 'collapse',
+}));
+
+const StyledTableHead = styled(TableHead)(({ theme }) => ({
+    backgroundColor: '#04AA6D',
+    '& th': {
+        color: 'white',
+        borderRight: '1px solid #ddd',
+        borderBottom: '1px solid #ddd',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        padding: theme.spacing(1),
+    },
+}));
+
+const StyledTableBody = styled(TableBody)(({ theme }) => ({
+    '& td': {
+        borderRight: '1px solid #ddd',
+        borderBottom: '1px solid #ddd',
+        textAlign: 'center',
+        padding: theme.spacing(1),
+    },
+    '& tr:last-child td': {
+        borderBottom: 'none',
+    },
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(2),
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+    borderRadius: '10px',
+}));
 
 const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
     const [file, setFile] = useState<File | null>(null);
@@ -89,24 +131,26 @@ const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
                 {viewCSV && data.length > 0 && (
                     <Box marginTop={4}>
                         <Typography variant="h5" gutterBottom>Uploaded Data:</Typography>
-                        <table className="properties-table">
-                            <thead>
-                                <tr>
-                                    {Object.keys(data[0]).map((key) => (
-                                        <th key={key}>{key}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((row, index) => (
-                                    <tr key={index}>
-                                        {Object.values(row).map((value, i) => (
-                                            <td key={i}>{String(value)}</td> // Typecast value to string
+                        <StyledTableContainer>
+                            <StyledTable>
+                                <StyledTableHead>
+                                    <TableRow>
+                                        {Object.keys(data[0]).map((key) => (
+                                            <TableCell key={key}>{key}</TableCell>
                                         ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                    </TableRow>
+                                </StyledTableHead>
+                                <StyledTableBody>
+                                    {data.map((row, index) => (
+                                        <TableRow key={index}>
+                                            {Object.values(row).map((value, i) => (
+                                                <TableCell key={i}>{String(value)}</TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))}
+                                </StyledTableBody>
+                            </StyledTable>
+                        </StyledTableContainer>
                     </Box>
                 )}
             </Box>
