@@ -4,7 +4,7 @@ import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTabl
 import { highYieldSavingsDefaultColumns } from "./columns/HighYieldSavingsColumns";
 import { DefaultTableType } from "../constants/Constant";
 
-export class HighYieldSavingsTable implements AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType> {
+export class HighYieldSavingsTable extends AbstractTable<HighYeildSavingsResponseDTO, DefaultTableType> {
 
     getRowData(
         highYieldSavings: HighYeildSavingsResponseDTO,

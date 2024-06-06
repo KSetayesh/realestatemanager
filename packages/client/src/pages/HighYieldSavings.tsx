@@ -71,10 +71,11 @@ const HighYieldSavings: React.FC = () => {
                         tableHandler={highYieldSavingsTable}
                         tableType={DefaultTableType.DEFAULT}
                         setTableType={undefined}
-                        tableTypeOptions={undefined}
                         onRowClick={undefined}
-                        includeTableSeparator={true}
-                        canExportIntoCSV={true}
+                        tableSeperatorDetails={undefined}
+                        exportIntoCSV={{
+                            buttonTitle: 'Export CSV'
+                        }}
                     />
                 </>
             )}

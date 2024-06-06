@@ -42,10 +42,11 @@ const AgentsList: React.FC = () => {
                         tableHandler={agentTable}
                         tableType={DefaultTableType.DEFAULT}
                         setTableType={undefined}
-                        tableTypeOptions={undefined}
                         onRowClick={undefined}
-                        includeTableSeparator={false}
-                        canExportIntoCSV={true}
+                        tableSeperatorDetails={undefined}
+                        exportIntoCSV={{
+                            buttonTitle: 'Export CSV'
+                        }}
                     />
                 </>
             )}

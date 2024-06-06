@@ -111,14 +111,11 @@ const PropertiesList: React.FC = () => {
                         tableHandler={propertiesListWithInvestmentBreakdownTable}
                         tableType={tableType}
                         setTableType={setTableType}
-                        tableTypeOptions={[
-                            PropertiesListTableType.STANDARD_BREAKDOWN,
-                            PropertiesListTableType.ALL
-                        ]}
                         onRowClick={handleRowClick}
-                        includeTableSeparator={false}
-                        canExportIntoCSV={true}
-                        exportCSVButtonTitle=''
+                        tableSeperatorDetails={undefined}
+                        exportIntoCSV={{
+                            buttonTitle: 'Export CSV'
+                        }}
                         isEditable={true}
                         handleUpdate={handleUpdate}
                     />

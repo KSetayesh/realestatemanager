@@ -4,10 +4,10 @@ import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTabl
 import { agentDefaultColumns } from "./columns/AgentColumns";
 import { DefaultTableType } from "../constants/Constant";
 
-export class AgentTable implements AbstractTable<AgentResponseDTO, DefaultTableType> {
+export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType> {
 
     getRowData(
-        agent: AgentResponseDTO, 
+        agent: AgentResponseDTO,
         tableType: DefaultTableType
     ): TableDataItem<AgentResponseDTO> {
         const tablesConfig = this.getTablesConfig();

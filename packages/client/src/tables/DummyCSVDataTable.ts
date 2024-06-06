@@ -4,7 +4,7 @@ import { DefaultTableType } from "../constants/Constant";
 import { DummyCSVDataType } from "../pages/PropertyForm";
 import { dummyDataDefaultColumns } from "./columns/DummyCSVDataColumns";
 
-export class DummyCSVDataTable implements AbstractTable<DummyCSVDataType, DefaultTableType> {
+export class DummyCSVDataTable extends AbstractTable<DummyCSVDataType, DefaultTableType> {
 
     getRowData(
         dummyData: DummyCSVDataType,

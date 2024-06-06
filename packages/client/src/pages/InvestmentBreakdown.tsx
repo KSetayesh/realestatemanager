@@ -104,14 +104,16 @@ const InvestmentBreakdown: React.FC = () => {
                         tableHandler={investmentBreakdownTable}
                         tableType={tableType}
                         setTableType={setTableType}
-                        tableTypeOptions={[
-                            InvestmentBreakdownTableType.STANDARD_BREAKDOWN,
-                            InvestmentBreakdownTableType.MORTGAGE_BREAKDOWN,
-                            InvestmentBreakdownTableType.INVESTMENT_BREAKDOWN,
-                            InvestmentBreakdownTableType.EXPENSES_BREAKDOWN
-                        ]}
-                        includeTableSeparator={true}
-                        canExportIntoCSV={true}
+                        tableSeperatorDetails={{
+                            separatorText: (rowCounter: number) => {
+                                const intervalCount = (rowCounter + 1) / 12;
+                                return `End of year ${intervalCount}`;
+                            },
+                            rowsInterval: 12,
+                        }}
+                        exportIntoCSV={{
+                            buttonTitle: 'Export CSV'
+                        }}
                     />
                 </>
             ) : (

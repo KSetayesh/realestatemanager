@@ -22,15 +22,20 @@ export interface TablesConfig<Y> {
     [type: string]: TableConfig<Y>;
 };
 
-export interface AbstractTable<Y, X> {
+export abstract class AbstractTable<Y, X> {
 
-    getTableData(
+    abstract getTableData(
         listOfData: Y[],
         tableType: X,
     ): TableDataItem<Y>[];
 
-    getTablesConfig(): TablesConfig<Y>;
+    abstract getTablesConfig(): TablesConfig<Y>;
 
-    getRowData(data: Y, tableType: X): TableDataItem<Y>;
+    abstract getRowData(data: Y, tableType: X): TableDataItem<Y>;
+
+    getTableOptions(): X[] {
+        const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
+        return Object.keys(tablesConfig) as X[];
+    }
 
 };

@@ -41,6 +41,16 @@ export interface TableColumn {
     isEditable?: boolean;
 };
 
+export type TableSeparatorDetails = {
+    separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
+    rowsInterval: number;  // Number of rows between each separator
+};
+
+export type ExportIntoCSV = {
+    buttonTitle: string;
+};
+
+
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
     X = PropertiesListTableType
@@ -54,11 +64,9 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     tableHandler: AbstractTable<Y, X>;
     tableType: X;
     setTableType?: React.Dispatch<React.SetStateAction<X>>;
-    tableTypeOptions?: X[];
     onRowClick?: (item: Y) => void;
-    includeTableSeparator?: boolean;
-    canExportIntoCSV?: boolean;
-    exportCSVButtonTitle?: string;
+    tableSeperatorDetails?: TableSeparatorDetails;
+    exportIntoCSV?: ExportIntoCSV;
     isEditable?: boolean;
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
@@ -107,11 +115,9 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     tableHandler,
     tableType,
     setTableType,
-    tableTypeOptions,
     onRowClick,
-    includeTableSeparator = false,
-    canExportIntoCSV = false,
-    exportCSVButtonTitle,
+    tableSeperatorDetails,
+    exportIntoCSV,
     isEditable = false,
     handleUpdate,
 }: ReusableTableProps<Y, X>) => {
@@ -262,11 +268,11 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const getExportCSVButton = () => {
         return (
-            <ExportCSVButton
+            exportIntoCSV && <ExportCSVButton
                 columns={getTableColumns()}
                 tableData={editableData}
                 disabled={isEditing}
-                buttonTitle={exportCSVButtonTitle}
+                buttonTitle={exportIntoCSV.buttonTitle}
             />
         );
     };
@@ -329,11 +335,17 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         );
     };
 
-    const getTableSeparator = (originalIndex: number, sortedIndex: number) => {
-        return ((sortedIndex + 1) % 12 === 0) && (
+    const getTableSeparator = (originalIndex: number) => {
+        if (!tableSeperatorDetails) {
+            return;
+        }
+        const rowsInterval: number = tableSeperatorDetails.rowsInterval;
+        return ((originalIndex + 1) % rowsInterval === 0) && (
             <TableRow key={`separator_${originalIndex}`}>
                 <TableCell colSpan={getVisibleColumnCount() + 1} align="center">
-                    <Typography variant="subtitle1"><b>End of Year {(sortedIndex + 1) / 12}</b></Typography>
+                    <Typography variant="subtitle1">
+                        <b>{tableSeperatorDetails.separatorText(originalIndex)}</b>
+                    </Typography>
                 </TableCell>
             </TableRow>
         );
@@ -379,12 +391,12 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
         return (
             <TableBody>
-                {paginatedData.map((item, sortedIndex) => {
+                {paginatedData.map((item) => {
                     const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
                     return (
                         <React.Fragment key={originalIndex}>
                             {getTableRow(originalIndex, item)}
-                            {includeTableSeparator && getTableSeparator(originalIndex, sortedIndex)}
+                            {tableSeperatorDetails && getTableSeparator(originalIndex)}
                         </React.Fragment>
                     );
                 })}
@@ -392,13 +404,15 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         );
     };
 
+    const tableOptions: X[] = tableHandler.getTableOptions();
+
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-            {setTableType && tableTypeOptions && (
+            {setTableType && (tableOptions.length > 1) && (
                 <Box mb={2}>
                     <Typography variant="h6" gutterBottom>Select Table Type</Typography>
                     <Box display="flex" flexDirection="row">
-                        {tableTypeOptions.map((option) => (
+                        {tableOptions.map((option) => (
                             <Box key={option} mr={2}>
                                 <Button
                                     variant="outlined"
@@ -412,7 +426,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                     </Box>
                 </Box>
             )}
-            {canExportIntoCSV && (
+            {exportIntoCSV && (
                 <Box mb={2}>
                     {getExportCSVButton()}
                 </Box>
