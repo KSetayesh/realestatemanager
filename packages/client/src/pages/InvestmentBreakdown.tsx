@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable from '../components/ReusableTable';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
-import '../styles/StandardForm.css'; // Make sure to create this CSS file
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';

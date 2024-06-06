@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropertyDetailsModal from '../components/PropertyDetailsModal';
 import '../styles/PropertiesList.css';
-import '../styles/StandardForm.css';
 import ReusableTable, { TableColumn, TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
@@ -71,9 +70,7 @@ const PropertiesList: React.FC = () => {
             const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
             setProperties(properties);
 
-            if (properties.length > 0) {
-                alert('Data submitted successfully!');
-            } else {
+            if (properties.length === 0) {
                 alert('No properties found with the applied filters.');
             }
             // window.location.reload();

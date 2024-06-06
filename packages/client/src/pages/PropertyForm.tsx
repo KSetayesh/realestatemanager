@@ -7,6 +7,8 @@ import UploadCSVFile from '../components/UploadCSVFile';
 import ReusableTable from '../components/ReusableTable';
 import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
 import { DefaultTableType } from '../constants/Constant';
+import RadioButtonComponent from '../basicdatadisplaycomponents/RadioButtonComponent';
+import { Box, Paper, Typography } from '@mui/material';
 
 export enum AddPropertyType {
     SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
@@ -124,28 +126,24 @@ const PropertyForm: React.FC = () => {
 
     return (
         <div className="form-container">
-            <h2>Property Listing Form</h2>
-            <div className="radio-button-group">
-                <h2>Select Property Upload Type</h2>
-                <label>
-                    <input
-                        type="radio"
-                        value={AddPropertyType.SINGLE_PROPERTY_INPUT}
-                        checked={formType === AddPropertyType.SINGLE_PROPERTY_INPUT}
-                        onChange={handleFormTypeChange}
-                    />
-                    Add Single Property
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        value={AddPropertyType.BULK_UPLOAD}
-                        checked={formType === AddPropertyType.BULK_UPLOAD}
-                        onChange={handleFormTypeChange}
-                    />
-                    Upload properties in bulk
-                </label>
-            </div>
+            <Typography variant="h4" gutterBottom>
+                Property Listing Form
+            </Typography>
+            <Box component={Paper} padding={2} marginBottom={2} bgcolor="#f0f0f0">
+                <Typography variant="h5" gutterBottom>
+                    Select Property Upload Type
+                </Typography>
+                <RadioButtonComponent
+                    name="propertyUploadType"
+                    value={formType}
+                    onChange={handleFormTypeChange}
+                    options={[
+                        { value: AddPropertyType.SINGLE_PROPERTY_INPUT, label: 'Add Single Property' },
+                        { value: AddPropertyType.BULK_UPLOAD, label: 'Upload properties in bulk' }
+                    ]}
+                    label=""
+                />
+            </Box>
             {formType === AddPropertyType.SINGLE_PROPERTY_INPUT && (
                 <StandardForm
                     formDetails={getFormDetails()}
@@ -158,10 +156,10 @@ const PropertyForm: React.FC = () => {
                 <div>
                     <hr></hr>
                     {isLoadingBulkData ? (
-                        <p><h3>Processing Bulk Upload...</h3></p>
+                        <Typography variant="h5" gutterBottom>Processing Bulk Upload...</Typography>
                     ) : (
                         <>
-                            <h2>Template CSV</h2>
+                            <Typography variant="h5" gutterBottom>Template CSV</Typography>
                             <ReusableTable
                                 data={getExampleData()}
                                 tableHandler={dummyCSVDataTable}

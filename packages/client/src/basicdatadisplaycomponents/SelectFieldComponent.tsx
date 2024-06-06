@@ -13,6 +13,20 @@ type SelectFieldComponentProps = {
 
 const StyledFormControl = styled(FormControl)(({ theme }) => ({
     margin: theme.spacing(0.5),
+    '& .MuiInputBase-root': {
+        height: '40px',
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderWidth: '2px',
+        },
+        '&:hover fieldset': {
+            borderWidth: '2px',
+        },
+        '&.Mui-focused fieldset': {
+            borderWidth: '2px',
+        },
+    },
     '& .MuiInputLabel-root': {
         top: '-4px',
     },

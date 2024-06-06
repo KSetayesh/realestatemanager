@@ -19,7 +19,7 @@ const RadioButtonComponent: React.FC<RadioButtonComponentProps> = ({ name, value
     return (
         <StyledFormControl>
             <FormLabel component="legend">{label}</FormLabel>
-            <RadioGroup name={name} value={value} onChange={onChange}>
+            <RadioGroup name={name} value={value} onChange={onChange} row>
                 {options.map((option, index) => (
                     <FormControlLabel
                         key={index}

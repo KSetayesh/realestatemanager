@@ -116,13 +116,15 @@ const StandardForm = <T,>({
                 );
             case InputType.RADIO:
                 return (
-                    <RadioButtonComponent
-                        name={valueDetail.name}
-                        value={valueDetail.value as string | number}
-                        onChange={handleChange}
-                        options={valueDetail.options || []}
-                        label={valueDetail.name}
-                    />
+                    <Box display="flex" flexDirection="row">
+                        <RadioButtonComponent
+                            name={valueDetail.name}
+                            value={valueDetail.value as string | number}
+                            onChange={handleChange}
+                            options={valueDetail.options || []}
+                            label={valueDetail.name}
+                        />
+                    </Box>
                 );
             default:
                 return null;
@@ -147,7 +149,7 @@ const StandardForm = <T,>({
 
     return (
         <Box display="flex" justifyContent="center" mt={4}>
-            <Paper elevation={3} style={{ padding: '2rem', backgroundColor: '#f9f9f9', maxWidth: '800px', width: '100%' }}>
+            <Paper elevation={3} style={{ padding: '2rem', backgroundColor: '#f9f9f9', maxWidth: '1000px', width: '100%' }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Form Title
                 </Typography>

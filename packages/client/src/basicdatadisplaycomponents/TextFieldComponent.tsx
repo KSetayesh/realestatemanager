@@ -4,7 +4,6 @@ import { TextField, styled } from '@mui/material';
 const StyledTextField = styled(TextField)(({ theme }) => ({
     '& .MuiInputBase-root': {
         height: '40px',
-        fontSize: '14px',
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -39,8 +38,8 @@ const TextFieldComponent: React.FC<TextFieldComponentProps> = ({ name, value, ty
             variant="outlined"
             size="small"
             fullWidth
-            placeholder={placeholder}
-            InputLabelProps={{ shrink: false }}
+            label={placeholder}
+            InputLabelProps={{ shrink: true }}
             InputProps={type === 'number' ? { inputProps: { step } } : undefined}
         />
     );
