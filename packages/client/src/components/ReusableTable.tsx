@@ -63,11 +63,11 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
 
-const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+const StyledTableContainer = styled(TableContainer)(() => ({
     overflowX: 'auto',
 }));
 
-const StyledTable = styled(Table)(({ theme }) => ({
+const StyledTable = styled(Table)(() => ({
     minWidth: 1000,
     borderCollapse: 'separate',
     borderSpacing: '0 10px',
@@ -221,6 +221,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        console.log(event);
         setPage(newPage);
     };
 
