@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { CreateListingDetailsRequest, CreatePropertiesInBulkRequest } from '@realestatemanager/shared';
+import { 
+    AddPropertyFormData, 
+    CreateListingDetailsRequest, 
+    CreatePropertiesInBulkRequest 
+} from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { AddPropertyFormData, AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
+import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
 import UploadCSVFile from '../components/UploadCSVFile';
 import ReusableTable from '../components/ReusableTable';
 import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';

@@ -1,4 +1,4 @@
-import { CreateRentCastApiRequest } from "@realestatemanager/shared";
+import { AddFormTitlesAndLabel, CollectPropertiesFormData, CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 import { InputType, PropertyStatus, PropertyType, State } from "../constants/Constant";
 import { FormProperty } from "../components/StandardForm";
@@ -10,22 +10,67 @@ import {
     StateForm
 } from "./ReusableFormFields";
 
-export type CollectPropertiesFormData = {
-    address: string;
-    city: string;
-    state: State;
-    zipcode: string;
-    latitude: number;
-    longitude: number;
-    radius: number;
-    propertyType: PropertyType;
-    bedrooms: number;
-    bathrooms: number;
-    status: PropertyStatus;
-    daysOld: number;
-    limit: number;
-    offset: number;
-    retrieveExtraData: boolean;
+export const AddCollectPropertiesTitlesAndLabels: AddFormTitlesAndLabel<CollectPropertiesFormData> = {
+    address: {
+        title: "",
+        name: ""
+    },
+    city: {
+        title: "",
+        name: ""
+    },
+    state: {
+        title: "",
+        name: ""
+    },
+    zipcode: {
+        title: "",
+        name: ""
+    },
+    latitude: {
+        title: "",
+        name: ""
+    },
+    longitude: {
+        title: "",
+        name: ""
+    },
+    radius: {
+        title: "",
+        name: ""
+    },
+    propertyType: {
+        title: "",
+        name: ""
+    },
+    bedrooms: {
+        title: "",
+        name: ""
+    },
+    bathrooms: {
+        title: "",
+        name: ""
+    },
+    status: {
+        title: "",
+        name: ""
+    },
+    daysOld: {
+        title: "",
+        name: ""
+    },
+    limit: {
+        title: "",
+        name: ""
+    },
+    offset: {
+        title: "",
+        name: ""
+    },
+    retrieveExtraData: {
+        title: "",
+        name: ""
+    }
 };
 
 export class CollectPropertiesFormDetails implements FormInterface<CollectPropertiesFormData, CreateRentCastApiRequest> {
@@ -52,13 +97,39 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
 
     getFormDetails(formData: CollectPropertiesFormData): FormProperty[] {
         return [
-            BasicStringForm('Address', 'address', formData.city),
-            BasicStringForm('City', 'city', formData.city),
-            StateForm(formData.state),
-            BasicStringForm('Zipcode', 'zipcode', formData.zipcode),
-            BasicNumberForm('Latitude', 'latitude', formData.latitude),
-            BasicNumberForm('Longitude', 'longitude', formData.longitude),
-            BasicNumberForm('Radius', 'radius', formData.radius),
+            BasicStringForm(
+                'Address',
+                'address',
+                formData.city
+            ),
+            BasicStringForm(
+                'City',
+                'city',
+                formData.city
+            ),
+            StateForm(
+                formData.state
+            ),
+            BasicStringForm(
+                'Zipcode',
+                'zipcode',
+                formData.zipcode
+            ),
+            BasicNumberForm(
+                'Latitude',
+                'latitude',
+                formData.latitude
+            ),
+            BasicNumberForm(
+                'Longitude',
+                'longitude',
+                formData.longitude
+            ),
+            BasicNumberForm(
+                'Radius',
+                'radius',
+                formData.radius
+            ),
             {
                 title: 'Property Type',
                 values: [
@@ -70,8 +141,16 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                     },
                 ],
             },
-            BasicNumberForm('Bedrooms', 'bedrooms', formData.bedrooms),
-            BasicNumberForm('Bathrooms', 'bathrooms', formData.bathrooms),
+            BasicNumberForm(
+                'Bedrooms',
+                'bedrooms',
+                formData.bedrooms
+            ),
+            BasicNumberForm(
+                'Bathrooms',
+                'bathrooms',
+                formData.bathrooms
+            ),
             {
                 title: 'Status',
                 values: [
@@ -83,10 +162,26 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                     },
                 ],
             },
-            BasicNumberForm('Days Old', 'daysOld', formData.daysOld),
-            BasicNumberForm('Limit', 'limit', formData.limit),
-            BasicNumberForm('Offset', 'offset', formData.offset),
-            BasicCheckBoxForm('Retrieve Extra Data', 'retrieveExtraData', formData.retrieveExtraData),
+            BasicNumberForm(
+                'Days Old',
+                'daysOld',
+                formData.daysOld
+            ),
+            BasicNumberForm(
+                'Limit',
+                'limit',
+                formData.limit
+            ),
+            BasicNumberForm(
+                'Offset',
+                'offset',
+                formData.offset
+            ),
+            BasicCheckBoxForm(
+                'Retrieve Extra Data',
+                'retrieveExtraData',
+                formData.retrieveExtraData
+            ),
         ];
     }
 

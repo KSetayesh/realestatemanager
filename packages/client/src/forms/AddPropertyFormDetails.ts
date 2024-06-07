@@ -1,4 +1,8 @@
-import { CreateListingDetailsRequest } from "@realestatemanager/shared";
+import {
+    AddFormTitlesAndLabel,
+    AddPropertyFormData,
+    CreateListingDetailsRequest
+} from "@realestatemanager/shared";
 import {
     Country,
     InputType,
@@ -17,53 +21,8 @@ import {
     StateForm,
     ratingSelections
 } from "./ReusableFormFields";
- 
-export type AddPropertyFormData = {
-    zillowURL: string;
-    fullAddress: string;
-    state: State;
-    zipcode: string;
-    city: string;
-    county: string;
-    country: Country;
-    streetAddress: string;
-    apartmentNumber: string;
-    longitude: number;
-    latitude: number;
-    numberOfDaysOnMarket: number;
-    elementarySchoolRating: number;
-    middleSchoolRating: number;
-    highSchoolRating: number;
-    numberOfBedrooms: number;
-    numberOfFullBathrooms: number;
-    numberOfHalfBathrooms: number;
-    squareFeet: number;
-    acres: number;
-    yearBuilt: number;
-    hasGarage: boolean;
-    hasPool: boolean;
-    hasBasement: boolean;
-    propertyType: PropertyType;
-    propertyStatus: PropertyStatus;
-    listingPrice: number;
-    zestimate: number;
-    zillowRentEstimate: number;
-    zestimateRangeLow: number;
-    zestimateRangeHigh: number;
-    zillowMonthlyPropertyTaxAmount: number;
-    zillowMonthlyHomeInsuranceAmount: number;
-    zillowMonthlyHOAFeesAmount: number;
-    description: string;
-};
 
-export type AddPropertyTitlesAndLabelsType = {
-    [K in keyof AddPropertyFormData]: {
-        title: string;
-        name: string;
-    };
-};
-
-export const AddPropertyTitlesAndLabels: AddPropertyTitlesAndLabelsType = {
+export const AddPropertyTitlesAndLabels: AddFormTitlesAndLabel<AddPropertyFormData> = {
     zillowURL: {
         title: 'Zillow URL',
         name: 'zillowURL',

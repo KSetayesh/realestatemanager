@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { CreateAgentRequest } from '@realestatemanager/shared';
+import { AgentFormData, CreateAgentRequest } from '@realestatemanager/shared';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { AgentFormData, AgentFormDetails } from '../forms/AgentFormDetails';
+import { AgentFormDetails } from '../forms/AgentFormDetails';
 
 const AgentForm: React.FC = () => {
 

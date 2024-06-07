@@ -36,54 +36,183 @@ import {
     getTravelingCosts,
     getVacancyRate
 } from '../utilities/PropertyResponseHelper';
-import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO, ValueInput } from "@realestatemanager/shared";
+import { AddFormTitlesAndLabel, CreateInvestmentScenarioRequest, InvestmentFormData, ListingWithScenariosResponseDTO, ValueInput } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";
 
-export type InvestmentFormData = {
-    downPaymentType: PercentageAndAmount,
-    downPaymentPercentage: number,
-    pmiRate: number,
-    pmiDropoffPoint: number,
-    monthlyPropertyTaxType: PercentageAndAmount,
-    monthlyPropertyTax: number,
-    monthlyHomeInsuranceAmountType: PercentageAndAmount,
-    monthlyHomeInsuranceAmount: number,
-    monthlyHOAFeesAmountType: PercentageAndAmount,
-    monthlyHOAFeesAmount: number,
-    annualInterestRate: number,
-    termInYears: number,
-    interestType: string,
-    propertyManagementRate: number,
-    vacancyRate: number,
-    maintenanceRate: number,
-    otherExpensesRate: number,
-    capExReserveRate: number,
-    legalAndProfessionalFeesType: PercentageAndAmount,
-    legalAndProfessionalFees: number,
-    initialRepairCostsType: PercentageAndAmount,
-    initialRepairCosts: number,
-    travelingCostsType: PercentageAndAmount,
-    travelingCosts: number,
-    closingCostsType: PercentageAndAmount,
-    closingCosts: number,
-    otherInitialExpensesType: PercentageAndAmount,
-    otherInitialExpenses: number,
-    rentEstimate: number,
-    purchasePrice: number,
-    annualRentIncreaseRate: number,
-    annualAppreciationRate: number,
-    annualTaxIncreaseRate: number,
-    annualHomeInsuranceIncreaseRate: number,
-    annualHOAFeesIncreaseRate: number,
-    parkingFees: number,
-    laundryServices: number,
-    storageUnitFees: number,
-    other: number,
-    depreciation: number,
-    mortgageInterest: number,
-    operatingExpenses: number,
-    propertyTaxes: number,
+export const AddHighYieldSavingsTitlesAndLabels: AddFormTitlesAndLabel<InvestmentFormData> = {
+    downPaymentType: {
+        title: "",
+        name: ""
+    },
+    downPaymentPercentage: {
+        title: "",
+        name: ""
+    },
+    pmiRate: {
+        title: "",
+        name: ""
+    },
+    pmiDropoffPoint: {
+        title: "",
+        name: ""
+    },
+    monthlyPropertyTaxType: {
+        title: "",
+        name: ""
+    },
+    monthlyPropertyTax: {
+        title: "",
+        name: ""
+    },
+    monthlyHomeInsuranceAmountType: {
+        title: "",
+        name: ""
+    },
+    monthlyHomeInsuranceAmount: {
+        title: "",
+        name: ""
+    },
+    monthlyHOAFeesAmountType: {
+        title: "",
+        name: ""
+    },
+    monthlyHOAFeesAmount: {
+        title: "",
+        name: ""
+    },
+    annualInterestRate: {
+        title: "",
+        name: ""
+    },
+    termInYears: {
+        title: "",
+        name: ""
+    },
+    interestType: {
+        title: "",
+        name: ""
+    },
+    propertyManagementRate: {
+        title: "",
+        name: ""
+    },
+    vacancyRate: {
+        title: "",
+        name: ""
+    },
+    maintenanceRate: {
+        title: "",
+        name: ""
+    },
+    otherExpensesRate: {
+        title: "",
+        name: ""
+    },
+    capExReserveRate: {
+        title: "",
+        name: ""
+    },
+    legalAndProfessionalFeesType: {
+        title: "",
+        name: ""
+    },
+    legalAndProfessionalFees: {
+        title: "",
+        name: ""
+    },
+    initialRepairCostsType: {
+        title: "",
+        name: ""
+    },
+    initialRepairCosts: {
+        title: "",
+        name: ""
+    },
+    travelingCostsType: {
+        title: "",
+        name: ""
+    },
+    travelingCosts: {
+        title: "",
+        name: ""
+    },
+    closingCostsType: {
+        title: "",
+        name: ""
+    },
+    closingCosts: {
+        title: "",
+        name: ""
+    },
+    otherInitialExpensesType: {
+        title: "",
+        name: ""
+    },
+    otherInitialExpenses: {
+        title: "",
+        name: ""
+    },
+    rentEstimate: {
+        title: "",
+        name: ""
+    },
+    purchasePrice: {
+        title: "",
+        name: ""
+    },
+    annualRentIncreaseRate: {
+        title: "",
+        name: ""
+    },
+    annualAppreciationRate: {
+        title: "",
+        name: ""
+    },
+    annualTaxIncreaseRate: {
+        title: "",
+        name: ""
+    },
+    annualHomeInsuranceIncreaseRate: {
+        title: "",
+        name: ""
+    },
+    annualHOAFeesIncreaseRate: {
+        title: "",
+        name: ""
+    },
+    parkingFees: {
+        title: "",
+        name: ""
+    },
+    laundryServices: {
+        title: "",
+        name: ""
+    },
+    storageUnitFees: {
+        title: "",
+        name: ""
+    },
+    other: {
+        title: "",
+        name: ""
+    },
+    depreciation: {
+        title: "",
+        name: ""
+    },
+    mortgageInterest: {
+        title: "",
+        name: ""
+    },
+    operatingExpenses: {
+        title: "",
+        name: ""
+    },
+    propertyTaxes: {
+        title: "",
+        name: ""
+    }
 };
 
 export class InvestmentBreakdownFormDetails implements FormInterface<

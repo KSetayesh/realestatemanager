@@ -4,11 +4,12 @@ import ReusableTable from '../components/ReusableTable';
 import DetailsModal from '../components/DetailsModal';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
-import { InvestmentBreakdownFormDetails, InvestmentFormData } from '../forms/InvestmentBreakdownFormDetails';
+import { InvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
 import { PropertiesListTable } from '../tables/PropertiesListTable';
 import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
 import {
     CreateInvestmentScenarioRequest,
+    InvestmentFormData,
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO
 } from '@realestatemanager/shared';

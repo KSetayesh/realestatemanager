@@ -1,5 +1,10 @@
 //-----Enums----
 
+export enum PercentageAndAmount {
+    PERCENTAGE = 'Percentage',
+    AMOUNT = 'Amount',
+};
+
 export enum PropertyStatus {
     ACTIVE = 'Active',
     INACTIVE = 'Inactive',

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
-import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from '@realestatemanager/shared';
+import {
+    HighYeildSavingsResponseDTO,
+    HighYeildSavingsRequest,
+    HighYieldSavingsFormData
+} from '@realestatemanager/shared';
 import ReusableTable from '../components/ReusableTable';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
-    HighYieldSavingsFormData,
     HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
 import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';

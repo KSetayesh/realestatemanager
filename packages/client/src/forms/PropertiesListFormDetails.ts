@@ -1,4 +1,4 @@
-import { CreateFilteredPropertyListRequest } from "@realestatemanager/shared";
+import { AddFormTitlesAndLabel, CreateFilteredPropertyListRequest, PropertyFilterFormFields } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { Filter, InputType, PropertyType, State } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
@@ -10,32 +10,107 @@ import {
     StateForm
 } from "./ReusableFormFields";
 
-export type PropertyFilterFormFields = {
-    state: State | string;
-    zipCode: string;
-    city: string;
-    rentEstimateFilter: Filter | string;
-    rentEstimate: number | string;
-    listedPriceFilter: Filter | string;
-    listedPrice: number | string;
-    numberOfBedroomsFilter: Filter | string;
-    numberOfBedrooms: number | string;
-    numberOfBathroomsFilter: Filter | string;
-    numberOfBathrooms: number | string;
-    squareFeetFilter: Filter | string;
-    squareFeet: number | string;
-    yearBuiltFilter: Filter | string;
-    yearBuilt: number | string;
-    maxHoaFilter: Filter | string;
-    maxHoa: number | string;
-    monthlyPropertyTaxAmountFilter: Filter | string;
-    monthlyPropertyTaxAmount: number | string;
-    homeType: PropertyType | string;
-    hasGarage: boolean;
-    hasBasement: boolean;
-    hasPool: boolean;
-    isActive: boolean;
-    limit: number;
+export const AddPropertyFilterTitlesAndLabels: AddFormTitlesAndLabel<PropertyFilterFormFields> = {
+    state: {
+        title: "",
+        name: ""
+    },
+    zipCode: {
+        title: "",
+        name: ""
+    },
+    city: {
+        title: "",
+        name: ""
+    },
+    rentEstimateFilter: {
+        title: "",
+        name: ""
+    },
+    rentEstimate: {
+        title: "",
+        name: ""
+    },
+    listedPriceFilter: {
+        title: "",
+        name: ""
+    },
+    listedPrice: {
+        title: "",
+        name: ""
+    },
+    numberOfBedroomsFilter: {
+        title: "",
+        name: ""
+    },
+    numberOfBedrooms: {
+        title: "",
+        name: ""
+    },
+    numberOfBathroomsFilter: {
+        title: "",
+        name: ""
+    },
+    numberOfBathrooms: {
+        title: "",
+        name: ""
+    },
+    squareFeetFilter: {
+        title: "",
+        name: ""
+    },
+    squareFeet: {
+        title: "",
+        name: ""
+    },
+    yearBuiltFilter: {
+        title: "",
+        name: ""
+    },
+    yearBuilt: {
+        title: "",
+        name: ""
+    },
+    maxHoaFilter: {
+        title: "",
+        name: ""
+    },
+    maxHoa: {
+        title: "",
+        name: ""
+    },
+    monthlyPropertyTaxAmountFilter: {
+        title: "",
+        name: ""
+    },
+    monthlyPropertyTaxAmount: {
+        title: "",
+        name: ""
+    },
+    homeType: {
+        title: "",
+        name: ""
+    },
+    hasGarage: {
+        title: "",
+        name: ""
+    },
+    hasBasement: {
+        title: "",
+        name: ""
+    },
+    hasPool: {
+        title: "",
+        name: ""
+    },
+    isActive: {
+        title: "",
+        name: ""
+    },
+    limit: {
+        title: "",
+        name: ""
+    }
 };
 
 // replace undefined with a type

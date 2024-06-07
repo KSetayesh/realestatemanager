@@ -6,12 +6,12 @@ import {
     CreateFilteredPropertyListRequest,
     CreateGetAllPropertiesRequest,
     CreateUpdatePropertyRequest,
-    ListingWithScenariosResponseDTO
+    ListingWithScenariosResponseDTO,
+    PropertyFilterFormFields
 } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     PropertiesListFormDetails,
-    PropertyFilterFormFields
 } from '../forms/PropertiesListFormDetails';
 import { PropertiesListWithInvestmentBreakdownTable } from '../tables/PropertiesListWithInvestmentBreakdownTable';
 
