@@ -1,13 +1,10 @@
-import { AddAgentTitlesAndLabelsGetter } from "@realestatemanager/shared";
 import { TableColumn } from "../../components/ReusableTable";
 import { InputType } from "../../constants/Constant";
 
-const getterInstance: AddAgentTitlesAndLabelsGetter = new AddAgentTitlesAndLabelsGetter();
-
 export const agentDefaultColumns: TableColumn[] = [
     {
-        header: getterInstance.firstNameTitle,
-        accessor: getterInstance.firstNameName,
+        header: "First Name",
+        accessor: "firstName",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -16,8 +13,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: getterInstance.lastNameTitle,
-        accessor: getterInstance.lastNameName,
+        header: "Last Name",
+        accessor: "lastName",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -26,7 +23,7 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: "Full Name",  // Come back to this 
+        header: "Full Name",
         accessor: "fullName",
         inputType: InputType.STRING,
         isURL: false,
@@ -35,8 +32,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isSortable: true,
     },
     {
-        header: getterInstance.websiteTitle,
-        accessor: getterInstance.websiteName,
+        header: "Website",
+        accessor: "website",
         inputType: InputType.STRING,
         isURL: true,
         showColumn: true,
@@ -45,8 +42,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: getterInstance.companyNameTitle,
-        accessor: getterInstance.companyNameName,
+        header: "Company Name",
+        accessor: "companyName",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -55,8 +52,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: getterInstance.phoneNumberTitle,
-        accessor: getterInstance.phoneNumberName,
+        header: "Phone Number",
+        accessor: "phoneNumber",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -65,8 +62,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: getterInstance.emailTitle,
-        accessor: getterInstance.emailName,
+        header: "Email",
+        accessor: "email",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -75,8 +72,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isEditable: true,
     },
     {
-        header: getterInstance.countryTitle,
-        accessor: getterInstance.countryName,
+        header: "Country",
+        accessor: "country",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -84,8 +81,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isSortable: true,
     },
     {
-        header: getterInstance.stateTitle,
-        accessor: getterInstance.stateName,
+        header: "State",
+        accessor: "state",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
@@ -93,8 +90,8 @@ export const agentDefaultColumns: TableColumn[] = [
         isSortable: true,
     },
     {
-        header: getterInstance.agentTypeTitle,
-        accessor: getterInstance.agentTypeName,
+        header: "Agent Type",
+        accessor: "agentType",
         inputType: InputType.STRING,
         isURL: false,
         showColumn: true,
