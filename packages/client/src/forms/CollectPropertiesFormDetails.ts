@@ -12,65 +12,188 @@ import {
 
 export const AddCollectPropertiesTitlesAndLabels: AddFormTitlesAndLabel<CollectPropertiesFormData> = {
     address: {
-        title: "",
-        name: ""
+        title: "Address",
+        name: "address"
     },
     city: {
-        title: "",
-        name: ""
+        title: "City",
+        name: "city"
     },
     state: {
-        title: "",
-        name: ""
+        title: "State",
+        name: "state"
     },
     zipcode: {
-        title: "",
-        name: ""
+        title: "Zipcode",
+        name: "zipcode"
     },
     latitude: {
-        title: "",
-        name: ""
+        title: "Latitude",
+        name: "latitude"
     },
     longitude: {
-        title: "",
-        name: ""
+        title: "Longitude",
+        name: "longitude"
     },
     radius: {
-        title: "",
-        name: ""
+        title: "Radius",
+        name: "radius"
     },
     propertyType: {
-        title: "",
-        name: ""
+        title: "Property Type",
+        name: "propertyType"
     },
     bedrooms: {
-        title: "",
-        name: ""
+        title: "Bedrooms",
+        name: "bedrooms"
     },
     bathrooms: {
-        title: "",
-        name: ""
+        title: "Bathrooms",
+        name: "bathrooms"
     },
     status: {
-        title: "",
-        name: ""
+        title: "Status",
+        name: "status"
     },
     daysOld: {
-        title: "",
-        name: ""
+        title: "Days Old",
+        name: "daysOld"
     },
     limit: {
-        title: "",
-        name: ""
+        title: "Limit",
+        name: "limit"
     },
     offset: {
-        title: "",
-        name: ""
+        title: "Offset",
+        name: "offset"
     },
     retrieveExtraData: {
-        title: "",
-        name: ""
+        title: "Retrieve Extra Data",
+        name: "retrieveExtraData"
+    },
+};
+
+export class AddCollectPropertiesTitlesAndLabelsGetter {
+    get addressTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.address.title;
     }
+
+    get addressName(): string {
+        return AddCollectPropertiesTitlesAndLabels.address.name;
+    }
+
+    get cityTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.city.title;
+    }
+
+    get cityName(): string {
+        return AddCollectPropertiesTitlesAndLabels.city.name;
+    }
+
+    get stateTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.state.title;
+    }
+
+    get stateName(): string {
+        return AddCollectPropertiesTitlesAndLabels.state.name;
+    }
+
+    get zipcodeTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.zipcode.title;
+    }
+
+    get zipcodeName(): string {
+        return AddCollectPropertiesTitlesAndLabels.zipcode.name;
+    }
+
+    get latitudeTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.latitude.title;
+    }
+
+    get latitudeName(): string {
+        return AddCollectPropertiesTitlesAndLabels.latitude.name;
+    }
+
+    get longitudeTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.longitude.title;
+    }
+
+    get longitudeName(): string {
+        return AddCollectPropertiesTitlesAndLabels.longitude.name;
+    }
+
+    get radiusTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.radius.title;
+    }
+
+    get radiusName(): string {
+        return AddCollectPropertiesTitlesAndLabels.radius.name;
+    }
+
+    get propertyTypeTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.propertyType.title;
+    }
+
+    get propertyTypeName(): string {
+        return AddCollectPropertiesTitlesAndLabels.propertyType.name;
+    }
+
+    get bedroomsTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.bedrooms.title;
+    }
+
+    get bedroomsName(): string {
+        return AddCollectPropertiesTitlesAndLabels.bedrooms.name;
+    }
+
+    get bathroomsTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.bathrooms.title;
+    }
+
+    get bathroomsName(): string {
+        return AddCollectPropertiesTitlesAndLabels.bathrooms.name;
+    }
+
+    get statusTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.status.title;
+    }
+
+    get statusName(): string {
+        return AddCollectPropertiesTitlesAndLabels.status.name;
+    }
+
+    get daysOldTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.daysOld.title;
+    }
+
+    get daysOldName(): string {
+        return AddCollectPropertiesTitlesAndLabels.daysOld.name;
+    }
+
+    get limitTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.limit.title;
+    }
+
+    get limitName(): string {
+        return AddCollectPropertiesTitlesAndLabels.limit.name;
+    }
+
+    get offsetTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.offset.title;
+    }
+
+    get offsetName(): string {
+        return AddCollectPropertiesTitlesAndLabels.offset.name;
+    }
+
+    get retrieveExtraDataTitle(): string {
+        return AddCollectPropertiesTitlesAndLabels.retrieveExtraData.title;
+    }
+
+    get retrieveExtraDataName(): string {
+        return AddCollectPropertiesTitlesAndLabels.retrieveExtraData.name;
+    }
+
 };
 
 export class CollectPropertiesFormDetails implements FormInterface<CollectPropertiesFormData, CreateRentCastApiRequest> {
@@ -96,45 +219,46 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
     }
 
     getFormDetails(formData: CollectPropertiesFormData): FormProperty[] {
+        const getterInstance: AddCollectPropertiesTitlesAndLabelsGetter = new AddCollectPropertiesTitlesAndLabelsGetter();
         return [
             BasicStringForm(
-                'Address',
-                'address',
+                getterInstance.addressTitle,
+                getterInstance.addressName,
                 formData.city
             ),
             BasicStringForm(
-                'City',
-                'city',
+                getterInstance.cityTitle,
+                getterInstance.cityName,
                 formData.city
             ),
             StateForm(
                 formData.state
             ),
             BasicStringForm(
-                'Zipcode',
-                'zipcode',
+                getterInstance.zipcodeTitle,
+                getterInstance.zipcodeName,
                 formData.zipcode
             ),
             BasicNumberForm(
-                'Latitude',
-                'latitude',
+                getterInstance.latitudeTitle,
+                getterInstance.latitudeName,
                 formData.latitude
             ),
             BasicNumberForm(
-                'Longitude',
-                'longitude',
+                getterInstance.longitudeTitle,
+                getterInstance.longitudeName,
                 formData.longitude
             ),
             BasicNumberForm(
-                'Radius',
-                'radius',
+                getterInstance.radiusTitle,
+                getterInstance.radiusName,
                 formData.radius
             ),
             {
-                title: 'Property Type',
+                title: getterInstance.propertyTypeTitle,
                 values: [
                     {
-                        name: 'propertyType',
+                        name: getterInstance.propertyTypeName,
                         type: InputType.SELECT,
                         value: formData.propertyType,
                         options: GetOptionsForFormProperty(PropertyType),
@@ -142,20 +266,20 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                 ],
             },
             BasicNumberForm(
-                'Bedrooms',
-                'bedrooms',
+                getterInstance.bedroomsTitle,
+                getterInstance.bedroomsName,
                 formData.bedrooms
             ),
             BasicNumberForm(
-                'Bathrooms',
-                'bathrooms',
+                getterInstance.bathroomsTitle,
+                getterInstance.bathroomsName,
                 formData.bathrooms
             ),
             {
-                title: 'Status',
+                title: getterInstance.statusTitle,
                 values: [
                     {
-                        name: 'status',
+                        name: getterInstance.statusName,
                         type: InputType.SELECT,
                         value: formData.status,
                         options: GetOptionsForFormProperty(PropertyStatus),
@@ -163,23 +287,23 @@ export class CollectPropertiesFormDetails implements FormInterface<CollectProper
                 ],
             },
             BasicNumberForm(
-                'Days Old',
-                'daysOld',
+                getterInstance.daysOldTitle,
+                getterInstance.daysOldName,
                 formData.daysOld
             ),
             BasicNumberForm(
-                'Limit',
-                'limit',
+                getterInstance.limitTitle,
+                getterInstance.limitName,
                 formData.limit
             ),
             BasicNumberForm(
-                'Offset',
-                'offset',
+                getterInstance.offsetTitle,
+                getterInstance.offsetName,
                 formData.offset
             ),
             BasicCheckBoxForm(
-                'Retrieve Extra Data',
-                'retrieveExtraData',
+                getterInstance.retrieveExtraDataTitle,
+                getterInstance.retrieveExtraDataName,
                 formData.retrieveExtraData
             ),
         ];

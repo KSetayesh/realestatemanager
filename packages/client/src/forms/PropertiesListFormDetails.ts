@@ -12,106 +12,308 @@ import {
 
 export const AddPropertyFilterTitlesAndLabels: AddFormTitlesAndLabel<PropertyFilterFormFields> = {
     state: {
-        title: "",
-        name: ""
+        title: "State",
+        name: "state"
     },
     zipCode: {
-        title: "",
-        name: ""
+        title: "ZipCode",
+        name: "zipCode"
     },
     city: {
-        title: "",
-        name: ""
+        title: "City",
+        name: "city"
     },
     rentEstimateFilter: {
-        title: "",
-        name: ""
+        title: "Rent Estimate Filter",
+        name: "rentEstimateFilter",
     },
     rentEstimate: {
-        title: "",
-        name: ""
+        title: "Rent Estimate",
+        name: "rentEstimate",
     },
     listedPriceFilter: {
-        title: "",
-        name: ""
+        title: "Listed Price Filter",
+        name: "listedPriceFilter"
     },
     listedPrice: {
-        title: "",
-        name: ""
+        title: "Listed Price",
+        name: "listedPrice"
     },
     numberOfBedroomsFilter: {
-        title: "",
-        name: ""
+        title: "Number Of Bedrooms Filter",
+        name: "numberOfBedroomsFilter"
     },
     numberOfBedrooms: {
-        title: "",
-        name: ""
+        title: "Number Of Bedrooms",
+        name: "numberOfBedrooms"
     },
     numberOfBathroomsFilter: {
-        title: "",
-        name: ""
+        title: "Number Of Bathrooms Filter",
+        name: "numberOfBathroomsFilter"
     },
     numberOfBathrooms: {
-        title: "",
-        name: ""
+        title: "Number Of Bathrooms",
+        name: "numberOfBathrooms"
     },
     squareFeetFilter: {
-        title: "",
-        name: ""
+        title: "Square Feet Filter",
+        name: "squareFeetFilter"
     },
     squareFeet: {
-        title: "",
-        name: ""
+        title: "Square Feet",
+        name: "squareFeet"
     },
     yearBuiltFilter: {
-        title: "",
-        name: ""
+        title: "Year Built Filter",
+        name: "yearBuiltFilter"
     },
     yearBuilt: {
-        title: "",
-        name: ""
+        title: "Year Built",
+        name: "yearBuilt"
     },
     maxHoaFilter: {
-        title: "",
-        name: ""
+        title: "Max Hoa Filter",
+        name: "maxHoaFilter"
     },
     maxHoa: {
-        title: "",
-        name: ""
+        title: "Max Hoa",
+        name: "maxHoa"
     },
     monthlyPropertyTaxAmountFilter: {
-        title: "",
-        name: ""
+        title: "Monthly Property Tax Amount Filter",
+        name: "monthlyPropertyTaxAmountFilter"
     },
     monthlyPropertyTaxAmount: {
-        title: "",
-        name: ""
+        title: "Monthly Property Tax Amount",
+        name: "monthlyPropertyTaxAmount"
     },
     homeType: {
-        title: "",
-        name: ""
+        title: "Home Type",
+        name: "homeType"
     },
     hasGarage: {
-        title: "",
-        name: ""
+        title: "Has Garage",
+        name: "hasGarage"
     },
     hasBasement: {
-        title: "",
-        name: ""
+        title: "Has Basement",
+        name: "hasBasement"
     },
     hasPool: {
-        title: "",
-        name: ""
+        title: "Has Pool",
+        name: "hasPool"
     },
     isActive: {
-        title: "",
-        name: ""
+        title: "Is Active",
+        name: "isActive"
     },
     limit: {
-        title: "",
-        name: ""
-    }
+        title: "Limit",
+        name: "limit"
+    },
 };
+
+export class AddPropertyFilterTitlesAndLabelsGetter {
+    get stateTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.state.title;
+    }
+
+    get stateName(): string {
+        return AddPropertyFilterTitlesAndLabels.state.name;
+    }
+
+    get zipCodeTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.zipCode.title;
+    }
+
+    get zipCodeName(): string {
+        return AddPropertyFilterTitlesAndLabels.zipCode.name;
+    }
+
+    get cityTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.city.title;
+    }
+
+    get cityName(): string {
+        return AddPropertyFilterTitlesAndLabels.city.name;
+    }
+
+    get rentEstimateFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.rentEstimateFilter.title;
+    }
+
+    get rentEstimateFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.rentEstimateFilter.name;
+    }
+
+    get rentEstimateTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.rentEstimate.title;
+    }
+
+    get rentEstimateName(): string {
+        return AddPropertyFilterTitlesAndLabels.rentEstimate.name;
+    }
+
+    get listedPriceFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.listedPriceFilter.title;
+    }
+
+    get listedPriceFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.listedPriceFilter.name;
+    }
+
+    get listedPriceTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.listedPrice.title;
+    }
+
+    get listedPriceName(): string {
+        return AddPropertyFilterTitlesAndLabels.listedPrice.name;
+    }
+
+    get numberOfBedroomsFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBedroomsFilter.title;
+    }
+
+    get numberOfBedroomsFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBedroomsFilter.name;
+    }
+
+    get numberOfBedroomsTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBedrooms.title;
+    }
+
+    get numberOfBedroomsName(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBedrooms.name;
+    }
+
+    get numberOfBathroomsFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBathroomsFilter.title;
+    }
+
+    get numberOfBathroomsFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBathroomsFilter.name;
+    }
+
+    get numberOfBathroomsTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBathrooms.title;
+    }
+
+    get numberOfBathroomsName(): string {
+        return AddPropertyFilterTitlesAndLabels.numberOfBathrooms.name;
+    }
+
+    get squareFeetFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.squareFeetFilter.title;
+    }
+
+    get squareFeetFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.squareFeetFilter.name;
+    }
+
+    get squareFeetTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.squareFeet.title;
+    }
+
+    get squareFeetName(): string {
+        return AddPropertyFilterTitlesAndLabels.squareFeet.name;
+    }
+
+    get yearBuiltFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.yearBuiltFilter.title;
+    }
+
+    get yearBuiltFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.yearBuiltFilter.name;
+    }
+
+    get yearBuiltTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.yearBuilt.title;
+    }
+
+    get yearBuiltName(): string {
+        return AddPropertyFilterTitlesAndLabels.yearBuilt.name;
+    }
+
+    get maxHoaFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.maxHoaFilter.title;
+    }
+
+    get maxHoaFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.maxHoaFilter.name;
+    }
+
+    get maxHoaTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.maxHoa.title;
+    }
+
+    get maxHoaName(): string {
+        return AddPropertyFilterTitlesAndLabels.maxHoa.name;
+    }
+
+    get monthlyPropertyTaxAmountFilterTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.monthlyPropertyTaxAmountFilter.title;
+    }
+
+    get monthlyPropertyTaxAmountFilterName(): string {
+        return AddPropertyFilterTitlesAndLabels.monthlyPropertyTaxAmountFilter.name;
+    }
+
+    get monthlyPropertyTaxAmountTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.monthlyPropertyTaxAmount.title;
+    }
+
+    get monthlyPropertyTaxAmountName(): string {
+        return AddPropertyFilterTitlesAndLabels.monthlyPropertyTaxAmount.name;
+    }
+
+    get homeTypeTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.homeType.title;
+    }
+
+    get homeTypeName(): string {
+        return AddPropertyFilterTitlesAndLabels.homeType.name;
+    }
+
+    get hasGarageTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.hasGarage.title;
+    }
+
+    get hasGarageName(): string {
+        return AddPropertyFilterTitlesAndLabels.hasGarage.name;
+    }
+
+    get hasBasementTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.hasBasement.title;
+    }
+
+    get hasBasementName(): string {
+        return AddPropertyFilterTitlesAndLabels.hasBasement.name;
+    }
+
+    get hasPoolTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.hasPool.title;
+    }
+
+    get hasPoolName(): string {
+        return AddPropertyFilterTitlesAndLabels.hasPool.name;
+    }
+
+    get isActiveTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.isActive.title;
+    }
+
+    get isActiveName(): string {
+        return AddPropertyFilterTitlesAndLabels.isActive.name;
+    }
+
+    get limitTitle(): string {
+        return AddPropertyFilterTitlesAndLabels.limit.title;
+    }
+
+    get limitName(): string {
+        return AddPropertyFilterTitlesAndLabels.limit.name;
+    }
+}
 
 // replace undefined with a type
 export class PropertiesListFormDetails implements FormInterface<PropertyFilterFormFields, CreateFilteredPropertyListRequest> {
@@ -232,155 +434,186 @@ export class PropertiesListFormDetails implements FormInterface<PropertyFilterFo
     }
 
     getFormDetails(formData: PropertyFilterFormFields): FormProperty[] {
-
+        const getterInstance: AddPropertyFilterTitlesAndLabelsGetter = new AddPropertyFilterTitlesAndLabelsGetter();
         return [
-            StateForm(formData.state, true),
-            BasicStringForm('ZipCode', 'zipCode', formData.zipCode),
-            BasicStringForm('City', 'city', formData.city),
+            StateForm(
+                formData.state,
+                true
+            ),
+            BasicStringForm(
+                getterInstance.zipCodeTitle,
+                getterInstance.zipCodeName,
+                formData.zipCode
+            ),
+            BasicStringForm(
+                getterInstance.cityTitle,
+                getterInstance.cityName,
+                formData.city
+            ),
             {
-                title: 'Rent Estimate',
+                title: getterInstance.rentEstimateTitle,
                 values: [
                     {
-                        name: 'rentEstimateFilter',
+                        name: getterInstance.rentEstimateFilterName,
                         type: InputType.SELECT,
                         value: formData.rentEstimateFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'rentEstimate',
+                        name: getterInstance.rentEstimateName,
                         type: InputType.NUMBER,
                         value: formData.rentEstimate,
                     },
                 ],
             },
             {
-                title: 'Listed Price',
+                title: getterInstance.listedPriceTitle,
                 values: [
                     {
-                        name: 'listedPriceFilter',
+                        name: getterInstance.listedPriceFilterName,
                         type: InputType.SELECT,
                         value: formData.listedPriceFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'listedPrice',
+                        name: getterInstance.listedPriceName,
                         type: InputType.NUMBER,
                         value: formData.listedPrice,
                     },
                 ],
             },
             {
-                title: 'Number Of Bedrooms',
+                title: getterInstance.numberOfBedroomsTitle,
                 values: [
                     {
-                        name: 'numberOfBedroomsFilter',
+                        name: getterInstance.numberOfBedroomsFilterName,
                         type: InputType.SELECT,
                         value: formData.numberOfBedroomsFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'numberOfBedrooms',
+                        name: getterInstance.numberOfBedroomsName,
                         type: InputType.NUMBER,
                         value: formData.numberOfBedrooms,
                     },
                 ],
             },
             {
-                title: 'Number Of Bathrooms',
+                title: getterInstance.numberOfBathroomsTitle,
                 values: [
                     {
-                        name: 'numberOfBathroomsFilter',
+                        name: getterInstance.numberOfBathroomsFilterName,
                         type: InputType.SELECT,
                         value: formData.numberOfBathroomsFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'numberOfBathrooms',
+                        name: getterInstance.numberOfBathroomsName,
                         type: InputType.NUMBER,
                         value: formData.numberOfBathrooms,
                     },
                 ],
             },
             {
-                title: 'Square Feet',
+                title: getterInstance.squareFeetTitle,
                 values: [
                     {
-                        name: 'squareFeetFilter',
+                        name: getterInstance.squareFeetFilterName,
                         type: InputType.SELECT,
                         value: formData.squareFeetFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'squareFeet',
+                        name: getterInstance.squareFeetName,
                         type: InputType.NUMBER,
                         value: formData.squareFeet,
                     },
                 ],
             },
             {
-                title: 'Year Built',
+                title: getterInstance.yearBuiltTitle,
                 values: [
                     {
-                        name: 'yearBuiltFilter',
+                        name: getterInstance.yearBuiltFilterName,
                         type: InputType.SELECT,
                         value: formData.yearBuiltFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'yearBuilt',
+                        name: getterInstance.yearBuiltName,
                         type: InputType.NUMBER,
                         value: formData.yearBuilt,
                     },
                 ],
             },
             {
-                title: 'Max Hoa',
+                title: getterInstance.maxHoaTitle,
                 values: [
                     {
-                        name: 'maxHoaFilter',
+                        name: getterInstance.maxHoaFilterName,
                         type: InputType.SELECT,
                         value: formData.maxHoaFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'maxHoa',
+                        name: getterInstance.maxHoaName,
                         type: InputType.NUMBER,
                         value: formData.maxHoa,
                     },
                 ],
             },
             {
-                title: 'Monthly Property Tax Amount',
+                title: getterInstance.monthlyPropertyTaxAmountTitle,
                 values: [
                     {
-                        name: 'monthlyPropertyTaxAmountFilter',
+                        name: getterInstance.monthlyPropertyTaxAmountFilterName,
                         type: InputType.SELECT,
                         value: formData.monthlyPropertyTaxAmountFilter,
                         options: GetOptionsForFormProperty(Filter, true),
                     },
                     {
-                        name: 'monthlyPropertyTaxAmount',
+                        name: getterInstance.monthlyPropertyTaxAmountName,
                         type: InputType.NUMBER,
                         value: formData.monthlyPropertyTaxAmount,
                     },
                 ],
             },
             {
-                title: 'Home Type',
+                title: getterInstance.homeTypeTitle,
                 values: [
                     {
-                        name: 'homeType',
+                        name: getterInstance.homeTypeName,
                         type: InputType.SELECT,
                         value: formData.homeType,
                         options: GetOptionsForFormProperty(PropertyType, true),
                     },
                 ],
             },
-            BasicCheckBoxForm('Has Garage', 'hasGarage', formData.hasGarage),
-            BasicCheckBoxForm('Has Basement', 'hasBasement', formData.hasBasement),
-            BasicCheckBoxForm('Has Pool', 'hasPool', formData.hasPool),
-            BasicCheckBoxForm('Is Active', 'isActive', formData.isActive),
-            BasicNumberForm('Limit', 'limit', formData.limit),
+            BasicCheckBoxForm(
+                getterInstance.hasGarageTitle,
+                getterInstance.hasGarageName,
+                formData.hasGarage
+            ),
+            BasicCheckBoxForm(
+                getterInstance.hasBasementTitle,
+                getterInstance.hasBasementName,
+                formData.hasBasement
+            ),
+            BasicCheckBoxForm(
+                getterInstance.hasPoolTitle,
+                getterInstance.hasPoolName,
+                formData.hasPool
+            ),
+            BasicCheckBoxForm(
+                getterInstance.isActiveTitle,
+                getterInstance.isActiveName,
+                formData.isActive
+            ),
+            BasicNumberForm(
+                getterInstance.limitTitle,
+                getterInstance.limitName,
+                formData.limit
+            ),
         ];
     }
 

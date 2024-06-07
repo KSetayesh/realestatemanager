@@ -1,6 +1,10 @@
 import axios from "axios";
 import { CalcApi } from "./calcapi";
-import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/shared";
+import {
+    AgentResponseDTO,
+    CreateAgentRequest,
+    CreateUpdateAgentRequest
+} from "@realestatemanager/shared";
 
 export class AgentApi extends CalcApi {
 

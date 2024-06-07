@@ -5,22 +5,56 @@ import { BasicNumberForm } from "./ReusableFormFields";
 
 export const AddHighYieldSavingsTitlesAndLabels: AddFormTitlesAndLabel<HighYieldSavingsFormData> = {
     initialDeposit: {
-        title: "",
-        name: ""
+        title: "Initial Deposit",
+        name: "initialDeposit"
     },
     annualInterestRate: {
-        title: "",
-        name: ""
+        title: "Annual Interest Rate (%)",
+        name: "annualInterestRate"
     },
     years: {
-        title: "",
-        name: ""
+        title: "Years",
+        name: "years"
     },
     monthlyDeposit: {
-        title: "",
-        name: ""
-    }
+        title: "Monthly Deposit",
+        name: "monthlyDeposit"
+    },
 };
+
+export class AddHighYieldSavingsTitlesAndLabelsGetter {
+    get initialDepositTitle(): string {
+        return AddHighYieldSavingsTitlesAndLabels.initialDeposit.title;
+    }
+
+    get initialDepositName(): string {
+        return AddHighYieldSavingsTitlesAndLabels.initialDeposit.name;
+    }
+
+    get annualInterestRateTitle(): string {
+        return AddHighYieldSavingsTitlesAndLabels.annualInterestRate.title;
+    }
+
+    get annualInterestRateName(): string {
+        return AddHighYieldSavingsTitlesAndLabels.annualInterestRate.name;
+    }
+
+    get yearsTitle(): string {
+        return AddHighYieldSavingsTitlesAndLabels.years.title;
+    }
+
+    get yearsName(): string {
+        return AddHighYieldSavingsTitlesAndLabels.years.name;
+    }
+
+    get monthlyDepositTitle(): string {
+        return AddHighYieldSavingsTitlesAndLabels.monthlyDeposit.title;
+    }
+
+    get monthlyDepositName(): string {
+        return AddHighYieldSavingsTitlesAndLabels.monthlyDeposit.name;
+    }
+}
 
 export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavingsFormData, HighYeildSavingsRequest> {
 
@@ -44,25 +78,26 @@ export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavin
     }
 
     getFormDetails(formData: HighYieldSavingsFormData): FormProperty[] {
+        const getterInstance: AddHighYieldSavingsTitlesAndLabelsGetter = new AddHighYieldSavingsTitlesAndLabelsGetter();
         return [
             BasicNumberForm(
-                'Initial Deposit', 
-                'initialDeposit', 
+                getterInstance.initialDepositTitle,
+                getterInstance.initialDepositName,
                 formData.initialDeposit
             ),
             BasicNumberForm(
-                'Annual Interest Rate (%)', 
-                'annualInterestRate', 
+                getterInstance.annualInterestRateTitle,
+                getterInstance.annualInterestRateName,
                 formData.annualInterestRate
             ),
             BasicNumberForm(
-                'Years', 
-                'years', 
+                getterInstance.yearsTitle,
+                getterInstance.yearsName,
                 formData.years
             ),
             BasicNumberForm(
-                'Monthly Deposit', 
-                'monthlyDeposit', 
+                getterInstance.monthlyDepositTitle,
+                getterInstance.monthlyDepositName,
                 formData.monthlyDeposit ?? 0
             ),
         ];

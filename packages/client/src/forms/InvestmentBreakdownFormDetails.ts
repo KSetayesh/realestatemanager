@@ -40,180 +40,526 @@ import { AddFormTitlesAndLabel, CreateInvestmentScenarioRequest, InvestmentFormD
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";
 
-export const AddHighYieldSavingsTitlesAndLabels: AddFormTitlesAndLabel<InvestmentFormData> = {
+export const AddInvestmentBreakdownTitlesAndLabels: AddFormTitlesAndLabel<InvestmentFormData> = {
     downPaymentType: {
-        title: "",
-        name: ""
+        title: 'Down Payment Type',
+        name: 'downPaymentType',
     },
     downPaymentPercentage: {
-        title: "",
-        name: ""
+        title: 'Down Payment (%)',
+        name: 'downPaymentPercentage',
     },
     pmiRate: {
-        title: "",
-        name: ""
+        title: 'PMI Rate (%)',
+        name: "pmiRate"
     },
     pmiDropoffPoint: {
-        title: "",
-        name: ""
+        title: "PMI Dropoff Point",
+        name: "pmiDropoffPoint"
     },
     monthlyPropertyTaxType: {
-        title: "",
-        name: ""
+        title: 'Monthly Property Tax Type',
+        name: 'monthlyPropertyTaxType',
     },
     monthlyPropertyTax: {
-        title: "",
-        name: ""
+        title: 'Monthly Property Tax',
+        name: 'monthlyPropertyTax',
     },
     monthlyHomeInsuranceAmountType: {
-        title: "",
-        name: ""
+        title: 'Monthly Home Insurance Amount Type',
+        name: 'monthlyHomeInsuranceAmountType',
     },
     monthlyHomeInsuranceAmount: {
-        title: "",
-        name: ""
+        title: 'Monthly Home Insurance Amount',
+        name: 'monthlyHomeInsuranceAmount',
     },
     monthlyHOAFeesAmountType: {
-        title: "",
-        name: ""
+        title: 'Monthly HOA Fees Amount Type',
+        name: 'monthlyHOAFeesAmountType',
     },
     monthlyHOAFeesAmount: {
-        title: "",
-        name: ""
+        title: 'Monthly HOA Fees Amount',
+        name: 'monthlyHOAFeesAmount',
     },
     annualInterestRate: {
-        title: "",
-        name: ""
+        title: 'Annual Interest Rate (%)',
+        name: 'annualInterestRate',
     },
     termInYears: {
-        title: "",
-        name: ""
+        title: 'Term In Years',
+        name: 'termInYears',
     },
     interestType: {
-        title: "",
-        name: ""
+        title: 'Interest Type',
+        name: 'interestType',
     },
     propertyManagementRate: {
-        title: "",
-        name: ""
+        title: 'Property Management (%)',
+        name: 'propertyManagementRate',
     },
     vacancyRate: {
-        title: "",
-        name: ""
+        title: 'Vacancy (%)',
+        name: 'vacancyRate',
     },
     maintenanceRate: {
-        title: "",
-        name: ""
+        title: 'Maintenance (%)',
+        name: 'maintenanceRate',
     },
     otherExpensesRate: {
-        title: "",
-        name: ""
+        title: 'Other Expenses (%)',
+        name: 'otherExpensesRate',
     },
     capExReserveRate: {
-        title: "",
-        name: ""
+        title: 'Cap Ex Reserve (%)',
+        name: 'capExReserveRate',
     },
     legalAndProfessionalFeesType: {
-        title: "",
-        name: ""
+        title: 'Legal And Professional Fees Type',
+        name: 'legalAndProfessionalFeesType',
     },
     legalAndProfessionalFees: {
-        title: "",
-        name: ""
+        title: 'Legal And Professional Fees (%)',
+        name: 'legalAndProfessionalFees',
     },
     initialRepairCostsType: {
-        title: "",
-        name: ""
+        title: 'Initial Repair Costs Type',
+        name: 'initialRepairCostsType',
     },
     initialRepairCosts: {
-        title: "",
-        name: ""
+        title: 'Initial Repair Costs (%)',
+        name: 'initialRepairCosts',
     },
     travelingCostsType: {
-        title: "",
-        name: ""
+        title: 'Traveling Costs Type',
+        name: 'travelingCostsType',
     },
     travelingCosts: {
-        title: "",
-        name: ""
+        title: 'Traveling Costs',
+        name: 'travelingCosts',
     },
     closingCostsType: {
-        title: "",
-        name: ""
+        title: 'Closing Costs Type',
+        name: 'closingCostsType',
     },
     closingCosts: {
-        title: "",
-        name: ""
+        title: 'Closing Costs',
+        name: 'closingCosts',
     },
     otherInitialExpensesType: {
-        title: "",
-        name: ""
+        title: 'Other Initial Expenses Type',
+        name: 'otherInitialExpensesType',
     },
     otherInitialExpenses: {
-        title: "",
-        name: ""
+        title: 'Other Initial Expenses (%)',
+        name: 'otherInitialExpenses',
     },
     rentEstimate: {
-        title: "",
-        name: ""
+        title: 'Rent Estimate',
+        name: 'rentEstimate',
     },
     purchasePrice: {
-        title: "",
-        name: ""
+        title: 'Purchase Price',
+        name: 'purchasePrice',
     },
     annualRentIncreaseRate: {
-        title: "",
-        name: ""
+        title: 'Annual Rent Increase Rate (%)',
+        name: 'annualRentIncreaseRate',
     },
     annualAppreciationRate: {
-        title: "",
-        name: ""
+        title: 'Annual Appreciation Rate (%)',
+        name: 'annualAppreciationRate',
     },
     annualTaxIncreaseRate: {
-        title: "",
-        name: ""
+        title: 'Annual Tax Increase Rate (%)',
+        name: 'annualTaxIncreaseRate',
     },
     annualHomeInsuranceIncreaseRate: {
-        title: "",
-        name: ""
+        title: 'Annual Home Insurance Increase Rate (%)',
+        name: 'annualHomeInsuranceIncreaseRate',
     },
     annualHOAFeesIncreaseRate: {
-        title: "",
-        name: ""
+        title: 'Annual HOA Fees Increase Rate (%)',
+        name: 'annualHOAFeesIncreaseRate',
     },
     parkingFees: {
-        title: "",
-        name: ""
+        title: 'Parking Fees',
+        name: 'parkingFees',
     },
     laundryServices: {
-        title: "",
-        name: ""
+        title: 'Laundry Services',
+        name: 'laundryServices',
     },
     storageUnitFees: {
-        title: "",
-        name: ""
+        title: 'Storage Unit Fees',
+        name: 'storageUnitFees',
     },
     other: {
-        title: "",
-        name: ""
+        title: 'Other',
+        name: 'other',
     },
     depreciation: {
-        title: "",
-        name: ""
+        title: 'Depreciation',
+        name: 'depreciation',
     },
     mortgageInterest: {
-        title: "",
-        name: ""
+        title: 'Mortgage Interest',
+        name: 'mortgageInterest',
     },
     operatingExpenses: {
-        title: "",
-        name: ""
+        title: 'Operating Expenses',
+        name: 'operatingExpenses',
     },
     propertyTaxes: {
-        title: "",
-        name: ""
+        title: 'Property Taxes',
+        name: 'propertyTaxes',
     }
 };
+
+export class AddInvestmentBreakdownTitlesAndLabelsGetter {
+    get downPaymentTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.downPaymentType.title;
+    }
+
+    get downPaymentTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.downPaymentType.name;
+    }
+
+    get downPaymentPercentageTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.downPaymentPercentage.title;
+    }
+
+    get downPaymentPercentageName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.downPaymentPercentage.name;
+    }
+
+    get pmiRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.pmiRate.title;
+    }
+
+    get pmiRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.pmiRate.name;
+    }
+
+    get pmiDropoffPointTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.pmiDropoffPoint.title;
+    }
+
+    get pmiDropoffPointName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.pmiDropoffPoint.name;
+    }
+
+    get monthlyPropertyTaxTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyPropertyTaxType.title;
+    }
+
+    get monthlyPropertyTaxTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyPropertyTaxType.name;
+    }
+
+    get monthlyPropertyTaxTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyPropertyTax.title;
+    }
+
+    get monthlyPropertyTaxName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyPropertyTax.name;
+    }
+
+    get monthlyHomeInsuranceAmountTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHomeInsuranceAmountType.title;
+    }
+
+    get monthlyHomeInsuranceAmountTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHomeInsuranceAmountType.name;
+    }
+
+    get monthlyHomeInsuranceAmountTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHomeInsuranceAmount.title;
+    }
+
+    get monthlyHomeInsuranceAmountName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHomeInsuranceAmount.name;
+    }
+
+    get monthlyHOAFeesAmountTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHOAFeesAmountType.title;
+    }
+
+    get monthlyHOAFeesAmountTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHOAFeesAmountType.name;
+    }
+
+    get monthlyHOAFeesAmountTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHOAFeesAmount.title;
+    }
+
+    get monthlyHOAFeesAmountName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.monthlyHOAFeesAmount.name;
+    }
+
+    get annualInterestRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualInterestRate.title;
+    }
+
+    get annualInterestRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualInterestRate.name;
+    }
+
+    get termInYearsTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.termInYears.title;
+    }
+
+    get termInYearsName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.termInYears.name;
+    }
+
+    get interestTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.interestType.title;
+    }
+
+    get interestTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.interestType.name;
+    }
+
+    get propertyManagementRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.propertyManagementRate.title;
+    }
+
+    get propertyManagementRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.propertyManagementRate.name;
+    }
+
+    get vacancyRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.vacancyRate.title;
+    }
+
+    get vacancyRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.vacancyRate.name;
+    }
+
+    get maintenanceRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.maintenanceRate.title;
+    }
+
+    get maintenanceRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.maintenanceRate.name;
+    }
+
+    get otherExpensesRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherExpensesRate.title;
+    }
+
+    get otherExpensesRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherExpensesRate.name;
+    }
+
+    get capExReserveRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.capExReserveRate.title;
+    }
+
+    get capExReserveRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.capExReserveRate.name;
+    }
+
+    get legalAndProfessionalFeesTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.legalAndProfessionalFeesType.title;
+    }
+
+    get legalAndProfessionalFeesTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.legalAndProfessionalFeesType.name;
+    }
+
+    get legalAndProfessionalFeesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.legalAndProfessionalFees.title;
+    }
+
+    get legalAndProfessionalFeesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.legalAndProfessionalFees.name;
+    }
+
+    get initialRepairCostsTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.initialRepairCostsType.title;
+    }
+
+    get initialRepairCostsTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.initialRepairCostsType.name;
+    }
+
+    get initialRepairCostsTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.initialRepairCosts.title;
+    }
+
+    get initialRepairCostsName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.initialRepairCosts.name;
+    }
+
+    get travelingCostsTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.travelingCostsType.title;
+    }
+
+    get travelingCostsTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.travelingCostsType.name;
+    }
+
+    get travelingCostsTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.travelingCosts.title;
+    }
+
+    get travelingCostsName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.travelingCosts.name;
+    }
+
+    get closingCostsTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.closingCostsType.title;
+    }
+
+    get closingCostsTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.closingCostsType.name;
+    }
+
+    get closingCostsTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.closingCosts.title;
+    }
+
+    get closingCostsName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.closingCosts.name;
+    }
+
+    get otherInitialExpensesTypeTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherInitialExpensesType.title;
+    }
+
+    get otherInitialExpensesTypeName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherInitialExpensesType.name;
+    }
+
+    get otherInitialExpensesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherInitialExpenses.title;
+    }
+
+    get otherInitialExpensesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.otherInitialExpenses.name;
+    }
+
+    get rentEstimateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.rentEstimate.title;
+    }
+
+    get rentEstimateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.rentEstimate.name;
+    }
+
+    get purchasePriceTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.purchasePrice.title;
+    }
+
+    get purchasePriceName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.purchasePrice.name;
+    }
+
+    get annualRentIncreaseRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualRentIncreaseRate.title;
+    }
+
+    get annualRentIncreaseRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualRentIncreaseRate.name;
+    }
+
+    get annualAppreciationRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualAppreciationRate.title;
+    }
+
+    get annualAppreciationRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualAppreciationRate.name;
+    }
+
+    get annualTaxIncreaseRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualTaxIncreaseRate.title;
+    }
+
+    get annualTaxIncreaseRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualTaxIncreaseRate.name;
+    }
+
+    get annualHomeInsuranceIncreaseRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualHomeInsuranceIncreaseRate.title;
+    }
+
+    get annualHomeInsuranceIncreaseRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualHomeInsuranceIncreaseRate.name;
+    }
+
+    get annualHOAFeesIncreaseRateTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualHOAFeesIncreaseRate.title;
+    }
+
+    get annualHOAFeesIncreaseRateName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.annualHOAFeesIncreaseRate.name;
+    }
+
+    get parkingFeesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.parkingFees.title;
+    }
+
+    get parkingFeesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.parkingFees.name;
+    }
+
+    get laundryServicesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.laundryServices.title;
+    }
+
+    get laundryServicesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.laundryServices.name;
+    }
+
+    get storageUnitFeesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.storageUnitFees.title;
+    }
+
+    get storageUnitFeesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.storageUnitFees.name;
+    }
+
+    get otherTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.other.title;
+    }
+
+    get otherName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.other.name;
+    }
+
+    get depreciationTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.depreciation.title;
+    }
+
+    get depreciationName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.depreciation.name;
+    }
+
+    get mortgageInterestTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.mortgageInterest.title;
+    }
+
+    get mortgageInterestName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.mortgageInterest.name;
+    }
+
+    get operatingExpensesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.operatingExpenses.title;
+    }
+
+    get operatingExpensesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.operatingExpenses.name;
+    }
+
+    get propertyTaxesTitle(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.propertyTaxes.title;
+    }
+
+    get propertyTaxesName(): string {
+        return AddInvestmentBreakdownTitlesAndLabels.propertyTaxes.name;
+    }
+}
 
 export class InvestmentBreakdownFormDetails implements FormInterface<
     InvestmentFormData,
@@ -399,18 +745,19 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
 
     // Come back to this
     getFormDetails(formData: InvestmentFormData): FormProperty[] {
+        const getterInstance: AddInvestmentBreakdownTitlesAndLabelsGetter = new AddInvestmentBreakdownTitlesAndLabelsGetter();
         return [
             {
-                title: 'Down Payment (%)',
+                title: getterInstance.downPaymentPercentageTitle,
                 values: [
                     {
-                        name: 'downPaymentType',
+                        name: getterInstance.downPaymentTypeName,
                         value: formData.downPaymentType, // Default selected value
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'downPaymentPercentage',
+                        name: getterInstance.downPaymentPercentageName,
                         value: formData.downPaymentPercentage,
                         type: InputType.STRING
                     }
@@ -418,168 +765,265 @@ export class InvestmentBreakdownFormDetails implements FormInterface<
             },
 
             {
-                title: 'Monthly Property Tax',
+                title: getterInstance.monthlyPropertyTaxTitle,
                 values: [
                     {
-                        name: 'monthlyPropertyTaxType',
+                        name: getterInstance.monthlyPropertyTaxTypeName,
                         value: formData.monthlyPropertyTaxType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'monthlyPropertyTax',
+                        name: getterInstance.monthlyPropertyTaxName,
                         value: formData.monthlyPropertyTax,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Monthly Home Insurance Amount',
+                title: getterInstance.monthlyHomeInsuranceAmountTitle,
                 values: [
                     {
-                        name: 'monthlyHomeInsuranceAmountType',
+                        name: getterInstance.monthlyHomeInsuranceAmountTypeName,
                         value: formData.monthlyHomeInsuranceAmountType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'monthlyHomeInsuranceAmount',
+                        name: getterInstance.monthlyHomeInsuranceAmountName,
                         value: formData.monthlyHomeInsuranceAmount,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Monthly HOA Fees Amount',
+                title: getterInstance.monthlyHOAFeesAmountTitle,
                 values: [
                     {
-                        name: 'monthlyHOAFeesAmountType',
+                        name: getterInstance.monthlyHOAFeesAmountTypeName,
                         value: formData.monthlyHOAFeesAmountType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'monthlyHOAFeesAmount',
+                        name: getterInstance.monthlyHOAFeesAmountName,
                         value: formData.monthlyHOAFeesAmount,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Legal And Professional Fees (%)',
+                title: getterInstance.legalAndProfessionalFeesTitle,
                 values: [
                     {
-                        name: 'legalAndProfessionalFeesType',
+                        name: getterInstance.legalAndProfessionalFeesTypeName,
                         value: formData.legalAndProfessionalFeesType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'legalAndProfessionalFees',
+                        name: getterInstance.legalAndProfessionalFeesName,
                         value: formData.legalAndProfessionalFees,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Initial Repair Costs (%)',
+                title: getterInstance.initialRepairCostsTitle,
                 values: [
                     {
-                        name: 'initialRepairCostsType',
+                        name: getterInstance.initialRepairCostsTypeName,
                         value: formData.initialRepairCostsType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'initialRepairCosts',
+                        name: getterInstance.initialRepairCostsName,
                         value: formData.initialRepairCosts,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Traveling Costs',
+                title: getterInstance.travelingCostsTitle,
                 values: [
                     {
-                        name: 'travelingCostsType',
+                        name: getterInstance.travelingCostsTypeName,
                         value: formData.travelingCostsType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'travelingCosts',
+                        name: getterInstance.travelingCostsName,
                         value: formData.travelingCosts,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Closing Costs',
+                title: getterInstance.closingCostsTitle,
                 values: [
                     {
-                        name: 'closingCostsType',
+                        name: getterInstance.closingCostsTypeName,
                         value: formData.closingCostsType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'closingCosts',
+                        name: getterInstance.closingCostsName,
                         value: formData.closingCosts,
                         type: InputType.NUMBER,
                     }
                 ]
             },
             {
-                title: 'Other Initial Expenses (%)',
+                title: getterInstance.otherInitialExpensesTitle,
                 values: [
                     {
-                        name: 'otherInitialExpensesType',
+                        name: getterInstance.otherInitialExpensesTypeName,
                         value: formData.otherInitialExpensesType,
                         type: InputType.RADIO,
                         options: GetOptionsForFormProperty(PercentageAndAmount),
                     },
                     {
-                        name: 'otherInitialExpenses',
+                        name: getterInstance.otherInitialExpensesName,
                         value: formData.otherInitialExpenses,
                         type: InputType.NUMBER,
                     }
                 ]
             },
-            BasicNumberForm('PMI Rate (%)', 'pmiRate', formData.pmiRate),
-            BasicNumberForm('PMI Dropoff Point', 'pmiDropoffPoint', formData.pmiDropoffPoint),
-            BasicNumberForm('Annual Interest Rate (%)', 'annualInterestRate', formData.annualInterestRate, '0.01'),
-            BasicNumberForm('Term In Years', 'termInYears', formData.termInYears),
+            BasicNumberForm(
+                getterInstance.pmiRateTitle,
+                getterInstance.pmiRateName,
+                formData.pmiRate
+            ),
+            BasicNumberForm(
+                getterInstance.pmiDropoffPointTitle,
+                getterInstance.pmiDropoffPointName,
+                formData.pmiDropoffPoint
+            ),
+            BasicNumberForm(
+                getterInstance.annualInterestRateTitle,
+                getterInstance.annualInterestRateName,
+                formData.annualInterestRate,
+                '0.01'
+            ),
+            BasicNumberForm(
+                getterInstance.termInYearsTitle,
+                getterInstance.termInYearsName,
+                formData.termInYears
+            ),
             {
-                title: 'Interest Type',
+                title: getterInstance.interestTypeTitle,
                 values: [
                     {
-                        name: 'interestType',
+                        name: getterInstance.interestTypeName,
                         type: InputType.SELECT,
                         value: formData.interestType,
                         options: GetOptionsForFormProperty(InterestType),
                     },
                 ],
             },
-            BasicNumberForm('Property Management (%)', 'propertyManagementRate', formData.propertyManagementRate),
-            BasicNumberForm('Vacancy (%)', 'vacancyRate', formData.vacancyRate),
-            BasicNumberForm('Maintenance (%)', 'maintenanceRate', formData.maintenanceRate),
-            BasicNumberForm('Other Expenses (%)', 'otherExpensesRate', formData.otherExpensesRate),
-            BasicNumberForm('Cap Ex Reserve (%)', 'capExReserveRate', formData.capExReserveRate),
-            BasicNumberForm('Rent Estimate', 'rentEstimate', formData.rentEstimate),
-            BasicNumberForm('Purchase Price', 'purchasePrice', formData.purchasePrice),
-            BasicNumberForm('Annual Rent Increase Rate (%)', 'annualRentIncreaseRate', formData.annualRentIncreaseRate),
-            BasicNumberForm('Annual Appreciation Rate (%)', 'annualAppreciationRate', formData.annualAppreciationRate),
-            BasicNumberForm('Annual Tax Increase Rate (%)', 'annualTaxIncreaseRate', formData.annualTaxIncreaseRate),
-            BasicNumberForm('Annual Home Insurance Increase Rate (%)', 'annualHomeInsuranceIncreaseRate', formData.annualHomeInsuranceIncreaseRate),
-            BasicNumberForm('Annual HOA Fees Increase Rate (%)', 'annualHOAFeesIncreaseRate', formData.annualHOAFeesIncreaseRate),
-            BasicNumberForm('Parking Fees', 'parkingFees', formData.parkingFees),
-            BasicNumberForm('Laundry Services', 'laundryServices', formData.laundryServices),
-            BasicNumberForm('Storage Unit Fees', 'storageUnitFees', formData.storageUnitFees),
-            BasicNumberForm('Other', 'other', formData.other),
-            BasicNumberForm('Depreciation', 'depreciation', formData.depreciation),
-            BasicNumberForm('Mortgage Interest', 'mortgageInterest', formData.mortgageInterest),
-            BasicNumberForm('Operating Expenses', 'operatingExpenses', formData.operatingExpenses),
-            BasicNumberForm('Property Taxes', 'propertyTaxes', formData.propertyTaxes),
+            BasicNumberForm(
+                getterInstance.propertyManagementRateTitle,
+                getterInstance.propertyManagementRateName,
+                formData.propertyManagementRate
+            ),
+            BasicNumberForm(
+                getterInstance.vacancyRateTitle,
+                getterInstance.vacancyRateName,
+                formData.vacancyRate
+            ),
+            BasicNumberForm(
+                getterInstance.maintenanceRateTitle,
+                getterInstance.maintenanceRateName,
+                formData.maintenanceRate
+            ),
+            BasicNumberForm(
+                getterInstance.otherExpensesRateTitle,
+                getterInstance.otherExpensesRateName,
+                formData.otherExpensesRate
+            ),
+            BasicNumberForm(
+                getterInstance.capExReserveRateTitle,
+                getterInstance.capExReserveRateName,
+                formData.capExReserveRate
+            ),
+            BasicNumberForm(
+                getterInstance.rentEstimateTitle,
+                getterInstance.rentEstimateName,
+                formData.rentEstimate
+            ),
+            BasicNumberForm(
+                getterInstance.purchasePriceTitle,
+                getterInstance.purchasePriceName,
+                formData.purchasePrice
+            ),
+            BasicNumberForm(
+                getterInstance.annualRentIncreaseRateTitle,
+                getterInstance.annualRentIncreaseRateName,
+                formData.annualRentIncreaseRate
+            ),
+            BasicNumberForm(
+                getterInstance.annualAppreciationRateTitle,
+                getterInstance.annualAppreciationRateName,
+                formData.annualAppreciationRate
+            ),
+            BasicNumberForm(
+                getterInstance.annualTaxIncreaseRateTitle,
+                getterInstance.annualTaxIncreaseRateName,
+                formData.annualTaxIncreaseRate
+            ),
+            BasicNumberForm(
+                getterInstance.annualHomeInsuranceIncreaseRateTitle,
+                getterInstance.annualHomeInsuranceIncreaseRateName,
+                formData.annualHomeInsuranceIncreaseRate
+            ),
+            BasicNumberForm(
+                getterInstance.annualHOAFeesIncreaseRateTitle,
+                getterInstance.annualHOAFeesIncreaseRateName,
+                formData.annualHOAFeesIncreaseRate
+            ),
+            BasicNumberForm(
+                getterInstance.parkingFeesTitle,
+                getterInstance.parkingFeesName,
+                formData.parkingFees
+            ),
+            BasicNumberForm(
+                getterInstance.laundryServicesTitle,
+                getterInstance.laundryServicesName,
+                formData.laundryServices
+            ),
+            BasicNumberForm(
+                getterInstance.storageUnitFeesTitle,
+                getterInstance.storageUnitFeesName,
+                formData.storageUnitFees
+            ),
+            BasicNumberForm(
+                getterInstance.otherTitle,
+                getterInstance.otherName,
+                formData.other
+            ),
+            BasicNumberForm(
+                getterInstance.depreciationTitle,
+                getterInstance.depreciationName,
+                formData.depreciation
+            ),
+            BasicNumberForm(
+                getterInstance.mortgageInterestTitle,
+                getterInstance.mortgageInterestName,
+                formData.mortgageInterest
+            ),
+            BasicNumberForm(
+                getterInstance.operatingExpensesTitle,
+                getterInstance.operatingExpensesName,
+                formData.operatingExpenses
+            ),
+            BasicNumberForm(
+                getterInstance.propertyTaxesTitle,
+                getterInstance.propertyTaxesName,
+                formData.propertyTaxes
+            ),
         ];
 
     }

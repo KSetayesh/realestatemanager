@@ -49,7 +49,6 @@ export interface TitleAndName {
 };
 
 export type AddFormTitlesAndLabel<T> = {
-    // [K in keyof AddPropertyFormData]: {
     [K in keyof T]: TitleAndName;
 };
 
