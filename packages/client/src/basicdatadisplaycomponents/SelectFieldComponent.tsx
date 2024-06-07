@@ -1,5 +1,11 @@
 import React from 'react';
-import { FormControl, MenuItem, TextField, styled, SelectChangeEvent } from '@mui/material';
+import {
+    FormControl,
+    MenuItem,
+    TextField,
+    styled,
+    SelectChangeEvent
+} from '@mui/material';
 
 type Options = { value: string | number, label: string }[];
 

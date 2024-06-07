@@ -1,88 +1,4 @@
-export enum PropertyStatus {
-    ACTIVE = 'Active',
-    INACTIVE = 'Inactive',
-};
-
-export enum PropertyType {
-    SINGLE_FAMILY = 'Single Family',
-    CONDO = 'Condo',
-    TOWN_HOUSE = 'Townhouse',
-    MANUFACTURED = 'Manufactured',
-    MULTI_FAMILY = 'Multi-Family',
-    APARTMENT = 'Apartment',
-    LAND = 'Land',
-};
-
-export enum Country {
-    UnitedStates = "US",
-};
-
-export enum InterestType {
-    FIXED = "Fixed",
-    VARIABLE = "Variable",
-};
-
-export enum AgentType {
-    REAL_ESTATE_AGENT = "Real Estate Agent",
-    LENDER = "Lender",
-    PROPERTY_MANAGER = "Property Manager",
-    CONTRACTOR = "Contractor",
-};
-
 export const Any: string = 'Any';
-
-export enum State {
-    AL = "Alabama",
-    AK = "Alaska",
-    AZ = "Arizona",
-    AR = "Arkansas",
-    CA = "California",
-    CO = "Colorado",
-    CT = "Connecticut",
-    DE = "Delaware",
-    FL = "Florida",
-    GA = "Georgia",
-    HI = "Hawaii",
-    ID = "Idaho",
-    IL = "Illinois",
-    IN = "Indiana",
-    IA = "Iowa",
-    KS = "Kansas",
-    KY = "Kentucky",
-    LA = "Louisiana",
-    ME = "Maine",
-    MD = "Maryland",
-    MA = "Massachusetts",
-    MI = "Michigan",
-    MN = "Minnesota",
-    MS = "Mississippi",
-    MO = "Missouri",
-    MT = "Montana",
-    NE = "Nebraska",
-    NV = "Nevada",
-    NH = "New Hampshire",
-    NJ = "New Jersey",
-    NM = "New Mexico",
-    NY = "New York",
-    NC = "North Carolina",
-    ND = "North Dakota",
-    OH = "Ohio",
-    OK = "Oklahoma",
-    OR = "Oregon",
-    PA = "Pennsylvania",
-    RI = "Rhode Island",
-    SC = "South Carolina",
-    SD = "South Dakota",
-    TN = "Tennessee",
-    TX = "Texas",
-    UT = "Utah",
-    VT = "Vermont",
-    VA = "Virginia",
-    WA = "Washington",
-    WV = "West Virginia",
-    WI = "Wisconsin",
-    WY = "Wyoming",
-};
 
 export enum InputType {
     TEXT = 'text',
@@ -93,36 +9,9 @@ export enum InputType {
     CHECKBOX = 'checkbox',
 };
 
-export enum ValueType {
-    AMOUNT = 'Amount',
-    RATE = 'Rate',
-};
-
-export enum PercentageAndAmount {
-    PERCENTAGE = 'Percentage',
-    AMOUNT = 'Amount',
-};
-
-export enum ListingCreationType {
-    MANUAL = 'Manual',
-    RENT_CAST_API = 'Rent Cast Api',
-    MATCHED_PRE_EXISTING_RENT_CAST_DATA = 'Matched Pre Existing Rent Cast Data',
-};
-
-export enum Filter {
-    // all = 'All',
-    gt = '>',
-    lt = '<',
-    eq = '=',
-    gteq = '>=',
-    lteq = '<=',
-};
-
 export enum DefaultTableType {
     DEFAULT = 'DEFAULT',
 };
-
-// export const ratingSelections: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const formatDollarAmount = (amount: number): string => {
     return amount.toLocaleString('en-US', {

@@ -1,5 +1,5 @@
 import { FormProperty } from "../components/StandardForm";
-import { InputType, InterestType, PercentageAndAmount, ValueType } from "../constants/Constant";
+import { InputType } from "../constants/Constant";
 import {
     getAnnualAppreciationRate,
     getAnnualHOAFeesIncreaseRate,
@@ -39,9 +39,12 @@ import {
 import {
     AddInvestmentBreakdownTitlesAndLabelsGetter,
     CreateInvestmentScenarioRequest,
+    InterestType,
     InvestmentFormData,
     ListingWithScenariosResponseDTO,
-    ValueInput
+    PercentageAndAmount,
+    ValueInput,
+    ValueType
 } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";

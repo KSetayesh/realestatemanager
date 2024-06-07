@@ -1,10 +1,13 @@
 import {
     AddPropertyFilterTitlesAndLabelsGetter,
     CreateFilteredPropertyListRequest,
-    PropertyFilterFormFields
+    Filter,
+    PropertyFilterFormFields,
+    PropertyType,
+    State
 } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { Filter, InputType, PropertyType, State } from "../constants/Constant";
+import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import {
     BasicCheckBoxForm,

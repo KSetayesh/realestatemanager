@@ -1,10 +1,13 @@
 import {
     AddAgentTitlesAndLabelsGetter,
     AgentFormData,
-    CreateAgentRequest
+    AgentType,
+    Country,
+    CreateAgentRequest,
+    State
 } from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
-import { AgentType, Country, InputType, State } from "../constants/Constant";
+import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import {
     BasicStringForm,

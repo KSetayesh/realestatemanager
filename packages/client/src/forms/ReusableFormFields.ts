@@ -1,5 +1,6 @@
+import { Country, State } from "@realestatemanager/shared";
 import { FormProperty, Options } from "../components/StandardForm";
-import { Country, InputType, State } from "../constants/Constant";
+import { InputType } from "../constants/Constant";
 
 export const ratingSelections = (from: number = 1, limit: number = 10): Options => {
     const array = [];

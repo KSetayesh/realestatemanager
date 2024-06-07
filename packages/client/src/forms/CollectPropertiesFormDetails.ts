@@ -1,10 +1,13 @@
 import {
     AddCollectPropertiesTitlesAndLabelsGetter,
     CollectPropertiesFormData,
-    CreateRentCastApiRequest
+    CreateRentCastApiRequest,
+    PropertyStatus,
+    PropertyType,
+    State
 } from "@realestatemanager/shared";
 import { FormInterface } from "./FormInterface";
-import { InputType, PropertyStatus, PropertyType, State } from "../constants/Constant";
+import { InputType } from "../constants/Constant";
 import { FormProperty } from "../components/StandardForm";
 import {
     BasicCheckBoxForm,

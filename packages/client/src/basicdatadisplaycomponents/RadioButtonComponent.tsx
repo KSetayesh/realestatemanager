@@ -1,5 +1,12 @@
 import React from 'react';
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, styled } from '@mui/material';
+import {
+    FormControl,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+    styled
+} from '@mui/material';
 
 type Options = { value: string | number, label: string }[];
 

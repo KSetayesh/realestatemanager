@@ -1,14 +1,14 @@
 import {
     AddPropertyFormData,
     AddPropertyTitlesAndLabelsGetter,
-    CreateListingDetailsRequest
-} from "@realestatemanager/shared";
-import {
     Country,
-    InputType,
+    CreateListingDetailsRequest,
     PropertyStatus,
     PropertyType,
     State
+} from "@realestatemanager/shared";
+import {
+    InputType,
 } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { FormProperty } from "../components/StandardForm";
@@ -23,11 +23,6 @@ import {
 } from "./ReusableFormFields";
 
 export class AddPropertyFormDetails implements FormInterface<AddPropertyFormData, CreateListingDetailsRequest> {
-
-    // name: string;
-    // value: number | string | Options | undefined;
-    // type: InputType;
-    // step?: string;
 
     getFormDetails(formData: AddPropertyFormData): FormProperty[] {
         const getterInstance: AddPropertyTitlesAndLabelsGetter = new AddPropertyTitlesAndLabelsGetter();
