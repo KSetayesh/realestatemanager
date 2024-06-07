@@ -1,6 +1,6 @@
+import { AddPropertyTitlesAndLabelsGetter } from "@realestatemanager/shared";
 import { TableColumn } from "../../components/ReusableTable";
 import { InputType } from "../../constants/Constant";
-import { AddPropertyTitlesAndLabelsGetter } from "../../forms/AddPropertyFormDetails";
 
 const getterInstance: AddPropertyTitlesAndLabelsGetter = new AddPropertyTitlesAndLabelsGetter();
 

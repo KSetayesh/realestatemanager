@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
         "target": "ES2021",
-        "module": "ESNext",
+        "module": "CommonJS",
         "declaration": true,
         "esModuleInterop": true,
-        "moduleResolution": "node",
-        "outDir": "./dist/esm",
+        "outDir": "./dist/cjs",
         "rootDir": "./src"
     },
     "include": [

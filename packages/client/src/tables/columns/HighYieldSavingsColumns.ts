@@ -1,10 +1,13 @@
+import { AddHighYieldSavingsTitlesAndLabelsGetter } from "@realestatemanager/shared";
 import { TableColumn } from "../../components/ReusableTable";
 import { InputType } from "../../constants/Constant";
 
+const getterInstance: AddHighYieldSavingsTitlesAndLabelsGetter = new AddHighYieldSavingsTitlesAndLabelsGetter();
+
 export const highYieldSavingsDefaultColumns: TableColumn[] = [
     {
-        header: "Year",
-        accessor: "year",
+        header: getterInstance.yearsTitle,
+        accessor: getterInstance.yearsName,
         inputType: InputType.NUMBER,
         isURL: false,
         showColumn: true,
@@ -12,7 +15,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
         isSortable: false,
     },
     {
-        header: "Month",
+        header: "Month",    // Come back to this
         accessor: "month",
         inputType: InputType.NUMBER,
         isURL: false,
@@ -21,7 +24,7 @@ export const highYieldSavingsDefaultColumns: TableColumn[] = [
         isSortable: false,
     },
     {
-        header: "Date",
+        header: "Date",     // Come back to this
         accessor: "date",
         inputType: InputType.STRING,
         isURL: false,
