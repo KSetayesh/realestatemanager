@@ -7,5 +7,11 @@ export * from './ListingTypes';
 export * from './InvestmentTypes';
 export * from './FilterPropertyListApiTypes';
 export * from './utilities/Utility';
+export * from './formdata/AddAgentTitlesAndLabelsGetter';
+export * from './formdata/AddCollectPropertiesTitlesAndLabelsGetter';
+export * from './formdata/AddHighYieldSavingsTitlesAndLabelsGetter';
+export * from './formdata/AddInvestmentBreakdownTitlesAndLabelsGetter';
+export * from './formdata/AddPropertyFilterTitlesAndLabelsGetter';
+export * from './formdata/AddPropertyTitlesAndLabelsGetter';
 
 

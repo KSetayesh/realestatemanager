@@ -5,7 +5,7 @@ import {
     State
 } from "@realestatemanager/shared";
 import { Agent } from "../models/agent.model";
-import { BuilderInterface } from "src/builder.interface";
+import { BuilderInterface } from "src/shared/builder.interface";
 
 export class AgentBuilder implements BuilderInterface<Agent> {
     private agent: Agent;

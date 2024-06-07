@@ -122,6 +122,23 @@ export class CalcService {
 
     async addPropertiesInBulk(propertiesInBulk: CreatePropertiesInBulkRequest): Promise<number> {
         console.log('propertiesInBulk:', propertiesInBulk);
+        const validateRequest = (propertiesInBulk: CreatePropertiesInBulkRequest) => {
+
+            const findItem = (key: string, value: string | number): Record<string, string | number> | undefined => {
+                return csvData.find(item => item[key] === value);
+            };
+
+            const csvData: Record<string, string | number>[] = propertiesInBulk.csvData;
+
+            for (let i = 0; i < csvData.length; i++) {
+                const record: Record<string, string | number> | undefined = csvData[i];
+                console.log(record);
+            }
+
+        };
+
+        validateRequest(propertiesInBulk);
+
         return 0;
     }
 

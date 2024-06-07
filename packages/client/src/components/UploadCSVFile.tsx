@@ -49,7 +49,10 @@ const StyledTableBody = styled(TableBody)(({ theme }) => ({
 //     borderRadius: '10px',
 // }));
 
-const UploadCSVFile: React.FC<UploadCSVFileProps> = ({ onFileUpload }) => {
+const UploadCSVFile: React.FC<UploadCSVFileProps> = ({
+    onFileUpload
+}: UploadCSVFileProps) => {
+
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [data, setData] = useState<Record<string, string | number>[]>([]);

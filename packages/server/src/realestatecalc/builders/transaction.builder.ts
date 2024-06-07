@@ -13,7 +13,7 @@ import { InitialCost } from "../models/investment_models/transaction_models/init
 import { RecurringOperationalCost } from "../models/investment_models/transaction_models/recurring.operational.cost";
 import { TransactionManager } from "../models/investment_models/transaction.manager";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
-import { BuilderInterface } from "src/builder.interface";
+import { BuilderInterface } from "src/shared/builder.interface";
 
 export type TransactionBuilderRequest = {
     growthProjections: GrowthProjections;

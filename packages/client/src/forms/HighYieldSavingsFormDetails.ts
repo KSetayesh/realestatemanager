@@ -1,60 +1,12 @@
-import { AddFormTitlesAndLabel, HighYeildSavingsRequest, HighYieldSavingsFormData } from "@realestatemanager/shared";
+import {
+    AddHighYieldSavingsTitlesAndLabelsGetter,
+    HighYeildSavingsRequest,
+    HighYieldSavingsFormData
+} from "@realestatemanager/shared";
 import { FormProperty } from "../components/StandardForm";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm } from "./ReusableFormFields";
 
-export const AddHighYieldSavingsTitlesAndLabels: AddFormTitlesAndLabel<HighYieldSavingsFormData> = {
-    initialDeposit: {
-        title: "Initial Deposit",
-        name: "initialDeposit"
-    },
-    annualInterestRate: {
-        title: "Annual Interest Rate (%)",
-        name: "annualInterestRate"
-    },
-    years: {
-        title: "Years",
-        name: "years"
-    },
-    monthlyDeposit: {
-        title: "Monthly Deposit",
-        name: "monthlyDeposit"
-    },
-};
-
-export class AddHighYieldSavingsTitlesAndLabelsGetter {
-    get initialDepositTitle(): string {
-        return AddHighYieldSavingsTitlesAndLabels.initialDeposit.title;
-    }
-
-    get initialDepositName(): string {
-        return AddHighYieldSavingsTitlesAndLabels.initialDeposit.name;
-    }
-
-    get annualInterestRateTitle(): string {
-        return AddHighYieldSavingsTitlesAndLabels.annualInterestRate.title;
-    }
-
-    get annualInterestRateName(): string {
-        return AddHighYieldSavingsTitlesAndLabels.annualInterestRate.name;
-    }
-
-    get yearsTitle(): string {
-        return AddHighYieldSavingsTitlesAndLabels.years.title;
-    }
-
-    get yearsName(): string {
-        return AddHighYieldSavingsTitlesAndLabels.years.name;
-    }
-
-    get monthlyDepositTitle(): string {
-        return AddHighYieldSavingsTitlesAndLabels.monthlyDeposit.title;
-    }
-
-    get monthlyDepositName(): string {
-        return AddHighYieldSavingsTitlesAndLabels.monthlyDeposit.name;
-    }
-}
 
 export class HighYieldSavingsFormDetails implements FormInterface<HighYieldSavingsFormData, HighYeildSavingsRequest> {
 
