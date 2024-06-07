@@ -2,20 +2,14 @@ import { Pool } from 'pg';
 import { Injectable } from "@nestjs/common";
 import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/shared";
 import { Agent } from "../models/agent.model";
-import { DatabaseManagerFactory } from "src/db/realestate/dbfactory";
 import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
 import { DatabaseService } from 'src/db/database.service';
+import { AgentBuilder } from '../builders/agent.builder';
 
 @Injectable()
 export class AgentService {
 
-    // private agentManager: AgentManager;
     private pool: Pool;
-
-    // constructor() {
-    //     this.agentManager = DatabaseManagerFactory.createAgentManager();
-    //     this.pool = DatabaseManagerFactory.getDbPool();
-    // }
 
     constructor(
         private readonly databaseService: DatabaseService,
@@ -50,8 +44,18 @@ export class AgentService {
     }
 
     async updateAgent(createUpdateAgentRequest: CreateUpdateAgentRequest): Promise<AgentResponseDTO> {
-        console.log('Need to work updateAgent logic');
-        return;
+        const agentId: number = createUpdateAgentRequest.id;
+
+        // Fetch the listing details before update
+        const agent: Agent = await this.agentManager.getAgentById(this.pool, agentId);
+
+        const updatedAgent: Agent = (new AgentBuilder(agent, createUpdateAgentRequest)).build();
+
+        await this.agentManager.updateAgent(this.pool, updatedAgent);
+
+        // Fetch the updated data
+        return (await this.agentManager.getAgentById(this.pool, agentId)).toDTO();
+
     }
 
     private buildAgent(agent: CreateAgentRequest): Agent {

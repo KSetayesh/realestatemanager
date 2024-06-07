@@ -80,6 +80,7 @@ export class Agent extends Entity implements IDTOConvertible<AgentResponseDTO> {
 
     toDTO(): AgentResponseDTO {
         return {
+            id: this.id,
             firstName: this.firstName,
             lastName: this.lastName,
             fullName: this.fullName,

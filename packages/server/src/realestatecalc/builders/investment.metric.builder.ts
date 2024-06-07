@@ -26,8 +26,9 @@ import { InitialCost } from "../models/investment_models/transaction_models/init
 import { RentEstimate } from "../models/investment_models/transaction_models/rent.estimate";
 import { InvestmentCalculator } from "../models/investment_models/investment.calculator";
 import { TaxImplications } from "../models/investment_models/tax.implications.model";
+import { BuilderInterface } from "src/builder.interface";
 
-export class InvestmentMetricBuilder {
+export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalculator> {
 
     private listingDetails: ListingDetails;
     private investmentScenarioRequest?: CreateInvestmentScenarioRequest;

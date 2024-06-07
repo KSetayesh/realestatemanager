@@ -13,6 +13,7 @@ import { InitialCost } from "../models/investment_models/transaction_models/init
 import { RecurringOperationalCost } from "../models/investment_models/transaction_models/recurring.operational.cost";
 import { TransactionManager } from "../models/investment_models/transaction.manager";
 import { GrowthProjections } from "../models/investment_models/growth.projections.model";
+import { BuilderInterface } from "src/builder.interface";
 
 export type TransactionBuilderRequest = {
     growthProjections: GrowthProjections;
@@ -43,7 +44,7 @@ export type TransactionBuilderRequest = {
     otherInitialExpenses: ValueInput;
 };
 
-export class TransactionBuilder {
+export class TransactionBuilder implements BuilderInterface<TransactionManager> {
     private txnBuilderReq: TransactionBuilderRequest;
 
     constructor(txnBuilderReq: TransactionBuilderRequest) {

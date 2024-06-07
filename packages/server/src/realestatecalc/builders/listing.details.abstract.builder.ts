@@ -10,8 +10,9 @@ import { ListingDetails } from "../models/listing_models/listingdetails.model";
 import { PropertyDetails } from "../models/listing_models/propertydetails.model";
 import { SchoolRating } from "../models/listing_models/schoolrating.model";
 import { ZillowMarketEstimates } from "../models/listing_models/zillowmarketestimates.model";
+import { BuilderInterface } from "src/builder.interface";
 
-export abstract class AbstractListingDetailsBuilder {
+export abstract class AbstractListingDetailsBuilder implements BuilderInterface<ListingDetails> {
 
     build(): ListingDetails {
 

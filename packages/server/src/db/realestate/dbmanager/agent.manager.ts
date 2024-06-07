@@ -29,8 +29,16 @@ export class AgentManager extends DatabaseManager {
         this.agentDAO.insertAgent(pool, agent);
     }
 
-    async getAllAgents(pool: Pool,): Promise<Agent[]> {
+    async getAllAgents(pool: Pool): Promise<Agent[]> {
         return this.agentDAO.getAllAgents(pool);
+    }
+
+    async updateAgent(pool: Pool, agent: Agent): Promise<void> {
+        await this.agentDAO.updateAgent(pool, agent);
+    }
+
+    async getAgentById(pool: Pool, id: number): Promise<Agent | null> {
+        return this.agentDAO.getAgentById(pool, id);
     }
 
 }

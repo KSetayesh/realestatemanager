@@ -39,7 +39,7 @@ const AgentsList: React.FC = () => {
         <div>
             <h2> Agents List </h2>
             {isLoading ? (
-                <p>Loading properties...</p>
+                <p>Loading agents...</p>
             ) : (
                 <>
                     <ReusableTable

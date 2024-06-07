@@ -21,6 +21,7 @@ export interface CreateAgentRequest {
 };
 
 export interface AgentResponseDTO {
+    id: number;
     firstName: string;
     lastName: string;
     fullName: string;
@@ -34,6 +35,7 @@ export interface AgentResponseDTO {
 };
 
 export interface CreateUpdateAgentRequest {
+    id: number;
     firstName: string;
     lastName: string;
     website: string;

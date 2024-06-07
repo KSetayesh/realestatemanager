@@ -28,6 +28,7 @@ export class AgentTable extends AbstractTable<AgentResponseDTO, DefaultTableType
     createUpdateAgentRequest(tableDataItem: TableDataItem<AgentResponseDTO>): CreateUpdateAgentRequest {
         const agent: AgentResponseDTO = tableDataItem.objectData.key;
         return {
+            id: agent.id,
             firstName: agent.firstName,
             lastName: agent.lastName,
             website: agent.website,
