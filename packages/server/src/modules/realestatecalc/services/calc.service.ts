@@ -223,7 +223,7 @@ export class CalcService {
                 },
             };
             console.log('ListingDetails:', listingDetailsReq);
-            if (this.addNewProperty(listingDetailsReq)) {
+            if (await this.addNewProperty(listingDetailsReq)) {
                 listingsAdded++;
             }
         }

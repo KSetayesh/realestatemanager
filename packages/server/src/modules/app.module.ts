@@ -3,12 +3,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PhotosModule } from './modules/photos/photos.module';
-import { PathUtil } from './shared/PathUtil';
-import { DatabaseService } from './db/database.service';
-import { CalcModule } from './modules/realestatecalc/calc.module';
-import { HighYieldSavingsModule } from './modules/highyieldsavingscalc/highyieldsavings.module';
-import { AgentModule } from './modules/agents/agent.module';
+import { PhotosModule } from './photos/photos.module';
+import { DatabaseService } from '../db/database.service';
+import { CalcModule } from './realestatecalc/calc.module';
+import { HighYieldSavingsModule } from './highyieldsavingscalc/highyieldsavings.module';
+import { AgentModule } from './agents/agent.module';
+import { PathUtil } from 'src/shared/PathUtil';
 
 @Module({
     imports: [
