@@ -10,6 +10,8 @@ import {
     CreateUpdatePropertyRequest,
     ListingCreationType,
     ListingWithScenariosResponseDTO,
+    AddPropertyTitlesAndLabels,
+    TitleAndName
 } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
@@ -19,6 +21,11 @@ import { DatabaseService } from 'src/db/database.service';
 import { InvestmentCalculationManager } from 'src/calculations/investment.calculation.manager';
 import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
 import { InvestmentCalculator } from 'src/calculations/investment.calculator';
+import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/shared';
+import { PropertyStatus } from '@realestatemanager/shared';
+import { State } from '@realestatemanager/shared';
+import { Country } from '@realestatemanager/shared';
+import { PropertyType } from '@realestatemanager/shared';
 
 @Injectable()
 export class CalcService {
@@ -122,22 +129,101 @@ export class CalcService {
 
     async addPropertiesInBulk(propertiesInBulk: CreatePropertiesInBulkRequest): Promise<number> {
         console.log('propertiesInBulk:', propertiesInBulk);
-        const validateRequest = (propertiesInBulk: CreatePropertiesInBulkRequest) => {
 
-            const findItem = (key: string, value: string | number): Record<string, string | number> | undefined => {
-                return csvData.find(item => item[key] === value);
-            };
+
+        const validateRequest = (propertiesInBulk: CreatePropertiesInBulkRequest): boolean => {
 
             const csvData: Record<string, string | number>[] = propertiesInBulk.csvData;
-
-            for (let i = 0; i < csvData.length; i++) {
-                const record: Record<string, string | number> | undefined = csvData[i];
-                console.log(record);
+            // Check if csvData is not empty
+            if (csvData.length === 0) {
+                throw new Error('CSV File cannot be empty');
             }
+
+            // Extract keys from the first object
+            const columnHeaders: Record<string, string | number> = csvData[0];
+            const keysArray: string[] = Object.keys(columnHeaders).sort();
+
+            const propertyTitles: string[] = (Object.keys(AddPropertyTitlesAndLabels).map(key => {
+                const titleAndName: TitleAndName = AddPropertyTitlesAndLabels[key];
+                return titleAndName.title;
+            })).sort();
+
+            const arraysAreEqual = (arr1: string[], arr2: string[]): boolean => {
+                if (arr1.length !== arr2.length) {
+                    return false;
+                }
+
+                for (let i = 0; i < arr1.length; i++) {
+                    if (arr1[i] !== arr2[i]) {
+                        return false;
+                    }
+                }
+
+                return true;
+            };
+
+            return arraysAreEqual(keysArray, propertyTitles);
 
         };
 
-        validateRequest(propertiesInBulk);
+        if (!validateRequest(propertiesInBulk)) {
+            throw new Error('Invalid CSV file, check to see if column headers are correct');
+        }
+
+        const getterInstance: AddPropertyTitlesAndLabelsGetter = new AddPropertyTitlesAndLabelsGetter();
+
+        for (const row of propertiesInBulk.csvData) {
+            const listingDetailsReq: CreateListingDetailsRequest = {
+                zillowURL: row[getterInstance.zillowURLTitle],
+                listingPrice: row[getterInstance.listingPriceTitle],
+                numberOfDaysOnMarket: row[getterInstance.numberOfDaysOnMarketTitle],
+                propertyStatus: row[getterInstance.propertyStatusName] as PropertyStatus,
+                propertyDetails: {
+                    address: {
+                        fullAddress: row[getterInstance.fullAddressTitle],
+                        state: row[getterInstance.stateName] as State,
+                        zipcode: row[getterInstance.zipcodeTitle],
+                        city: row[getterInstance.cityTitle],
+                        county: row[getterInstance.countyTitle],
+                        country: row[getterInstance.countryName] as Country,
+                        streetAddress: row[getterInstance.streetAddressTitle],
+                        apartmentNumber: row[getterInstance.apartmentNumberTitle],
+                        longitude: row[getterInstance.longitudeTitle],
+                        latitude: row[getterInstance.latitudeTitle],
+                    },
+                    schoolRating: {
+                        elementarySchoolRating: row[getterInstance.elementarySchoolRatingTitle],
+                        middleSchoolRating: row[getterInstance.middleSchoolRatingTitle],
+                        highSchoolRating: row[getterInstance.highSchoolRatingTitle],
+                    },
+                    numberOfBedrooms: row[getterInstance.numberOfBedroomsTitle],
+                    numberOfFullBathrooms: row[getterInstance.numberOfFullBathroomsTitle],
+                    numberOfHalfBathrooms: row[getterInstance.numberOfHalfBathroomsTitle],
+                    squareFeet: row[getterInstance.squareFeetTitle],
+                    acres: row[getterInstance.acresTitle],
+                    yearBuilt: row[getterInstance.yearBuiltTitle],
+                    hasGarage: row[getterInstance.hasGarageTitle],
+                    hasPool: row[getterInstance.hasPoolTitle],
+                    hasBasement: row[getterInstance.hasBasementTitle],
+                    propertyType: row[getterInstance.propertyTypeName] as PropertyType,
+                    description: row[getterInstance.descriptionTitle],
+                },
+                zillowMarketEstimates: {
+                    zestimate: row[getterInstance.zestimate], // Estimated market value
+                    zestimateRange: {
+                        low: row[getterInstance.zestimateRangeLowTitle],
+                        high: row[getterInstance.zestimateRangeHighTitle],
+                    },
+                    zillowRentEstimate: row[getterInstance.zillowRentEstimateTitle], // Estimated rental value
+                    zillowMonthlyPropertyTaxAmount: row[getterInstance.zillowMonthlyPropertyTaxAmountTitle],
+                    zillowMonthlyHomeInsuranceAmount: row[getterInstance.zillowMonthlyHomeInsuranceAmountTitle],
+                    zillowMonthlyHOAFeesAmount: row[getterInstance.zillowMonthlyHOAFeesAmountTitle],
+                },
+            };
+            console.log('ListingDetails:', listingDetailsReq);
+        }
+
+        console.log('Csv file is valid');
 
         return 0;
     }

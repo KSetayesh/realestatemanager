@@ -1,6 +1,6 @@
 import { AddFormTitlesAndLabel, AddPropertyFormData } from "../ApiTypes";
 
-const AddPropertyTitlesAndLabels: AddFormTitlesAndLabel<AddPropertyFormData> = {
+export const AddPropertyTitlesAndLabels: AddFormTitlesAndLabel<AddPropertyFormData> = {
     zillowURL: {
         title: 'Zillow URL',
         name: 'zillowURL',
