@@ -13,6 +13,18 @@ export enum DefaultTableType {
     DEFAULT = 'DEFAULT',
 };
 
+export enum InvestmentBreakdownTableType {
+    STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
+    MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
+    EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
+    INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
+};
+
+export enum AddPropertyType {
+    SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
+    BULK_UPLOAD = 'BULK_UPLOAD',
+};
+
 const formatDollarAmount = (amount: number): string => {
     return amount.toLocaleString('en-US', {
         style: 'currency',

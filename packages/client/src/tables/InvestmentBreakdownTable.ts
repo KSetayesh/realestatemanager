@@ -1,5 +1,4 @@
 import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/shared";
-import { InvestmentBreakdownTableType } from "../pages/InvestmentBreakdown";
 import { TableColumn, TableRow } from "../components/ReusableTable";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import {
@@ -8,6 +7,7 @@ import {
     mortgageBreakdownColumns,
     standardBreakdownColumns
 } from "./columns/InvestmentBreakdownColumn";
+import { InvestmentBreakdownTableType } from "../constants/Constant";
 
 export class InvestmentBreakdownTable extends AbstractTable<MonthlyInvestmentDetailsResponseDTO, InvestmentBreakdownTableType> {
 

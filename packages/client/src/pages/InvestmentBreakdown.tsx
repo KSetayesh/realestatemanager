@@ -14,13 +14,6 @@ import {
     MonthlyInvestmentDetailsResponseDTO
 } from '@realestatemanager/shared';
 
-export enum InvestmentBreakdownTableType {
-    STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
-    MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
-    EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
-    INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
-};
-
 const InvestmentBreakdown: React.FC = () => {
 
     const investmentBreakdownFormDetails: InvestmentBreakdownFormDetails = new InvestmentBreakdownFormDetails();

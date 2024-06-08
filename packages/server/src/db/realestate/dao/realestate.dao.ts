@@ -30,7 +30,7 @@ export abstract class RealEstateDAO {
         console.log(`Values: ${values}`);
 
         try {
-            const res = await pool.query(`${fullQuery}`, values);
+            const res = await pool.query(fullQuery, values);
             if (res.rowCount === 0) {
                 console.log(`No new row was added - duplicate ${uniqueColumn} id found`);
                 return -1;

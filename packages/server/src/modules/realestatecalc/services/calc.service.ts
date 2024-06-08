@@ -172,20 +172,22 @@ export class CalcService {
 
         const getterInstance: AddPropertyTitlesAndLabelsGetter = new AddPropertyTitlesAndLabelsGetter();
 
+        let listingsAdded = 0;
+
         for (const row of propertiesInBulk.csvData) {
             const listingDetailsReq: CreateListingDetailsRequest = {
                 zillowURL: row[getterInstance.zillowURLTitle],
                 listingPrice: row[getterInstance.listingPriceTitle],
                 numberOfDaysOnMarket: row[getterInstance.numberOfDaysOnMarketTitle],
-                propertyStatus: row[getterInstance.propertyStatusName] as PropertyStatus,
+                propertyStatus: row[getterInstance.propertyStatusTitle] as PropertyStatus,
                 propertyDetails: {
                     address: {
                         fullAddress: row[getterInstance.fullAddressTitle],
-                        state: row[getterInstance.stateName] as State,
+                        state: row[getterInstance.stateTitle] as State,
                         zipcode: row[getterInstance.zipcodeTitle],
                         city: row[getterInstance.cityTitle],
                         county: row[getterInstance.countyTitle],
-                        country: row[getterInstance.countryName] as Country,
+                        country: row[getterInstance.countryTitle] as Country,
                         streetAddress: row[getterInstance.streetAddressTitle],
                         apartmentNumber: row[getterInstance.apartmentNumberTitle],
                         longitude: row[getterInstance.longitudeTitle],
@@ -205,11 +207,11 @@ export class CalcService {
                     hasGarage: row[getterInstance.hasGarageTitle],
                     hasPool: row[getterInstance.hasPoolTitle],
                     hasBasement: row[getterInstance.hasBasementTitle],
-                    propertyType: row[getterInstance.propertyTypeName] as PropertyType,
+                    propertyType: row[getterInstance.propertyTypeTitle] as PropertyType,
                     description: row[getterInstance.descriptionTitle],
                 },
                 zillowMarketEstimates: {
-                    zestimate: row[getterInstance.zestimate], // Estimated market value
+                    zestimate: row[getterInstance.zestimateTitle], // Estimated market value
                     zestimateRange: {
                         low: row[getterInstance.zestimateRangeLowTitle],
                         high: row[getterInstance.zestimateRangeHighTitle],
@@ -221,15 +223,19 @@ export class CalcService {
                 },
             };
             console.log('ListingDetails:', listingDetailsReq);
+            if (this.addNewProperty(listingDetailsReq)) {
+                listingsAdded++;
+            }
         }
 
         console.log('Csv file is valid');
 
-        return 0;
+        return listingsAdded;
     }
 
 
-    async addNewProperty(listingDetailsRequest: CreateListingDetailsRequest): Promise<void> {
+    async addNewProperty(listingDetailsRequest: CreateListingDetailsRequest): Promise<boolean> {
+        let newListingId = -1;
         const client = await this.pool.connect();
         try {
             await client.query('BEGIN');
@@ -237,7 +243,7 @@ export class CalcService {
 
             const listingDetails: ListingDetails = new ListingDetailsRequestBuilder(listingDetailsRequest).build();
             console.log('listingDetails:', listingDetails);
-            const newListingId = await this.insertListingDetails(listingDetails, ListingCreationType.MANUAL);
+            newListingId = await this.insertListingDetails(listingDetails, ListingCreationType.MANUAL);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -246,6 +252,7 @@ export class CalcService {
             throw error;
         } finally {
             client.release();
+            return newListingId > -1;
         }
     }
 

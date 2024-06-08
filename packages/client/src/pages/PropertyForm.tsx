@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
-import { 
-    AddPropertyFormData, 
-    CreateListingDetailsRequest, 
-    CreatePropertiesInBulkRequest 
+import {
+    AddPropertyFormData,
+    CreateListingDetailsRequest,
+    CreatePropertiesInBulkRequest
 } from '@realestatemanager/shared';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
@@ -12,11 +12,7 @@ import ReusableTable from '../components/ReusableTable';
 import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
 import RadioButtonComponent from '../basicdatadisplaycomponents/RadioButtonComponent';
 import { Box, Paper, Typography } from '@mui/material';
-
-export enum AddPropertyType {
-    SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
-    BULK_UPLOAD = 'BULK_UPLOAD',
-};
+import { AddPropertyType } from '../constants/Constant';
 
 // New type with all properties as strings
 export type DummyCSVDataType = {
@@ -89,8 +85,8 @@ const PropertyForm: React.FC = () => {
 
     const getExampleData = (): DummyCSVDataType[] => {
         return [{
-            zillowURL: 'example_ZillowUrl.com',
-            fullAddress: '123 example st, my_town, NY, 11021',
+            zillowURL: '1_example_ZillowUrl.com',
+            fullAddress: '1234 example st, my_town, NY, 11021',
             state: 'NY',
             zipcode: '11021',
             city: 'my_town',
@@ -111,7 +107,7 @@ const PropertyForm: React.FC = () => {
             acres: '1.2',
             yearBuilt: '1989',
             hasGarage: 'true',
-            hasPool: '',
+            hasPool: 'false',
             hasBasement: 'false',
             propertyType: 'Single Family',
             propertyStatus: 'Active',
