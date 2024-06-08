@@ -1,9 +1,9 @@
 import { Pool } from 'pg';
 import { ListingDAO } from '../dao/listing.dao';
 import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realestatemanager/shared';
-import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
+import { ListingDetails } from 'src/modules/realestatecalc/models/listing_models/listingdetails.model';
 
 @Injectable()
 export class ListingManager extends DatabaseManager {

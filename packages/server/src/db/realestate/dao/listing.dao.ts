@@ -1,9 +1,5 @@
 import { Pool } from 'pg';
 import { RealEstateDAO } from "./realestate.dao";
-import { ListingDetails } from 'src/realestatecalc/models/listing_models/listingdetails.model';
-import { Address } from 'src/realestatecalc/models/listing_models/address.model';
-import { PropertyDetails } from 'src/realestatecalc/models/listing_models/propertydetails.model';
-import { ZillowMarketEstimates } from 'src/realestatecalc/models/listing_models/zillowmarketestimates.model';
 import {
     Country,
     PropertyType,
@@ -12,8 +8,12 @@ import {
     ListingCreationType,
     CreateFilteredPropertyListRequest,
 } from '@realestatemanager/shared';
-import { SchoolRating } from 'src/realestatecalc/models/listing_models/schoolrating.model';
 import { Injectable } from '@nestjs/common';
+import { ListingDetails } from 'src/modules/realestatecalc/models/listing_models/listingdetails.model';
+import { SchoolRating } from 'src/modules/realestatecalc/models/listing_models/schoolrating.model';
+import { PropertyDetails } from 'src/modules/realestatecalc/models/listing_models/propertydetails.model';
+import { ZillowMarketEstimates } from 'src/modules/realestatecalc/models/listing_models/zillowmarketestimates.model';
+import { Address } from 'src/modules/realestatecalc/models/listing_models/address.model';
 
 @Injectable()
 export class ListingDAO extends RealEstateDAO {

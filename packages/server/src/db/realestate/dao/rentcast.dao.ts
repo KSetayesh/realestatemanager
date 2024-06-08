@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
-import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RealEstateDAO } from "./realestate.dao";
-import { RentCastResponse } from "src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model";
-import { RentCastApiResponse } from 'src/realestatecalc/api/rent.cast.api.client';
-import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 import { Injectable } from '@nestjs/common';
+import { RentCastResponse } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
+import { RentCastDetails } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastdetails.model';
+import { RentCastMatchingData } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
+import { RentCastApiResponse } from 'src/modules/realestatecalc/api/rent.cast.api.client';
 
 @Injectable()
 export class RentCastDAO extends RealEstateDAO {
@@ -98,7 +98,11 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async insertRentCastApiResponse(pool: Pool, rentCastResponse: RentCastResponse, rentCastApiCallId: number): Promise<number> {
+    async insertRentCastApiResponse(
+        pool: Pool,
+        rentCastResponse: RentCastResponse,
+        rentCastApiCallId: number
+    ): Promise<number> {
         try {
             const values: any[] = [
                 rentCastResponse.addressId,
@@ -209,7 +213,11 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async findMatchingRentingCastData(pool: Pool, saleEndPoint: string, propertyEndPoint: string): Promise<RentCastMatchingData[]> {
+    async findMatchingRentingCastData(
+        pool: Pool,
+        saleEndPoint: string,
+        propertyEndPoint: string
+    ): Promise<RentCastMatchingData[]> {
         const matchingRentCastDataList: RentCastMatchingData[] = [];
         try {
             const query = `${this.MATCHING_RENT_CAST_DATA_QUERY};`;

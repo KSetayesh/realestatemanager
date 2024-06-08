@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 import apiKeysConfig from '../../../config/apiKeysConfig';
-import { RentCastDetails } from "src/realestatecalc/models/rent_cast_api_models/rentcastdetails.model";
 import { RentCastDAO } from '../dao/rentcast.dao';
-import { RentCastResponse } from 'src/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
-import { RentCastMatchingData } from 'src/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
+import { RentCastResponse } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
+import { RentCastDetails } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastdetails.model';
+import { RentCastMatchingData } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
 
 @Injectable()
 export class RentCastManager extends DatabaseManager {

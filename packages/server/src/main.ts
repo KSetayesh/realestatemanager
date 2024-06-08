@@ -3,8 +3,8 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ServeStaticMiddleware } from './serve-static.middleware';
 import { PathUtil } from './shared/PathUtil';
-import { CalcService } from './realestatecalc/services/calc.service';
 import * as bodyParser from 'body-parser';
+import { CalcService } from './modules/realestatecalc/services/calc.service';
 
 const port = process.env.PORT || 3000;
 

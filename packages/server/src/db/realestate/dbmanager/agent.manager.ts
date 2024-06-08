@@ -1,8 +1,8 @@
 import { Pool } from 'pg';
 import { AgentDAO } from "../dao/agent.dao";
-import { Agent } from 'src/agents/models/agent.model';
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
+import { Agent } from 'src/modules/agents/models/agent.model';
 
 @Injectable()
 export class AgentManager extends DatabaseManager {
