@@ -84,4 +84,5 @@ export const convertSquareFeetToAcres = (squareFeet: number): number => {
 export const rentCastDetailsMap: { [key: number]: string } = {
     1: apiKeysConfig.rentCastApiKey,
     2: apiKeysConfig.backUpRentCastApiKey,
+    3: apiKeysConfig.backUpbackUpRentCastApiKey,
 };

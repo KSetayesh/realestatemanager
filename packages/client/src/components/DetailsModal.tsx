@@ -1,5 +1,4 @@
 import React from 'react';
-import { ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
 import { Modal, Box, Typography, Link as MuiLink } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { ensureAbsoluteUrl, renderCellData } from '../constants/Constant';
@@ -75,7 +74,7 @@ const PropertyDetailsModal = <Y, X extends keyof TablesConfig<Y>>({
                 </Box>
                 {getTableColumns().map((column, colIndex) => {
                     const rowData: TableRow = getTableData().rowData;
-                    const cellData = renderCellData(rowData[column.accessor as keyof ListingWithScenariosResponseDTO],
+                    const cellData = renderCellData(rowData[column.accessor],
                         column.isDollarAmount,
                         column.addSuffix);
 
