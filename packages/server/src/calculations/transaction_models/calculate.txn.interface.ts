@@ -1,4 +1,10 @@
-import { TransactionKey, TransactionType, TxnResponseDTO, ValueInput, ValueRateInput } from "@realestatemanager/shared";
+import {
+    TransactionKey,
+    TransactionType,
+    TxnResponseDTO,
+    ValueInput,
+    ValueRateInput
+} from "@realestatemanager/shared";
 import { RentEstimate } from "./rent.estimate";
 import { PurchasePrice } from "./purchase.price";
 

@@ -1,4 +1,10 @@
-import { TransactionKey, TransactionType, ValueInput, isValueAmountInput, isValueRateInput } from "@realestatemanager/shared";
+import {
+    TransactionKey,
+    TransactionType,
+    ValueInput,
+    isValueAmountInput,
+    isValueRateInput
+} from "@realestatemanager/shared";
 import { getYear, isFirstYear } from "src/shared/Constants";
 
 export abstract class Transaction {

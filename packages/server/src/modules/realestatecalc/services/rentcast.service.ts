@@ -91,17 +91,7 @@ export type RentCastPropertyResponseType = {
 @Injectable()
 export class RentCastService {
 
-    // private listingManager: ListingManager;
-    // private rentCastManager: RentCastManager;
-    // private rentCastApiClient: RentCastApiClient;
     private pool: Pool;
-
-    // constructor() {
-    //     this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-    //     this.listingManager = DatabaseManagerFactory.createListingManager();
-    //     this.pool = DatabaseManagerFactory.getDbPool();
-    //     this.rentCastApiClient = new RentCastApiClient();
-    // }
 
     constructor(
         private readonly calcService: CalcService,
@@ -111,10 +101,6 @@ export class RentCastService {
         private readonly rentCastManager: RentCastManager,
     ) {
         this.pool = this.databaseService.getPool();
-        // this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-        // this.listingManager = DatabaseManagerFactory.createListingManager();
-        // this.pool = DatabaseManagerFactory.getDbPool();
-        // this.rentCastApiClient = new RentCastApiClient();
     }
 
     async getRentCastApiDetailsDTO(): Promise<RentCastDetailsResponseDTO[]> {

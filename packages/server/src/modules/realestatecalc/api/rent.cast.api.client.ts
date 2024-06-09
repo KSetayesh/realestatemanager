@@ -47,21 +47,15 @@ export class RentCastApiClient {
     private endPointMap: Record<RentCastEndPoint, EndpointDetails> = {
         [RentCastEndPoint.SALE]: {
             endPoint: 'https://api.rentcast.io/v1/listings/sale',
-            responseFilePath: PathUtil.getLatestRentCastSalePath(), //path.join(__dirname, '../../../src/data/latestRentCastSale.json'),
+            responseFilePath: PathUtil.getLatestRentCastSalePath(),
         },
         [RentCastEndPoint.PROPERTIES]: {
             endPoint: 'https://api.rentcast.io/v1/properties',
-            responseFilePath: PathUtil.getLatestRentCastPropertyPath(), //path.join(__dirname, '../../../src/data/latestRentCastProperty.json'),
+            responseFilePath: PathUtil.getLatestRentCastPropertyPath(),
         },
     };
 
-    // private rentCastManager: RentCastManager;
     private pool: Pool;
-
-    // constructor() {
-    //     this.rentCastManager = DatabaseManagerFactory.createRentCastManager();
-    //     this.pool = DatabaseManagerFactory.getDbPool();
-    // }
 
     constructor(
         private readonly databaseService: DatabaseService,

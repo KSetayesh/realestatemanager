@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FileObject } from 'imagekit/dist/libs/interfaces';
-import { ImageKitApiClient } from 'src/modules/realestatecalc/api/image.kit.api.client';
+import { ImageKitApiClient } from 'src/modules/photos/api/image.kit.api.client';
 
 @Injectable()
 export class PhotosService {
