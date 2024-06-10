@@ -37,6 +37,10 @@ export class AgentManager extends DatabaseManager {
         await this.agentDAO.updateAgent(pool, agent);
     }
 
+    async deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
+        return this.agentDAO.deleteAgent(pool, agentId);
+    }
+
     async getAgentById(pool: Pool, id: number): Promise<Agent | null> {
         return this.agentDAO.getAgentById(pool, id);
     }

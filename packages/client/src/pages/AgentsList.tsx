@@ -33,8 +33,7 @@ const AgentsList: React.FC = () => {
     };
 
     const handleDeleteUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<boolean> => {
-        console.log('I have been deleted', tableDataItem.objectData.key.fullName);
-        return true;
+        return agentApi.deleteAgent(tableDataItem.objectData.key.id);
     };
 
     // Inside PropertiesList component

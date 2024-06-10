@@ -38,6 +38,8 @@ export class AgentDAO extends RealEstateDAO {
                 updated_at = $7
             WHERE id = $8;`;
 
+    private DELETE_AGENT_QUERY = `DELETE FROM agent WHERE id = $1;`
+
     async insertAgent(pool: Pool, agent: Agent): Promise<void> {
         try {
             const values: any[] = this.getAgentValues(agent);
@@ -70,6 +72,21 @@ export class AgentDAO extends RealEstateDAO {
             console.log('Agent updated successfully');
         } catch (err) {
             console.error('Error updating Agent', err);
+            throw err;
+        }
+    }
+
+    async deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
+        const query = this.DELETE_AGENT_QUERY;
+
+        const values: any[] = [agentId];
+
+        try {
+            const result = await pool.query(query, values);
+            console.log(`Agent id ${agentId} successfully deleted from database`);
+            return result.rowCount > 0;
+        } catch (err) {
+            console.error('Error deleting Agent', err);
             throw err;
         }
     }

@@ -47,6 +47,24 @@ export class AgentApi extends CalcApi {
         }
     }
 
+    async deleteAgent(agentId: number): Promise<boolean> {
+        try {
+            const agentIdObj = {
+                id: agentId,
+            };
+            const response = await axios.post(
+                // Send agentId as an object
+                `${this.getURL()}/deleteAgent`, agentIdObj, {
+                headers: this.getHeaders(), // Include headers if needed
+            });
+            return response.data;
+        } catch (error) {
+            const message = `Error deleting agent: ${error}`;
+            console.error(message);
+            throw new Error(message);
+        }
+    }
+
     protected getURL(): string {
         return `${this.getBaseURL()}/agents`;
     }

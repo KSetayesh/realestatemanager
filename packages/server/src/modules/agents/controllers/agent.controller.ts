@@ -28,4 +28,12 @@ export class AgentController {
         return this.agentService.updateAgent(createUpdateAgentRequest);
     }
 
+    @Post('deleteAgent')
+    async deleteAgent(
+        @Body('id') agentId: number
+    ): Promise<boolean> {
+        console.log('agentId:', agentId);
+        return this.agentService.deleteAgent(agentId);
+    }
+
 }

@@ -62,6 +62,10 @@ export class AgentService {
 
     }
 
+    async deleteAgent(agentId: number): Promise<boolean> {
+        return this.agentManager.deleteAgent(this.pool, agentId);
+    }
+
     private buildAgent(agent: CreateAgentRequest): Agent {
         return new Agent(
             -1,
