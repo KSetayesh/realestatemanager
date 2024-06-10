@@ -7,13 +7,6 @@ import { Agent } from 'src/modules/agents/models/agent.model';
 @Injectable()
 export class AgentManager extends DatabaseManager {
 
-    // private agentDAO: AgentDAO;
-
-    // constructor(agentDAO: AgentDAO, commit: boolean) {
-    //     super(commit);
-    //     this.agentDAO = agentDAO;
-    // }
-
     constructor(
         private readonly agentDAO: AgentDAO,
         commit: boolean,
@@ -34,10 +27,18 @@ export class AgentManager extends DatabaseManager {
     }
 
     async updateAgent(pool: Pool, agent: Agent): Promise<void> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         await this.agentDAO.updateAgent(pool, agent);
     }
 
     async deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return;
+        }
         return this.agentDAO.deleteAgent(pool, agentId);
     }
 

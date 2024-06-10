@@ -104,7 +104,38 @@ export class CalcService {
             useDefaultRequest: true,
         };
 
-        return this.calculate(createInvestmentScenarioRequest, updatedListingDetailsFromDb);
+        const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(
+            this.cache,
+            updatedListingDetailsFromDb,
+            createInvestmentScenarioRequest,
+        );
+
+        return investmentCalculationManager.updateCache();
+
+    }
+
+    async deleteListingDetails(zillowURL: string): Promise<boolean> {
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+        let didDelete: boolean = false;
+        if (listingDetails) {
+            didDelete = await this.listingManager.deleteListingDetails(this.pool, zillowURL);
+        }
+        else {
+            console.log(`${zillowURL} does not exist in the database to delete`);
+            return false;
+        }
+
+        console.log(`${zillowURL} has been deleted: ${didDelete}`);
+
+        if (didDelete) {
+            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails);
+            investmentCalculationManager.deleteFromCache();
+
+            // return true wether or not anything was deleted from cache
+            return true;
+        }
+
+        return false;
     }
 
     async getPropertyByZillowURL(

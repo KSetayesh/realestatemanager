@@ -64,4 +64,18 @@ export class ListingManager extends DatabaseManager {
         );
     }
 
+    async deleteListingDetails(
+        pool: Pool,
+        zillowURL: string): Promise<boolean> {
+        if (!this.commit) {
+            console.log(this.commitMessage);
+            return false;
+        }
+        return this.listingDAO.deleteListingByZillowURL(
+            pool,
+            zillowURL,
+        );
+    }
+
+
 }

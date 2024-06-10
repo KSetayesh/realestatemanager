@@ -44,6 +44,13 @@ export class CalcController {
         return this.calcService.updateProperty(createUpdatePropertyRequest);
     }
 
+    @Post('deleteListingDetails')
+    async deleteListingDetails(
+        @Body('zillowURL') zillowURL: string
+    ): Promise<boolean> {
+        return this.calcService.deleteListingDetails(zillowURL);
+    }
+
     @Get('property')
     async getPropertyByZillowUrl(
         @Query('zillowURL') zillowURL: string,

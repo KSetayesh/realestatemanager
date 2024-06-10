@@ -225,6 +225,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
             if (areTableRowsDeletable()) {
                 try {
                     const wasDeleted = await tableActions!.handleDeleteUpdate!(row);
+                    console.log('Was deleted: ', wasDeleted);
                     if (wasDeleted) {
                         setEditableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
                     }

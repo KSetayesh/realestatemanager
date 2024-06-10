@@ -89,7 +89,7 @@ const PropertiesList: React.FC = () => {
 
     const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
         console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
-        return true;
+        return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
     };
 
     return (

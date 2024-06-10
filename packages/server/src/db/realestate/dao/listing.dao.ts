@@ -345,7 +345,9 @@ export class ListingDAO extends RealEstateDAO {
     }
 
     async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
+        console.log('zillowurl:', zillowURL);
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
+        console.log(query);
         try {
             const res = await pool.query(query, [zillowURL]);
             if (res.rows.length > 0) {
@@ -368,7 +370,7 @@ export class ListingDAO extends RealEstateDAO {
         let newListingId = -1;
         try {
             const addressId = await this.insertAddress(pool, listingDetails);
-            const schoolRatingId = await this._insertSchoolRating(pool, listingDetails);
+            const schoolRatingId = await this.insertSchoolRating(pool, listingDetails);
             const propertyDetailsId = await this.insertPropertyDetails(
                 pool,
                 listingDetails,
@@ -432,10 +434,70 @@ export class ListingDAO extends RealEstateDAO {
         return newListingId;
     }
 
+    async deleteListingByZillowURL(pool: Pool, zillowURL: string): Promise<boolean> {
+        const client = await pool.connect();
+
+        try {
+            await client.query('BEGIN');
+
+            // First, fetch the listing details to get associated IDs
+            const listingQuery = 'SELECT property_details_id, zillow_market_estimates_id FROM listing_details WHERE zillow_url = $1';
+            const listingResult = await client.query(listingQuery, [zillowURL]);
+
+            if (listingResult.rows.length === 0) {
+                await client.query('ROLLBACK');
+                return false;
+            }
+
+            const { property_details_id, zillow_market_estimates_id } = listingResult.rows[0];
+
+            // Fetch associated property details
+            const propertyDetailsQuery = 'SELECT address_id, school_rating_id FROM property_details WHERE id = $1';
+            const propertyDetailsResult = await client.query(propertyDetailsQuery, [property_details_id]);
+
+            if (propertyDetailsResult.rows.length === 0) {
+                await client.query('ROLLBACK');
+                return false;
+            }
+
+            const { address_id, school_rating_id } = propertyDetailsResult.rows[0];
+
+            // Delete the listing
+            const deleteListingQuery = 'DELETE FROM listing_details WHERE zillow_url = $1';
+            await client.query(deleteListingQuery, [zillowURL]);
+
+            // Delete associated property details
+            const deletePropertyDetailsQuery = 'DELETE FROM property_details WHERE id = $1';
+            await client.query(deletePropertyDetailsQuery, [property_details_id]);
+
+            // Delete associated Zillow market estimates
+            const deleteZillowMarketEstimatesQuery = 'DELETE FROM zillow_market_estimates WHERE id = $1';
+            await client.query(deleteZillowMarketEstimatesQuery, [zillow_market_estimates_id]);
+
+            // Delete associated address
+            const deleteAddressQuery = 'DELETE FROM address WHERE id = $1';
+            await client.query(deleteAddressQuery, [address_id]);
+
+            // Delete associated school rating
+            const deleteSchoolRatingQuery = 'DELETE FROM school_rating WHERE id = $1';
+            await client.query(deleteSchoolRatingQuery, [school_rating_id]);
+
+            await client.query('COMMIT');
+            console.log('Listing and all associated data deleted successfully');
+            return true;
+        } catch (err) {
+            await client.query('ROLLBACK');
+            console.error('Error deleting listing and associated data', err);
+            return false;
+        } finally {
+            client.release();
+        }
+    }
+
     async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
         await this.updateAddress(pool, listingDetails);
         await this.updateZillowMarketEstimates(pool, listingDetails);
-        await this._updateSchoolRating(pool, listingDetails);
+        await this.updateSchoolRating(pool, listingDetails);
         await this.updatePropertyDetails(pool, listingDetails);
         await this._updateListingDetails(pool, listingDetails);
     }
@@ -586,7 +648,7 @@ export class ListingDAO extends RealEstateDAO {
 
     }
 
-    private async _updateSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+    private async updateSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<void> {
 
         const query = this.UPDATE_SCHOOL_RATING_QUERY;
 
@@ -603,7 +665,7 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
-    private async _insertSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<number> {
+    private async insertSchoolRating(pool: Pool, listingDetails: ListingDetails): Promise<number> {
 
         const values: any[] = this.getSchoolRatingValues(listingDetails);
 

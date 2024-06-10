@@ -27,6 +27,10 @@ export class InvestmentCalculationManager {
         this.investmentScenarioRequest = investmentScenarioRequest;
     }
 
+    resetCache(): void {
+        this.cache.clear();
+    }
+
     getListingDetailsCalculations(): ListingWithScenariosResponseDTO {
         if (!this.usePropertyCache) {
             return this.createInvestmentMetrics();
@@ -46,13 +50,41 @@ export class InvestmentCalculationManager {
         return this.cache.get(this.listingDetails.id);
     }
 
-    setCache() {
+    setCache(): ListingWithScenariosResponseDTO {
         if (!this.usePropertyCache) {
             return;
         }
 
         const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.createInvestmentMetrics();
         this.cache.set(this.listingDetails.id, listingWithScenariosDTO);
+        return listingWithScenariosDTO;
+    }
+
+    deleteFromCache(): boolean {
+        if (!this.usePropertyCache) {
+            return false;
+        }
+        if (this.cache.has(this.listingDetails.id)) {
+            this.cache.delete(this.listingDetails.id);
+            console.log(`Deleted key ${this.listingDetails.id} from cache.`);
+            return true;
+        } else {
+            console.log(`Key ${this.listingDetails.id} not found in cache.`);
+            return false;
+        }
+    }
+
+    updateCache(): ListingWithScenariosResponseDTO {
+        if (!this.usePropertyCache) {
+            return;
+        }
+        if (this.cache.has(this.listingDetails.id)) {
+            this.cache.set(this.listingDetails.id, this.createInvestmentMetrics());
+            console.log(`${this.listingDetails.id} has been updated in cache.`);
+            return this.cache.get(this.listingDetails.id);
+        } else {
+            return this.setCache();
+        }
     }
 
     private createInvestmentMetrics(): ListingWithScenariosResponseDTO {

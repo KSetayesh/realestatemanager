@@ -39,6 +39,25 @@ export class RealEstateCalcApi extends CalcApi {
         }
     }
 
+    async deleteListingDetails(zillowURL: string): Promise<boolean> {
+        try {
+            const zillowURLObj = {
+                zillowURL: zillowURL,
+            };
+            const response = await axios.post(
+                // Send agentId as an object
+                `${this.getURL()}/deleteListingDetails`, zillowURLObj, {
+                headers: this.getHeaders(), // Include headers if needed
+            });
+            console.log('response.data:', response.data, ' type of response', (typeof response.data));
+            return response.data;
+        } catch (error) {
+            const message = `Error deleting listing details: ${error}`;
+            console.error(message);
+            throw new Error(message);
+        }
+    }
+
     async realEstateCalculator(dataToSubmit: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
 
         try {
