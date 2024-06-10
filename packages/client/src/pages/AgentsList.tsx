@@ -32,6 +32,11 @@ const AgentsList: React.FC = () => {
         return agentApi.updateAgent(createUpdateAgentRequest);
     };
 
+    const handleDeleteUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<boolean> => {
+        console.log('I have been deleted', tableDataItem.objectData.key.fullName);
+        return true;
+    };
+
     // Inside PropertiesList component
 
     // Assuming your ReusableTable component and TableColumn interface are set up to handle this
@@ -50,8 +55,11 @@ const AgentsList: React.FC = () => {
                         exportIntoCSV={{
                             buttonTitle: 'Export CSV'
                         }}
-                        isEditable={true}
-                        handleUpdate={handleUpdate}
+                        tableActions={{
+                            handleEditUpdate: handleUpdate,
+                            handleDeleteUpdate: handleDeleteUpdate,
+                        }} //{true}
+                    //handleUpdate={handleUpdate}
                     />
                 </>
             )}

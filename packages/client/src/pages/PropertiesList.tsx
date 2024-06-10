@@ -87,6 +87,11 @@ const PropertiesList: React.FC = () => {
         return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
     };
 
+    const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
+        console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
+        return true;
+    };
+
     return (
         <div>
             <h2> Filter Properties </h2>
@@ -109,8 +114,12 @@ const PropertiesList: React.FC = () => {
                         exportIntoCSV={{
                             buttonTitle: 'Export CSV'
                         }}
-                        isEditable={true}
-                        handleUpdate={handleUpdate}
+                        tableActions={{
+                            handleEditUpdate: handleUpdate,
+                            handleDeleteUpdate: handleDeleteUpdate,
+                        }} //{true}
+                    // isEditable={true}
+                    // handleUpdate={handleUpdate}
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}

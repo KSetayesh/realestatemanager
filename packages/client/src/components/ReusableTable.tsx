@@ -1,3 +1,4 @@
+// ReusableTable.tsx
 import React, { useState, useEffect } from 'react';
 import {
     Table,
@@ -28,6 +29,7 @@ import {
 } from '../constants/Constant';
 import ExportCSVButton from './ExportCSVButton';
 import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
+import ConfirmationDialog from './ConfirmationDialog';
 
 enum SortDirection {
     ASCENDING = 'ascending',
@@ -66,6 +68,10 @@ export type ExportIntoCSV = {
     buttonTitle: string;
 };
 
+export type TableActions<Y> = {
+    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+};
 
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
@@ -81,8 +87,9 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
     exportIntoCSV?: ExportIntoCSV;
-    isEditable?: boolean;
-    handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+    tableActions?: TableActions<Y>;
+    // isEditable?: boolean;
+    // handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
 };
 
 const StyledTableContainer = styled(TableContainer)(() => ({
@@ -130,8 +137,9 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     onRowClick,
     tableSeperatorDetails,
     exportIntoCSV,
-    isEditable = false,
-    handleUpdate,
+    tableActions,
+    // isEditable = false,
+    // handleUpdate,
 }: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
@@ -151,6 +159,8 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(50);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
     useEffect(() => {
         setEditableData(getTableData());
@@ -186,6 +196,48 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setSortConfig({ key, direction });
     };
 
+    const areTableRowsEditable = (): boolean => {
+        if (tableActions) {
+            return tableActions.handleEditUpdate ? true : false;
+        }
+        return false;
+    };
+
+    const areTableRowsDeletable = (): boolean => {
+        if (tableActions) {
+            return tableActions.handleDeleteUpdate ? true : false;
+        }
+        return false;
+    };
+
+    const handleDeleteClick = async (index: number) => {
+        if (editMode === null) {
+            if (areTableRowsDeletable()) {
+                setOpenDialog(true);
+                setDeleteIndex(index);
+            }
+        }
+    };
+
+    const confirmDelete = async () => {
+        if (deleteIndex !== null) {
+            const row = editableData[deleteIndex];
+            if (areTableRowsDeletable()) {
+                try {
+                    const wasDeleted = await tableActions!.handleDeleteUpdate!(row);
+                    if (wasDeleted) {
+                        setEditableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
+                    }
+                } catch (error) {
+                    console.error('Error deleting row:', error);
+                } finally {
+                    setOpenDialog(false);
+                    setDeleteIndex(null);
+                }
+            }
+        }
+    };
+
     const handleEditClick = (index: number) => {
         setEditMode(index);
         setIsEditing(true);
@@ -206,9 +258,9 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     const handleSaveClick = async () => {
         if (editMode !== null) {
             const editedRow = editableData[editMode];
-            if (handleUpdate) {
+            if (areTableRowsEditable()) {
                 try {
-                    const updatedRow: Y = await handleUpdate(editedRow);
+                    const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
 
                     const updatedEditableData = [...editableData];
                     const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
@@ -249,7 +301,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setPage(0);
     };
 
-    const displayActionButton = (rowIndex: number) => {
+    const displayEditActionButton = (rowIndex: number) => {
         if (editMode === rowIndex) {
             return (
                 <>
@@ -267,11 +319,20 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                 <IconButton onClick={(e) => { e.stopPropagation(); handleEditClick(rowIndex); }}>
                     <EditIcon />
                 </IconButton>
-                <IconButton onClick={(e) => { e.stopPropagation(); /* Add delete action here */ }}>
-                    <DeleteIcon />
-                </IconButton>
             </>
         );
+    };
+
+    const displayDeleteActionButton = (rowIndex: number) => {
+        if (editMode !== rowIndex) {
+            return (
+                <>
+                    <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteClick(rowIndex); }}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
     };
 
     const getVisibleColumnCount = (): number => {
@@ -372,7 +433,12 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                 style={{ cursor: isEditing ? 'default' : 'pointer' }}
                 onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
             >
-                {isEditable && <StyledTableBodyCell>{displayActionButton(originalIndex)}</StyledTableBodyCell>}
+                {(areTableRowsEditable() || areTableRowsDeletable()) && (
+                    <StyledTableBodyCell>
+                        {areTableRowsEditable() && displayEditActionButton(originalIndex)}
+                        {areTableRowsDeletable() && displayDeleteActionButton(originalIndex)}
+                    </StyledTableBodyCell>
+                )}
                 {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
                     const cellContent = getCellContent(originalIndex, column, item);
                     return <StyledTableBodyCell key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</StyledTableBodyCell>;
@@ -385,7 +451,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         return (
             <TableHead>
                 <TableRow>
-                    {isEditable && <StyledTableCell>Actions</StyledTableCell>}
+                    {(areTableRowsEditable() || areTableRowsDeletable()) && <StyledTableCell>Actions</StyledTableCell>}
                     {getTableColumns().filter(column => column.showColumn).map((column) => (
                         <StyledTableCell key={column.accessor} onClick={() => requestSort(column)}>
                             <Tooltip title={column.detailedDescription || column.header}>
@@ -463,6 +529,13 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                     />
                 </StyledPaper>
             </Box>
+            <ConfirmationDialog
+                open={openDialog}
+                onClose={() => setOpenDialog(false)}
+                onConfirm={confirmDelete}
+                title="Confirm Delete"
+                content="Are you sure you want to delete this row?"
+            />
         </Box>
     );
 };

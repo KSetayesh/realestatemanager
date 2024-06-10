@@ -167,8 +167,9 @@ const PropertyForm: React.FC = () => {
                                 exportIntoCSV={{
                                     buttonTitle: 'Export Template CSV'
                                 }}
-                                isEditable={false}
-                                handleUpdate={undefined}
+                                // isEditable={false}
+                                // handleUpdate={undefined}
+                                tableActions={undefined} //{true}
                             />
                             <br></br>
                             <hr></hr>
