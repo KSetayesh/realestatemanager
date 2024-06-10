@@ -18,7 +18,6 @@ import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
 import { DatabaseService } from 'src/db/database.service';
-import { InvestmentCalculationManager } from 'src/calculations/investment.calculation.manager';
 import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
 import { InvestmentCalculator } from 'src/calculations/investment.calculator';
 import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/shared';
@@ -26,55 +25,67 @@ import { PropertyStatus } from '@realestatemanager/shared';
 import { State } from '@realestatemanager/shared';
 import { Country } from '@realestatemanager/shared';
 import { PropertyType } from '@realestatemanager/shared';
+import { InvestmentCalculationCache } from 'src/calculations/investment.calculation.cache';
 
 @Injectable()
 export class CalcService {
 
-    // private listingManager: ListingManager;
     private pool: Pool;
-    private cache: Map<number, ListingWithScenariosResponseDTO>;
-
-    // constructor() {
-    //     // this.listingManager = DatabaseManagerFactory.createListingManager();
-    //     // this.pool = DatabaseManagerFactory.getDbPool();
-    //     this.cache = new Map<number, ListingWithScenariosResponseDTO>();
-    // }
-
+    private calculationCache: InvestmentCalculationCache;
 
     constructor(
         private readonly databaseService: DatabaseService,
         private readonly listingManager: ListingManager
     ) {
         this.pool = this.databaseService.getPool();
-        this.cache = new Map<number, ListingWithScenariosResponseDTO>();
+        this.calculationCache = new InvestmentCalculationCache();
+        this.setCache();
     }
 
     async setCache(): Promise<void> {
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
-        for (const listingDetails of listingDetailsArr) {
-            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails);
-            investmentCalculationManager.setCache();
-        }
+        this.calculationCache.setFreshCache(listingDetailsArr);
     }
 
-    async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+    // async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
 
-        const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
+    //     const investmentScenarioRequest: CreateInvestmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
+    //     if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
+    //         throw new Error('Not a valid Investment Scenario Request');
+    //     }
+    //     const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
+
+    //     const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
+    //     const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
+
+    //     for (const listingDetails of listingDetailsArr) {
+
+    //         const listingWithScenariosDTO: ListingWithScenariosResponseDTO =
+    //             this.calculationCache.getListingDetailsCalculations(listingDetails);
+
+    //         listingWithScenariosArr.push(listingWithScenariosDTO);
+    //     }
+
+    //     return listingWithScenariosArr;
+    // }
+
+    async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+        const investmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
         }
-        const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
 
+        const filteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
         const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
 
         for (const listingDetails of listingDetailsArr) {
-            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(
-                this.cache,
-                listingDetails,
-                investmentScenarioRequest
-            );
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = investmentCalculationManager.getListingDetailsCalculations();
+            // Update the cache asynchronously
+            this.calculationCache.setCache(listingDetails).then(() => {
+                console.log(`Cache update initiated for listing ID: ${listingDetails.id}`);
+            });
+
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.calculationCache.getListingDetailsCalculations(listingDetails);
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }
 
@@ -85,7 +96,10 @@ export class CalcService {
         const zillowURL = createUpdatePropertyRequest.propertyIdentifier.zillowURL;
 
         // Fetch the listing details before update
-        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(
+            this.pool,
+            zillowURL
+        );
 
         // TODO implement all the methods in ListingDetailsUpdateBuilder
         // Update the listing details 
@@ -97,20 +111,17 @@ export class CalcService {
         await this.listingManager.updateListingDetails(this.pool, updatedListingDetails);
 
         // Fetch the updated data
-        const updatedListingDetailsFromDb: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
-
-        const createInvestmentScenarioRequest: CreateInvestmentScenarioRequest = {
-            propertyIdentifier: createUpdatePropertyRequest.propertyIdentifier,
-            useDefaultRequest: true,
-        };
-
-        const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(
-            this.cache,
-            updatedListingDetailsFromDb,
-            createInvestmentScenarioRequest,
+        const updatedListingDetailsFromDb: ListingDetails = await this.listingManager.getPropertyByZillowURL(
+            this.pool,
+            zillowURL
         );
 
-        return investmentCalculationManager.updateCache();
+        // Update the cache asynchronously
+        this.calculationCache.setCacheForce(updatedListingDetailsFromDb).then(() => {
+            console.log(`Cache update initiated for updated listing ID: ${updatedListingDetailsFromDb.id}`);
+        });
+
+        return this.calculationCache.getListingDetailsCalculations(updatedListingDetailsFromDb);
 
     }
 
@@ -128,8 +139,7 @@ export class CalcService {
         console.log(`${zillowURL} has been deleted: ${didDelete}`);
 
         if (didDelete) {
-            const investmentCalculationManager: InvestmentCalculationManager = new InvestmentCalculationManager(this.cache, listingDetails);
-            investmentCalculationManager.deleteFromCache();
+            this.calculationCache.deleteFromCache(listingDetails.id);
 
             // return true wether or not anything was deleted from cache
             return true;
@@ -138,6 +148,7 @@ export class CalcService {
         return false;
     }
 
+    // Need to eventually update
     async getPropertyByZillowURL(
         zillowURL: string,
         investmentScenarioRequest?: CreateInvestmentScenarioRequest
@@ -254,9 +265,20 @@ export class CalcService {
                 },
             };
             console.log('ListingDetails:', listingDetailsReq);
-            if (await this.addNewProperty(listingDetailsReq)) {
+
+            if ((await this.addNewProperty(listingDetailsReq)) > -1) {
+
+                // Start by fetching the listing details of the new property from the database asynchronously.
+                // This ensures the loop does not wait for these operations to complete before continuing.
+                this.listingManager.getPropertyByZillowURL(this.pool, listingDetailsReq.zillowURL).then((listingDetails) => {
+                    // Update the cache asynchronously without blocking the main application flow.
+                    this.calculationCache.setCache(listingDetails).then(() => {
+                        console.log(`Cache update initiated for listing ID: ${listingDetails.id}`);
+                    });
+                });
                 listingsAdded++;
             }
+
         }
 
         console.log('Csv file is valid');
@@ -265,7 +287,7 @@ export class CalcService {
     }
 
 
-    async addNewProperty(listingDetailsRequest: CreateListingDetailsRequest): Promise<boolean> {
+    async addNewProperty(listingDetailsRequest: CreateListingDetailsRequest): Promise<number> {
         let newListingId = -1;
         const client = await this.pool.connect();
         try {
@@ -283,7 +305,7 @@ export class CalcService {
             throw error;
         } finally {
             client.release();
-            return newListingId > -1;
+            return newListingId;
         }
     }
 

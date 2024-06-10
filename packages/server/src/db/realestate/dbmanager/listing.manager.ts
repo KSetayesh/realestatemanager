@@ -8,13 +8,6 @@ import { ListingDetails } from 'src/modules/realestatecalc/models/listing_models
 @Injectable()
 export class ListingManager extends DatabaseManager {
 
-    // private listingDAO: ListingDAO;
-
-    // constructor(listingDAO: ListingDAO, commit: boolean) {
-    //     super(commit);
-    //     this.listingDAO = listingDAO;
-    // }
-
     constructor(
         private readonly listingDAO: ListingDAO,
         commit: boolean,
