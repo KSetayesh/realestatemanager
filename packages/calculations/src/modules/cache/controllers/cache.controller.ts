@@ -1,6 +1,11 @@
-import { Controller, Post, Body, Delete, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Delete, Param } from '@nestjs/common';
 import { CacheService } from '../services/cache.service';
-import { CreateInvestmentScenarioRequest, CreateSetCacheRequestDTO, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import {
+    CreateListingDetailsCalculationsRequest,
+    CreateSetCacheRequest,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosResponseDTO
+} from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('cache')
@@ -20,11 +25,11 @@ export class CacheController {
 
     @Post('set')
     async setCache(
-        @Body() createSetCacheRequestDTO: CreateSetCacheRequestDTO,
+        @Body() createSetCacheRequest: CreateSetCacheRequest,
     ): Promise<void> {
         console.log('hi_2');
-        console.log('createSetCacheRequestDTO:', createSetCacheRequestDTO);
-        await this.cacheService.setCache(createSetCacheRequestDTO.listingDetails, createSetCacheRequestDTO.forceUpdate);
+        console.log('createSetCacheRequest:', createSetCacheRequest);
+        await this.cacheService.setCache(createSetCacheRequest.listingDetails, createSetCacheRequest.forceUpdate);
     }
 
     @Post('reset')
@@ -50,12 +55,14 @@ export class CacheController {
 
     @Post('calculate')
     async calculate(
-        @Body() listingDetails: ListingDetailsResponseDTO,
-        @Body() investmentScenarioRequest: CreateInvestmentScenarioRequest,
+        @Body() createListingDetailsCalculationsRequest: CreateListingDetailsCalculationsRequest,
     ): Promise<ListingWithScenariosResponseDTO> {
         console.log('hi_6');
-        console.log(investmentScenarioRequest);
-        return this.calcService.calculate(listingDetails, investmentScenarioRequest);
+        console.log(createListingDetailsCalculationsRequest);
+        return this.calcService.calculate(
+            createListingDetailsCalculationsRequest.listingDetails,
+            createListingDetailsCalculationsRequest.investmentScenarioRequest
+        );
     }
 
 }

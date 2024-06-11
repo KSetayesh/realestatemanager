@@ -56,6 +56,7 @@ export class CalcController {
     async calculate(
         @Body() investmentScenarioRequest: CreateInvestmentScenarioRequest,
     ): Promise<ListingWithScenariosResponseDTO> {
+        console.log('hi_7');
         console.log(investmentScenarioRequest);
         return this.calcService.calculate(investmentScenarioRequest);
     }

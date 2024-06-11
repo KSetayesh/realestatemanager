@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { ApiClient, ApiHeader, Method } from "../../../shared/api.client";
+import { ApiClient, Method } from "../../../shared/api.client";
 import {
     CreateInvestmentScenarioRequest,
-    CreateSetCacheRequestDTO,
+    CreateListingDetailsCalculationsRequest,
     ListingDetailsResponseDTO,
-    ListingWithScenariosResponseDTO
+    ListingWithScenariosResponseDTO,
+    CreateSetCacheRequest,
 } from "@realestatemanager/shared";
 import applicationConfig from '../../../config/applicationConfig';
 import { EndpointDetails } from "../../../shared/endpoint.details.interface";
@@ -53,11 +54,11 @@ export class CalculationsApiClient extends ApiClient {
 
     async calculate(listingDetails: ListingDetails, investmentScenarioRequest: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.CALCULATE);
-        const body = {
+        const requestBody: CreateListingDetailsCalculationsRequest = {
             listingDetails: listingDetails.toDTO(),
             investmentScenarioRequest: investmentScenarioRequest,
         };
-        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(body), Method.POST);
+        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(requestBody), Method.POST);
     }
 
     async deleteFromCache(listingDetailsId: number): Promise<void> {
@@ -76,11 +77,11 @@ export class CalculationsApiClient extends ApiClient {
 
     async setCache(listingDetails: ListingDetails, forceUpdate: boolean): Promise<void> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.SET);
-        const body: CreateSetCacheRequestDTO = {
+        const requestBody: CreateSetCacheRequest = {
             listingDetails: listingDetails.toDTO(),
             forceUpdate: forceUpdate,
         };
-        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(body), Method.POST);
+        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(requestBody), Method.POST);
     }
 
     async setFreshCache(listingDetails: ListingDetails[]): Promise<void> {
@@ -95,8 +96,8 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTO), Method.POST);
     }
 
-    private async _makeApiCall(url: string, body?: string, method: Method = Method.GET): Promise<any> {
-        return this.makeApiCall(undefined, url, body, method);
+    private async _makeApiCall(url: string, requestBody?: string, method: Method = Method.GET): Promise<any> {
+        return this.makeApiCall(undefined, url, requestBody, method);
     }
 
     private constructUrl(endPointEnum: CaclulationEndPoint): EndpointDetails {

@@ -283,7 +283,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyPropertyTax(): ValueInput {
         const defaultMonthlyPropertyTax: ValueAmountInput = {
-            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates?.zillowMonthlyPropertyTaxAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -294,7 +294,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyHomeInsuranceAmount(): ValueInput {
         const defaultMonthlyHomeInsuranceAmount: ValueAmountInput = {
-            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates?.zillowMonthlyHomeInsuranceAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -305,7 +305,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyHOAFeesAmount(): ValueInput {
         const defaultMonthlyHOAFeesAmount: ValueAmountInput = {
-            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates?.zillowMonthlyHOAFeesAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -439,7 +439,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getRentEstimate(): ValueAmountInput {
         const defaultRentEstimate: ValueAmountInput = {
-            amount: this.listingDetails.zillowMarketEstimates.zillowRentEstimate ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates?.zillowRentEstimate ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {

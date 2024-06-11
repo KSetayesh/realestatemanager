@@ -40,13 +40,13 @@ export abstract class ApiClient {
     protected async makeApiCall(
         apiKey: string,
         url: string,
-        body?: string,
+        requestBody?: string,
         method: Method = Method.GET,
     ): Promise<any> {
         try {
             console.log("URL for Api:", url);
             // console.log("body:", body);
-            const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, body, method);
+            const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, requestBody, method);
             console.log('options:', options);
             const response = await fetch(url, options);
 
@@ -74,7 +74,7 @@ export abstract class ApiClient {
 
     private async getHeadersForRentCastApiCall(
         apiKey: string,
-        body?: string,
+        requestBody?: string,
         method: Method = Method.GET,
     ): Promise<ApiHeader> {
 
@@ -90,8 +90,8 @@ export abstract class ApiClient {
             headers['X-Api-Key'] = apiKey;
         }
 
-        if (method !== Method.GET && body) {
-            headers.body = body;
+        if (method !== Method.GET && requestBody) {
+            headers.body = requestBody;
         }
 
         return headers;
