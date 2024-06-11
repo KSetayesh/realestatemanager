@@ -55,7 +55,7 @@ export class CalcService {
             // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
             this.updateCacheInBackground(listingDetails.zillowURL, false);
 
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = await this.calculationsApiClient.getListingDetailsCalculations(listingDetails);
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = await this.getFromCache(listingDetails);
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }
 
@@ -86,7 +86,7 @@ export class CalcService {
         );
 
 
-        return this.calculationsApiClient.getListingDetailsCalculations(updatedListingDetailsFromDb);
+        return this.getFromCache(updatedListingDetailsFromDb);
 
     }
 
@@ -285,7 +285,7 @@ export class CalcService {
             listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         }
 
-        return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+        return this._calculate(investmentScenarioRequest, listingDetails);
 
     }
 
@@ -313,6 +313,17 @@ export class CalcService {
             }
         }
         return true;
+    }
+
+    private async _calculate(
+        investmentScenarioRequest: CreateInvestmentScenarioRequest,
+        listingDetails?: ListingDetails
+    ): Promise<ListingWithScenariosResponseDTO> {
+        return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+    }
+
+    private async getFromCache(listingDetails: ListingDetails): Promise<ListingWithScenariosResponseDTO> {
+        return this.calculationsApiClient.getFromCache(listingDetails);
     }
 
     private async deleteFromCacheInBackground(listingDetailsId: number): Promise<void> {

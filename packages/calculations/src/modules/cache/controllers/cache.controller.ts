@@ -5,7 +5,10 @@ import { CalcService } from '../services/calc.service';
 
 @Controller('cache')
 export class CacheController {
-    constructor(private readonly cacheService: CacheService, private readonly calcService: CalcService) { }
+    constructor(
+        private readonly cacheService: CacheService,
+        private readonly calcService: CalcService
+    ) { }
 
     @Post('setFreshCache')
     async setFreshCache(
@@ -28,10 +31,10 @@ export class CacheController {
     }
 
     @Get('get')
-    async getCache(
+    async getFromCache(
         @Body() listingDetails: ListingDetailsResponseDTO
     ): Promise<ListingWithScenariosResponseDTO> {
-        return this.cacheService.getListingDetailsCalculations(listingDetails);
+        return this.cacheService.getFromCache(listingDetails);
     }
 
     @Delete('delete/:id')

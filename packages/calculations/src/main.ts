@@ -6,7 +6,7 @@ import * as bodyParser from 'body-parser';
 const port = process.env.PORT || 3001;
 
 async function bootstrap() {
-    console.log('---Starting application---');
+    console.log('---Starting Calculations application---');
     const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
     app.enableCors();
 

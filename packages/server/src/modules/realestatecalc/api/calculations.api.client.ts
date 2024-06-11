@@ -1,7 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { ApiClient, ApiHeader, Method } from "./api.client";
+import { ApiClient, Method } from "./api.client";
 import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { CreateInvestmentScenarioRequest, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
+import {
+    CreateInvestmentScenarioRequest,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosResponseDTO
+} from "@realestatemanager/shared";
 import applicationConfig from '../../../config/applicationConfig';
 import { EndpointDetails } from "./endpoint.details.interface";
 
@@ -84,7 +88,7 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTOArr), Method.POST);
     }
 
-    async getListingDetailsCalculations(updatedListingDetailsFromDb: ListingDetails): Promise<ListingWithScenariosResponseDTO> {
+    async getFromCache(updatedListingDetailsFromDb: ListingDetails): Promise<ListingWithScenariosResponseDTO> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.GET);
         const listingDetailsDTO: ListingDetailsResponseDTO = updatedListingDetailsFromDb.toDTO();
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTO));

@@ -29,7 +29,7 @@ export abstract class ApiClient {
         if (!this._baseApiUrl) {
             throw new Error('Api Url is not set');
         }
-        return this.baseApiUrl;
+        return this._baseApiUrl;
     }
 
     protected get canMakeApiCall(): boolean {

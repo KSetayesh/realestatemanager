@@ -8,7 +8,7 @@ import * as bodyParser from 'body-parser';
 const port = process.env.PORT || 3000;
 
 async function bootstrap() {
-    console.log('---Starting application---');
+    console.log('---Starting RealEstate application---');
     const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
     app.enableCors();
 
@@ -29,7 +29,7 @@ async function bootstrap() {
 
     console.log(`App is now listening on port ${port}`);
     console.log(`URL: http://localhost:${port}`);
- 
+
 }
- 
+
 bootstrap();

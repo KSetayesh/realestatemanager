@@ -47,12 +47,12 @@ export class CacheService implements CacheInterface {
         await this._setCache(listingDetails, forceUpdate);
     }
 
-    getListingDetailsCalculations(listingDetails: ListingDetailsResponseDTO): ListingWithScenariosResponseDTO {
+    async getFromCache(listingDetails: ListingDetailsResponseDTO): Promise<ListingWithScenariosResponseDTO> {
         if (!this.usePropertyCache) {
             return this.createInvestmentMetrics(listingDetails);
         }
 
-        return this._getListingDetailsCalculations(listingDetails);
+        return this._getFromCache(listingDetails);
     }
 
     private async _setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
@@ -127,7 +127,7 @@ export class CacheService implements CacheInterface {
         }
     }
 
-    private _getListingDetailsCalculations(listingDetails: ListingDetailsResponseDTO): ListingWithScenariosResponseDTO {
+    private async _getFromCache(listingDetails: ListingDetailsResponseDTO): Promise<ListingWithScenariosResponseDTO> {
         if (!this.usePropertyCache) {
             return this.createInvestmentMetrics(listingDetails);
         }

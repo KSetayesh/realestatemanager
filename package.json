@@ -14,7 +14,7 @@
         "start:calc": "cd packages/calculations && npm run start:dev",
         "start:server": "cd packages/server && npm run start:dev",
         "start:client": "cd packages/client && npm run dev",
-        "start": "npm run start:calc && npm run start:server & npm run start:client",
+        "start": "npm run start:calc && npm run start:server && npm run start:client",
         "start:client:prod": "cd packages/client && npm run preview",
         "start:server:prod": "cd packages/server && npm run start:prod",
         "start:prod": "npm run start:server:prod"
