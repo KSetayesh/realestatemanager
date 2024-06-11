@@ -1,4 +1,4 @@
-import { RentCastApiResponse } from "../../api/rent.cast.api.client";
+import { RentCastApiResponse } from "../api/rent.cast.api.client";
 
 type RentCastApiResponseWithId = {
     rentCastResponseId: number;

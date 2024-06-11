@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AmortizationBreakdownResponseDTO, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import {
+    AmortizationBreakdownResponseDTO,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosResponseDTO
+} from '@realestatemanager/shared';
 import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
 import { InvestmentCalculator } from 'src/calculations/investment.calculator';
 import applicationConfig from 'src/config/applicationConfig';

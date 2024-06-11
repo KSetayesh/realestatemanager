@@ -7,7 +7,7 @@ import {
     State,
     Utility
 } from "@realestatemanager/shared";
-import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
+import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
 
 export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder {
 

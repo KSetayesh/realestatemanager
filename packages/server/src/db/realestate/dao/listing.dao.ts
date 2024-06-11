@@ -9,11 +9,11 @@ import {
     CreateFilteredPropertyListRequest,
 } from '@realestatemanager/shared';
 import { Injectable } from '@nestjs/common';
-import { ListingDetails } from 'src/modules/realestatecalc/models/listing_models/listingdetails.model';
-import { SchoolRating } from 'src/modules/realestatecalc/models/listing_models/schoolrating.model';
-import { PropertyDetails } from 'src/modules/realestatecalc/models/listing_models/propertydetails.model';
-import { ZillowMarketEstimates } from 'src/modules/realestatecalc/models/listing_models/zillowmarketestimates.model';
-import { Address } from 'src/modules/realestatecalc/models/listing_models/address.model';
+import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
+import { Address } from 'src/modules/realestatecalc/models/address.model';
+import { SchoolRating } from 'src/modules/realestatecalc/models/schoolrating.model';
+import { PropertyDetails } from 'src/modules/realestatecalc/models/propertydetails.model';
+import { ZillowMarketEstimates } from 'src/modules/realestatecalc/models/zillowmarketestimates.model';
 
 @Injectable()
 export class ListingDAO extends RealEstateDAO {

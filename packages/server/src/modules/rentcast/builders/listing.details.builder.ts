@@ -6,9 +6,9 @@ import {
     State,
     Utility
 } from "@realestatemanager/shared";
-import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../services/rentcast.service";
-import { convertSquareFeetToAcres } from "src/shared/Constants";
-import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
+import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
+import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../service/rentcast.service";
+import { PropertyUtility } from "src/utility/PropertyUtility";
 
 export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
 
@@ -143,7 +143,7 @@ export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
     protected createAcres(): number {
         const lotSize = this.rentCastSalesResponseType.lotSize ?? this.rentCastPropertyType?.lotSize;
 
-        return (lotSize ?? this.defaultAcres) !== this.defaultAcres ? convertSquareFeetToAcres(lotSize) : this.defaultAcres;
+        return (lotSize ?? this.defaultAcres) !== this.defaultAcres ? PropertyUtility.convertSquareFeetToAcres(lotSize) : this.defaultAcres;
     }
 
 

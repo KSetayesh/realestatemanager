@@ -1,22 +1,14 @@
 import { Pool } from 'pg';
-import apiKeysConfig from '../../../config/rentCastConfig';
 import { RentCastDAO } from '../dao/rentcast.dao';
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
-import { RentCastResponse } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
-import { RentCastDetails } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastdetails.model';
-import { RentCastMatchingData } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
+import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';
+import { RentCastDetails } from 'src/modules/rentcast/models/rentcastdetails.model';
+import { RentCastMatchingData } from 'src/modules/rentcast/models/rentcastmatchingdata.model';
+import { rentCastDetailsMap } from 'src/shared/Constants';
 
 @Injectable()
 export class RentCastManager extends DatabaseManager {
-
-    // private rentCastDAO: RentCastDAO;
-
-    private rentCastDetailsMap: { [key: number]: string } = {
-        1: apiKeysConfig.rentCastApiKey,
-        2: apiKeysConfig.backUpRentCastApiKey,
-        3: apiKeysConfig.backUpbackUpRentCastApiKey,
-    };
 
     constructor(
         private readonly rentCastDAO: RentCastDAO,
@@ -24,11 +16,6 @@ export class RentCastManager extends DatabaseManager {
     ) {
         super(commit)
     }
-
-    // constructor(rentCastDAO: RentCastDAO, commit: boolean) {
-    //     super(commit);
-    //     this.rentCastDAO = rentCastDAO;
-    // }
 
     // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, addressId: string): Promise<boolean> {
@@ -59,7 +46,7 @@ export class RentCastManager extends DatabaseManager {
         const rentCastDetails: RentCastDetails[] = await this.rentCastDAO.getRentCastDetails(pool);
 
         for (const rentCastDetail of rentCastDetails) {
-            if (!(rentCastDetail.id in this.rentCastDetailsMap)) {
+            if (!(rentCastDetail.id in rentCastDetailsMap)) {
                 throw new Error(`${rentCastDetail.id} not found! Need to update rentCastDetailsMap`);
             }
         }

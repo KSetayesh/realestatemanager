@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { ApiClient, Method } from "./api.client";
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
+import { ApiClient, Method } from "../../../shared/api.client";
 import {
     CreateInvestmentScenarioRequest,
     ListingDetailsResponseDTO,
     ListingWithScenariosResponseDTO
 } from "@realestatemanager/shared";
 import applicationConfig from '../../../config/applicationConfig';
-import { EndpointDetails } from "./endpoint.details.interface";
+import { EndpointDetails } from "../../../shared/endpoint.details.interface";
+import { ListingDetails } from "../models/listingdetails.model";
 
 export enum CaclulationEndPoint {
     GET = 'GET',

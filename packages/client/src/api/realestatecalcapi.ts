@@ -1,5 +1,4 @@
 import {
-    CreateRentCastApiRequest,
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
@@ -91,20 +90,6 @@ export class RealEstateCalcApi extends CalcApi {
 
         try {
             await axios.post(`${this.getURL()}/addNewProperty`, dataToSubmit, {
-                headers: this.getHeaders(),
-            });
-        } catch (error) {
-            console.error('There was an error submitting the form:', error);
-            return false;
-        }
-
-        return true;
-    }
-
-    async addNewPropertyWithRentCastAPI(dataToSubmit: CreateRentCastApiRequest): Promise<boolean> {
-
-        try {
-            await axios.post(`${this.getURL()}/addNewPropertyWithRentCastAPI`, dataToSubmit, {
                 headers: this.getHeaders(),
             });
         } catch (error) {

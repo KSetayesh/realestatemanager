@@ -1,5 +1,5 @@
-import { PathUtil } from "src/shared/PathUtil";
-import { EndpointDetails } from "./endpoint.details.interface";
+import { EndpointDetails } from "src/shared/endpoint.details.interface";
+import { PathUtil } from "src/utility/PathUtil";
 
 export enum RentCastEndPoint {
     SALE = 'SALE',

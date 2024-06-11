@@ -1,6 +1,6 @@
 import { IDTOConvertible, RentCastDetailsResponseDTO } from "@realestatemanager/shared";
-import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
 import { Entity } from "src/shared/entity";
+import { PropertyUtility } from "src/utility/PropertyUtility";
 
 export class RentCastDetails extends Entity implements IDTOConvertible<RentCastDetailsResponseDTO> {
 
@@ -62,7 +62,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
     }
 
     get daysIntoBillingPeriod(): number {
-        return calculateDaysPassedSinceIgnoreTime(this.firstBilledOn);
+        return PropertyUtility.calculateDaysPassedSinceIgnoreTime(this.firstBilledOn);
     }
 
     get email(): string {

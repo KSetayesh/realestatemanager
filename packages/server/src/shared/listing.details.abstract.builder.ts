@@ -6,11 +6,11 @@ import {
     PropertyType,
     State
 } from "@realestatemanager/shared";
-import { Address } from "../models/listing_models/address.model";
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { PropertyDetails } from "../models/listing_models/propertydetails.model";
-import { SchoolRating } from "../models/listing_models/schoolrating.model";
-import { ZillowMarketEstimates } from "../models/listing_models/zillowmarketestimates.model";
+import { Address } from "src/modules/realestatecalc/models/address.model";
+import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
+import { PropertyDetails } from "src/modules/realestatecalc/models/propertydetails.model";
+import { SchoolRating } from "src/modules/realestatecalc/models/schoolrating.model";
+import { ZillowMarketEstimates } from "src/modules/realestatecalc/models/zillowmarketestimates.model";
 
 export abstract class AbstractListingDetailsBuilder implements BuilderInterface<ListingDetails> {
 

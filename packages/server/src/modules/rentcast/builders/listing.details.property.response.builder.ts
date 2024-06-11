@@ -1,8 +1,15 @@
-import { State, Country, PropertyType, ListingCreationType, PropertyStatus, Utility } from "@realestatemanager/shared";
-import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
-import { RentCastPropertyResponseType } from "../services/rentcast.service";
-import { convertSquareFeetToAcres } from "src/shared/Constants";
+import {
+    State,
+    Country,
+    PropertyType,
+    ListingCreationType,
+    PropertyStatus,
+    Utility
+} from "@realestatemanager/shared";
+import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
+import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
+import { RentCastPropertyResponseType } from "../service/rentcast.service";
+import { PropertyUtility } from "src/utility/PropertyUtility";
 
 /* 
     The order of creating the properties in this Builder class is 
@@ -159,7 +166,7 @@ export class ListingDetailsPropertyResponseBuilder extends AbstractListingDetail
 
         const lotSize = this.rentCastPropertyType.lotSize ?? -1;
         if (lotSize > -1) {
-            return convertSquareFeetToAcres(lotSize);
+            return PropertyUtility.convertSquareFeetToAcres(lotSize);
         }
         return acres;
     }

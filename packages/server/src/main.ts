@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ServeStaticMiddleware } from './serve-static.middleware';
-import { PathUtil } from './shared/PathUtil';
+import { PathUtil } from './utility/PathUtil';
 import * as bodyParser from 'body-parser';
 
 const port = process.env.PORT || 3000;

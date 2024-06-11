@@ -9,16 +9,16 @@ import {
     RentCastDetailsResponseDTO,
     State,
 } from "@realestatemanager/shared";
-import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
-import { CalcService } from './calc.service';
-import { RentCastApiClient, RentCastApiResponse } from '../api/rent.cast.api.client';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
-import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
-import { ListingDetails } from '../models/listing_models/listingdetails.model';
-import { ListingDetailsBuilder } from '../builders/listing.details.builder';
-import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
 import { DatabaseService } from 'src/db/database.service';
+import { CalcService } from 'src/modules/realestatecalc/services/calc.service';
+import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';
+import { RentCastApiClient, RentCastApiResponse } from '../api/rent.cast.api.client';
 import { RentCastEndPoint } from '../api/rent.cast.api.endpoint.manager';
+import { RentCastMatchingData } from '../models/rentcastmatchingdata.model';
+import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
+import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
+import { ListingDetailsBuilder } from '../builders/listing.details.builder';
 
 export type RentCastSaleResponseType = {
     id: string;

@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
 import { RealEstateDAO } from "./realestate.dao";
 import { Injectable } from '@nestjs/common';
-import { RentCastResponse } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastresponse.model';
-import { RentCastDetails } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastdetails.model';
-import { RentCastMatchingData } from 'src/modules/realestatecalc/models/rent_cast_api_models/rentcastmatchingdata.model';
-import { RentCastApiResponse } from 'src/modules/realestatecalc/api/rent.cast.api.client';
+import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';
+import { RentCastDetails } from 'src/modules/rentcast/models/rentcastdetails.model';
+import { RentCastMatchingData } from 'src/modules/rentcast/models/rentcastmatchingdata.model';
+import { RentCastApiResponse } from 'src/modules/rentcast/api/rent.cast.api.client';
 
 @Injectable()
 export class RentCastDAO extends RealEstateDAO {

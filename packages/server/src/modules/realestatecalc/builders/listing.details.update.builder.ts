@@ -1,6 +1,13 @@
-import { Country, CreateUpdatePropertyRequest, ListingCreationType, PropertyStatus, PropertyType, State } from "@realestatemanager/shared";
-import { AbstractListingDetailsBuilder } from "./listing.details.abstract.builder";
-import { ListingDetails } from "../models/listing_models/listingdetails.model";
+import {
+    Country,
+    CreateUpdatePropertyRequest,
+    ListingCreationType,
+    PropertyStatus,
+    PropertyType,
+    State
+} from "@realestatemanager/shared";
+import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
+import { ListingDetails } from "../models/listingdetails.model";
 
 export class ListingDetailsUpdateBuilder extends AbstractListingDetailsBuilder {
 

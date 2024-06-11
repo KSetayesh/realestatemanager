@@ -3,7 +3,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Pool } from 'pg';
 import * as dotenv from 'dotenv';
 import { readFileSync } from 'fs';
-import { PathUtil } from 'src/shared/PathUtil';
+import { PathUtil } from 'src/utility/PathUtil';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {

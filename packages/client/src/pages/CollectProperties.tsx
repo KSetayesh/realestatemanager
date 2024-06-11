@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
 import { RentCastApi } from '../api/rentcastapi';
 import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
@@ -39,8 +38,7 @@ const CollectProperties: React.FC = () => {
         const dataToSubmit: CreateRentCastApiRequest = getRequestData();
         console.log('dataToSubmit:', dataToSubmit);
 
-        const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
-        const postSuccess = await realEstateCalcApi.addNewPropertyWithRentCastAPI(dataToSubmit);
+        const postSuccess = await rentCastApi.addNewPropertyWithRentCastAPI(dataToSubmit);
         if (postSuccess) {
             alert('Data submitted successfully!');
             window.location.reload();

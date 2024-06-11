@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { PathUtil } from './shared/PathUtil';
+import { PathUtil } from './utility/PathUtil';
 
 @Injectable()
 export class ServeStaticMiddleware implements NestMiddleware {

@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import {
-    CreateRentCastApiRequest,
-    RentCastDetailsResponseDTO,
     CreateListingDetailsRequest,
     CreateInvestmentScenarioRequest,
     ListingWithScenariosResponseDTO,
@@ -10,30 +8,18 @@ import {
     CreatePropertiesInBulkRequest
 } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
-import { RentCastService } from '../services/rentcast.service';
 
 @Controller('realestatecalc')
 export class CalcController {
 
-    constructor(private readonly calcService: CalcService, private readonly rentCastService: RentCastService) { }
+    constructor(private readonly calcService: CalcService) { }
 
     // Had to change this from a GET to a POST
     @Post()
     async getAllProperties(
         @Body() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
-
-        console.log('In getAllProperties endpoint');
-
-        if (getAllPropertiesRequest) {
-            console.log('---filteredPropertyListRequest:', getAllPropertiesRequest.filteredPropertyListRequest);
-        }
-        else {
-            console.log('---getAllPropertiesRequest is undefined');
-        }
-
         return this.calcService.getAllProperties(getAllPropertiesRequest);
-
     }
 
     @Post('updateProperty')
@@ -51,25 +37,12 @@ export class CalcController {
         return this.calcService.deleteListingDetails(zillowURL);
     }
 
-    @Get('rentCastApiCallDetails')
-    async getRentCastApiCallDetails(
-    ): Promise<RentCastDetailsResponseDTO[]> {
-        return this.rentCastService.getRentCastApiDetailsDTO();
-    }
-
     @Post('addNewProperty')
     async addNewProperty(
         @Body() listingDetails: CreateListingDetailsRequest,
     ): Promise<void> {
         console.log('New listing:', listingDetails);
         await this.calcService.addNewProperty(listingDetails);
-    }
-
-    @Post('addNewPropertyWithRentCastAPI')
-    async addNewPropertyWithRentCastAPI(
-        @Body() rentCastApiRequest: CreateRentCastApiRequest,
-    ): Promise<void> {
-        await this.rentCastService.addNewPropertyWithRentCastAPI(rentCastApiRequest);
     }
 
     @Post('addPropertiesInBulk')

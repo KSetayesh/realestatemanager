@@ -11,7 +11,6 @@ import {
     AddPropertyTitlesAndLabels,
     TitleAndName
 } from '@realestatemanager/shared';
-import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
@@ -22,12 +21,12 @@ import { State } from '@realestatemanager/shared';
 import { Country } from '@realestatemanager/shared';
 import { PropertyType } from '@realestatemanager/shared';
 import { CalculationsApiClient } from '../api/calculations.api.client';
+import { ListingDetails } from '../models/listingdetails.model';
 
 @Injectable()
 export class CalcService {
 
     private pool: Pool;
-    // private calculationCache: InvestmentCalculationCache;
 
     constructor(
         private readonly databaseService: DatabaseService,
@@ -35,7 +34,6 @@ export class CalcService {
         private readonly listingManager: ListingManager
     ) {
         this.pool = this.databaseService.getPool();
-        // this.calculationCache = new InvestmentCalculationCache();
         this.setNewCache();
     }
 

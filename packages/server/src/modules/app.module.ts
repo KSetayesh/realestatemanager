@@ -8,7 +8,8 @@ import { DatabaseService } from '../db/database.service';
 import { CalcModule } from './realestatecalc/calc.module';
 import { HighYieldSavingsModule } from './highyieldsavingscalc/highyieldsavings.module';
 import { AgentModule } from './agents/agent.module';
-import { PathUtil } from 'src/shared/PathUtil';
+import { RentCastModule } from './rentcast/rentcast.module';
+import { PathUtil } from 'src/utility/PathUtil';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { PathUtil } from 'src/shared/PathUtil';
         HighYieldSavingsModule,
         AgentModule,
         PhotosModule,
+        RentCastModule,
     ],
     controllers: [AppController],
     providers: [AppService, DatabaseService],

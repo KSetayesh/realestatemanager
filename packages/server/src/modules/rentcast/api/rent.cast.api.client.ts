@@ -3,14 +3,14 @@ import fs from 'fs/promises';  // Use promise-based fs
 import rentCastConfig from '../../../config/rentCastConfig';
 import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { rentCastDetailsMap } from 'src/shared/Constants';
-import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.model';
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/db/database.service';
-import { ApiClient, ApiHeader } from './api.client';
 import { RentCastApiEndPointManager, RentCastEndPoint } from './rent.cast.api.endpoint.manager';
-import { EndpointDetails } from './endpoint.details.interface';
+import { RentCastDetails } from '../models/rentcastdetails.model';
+import { ApiClient } from 'src/shared/api.client';
+import { EndpointDetails } from 'src/shared/endpoint.details.interface';
 
 export type ApiCallDetails = {
     canCallRentCastApi: boolean;
