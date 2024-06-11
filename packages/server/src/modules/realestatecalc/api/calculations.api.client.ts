@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ApiClient, Method } from "../../../shared/api.client";
+import { ApiClient, ApiHeader, Method } from "../../../shared/api.client";
 import {
     CreateInvestmentScenarioRequest,
     CreateSetCacheRequestDTO,
@@ -92,7 +92,7 @@ export class CalculationsApiClient extends ApiClient {
     async getFromCache(listingDetailsArr: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.GET);
         const listingDetailsDTO: ListingDetailsResponseDTO[] = listingDetailsArr.map(listing => listing.toDTO());
-        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTO));
+        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTO), Method.POST);
     }
 
     private async _makeApiCall(url: string, body?: string, method: Method = Method.GET): Promise<any> {

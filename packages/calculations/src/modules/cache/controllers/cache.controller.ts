@@ -33,9 +33,9 @@ export class CacheController {
         await this.cacheService.resetCache();
     }
 
-    @Get('get')
+    @Post('get')
     async getFromCache(
-        @Body() listingDetails: ListingDetailsResponseDTO[]
+        @Body() listingDetails: ListingDetailsResponseDTO[],
     ): Promise<ListingWithScenariosResponseDTO[]> {
         console.log('hi_4');
         console.log('listingDetails:', listingDetails);

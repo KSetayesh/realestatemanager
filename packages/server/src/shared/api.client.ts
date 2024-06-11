@@ -4,6 +4,7 @@ export type ApiHeader = {
     headers: {
         accept: string;
         'X-Api-Key'?: string;
+        'Content-Type': string;
     },
     body?: string;
 };
@@ -40,7 +41,7 @@ export abstract class ApiClient {
         apiKey: string,
         url: string,
         body?: string,
-        method: Method = Method.GET
+        method: Method = Method.GET,
     ): Promise<any> {
         try {
             console.log("URL for Api:", url);
@@ -55,10 +56,12 @@ export abstract class ApiClient {
 
             // Check if the response has a body before parsing it as JSON
             const contentType = response.headers.get('content-type');
+            console.log('contentType:', contentType);
             if (contentType && contentType.includes('application/json')) {
                 const data = await response.json();
                 return data;
             } else {
+                console.log('In else statement');
                 return; // or return an appropriate value if there's no JSON body
             }
 
@@ -79,6 +82,7 @@ export abstract class ApiClient {
             method: method,
             headers: {
                 accept: 'application/json',
+                "Content-Type": "application/json"
             },
         };
 
