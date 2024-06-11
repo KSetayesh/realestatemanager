@@ -16,5 +16,6 @@ export * from './client/formdata/AddInvestmentBreakdownTitlesAndLabelsGetter';
 export * from './client/formdata/AddPropertyFilterTitlesAndLabelsGetter';
 export * from './client/formdata/AddPropertyTitlesAndLabelsGetter';
 export * from './client/types/ClientTypes';
+export * from './calc/CalcTypes';
 
 

@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Delete, Param, Get } from '@nestjs/common';
 import { CacheService } from '../services/cache.service';
-import { CreateInvestmentScenarioRequest, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import { CreateInvestmentScenarioRequest, CreateSetCacheRequestDTO, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 import { CalcService } from '../services/calc.service';
 
 @Controller('cache')
@@ -14,19 +14,22 @@ export class CacheController {
     async setFreshCache(
         @Body() listingDetailsArr: ListingDetailsResponseDTO[],
     ): Promise<void> {
+        console.log('hi_1');
         await this.cacheService.setFreshCache(listingDetailsArr);
     }
 
     @Post('set')
     async setCache(
-        @Body() listingDetails: ListingDetailsResponseDTO,
-        @Body('forceUpdate') forceUpdate: boolean
+        @Body() createSetCacheRequestDTO: CreateSetCacheRequestDTO,
     ): Promise<void> {
-        await this.cacheService.setCache(listingDetails, forceUpdate);
+        console.log('hi_2');
+        console.log('createSetCacheRequestDTO:', createSetCacheRequestDTO);
+        await this.cacheService.setCache(createSetCacheRequestDTO.listingDetails, createSetCacheRequestDTO.forceUpdate);
     }
 
     @Post('reset')
     async resetCache(): Promise<void> {
+        console.log('hi_3');
         await this.cacheService.resetCache();
     }
 
@@ -34,11 +37,14 @@ export class CacheController {
     async getFromCache(
         @Body() listingDetails: ListingDetailsResponseDTO[]
     ): Promise<ListingWithScenariosResponseDTO[]> {
+        console.log('hi_4');
+        console.log('listingDetails:', listingDetails);
         return this.cacheService.getFromCache(listingDetails);
     }
 
     @Delete('delete/:id')
     async deleteCache(@Param('id') id: number): Promise<boolean> {
+        console.log('hi_5');
         return this.cacheService.deleteFromCache(id);
     }
 
@@ -47,6 +53,7 @@ export class CacheController {
         @Body() listingDetails: ListingDetailsResponseDTO,
         @Body() investmentScenarioRequest: CreateInvestmentScenarioRequest,
     ): Promise<ListingWithScenariosResponseDTO> {
+        console.log('hi_6');
         console.log(investmentScenarioRequest);
         return this.calcService.calculate(listingDetails, investmentScenarioRequest);
     }

@@ -1,6 +1,6 @@
 
 export type ApiHeader = {
-    method: string;
+    method: Method;
     headers: {
         accept: string;
         'X-Api-Key'?: string;
@@ -46,6 +46,7 @@ export abstract class ApiClient {
             console.log("URL for Api:", url);
             // console.log("body:", body);
             const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, body, method);
+            console.log('options:', options);
             const response = await fetch(url, options);
 
             if (!response.ok) {
@@ -75,7 +76,7 @@ export abstract class ApiClient {
     ): Promise<ApiHeader> {
 
         const headers: ApiHeader = {
-            method,
+            method: method,
             headers: {
                 accept: 'application/json',
             },
@@ -86,7 +87,7 @@ export abstract class ApiClient {
         }
 
         if (method !== Method.GET && body) {
-            headers.body = JSON.stringify(body);
+            headers.body = body;
         }
 
         return headers;

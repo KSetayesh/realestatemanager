@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ApiClient, Method } from "../../../shared/api.client";
 import {
     CreateInvestmentScenarioRequest,
+    CreateSetCacheRequestDTO,
     ListingDetailsResponseDTO,
     ListingWithScenariosResponseDTO
 } from "@realestatemanager/shared";
@@ -75,7 +76,7 @@ export class CalculationsApiClient extends ApiClient {
 
     async setCache(listingDetails: ListingDetails, forceUpdate: boolean): Promise<void> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.SET);
-        const body = {
+        const body: CreateSetCacheRequestDTO = {
             listingDetails: listingDetails.toDTO(),
             forceUpdate: forceUpdate,
         };
