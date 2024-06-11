@@ -88,9 +88,9 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTOArr), Method.POST);
     }
 
-    async getFromCache(updatedListingDetailsFromDb: ListingDetails): Promise<ListingWithScenariosResponseDTO> {
+    async getFromCache(listingDetailsArr: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.GET);
-        const listingDetailsDTO: ListingDetailsResponseDTO = updatedListingDetailsFromDb.toDTO();
+        const listingDetailsDTO: ListingDetailsResponseDTO[] = listingDetailsArr.map(listing => listing.toDTO());
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsDTO));
     }
 

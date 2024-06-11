@@ -32,8 +32,8 @@ export class CacheController {
 
     @Get('get')
     async getFromCache(
-        @Body() listingDetails: ListingDetailsResponseDTO
-    ): Promise<ListingWithScenariosResponseDTO> {
+        @Body() listingDetails: ListingDetailsResponseDTO[]
+    ): Promise<ListingWithScenariosResponseDTO[]> {
         return this.cacheService.getFromCache(listingDetails);
     }
 

@@ -46,20 +46,19 @@ export class CalcService {
         }
 
         const filteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
-        const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
+        // const listingWithScenariosArr: ListingWithScenariosResponseDTO[] = [];
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
 
-        for (const listingDetails of listingDetailsArr) {
+        listingDetailsArr.forEach(listingDetails => {
             // Start by fetching the listing details of the new property from the database asynchronously.
             // This ensures the loop does not wait for these operations to complete before continuing.
             // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
             this.updateCacheInBackground(listingDetails.zillowURL, false);
+        });
 
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = await this.getFromCache(listingDetails);
-            listingWithScenariosArr.push(listingWithScenariosDTO);
-        }
+        return this.getFromCache(listingDetailsArr);
 
-        return listingWithScenariosArr;
+        // return listingWithScenariosArr;
     }
 
     async updateProperty(createUpdatePropertyRequest: CreateUpdatePropertyRequest): Promise<ListingWithScenariosResponseDTO> {
@@ -85,8 +84,8 @@ export class CalcService {
             zillowURL
         );
 
-
-        return this.getFromCache(updatedListingDetailsFromDb);
+        const listingsFromCache: ListingWithScenariosResponseDTO[] = await this.getFromCache([updatedListingDetailsFromDb]);
+        return listingsFromCache[0];
 
     }
 
@@ -322,7 +321,7 @@ export class CalcService {
         return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
     }
 
-    private async getFromCache(listingDetails: ListingDetails): Promise<ListingWithScenariosResponseDTO> {
+    private async getFromCache(listingDetails: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
         return this.calculationsApiClient.getFromCache(listingDetails);
     }
 

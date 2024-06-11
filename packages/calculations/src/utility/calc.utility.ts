@@ -19,14 +19,14 @@ export class CalcUtility {
             total += callback(month);
         }
         return total;
-    };
+    }
 
     static getYear(monthCounter: number): number {
         return Math.floor((monthCounter - 1) / 12) + 1;
-    };
+    }
 
     static isFirstYear(monthCounter: number): boolean {
         return this.getYear(monthCounter) <= 1;
-    };
+    }
 
 }

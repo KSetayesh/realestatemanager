@@ -47,12 +47,12 @@ export class CacheService implements CacheInterface {
         await this._setCache(listingDetails, forceUpdate);
     }
 
-    async getFromCache(listingDetails: ListingDetailsResponseDTO): Promise<ListingWithScenariosResponseDTO> {
+    async getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]> {
         if (!this.usePropertyCache) {
-            return this.createInvestmentMetrics(listingDetails);
+            return listingDetailsArr.map(listingDetails => this.createInvestmentMetrics(listingDetails));
         }
 
-        return this._getFromCache(listingDetails);
+        return Promise.all(listingDetailsArr.map(listingDetails => this._getFromCache(listingDetails)));
     }
 
     private async _setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
