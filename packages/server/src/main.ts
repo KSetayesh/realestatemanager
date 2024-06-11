@@ -32,14 +32,14 @@ async function bootstrap() {
     console.log(`URL: http://localhost:${port}`);
 
     // pre-load property calculations
-    await setCache(app);
+    // await setCache(app);
 }
 
-async function setCache(app: NestExpressApplication) {
-    console.log('\n---Setting property cache---\n');
-    const calcService: CalcService = app.get(CalcService);
-    await calcService.setCache();
-    console.log('\n---Property cache has been set---\n');
-}
+// async function setCache(app: NestExpressApplication) {
+//     console.log('\n---Setting property cache---\n');
+//     const calcService: CalcService = app.get(CalcService);
+//     await calcService.setCache();
+//     console.log('\n---Property cache has been set---\n');
+// }
 
 bootstrap();

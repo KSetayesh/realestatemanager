@@ -2,12 +2,13 @@ import {
     AmortizationBreakdownResponseDTO,
     ListingWithScenariosResponseDTO,
 } from "@realestatemanager/shared";
-import { InvestmentCalculator } from "./investment.calculator";
+import { InvestmentCalculator } from "../calculations/investment.calculator";
 import applicationConfig from 'src/config/applicationConfig';
 import { ListingDetails } from "src/modules/realestatecalc/models/listing_models/listingdetails.model";
-import { InvestmentMetricBuilder } from "./builder/investment.metric.builder";
+import { InvestmentMetricBuilder } from "../calculations/builder/investment.metric.builder";
+import { CacheInterface } from "./cache.interface";
 
-export class InvestmentCalculationCache {
+export class InvestmentCalculationCache implements CacheInterface {
 
     private cache: Map<number, ListingWithScenariosResponseDTO>;
     private usePropertyCache: boolean = applicationConfig.useCache;
@@ -33,32 +34,29 @@ export class InvestmentCalculationCache {
         }
     }
 
-    resetCache(): void {
+    async resetCache(): Promise<void> {
         if (!this.usePropertyCache) {
             return;
         }
+
+        // Wait until cache update is finished
+        while (this.cacheUpdateInProgress) {
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+
         this.cache.clear();
+        this.cacheUpdateQueue = [];
+        console.log(`Cache has been reset.`);
     }
 
-    async setCache(listingDetails: ListingDetails): Promise<void> {
+    async setCache(listingDetails: ListingDetails, forceUpdate: boolean): Promise<void> {
         if (!this.usePropertyCache) {
             return;
         }
 
         this.cacheUpdateQueue.push(listingDetails);
         if (!this.cacheUpdateInProgress) {
-            this.processCacheUpdateQueue(false);
-        }
-    }
-
-    async setCacheForce(listingDetails: ListingDetails): Promise<void> {
-        if (!this.usePropertyCache) {
-            return;
-        }
-
-        this.cacheUpdateQueue.push(listingDetails);
-        if (!this.cacheUpdateInProgress) {
-            this.processCacheUpdateQueue(true);
+            this.processCacheUpdateQueue(forceUpdate);
         }
     }
 
@@ -89,23 +87,51 @@ export class InvestmentCalculationCache {
             return this.cache.get(listingDetails.id);
         }
 
-        const listingWithScenarios = this.createInvestmentMetrics(listingDetails);
-        // this.cache.set(listingDetails.id, listingWithScenarios);
-        return listingWithScenarios;
+        return this.createInvestmentMetrics(listingDetails);
     }
 
-    deleteFromCache(listingDetailsId: number): boolean {
+    async deleteFromCache(listingDetailsId: number): Promise<boolean> {
         if (!this.usePropertyCache) {
             return false;
         }
+
+        // Attempt to remove from cache and update queue first
+        let wasDeleted = false;
+
+        // Remove from cache if it exists
         if (this.cache.has(listingDetailsId)) {
             this.cache.delete(listingDetailsId);
+            wasDeleted = true;
             console.log(`Deleted key ${listingDetailsId} from cache.`);
-            return true;
-        } else {
-            console.log(`Key ${listingDetailsId} not found in cache.`);
-            return false;
         }
+
+        // Remove from update queue if it exists
+        const indexInQueue = this.cacheUpdateQueue.findIndex(item => item.id === listingDetailsId);
+        if (indexInQueue !== -1) {
+            this.cacheUpdateQueue.splice(indexInQueue, 1);
+            wasDeleted = true;
+            console.log(`Deleted key ${listingDetailsId} from cache update queue.`);
+        }
+
+        // If deletion was not successful and cache update is in progress, wait until it finishes
+        if (!wasDeleted && this.cacheUpdateInProgress) {
+            while (this.cacheUpdateInProgress) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+
+            // Try deleting again after waiting
+            if (this.cache.has(listingDetailsId)) {
+                this.cache.delete(listingDetailsId);
+                wasDeleted = true;
+                console.log(`Deleted key ${listingDetailsId} from cache after waiting.`);
+            }
+        }
+
+        if (!wasDeleted) {
+            console.log(`Key ${listingDetailsId} not found in cache or update queue.`);
+        }
+
+        return wasDeleted;
     }
 
     private createInvestmentMetrics(listingDetails: ListingDetails): ListingWithScenariosResponseDTO {

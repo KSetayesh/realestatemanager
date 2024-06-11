@@ -51,15 +51,6 @@ export class CalcController {
         return this.calcService.deleteListingDetails(zillowURL);
     }
 
-    @Get('property')
-    async getPropertyByZillowUrl(
-        @Query('zillowURL') zillowURL: string,
-        @Query('investmentScenarioRequest') investmentScenarioRequest?: CreateInvestmentScenarioRequest
-    ): Promise<ListingWithScenariosResponseDTO> {
-
-        return this.calcService.getPropertyByZillowURL(zillowURL, investmentScenarioRequest);
-    }
-
     @Get('rentCastApiCallDetails')
     async getRentCastApiCallDetails(
     ): Promise<RentCastDetailsResponseDTO[]> {
