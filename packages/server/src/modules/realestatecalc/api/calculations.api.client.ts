@@ -75,10 +75,11 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(getUrlObj.endPoint, undefined, Method.POST);
     }
 
-    async setCache(listingDetails: ListingDetails, forceUpdate: boolean): Promise<void> {
+    async setCache(listingDetailsList: ListingDetails[], forceUpdate: boolean): Promise<void> {
         const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.SET);
+        const listingDetailsListDTO: ListingDetailsResponseDTO[] = listingDetailsList.map(listingDetails => listingDetails.toDTO());
         const requestBody: CreateSetCacheRequest = {
-            listingDetails: listingDetails.toDTO(),
+            listingDetailsList: listingDetailsListDTO,
             forceUpdate: forceUpdate,
         };
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(requestBody), Method.POST);

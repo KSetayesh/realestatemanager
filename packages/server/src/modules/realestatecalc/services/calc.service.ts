@@ -333,7 +333,7 @@ export class CalcService {
     private async updateCacheInBackground(zillowURL: string, forceUpdate: boolean): Promise<void> {
         try {
             const listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
-            await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
+            await this.calculationsApiClient.setCache([listingDetails], forceUpdate);
         } catch (error) {
             console.error(`Failed to update cache for Zillow URL: ${zillowURL}`, error);
         }

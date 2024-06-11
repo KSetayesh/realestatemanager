@@ -2,7 +2,7 @@ import { CreateInvestmentScenarioRequest } from "../server/InvestmentTypes";
 import { ListingDetailsResponseDTO } from "../server/ListingTypes";
 
 export interface CreateSetCacheRequest {
-    listingDetails: ListingDetailsResponseDTO;
+    listingDetailsList: ListingDetailsResponseDTO[];
     forceUpdate: boolean;
 };
 

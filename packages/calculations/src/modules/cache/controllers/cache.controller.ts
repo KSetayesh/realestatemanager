@@ -29,7 +29,7 @@ export class CacheController {
     ): Promise<void> {
         console.log('hi_2');
         console.log('createSetCacheRequest:', createSetCacheRequest);
-        await this.cacheService.setCache(createSetCacheRequest.listingDetails, createSetCacheRequest.forceUpdate);
+        await this.cacheService.setCache(createSetCacheRequest.listingDetailsList, createSetCacheRequest.forceUpdate);
     }
 
     @Post('reset')

@@ -43,12 +43,15 @@ export class CacheService implements CacheInterface {
         await this._deleteFromCache(listingDetailsId);
     }
 
-    async setCache(listingDetails: ListingDetailsResponseDTO, forceUpdate: boolean): Promise<void> {
+    async setCache(listingDetailsList: ListingDetailsResponseDTO[], forceUpdate: boolean): Promise<void> {
         if (!this.usePropertyCache) {
             return;
         }
 
-        await this._setCache(listingDetails, forceUpdate);
+        for (const listingDetails of listingDetailsList) {
+            await this._setCache(listingDetails, forceUpdate);
+        }
+
     }
 
     async getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]> {
