@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, CollectPropertiesFormData } from "../ApiTypes";
+import { AddFormTitlesAndLabel, CollectPropertiesFormData } from "../types/ClientTypes";
 
 const AddCollectPropertiesTitlesAndLabels: AddFormTitlesAndLabel<CollectPropertiesFormData> = {
     address: {

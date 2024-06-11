@@ -1,4 +1,4 @@
-import { Filter, PropertyType, State } from "./Constants";
+import { Filter, PropertyType, State } from "../Constants";
 
 export interface FilterOn {
     value: number;

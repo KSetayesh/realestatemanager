@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, PropertyFilterFormFields } from "../ApiTypes";
+import { AddFormTitlesAndLabel, PropertyFilterFormFields } from "../types/ClientTypes";
 
 const AddPropertyFilterTitlesAndLabels: AddFormTitlesAndLabel<PropertyFilterFormFields> = {
     state: {

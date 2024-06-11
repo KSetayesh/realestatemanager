@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, HighYieldSavingsFormData } from "../ApiTypes";
+import { AddFormTitlesAndLabel, HighYieldSavingsFormData } from "../types/ClientTypes";
 
 const AddHighYieldSavingsTitlesAndLabels: AddFormTitlesAndLabel<HighYieldSavingsFormData> = {
     initialDeposit: {

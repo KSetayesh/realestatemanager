@@ -4,12 +4,12 @@ import {
     CreateGetAllPropertiesRequest,
     CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
-    CreatePropertiesInBulkRequest,
     CreateUpdatePropertyRequest,
     ListingCreationType,
     ListingWithScenariosResponseDTO,
     AddPropertyTitlesAndLabels,
-    TitleAndName
+    CreatePropertiesInBulkRequest,
+    TitleAndName,
 } from '@realestatemanager/shared';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';

@@ -1,5 +1,5 @@
 import { ValueAmountInput, ValueInput, ValueRateInput } from "./ApiTypes";
-import { InterestType, TransactionKey, TransactionType } from "./Constants";
+import { InterestType, TransactionKey, TransactionType } from "../Constants";
 import { CreateFilteredPropertyListRequest } from "./FilterPropertyListApiTypes";
 import { ListingDetailsResponseDTO } from "./ListingTypes";
 

@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, AddPropertyFormData } from "../ApiTypes";
+import { AddFormTitlesAndLabel, AddPropertyFormData } from "../types/ClientTypes";
 
 export const AddPropertyTitlesAndLabels: AddFormTitlesAndLabel<AddPropertyFormData> = {
     zillowURL: {

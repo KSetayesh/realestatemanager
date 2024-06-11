@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, AgentFormData } from "../ApiTypes";
+import { AddFormTitlesAndLabel, AgentFormData } from "../types/ClientTypes";
 
 const AddAgentTitlesAndLabels: AddFormTitlesAndLabel<AgentFormData> = {
     firstName: {

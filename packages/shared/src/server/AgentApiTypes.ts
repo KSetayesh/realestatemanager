@@ -1,4 +1,4 @@
-import { Country, State } from "./Constants";
+import { Country, State } from "../Constants";
 
 export enum AgentType {
     REAL_ESTATE_AGENT = "Real Estate Agent",

@@ -1,4 +1,4 @@
-import { PropertyStatus, PropertyType, State } from "./Constants";
+import { PropertyStatus, PropertyType, State } from "../Constants";
 
 export interface CreateRentCastApiRequest {
     address: string;

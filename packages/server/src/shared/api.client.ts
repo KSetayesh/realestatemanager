@@ -44,6 +44,7 @@ export abstract class ApiClient {
     ): Promise<any> {
         try {
             console.log("URL for Api:", url);
+            // console.log("body:", body);
             const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, body, method);
             const response = await fetch(url, options);
 

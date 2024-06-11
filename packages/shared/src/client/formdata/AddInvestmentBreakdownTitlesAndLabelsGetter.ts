@@ -1,4 +1,4 @@
-import { AddFormTitlesAndLabel, InvestmentFormData } from "../ApiTypes";
+import { AddFormTitlesAndLabel, InvestmentFormData } from "../types/ClientTypes";
 
 const AddInvestmentBreakdownTitlesAndLabels: AddFormTitlesAndLabel<InvestmentFormData> = {
     downPaymentType: {

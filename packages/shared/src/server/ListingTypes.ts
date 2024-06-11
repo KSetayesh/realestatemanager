@@ -4,7 +4,7 @@ import {
     PropertyStatus,
     PropertyType,
     State
-} from "./Constants";
+} from "../Constants";
 import { PropertyIdentifier } from "./InvestmentTypes";
 
 export interface CreateListingDetailsRequest {
