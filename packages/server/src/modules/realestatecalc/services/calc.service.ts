@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
 import { Injectable } from '@nestjs/common';
 import {
-    AmortizationBreakdownResponseDTO,
     CreateGetAllPropertiesRequest,
     CreateInvestmentScenarioRequest,
     CreateListingDetailsRequest,
@@ -17,27 +16,26 @@ import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
 import { DatabaseService } from 'src/db/database.service';
-import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
-import { InvestmentCalculator } from 'src/calculations/investment.calculator';
 import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/shared';
 import { PropertyStatus } from '@realestatemanager/shared';
 import { State } from '@realestatemanager/shared';
 import { Country } from '@realestatemanager/shared';
 import { PropertyType } from '@realestatemanager/shared';
-import { InvestmentCalculationCache } from 'src/calculations_cache/investment.calculation.cache';
+import { CalculationsApiClient } from '../api/calculations.api.client';
 
 @Injectable()
 export class CalcService {
 
     private pool: Pool;
-    private calculationCache: InvestmentCalculationCache;
+    // private calculationCache: InvestmentCalculationCache;
 
     constructor(
         private readonly databaseService: DatabaseService,
+        private readonly calculationsApiClient: CalculationsApiClient,
         private readonly listingManager: ListingManager
     ) {
         this.pool = this.databaseService.getPool();
-        this.calculationCache = new InvestmentCalculationCache();
+        // this.calculationCache = new InvestmentCalculationCache();
         this.setNewCache();
     }
 
@@ -57,7 +55,7 @@ export class CalcService {
             // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
             this.updateCacheInBackground(listingDetails.zillowURL, false);
 
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.calculationCache.getListingDetailsCalculations(listingDetails);
+            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = await this.calculationsApiClient.getListingDetailsCalculations(listingDetails);
             listingWithScenariosArr.push(listingWithScenariosDTO);
         }
 
@@ -88,7 +86,7 @@ export class CalcService {
         );
 
 
-        return this.calculationCache.getListingDetailsCalculations(updatedListingDetailsFromDb);
+        return this.calculationsApiClient.getListingDetailsCalculations(updatedListingDetailsFromDb);
 
     }
 
@@ -287,13 +285,8 @@ export class CalcService {
             listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         }
 
-        const investmentMetricsBuilder = new InvestmentMetricBuilder(listingDetails, investmentScenarioRequest);
-        const investmentCalc: InvestmentCalculator = investmentMetricsBuilder.build();
-        const metrics: AmortizationBreakdownResponseDTO = investmentCalc.createInvestmentMetrics();
-        return {
-            listingDetails: listingDetails.toDTO(),
-            metrics: metrics,
-        };
+        return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+
     }
 
 
@@ -324,7 +317,7 @@ export class CalcService {
 
     private async deleteFromCacheInBackground(listingDetailsId: number): Promise<void> {
         // Perform cache deletion asynchronously
-        await this.calculationCache.deleteFromCache(listingDetailsId).then(() => {
+        await this.calculationsApiClient.deleteFromCache(listingDetailsId).then(() => {
             console.log(`Cache deletion initiated for listing ID: ${listingDetailsId}`);
         });
     }
@@ -332,7 +325,7 @@ export class CalcService {
     private async updateCacheInBackground(zillowURL: string, forceUpdate: boolean): Promise<void> {
         try {
             const listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
-            await this.calculationCache.setCache(listingDetails, forceUpdate);
+            await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
         } catch (error) {
             console.error(`Failed to update cache for Zillow URL: ${zillowURL}`, error);
         }
@@ -341,7 +334,7 @@ export class CalcService {
     private async setNewCache(): Promise<void> {
         console.log('\n---Setting property cache---\n');
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool);
-        await this.calculationCache.setFreshCache(listingDetailsArr);
+        await this.calculationsApiClient.setFreshCache(listingDetailsArr);
     }
 
 }

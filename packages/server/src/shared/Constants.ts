@@ -3,7 +3,7 @@ import {
     ValueInput,
     ValueType
 } from "@realestatemanager/shared"
-import apiKeysConfig from '../config/apiKeysConfig';
+import apiKeysConfig from '../config/rentCastConfig';
 
 export const getAmountFromValueInput = (input: ValueInput, baseValue?: number): number => {
     if (input.type === ValueType.AMOUNT) {
@@ -29,33 +29,6 @@ export const getRateFromValueInput = (input: ValueInput, baseValue?: number): nu
         return (input.amount / baseValue) * 100;
     }
     throw new Error("Invalid ValueType.");
-};
-
-export const getInterestTypeEnumValue = (input: string): InterestType => {
-    const matchingKey = Object.keys(InterestType).find(key => InterestType[key as keyof typeof InterestType] === input);
-    if (matchingKey) {
-        return InterestType[matchingKey as keyof typeof InterestType];
-    }
-    throw new Error(`${input} does not match any enum values.`);
-};
-
-export const getYear = (monthCounter: number): number => {
-    return Math.floor((monthCounter - 1) / 12) + 1;
-};
-
-export const isFirstYear = (monthCounter: number): boolean => {
-    return getYear(monthCounter) <= 1;
-};
-
-export const accumulateAndSum = (
-    callback: (month: number) => number,
-    monthCounter: number,
-): number => {
-    let total = 0;
-    for (let month = 1; month <= monthCounter; month++) {
-        total += callback(month);
-    }
-    return total;
 };
 
 export const calculateDaysPassedSinceIgnoreTime = (inputDate: Date): number => {

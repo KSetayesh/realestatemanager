@@ -9,6 +9,7 @@ import applicationConfig from 'src/config/applicationConfig';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { RentCastApiClient } from './api/rent.cast.api.client';
 import { AppModule } from '../app.module';
+import { CalculationsApiClient } from './api/calculations.api.client';
 
 @Module({
     imports: [forwardRef(() => AppModule)],  // Ensure AppModule is imported using forwardRef to avoid circular dependency
@@ -19,6 +20,7 @@ import { AppModule } from '../app.module';
         ListingDAO,
         RentCastDAO,
         RentCastApiClient,
+        CalculationsApiClient,
         {
             provide: ListingManager,
             useFactory: (listingDAO: ListingDAO) => {

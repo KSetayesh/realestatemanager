@@ -1,4 +1,3 @@
-import { accumulateAndSum, getYear } from "src/shared/Constants";
 import {
     AmortizationBreakdownResponseDTO,
     FinancingResponseDTO,
@@ -19,6 +18,7 @@ import { TaxImplications } from "./tax.implications.model";
 import { MortgageCalculator } from "./transaction_models/mortgage.calc";
 import { PurchasePrice } from "./transaction_models/purchase.price";
 import { RentEstimate } from "./transaction_models/rent.estimate";
+import { CalcUtility } from "src/utility/calc.utility";
 
 export class InvestmentCalculator {
 
@@ -195,7 +195,7 @@ export class InvestmentCalculator {
         const date: Date = new Date(year + yearOffset, month, 1);
         const dateAsString = date.toLocaleDateString('en-US'); // date.toISOString().split('T')[0];
         const monthMod12 = ((monthCounter - 1) % 12) + 1;
-        const yearCounter = getYear(monthCounter);
+        const yearCounter = CalcUtility.getYear(monthCounter);
         return {
             dateAsString: dateAsString,
             monthMod12: monthMod12,
@@ -328,7 +328,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        return accumulateAndSum(month => this.calculateMonthlyCashFlow(rentEstimate, month), monthCounter);
+        return CalcUtility.accumulateAndSum(month => this.calculateMonthlyCashFlow(rentEstimate, month), monthCounter);
     }
 
     /**
@@ -347,7 +347,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        return accumulateAndSum(month => this.getTotalIncomeStreams(rentEstimate, month), monthCounter);
+        return CalcUtility.accumulateAndSum(month => this.getTotalIncomeStreams(rentEstimate, month), monthCounter);
     }
 
     /**
@@ -369,7 +369,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        return accumulateAndSum(month => this.getTotalRecurringExpenseAmount(rentEstimate, month), monthCounter);
+        return CalcUtility.accumulateAndSum(month => this.getTotalRecurringExpenseAmount(rentEstimate, month), monthCounter);
     }
 
 
@@ -441,7 +441,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        return accumulateAndSum(month => this.calculateMonthlyNetIncome(rentEstimate, month), monthCounter);
+        return CalcUtility.accumulateAndSum(month => this.calculateMonthlyNetIncome(rentEstimate, month), monthCounter);
     }
 
 
@@ -504,7 +504,7 @@ export class InvestmentCalculator {
         rentEstimate: RentEstimate,
         monthCounter: number
     ): number {
-        return accumulateAndSum(month => this.calculateNOI(rentEstimate, month), monthCounter);
+        return CalcUtility.accumulateAndSum(month => this.calculateNOI(rentEstimate, month), monthCounter);
     }
 
 

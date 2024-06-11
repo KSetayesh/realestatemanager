@@ -5,7 +5,7 @@ import {
     isValueAmountInput,
     isValueRateInput
 } from "@realestatemanager/shared";
-import { getYear, isFirstYear } from "src/shared/Constants";
+import { CalcUtility } from "src/utility/calc.utility";
 
 export abstract class Transaction {
 
@@ -33,11 +33,11 @@ export abstract class Transaction {
         growthRate: number,
         monthCounter: number,
     ): number {
-        if (isFirstYear(monthCounter)) {
+        if (CalcUtility.isFirstYear(monthCounter)) {
             return principal;
         }
         const rateOfGrowth = 1 + (growthRate / 100);
-        return principal * (Math.pow(rateOfGrowth, getYear(monthCounter) - 1));
+        return principal * (Math.pow(rateOfGrowth, CalcUtility.getYear(monthCounter) - 1));
     }
 
     protected getTransactionAmount(valueInput: ValueInput, principalAmount: number): number {

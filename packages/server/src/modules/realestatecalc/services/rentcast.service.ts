@@ -11,13 +11,14 @@ import {
 } from "@realestatemanager/shared";
 import { RentCastResponse } from "../models/rent_cast_api_models/rentcastresponse.model";
 import { CalcService } from './calc.service';
-import { RentCastApiClient, RentCastApiResponse, RentCastEndPoint } from '../api/rent.cast.api.client';
+import { RentCastApiClient, RentCastApiResponse } from '../api/rent.cast.api.client';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { RentCastMatchingData } from '../models/rent_cast_api_models/rentcastmatchingdata.model';
 import { ListingDetails } from '../models/listing_models/listingdetails.model';
 import { ListingDetailsBuilder } from '../builders/listing.details.builder';
 import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
 import { DatabaseService } from 'src/db/database.service';
+import { RentCastEndPoint } from '../api/rent.cast.api.endpoint.manager';
 
 export type RentCastSaleResponseType = {
     id: string;
@@ -467,7 +468,7 @@ export class RentCastService {
     }
 
     private getEndpoint(rentCastEndPoint: RentCastEndPoint): string {
-        return this.rentCastApiClient.getEndpoint(rentCastEndPoint);
+        return this.rentCastApiClient.getEndPointDetails(rentCastEndPoint).endPoint;
     }
 
 

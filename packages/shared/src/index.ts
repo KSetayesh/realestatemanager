@@ -6,6 +6,8 @@ export * from './RentCastApiTypes';
 export * from './ListingTypes';
 export * from './InvestmentTypes';
 export * from './FilterPropertyListApiTypes';
+export * from './BuilderInterface';
+export * from './IDTOConvertible';
 export * from './utilities/Utility';
 export * from './formdata/AddAgentTitlesAndLabelsGetter';
 export * from './formdata/AddCollectPropertiesTitlesAndLabelsGetter';

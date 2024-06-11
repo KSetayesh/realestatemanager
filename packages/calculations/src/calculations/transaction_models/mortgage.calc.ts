@@ -14,7 +14,7 @@ import {
 } from "@realestatemanager/shared";
 import { PurchasePrice } from "./purchase.price";
 import { Transaction } from "./transaction";
-import { accumulateAndSum } from "src/shared/Constants";
+import { CalcUtility } from "src/utility/calc.utility";
 
 
 @Injectable()
@@ -126,11 +126,11 @@ export class MortgageCalculator extends Transaction { //implements MortgageCalcu
     }
 
     getTotalInterestPaid(paymentNumber: number): number {
-        return accumulateAndSum(paymentNumber => this.getInterestAmountForPayment(paymentNumber), paymentNumber);
+        return CalcUtility.accumulateAndSum(paymentNumber => this.getInterestAmountForPayment(paymentNumber), paymentNumber);
     }
 
     getTotalPrincipalPaid(paymentNumber: number): number {
-        return accumulateAndSum(paymentNumber => this.getPrincipalAmountForPayment(paymentNumber), paymentNumber);
+        return CalcUtility.accumulateAndSum(paymentNumber => this.getPrincipalAmountForPayment(paymentNumber), paymentNumber);
     }
 
     getInterestAmountForPayment(paymentNumber: number): number {

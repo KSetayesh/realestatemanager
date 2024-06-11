@@ -1,8 +1,5 @@
 import {
-    getInterestTypeEnumValue,
-} from "src/shared/Constants";
-import { GrowthProjections } from "../growth.projections.model";
-import {
+    BuilderInterface,
     CreateAdditionalIncomeStreamsRequest,
     CreateGrowthProjectionsRequest,
     CreateInvestmentDetailsRequest,
@@ -12,29 +9,31 @@ import {
     CreateTaxImplicationsRequest,
     DefaultInvestmentRates,
     InterestType,
+    ListingDetailsResponseDTO,
     ValueAmountInput,
     ValueInput,
     ValueRateInput,
     ValueType,
 } from "@realestatemanager/shared";
 import { TransactionBuilder } from "./transaction.builder";
-import { TransactionManager } from "../transaction.manager";
 import { InvestmentCalculator } from "../investment.calculator";
-import { TaxImplications } from "../tax.implications.model";
-import { BuilderInterface } from "src/shared/builder.interface";
-import { ListingDetails } from "src/modules/realestatecalc/models/listing_models/listingdetails.model";
-import { MortgageCalculator } from "../transaction_models/mortgage.calc";
-import { RentEstimate } from "../transaction_models/rent.estimate";
+import { GrowthProjections } from "../growth.projections.model";
+import { TransactionManager } from "../transaction.manager";
 import { PurchasePrice } from "../transaction_models/purchase.price";
 import { InitialCost } from "../transaction_models/initial.cost";
+import { RentEstimate } from "../transaction_models/rent.estimate";
+import { MortgageCalculator } from "../transaction_models/mortgage.calc";
+import { TaxImplications } from "../tax.implications.model";
+import { CalcUtility } from "src/utility/calc.utility";
 
 export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalculator> {
 
-    private listingDetails: ListingDetails;
+    // private listingDetails: ListingDetails;
+    private listingDetails: ListingDetailsResponseDTO;
     private investmentScenarioRequest?: CreateInvestmentScenarioRequest;
 
     constructor(
-        listingDetails: ListingDetails,
+        listingDetails: ListingDetailsResponseDTO,
         investmentScenarioRequest?: CreateInvestmentScenarioRequest) {
 
         this.listingDetails = listingDetails;
@@ -247,9 +246,9 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getInterestType(): InterestType {
         if (this._useDefaultRequest()) {
-            return getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
+            return CalcUtility.getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
         }
-        return this.getMortgageDetails().interestType ?? getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
+        return this.getMortgageDetails().interestType ?? CalcUtility.getInterestTypeEnumValue(DefaultInvestmentRates.INTEREST_TYPE);
     }
 
     private getDownPayment(): ValueInput {
@@ -284,7 +283,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyPropertyTax(): ValueInput {
         const defaultMonthlyPropertyTax: ValueAmountInput = {
-            amount: this.listingDetails.zillowMonthlyPropertyTaxAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyPropertyTaxAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -295,7 +294,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyHomeInsuranceAmount(): ValueInput {
         const defaultMonthlyHomeInsuranceAmount: ValueAmountInput = {
-            amount: this.listingDetails.zillowMonthlyHomeInsuranceAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -306,7 +305,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getMonthlyHOAFeesAmount(): ValueInput {
         const defaultMonthlyHOAFeesAmount: ValueAmountInput = {
-            amount: this.listingDetails.zillowMonthlyHOAFeesAmount ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates.zillowMonthlyHOAFeesAmount ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {
@@ -440,7 +439,7 @@ export class InvestmentMetricBuilder implements BuilderInterface<InvestmentCalcu
 
     private getRentEstimate(): ValueAmountInput {
         const defaultRentEstimate: ValueAmountInput = {
-            amount: this.listingDetails.zillowRentEstimate ?? 0,
+            amount: this.listingDetails.zillowMarketEstimates.zillowRentEstimate ?? 0,
             type: ValueType.AMOUNT,
         };
         if (this._useDefaultRequest()) {

@@ -1,13 +1,13 @@
 import {
+    BuilderInterface,
     InterestType,
     TransactionKey,
     ValueAmountInput,
     ValueInput,
     ValueRateInput
 } from "@realestatemanager/shared";
-import { TransactionManager } from "../transaction.manager";
 import { GrowthProjections } from "../growth.projections.model";
-import { BuilderInterface } from "src/shared/builder.interface";
+import { TransactionManager } from "../transaction.manager";
 import { RecurringFixedCost } from "../transaction_models/recurring.fixed.cost";
 import { Income } from "../transaction_models/income";
 import { InitialCost } from "../transaction_models/initial.cost";

@@ -1,5 +1,4 @@
-import { TaxImplicationsResponseDTO } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../shared/idtoconvertible.model";
+import { IDTOConvertible, TaxImplicationsResponseDTO } from "@realestatemanager/shared";
 
 export class TaxImplications implements IDTOConvertible<TaxImplicationsResponseDTO> {
 

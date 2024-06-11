@@ -5,12 +5,12 @@ import {
     State,
     Country,
     PropertyType,
-    ListingDetailsResponseDTO
+    ListingDetailsResponseDTO,
+    IDTOConvertible
 } from "@realestatemanager/shared";
 import { PropertyDetails } from "./propertydetails.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 import { Entity } from "src/shared/entity";
-import { IDTOConvertible } from "src/shared/idtoconvertible.model";
 
 export class ListingDetails extends Entity implements IDTOConvertible<ListingDetailsResponseDTO> {
 
@@ -225,6 +225,7 @@ export class ListingDetails extends Entity implements IDTOConvertible<ListingDet
 
     toDTO(): ListingDetailsResponseDTO {
         return {
+            id: this.id,
             zillowURL: this.zillowURL,
             propertyDetails: this._propertyDetails.toDTO(),
             zillowMarketEstimates: this._zillowMarketEstimates.toDTO(),

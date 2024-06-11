@@ -1,6 +1,5 @@
-import { SchoolRatingResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, SchoolRatingResponseDTO } from "@realestatemanager/shared";
 import { Entity } from "src/shared/entity";
-import { IDTOConvertible } from "src/shared/idtoconvertible.model";
 
 export class SchoolRating extends Entity implements IDTOConvertible<SchoolRatingResponseDTO> {
     private _elementarySchoolRating?: number;

@@ -1,5 +1,4 @@
-import { GrowthProjectionsResponseDTO, ValueRateInput } from "@realestatemanager/shared";
-import { IDTOConvertible } from "../shared/idtoconvertible.model";
+import { GrowthProjectionsResponseDTO, IDTOConvertible, ValueRateInput } from "@realestatemanager/shared";
 
 export class GrowthProjections implements IDTOConvertible<GrowthProjectionsResponseDTO> {
 

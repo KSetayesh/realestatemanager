@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import apiKeysConfig from '../../../config/apiKeysConfig';
+import apiKeysConfig from '../../../config/rentCastConfig';
 import { RentCastDAO } from '../dao/rentcast.dao';
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';

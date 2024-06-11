@@ -1,9 +1,9 @@
-import { 
-    Country, 
-    ListingCreationType, 
-    PropertyStatus, 
-    PropertyType, 
-    State 
+import {
+    Country,
+    ListingCreationType,
+    PropertyStatus,
+    PropertyType,
+    State
 } from "./Constants";
 import { PropertyIdentifier } from "./InvestmentTypes";
 
@@ -95,6 +95,7 @@ export interface CreateUpdatePropertyRequest {
 //------------------------------------------------------------------------------------------------
 
 export interface ListingDetailsResponseDTO {
+    id: number;
     zillowURL: string;
     propertyDetails: PropertyDetailsResponseDTO;
     zillowMarketEstimates: ZillowMarketEstimatesResponseDTO;

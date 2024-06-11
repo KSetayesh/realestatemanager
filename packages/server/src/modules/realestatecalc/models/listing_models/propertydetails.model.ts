@@ -2,12 +2,12 @@ import {
     PropertyType,
     State,
     Country,
-    PropertyDetailsResponseDTO
+    PropertyDetailsResponseDTO,
+    IDTOConvertible
 } from "@realestatemanager/shared";
 import { Address } from "./address.model";
 import { SchoolRating } from "./schoolrating.model";
 import { Entity } from "src/shared/entity";
-import { IDTOConvertible } from "src/shared/idtoconvertible.model";
 
 export class PropertyDetails extends Entity implements IDTOConvertible<PropertyDetailsResponseDTO> {
     private _address?: Address;

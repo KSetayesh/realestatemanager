@@ -1,31 +1,20 @@
 import { Pool } from 'pg';
 import fs from 'fs/promises';  // Use promise-based fs
-import apiKeysConfig from '../../../config/apiKeysConfig';
+import rentCastConfig from '../../../config/rentCastConfig';
 import { CreateRentCastApiRequest } from "@realestatemanager/shared";
 import { rentCastDetailsMap } from 'src/shared/Constants';
 import { RentCastDetails } from '../models/rent_cast_api_models/rentcastdetails.model';
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
-import { PathUtil } from 'src/shared/PathUtil';
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/db/database.service';
-
-export enum RentCastEndPoint {
-    SALE = 'SALE',
-    PROPERTIES = 'PROPERTIES',
-};
+import { ApiClient, ApiHeader } from './api.client';
+import { RentCastApiEndPointManager, RentCastEndPoint } from './rent.cast.api.endpoint.manager';
+import { EndpointDetails } from './endpoint.details.interface';
 
 export type ApiCallDetails = {
     canCallRentCastApi: boolean;
     rentCastDetailsId?: number;
-};
-
-export type RentCastApiHeader = {
-    method: string;
-    headers: {
-        accept: string;
-        'X-Api-Key': string;
-    }
 };
 
 export type RentCastApiResponse = {
@@ -35,38 +24,23 @@ export type RentCastApiResponse = {
     executionTime?: Date;
 };
 
-interface EndpointDetails {
-    endPoint: string;
-    responseFilePath: string;
-};
 
 @Injectable()
-export class RentCastApiClient {
-
-
-    private endPointMap: Record<RentCastEndPoint, EndpointDetails> = {
-        [RentCastEndPoint.SALE]: {
-            endPoint: 'https://api.rentcast.io/v1/listings/sale',
-            responseFilePath: PathUtil.getLatestRentCastSalePath(),
-        },
-        [RentCastEndPoint.PROPERTIES]: {
-            endPoint: 'https://api.rentcast.io/v1/properties',
-            responseFilePath: PathUtil.getLatestRentCastPropertyPath(),
-        },
-    };
+export class RentCastApiClient extends ApiClient {
 
     private pool: Pool;
+    private rentCastApiEndPointManager: RentCastApiEndPointManager;
 
     constructor(
         private readonly databaseService: DatabaseService,
         private readonly rentCastManager: RentCastManager,
     ) {
+        super(
+            rentCastConfig.rentCastApiUrl,
+            rentCastConfig.canMakeRentCastApiCall
+        );
         this.pool = this.databaseService.getPool();
-    }
-
-    getEndpoint(rentCastEndPoint: RentCastEndPoint): string {
-        const endpointDetails: EndpointDetails = this.endPointMap[rentCastEndPoint];
-        return endpointDetails.endPoint;
+        this.rentCastApiEndPointManager = new RentCastApiEndPointManager();
     }
 
     async getRentCastDetailsId(): Promise<number> {
@@ -108,6 +82,10 @@ export class RentCastApiClient {
 
     }
 
+    getEndPointDetails(rentCastApiEndPoint: RentCastEndPoint): EndpointDetails {
+        return this.rentCastApiEndPointManager.getEndPointDetails(this.baseApiUrl, rentCastApiEndPoint);
+    }
+
     private async _callRentCastApi(
         rentCastEndPoint: RentCastEndPoint,
         apiCallDetails: ApiCallDetails,
@@ -116,13 +94,13 @@ export class RentCastApiClient {
 
         console.log("requestData:", rentCastApiRequest);
 
-        const endpointDetails: EndpointDetails = this.endPointMap[rentCastEndPoint];
+        const endpointDetails: EndpointDetails = this.getEndPointDetails(rentCastEndPoint);
         const filePath = endpointDetails.responseFilePath;
         const endPoint = endpointDetails.endPoint;
 
         const url = new RentClassApiUrlCreator().createURL(endPoint, rentCastApiRequest);
 
-        const response = await this.makeApiCall(apiCallDetails, url);
+        const response = await this._makeApiCall(apiCallDetails, url);
         if (response.status === 200) {
             const executionTime = new Date();
             console.log("RentCastApi call is successful!");
@@ -154,20 +132,13 @@ export class RentCastApiClient {
 
     }
 
-    private async makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
-        try {
-            console.log("URL for RentCast Api:", url);
-            const options: RentCastApiHeader = await this.getHeadersForRentCastApiCall(apiCallDetails);
-            return fetch(url, options);
-        }
-        catch (error) {
-            console.error('RentCast Api Call Error:', error);
-            throw new Error(error);// Re-throw the error if needed or handle it as needed
-        }
+    protected async _makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
+        const apiKey = rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
+        return this.makeApiCall(apiKey, url, undefined);
     }
 
     private async getApiCallDetails(): Promise<ApiCallDetails> {
-        if (!apiKeysConfig.canMakeRentCastApiCall) {
+        if (!this.canMakeApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
             return { canCallRentCastApi: false };
         }
@@ -186,19 +157,6 @@ export class RentCastApiClient {
 
         return {
             canCallRentCastApi: false
-        };
-    }
-
-    private async getHeadersForRentCastApiCall(apiCallDetails: ApiCallDetails): Promise<RentCastApiHeader> {
-
-        const apiKey = rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
-
-        return {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                'X-Api-Key': apiKey,
-            }
         };
     }
 

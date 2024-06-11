@@ -13,14 +13,19 @@ export abstract class CalcApi {
     //     return this.baseURL;
     // }
 
+    private baseApiUrl: string;
+
+    constructor() {
+        this.baseApiUrl = appConfig.apiUrl;
+    }
+
 
     protected getBaseURL(): string {
-        const apiUrl = appConfig.apiUrl;
-        console.log('apiUrl:', apiUrl);
-        if (!apiUrl) {
+        console.log('apiUrl:', this.baseApiUrl);
+        if (!this.baseApiUrl) {
             throw new Error('Api Url is not set');
         }
-        return apiUrl;
+        return this.baseApiUrl;
     }
 
     protected getHeaders(): ContentType {

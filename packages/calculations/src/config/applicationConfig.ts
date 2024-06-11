@@ -5,8 +5,7 @@ dotenv.config();
 // Define the database configuration
 const applicationConfig = {
     commit: process.env.COMMIT.toLocaleLowerCase() === 'true',
-    useCache: process.env.USE_PROPERTY_CACHE.toLocaleLowerCase() === 'true',
-    calculationsApiUrl: process.env.CALCULATIONS_API_URL,
+    useCache: process.env.USE_PROPERTY_CACHE.toLocaleLowerCase() === 'true'
 };
 
 export default applicationConfig;

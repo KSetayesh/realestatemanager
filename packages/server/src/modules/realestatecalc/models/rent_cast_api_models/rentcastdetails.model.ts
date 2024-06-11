@@ -1,7 +1,6 @@
-import { RentCastDetailsResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, RentCastDetailsResponseDTO } from "@realestatemanager/shared";
 import { calculateDaysPassedSinceIgnoreTime } from "src/shared/Constants";
 import { Entity } from "src/shared/entity";
-import { IDTOConvertible } from "src/shared/idtoconvertible.model";
 
 export class RentCastDetails extends Entity implements IDTOConvertible<RentCastDetailsResponseDTO> {
 
