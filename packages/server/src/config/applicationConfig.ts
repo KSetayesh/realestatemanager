@@ -6,7 +6,7 @@ dotenv.config();
 const applicationConfig = {
     commit: process.env.COMMIT.toLocaleLowerCase() === 'true',
     calculationsApiUrl: process.env.CALCULATIONS_API_URL,
-    hitCalcCache: process.env.HIT_CALC_CACHE.toLocaleLowerCase() === 'true',
+    enableCacheUpdates: process.env.ENABLE_CACHE_UPDATES.toLocaleLowerCase() === 'true',
 };
 
 export default applicationConfig;

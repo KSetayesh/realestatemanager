@@ -27,6 +27,10 @@ export class ListingManager extends DatabaseManager {
         return this.listingDAO.getPropertyByZillowURL(pool, zillowURL);
     }
 
+    async getPropertiesByZillowURL(pool: Pool, zillowUrlList: string[]): Promise<ListingDetails[]> {
+        return this.listingDAO.getPropertiesByZillowURLs(pool, zillowUrlList);
+    }
+
     async insertListingDetails(
         pool: Pool,
         listingDetails: ListingDetails,
@@ -51,7 +55,7 @@ export class ListingManager extends DatabaseManager {
             console.log(this.commitMessage);
             return;
         }
-        this.listingDAO.updateListingDetails(
+        await this.listingDAO.updateListingDetails(
             pool,
             listingDetails,
         );

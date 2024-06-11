@@ -1,43 +1,70 @@
+import { Injectable } from '@nestjs/common';
+import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
 import { Pool } from 'pg';
+import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { CalculationsApiClient } from "src/modules/realestatecalc/api/calculations.api.client";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 
+@Injectable()
 export class CalculationsCacheHandler {
 
-    private hitCalcCache: boolean;
+    private enableCacheUpdates: boolean;
     private calculationsApiClient: CalculationsApiClient;
+    private listingManager: ListingManager;
 
-    constructor(hitCalcCache: boolean, calculationsApiClient: CalculationsApiClient) {
-        this.hitCalcCache = hitCalcCache;
+    constructor(
+        enableCacheUpdates: boolean,
+        calculationsApiClient: CalculationsApiClient,
+        listingManager: ListingManager
+    ) {
+        this.enableCacheUpdates = enableCacheUpdates;
         this.calculationsApiClient = calculationsApiClient;
+        this.listingManager = listingManager;
+    }
+
+    async setNewCacheIfNeeded(pool: Pool): Promise<void> {
+        if (this.enableCacheUpdates) {
+            console.log('\n---Setting property cache---\n');
+            const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(pool);
+            await this.calculationsApiClient.setFreshCache(listingDetailsArr);
+        }
+    }
+
+    // Doensn't update, delete, or add to Calculation Cache (just fetches from it), no need to check for enableCacheUpdates
+    async getFromCache(listingDetails: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
+        return this.calculationsApiClient.getFromCache(listingDetails);
     }
 
     async updateCacheIfNeeded(
-        listingDetails: ListingDetails[],
+        pool: Pool,
+        zillowUrls: string[],
         forceUpdate: boolean,
         condition: boolean = true): Promise<void> {
 
-        if (this.hitCalcCache && condition) {
-            await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
+        if (this.enableCacheUpdates && condition) {
+            await this.updateCacheInBackground(pool, zillowUrls, forceUpdate);
         }
     }
 
     async deleteFromCacheIfNeeded(listingDetailsId: number, condition: boolean): Promise<void> {
-        if (this.hitCalcCache && condition) {
-            await this.calculationsApiClient.deleteFromCache(listingDetailsId).then(() => {
-                console.log(`Cache deletion initiated for listing ID: ${listingDetailsId}`);
-            });
+        if (this.enableCacheUpdates && condition) {
+            await this.deleteFromCacheInBackground(listingDetailsId);
         }
     }
 
-    private async updateCacheInBackground(pool: Pool, zillowURL: string, forceUpdate: boolean): Promise<void> {
+    // Doens't hit Calculation Cache, no need to check for enableCacheUpdates
+    async calculate(listingDetails: ListingDetails, investmentScenarioRequest: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
+        return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+    }
+
+    private async updateCacheInBackground(pool: Pool, zillowUrls: string[], forceUpdate: boolean): Promise<void> {
         try {
-            const listingDetails: ListingDetails | null = await this.getPropertyByZillowURL(pool, zillowURL);
-            if (listingDetails) {
-                await this.calculationsApiClient.setCache([listingDetails], forceUpdate);
+            const listingDetailsFromDb: ListingDetails[] = await this.listingManager.getPropertiesByZillowURL(pool, zillowUrls);
+            if (listingDetailsFromDb && listingDetailsFromDb.length > 0) {
+                await this.calculationsApiClient.setCache(listingDetailsFromDb, forceUpdate);
             }
         } catch (error) {
-            console.error(`Failed to update cache for Zillow URL: ${zillowURL}`, error);
+            console.error(`Failed to update cache for Zillow URL: ${zillowUrls}`, error);
         }
     }
 

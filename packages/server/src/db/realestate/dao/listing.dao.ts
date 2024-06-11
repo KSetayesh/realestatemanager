@@ -344,6 +344,20 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
+    async getPropertiesByZillowURLs(pool: Pool, zillowURLs: string[]): Promise<ListingDetails[]> {
+        console.log('zillowurls:', zillowURLs);
+        const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = ANY($1);`;
+        console.log(query);
+        try {
+            const res = await pool.query(query, [zillowURLs]);
+            const listings: ListingDetails[] = res.rows.map((row: any) => this.mapRowToListingDetails(row));
+            return listings;
+        } catch (err) {
+            console.error(`Error fetching properties by Zillow URLs: ${zillowURLs}`, err);
+            throw err;
+        }
+    }
+
     async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
         console.log('zillowurl:', zillowURL);
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
