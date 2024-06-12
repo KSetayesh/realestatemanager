@@ -50,20 +50,23 @@ export abstract class ApiClient {
             console.log('options:', options);
             const response = await fetch(url, options);
 
+            // response.ok checks to see if the status code falls between 200-299
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return response;
 
-            // Check if the response has a body before parsing it as JSON
-            const contentType = response.headers.get('content-type');
-            console.log('contentType:', contentType);
-            if (contentType && contentType.includes('application/json')) {
-                const data = await response.json();
-                return data;
-            } else {
-                console.log('In else statement');
-                return; // or return an appropriate value if there's no JSON body
-            }
+
+            // // Check if the response has a body before parsing it as JSON
+            // const contentType = response.headers.get('content-type');
+            // console.log('contentType:', contentType);
+            // if (contentType && contentType.includes('application/json')) {
+            //     const data = await response.json();
+            //     return data;
+            // } else {
+            //     console.log('In else statement');
+            //     return; // or return an appropriate value if there's no JSON body
+            // }
 
         } catch (error) {
             console.error('Api Call Error:', error);
@@ -78,7 +81,7 @@ export abstract class ApiClient {
         method: Method = Method.GET,
     ): Promise<ApiHeader> {
 
-        const headers: ApiHeader = {
+        const reqHeader: ApiHeader = {
             method: method,
             headers: {
                 accept: 'application/json',
@@ -87,14 +90,14 @@ export abstract class ApiClient {
         };
 
         if (apiKey) {
-            headers['X-Api-Key'] = apiKey;
+            reqHeader.headers['X-Api-Key'] = apiKey;
         }
 
         if (method !== Method.GET && requestBody) {
-            headers.body = requestBody;
+            reqHeader.body = requestBody;
         }
 
-        return headers;
+        return reqHeader;
     }
 
 }
