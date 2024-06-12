@@ -134,7 +134,7 @@ export class RentCastService {
 
         for (const listingDetail of listingDetails) {
             const rentCastSaleResponseId = listingDetail.rentCastSaleResponseId;
-            if (rentCastSaleResponseId && rentCastSaleResponseId > -1) {
+            if (rentCastSaleResponseId && rentCastSaleResponseId > 0) {
                 listingsWithRentCastIds.set(rentCastSaleResponseId, listingDetail);
             }
         }
@@ -182,7 +182,7 @@ export class RentCastService {
                     ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA,
                 );
 
-                if (newListingId > -1) {
+                if (newListingId > 0) {
                     numberOfPropertiesAdded++;
                 }
 
@@ -294,7 +294,7 @@ export class RentCastService {
 
                 const rentCastSaleResponseType: RentCastSaleResponseType = this.createRentCastSaleResponseType(rentCastSaleResponse);
 
-                if (rentCastPropertyApiCallId > -1 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
+                if (rentCastPropertyApiCallId > 0 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.addressId];
                     const rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
                     listingDetail = this.buildListingDetails(
@@ -317,7 +317,7 @@ export class RentCastService {
                     ListingCreationType.RENT_CAST_API,
                 );
 
-                if (newListingId > -1) {
+                if (newListingId > 0) {
                     numberOfPropertiesAdded++;
                 }
             }

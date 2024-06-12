@@ -209,7 +209,7 @@ export class CalcService {
             };
             console.log('ListingDetails:', listingDetailsReq);
 
-            if ((await this.addNewProperty(listingDetailsReq)) > -1) {
+            if ((await this.addNewProperty(listingDetailsReq)) > 0) {
                 zillowUrls.push(listingDetailsReq.zillowURL);
                 listingsAdded++;
             }

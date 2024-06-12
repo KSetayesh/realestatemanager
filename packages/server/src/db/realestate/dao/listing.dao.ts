@@ -381,7 +381,7 @@ export class ListingDAO extends RealEstateDAO {
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
     ): Promise<number> {
-        let newListingId = -1;
+        let newListingId = 0;
         try {
             const addressId = await this.insertAddress(pool, listingDetails);
             const schoolRatingId = await this.insertSchoolRating(pool, listingDetails);
@@ -405,7 +405,7 @@ export class ListingDAO extends RealEstateDAO {
             ];
 
             const isValidRentCastResponseId = (rentCastResponseId?: number): boolean => {
-                return rentCastResponseId && rentCastResponseId > -1;
+                return rentCastResponseId && rentCastResponseId > 0;
             }
 
             const saleResponseId = listingDetails.rentCastSaleResponseId;
@@ -437,9 +437,10 @@ export class ListingDAO extends RealEstateDAO {
                 );
             }
 
-            if (newListingId > -1) {
+            if (newListingId > 0) {
                 console.log('Listing information inserted successfully');
                 console.log(`New ListingDetails id: ${newListingId}`);
+                await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
             }
         } catch (err) {
             console.error('Error inserting listing information', err);
@@ -498,6 +499,9 @@ export class ListingDAO extends RealEstateDAO {
 
             await client.query('COMMIT');
             console.log('Listing and all associated data deleted successfully');
+
+            await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
+
             return true;
         } catch (err) {
             await client.query('ROLLBACK');
@@ -514,6 +518,7 @@ export class ListingDAO extends RealEstateDAO {
         await this.updateSchoolRating(pool, listingDetails);
         await this.updatePropertyDetails(pool, listingDetails);
         await this._updateListingDetails(pool, listingDetails);
+        await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
     }
 
     private async _updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
@@ -817,5 +822,9 @@ export class ListingDAO extends RealEstateDAO {
             listingDetails.zillowMonthlyHomeInsuranceAmount,
             listingDetails.zillowMonthlyHOAFeesAmount
         ];
+    }
+
+    private async triggerNotifyAndClearAffectedIdsSQLFunction(pool: Pool): Promise<void> {
+        await pool.query('SELECT notify_and_clear_affected_ids()');
     }
 }
