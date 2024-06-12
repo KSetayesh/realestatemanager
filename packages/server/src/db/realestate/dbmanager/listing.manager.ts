@@ -14,7 +14,7 @@ export class ListingManager extends DatabaseManager implements ListingDAOInterfa
         commit: boolean,
     ) {
         super(commit)
-    }
+    } 
 
     async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
         return this.listingDAO.getAllListings(pool, filteredPropertyListRequest);

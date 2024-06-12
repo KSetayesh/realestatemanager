@@ -82,12 +82,7 @@ export class PropertyService {
     }
 
     async updateListingDetails(pool: Pool, updatedListingDetails: ListingDetails): Promise<void> {
-        await this.listingManager.updateListingDetails(pool, updatedListingDetails);
-
-        // Start by fetching the listing details of the new property from the database asynchronously.
-        // This ensures the loop does not wait for these operations to complete before continuing.
-        // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        // this.updateCacheIfNeeded([updatedListingDetails.zillowURL], true);
+        await this.listingManager.updateListingDetails(pool, updatedListingDetails); 
     }
 
     async deleteListingDetails(pool: Pool, zillowURL: string): Promise<boolean> {

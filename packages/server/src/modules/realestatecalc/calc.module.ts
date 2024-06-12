@@ -9,6 +9,7 @@ import { CalculationsApiClient } from './api/calculations.api.client';
 import { CalculationsCacheHandler } from './api/calculations.cache.handler';
 import { DatabaseListenerDAO } from 'src/db/realestate/dao/database.listener.dao';
 import { PropertyService } from './services/property.service';
+import { DatabaseService } from 'src/db/database.service';
 
 @Module({
     imports: [forwardRef(() => AppModule)],  // Ensure AppModule is imported using forwardRef to avoid circular dependency
@@ -37,7 +38,17 @@ import { PropertyService } from './services/property.service';
             },
             inject: [CalculationsApiClient, ListingManager],
         },
-        PropertyTransactionService,  // Add PropertyTransactionService to providers
+        {
+            provide: PropertyTransactionService,
+            useFactory: (
+                databaseService: DatabaseService,
+                propertyService: PropertyService,
+            ) => {
+                const enableCacheUpdates: boolean = applicationConfig.enableCacheUpdates;
+                return new PropertyTransactionService(databaseService, propertyService, enableCacheUpdates);
+            },
+            inject: [DatabaseService, PropertyService],
+        },
     ],
     exports: [PropertyTransactionService],  // Export PropertyTransactionService if it's used in other modules
 })

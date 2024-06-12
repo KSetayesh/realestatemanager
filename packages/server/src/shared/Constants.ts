@@ -5,3 +5,10 @@ export const rentCastDetailsMap: { [key: number]: string } = {
     2: apiKeysConfig.backUpRentCastApiKey,
     3: apiKeysConfig.backUpbackUpRentCastApiKey,
 };
+
+export enum DatabaseTriggerTypes {
+    GET_ALL_LISTINGS = 'GET_ALL_LISTINGS',
+    INSERT = 'INSERT',
+    UPDATE = 'UPDATE',
+    DELETE = 'DELETE',
+};

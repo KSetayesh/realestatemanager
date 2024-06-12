@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS affected_ids (
 -- Step 2: Create or replace the function that logs the changes
 CREATE OR REPLACE FUNCTION log_listing_change() RETURNS TRIGGER AS $$
 BEGIN
-    RAISE NOTICE 'Trigger fired: % %', TG_OP, NEW.id; -- Add this line for debugging
+    RAISE NOTICE 'Trigger fired: % %', TG_OP, NEW.id;
     IF (TG_OP = 'INSERT') THEN
         INSERT INTO affected_ids (operation, id) VALUES ('INSERT', NEW.id);
     ELSIF (TG_OP = 'UPDATE') THEN
@@ -180,7 +180,6 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- Step 3: Create triggers to call the function on insert, update, and delete
 DO $$
@@ -199,15 +198,88 @@ BEGIN
     END IF;
 END $$;
 
--- Step 4: Create a function to notify and clear the affected_ids table
-CREATE OR REPLACE FUNCTION notify_and_clear_affected_ids() RETURNS VOID AS $$
+-- Step 4: Create a function to notify and clear the affected_ids table with data splitting
+CREATE OR REPLACE FUNCTION split_and_notify() RETURNS VOID AS $$
 DECLARE
-    affected_data TEXT;
+    max_length INT := 8000;  -- Maximum length for combined data chunks before sending notification
+    current_length INT := 0;  -- Counter for the current length of combined data chunks
+    affected_data JSONB;
+    json_element JSONB;
+    data_chunk TEXT;
+    data_chunks JSONB := '[]'::jsonb;  -- Declare and initialize an empty JSONB array
 BEGIN
-    SELECT json_agg(row_to_json(affected_ids))::text INTO affected_data FROM affected_ids;
-    PERFORM pg_notify('listing_change', affected_data);
-    DELETE FROM affected_ids;
+    RAISE NOTICE 'split_and_notify function is being executed.';
+    SELECT json_agg(row_to_json(affected_ids))::jsonb INTO affected_data FROM affected_ids;
+    RAISE NOTICE 'Affected data: %', affected_data;
+
+    -- Iterate through each element in the affected_data JSONB array
+    FOR json_element IN SELECT * FROM jsonb_array_elements(affected_data)
+    LOOP
+        data_chunk := json_element::text;
+        
+        RAISE NOTICE 'Current data chunk: %', data_chunk;
+        raise notice 'length of data chunk: %', length(data_chunk);
+      --  RAISE NOTICE 'Current data chunk length: %', length(data_chunk);
+        
+        -- Check if adding this chunk will exceed the maximum length
+        IF (current_length + length(data_chunk) + 2) > max_length THEN
+            -- Send notification with the current chunks as a JSON string
+            RAISE NOTICE 'Current chunk size exceeds max_length. Sending notification with data chunks: %', data_chunks::text;
+            PERFORM pg_notify('listing_change', data_chunks::text);
+            -- Reset the JSON array and counter
+            data_chunks := '[]'::jsonb;
+            current_length := 0;
+        END IF;
+        
+        -- Append the data_chunk to the JSON array and update the counter
+        data_chunks := data_chunks || jsonb_build_array(json_element);
+        current_length := current_length + length(data_chunk) + 2;
+    --    RAISE NOTICE 'Updated data chunks array: %', data_chunks;
+     --   RAISE NOTICE 'Updated current length: %', current_length;
+    END LOOP;
+    
+    -- Send any remaining chunks in the array
+    IF jsonb_array_length(data_chunks) > 0 THEN
+        RAISE NOTICE 'Sending remaining data chunks: %', data_chunks::text;
+        PERFORM pg_notify('listing_change', data_chunks::text);
+    END IF;
+
+   -- DELETE FROM affected_ids;
+   -- RAISE NOTICE 'Deleted all entries from affected_ids.';
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION notify_and_clear_affected_ids() RETURNS VOID AS $$
+BEGIN
+    PERFORM split_and_notify();
+END;
+$$ LANGUAGE plpgsql;
+
+-- CREATE OR REPLACE FUNCTION split_and_notify() RETURNS VOID AS $$
+-- DECLARE
+--     chunk_size INT := 7000;  -- Define the chunk size (in bytes)
+--     affected_data TEXT;
+--     data_chunk TEXT;
+--     data_length INT;
+-- BEGIN
+--     RAISE NOTICE 'notify_and_clear_affected_ids function is being executed.';
+--     SELECT json_agg(row_to_json(affected_ids))::text INTO affected_data FROM affected_ids;
+--     data_length := length(affected_data);
+
+--     WHILE data_length > 0 LOOP
+--         data_chunk := substr(affected_data, 1, chunk_size);
+--         PERFORM pg_notify('listing_change', data_chunk);
+--         affected_data := substr(affected_data, chunk_size + 1);
+--         data_length := length(affected_data);
+--     END LOOP;
+
+--  --   DELETE FROM affected_ids;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE OR REPLACE FUNCTION notify_and_clear_affected_ids() RETURNS VOID AS $$
+-- BEGIN
+--     PERFORM split_and_notify();
+-- END;
+-- $$ LANGUAGE plpgsql;
 

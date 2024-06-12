@@ -846,8 +846,4 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
             listingDetails.zillowMonthlyHOAFeesAmount
         ];
     }
-
-    private async triggerNotifyAndClearAffectedIdsSQLFunction(pool: Pool): Promise<void> {
-        await pool.query('SELECT notify_and_clear_affected_ids()');
-    }
 }

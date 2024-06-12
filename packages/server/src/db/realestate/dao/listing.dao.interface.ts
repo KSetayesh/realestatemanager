@@ -2,7 +2,7 @@ import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realest
 import { Pool } from 'pg';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 
-export interface ListingDAOInterface {
+export interface ListingDAOInterface { 
 
     insertListingDetails(
         pool: Pool,
