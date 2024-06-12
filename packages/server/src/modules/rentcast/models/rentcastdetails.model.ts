@@ -62,7 +62,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
     }
 
     get daysIntoBillingPeriod(): number {
-        return PropertyUtility.calculateDaysPassedSinceIgnoreTime(this.firstBilledOn);
+        return PropertyUtility.calculateDaysPassedSinceIgnoreTime(this.mostRecentBillingDate);
     }
 
     get email(): string {
