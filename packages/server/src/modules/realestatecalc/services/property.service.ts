@@ -14,7 +14,6 @@ import {
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
-import { DatabaseService } from 'src/db/database.service';
 import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/shared';
 import { PropertyStatus } from '@realestatemanager/shared';
 import { State } from '@realestatemanager/shared';
@@ -23,46 +22,43 @@ import { PropertyType } from '@realestatemanager/shared';
 import { ListingDetails } from '../models/listingdetails.model';
 import { CalculationsCacheHandler } from '../api/calculations.cache.handler';
 
-@Injectable()
-export class CalcService {
 
-    private pool: Pool;
+@Injectable()
+export class PropertyService {
 
     constructor(
-        private readonly databaseService: DatabaseService,
         private readonly cacheHandler: CalculationsCacheHandler,
-        private readonly listingManager: ListingManager
-    ) {
-        this.pool = this.databaseService.getPool();
-        this.setNewCacheIfNeeded();
-    }
+        private readonly listingManager: ListingManager,
+    ) { }
 
-    async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
+    async getAllProperties(
+        pool: Pool,
+        getAllPropertiesRequest?: CreateGetAllPropertiesRequest
+    ): Promise<ListingWithScenariosResponseDTO[]> {
+
         const investmentScenarioRequest = getAllPropertiesRequest?.investmentScenarioRequest;
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
         }
 
         const filteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
-        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(this.pool, filteredPropertyListRequest);
+        const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(pool, filteredPropertyListRequest);
 
-        const zillowUrls: string[] = listingDetailsArr.map(listingDetails => listingDetails.zillowURL);
         // Start by fetching the listing details of the new property from the database asynchronously.
         // This ensures the loop does not wait for these operations to complete before continuing.
         // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        this.updateCacheIfNeeded(zillowUrls, false);
-
+        // this.updateCacheIfNeeded(zillowUrls, false);
 
         return this.getFromCache(listingDetailsArr);
 
     }
 
-    async updateProperty(createUpdatePropertyRequest: CreateUpdatePropertyRequest): Promise<ListingWithScenariosResponseDTO> {
+    async updateProperty(pool: Pool, createUpdatePropertyRequest: CreateUpdatePropertyRequest): Promise<ListingWithScenariosResponseDTO> {
         const zillowURL = createUpdatePropertyRequest.propertyIdentifier.zillowURL;
 
         // Fetch the listing details before update
         const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(
-            this.pool,
+            pool,
             zillowURL
         );
 
@@ -73,10 +69,10 @@ export class CalcService {
             createUpdatePropertyRequest,
         ).build();
 
-        await this.updateListingDetails(updatedListingDetails);
+        await this.updateListingDetails(pool, updatedListingDetails);
 
         const updatedListingDetailsFromDb: ListingDetails = await this.listingManager.getPropertyByZillowURL(
-            this.pool,
+            pool,
             zillowURL
         );
 
@@ -85,20 +81,20 @@ export class CalcService {
 
     }
 
-    async updateListingDetails(updatedListingDetails: ListingDetails): Promise<void> {
-        await this.listingManager.updateListingDetails(this.pool, updatedListingDetails);
+    async updateListingDetails(pool: Pool, updatedListingDetails: ListingDetails): Promise<void> {
+        await this.listingManager.updateListingDetails(pool, updatedListingDetails);
 
         // Start by fetching the listing details of the new property from the database asynchronously.
         // This ensures the loop does not wait for these operations to complete before continuing.
         // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        this.updateCacheIfNeeded([updatedListingDetails.zillowURL], true);
+        // this.updateCacheIfNeeded([updatedListingDetails.zillowURL], true);
     }
 
-    async deleteListingDetails(zillowURL: string): Promise<boolean> {
-        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+    async deleteListingDetails(pool: Pool, zillowURL: string): Promise<boolean> {
+        const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(pool, zillowURL);
         let didDelete: boolean = false;
         if (listingDetails) {
-            didDelete = await this.listingManager.deleteListingByZillowURL(this.pool, zillowURL);
+            didDelete = await this.listingManager.deleteListingByZillowURL(pool, zillowURL);
         } else {
             console.log(`${zillowURL} does not exist in the database to delete`);
             return false;
@@ -106,16 +102,10 @@ export class CalcService {
 
         console.log(`${zillowURL} has been deleted: ${didDelete}`);
 
-        if (didDelete) {
-            // Perform cache deletion asynchronously. 
-            // For this reason we DO NOT want to await on deleteFromCacheInBackground() function
-            this.deleteFromCacheIfNeeded(listingDetails.id, true);
-        }
-
         return didDelete;
     }
 
-    async addPropertiesInBulk(propertiesInBulk: CreatePropertiesInBulkRequest): Promise<number> {
+    async addPropertiesInBulk(pool: Pool, propertiesInBulk: CreatePropertiesInBulkRequest): Promise<number> {
         console.log('propertiesInBulk:', propertiesInBulk);
 
         const validateRequest = (propertiesInBulk: CreatePropertiesInBulkRequest): boolean => {
@@ -209,25 +199,20 @@ export class CalcService {
             };
             console.log('ListingDetails:', listingDetailsReq);
 
-            if ((await this.addNewProperty(listingDetailsReq)) > 0) {
+            if ((await this.addNewProperty(pool, listingDetailsReq)) > 0) {
                 zillowUrls.push(listingDetailsReq.zillowURL);
                 listingsAdded++;
             }
         }
-
-        // Start by fetching the listing details of the new property from the database asynchronously.
-        // This ensures the loop does not wait for these operations to complete before continuing.
-        // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        this.updateCacheIfNeeded(zillowUrls, false);
 
         console.log('Csv file is valid');
 
         return listingsAdded;
     }
 
-    async addNewProperty(listingDetailsRequest: CreateListingDetailsRequest): Promise<number> {
+    async addNewProperty(pool: Pool, listingDetailsRequest: CreateListingDetailsRequest): Promise<number> {
         let newListingId = -1;
-        const client = await this.pool.connect();
+        const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
@@ -235,6 +220,7 @@ export class CalcService {
             const listingDetails: ListingDetails = new ListingDetailsRequestBuilder(listingDetailsRequest).build();
             console.log('listingDetails:', listingDetails);
             newListingId = await this.insertListingDetails(
+                pool,
                 listingDetails,
                 ListingCreationType.MANUAL
             );
@@ -251,19 +237,15 @@ export class CalcService {
     }
 
     async insertListingDetails(
+        pool: Pool,
         listingDetails: ListingDetails,
         listingCreationType: ListingCreationType,
     ): Promise<number> {
         const newListingId = await this.listingManager.insertListingDetails(
-            this.pool,
+            pool,
             listingDetails,
             listingCreationType,
         );
-
-        // Start by fetching the listing details of the new property from the database asynchronously.
-        // This ensures the loop does not wait for these operations to complete before continuing.
-        // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        this.updateCacheIfNeeded([listingDetails.zillowURL], false);
 
         return newListingId;
     }
@@ -273,30 +255,20 @@ export class CalcService {
         the cache only has default CreateInvestmentScenarioRequest 
     */
     async calculate(
+        pool: Pool,
         investmentScenarioRequest: CreateInvestmentScenarioRequest,
         listingDetails?: ListingDetails
     ): Promise<ListingWithScenariosResponseDTO> {
 
         if (!listingDetails) {
             const zillowURL = investmentScenarioRequest.propertyIdentifier.zillowURL;
-            listingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
+            listingDetails = await this.listingManager.getPropertyByZillowURL(pool, zillowURL);
         }
-
-        return this._calculate(investmentScenarioRequest, listingDetails);
-
+        return this.cacheHandler.calculate(listingDetails, investmentScenarioRequest);
     }
 
-
     async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
-        const listingDetailsList: ListingDetails[] = await this.listingManager.getListingsByRentCastSaleResponseIds(pool, rentCastSaleResponseIds);
-
-        const zillowUrls: string[] = listingDetailsList.map(listingDetails => listingDetails.zillowURL);
-        // Start by fetching the listing details of the new property from the database asynchronously.
-        // This ensures the loop does not wait for these operations to complete before continuing.
-        // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
-        this.updateCacheIfNeeded(zillowUrls, false);
-
-        return listingDetailsList;
+        return this.listingManager.getListingsByRentCastSaleResponseIds(pool, rentCastSaleResponseIds);
     }
 
     private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
@@ -311,28 +283,8 @@ export class CalcService {
         return true;
     }
 
-    private async setNewCacheIfNeeded() {
-        await this.cacheHandler.setNewCacheIfNeeded(this.pool);
-    }
-
     private async getFromCache(listingDetailsList: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
         return this.cacheHandler.getFromCache(listingDetailsList);
     }
 
-    private async updateCacheIfNeeded(zillowUrls: string[], forceUpdate: boolean) {
-        await this.cacheHandler.updateCacheIfNeeded(this.pool, zillowUrls, forceUpdate);
-    }
-
-    private async deleteFromCacheIfNeeded(listingDetailsId: number, wasDeleted: boolean) {
-        await this.cacheHandler.deleteFromCacheIfNeeded(listingDetailsId, wasDeleted);
-    }
-
-    private async _calculate(
-        investmentScenarioRequest: CreateInvestmentScenarioRequest,
-        listingDetails?: ListingDetails
-    ): Promise<ListingWithScenariosResponseDTO> {
-        return this.cacheHandler.calculate(listingDetails, investmentScenarioRequest);
-    }
-
 }
-

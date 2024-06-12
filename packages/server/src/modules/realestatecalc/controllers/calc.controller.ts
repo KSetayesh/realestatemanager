@@ -7,19 +7,19 @@ import {
     CreateUpdatePropertyRequest,
     CreatePropertiesInBulkRequest
 } from '@realestatemanager/shared';
-import { CalcService } from '../services/calc.service';
+import { PropertyTransactionService } from '../services/property.transaction.service';
 
 @Controller('realestatecalc')
 export class CalcController {
 
-    constructor(private readonly calcService: CalcService) { }
+    constructor(private readonly propertyTxnService: PropertyTransactionService) { }
 
     // Had to change this from a GET to a POST
     @Post()
     async getAllProperties(
         @Body() getAllPropertiesRequest?: CreateGetAllPropertiesRequest,
     ): Promise<ListingWithScenariosResponseDTO[]> {
-        return this.calcService.getAllProperties(getAllPropertiesRequest);
+        return this.propertyTxnService.getAllProperties(getAllPropertiesRequest);
     }
 
     @Post('updateProperty')
@@ -27,14 +27,14 @@ export class CalcController {
         @Body() createUpdatePropertyRequest: CreateUpdatePropertyRequest,
     ): Promise<ListingWithScenariosResponseDTO> {
         console.log('createUpdatePropertyRequest:', createUpdatePropertyRequest);
-        return this.calcService.updateProperty(createUpdatePropertyRequest);
+        return this.propertyTxnService.updateProperty(createUpdatePropertyRequest);
     }
 
     @Post('deleteListingDetails')
     async deleteListingDetails(
         @Body('zillowURL') zillowURL: string
     ): Promise<boolean> {
-        return this.calcService.deleteListingDetails(zillowURL);
+        return this.propertyTxnService.deleteListingDetails(zillowURL);
     }
 
     @Post('addNewProperty')
@@ -42,14 +42,14 @@ export class CalcController {
         @Body() listingDetails: CreateListingDetailsRequest,
     ): Promise<void> {
         console.log('New listing:', listingDetails);
-        await this.calcService.addNewProperty(listingDetails);
+        await this.propertyTxnService.addNewProperty(listingDetails);
     }
 
     @Post('addPropertiesInBulk')
     async addPropertiesInBulk(
         @Body() propertiesInBulk: CreatePropertiesInBulkRequest,
     ): Promise<number> {
-        return this.calcService.addPropertiesInBulk(propertiesInBulk);
+        return this.propertyTxnService.addPropertiesInBulk(propertiesInBulk);
     }
 
     @Post('calculate')
@@ -58,7 +58,7 @@ export class CalcController {
     ): Promise<ListingWithScenariosResponseDTO> {
         console.log('hi_7');
         console.log(investmentScenarioRequest);
-        return this.calcService.calculate(investmentScenarioRequest);
+        return this.propertyTxnService.calculate(investmentScenarioRequest);
     }
 
 }

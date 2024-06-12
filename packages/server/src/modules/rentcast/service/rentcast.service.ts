@@ -11,7 +11,6 @@ import {
 } from "@realestatemanager/shared";
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { DatabaseService } from 'src/db/database.service';
-import { CalcService } from 'src/modules/realestatecalc/services/calc.service';
 import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';
 import { RentCastApiClient, RentCastApiResponse } from '../api/rent.cast.api.client';
 import { RentCastEndPoint } from '../api/rent.cast.api.endpoint.manager';
@@ -19,6 +18,7 @@ import { RentCastMatchingData } from '../models/rentcastmatchingdata.model';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 import { ListingDetailsPropertyResponseBuilder } from '../builders/listing.details.property.response.builder';
 import { ListingDetailsBuilder } from '../builders/listing.details.builder';
+import { PropertyTransactionService } from 'src/modules/realestatecalc/services/property.transaction.service';
 
 export type RentCastSaleResponseType = {
     id: string;
@@ -94,7 +94,7 @@ export class RentCastService {
     private pool: Pool;
 
     constructor(
-        private readonly calcService: CalcService,
+        private readonly propertyTxnService: PropertyTransactionService,
         private readonly databaseService: DatabaseService,
         private readonly rentCastApiClient: RentCastApiClient,
         private readonly rentCastManager: RentCastManager,
@@ -130,7 +130,9 @@ export class RentCastService {
         });
 
         const listingsWithRentCastIds: Map<number, ListingDetails> = new Map();
-        const listingDetails: ListingDetails[] = await this.calcService.getListingsByRentCastSaleResponseIds(this.pool, rentCastSaleResponseIds);
+        const listingDetails: ListingDetails[] = await this.propertyTxnService.getListingsByRentCastSaleResponseIds(
+            rentCastSaleResponseIds
+        );
 
         for (const listingDetail of listingDetails) {
             const rentCastSaleResponseId = listingDetail.rentCastSaleResponseId;
@@ -166,7 +168,7 @@ export class RentCastService {
                     rentCastPropertyResponseType,
                 ).build();
 
-                await this.calcService.updateListingDetails(listingDetail);
+                await this.propertyTxnService.updateListingDetails(listingDetail);
                 numberOfPropertiesUpdated++;
             }
             else {
@@ -177,7 +179,7 @@ export class RentCastService {
                     rentCastPropertyResponseType,
                     rentCastMatch.rentCastPropertyResponseId,
                 );
-                const newListingId = await this.calcService.insertListingDetails(
+                const newListingId = await this.propertyTxnService.insertListingDetails(
                     listingDetail,
                     ListingCreationType.MATCHED_PRE_EXISTING_RENT_CAST_DATA,
                 );
@@ -320,7 +322,7 @@ export class RentCastService {
                     );
                 }
 
-                const newListingId = await this.calcService.insertListingDetails(
+                const newListingId = await this.propertyTxnService.insertListingDetails(
                     listingDetail,
                     ListingCreationType.RENT_CAST_API,
                 );

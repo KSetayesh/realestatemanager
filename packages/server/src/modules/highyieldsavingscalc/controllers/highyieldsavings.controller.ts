@@ -5,13 +5,13 @@ import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestat
 @Controller('highyieldsavingscalc')
 export class HighYieldSavingsCalcController {
 
-    constructor(private readonly calcService: HighYieldSavingsCalcService) { }
+    constructor(private readonly highYieldSavingsCalcService: HighYieldSavingsCalcService) { }
 
     @Post('calculate')
     async calculate(
         @Body() highYeildSavingsRequest: HighYeildSavingsRequest,
     ): Promise<HighYeildSavingsResponseDTO[]> {
-        return this.calcService.calculateFutureValueByMonth(highYeildSavingsRequest);
+        return this.highYieldSavingsCalcService.calculateFutureValueByMonth(highYeildSavingsRequest);
     }
 
 }
