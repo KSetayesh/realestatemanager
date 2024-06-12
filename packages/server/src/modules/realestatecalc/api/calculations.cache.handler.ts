@@ -59,7 +59,7 @@ export class CalculationsCacheHandler {
 
     private async updateCacheInBackground(pool: Pool, zillowUrls: string[], forceUpdate: boolean): Promise<void> {
         try {
-            const listingDetailsFromDb: ListingDetails[] = await this.listingManager.getPropertiesByZillowURL(pool, zillowUrls);
+            const listingDetailsFromDb: ListingDetails[] = await this.listingManager.getPropertiesByZillowURLs(pool, zillowUrls);
             if (listingDetailsFromDb && listingDetailsFromDb.length > 0) {
                 await this.calculationsApiClient.setCache(listingDetailsFromDb, forceUpdate);
             }

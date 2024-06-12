@@ -288,7 +288,11 @@ export class RentCastService {
                     continue;
                 }
 
-                const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastSaleResponse, rentCastSaleApiCallId);
+                const rentCastSaleResponseId = await this.rentCastManager.insertRentCastApiResponse(
+                    this.pool,
+                    rentCastSaleResponse,
+                    rentCastSaleApiCallId
+                );
 
                 let listingDetail: ListingDetails;
 
@@ -296,7 +300,11 @@ export class RentCastService {
 
                 if (rentCastPropertyApiCallId > 0 && (rentCastSaleResponse.addressId in rentCastPropertyMap)) {
                     const rentCastProperty: RentCastResponse = rentCastPropertyMap[rentCastSaleResponse.addressId];
-                    const rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(this.pool, rentCastProperty, rentCastPropertyApiCallId);
+                    const rentCastPropertyResponseId = await this.rentCastManager.insertRentCastApiResponse(
+                        this.pool,
+                        rentCastProperty,
+                        rentCastPropertyApiCallId
+                    );
                     listingDetail = this.buildListingDetails(
                         rentCastSaleResponseType,
                         rentCastSaleResponseId,
@@ -330,7 +338,6 @@ export class RentCastService {
             }
 
             return numberOfPropertiesAdded;
-
 
         } catch (error) {
             throw error;

@@ -3,9 +3,10 @@ import { AgentDAO } from "../dao/agent.dao";
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
 import { Agent } from 'src/modules/agents/models/agent.model';
+import { AgentDAOInterface } from '../dao/agent.dao.interface';
 
 @Injectable()
-export class AgentManager extends DatabaseManager {
+export class AgentManager extends DatabaseManager implements AgentDAOInterface {
 
     constructor(
         private readonly agentDAO: AgentDAO,

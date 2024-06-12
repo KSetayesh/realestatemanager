@@ -4,9 +4,10 @@ import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realest
 import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
+import { ListingDAOInterface } from '../dao/listing.dao.interface';
 
 @Injectable()
-export class ListingManager extends DatabaseManager {
+export class ListingManager extends DatabaseManager implements ListingDAOInterface {
 
     constructor(
         private readonly listingDAO: ListingDAO,
@@ -27,7 +28,7 @@ export class ListingManager extends DatabaseManager {
         return this.listingDAO.getPropertyByZillowURL(pool, zillowURL);
     }
 
-    async getPropertiesByZillowURL(pool: Pool, zillowUrlList: string[]): Promise<ListingDetails[]> {
+    async getPropertiesByZillowURLs(pool: Pool, zillowUrlList: string[]): Promise<ListingDetails[]> {
         return this.listingDAO.getPropertiesByZillowURLs(pool, zillowUrlList);
     }
 
@@ -61,7 +62,7 @@ export class ListingManager extends DatabaseManager {
         );
     }
 
-    async deleteListingDetails(
+    async deleteListingByZillowURL(
         pool: Pool,
         zillowURL: string): Promise<boolean> {
         if (!this.commit) {

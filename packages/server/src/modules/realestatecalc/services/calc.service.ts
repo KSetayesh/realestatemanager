@@ -98,7 +98,7 @@ export class CalcService {
         const listingDetails: ListingDetails = await this.listingManager.getPropertyByZillowURL(this.pool, zillowURL);
         let didDelete: boolean = false;
         if (listingDetails) {
-            didDelete = await this.listingManager.deleteListingDetails(this.pool, zillowURL);
+            didDelete = await this.listingManager.deleteListingByZillowURL(this.pool, zillowURL);
         } else {
             console.log(`${zillowURL} does not exist in the database to delete`);
             return false;

@@ -14,9 +14,10 @@ import { Address } from 'src/modules/realestatecalc/models/address.model';
 import { SchoolRating } from 'src/modules/realestatecalc/models/schoolrating.model';
 import { PropertyDetails } from 'src/modules/realestatecalc/models/propertydetails.model';
 import { ZillowMarketEstimates } from 'src/modules/realestatecalc/models/zillowmarketestimates.model';
+import { ListingDAOInterface } from './listing.dao.interface';
 
 @Injectable()
-export class ListingDAO extends RealEstateDAO {
+export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
 
     private GET_LISTINGS_QUERY = `SELECT 
             ld.id AS listing_details_id, ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed,
@@ -197,7 +198,39 @@ export class ListingDAO extends RealEstateDAO {
 
     //----------------------------------------------------------------------------------------------------
 
+    async insertListingDetails(
+        pool: Pool,
+        listingDetails: ListingDetails,
+        creationType: ListingCreationType,
+    ): Promise<number> {
+        return this._insertListingDetails(pool, listingDetails, creationType);
+    }
+
+    async deleteListingByZillowURL(pool: Pool, zillowURL: string): Promise<boolean> {
+        return this._deleteListingByZillowURL(pool, zillowURL);
+    }
+
+    async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+        await this._updateListingDetails(pool, listingDetails);
+    }
+
     async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
+        return this._getAllListings(pool, filteredPropertyListRequest);
+    }
+
+    async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
+        return this._getListingsByRentCastSaleResponseIds(pool, rentCastSaleResponseIds);
+    }
+
+    async getPropertiesByZillowURLs(pool: Pool, zillowURLs: string[]): Promise<ListingDetails[]> {
+        return this._getPropertiesByZillowURLs(pool, zillowURLs);
+    }
+
+    async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
+        return this._getPropertyByZillowURL(pool, zillowURL);
+    }
+
+    private async _getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
         let query = `${this.GET_LISTINGS_QUERY}`;
         let counter = 1;
@@ -318,7 +351,7 @@ export class ListingDAO extends RealEstateDAO {
     }
 
 
-    async getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
+    private async _getListingsByRentCastSaleResponseIds(pool: Pool, rentCastSaleResponseIds: number[]): Promise<ListingDetails[]> {
         if (rentCastSaleResponseIds.length === 0) {
             console.log('No rentCastSaleResponseIds provided.');
             return [];
@@ -344,7 +377,7 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
-    async getPropertiesByZillowURLs(pool: Pool, zillowURLs: string[]): Promise<ListingDetails[]> {
+    private async _getPropertiesByZillowURLs(pool: Pool, zillowURLs: string[]): Promise<ListingDetails[]> {
         console.log('zillowurls:', zillowURLs);
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = ANY($1);`;
         console.log(query);
@@ -358,7 +391,7 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
-    async getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
+    private async _getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null> {
         console.log('zillowurl:', zillowURL);
         const query = `${this.GET_LISTINGS_QUERY} WHERE ld.zillow_url = $1;`;
         console.log(query);
@@ -376,7 +409,7 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
-    async insertListingDetails(
+    private async _insertListingDetails(
         pool: Pool,
         listingDetails: ListingDetails,
         creationType: ListingCreationType,
@@ -437,11 +470,6 @@ export class ListingDAO extends RealEstateDAO {
                 );
             }
 
-            if (newListingId > 0) {
-                console.log('Listing information inserted successfully');
-                console.log(`New ListingDetails id: ${newListingId}`);
-                await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
-            }
         } catch (err) {
             console.error('Error inserting listing information', err);
             throw err;
@@ -449,7 +477,7 @@ export class ListingDAO extends RealEstateDAO {
         return newListingId;
     }
 
-    async deleteListingByZillowURL(pool: Pool, zillowURL: string): Promise<boolean> {
+    private async _deleteListingByZillowURL(pool: Pool, zillowURL: string): Promise<boolean> {
         const client = await pool.connect();
 
         try {
@@ -498,10 +526,6 @@ export class ListingDAO extends RealEstateDAO {
             await client.query(deleteSchoolRatingQuery, [school_rating_id]);
 
             await client.query('COMMIT');
-            console.log('Listing and all associated data deleted successfully');
-
-            await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
-
             return true;
         } catch (err) {
             await client.query('ROLLBACK');
@@ -512,16 +536,15 @@ export class ListingDAO extends RealEstateDAO {
         }
     }
 
-    async updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+    private async _updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
         await this.updateAddress(pool, listingDetails);
         await this.updateZillowMarketEstimates(pool, listingDetails);
         await this.updateSchoolRating(pool, listingDetails);
         await this.updatePropertyDetails(pool, listingDetails);
-        await this._updateListingDetails(pool, listingDetails);
-        await this.triggerNotifyAndClearAffectedIdsSQLFunction(pool);
+        await this.updateListingDetailsTable(pool, listingDetails);
     }
 
-    private async _updateListingDetails(pool: Pool, listingDetails: ListingDetails): Promise<void> {
+    private async updateListingDetailsTable(pool: Pool, listingDetails: ListingDetails): Promise<void> {
 
         const query = this.UPDATE_LISTING_DETAILS_WITH_RENT_CAST_ID_QUERY;
 

@@ -5,9 +5,10 @@ import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.m
 import { RentCastDetails } from 'src/modules/rentcast/models/rentcastdetails.model';
 import { RentCastMatchingData } from 'src/modules/rentcast/models/rentcastmatchingdata.model';
 import { RentCastApiResponse } from 'src/modules/rentcast/api/rent.cast.api.client';
+import { RentCastDAOInterface } from './rentcast.dao.interface';
 
 @Injectable()
-export class RentCastDAO extends RealEstateDAO {
+export class RentCastDAO extends RealEstateDAO implements RentCastDAOInterface {
 
     private CHECK_FOR_EXISTING_ADDRESS_ID =
         `SELECT EXISTS (SELECT 1 FROM rent_cast_api_response WHERE address_id = $1) AS exists`;
@@ -86,8 +87,50 @@ export class RentCastDAO extends RealEstateDAO {
             ORDER BY sale_address_id
         `;
 
-    // Function to check if a specific ID exists in the database
     async checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
+        return this._checkIfAddressIdExists(pool, address_id);
+    }
+
+    async insertRentCastApiResponse(
+        pool: Pool,
+        rentCastResponse: RentCastResponse,
+        rentCastApiCallId: number
+    ): Promise<number> {
+        return this._insertRentCastApiResponse(pool, rentCastResponse, rentCastApiCallId);
+    }
+
+    async getRentCastApiDetails(pool: Pool): Promise<RentCastDetails[]> {
+        return this._getRentCastApiDetails(pool);
+    }
+
+    async updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number): Promise<void> {
+        await this._updateNumberOfApiCalls(pool, rentCastConfigDetailsId);
+    }
+
+    async resetNumberOfApiCalls(pool: Pool, id: number): Promise<void> {
+        await this._resetNumberOfApiCalls(pool, id);
+    }
+
+    async insertRentCastApiCall(
+        pool: Pool,
+        endpoint: string,
+        fullUrl: string,
+        rentCastDetailsId: number,
+        executionTime: Date = new Date()
+    ): Promise<number> {
+        return this._insertRentCastApiCall(pool, endpoint, fullUrl, rentCastDetailsId, executionTime);
+    }
+
+    async findMatchingRentingCastData(
+        pool: Pool,
+        saleEndPoint: string,
+        propertyEndPoint: string
+    ): Promise<RentCastMatchingData[]> {
+        return this._findMatchingRentingCastData(pool, saleEndPoint, propertyEndPoint);
+    }
+
+    // Function to check if a specific ID exists in the database
+    private async _checkIfAddressIdExists(pool: Pool, address_id: string): Promise<boolean> {
         const query = `${this.CHECK_FOR_EXISTING_ADDRESS_ID};`;
         try {
             const res = await pool.query(query, [address_id]);
@@ -98,7 +141,7 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async insertRentCastApiResponse(
+    private async _insertRentCastApiResponse(
         pool: Pool,
         rentCastResponse: RentCastResponse,
         rentCastApiCallId: number
@@ -129,7 +172,7 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async getRentCastDetails(pool: Pool): Promise<RentCastDetails[]> {
+    private async _getRentCastApiDetails(pool: Pool): Promise<RentCastDetails[]> {
 
         const rentCastDetails: RentCastDetails[] = [];
 
@@ -150,13 +193,14 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number) {
+    private async _updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number): Promise<void> {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._updateNumberOfApiCalls(pool, rentCastConfigDetailsId);
+            const query = `${this.UPDATE_NUMBER_OF_API_CALLS_QUERY};`;
+            await pool.query(query, [rentCastConfigDetailsId]);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -168,13 +212,14 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async resetNumberOfApiCalls(pool: Pool, id: number) {
+    private async _resetNumberOfApiCalls(pool: Pool, id: number): Promise<void> {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
             console.log('BEGIN QUERY');
 
-            await this._resetNumberOfApiCalls(pool, id);
+            const query = `${this.RESET_NUMBER_OF_API_CALLS_QUERY};`;
+            await pool.query(query, [id]);
 
             await client.query('COMMIT');
         } catch (error) {
@@ -186,7 +231,7 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async insertRentCastApiCall(
+    private async _insertRentCastApiCall(
         pool: Pool,
         endpoint: string,
         fullUrl: string,
@@ -213,7 +258,7 @@ export class RentCastDAO extends RealEstateDAO {
         }
     }
 
-    async findMatchingRentingCastData(
+    private async _findMatchingRentingCastData(
         pool: Pool,
         saleEndPoint: string,
         propertyEndPoint: string
@@ -233,30 +278,6 @@ export class RentCastDAO extends RealEstateDAO {
             throw err;
         }
         return matchingRentCastDataList;
-    }
-
-    private async _resetNumberOfApiCalls(pool: Pool, id: number) {
-        const query = `${this.RESET_NUMBER_OF_API_CALLS_QUERY};`;
-        try {
-            await pool.query(query, [id]);
-            console.log('Number of api calls set to 0');
-
-        } catch (err) {
-            console.error('Error inserting listing information', err);
-            throw err;
-        }
-    }
-
-    private async _updateNumberOfApiCalls(pool: Pool, rentCastConfigDetailsId: number) {
-        const query = `${this.UPDATE_NUMBER_OF_API_CALLS_QUERY};`;
-        try {
-            await pool.query(query, [rentCastConfigDetailsId]);
-            console.log('Number of api calls has been incremented');
-
-        } catch (err) {
-            console.error('Error inserting listing information', err);
-            throw err;
-        }
     }
 
     private mapRowToMatchingRentingCastData(row: any): RentCastMatchingData {

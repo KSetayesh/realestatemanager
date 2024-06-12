@@ -7,9 +7,10 @@ import {
 } from "@realestatemanager/shared";
 import { Injectable } from '@nestjs/common';
 import { Agent } from 'src/modules/agents/models/agent.model';
+import { AgentDAOInterface } from './agent.dao.interface';
 
 @Injectable()
-export class AgentDAO extends RealEstateDAO {
+export class AgentDAO extends RealEstateDAO implements AgentDAOInterface {
 
     private GET_AGENTS_QUERY = `SELECT
         id AS agent_id, first_name, last_name, website, company_name, phone_number, email, state, country, agent_type 
@@ -41,6 +42,26 @@ export class AgentDAO extends RealEstateDAO {
     private DELETE_AGENT_QUERY = `DELETE FROM agent WHERE id = $1;`
 
     async insertAgent(pool: Pool, agent: Agent): Promise<void> {
+        await this._insertAgent(pool, agent);
+    }
+
+    async updateAgent(pool: Pool, agent: Agent): Promise<void> {
+        await this._updateAgent(pool, agent);
+    }
+
+    async deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
+        return this._deleteAgent(pool, agentId);
+    }
+
+    async getAgentById(pool: Pool, agentId: number): Promise<Agent> {
+        return this._getAgentById(pool, agentId);
+    }
+
+    async getAllAgents(pool: Pool): Promise<Agent[]> {
+        return this._getAllAgents(pool);
+    }
+
+    private async _insertAgent(pool: Pool, agent: Agent): Promise<void> {
         try {
             const values: any[] = this.getAgentValues(agent);
 
@@ -53,7 +74,7 @@ export class AgentDAO extends RealEstateDAO {
         }
     }
 
-    async updateAgent(pool: Pool, agent: Agent): Promise<void> {
+    private async _updateAgent(pool: Pool, agent: Agent): Promise<void> {
         const query = this.UPDATE_AGENT_QUERY;
 
         const values: any[] = [
@@ -76,7 +97,7 @@ export class AgentDAO extends RealEstateDAO {
         }
     }
 
-    async deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
+    private async _deleteAgent(pool: Pool, agentId: number): Promise<boolean> {
         const query = this.DELETE_AGENT_QUERY;
 
         const values: any[] = [agentId];
@@ -91,10 +112,10 @@ export class AgentDAO extends RealEstateDAO {
         }
     }
 
-    async getAgentById(pool: Pool, id: number): Promise<Agent> {
+    private async _getAgentById(pool: Pool, agentId: number): Promise<Agent> {
         const query = `${this.GET_AGENTS_QUERY} WHERE id = $1;`;
         try {
-            const res = await pool.query(query, [id]);
+            const res = await pool.query(query, [agentId]);
             if (res.rows.length > 0) {
                 const row = res.rows[0];
                 const agent: Agent = this.mapRowToAgent(row);
@@ -102,12 +123,12 @@ export class AgentDAO extends RealEstateDAO {
             }
             return null;
         } catch (err) {
-            console.error(`Error fetching property by Agent id: ${id}`, err);
+            console.error(`Error fetching property by Agent id: ${agentId}`, err);
             throw err;
         }
     }
 
-    async getAllAgents(pool: Pool): Promise<Agent[]> {
+    private async _getAllAgents(pool: Pool): Promise<Agent[]> {
         const agents: Agent[] = [];
         const query = `${this.GET_AGENTS_QUERY};`;
 
