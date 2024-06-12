@@ -7,11 +7,13 @@ import applicationConfig from 'src/config/applicationConfig';
 import { AppModule } from '../app.module';
 import { CalculationsApiClient } from './api/calculations.api.client';
 import { CalculationsCacheHandler } from './api/calculations.cache.handler';
+import { DatabaseListenerDAO } from 'src/db/realestate/dao/database.listener.dao';
 
 @Module({
     imports: [forwardRef(() => AppModule)],  // Ensure AppModule is imported using forwardRef to avoid circular dependency
     controllers: [CalcController],
     providers: [
+        DatabaseListenerDAO,
         CalcService,
         ListingDAO,
         CalculationsApiClient,
