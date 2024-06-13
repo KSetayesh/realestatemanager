@@ -1,4 +1,4 @@
-import { IDTOConvertible, SchoolRatingResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, SchoolRatingResponseDTO } from "@realestatemanager/types";
 import { Entity } from "src/shared/entity";
 
 export class SchoolRating extends Entity implements IDTOConvertible<SchoolRatingResponseDTO> {

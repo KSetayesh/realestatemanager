@@ -1,4 +1,4 @@
-import { ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
+import { ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from "@realestatemanager/types";
 
 export interface CacheInterface {
 

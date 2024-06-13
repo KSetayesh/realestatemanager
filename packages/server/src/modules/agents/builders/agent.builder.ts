@@ -4,7 +4,7 @@ import {
     Country,
     CreateUpdateAgentRequest,
     State
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Agent } from "../models/agent.model";
 
 export class AgentBuilder implements BuilderInterface<Agent> {

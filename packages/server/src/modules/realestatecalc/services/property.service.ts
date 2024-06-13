@@ -10,15 +10,15 @@ import {
     AddPropertyTitlesAndLabels,
     CreatePropertiesInBulkRequest,
     TitleAndName,
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
 import { ListingDetailsUpdateBuilder } from '../builders/listing.details.update.builder';
-import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/shared';
-import { PropertyStatus } from '@realestatemanager/shared';
-import { State } from '@realestatemanager/shared';
-import { Country } from '@realestatemanager/shared';
-import { PropertyType } from '@realestatemanager/shared';
+import { AddPropertyTitlesAndLabelsGetter } from '@realestatemanager/types';
+import { PropertyStatus } from '@realestatemanager/types';
+import { State } from '@realestatemanager/types';
+import { Country } from '@realestatemanager/types';
+import { PropertyType } from '@realestatemanager/types';
 import { ListingDetails } from '../models/listingdetails.model';
 import { CalculationsCacheHandler } from '../api/calculations.cache.handler';
 

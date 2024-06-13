@@ -5,7 +5,7 @@ import {
     Utility,
     ValueAmountInput,
     ValueRateInput
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Transaction } from "./transaction";
 
 export class RentEstimate extends Transaction {

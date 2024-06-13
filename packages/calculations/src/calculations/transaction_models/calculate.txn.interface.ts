@@ -4,7 +4,7 @@ import {
     TxnResponseDTO,
     ValueInput,
     ValueRateInput
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { RentEstimate } from "./rent.estimate";
 import { PurchasePrice } from "./purchase.price";
 

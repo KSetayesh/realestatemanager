@@ -4,7 +4,7 @@ import {
     AddPropertyFormData,
     CreateListingDetailsRequest,
     CreatePropertiesInBulkRequest
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
 import UploadCSVFile from '../components/UploadCSVFile';

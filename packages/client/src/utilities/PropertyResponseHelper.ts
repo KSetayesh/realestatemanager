@@ -2,7 +2,7 @@ import {
     GrowthProjectionsResponseDTO,
     InitialInvestmentBreakdownResponseDTO,
     ListingDetailsResponseDTO, ListingWithScenariosResponseDTO, TaxImplicationsResponseDTO,
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 
 export const getPropertyType = (property: ListingWithScenariosResponseDTO): string => {
     return listingDetails(property).propertyDetails.propertyType ?? "";

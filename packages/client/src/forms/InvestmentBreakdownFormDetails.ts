@@ -45,7 +45,7 @@ import {
     PercentageAndAmount,
     ValueInput,
     ValueType
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";
 

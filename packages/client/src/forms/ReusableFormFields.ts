@@ -1,4 +1,4 @@
-import { Country, State } from "@realestatemanager/shared";
+import { Country, State } from "@realestatemanager/types";
 import { FormProperty, Options } from "../components/StandardForm";
 import { InputType } from "../constants/Constant";
 

@@ -1,4 +1,4 @@
-import { IDTOConvertible, ZillowMarketEstimatesResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, ZillowMarketEstimatesResponseDTO } from "@realestatemanager/types";
 import { Entity } from "src/shared/entity";
 
 export class ZillowMarketEstimates extends Entity implements IDTOConvertible<ZillowMarketEstimatesResponseDTO> {

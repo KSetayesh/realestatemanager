@@ -1,4 +1,4 @@
-import { AddressResponseDTO, Country, IDTOConvertible, State } from "@realestatemanager/shared";
+import { AddressResponseDTO, Country, IDTOConvertible, State } from "@realestatemanager/types";
 import { Entity } from "src/shared/entity";
 
 export class Address extends Entity implements IDTOConvertible<AddressResponseDTO> {

@@ -1,4 +1,4 @@
-import { RentCastDetailsResponseDTO } from "@realestatemanager/shared";
+import { RentCastDetailsResponseDTO } from "@realestatemanager/types";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import { TableColumn, TableRow } from "../components/ReusableTable";
 import { DefaultTableType } from "../constants/Constant";

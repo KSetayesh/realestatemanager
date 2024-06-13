@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { HighYieldSavingsCalcService } from "../services/highyieldsavings.calc.service";
-import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
+import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/types";
 
 @Controller('highyieldsavingscalc')
 export class HighYieldSavingsCalcController {

@@ -5,7 +5,7 @@ import {
     CreateListingDetailsCalculationsRequest,
     ListingDetailsResponseDTO,
     CreateSetCacheRequest,
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import applicationConfig from '../../../config/applicationConfig';
 import { EndpointDetails } from "../../../shared/endpoint.details.interface";
 import { ListingDetails } from "../models/listingdetails.model";

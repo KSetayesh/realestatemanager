@@ -7,7 +7,7 @@ import {
     TransactionType,
     TxnResponseDTO,
     Utility
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Income } from "./transaction_models/income";
 import { InitialCost } from "./transaction_models/initial.cost";
 import { PurchasePrice } from "./transaction_models/purchase.price";

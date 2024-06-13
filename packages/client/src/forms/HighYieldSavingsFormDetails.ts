@@ -2,7 +2,7 @@ import {
     AddHighYieldSavingsTitlesAndLabelsGetter,
     HighYeildSavingsRequest,
     HighYieldSavingsFormData
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { FormProperty } from "../components/StandardForm";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm } from "./ReusableFormFields";

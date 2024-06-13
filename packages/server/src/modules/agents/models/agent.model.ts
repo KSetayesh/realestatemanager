@@ -1,4 +1,4 @@
-import { AgentResponseDTO, AgentType, Country, IDTOConvertible, State } from "@realestatemanager/shared";
+import { AgentResponseDTO, AgentType, Country, IDTOConvertible, State } from "@realestatemanager/types";
 import { Entity } from "src/shared/entity";
 
 export class Agent extends Entity implements IDTOConvertible<AgentResponseDTO> {

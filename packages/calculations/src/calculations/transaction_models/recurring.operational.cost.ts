@@ -4,7 +4,7 @@ import {
     TxnResponseDTO, 
     Utility, 
     ValueRateInput 
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";

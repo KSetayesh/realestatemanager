@@ -7,7 +7,7 @@ import {
     PropertyType,
     ListingDetailsResponseDTO,
     IDTOConvertible
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { PropertyDetails } from "./propertydetails.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 import { Entity } from "src/shared/entity";

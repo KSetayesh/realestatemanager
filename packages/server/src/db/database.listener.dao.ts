@@ -1,5 +1,5 @@
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
-import { Utility } from '@realestatemanager/shared';
+import { Utility } from '@realestatemanager/types';
 import { Pool, PoolClient } from 'pg';
 import { DatabaseService } from 'src/db/database.service';
 import { DatabaseTriggerType } from 'src/shared/Constants';

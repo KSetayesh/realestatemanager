@@ -12,7 +12,7 @@ import {
     InvestmentFormData,
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 
 const InvestmentBreakdown: React.FC = () => {
 

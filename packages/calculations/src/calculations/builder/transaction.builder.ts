@@ -5,7 +5,7 @@ import {
     ValueAmountInput,
     ValueInput,
     ValueRateInput
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { GrowthProjections } from "../growth.projections.model";
 import { TransactionManager } from "../transaction.manager";
 import { RecurringFixedCost } from "../transaction_models/recurring.fixed.cost";

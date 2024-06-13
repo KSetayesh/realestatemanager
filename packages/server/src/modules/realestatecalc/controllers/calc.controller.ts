@@ -6,7 +6,7 @@ import {
     CreateGetAllPropertiesRequest,
     CreateUpdatePropertyRequest,
     CreatePropertiesInBulkRequest
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { PropertyTransactionService } from '../services/property.transaction.service';
 
 @Controller('realestatecalc')

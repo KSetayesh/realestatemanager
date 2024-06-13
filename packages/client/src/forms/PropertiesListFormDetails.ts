@@ -5,7 +5,7 @@ import {
     PropertyFilterFormFields,
     PropertyType,
     State
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { FormProperty } from "../components/StandardForm";
 import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";

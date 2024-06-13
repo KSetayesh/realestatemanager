@@ -5,7 +5,7 @@ import {
     CreateGetAllPropertiesRequest,
     CreateUpdatePropertyRequest,
     CreatePropertiesInBulkRequest
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 

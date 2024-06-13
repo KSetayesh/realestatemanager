@@ -1,4 +1,4 @@
-import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/shared";
+import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/types";
 import axios from "axios";
 import { CalcApi } from "./calcapi";
 

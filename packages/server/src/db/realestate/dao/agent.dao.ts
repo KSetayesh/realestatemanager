@@ -4,7 +4,7 @@ import {
     AgentType,
     Country,
     State
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Injectable } from '@nestjs/common';
 import { Agent } from 'src/modules/agents/models/agent.model';
 import { AgentDAOInterface } from './agent.dao.interface';

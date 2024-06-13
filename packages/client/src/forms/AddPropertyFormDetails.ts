@@ -6,7 +6,7 @@ import {
     PropertyStatus,
     PropertyType,
     State
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import {
     InputType,
 } from "../constants/Constant";

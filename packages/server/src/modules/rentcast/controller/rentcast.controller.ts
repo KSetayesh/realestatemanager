@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { RentCastService } from '../service/rentcast.service';
-import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
+import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/types';
 
 @Controller('rentcast')
 export class RentCastController {

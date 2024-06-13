@@ -1,7 +1,6 @@
 import { Pool } from 'pg';
-import fs from 'fs/promises';  // Use promise-based fs
 import rentCastConfig from '../../../config/rentCastConfig';
-import { CreateRentCastApiRequest } from "@realestatemanager/shared";
+import { CreateRentCastApiRequest } from "@realestatemanager/types";
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { Injectable } from '@nestjs/common';

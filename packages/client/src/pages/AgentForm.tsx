@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AgentFormData, CreateAgentRequest } from '@realestatemanager/shared';
+import { AgentFormData, CreateAgentRequest } from '@realestatemanager/types';
 import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AgentFormDetails } from '../forms/AgentFormDetails';

@@ -3,7 +3,7 @@ import {
     AmortizationBreakdownResponseDTO,
     ListingDetailsResponseDTO,
     ListingWithScenariosResponseDTO
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
 import { InvestmentCalculator } from 'src/calculations/investment.calculator';
 import applicationConfig from 'src/config/applicationConfig';

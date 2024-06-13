@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/shared';
+import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/types';
 import { RentCastApi } from '../api/rentcastapi';
 import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
 import StandardForm, { FormProperty } from '../components/StandardForm';

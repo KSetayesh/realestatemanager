@@ -4,7 +4,7 @@ import {
     Country,
     PropertyDetailsResponseDTO,
     IDTOConvertible
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Address } from "./address.model";
 import { SchoolRating } from "./schoolrating.model";
 import { Entity } from "src/shared/entity";

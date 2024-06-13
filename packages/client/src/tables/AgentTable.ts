@@ -1,4 +1,4 @@
-import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 import { agentDefaultColumns } from "./columns/AgentColumns";

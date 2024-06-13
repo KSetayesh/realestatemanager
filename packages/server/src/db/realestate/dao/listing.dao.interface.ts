@@ -1,4 +1,4 @@
-import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realestatemanager/shared';
+import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realestatemanager/types';
 import { Pool } from 'pg';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO } from '@realestatemanager/shared';
+import { CreateInvestmentScenarioRequest, ListingWithScenariosResponseDTO } from '@realestatemanager/types';
 import { CalculationsApiClient } from "src/modules/realestatecalc/api/calculations.api.client";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 

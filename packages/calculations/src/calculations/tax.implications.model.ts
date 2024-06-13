@@ -1,4 +1,4 @@
-import { IDTOConvertible, TaxImplicationsResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, TaxImplicationsResponseDTO } from "@realestatemanager/types";
 
 export class TaxImplications implements IDTOConvertible<TaxImplicationsResponseDTO> {
 

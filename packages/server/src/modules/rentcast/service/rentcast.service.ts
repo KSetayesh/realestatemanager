@@ -8,7 +8,7 @@ import {
     CreateRentCastApiRequest,
     RentCastDetailsResponseDTO,
     State,
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { DatabaseService } from 'src/db/database.service';
 import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';

@@ -14,7 +14,7 @@ import {
     ValueInput,
     ValueRateInput,
     ValueType,
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { TransactionBuilder } from "./transaction.builder";
 import { InvestmentCalculator } from "../investment.calculator";
 import { GrowthProjections } from "../growth.projections.model";

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CalcApi } from "./calcapi";
-import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from "@realestatemanager/shared";
+import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from "@realestatemanager/types";
 
 export class RentCastApi extends CalcApi {
 

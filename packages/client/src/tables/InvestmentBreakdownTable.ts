@@ -1,4 +1,4 @@
-import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/shared";
+import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/types";
 import { TableColumn, TableRow } from "../components/ReusableTable";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import {

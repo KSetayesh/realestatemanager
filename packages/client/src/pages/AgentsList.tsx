@@ -1,4 +1,4 @@
-import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/shared";
+import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableDataItem } from "../components/ReusableTable";

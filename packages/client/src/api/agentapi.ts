@@ -4,7 +4,7 @@ import {
     AgentResponseDTO,
     CreateAgentRequest,
     CreateUpdateAgentRequest
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 
 export class AgentApi extends CalcApi {
 

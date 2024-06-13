@@ -1,4 +1,4 @@
-import { AddPropertyTitlesAndLabelsGetter } from "@realestatemanager/shared";
+import { AddPropertyTitlesAndLabelsGetter } from "@realestatemanager/types";
 import { TableColumn } from "../../components/ReusableTable";
 import { InputType } from "../../constants/Constant";
 

@@ -4,7 +4,7 @@ import {
     ValueInput,
     isValueAmountInput,
     isValueRateInput
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { CalcUtility } from "src/utility/calc.utility";
 
 export abstract class Transaction {

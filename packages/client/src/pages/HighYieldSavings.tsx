@@ -4,7 +4,7 @@ import {
     HighYeildSavingsResponseDTO,
     HighYeildSavingsRequest,
     HighYieldSavingsFormData
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import ReusableTable from '../components/ReusableTable';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {

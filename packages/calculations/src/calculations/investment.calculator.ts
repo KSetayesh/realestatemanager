@@ -11,7 +11,7 @@ import {
     TransactionKey,
     TransactionType,
     Utility
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { TransactionManager } from "./transaction.manager";
 import { GrowthProjections } from "./growth.projections.model";
 import { TaxImplications } from "./tax.implications.model";

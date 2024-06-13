@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { AgentService } from "../services/agent.services";
-import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from '@realestatemanager/shared';
+import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from '@realestatemanager/types';
 
 @Controller('agents')
 export class AgentController {

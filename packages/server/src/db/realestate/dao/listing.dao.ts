@@ -7,7 +7,7 @@ import {
     State,
     ListingCreationType,
     CreateFilteredPropertyListRequest,
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { Injectable } from '@nestjs/common';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 import { Address } from 'src/modules/realestatecalc/models/address.model';

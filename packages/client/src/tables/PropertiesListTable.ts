@@ -1,4 +1,4 @@
-import { CreateUpdatePropertyRequest, ListingWithScenariosResponseDTO } from "@realestatemanager/shared";
+import { CreateUpdatePropertyRequest, ListingWithScenariosResponseDTO } from "@realestatemanager/types";
 import { PropertiesListTableType } from "../pages/PropertiesList";
 import { TableColumn, TableDataItem, TableRow } from "../components/ReusableTable";
 import { AbstractTable, TablesConfig } from "./AbstractTable";

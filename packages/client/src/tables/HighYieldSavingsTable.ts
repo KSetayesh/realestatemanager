@@ -1,4 +1,4 @@
-import { HighYeildSavingsResponseDTO } from "@realestatemanager/shared";
+import { HighYeildSavingsResponseDTO } from "@realestatemanager/types";
 import { AbstractTable, TablesConfig } from "./AbstractTable";
 import { TableColumn, TableRow } from "../components/ReusableTable";
 import { highYieldSavingsDefaultColumns } from "./columns/HighYieldSavingsColumns";

@@ -5,7 +5,7 @@ import {
     ListingCreationType,
     PropertyStatus,
     Utility
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 import { RentCastPropertyResponseType } from "../service/rentcast.service";

@@ -4,7 +4,7 @@ import {
     AgentResponseDTO,
     CreateAgentRequest,
     CreateUpdateAgentRequest
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Agent } from "../models/agent.model";
 import { AgentManager } from 'src/db/realestate/dbmanager/agent.manager';
 import { DatabaseService } from 'src/db/database.service';

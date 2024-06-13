@@ -11,7 +11,7 @@ import {
     ValueRateInput,
     isValueAmountInput,
     isValueRateInput
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { PurchasePrice } from "./purchase.price";
 import { Transaction } from "./transaction";
 import { CalcUtility } from "src/utility/calc.utility";

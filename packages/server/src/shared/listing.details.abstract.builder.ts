@@ -5,7 +5,7 @@ import {
     PropertyStatus,
     PropertyType,
     State
-} from "@realestatemanager/shared";
+} from "@realestatemanager/types";
 import { Address } from "src/modules/realestatecalc/models/address.model";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 import { PropertyDetails } from "src/modules/realestatecalc/models/propertydetails.model";

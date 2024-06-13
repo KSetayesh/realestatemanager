@@ -1,4 +1,4 @@
-import { IDTOConvertible, RentCastDetailsResponseDTO, Utility } from "@realestatemanager/shared";
+import { IDTOConvertible, RentCastDetailsResponseDTO, Utility } from "@realestatemanager/types";
 import { Entity } from "src/shared/entity";
 import { PropertyUtility } from "src/utility/PropertyUtility";
 

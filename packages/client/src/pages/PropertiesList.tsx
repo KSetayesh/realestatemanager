@@ -8,7 +8,7 @@ import {
     CreateUpdatePropertyRequest,
     ListingWithScenariosResponseDTO,
     PropertyFilterFormFields
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     PropertiesListFormDetails,

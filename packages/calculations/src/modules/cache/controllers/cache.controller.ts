@@ -5,7 +5,7 @@ import {
     CreateSetCacheRequest,
     ListingDetailsResponseDTO,
     ListingWithScenariosResponseDTO
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { CalcService } from '../services/calc.service';
 
 @Controller('cache')

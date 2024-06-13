@@ -1,4 +1,4 @@
-import { InterestType } from "@realestatemanager/shared";
+import { InterestType } from "@realestatemanager/types";
 
 export class CalcUtility {
 

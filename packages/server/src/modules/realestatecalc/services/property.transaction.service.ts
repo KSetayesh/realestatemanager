@@ -8,7 +8,7 @@ import {
     CreatePropertiesInBulkRequest,
     CreateInvestmentScenarioRequest,
     ListingCreationType,
-} from '@realestatemanager/shared';
+} from '@realestatemanager/types';
 import { DatabaseService } from 'src/db/database.service';
 import { PropertyService } from './property.service';
 import { ListingDetails } from '../models/listingdetails.model';
