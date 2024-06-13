@@ -5,8 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npm run build:types && npm run build:calc && npm run build:server && npm run build:client",
+        "build": "npm run build:utilities && npm run build:types && npm run build:calc && npm run build:server && npm run build:client",
         "build:full": "npm i && npm run build",
+        "build:utilities": "cd packages/utilities && npm run build",
         "build:types": "cd packages/types && npm run build",
         "build:calc": "cd packages/calculations && npm run build",
         "build:server": "cd packages/server && npm run build",
