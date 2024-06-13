@@ -146,18 +146,4 @@ CREATE TABLE IF NOT EXISTS listing_details (
 );
 -- EndQuery
 
--- Query: InsertIntoRentCastConfigDetailsTable
-INSERT INTO rent_cast_config_details (
-    api_key_name,
-    email,
-    api_calls_this_month, 
-    number_of_free_api_calls, 
-    billing_period, 
-    first_billed_on, 
-    most_recent_billing_date, 
-    created_at, 
-    updated_at
-) SELECT 'Kevins RentCast API Key', 'kevinsetayesh@gmail.com', 0, 50, 31, NOW(), NOW(), NOW(), NOW()
-WHERE NOT EXISTS (SELECT 1 FROM rent_cast_config_details);
--- EndQuery
 
