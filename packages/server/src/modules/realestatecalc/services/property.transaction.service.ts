@@ -79,11 +79,11 @@ export class PropertyTransactionService {
             await client.query('BEGIN');
             console.log('---Inserting listing ids into affected_ids table---');
             await client.query(`
-                INSERT INTO affected_ids (property_listing_id, operation)
+                INSERT INTO affected_ids (listing_details_id, operation)
                 SELECT ld.id, '${DatabaseTriggerType.GET_ALL_LISTINGS}'
                 FROM listing_details ld
-                LEFT JOIN affected_ids ai ON ld.id = ai.property_listing_id
-                WHERE ai.property_listing_id IS NULL;
+                LEFT JOIN affected_ids ai ON ld.id = ai.listing_details_id
+                WHERE ai.listing_details_id IS NULL;
             `);
 
             await client.query('COMMIT');

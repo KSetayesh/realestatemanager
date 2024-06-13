@@ -2,19 +2,19 @@
 CREATE TABLE IF NOT EXISTS affected_ids (
     id SERIAL PRIMARY KEY,
     operation VARCHAR,
-    property_listing_id INT
+    listing_details_id INT
 );
 
 -- Step 2: Create or replace the function that logs the changes
 CREATE OR REPLACE FUNCTION log_listing_change() RETURNS TRIGGER AS $$
 BEGIN
-    RAISE NOTICE 'Trigger fired: % %', TG_OP, NEW.property_listing_id;
+    RAISE NOTICE 'Trigger fired: % %', TG_OP, NEW.listing_details_id;
     IF (TG_OP = 'INSERT') THEN
-        INSERT INTO affected_ids (operation, property_listing_id) VALUES ('INSERT', NEW.property_listing_id);
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('INSERT', NEW.listing_details_id);
     ELSIF (TG_OP = 'UPDATE') THEN
-        INSERT INTO affected_ids (operation, property_listing_id) VALUES ('UPDATE', NEW.property_listing_id);
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('UPDATE', NEW.listing_details_id);
     ELSIF (TG_OP = 'DELETE') THEN
-        INSERT INTO affected_ids (operation, property_listing_id) VALUES ('DELETE', OLD.property_listing_id);
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('DELETE', OLD.listing_details_id);
     END IF;
     RETURN NEW;
 END;

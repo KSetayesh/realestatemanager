@@ -41,7 +41,7 @@ export class CacheService implements CacheInterface {
         if (!this.usePropertyCache) {
             return;
         }
-        
+
         for (const listingDetailsId of listingDetailsIds) {
             await this._deleteFromCache(listingDetailsId);
         }
@@ -69,12 +69,16 @@ export class CacheService implements CacheInterface {
     private async _setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
         await this.resetCache();
 
+        console.log(`Setting cache with ${listingDetailsArr.length} properties.`);
+
         for (const listingDetail of listingDetailsArr) {
             const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.createInvestmentMetrics(
                 listingDetail
             );
             this.cache.set(listingDetail.id, listingWithScenariosDTO);
         }
+
+        console.log(`Fresh Cache has been set.`);
     }
 
     private async _resetCache(): Promise<void> {
@@ -143,18 +147,24 @@ export class CacheService implements CacheInterface {
         }
         const listingId: number = listingDetails.id;
         if (this.cache.has(listingId) && Utility.deepEqual(listingDetails, this.cache.get(listingId))) {
+            console.log(`Property id ${listingId} has been found in cache`);
             return this.cache.get(listingId);
         }
-
+        console.log(`Property id ${listingId} NOT found in cache`);
         return this.createInvestmentMetrics(listingDetails);
     }
 
     private async processCacheUpdateQueue(forceUpdate: boolean): Promise<void> {
-        if (this.cacheUpdateQueue.length > 0) {
-            this.cacheUpdateInProgress = true;
-            const listingDetails = this.cacheUpdateQueue.shift()!;
+        if (this.cacheUpdateInProgress) {
+            return; // If already in progress, do not start a new processing loop
+        }
+
+        this.cacheUpdateInProgress = true;
+
+        while (this.cacheUpdateQueue.length > 0) {
+            const listingDetails = this.cacheUpdateQueue.shift();
             try {
-                if (forceUpdate || !this.cache.has(listingDetails.id)) {
+                if (listingDetails && (forceUpdate || !this.cache.has(listingDetails.id))) {
                     const listingWithScenarios: ListingWithScenariosResponseDTO = this.createInvestmentMetrics(listingDetails);
                     this.cache.set(listingDetails.id, listingWithScenarios);
                     console.log(`Cache updated for listing ID: ${listingDetails.id}`);
@@ -162,9 +172,9 @@ export class CacheService implements CacheInterface {
             } catch (error) {
                 console.error(`Failed to update cache for listing ID: ${listingDetails.id}`, error);
             }
-            this.cacheUpdateInProgress = false;
-            this.processCacheUpdateQueue(forceUpdate);
         }
+
+        this.cacheUpdateInProgress = false;
     }
 
     private createInvestmentMetrics(listingDetails: ListingDetailsResponseDTO): ListingWithScenariosResponseDTO {
@@ -177,4 +187,5 @@ export class CacheService implements CacheInterface {
             metrics: metrics,
         };
     }
+
 }

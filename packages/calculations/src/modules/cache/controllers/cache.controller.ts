@@ -43,7 +43,7 @@ export class CacheController {
         @Body() listingDetails: ListingDetailsResponseDTO[],
     ): Promise<ListingWithScenariosResponseDTO[]> {
         console.log('hi_4');
-        console.log('listingDetails:', listingDetails);
+        // console.log('listingDetails:', listingDetails);
         return this.cacheService.getFromCache(listingDetails);
     }
 

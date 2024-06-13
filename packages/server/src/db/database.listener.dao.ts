@@ -16,19 +16,21 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     private pool: Pool;
 
     private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
-        [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listDetails: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.setNewCache(listDetails);
+        [DatabaseTriggerType.GET_ALL_LISTINGS]: (listDetails: ListingDetails[]): Promise<void> => {
+            return this.queueCacheHandler(() => this.cacheHandler.setNewCache(listDetails));
         },
-        [DatabaseTriggerType.INSERT]: async (listDetails: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.updateCache(listDetails, false);
+        [DatabaseTriggerType.INSERT]: (listDetails: ListingDetails[]): Promise<void> => {
+            return this.queueCacheHandler(() => this.cacheHandler.updateCache(listDetails, false));
         },
-        [DatabaseTriggerType.UPDATE]: async (listDetails: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.updateCache(listDetails, true);
+        [DatabaseTriggerType.UPDATE]: (listDetails: ListingDetails[]): Promise<void> => {
+            return this.queueCacheHandler(() => this.cacheHandler.updateCache(listDetails, true));
         },
-        [DatabaseTriggerType.DELETE]: async (listDetailsIds: number[]): Promise<void> => {
-            await this.cacheHandler.deleteFromCache(listDetailsIds);
+        [DatabaseTriggerType.DELETE]: (listDetailsIds: number[]): Promise<void> => {
+            return this.queueCacheHandler(() => this.cacheHandler.deleteFromCache(listDetailsIds));
         },
     };
+
+    private cacheQueue: Promise<void> = Promise.resolve();
 
     constructor(
         private readonly databaseService: DatabaseService,
@@ -71,18 +73,19 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     }
 
     private async handleNotification(client: PoolClient) {
-        const res = await client.query('SELECT property_listing_id, operation FROM affected_ids;');
+        const res = await client.query('SELECT listing_details_id, operation FROM affected_ids;');
+        await client.query('DELETE FROM affected_ids;');
 
         const affectedIdsByTypeMap: Map<number, DatabaseTriggerType> = new Map();
         const deletedIds: number[] = [];
 
         res.rows.forEach((row: any) => {
-            const propertyListingId: number = row.property_listing_id;
+            const listingDetailsId: number = row.listing_details_id;
             const operation: DatabaseTriggerType = Utility.getEnumValue(DatabaseTriggerType, row.operation);
             if (operation === DatabaseTriggerType.DELETE) {
-                deletedIds.push(propertyListingId);
+                deletedIds.push(listingDetailsId);
             } else {
-                affectedIdsByTypeMap.set(propertyListingId, operation);
+                affectedIdsByTypeMap.set(listingDetailsId, operation);
             }
         });
 
@@ -100,8 +103,6 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
         if (deletedIds.length > 0) {
             await this.triggerCacheBasedOnTriggerType[DatabaseTriggerType.DELETE](deletedIds);
         }
-
-        await client.query('DELETE FROM affected_ids;');
     }
 
     private groupListingDetailsByTriggerType(
@@ -133,5 +134,9 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
             }
         }
     }
-}
 
+    private queueCacheHandler(handler: () => Promise<void>): Promise<void> {
+        this.cacheQueue = this.cacheQueue.then(() => handler());
+        return this.cacheQueue;
+    }
+}
