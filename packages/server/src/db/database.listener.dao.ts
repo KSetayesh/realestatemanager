@@ -8,7 +8,7 @@ import { CalculationsCacheHandler } from 'src/modules/realestatecalc/api/calcula
 import { Utility } from '@realestatemanager/utilities';
 
 type TriggerCacheHandler = {
-    [key in DatabaseTriggerType]: (listingDetailsList: ListingDetails[]) => Promise<void>;
+    [key in DatabaseTriggerType]: (list: ListingDetails[] | number[]) => Promise<void>;
 };
 
 @Injectable()
@@ -16,17 +16,17 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     private pool: Pool;
 
     private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
-        [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.setNewCache(listingDetailsList);
+        [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listDetails: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.setNewCache(listDetails);
         },
-        [DatabaseTriggerType.INSERT]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.updateCache(listingDetailsList, false);
+        [DatabaseTriggerType.INSERT]: async (listDetails: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.updateCache(listDetails, false);
         },
-        [DatabaseTriggerType.UPDATE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-            await this.cacheHandler.updateCache(listingDetailsList, true);
+        [DatabaseTriggerType.UPDATE]: async (listDetails: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.updateCache(listDetails, true);
         },
-        [DatabaseTriggerType.DELETE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-            return;
+        [DatabaseTriggerType.DELETE]: async (listDetailsIds: number[]): Promise<void> => {
+            await this.cacheHandler.deleteFromCache(listDetailsIds);
         },
     };
 
@@ -98,7 +98,7 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
 
         await this.processGroupedListingDetails(listingDetailsGroupedByTriggerType);
         if (deletedIds.length > 0) {
-            await this.cacheHandler.deleteFromCache(deletedIds);
+            await this.triggerCacheBasedOnTriggerType[DatabaseTriggerType.DELETE](deletedIds);
         }
 
         await client.query('DELETE FROM affected_ids;');
