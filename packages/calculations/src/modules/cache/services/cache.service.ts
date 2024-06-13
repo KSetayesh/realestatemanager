@@ -20,6 +20,7 @@ export class CacheService implements CacheInterface {
 
     constructor() {
         this.cache = new Map<number, ListingWithScenariosResponseDTO>();
+        console.log('CacheService instance created');
     }
 
     async setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
@@ -59,6 +60,7 @@ export class CacheService implements CacheInterface {
     }
 
     async getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]> {
+        console.log('size of cache before trying to get from it: ', this.cache.size);
         if (!this.usePropertyCache) {
             return listingDetailsArr.map(listingDetails => this.createInvestmentMetrics(listingDetails));
         }
@@ -78,7 +80,7 @@ export class CacheService implements CacheInterface {
             this.cache.set(listingDetail.id, listingWithScenariosDTO);
         }
 
-        console.log(`Fresh Cache has been set.`);
+        console.log(`Fresh Cache has been set with ${this.cache.size} properties found in cache.`);
     }
 
     private async _resetCache(): Promise<void> {
@@ -145,6 +147,11 @@ export class CacheService implements CacheInterface {
         if (!this.usePropertyCache) {
             return this.createInvestmentMetrics(listingDetails);
         }
+
+        for (let key of this.cache.keys()) {
+            console.log(`key: ${key}, value: ${listingDetails.id}`);
+        }
+
         const listingId: number = listingDetails.id;
         if (this.cache.has(listingId) && Utility.deepEqual(listingDetails, this.cache.get(listingId))) {
             console.log(`Property id ${listingId} has been found in cache`);

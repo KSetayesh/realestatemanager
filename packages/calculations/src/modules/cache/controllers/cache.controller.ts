@@ -52,7 +52,7 @@ export class CacheController {
         @Body() listingDetailIds: number[],
     ): Promise<void> {
         console.log('hi_5');
-        this.cacheService.deleteFromCache(listingDetailIds);
+        await this.cacheService.deleteFromCache(listingDetailIds);
     }
 
     @Post('calculate')
