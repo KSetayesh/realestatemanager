@@ -1,6 +1,28 @@
+import { promises as fs } from 'fs';
 import { ValueInput, ValueType } from "@realestatemanager/shared";
 
 export class PropertyUtility {
+
+    /**
+   * This function writes the provided data to a JSON file at the specified filePath.
+   * The file writing operation is non-blocking, meaning the function does not wait
+   * for the file to be written before continuing with the execution of subsequent code.
+   * Instead, it initiates the write operation and immediately proceeds.
+   * The success or failure of the file write operation is logged using .then and .catch.
+   *
+   * @param {string} filePath - The path where the JSON file will be written.
+   * @param {any} data - The data to be written to the JSON file.
+   */
+    static writeResponseToJsonFile(filePath: string, data: any): void {
+        console.log(`Writing rentcast api response to ${filePath}`);
+        fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8')
+            .then(() => {
+                console.log('File has been saved successfully.');
+            })
+            .catch(err => {
+                console.error('Failed to write to file:', err);
+            });
+    }
 
     static getAmountFromValueInput(input: ValueInput, baseValue?: number): number {
         if (input.type === ValueType.AMOUNT) {

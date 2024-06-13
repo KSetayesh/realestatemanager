@@ -10,6 +10,7 @@ import { RentCastApiEndPointManager, RentCastEndPoint } from './rent.cast.api.en
 import { RentCastDetails } from '../models/rentcastdetails.model';
 import { ApiClient } from 'src/shared/api.client';
 import { EndpointDetails } from 'src/shared/endpoint.details.interface';
+import { PropertyUtility } from 'src/utility/PropertyUtility';
 
 export type RentCastApiResponse = {
     jsonData: any;
@@ -107,7 +108,8 @@ export class RentCastApiClient extends ApiClient {
         console.log("_data1:", data); // Log the response data
 
         // Write response data to JSON file
-        await this.writeResponseToJsonFile(filePath, data);
+        PropertyUtility.writeResponseToJsonFile(filePath, data);
+
         console.log(`Api response written to ${filePath}`);
         return {
             rentCastApiCallId,
@@ -135,16 +137,6 @@ export class RentCastApiClient extends ApiClient {
         } else {
             console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
             return;
-        }
-    }
-
-    private async writeResponseToJsonFile(filePath: string, data: any): Promise<void> {
-        try {
-            console.log(`Writing rentcast api response to ${filePath}`);
-            await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-            console.log('File has been saved successfully.');
-        } catch (err) {
-            console.error('Failed to write to file:', err);
         }
     }
 
