@@ -22,6 +22,7 @@ export class CalculationsCacheHandler {
     }
 
     async getFromCache(listingDetails: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
+        console.log('About to call getFromCache, length of list is: ', listingDetails.length);
         const response: Response = await this.calculationsApiClient.getFromCache(listingDetails);
         if (!response.ok) {
             throw new Error(`Failed to get from cache: ${response.status} ${response.statusText}`);

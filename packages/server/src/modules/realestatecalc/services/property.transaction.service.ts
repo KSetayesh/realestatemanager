@@ -98,13 +98,13 @@ export class PropertyTransactionService {
         }
     }
 
-    private async executeWithTransaction<T>(operation: (client: PoolClient) => Promise<T>, updateCache: boolean = true): Promise<T> {
+    private async executeWithTransaction<T>(operation: (client: PoolClient) => Promise<T>): Promise<T> {
         const client = await this.pool.connect();
         try {
             await client.query('BEGIN');
             const result = await operation(client);
             await client.query('COMMIT');
-            await this.executeUpdateCache(client, updateCache);
+            await this.executeUpdateCache(client);
             return result;
         } catch (error) {
             await client.query('ROLLBACK');
@@ -115,15 +115,12 @@ export class PropertyTransactionService {
         }
     }
 
-    private async executeUpdateCache(client: Pool, updateCache: boolean = true): Promise<void> {
+    private async executeUpdateCache(client: Pool): Promise<void> {
         if (!this.enableCacheUpdates) {
             return;
         }
-        console.log('updateCache:', updateCache);
-        if (updateCache) {
-            console.log('Running: SELECT notify_and_clear_affected_ids()');
-            await client.query('SELECT notify_and_clear_affected_ids()');
-        }
+        console.log('Running: SELECT notify_and_clear_affected_ids()');
+        await client.query('SELECT notify_and_clear_affected_ids()');
     }
 
 }

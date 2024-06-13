@@ -45,7 +45,7 @@ export abstract class ApiClient {
     ): Promise<Response> {
         try {
             console.log("URL for Api:", url);
-            const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, requestBody, method);
+            const options: ApiHeader = this.getHeadersForRentCastApiCall(apiKey, requestBody, method);
             const response = await fetch(url, options);
 
             // response.ok checks to see if the status code falls between 200-299
@@ -61,11 +61,11 @@ export abstract class ApiClient {
     }
 
 
-    private async getHeadersForRentCastApiCall(
+    private getHeadersForRentCastApiCall(
         apiKey: string,
         requestBody?: string,
         method: Method = Method.GET,
-    ): Promise<ApiHeader> {
+    ): ApiHeader {
 
         const reqHeader: ApiHeader = {
             method: method,
