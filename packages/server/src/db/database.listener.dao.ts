@@ -3,18 +3,38 @@ import { Utility } from '@realestatemanager/shared';
 import { Pool, PoolClient } from 'pg';
 import { DatabaseService } from 'src/db/database.service';
 import { DatabaseTriggerType } from 'src/shared/Constants';
-import { ListingManager } from '../dbmanager/listing.manager';
+import { ListingManager } from './realestate/dbmanager/listing.manager';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 import { CalculationsCacheHandler } from 'src/modules/realestatecalc/api/calculations.cache.handler';
+
+type TriggerCacheHandler = {
+    [key in DatabaseTriggerType]: (listingDetailsList: ListingDetails[]) => Promise<void>;
+};
 
 @Injectable()
 export class DatabaseListenerDAO implements OnModuleDestroy {
     private pool: Pool;
 
+    private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
+        [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.setNewCache(listingDetailsList);
+        },
+        [DatabaseTriggerType.INSERT]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.updateCache(listingDetailsList, false);
+        },
+        [DatabaseTriggerType.UPDATE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+            await this.cacheHandler.updateCache(listingDetailsList, true);
+        },
+        [DatabaseTriggerType.DELETE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+            return;
+        },
+    };
+
     constructor(
         private readonly databaseService: DatabaseService,
         private readonly listingManager: ListingManager,
-        private readonly cacheHandler: CalculationsCacheHandler
+        private readonly cacheHandler: CalculationsCacheHandler,
+        private readonly enableChacheUpdate: boolean,
     ) {
         this.pool = this.databaseService.getPool();
     }
@@ -27,6 +47,9 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     }
 
     async listenToListingChanges() {
+        if (!this.enableChacheUpdate) {
+            return;
+        }
         console.log('---Listening to database changes---');
         const client = await this.pool.connect();
 
@@ -75,7 +98,7 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
 
         await this.processGroupedListingDetails(listingDetailsGroupedByTriggerType);
         if (deletedIds.length > 0) {
-            await this.cacheHandler.deleteFromCacheIfNeeded(deletedIds);
+            await this.cacheHandler.deleteFromCache(deletedIds);
         }
 
         await client.query('DELETE FROM affected_ids;');
@@ -104,21 +127,9 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     }
 
     private async processGroupedListingDetails(listingDetailsGroupedByTriggerType: Map<DatabaseTriggerType, ListingDetails[]>) {
-        const triggerCacheBasedOnTriggerType = {
-            [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-                await this.cacheHandler.setNewCache(listingDetailsList);
-            },
-            [DatabaseTriggerType.INSERT]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-                await this.cacheHandler.updateCache(listingDetailsList, false);
-            },
-            [DatabaseTriggerType.UPDATE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
-                await this.cacheHandler.updateCache(listingDetailsList, true);
-            },
-        };
-
         for (const [triggerType, listingDetailsList] of listingDetailsGroupedByTriggerType.entries()) {
             if (listingDetailsList.length > 0) {
-                await triggerCacheBasedOnTriggerType[triggerType](listingDetailsList);
+                await this.triggerCacheBasedOnTriggerType[triggerType](listingDetailsList);
             }
         }
     }

@@ -19,7 +19,11 @@ export class PathUtil {
     }
 
     static getDbSchemaPath(): string {
-        return join(__dirname, '..', 'db', 'dbschema.sql');
+        return join(__dirname, '..', 'db', 'schemas', 'dbschema.sql');
+    }
+
+    static getDbTriggersPath(): string {
+        return join(__dirname, '..', 'db', 'schemas', 'dbtriggers.sql');
     }
 
 }

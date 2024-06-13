@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 import { PathUtil } from 'src/utility/PathUtil';
 
 @Injectable()
-export class DatabaseService { //implements OnModuleInit {
+export class DatabaseService { 
 
     private pool: Pool;
 
@@ -23,23 +23,28 @@ export class DatabaseService { //implements OnModuleInit {
         return this.pool;
     }
 
-    // async onModuleInit() {
-    //     await this.initializeDatabase();
-    //     // await this.databaseListenerDAO.onModuleInit();
-    // }
-
     async initializeDatabase() {
-        const sqlFilePath = PathUtil.getDbSchemaPath();  //join(__dirname, this.dbSchema);
-        console.log('sqlFilePath:', sqlFilePath);
-        const sql = readFileSync(sqlFilePath).toString();
+        const sqlFilePaths = [
+            PathUtil.getDbSchemaPath(),   
+            PathUtil.getDbTriggersPath(),  
+        ];
+
         try {
-            console.log('Running dbschema.sql script...');
             const client = await this.pool.connect();
-            await client.query(sql);
+
+            for (const sqlFilePath of sqlFilePaths) {
+                const sql = readFileSync(sqlFilePath).toString();
+                console.log(`Running ${sqlFilePath} script...`);
+                await client.query(sql);
+            }
+
             client.release();
             console.log('Database initialized successfully.');
         } catch (err) {
             console.error('Error initializing database:', err);
         }
     }
+
+
+ 
 }

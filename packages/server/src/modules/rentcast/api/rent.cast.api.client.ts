@@ -132,7 +132,7 @@ export class RentCastApiClient extends ApiClient {
 
     }
 
-    protected async _makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<any> {
+    protected async _makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<Response> {
         const apiKey = rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
         return this.makeApiCall(apiKey, url, undefined);
     }

@@ -6,41 +6,51 @@ import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails
 @Injectable()
 export class CalculationsCacheHandler {
 
-    private enableCacheUpdates: boolean;
     private calculationsApiClient: CalculationsApiClient;
 
     constructor(
-        enableCacheUpdates: boolean,
         calculationsApiClient: CalculationsApiClient,
     ) {
-        this.enableCacheUpdates = enableCacheUpdates;
         this.calculationsApiClient = calculationsApiClient;
     }
 
     async setNewCache(listingDetailsArr: ListingDetails[]): Promise<void> {
-        await this.calculationsApiClient.setFreshCache(listingDetailsArr);
+        const response = await this.calculationsApiClient.setFreshCache(listingDetailsArr);
+        if (!response.ok) {
+            throw new Error(`Failed to set new cache: ${response.status} ${response.statusText}`);
+        }
     }
 
-    // Doensn't update, delete, or add to Calculation Cache (just fetches from it), no need to check for enableCacheUpdates
     async getFromCache(listingDetails: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
-        return this.calculationsApiClient.getFromCache(listingDetails);
+        const response: Response = await this.calculationsApiClient.getFromCache(listingDetails);
+        if (!response.ok) {
+            throw new Error(`Failed to get from cache: ${response.status} ${response.statusText}`);
+        }
+        const listingWithScenariosList: ListingWithScenariosResponseDTO[] = await response.json();
+        return listingWithScenariosList;
     }
 
-    async updateCache(
-        listingDetails: ListingDetails[],
-        forceUpdate: boolean): Promise<void> {
-        await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
+    async updateCache(listingDetails: ListingDetails[], forceUpdate: boolean): Promise<void> {
+        const response = await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
+        if (!response.ok) {
+            throw new Error(`Failed to update cache: ${response.status} ${response.statusText}`);
+        }
     }
 
-    async deleteFromCacheIfNeeded(listingDetailIds: number[]): Promise<void> {
-        await this.calculationsApiClient.deleteFromCache(listingDetailIds);
+    async deleteFromCache(listingDetailIds: number[]): Promise<void> {
+        const response = await this.calculationsApiClient.deleteFromCache(listingDetailIds);
+        if (!response.ok) {
+            throw new Error(`Failed to delete from cache: ${response.status} ${response.statusText}`);
+        }
     }
 
-    // Doens't hit Calculation Cache, no need to check for enableCacheUpdates
     async calculate(listingDetails: ListingDetails, investmentScenarioRequest: CreateInvestmentScenarioRequest): Promise<ListingWithScenariosResponseDTO> {
-        return this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+        const response: Response = await this.calculationsApiClient.calculate(listingDetails, investmentScenarioRequest);
+        if (!response.ok) {
+            throw new Error(`Failed to calculate: ${response.status} ${response.statusText}`);
+        }
+        const listingWithScenarios: ListingWithScenariosResponseDTO = await response.json();
+        return listingWithScenarios;
     }
-
-
 
 }

@@ -24,8 +24,7 @@ export class PropertyTransactionService {
         private readonly propertyService: PropertyService,
         private readonly enableCacheUpdates: boolean,
     ) {
-        this.pool = this.databaseService.getPool()
-        // this.setupCache();
+        this.pool = this.databaseService.getPool();
     }
 
     async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
@@ -126,8 +125,6 @@ export class PropertyTransactionService {
             await client.query('SELECT notify_and_clear_affected_ids()');
         }
     }
-
-
 
 }
 

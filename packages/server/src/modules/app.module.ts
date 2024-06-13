@@ -8,13 +8,14 @@ import { AgentModule } from './agents/agent.module';
 import { RentCastModule } from './rentcast/rentcast.module';
 import { PathUtil } from 'src/utility/PathUtil';
 import { DatabaseService } from '../db/database.service';
-import { DatabaseListenerDAO } from '../db/realestate/dao/database.listener.dao';
+import { DatabaseListenerDAO } from '../db/database.listener.dao';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDAO } from 'src/db/realestate/dao/listing.dao';
 import applicationConfig from 'src/config/applicationConfig';
 import { CalculationsCacheHandler } from './realestatecalc/api/calculations.cache.handler';
 import { CalculationsApiClient } from './realestatecalc/api/calculations.api.client';
 import { InitService } from './init.service';
+import { PropertyTransactionService } from './realestatecalc/services/property.transaction.service';
 
 @Module({
     imports: [
@@ -46,13 +47,44 @@ import { InitService } from './init.service';
             useFactory: (
                 calculationsApiClient: CalculationsApiClient,
             ) => {
-                const enableCacheUpdates: boolean = applicationConfig.enableCacheUpdates;
-                return new CalculationsCacheHandler(enableCacheUpdates, calculationsApiClient);
+                return new CalculationsCacheHandler(calculationsApiClient);
             },
             inject: [CalculationsApiClient, ListingManager],
         },
-        DatabaseListenerDAO,
-        InitService,
+        {
+            provide: DatabaseListenerDAO,
+            useFactory: (
+                databaseService: DatabaseService,
+                listingManager: ListingManager,
+                cacheHandler: CalculationsCacheHandler,
+            ) => {
+                const enableCacheUpdates: boolean = applicationConfig.enableCacheUpdates;
+                return new DatabaseListenerDAO(
+                    databaseService,
+                    listingManager,
+                    cacheHandler,
+                    enableCacheUpdates,
+                );
+            },
+            inject: [DatabaseService, ListingManager, CalculationsCacheHandler],
+        },
+        {
+            provide: InitService,
+            useFactory: (
+                databaseService: DatabaseService,
+                databaseListener: DatabaseListenerDAO,
+                propertyTransactionService: PropertyTransactionService,
+            ) => {
+                const enableCacheUpdates: boolean = applicationConfig.enableCacheUpdates;
+                return new InitService(
+                    databaseService,
+                    databaseListener,
+                    propertyTransactionService,
+                    enableCacheUpdates,
+                );
+            },
+            inject: [DatabaseService, DatabaseListenerDAO, PropertyTransactionService],
+        },
     ],
     exports: [DatabaseService, ListingManager, ListingDAO, CalculationsCacheHandler],
 })

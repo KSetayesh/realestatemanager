@@ -42,12 +42,10 @@ export abstract class ApiClient {
         url: string,
         requestBody?: string,
         method: Method = Method.GET,
-    ): Promise<any> {
+    ): Promise<Response> {
         try {
             console.log("URL for Api:", url);
-            // console.log("body:", body);
             const options: ApiHeader = await this.getHeadersForRentCastApiCall(apiKey, requestBody, method);
-            console.log('options:', options);
             const response = await fetch(url, options);
 
             // response.ok checks to see if the status code falls between 200-299
@@ -55,18 +53,6 @@ export abstract class ApiClient {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response;
-
-
-            // // Check if the response has a body before parsing it as JSON
-            // const contentType = response.headers.get('content-type');
-            // console.log('contentType:', contentType);
-            // if (contentType && contentType.includes('application/json')) {
-            //     const data = await response.json();
-            //     return data;
-            // } else {
-            //     console.log('In else statement');
-            //     return; // or return an appropriate value if there's no JSON body
-            // }
 
         } catch (error) {
             console.error('Api Call Error:', error);

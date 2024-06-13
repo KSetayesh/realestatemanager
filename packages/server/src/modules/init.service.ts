@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DatabaseService } from 'src/db/database.service';
-import { DatabaseListenerDAO } from 'src/db/realestate/dao/database.listener.dao';
 import { PropertyTransactionService } from './realestatecalc/services/property.transaction.service';
+import { DatabaseListenerDAO } from 'src/db/database.listener.dao';
 
 @Injectable()
 export class InitService implements OnModuleInit {
@@ -9,13 +9,16 @@ export class InitService implements OnModuleInit {
         private readonly databaseService: DatabaseService,
         private readonly databaseListener: DatabaseListenerDAO,
         private readonly propertyTransactionService: PropertyTransactionService,
+        private readonly enableCacheUpdates: boolean,
     ) { }
 
     async onModuleInit() {
         console.log('--- Starting initialization ---');
         await this.initializeDatabase();
-        await this.initializeCache();
-        await this.initializeOtherService();
+        if (this.enableCacheUpdates) {
+            await this.initializeCache();
+            await this.initializeOtherService();
+        }
         console.log('--- Initialization complete ---');
     }
 
