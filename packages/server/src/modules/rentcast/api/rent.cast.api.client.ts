@@ -2,7 +2,6 @@ import { Pool } from 'pg';
 import fs from 'fs/promises';  // Use promise-based fs
 import rentCastConfig from '../../../config/rentCastConfig';
 import { CreateRentCastApiRequest } from "@realestatemanager/shared";
-import { rentCastDetailsMap } from 'src/shared/Constants';
 import { RentClassApiUrlCreator } from './rent.cast.api.url.creator';
 import { RentCastManager } from 'src/db/realestate/dbmanager/rentcast.manager';
 import { Injectable } from '@nestjs/common';
@@ -11,11 +10,6 @@ import { RentCastApiEndPointManager, RentCastEndPoint } from './rent.cast.api.en
 import { RentCastDetails } from '../models/rentcastdetails.model';
 import { ApiClient } from 'src/shared/api.client';
 import { EndpointDetails } from 'src/shared/endpoint.details.interface';
-
-export type ApiCallDetails = {
-    canCallRentCastApi: boolean;
-    rentCastDetailsId?: number;
-};
 
 export type RentCastApiResponse = {
     jsonData: any;
@@ -43,17 +37,13 @@ export class RentCastApiClient extends ApiClient {
         this.rentCastApiEndPointManager = new RentCastApiEndPointManager();
     }
 
-    async getRentCastDetailsId(): Promise<number> {
-        return (await this.getApiCallDetails()).rentCastDetailsId;
-    }
-
     async callRentCastApi(
         rentCastEndPoint: RentCastEndPoint,
         rentCastApiRequest: CreateRentCastApiRequest,
     ): Promise<RentCastApiResponse> {
 
-        const apiCallDetails = await this.getApiCallDetails();
-        if (!apiCallDetails.canCallRentCastApi) {
+        const rentCastDetails: RentCastDetails = await this.getRentCastDetails();
+        if (!rentCastDetails) {
             throw new Error('API call not permitted at this time.');
         }
 
@@ -66,7 +56,7 @@ export class RentCastApiClient extends ApiClient {
 
             rentCastApiResponse = await this._callRentCastApi(
                 rentCastEndPoint,
-                apiCallDetails,
+                rentCastDetails,
                 rentCastApiRequest,
             );
 
@@ -88,7 +78,7 @@ export class RentCastApiClient extends ApiClient {
 
     private async _callRentCastApi(
         rentCastEndPoint: RentCastEndPoint,
-        apiCallDetails: ApiCallDetails,
+        rentCastDetails: RentCastDetails,
         rentCastApiRequest: CreateRentCastApiRequest,
     ): Promise<RentCastApiResponse> {
 
@@ -98,66 +88,54 @@ export class RentCastApiClient extends ApiClient {
         const filePath = endpointDetails.responseFilePath;
         const endPoint = endpointDetails.endPoint;
 
-        const url = new RentClassApiUrlCreator().createURL(endPoint, rentCastApiRequest);
+        const url: string = new RentClassApiUrlCreator().createURL(endPoint, rentCastApiRequest);
 
-        const response = await this._makeApiCall(apiCallDetails, url);
-        if (response.status === 200) {
-            const executionTime = new Date();
-            console.log("RentCastApi call is successful!");
-            const rentCastDetailsId = apiCallDetails.rentCastDetailsId;
-            await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
-            const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
-                this.pool,
-                endPoint,
-                url,
-                rentCastDetailsId,
-                executionTime
-            );
-            const data = await response.json();
-            console.log("_data1:", data); // Log the response data
+        const response: Response = await this._makeApiCall(rentCastDetails, url);
 
-            // Write response data to JSON file
-            await this.writeResponseToJsonFile(filePath, data);
-            console.log(`Api response written to ${filePath}`);
-            return {
-                rentCastApiCallId,
-                jsonData: data,
-                endPoint: endPoint,
-            };
+        const executionTime = new Date();
+        console.log("RentCastApi call is successful!");
+        const rentCastDetailsId = rentCastDetails.id;
+        await this.rentCastManager.updateNumberOfApiCalls(this.pool, rentCastDetailsId);
+        const rentCastApiCallId = await this.rentCastManager.insertRentCastApiCall(
+            this.pool,
+            endPoint,
+            url,
+            rentCastDetailsId,
+            executionTime
+        );
+        const data = await response.json();
+        console.log("_data1:", data); // Log the response data
 
-        } else {
-            console.log("Is NOT successful!");
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // Write response data to JSON file
+        await this.writeResponseToJsonFile(filePath, data);
+        console.log(`Api response written to ${filePath}`);
+        return {
+            rentCastApiCallId,
+            jsonData: data,
+            endPoint: endPoint,
+        };
 
     }
 
-    protected async _makeApiCall(apiCallDetails: ApiCallDetails, url: string): Promise<Response> {
-        const apiKey = rentCastDetailsMap[apiCallDetails.rentCastDetailsId];
-        return this.makeApiCall(apiKey, url, undefined);
+    protected async _makeApiCall(rentCastDetails: RentCastDetails, url: string): Promise<Response> {
+        return this.makeApiCall(rentCastDetails.apiKey, url, undefined);
     }
 
-    private async getApiCallDetails(): Promise<ApiCallDetails> {
+    private async getRentCastDetails(): Promise<RentCastDetails | undefined> {
         if (!this.canMakeApiCall) {
             console.log(`"canMakeRentCastApiCall" is set to false in .env`);
-            return { canCallRentCastApi: false };
+            return;
         }
 
         const rentCastDetails: RentCastDetails[] = await this.rentCastManager.getRentCastApiDetails(this.pool);
-        for (const rentCastDetail of rentCastDetails) {
-            if (rentCastDetail.canMakeFreeApiCall) {
-                return {
-                    canCallRentCastApi: true,
-                    rentCastDetailsId: rentCastDetail.id
-                };
-            }
+        const validRentCastDetail = rentCastDetails.find(detail => detail.canMakeFreeApiCall);
+
+        if (validRentCastDetail) {
+            return validRentCastDetail;
+        } else {
+            console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
+            return;
         }
-
-        console.log(`Number of rent cast api calls has reached its limit, cannot make api call`);
-
-        return {
-            canCallRentCastApi: false
-        };
     }
 
     private async writeResponseToJsonFile(filePath: string, data: any): Promise<void> {

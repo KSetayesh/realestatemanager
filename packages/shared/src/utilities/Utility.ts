@@ -1,5 +1,10 @@
 export class Utility {
 
+    // Returns false if string is undefined, null or length = 0, otherwise return true
+    static isValidString(str?: string): boolean {
+        return !!str?.length;
+    }
+
     // Basically just pass in "Date.now()"
     static getTimeSpent(startTime: number): number {
         const endTime = Date.now();

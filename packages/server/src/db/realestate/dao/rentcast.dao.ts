@@ -16,7 +16,7 @@ export class RentCastDAO extends RealEstateDAO implements RentCastDAOInterface {
 
     private GET_RENT_CAST_CONFIG_DETAILS_QUERY = `SELECT 
         id, api_calls_this_month, number_of_free_api_calls, billing_period, first_billed_on, most_recent_billing_date,  
-        email, api_key_name 
+        email, api_key_name, api_key 
         FROM rent_cast_config_details`;
 
 
@@ -325,6 +325,7 @@ export class RentCastDAO extends RealEstateDAO implements RentCastDAOInterface {
         const firstBilledOn: Date = row.first_billed_on;
         const email: string = row.email;
         const apiKeyName: string = row.api_key_name;
+        const apiKey: string = row.api_key;
 
         return new RentCastDetails(
             id,
@@ -334,7 +335,8 @@ export class RentCastDAO extends RealEstateDAO implements RentCastDAOInterface {
             mostRecentBillingDate,
             firstBilledOn,
             email,
-            apiKeyName
+            apiKeyName,
+            apiKey,
         );
     }
 

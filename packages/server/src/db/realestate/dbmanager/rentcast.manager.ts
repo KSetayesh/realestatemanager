@@ -4,8 +4,7 @@ import { DatabaseManager } from './db.manager';
 import { Injectable } from '@nestjs/common';
 import { RentCastResponse } from 'src/modules/rentcast/models/rentcastresponse.model';
 import { RentCastDetails } from 'src/modules/rentcast/models/rentcastdetails.model';
-import { RentCastMatchingData } from 'src/modules/rentcast/models/rentcastmatchingdata.model';
-import { rentCastDetailsMap } from 'src/shared/Constants';
+import { RentCastMatchingData } from 'src/modules/rentcast/models/rentcastmatchingdata.model'; 
 import { RentCastDAOInterface } from '../dao/rentcast.dao.interface';
 
 @Injectable()
@@ -44,13 +43,6 @@ export class RentCastManager extends DatabaseManager implements RentCastDAOInter
     }
 
     async getRentCastApiDetails(pool: Pool): Promise<RentCastDetails[]> {
-        const rentCastDetails: RentCastDetails[] = await this.rentCastDAO.getRentCastApiDetails(pool);
-
-        for (const rentCastDetail of rentCastDetails) {
-            if (!(rentCastDetail.id in rentCastDetailsMap)) {
-                throw new Error(`${rentCastDetail.id} not found! Need to update rentCastDetailsMap`);
-            }
-        }
         return (await this.rentCastDAO.getRentCastApiDetails(pool)).sort((a, b) => a.id - b.id);
     }
 

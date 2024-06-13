@@ -1,4 +1,4 @@
-import { IDTOConvertible, RentCastDetailsResponseDTO } from "@realestatemanager/shared";
+import { IDTOConvertible, RentCastDetailsResponseDTO, Utility } from "@realestatemanager/shared";
 import { Entity } from "src/shared/entity";
 import { PropertyUtility } from "src/utility/PropertyUtility";
 
@@ -11,6 +11,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
     private _firstBilledOn: Date;
     private _email: string; // Sensative info don't want to expose in getter
     private _apiKeyName: string; // Sensative info don't want to expose in getter
+    private _apiKey: string;
 
     constructor(
         id: number,
@@ -21,6 +22,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
         firstBilledOn: Date,
         email: string,
         apiKeyName: string,
+        apiKey: string,
     ) {
         super(id);
         this._apiCallsThisMonth = apiCallsThisMonth;
@@ -30,11 +32,12 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
         this._firstBilledOn = firstBilledOn;
         this._email = email;
         this._apiKeyName = apiKeyName;
+        this._apiKey = apiKey;
 
     }
 
     get canMakeFreeApiCall(): boolean {
-        return this.remainingNumberOfFreeApiCalls > 0;
+        return this.remainingNumberOfFreeApiCalls > 0 && Utility.isValidString(this.apiKey);
     }
 
     get apiCallsThisMonth(): number {
@@ -71,6 +74,10 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
 
     get apiKeyName(): string {
         return this._apiKeyName;
+    }
+
+    get apiKey(): string {
+        return this._apiKey;
     }
 
     toDTO(): RentCastDetailsResponseDTO {
