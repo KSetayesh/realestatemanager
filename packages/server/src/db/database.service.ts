@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 import { PathUtil } from 'src/utility/PathUtil';
 
 @Injectable()
-export class DatabaseService implements OnModuleInit {
+export class DatabaseService { //implements OnModuleInit {
 
     private pool: Pool;
 
@@ -23,11 +23,12 @@ export class DatabaseService implements OnModuleInit {
         return this.pool;
     }
 
-    async onModuleInit() {
-        await this.initializeDatabase();
-    }
+    // async onModuleInit() {
+    //     await this.initializeDatabase();
+    //     // await this.databaseListenerDAO.onModuleInit();
+    // }
 
-    private async initializeDatabase() {
+    async initializeDatabase() {
         const sqlFilePath = PathUtil.getDbSchemaPath();  //join(__dirname, this.dbSchema);
         console.log('sqlFilePath:', sqlFilePath);
         const sql = readFileSync(sqlFilePath).toString();

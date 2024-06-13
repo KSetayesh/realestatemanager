@@ -2,7 +2,7 @@ import { CreateFilteredPropertyListRequest, ListingCreationType } from '@realest
 import { Pool } from 'pg';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 
-export interface ListingDAOInterface { 
+export interface ListingDAOInterface {
 
     insertListingDetails(
         pool: Pool,
@@ -21,5 +21,9 @@ export interface ListingDAOInterface {
     getPropertiesByZillowURLs(pool: Pool, zillowURLs: string[]): Promise<ListingDetails[]>;
 
     getPropertyByZillowURL(pool: Pool, zillowURL: string): Promise<ListingDetails | null>;
+
+    getPropertyById(pool: Pool, id: number): Promise<ListingDetails | null>;
+
+    getPropertiesByIds(pool: Pool, ids: number[]): Promise<ListingDetails[]>;
 
 } 

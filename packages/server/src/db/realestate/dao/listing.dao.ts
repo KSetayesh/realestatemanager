@@ -230,6 +230,14 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
         return this._getPropertyByZillowURL(pool, zillowURL);
     }
 
+    async getPropertyById(pool: Pool, id: number): Promise<ListingDetails | null> {
+        return this._getPropertyById(pool, id);
+    }
+
+    async getPropertiesByIds(pool: Pool, ids: number[]): Promise<ListingDetails[]> {
+        return this._getPropertiesByIds(pool, ids);
+    }
+
     private async _getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
         const listings: ListingDetails[] = [];
         let query = `${this.GET_LISTINGS_QUERY}`;
@@ -405,6 +413,47 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
             return null;
         } catch (err) {
             console.error(`Error fetching property by Zillow URL: ${zillowURL}`, err);
+            throw err;
+        }
+    }
+
+    private async _getPropertyById(pool: Pool, id: number): Promise<ListingDetails | null> {
+        console.log('property id:', id);
+        const query = `${this.GET_LISTINGS_QUERY} WHERE ld.id = $1;`;
+        console.log(query);
+        try {
+            const res = await pool.query(query, [id]);
+            if (res.rows.length > 0) {
+                const row = res.rows[0];
+                const listing: ListingDetails = this.mapRowToListingDetails(row);
+                return listing;
+            }
+            return null;
+        } catch (err) {
+            console.error(`Error fetching property by ID: ${id}`, err);
+            throw err;
+        }
+    }
+
+    private async _getPropertiesByIds(pool: Pool, ids: number[]): Promise<ListingDetails[]> {
+        if (ids.length === 0) {
+            console.log('No IDs provided.');
+            return [];
+        }
+
+        const listings: ListingDetails[] = [];
+        const placeholders = ids.map((_, index) => `$${index + 1}`).join(', ');
+        const query = `${this.GET_LISTINGS_QUERY} WHERE ld.id IN (${placeholders});`;
+
+        try {
+            const res = await pool.query(query, ids);
+            res.rows.forEach(row => {
+                const listing: ListingDetails = this.mapRowToListingDetails(row);
+                listings.push(listing);
+            });
+            return listings;
+        } catch (err) {
+            console.error('Error fetching properties by IDs', err);
             throw err;
         }
     }

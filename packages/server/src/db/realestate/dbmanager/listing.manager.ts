@@ -14,7 +14,7 @@ export class ListingManager extends DatabaseManager implements ListingDAOInterfa
         commit: boolean,
     ) {
         super(commit)
-    } 
+    }
 
     async getAllListings(pool: Pool, filteredPropertyListRequest?: CreateFilteredPropertyListRequest): Promise<ListingDetails[]> {
         return this.listingDAO.getAllListings(pool, filteredPropertyListRequest);
@@ -30,6 +30,14 @@ export class ListingManager extends DatabaseManager implements ListingDAOInterfa
 
     async getPropertiesByZillowURLs(pool: Pool, zillowUrlList: string[]): Promise<ListingDetails[]> {
         return this.listingDAO.getPropertiesByZillowURLs(pool, zillowUrlList);
+    }
+
+    async getPropertyById(pool: Pool, id: number): Promise<ListingDetails> {
+        return this.listingDAO.getPropertyById(pool, id);
+    }
+
+    async getPropertiesByIds(pool: Pool, ids: number[]): Promise<ListingDetails[]> {
+        return this.listingDAO.getPropertiesByIds(pool, ids);
     }
 
     async insertListingDetails(

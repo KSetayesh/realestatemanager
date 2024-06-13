@@ -12,7 +12,7 @@ import {
 import { DatabaseService } from 'src/db/database.service';
 import { PropertyService } from './property.service';
 import { ListingDetails } from '../models/listingdetails.model';
-import { DatabaseTriggerTypes } from 'src/shared/Constants';
+import { DatabaseTriggerType } from 'src/shared/Constants';
 
 @Injectable()
 export class PropertyTransactionService {
@@ -25,7 +25,7 @@ export class PropertyTransactionService {
         private readonly enableCacheUpdates: boolean,
     ) {
         this.pool = this.databaseService.getPool()
-        this.setupCache();
+        // this.setupCache();
     }
 
     async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
@@ -70,6 +70,41 @@ export class PropertyTransactionService {
         return this.executeWithTransaction(client => this.propertyService.insertListingDetails(client, listingDetails, listingCreationType));
     }
 
+    async setupCache(): Promise<void> {
+        console.log('In PropertyTransactionService.setupCache()');
+        if (!this.enableCacheUpdates) {
+            return;
+        }
+        const client = await this.pool.connect();
+        try {
+            await client.query('BEGIN');
+            console.log('---Inserting listing ids into affected_ids table---');
+            await client.query(`
+                INSERT INTO affected_ids (property_listing_id, operation)
+                SELECT ld.id, '${DatabaseTriggerType.GET_ALL_LISTINGS}'
+                FROM listing_details ld
+                LEFT JOIN affected_ids ai ON ld.id = ai.property_listing_id
+                WHERE ai.property_listing_id IS NULL;
+            `);
+
+            await client.query('COMMIT');
+
+            // const response = await client.query(`SELECT id, operation FROM affected_ids`);
+            // for (const row of response.rows) {
+            //     console.log(`id: ${row.id}, operation: ${row.operation}`);
+            // }
+            // console.log('response.rows.length: ', response.rows.length);
+
+            await this.executeUpdateCache(client);
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error('Transaction failed:', error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
     private async executeWithTransaction<T>(operation: (client: PoolClient) => Promise<T>, updateCache: boolean = true): Promise<T> {
         const client = await this.pool.connect();
         try {
@@ -91,33 +126,14 @@ export class PropertyTransactionService {
         if (!this.enableCacheUpdates) {
             return;
         }
+        console.log('updateCache:', updateCache);
         if (updateCache) {
+            console.log('Running: SELECT notify_and_clear_affected_ids()');
             await client.query('SELECT notify_and_clear_affected_ids()');
         }
     }
 
-    private async setupCache(): Promise<void> {
-        if (!this.enableCacheUpdates) {
-            return;
-        }
-        const client = await this.pool.connect();
-        try {
-            await client.query('BEGIN');
-            await client.query(`
-                INSERT INTO 
-                affected_ids (id, operation) 
-                SELECT id, '${DatabaseTriggerTypes.GET_ALL_LISTINGS}' 
-                FROM listing_details;`);
-            await client.query('COMMIT');
-            await this.executeUpdateCache(client);
-        } catch (error) {
-            await client.query('ROLLBACK');
-            console.error('Transaction failed:', error);
-            throw error;
-        } finally {
-            client.release();
-        }
-    }
+
 
 }
 
