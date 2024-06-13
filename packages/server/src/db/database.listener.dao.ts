@@ -1,11 +1,11 @@
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
-import { Utility } from '@realestatemanager/types';
 import { Pool, PoolClient } from 'pg';
 import { DatabaseService } from 'src/db/database.service';
 import { DatabaseTriggerType } from 'src/shared/Constants';
 import { ListingManager } from './realestate/dbmanager/listing.manager';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 import { CalculationsCacheHandler } from 'src/modules/realestatecalc/api/calculations.cache.handler';
+import { Utility } from '@realestatemanager/utilities';
 
 type TriggerCacheHandler = {
     [key in DatabaseTriggerType]: (listingDetailsList: ListingDetails[]) => Promise<void>;

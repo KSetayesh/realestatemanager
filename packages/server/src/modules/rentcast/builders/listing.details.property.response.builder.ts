@@ -4,12 +4,12 @@ import {
     PropertyType,
     ListingCreationType,
     PropertyStatus,
-    Utility
 } from "@realestatemanager/types";
 import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 import { RentCastPropertyResponseType } from "../service/rentcast.service";
 import { PropertyUtility } from "src/utility/PropertyUtility";
+import { Utility } from "@realestatemanager/utilities";
 
 /* 
     The order of creating the properties in this Builder class is 

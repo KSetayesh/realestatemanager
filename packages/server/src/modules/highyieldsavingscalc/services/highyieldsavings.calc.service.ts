@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import {
-    HighYeildSavingsResponseDTO, HighYeildSavingsRequest, Utility
+    HighYeildSavingsResponseDTO, HighYeildSavingsRequest
 } from '@realestatemanager/types';
+import { Utility } from "@realestatemanager/utilities";
 
 
 @Injectable()

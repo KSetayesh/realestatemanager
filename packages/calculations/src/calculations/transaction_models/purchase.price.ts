@@ -2,11 +2,11 @@ import {
     TransactionKey,
     TransactionType,
     TxnResponseDTO,
-    Utility,
     ValueAmountInput,
     ValueRateInput
 } from "@realestatemanager/types";
 import { Transaction } from "./transaction";
+import { Utility } from "@realestatemanager/utilities";
 
 export class PurchasePrice extends Transaction {
     private initialPurchasePrice: ValueAmountInput;

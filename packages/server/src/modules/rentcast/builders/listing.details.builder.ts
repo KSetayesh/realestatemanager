@@ -4,11 +4,11 @@ import {
     PropertyStatus,
     PropertyType,
     State,
-    Utility
 } from "@realestatemanager/types";
 import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
 import { RentCastPropertyResponseType, RentCastSaleResponseType } from "../service/rentcast.service";
 import { PropertyUtility } from "src/utility/PropertyUtility";
+import { Utility } from "@realestatemanager/utilities";
 
 export class ListingDetailsBuilder extends AbstractListingDetailsBuilder {
 

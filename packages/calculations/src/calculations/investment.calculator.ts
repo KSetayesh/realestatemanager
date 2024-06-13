@@ -10,7 +10,6 @@ import {
     MortgageTxnResponseDTO,
     TransactionKey,
     TransactionType,
-    Utility
 } from "@realestatemanager/types";
 import { TransactionManager } from "./transaction.manager";
 import { GrowthProjections } from "./growth.projections.model";
@@ -19,6 +18,7 @@ import { MortgageCalculator } from "./transaction_models/mortgage.calc";
 import { PurchasePrice } from "./transaction_models/purchase.price";
 import { RentEstimate } from "./transaction_models/rent.estimate";
 import { CalcUtility } from "src/utility/calc.utility";
+import { Utility } from "@realestatemanager/utilities";
 
 export class InvestmentCalculator {
 

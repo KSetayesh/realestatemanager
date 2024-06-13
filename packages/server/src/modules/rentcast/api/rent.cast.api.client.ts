@@ -10,6 +10,7 @@ import { RentCastDetails } from '../models/rentcastdetails.model';
 import { ApiClient } from 'src/shared/api.client';
 import { EndpointDetails } from 'src/shared/endpoint.details.interface';
 import { PropertyUtility } from 'src/utility/PropertyUtility';
+import { Utility } from '@realestatemanager/utilities';
 
 export type RentCastApiResponse = {
     jsonData: any;
@@ -107,7 +108,7 @@ export class RentCastApiClient extends ApiClient {
         console.log("_data1:", data); // Log the response data
 
         // Write response data to JSON file
-        PropertyUtility.writeResponseToJsonFileNonBlocking(filePath, data);
+        Utility.writeResponseToJsonFileNonBlocking(filePath, data);
 
         console.log(`Api response written to ${filePath}`);
         return {

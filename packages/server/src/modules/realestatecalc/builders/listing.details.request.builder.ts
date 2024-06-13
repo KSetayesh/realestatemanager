@@ -5,9 +5,9 @@ import {
     PropertyStatus,
     PropertyType,
     State,
-    Utility
 } from "@realestatemanager/types";
 import { AbstractListingDetailsBuilder } from "../../../shared/listing.details.abstract.builder";
+import { Utility } from "@realestatemanager/utilities";
 
 export class ListingDetailsRequestBuilder extends AbstractListingDetailsBuilder {
 

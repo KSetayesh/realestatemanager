@@ -6,7 +6,6 @@ import {
     MortgageTxnResponseDTO,
     TransactionKey,
     TransactionType,
-    Utility,
     ValueInput,
     ValueRateInput,
     isValueAmountInput,
@@ -15,6 +14,7 @@ import {
 import { PurchasePrice } from "./purchase.price";
 import { Transaction } from "./transaction";
 import { CalcUtility } from "src/utility/calc.utility";
+import { Utility } from "@realestatemanager/utilities";
 
 
 @Injectable()

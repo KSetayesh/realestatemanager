@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import {
     AmortizationBreakdownResponseDTO,
     ListingDetailsResponseDTO,
-    ListingWithScenariosResponseDTO
+    ListingWithScenariosResponseDTO,
 } from '@realestatemanager/types';
 import { InvestmentMetricBuilder } from 'src/calculations/builder/investment.metric.builder';
 import { InvestmentCalculator } from 'src/calculations/investment.calculator';
 import applicationConfig from 'src/config/applicationConfig';
 import { CacheInterface } from './cache.interface';
+import { Utility } from '@realestatemanager/utilities';
 
 @Injectable()
 export class CacheService implements CacheInterface {
@@ -141,9 +142,9 @@ export class CacheService implements CacheInterface {
         if (!this.usePropertyCache) {
             return this.createInvestmentMetrics(listingDetails);
         }
-
-        if (this.cache.has(listingDetails.id)) {
-            return this.cache.get(listingDetails.id);
+        const listingId: number = listingDetails.id;
+        if (this.cache.has(listingId) && Utility.deepEqual(listingDetails, this.cache.get(listingId))) {
+            return this.cache.get(listingId);
         }
 
         return this.createInvestmentMetrics(listingDetails);

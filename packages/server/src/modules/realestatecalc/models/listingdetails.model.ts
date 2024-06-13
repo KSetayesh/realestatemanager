@@ -1,7 +1,6 @@
 import {
     PropertyStatus,
     ListingCreationType,
-    Utility,
     State,
     Country,
     PropertyType,
@@ -11,6 +10,7 @@ import {
 import { PropertyDetails } from "./propertydetails.model";
 import { ZillowMarketEstimates } from "./zillowmarketestimates.model";
 import { Entity } from "src/shared/entity";
+import { Utility } from "@realestatemanager/utilities";
 
 export class ListingDetails extends Entity implements IDTOConvertible<ListingDetailsResponseDTO> {
 

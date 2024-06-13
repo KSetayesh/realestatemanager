@@ -2,7 +2,6 @@ import {
     TransactionKey,
     TransactionType,
     TxnResponseDTO,
-    Utility,
     ValueAmountInput,
     ValueRateInput,
     ValueType
@@ -11,6 +10,7 @@ import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";
 import { CalcUtility } from "src/utility/calc.utility";
+import { Utility } from "@realestatemanager/utilities";
 
 export class Income extends Transaction implements CalculateTxnInterface<ValueAmountInput, RentEstimate> {
 

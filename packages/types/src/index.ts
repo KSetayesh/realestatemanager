@@ -8,7 +8,6 @@ export * from './server/InvestmentTypes';
 export * from './server/FilterPropertyListApiTypes';
 export * from './server/BuilderInterface';
 export * from './server/IDTOConvertible';
-export * from './utilities/Utility';
 export * from './client/formdata/AddAgentTitlesAndLabelsGetter';
 export * from './client/formdata/AddCollectPropertiesTitlesAndLabelsGetter';
 export * from './client/formdata/AddHighYieldSavingsTitlesAndLabelsGetter';

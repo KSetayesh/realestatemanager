@@ -2,12 +2,12 @@ import {
     TransactionKey, 
     TransactionType, 
     TxnResponseDTO, 
-    Utility, 
     ValueRateInput 
 } from "@realestatemanager/types";
 import { CalculateTxnInterface } from "./calculate.txn.interface";
 import { RentEstimate } from "./rent.estimate";
 import { Transaction } from "./transaction";
+import { Utility } from "@realestatemanager/utilities";
 
 export class RecurringOperationalCost extends Transaction implements CalculateTxnInterface<ValueRateInput, RentEstimate> {
 

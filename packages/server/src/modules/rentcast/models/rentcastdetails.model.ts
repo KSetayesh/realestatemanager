@@ -1,4 +1,5 @@
-import { IDTOConvertible, RentCastDetailsResponseDTO, Utility } from "@realestatemanager/types";
+import { IDTOConvertible, RentCastDetailsResponseDTO } from "@realestatemanager/types";
+import { Utility } from "@realestatemanager/utilities";
 import { Entity } from "src/shared/entity";
 import { PropertyUtility } from "src/utility/PropertyUtility";
 
@@ -65,7 +66,7 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
     }
 
     get daysIntoBillingPeriod(): number {
-        return PropertyUtility.calculateDaysPassedSinceIgnoreTime(this.mostRecentBillingDate);
+        return Utility.calculateDaysPassedSinceIgnoreTime(this.mostRecentBillingDate);
     }
 
     get email(): string {

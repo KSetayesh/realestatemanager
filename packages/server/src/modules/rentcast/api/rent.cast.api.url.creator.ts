@@ -1,4 +1,5 @@
-import { CreateRentCastApiRequest, State, Utility } from "@realestatemanager/types";
+import { CreateRentCastApiRequest, State } from "@realestatemanager/types";
+import { Utility } from "@realestatemanager/utilities";
 
 export class RentClassApiUrlCreator {
 
