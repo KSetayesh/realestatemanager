@@ -61,13 +61,9 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(requestBody), Method.POST);
     }
 
-    async deleteFromCache(listingDetailsId: number): Promise<void> {
-        const createDeleteUrl = (listingDetailsId: number): string => {
-            const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.DELETE);
-            return `${getUrlObj.endPoint}/${listingDetailsId}`;
-        };
-
-        return this._makeApiCall(createDeleteUrl(listingDetailsId), undefined, Method.DELETE);
+    async deleteFromCache(listingDetailsId: number[]): Promise<void> {
+        const getUrlObj: EndpointDetails = this.constructUrl(CaclulationEndPoint.DELETE);
+        return this._makeApiCall(getUrlObj.endPoint, JSON.stringify(listingDetailsId), Method.POST);
     }
 
     async resetCache(): Promise<void> {

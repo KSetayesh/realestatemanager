@@ -45,10 +45,9 @@ import { InitService } from './init.service';
             provide: CalculationsCacheHandler,
             useFactory: (
                 calculationsApiClient: CalculationsApiClient,
-                listingManager: ListingManager
             ) => {
                 const enableCacheUpdates: boolean = applicationConfig.enableCacheUpdates;
-                return new CalculationsCacheHandler(enableCacheUpdates, calculationsApiClient, listingManager);
+                return new CalculationsCacheHandler(enableCacheUpdates, calculationsApiClient);
             },
             inject: [CalculationsApiClient, ListingManager],
         },

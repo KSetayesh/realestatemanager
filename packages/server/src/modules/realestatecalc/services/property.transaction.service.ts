@@ -89,12 +89,6 @@ export class PropertyTransactionService {
 
             await client.query('COMMIT');
 
-            // const response = await client.query(`SELECT id, operation FROM affected_ids`);
-            // for (const row of response.rows) {
-            //     console.log(`id: ${row.id}, operation: ${row.operation}`);
-            // }
-            // console.log('response.rows.length: ', response.rows.length);
-
             await this.executeUpdateCache(client);
         } catch (error) {
             await client.query('ROLLBACK');

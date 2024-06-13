@@ -47,10 +47,12 @@ export class CacheController {
         return this.cacheService.getFromCache(listingDetails);
     }
 
-    @Delete('delete/:id')
-    async deleteCache(@Param('id') id: number): Promise<boolean> {
+    @Post('delete')
+    async deleteCache(
+        @Body() listingDetailIds: number[],
+    ): Promise<boolean> {
         console.log('hi_5');
-        return this.cacheService.deleteFromCache(id);
+        return this.cacheService.deleteFromCache(listingDetailIds);
     }
 
     @Post('calculate')

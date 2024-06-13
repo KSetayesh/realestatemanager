@@ -1,16 +1,14 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Utility } from '@realestatemanager/shared';
-import { Pool } from 'pg';
+import { Pool, PoolClient } from 'pg';
 import { DatabaseService } from 'src/db/database.service';
 import { DatabaseTriggerType } from 'src/shared/Constants';
 import { ListingManager } from '../dbmanager/listing.manager';
 import { ListingDetails } from 'src/modules/realestatecalc/models/listingdetails.model';
 import { CalculationsCacheHandler } from 'src/modules/realestatecalc/api/calculations.cache.handler';
 
-
-
 @Injectable()
-export class DatabaseListenerDAO implements OnModuleDestroy { //OnModuleInit, OnModuleDestroy {
+export class DatabaseListenerDAO implements OnModuleDestroy {
     private pool: Pool;
 
     constructor(
@@ -20,11 +18,6 @@ export class DatabaseListenerDAO implements OnModuleDestroy { //OnModuleInit, On
     ) {
         this.pool = this.databaseService.getPool();
     }
-
-    // async onModuleInit() {
-    //     console.log('In DatabaseListenerDAO.onModuleInit()');
-    //     await this.listenToListingChanges();
-    // }
 
     async onModuleDestroy() {
         if (this.pool) {
@@ -39,60 +32,10 @@ export class DatabaseListenerDAO implements OnModuleDestroy { //OnModuleInit, On
 
         try {
             await client.query('LISTEN listing_change');
-            client.on('notification', async (msg) => {
-                console.log('inside listener');
-                if (msg.channel === 'listing_change' && ((msg.payload + '').toLocaleLowerCase() === 'true')) {
+            client.on('notification', async (msg: any) => {
+                if (this.receivedChangeNotification(msg)) {
                     console.log('Received listing_change notification:', msg.payload);
-                    const res = await client.query(`SELECT AS , operation FROM affected_ids;`);
-
-                    // const affectedIdsList: AffectedIdsType[] = [];
-                    const affectedIdsByTypeMap: Map<number, DatabaseTriggerType> = new Map();
-
-                    res.rows.forEach(row => {
-                        const propertyListingId: number = row.property_listing_id;
-                        const operation: DatabaseTriggerType = Utility.getEnumValue(DatabaseTriggerType, row.operation);
-                        affectedIdsByTypeMap.set(propertyListingId, operation);
-                    });
-
-                    const listingDetailsList: ListingDetails[] = await this.listingManager.getPropertiesByIds(
-                        client,
-                        [...affectedIdsByTypeMap.keys()]
-                    );
-
-                    const listingDetailsGroupedByTriggerType: Map<DatabaseTriggerType, ListingDetails[]> = new Map();
-
-                    for (const listingDetails of listingDetailsList) {
-                        const listingId: number = listingDetails.id;
-                        if (listingId in affectedIdsByTypeMap) {
-                            const triggerType: DatabaseTriggerType = affectedIdsByTypeMap.get(listingId);
-                            if (!(triggerType in listingDetailsGroupedByTriggerType)) {
-                                listingDetailsGroupedByTriggerType.set(triggerType, []);
-                            }
-                            listingDetailsGroupedByTriggerType.get(triggerType).push(listingDetails);
-                        }
-                        else {
-                            console.log(`Listing Id ${listingId} not found in affectedIdsByTypeMap`);
-                        }
-                    }
-
-                    const triggerCacheBasedOnTriggerType = {
-                        [DatabaseTriggerType.DELETE]: (listingDetailsList: ListingDetails[]) => {
-
-                        },
-                        [DatabaseTriggerType.GET_ALL_LISTINGS]: (listingDetailsList: ListingDetails[]) => { },
-                        [DatabaseTriggerType.INSERT]: (listingDetailsList: ListingDetails[]) => { },
-                        [DatabaseTriggerType.UPDATE]: (listingDetailsList: ListingDetails[]) => { },
-                    };
-
-                    for (const key of listingDetailsGroupedByTriggerType.keys()) {
-                        const listingDetailsList: ListingDetails[] = listingDetailsGroupedByTriggerType.get(key);
-
-                    }
-
-
-                }
-                else {
-                    console.log('Not true');
+                    await this.handleNotification(client);
                 }
             });
         } catch (err) {
@@ -100,41 +43,84 @@ export class DatabaseListenerDAO implements OnModuleDestroy { //OnModuleInit, On
         }
     }
 
-    // private async handleListingChange(changes: any[]) {
-    //     changes.forEach(change => {
-    //         console.log(`Operation: ${change.operation}, Record ID: ${change.id}`);
-    //         if (DatabaseTriggerType.GET_ALL_LISTINGS === change.operation) {
-    //             console.log('Is a GET_ALL_LISTINGS operation');
-    //         }
-    //         else if (DatabaseTriggerType.UPDATE === change.operation) {
-    //             console.log('Is an UPDATE operation');
-    //         }
-    //         else if (DatabaseTriggerType.DELETE === change.operation) {
-    //             console.log('Is a DELETE operation');
-    //         }
-    //         else if (DatabaseTriggerType.INSERT === change.operation) {
-    //             console.log('Is an INSERT operation');
-    //         }
-    //         else {
-    //             throw new Error('Not a valid operation type');
-    //         }
-    //         // Perform the necessary actions based on the change
-    //     });
-    // }
+    private receivedChangeNotification(msg: any): boolean {
+        return msg.channel === 'listing_change' && msg.payload.toLowerCase() === 'true';
+    }
 
-    // public async executeQueryWithNotification(query: string, params: any[]) {
-    //     const client = await this.pool.connect();
-    //     try {
-    //         await client.query('BEGIN');
-    //         const res = await client.query(query, params);
-    //         await client.query('SELECT notify_and_clear_affected_ids()');
-    //         await client.query('COMMIT');
-    //         return res;
-    //     } catch (err) {
-    //         await client.query('ROLLBACK');
-    //         throw err;
-    //     } finally {
-    //         client.release();
-    //     }
-    // }
+    private async handleNotification(client: PoolClient) {
+        const res = await client.query('SELECT property_listing_id, operation FROM affected_ids;');
+
+        const affectedIdsByTypeMap: Map<number, DatabaseTriggerType> = new Map();
+        const deletedIds: number[] = [];
+
+        res.rows.forEach((row: any) => {
+            const propertyListingId: number = row.property_listing_id;
+            const operation: DatabaseTriggerType = Utility.getEnumValue(DatabaseTriggerType, row.operation);
+            if (operation === DatabaseTriggerType.DELETE) {
+                deletedIds.push(propertyListingId);
+            } else {
+                affectedIdsByTypeMap.set(propertyListingId, operation);
+            }
+        });
+
+        const listingDetailsList: ListingDetails[] = await this.listingManager.getPropertiesByIds(
+            client,
+            [...affectedIdsByTypeMap.keys()]
+        );
+
+        const listingDetailsGroupedByTriggerType: Map<DatabaseTriggerType, ListingDetails[]> = this.groupListingDetailsByTriggerType(
+            listingDetailsList,
+            affectedIdsByTypeMap
+        );
+
+        await this.processGroupedListingDetails(listingDetailsGroupedByTriggerType);
+        if (deletedIds.length > 0) {
+            await this.cacheHandler.deleteFromCacheIfNeeded(deletedIds);
+        }
+
+        await client.query('DELETE FROM affected_ids;');
+    }
+
+    private groupListingDetailsByTriggerType(
+        listingDetailsList: ListingDetails[],
+        affectedIdsByTypeMap: Map<number, DatabaseTriggerType>
+    ): Map<DatabaseTriggerType, ListingDetails[]> {
+        const listingDetailsGroupedByTriggerType: Map<DatabaseTriggerType, ListingDetails[]> = new Map();
+
+        listingDetailsList.forEach((listingDetails) => {
+            const listingId: number = listingDetails.id;
+            if (affectedIdsByTypeMap.has(listingId)) {
+                const triggerType: DatabaseTriggerType = affectedIdsByTypeMap.get(listingId);
+                if (!listingDetailsGroupedByTriggerType.has(triggerType)) {
+                    listingDetailsGroupedByTriggerType.set(triggerType, []);
+                }
+                listingDetailsGroupedByTriggerType.get(triggerType).push(listingDetails);
+            } else {
+                console.log(`Listing Id ${listingId} not found in affectedIdsByTypeMap`);
+            }
+        });
+
+        return listingDetailsGroupedByTriggerType;
+    }
+
+    private async processGroupedListingDetails(listingDetailsGroupedByTriggerType: Map<DatabaseTriggerType, ListingDetails[]>) {
+        const triggerCacheBasedOnTriggerType = {
+            [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+                await this.cacheHandler.setNewCache(listingDetailsList);
+            },
+            [DatabaseTriggerType.INSERT]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+                await this.cacheHandler.updateCache(listingDetailsList, false);
+            },
+            [DatabaseTriggerType.UPDATE]: async (listingDetailsList: ListingDetails[]): Promise<void> => {
+                await this.cacheHandler.updateCache(listingDetailsList, true);
+            },
+        };
+
+        for (const [triggerType, listingDetailsList] of listingDetailsGroupedByTriggerType.entries()) {
+            if (listingDetailsList.length > 0) {
+                await triggerCacheBasedOnTriggerType[triggerType](listingDetailsList);
+            }
+        }
+    }
 }
+
