@@ -108,7 +108,7 @@ export class RentCastApiClient extends ApiClient {
         console.log("_data1:", data); // Log the response data
 
         // Write response data to JSON file
-        PropertyUtility.writeResponseToJsonFile(filePath, data);
+        PropertyUtility.writeResponseToJsonFileNonBlocking(filePath, data);
 
         console.log(`Api response written to ${filePath}`);
         return {
