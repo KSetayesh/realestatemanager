@@ -50,9 +50,9 @@ export class CacheController {
     @Post('delete')
     async deleteCache(
         @Body() listingDetailIds: number[],
-    ): Promise<boolean> {
+    ): Promise<void> {
         console.log('hi_5');
-        return this.cacheService.deleteFromCache(listingDetailIds);
+        this.cacheService.deleteFromCache(listingDetailIds);
     }
 
     @Post('calculate')

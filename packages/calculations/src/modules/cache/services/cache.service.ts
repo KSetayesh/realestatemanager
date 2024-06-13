@@ -37,11 +37,11 @@ export class CacheService implements CacheInterface {
         await this._resetCache();
     }
 
-    async deleteFromCache(listingDetailsIds: number[]): Promise<boolean> {
+    async deleteFromCache(listingDetailsIds: number[]): Promise<void> {
         if (!this.usePropertyCache) {
-            return false;
+            return;
         }
-
+        
         for (const listingDetailsId of listingDetailsIds) {
             await this._deleteFromCache(listingDetailsId);
         }
@@ -67,7 +67,7 @@ export class CacheService implements CacheInterface {
     }
 
     private async _setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
-        this.resetCache();
+        await this.resetCache();
 
         for (const listingDetail of listingDetailsArr) {
             const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.createInvestmentMetrics(
@@ -89,7 +89,7 @@ export class CacheService implements CacheInterface {
         console.log(`Cache has been reset.`);
     }
 
-    private async _deleteFromCache(listingDetailsId: number): Promise<boolean> {
+    private async _deleteFromCache(listingDetailsId: number): Promise<void> {
 
         // Attempt to remove from cache and update queue first
         let wasDeleted = false;
@@ -127,7 +127,6 @@ export class CacheService implements CacheInterface {
             console.log(`Key ${listingDetailsId} not found in cache or update queue.`);
         }
 
-        return wasDeleted;
     }
 
     private async _setCache(listingDetails: ListingDetailsResponseDTO, forceUpdate: boolean): Promise<void> {

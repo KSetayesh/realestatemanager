@@ -10,6 +10,6 @@ export interface CacheInterface {
 
     getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]>;
 
-    deleteFromCache(listingDetailsIds: number[]): Promise<boolean>;
+    deleteFromCache(listingDetailsIds: number[]): Promise<void>;
 
 }
