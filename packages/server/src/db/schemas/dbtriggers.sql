@@ -5,20 +5,22 @@ CREATE TABLE IF NOT EXISTS affected_ids (
     listing_details_id INT
 );
 
--- Step 2: Create or replace the function that logs the changes
 CREATE OR REPLACE FUNCTION log_listing_change() RETURNS TRIGGER AS $$
 BEGIN
-    RAISE NOTICE 'Trigger fired: % %', TG_OP, NEW.listing_details_id;
     IF (TG_OP = 'INSERT') THEN
-        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('INSERT', NEW.listing_details_id);
+        RAISE NOTICE 'Trigger fired: INSERT %', NEW.id;
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('INSERT', NEW.id);
     ELSIF (TG_OP = 'UPDATE') THEN
-        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('UPDATE', NEW.listing_details_id);
+        RAISE NOTICE 'Trigger fired: UPDATE %', NEW.id;
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('UPDATE', NEW.id);
     ELSIF (TG_OP = 'DELETE') THEN
-        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('DELETE', OLD.listing_details_id);
+        RAISE NOTICE 'Trigger fired: DELETE %', OLD.id;
+        INSERT INTO affected_ids (operation, listing_details_id) VALUES ('DELETE', OLD.id);
     END IF;
-    RETURN NEW;
+    RETURN NULL; -- Use RETURN NULL for AFTER triggers
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Step 3: Create triggers to call the function on insert, update, and delete
 DO $$
@@ -37,10 +39,9 @@ BEGIN
     END IF;
 END $$;
 
--- Step 4: Create triggers to call the function on insert, update, and delete
+-- Step 4: Create function to notify and clear affected IDs
 CREATE OR REPLACE FUNCTION notify_and_clear_affected_ids() RETURNS VOID AS $$
 BEGIN
     PERFORM pg_notify('listing_change', 'true');
 END;
 $$ LANGUAGE plpgsql;
- 

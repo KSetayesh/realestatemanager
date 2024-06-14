@@ -15,6 +15,11 @@ export class CacheController {
         private readonly calcService: CalcService
     ) { }
 
+    @Post('checkCache')
+    async checkCache(): Promise<any> {
+        return this.cacheService.getCache();
+    }
+
     @Post('setFreshCache')
     async setFreshCache(
         @Body() listingDetailsArr: ListingDetailsResponseDTO[],

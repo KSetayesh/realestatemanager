@@ -527,61 +527,60 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
     }
 
     private async _deleteListingByZillowURL(pool: Pool, zillowURL: string): Promise<boolean> {
-        const client = await pool.connect();
+
 
         try {
-            await client.query('BEGIN');
+            await pool.query('BEGIN');
 
             // First, fetch the listing details to get associated IDs
-            const listingQuery = 'SELECT property_details_id, zillow_market_estimates_id FROM listing_details WHERE zillow_url = $1';
-            const listingResult = await client.query(listingQuery, [zillowURL]);
+            const listingQuery = 'SELECT id AS listing_details_id, property_details_id, zillow_market_estimates_id FROM listing_details WHERE zillow_url = $1';
+            const listingResult = await pool.query(listingQuery, [zillowURL]);
 
             if (listingResult.rows.length === 0) {
-                await client.query('ROLLBACK');
+                await pool.query('ROLLBACK');
                 return false;
             }
 
-            const { property_details_id, zillow_market_estimates_id } = listingResult.rows[0];
+            const { listing_details_id, property_details_id, zillow_market_estimates_id } = listingResult.rows[0];
 
             // Fetch associated property details
             const propertyDetailsQuery = 'SELECT address_id, school_rating_id FROM property_details WHERE id = $1';
-            const propertyDetailsResult = await client.query(propertyDetailsQuery, [property_details_id]);
+            const propertyDetailsResult = await pool.query(propertyDetailsQuery, [property_details_id]);
 
             if (propertyDetailsResult.rows.length === 0) {
-                await client.query('ROLLBACK');
+                await pool.query('ROLLBACK');
                 return false;
             }
 
             const { address_id, school_rating_id } = propertyDetailsResult.rows[0];
 
             // Delete the listing
-            const deleteListingQuery = 'DELETE FROM listing_details WHERE zillow_url = $1';
-            await client.query(deleteListingQuery, [zillowURL]);
+            console.log('Zillow url is: ', zillowURL);
+            const deleteListingQuery = 'DELETE FROM listing_details WHERE id = $1';
+            await pool.query(deleteListingQuery, [listing_details_id]);
 
             // Delete associated property details
             const deletePropertyDetailsQuery = 'DELETE FROM property_details WHERE id = $1';
-            await client.query(deletePropertyDetailsQuery, [property_details_id]);
+            await pool.query(deletePropertyDetailsQuery, [property_details_id]);
 
             // Delete associated Zillow market estimates
             const deleteZillowMarketEstimatesQuery = 'DELETE FROM zillow_market_estimates WHERE id = $1';
-            await client.query(deleteZillowMarketEstimatesQuery, [zillow_market_estimates_id]);
+            await pool.query(deleteZillowMarketEstimatesQuery, [zillow_market_estimates_id]);
 
             // Delete associated address
             const deleteAddressQuery = 'DELETE FROM address WHERE id = $1';
-            await client.query(deleteAddressQuery, [address_id]);
+            await pool.query(deleteAddressQuery, [address_id]);
 
             // Delete associated school rating
             const deleteSchoolRatingQuery = 'DELETE FROM school_rating WHERE id = $1';
-            await client.query(deleteSchoolRatingQuery, [school_rating_id]);
+            await pool.query(deleteSchoolRatingQuery, [school_rating_id]);
 
-            await client.query('COMMIT');
+            await pool.query('COMMIT');
             return true;
         } catch (err) {
-            await client.query('ROLLBACK');
+            await pool.query('ROLLBACK');
             console.error('Error deleting listing and associated data', err);
             return false;
-        } finally {
-            client.release();
         }
     }
 
