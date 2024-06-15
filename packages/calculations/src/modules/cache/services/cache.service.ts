@@ -27,20 +27,11 @@ export class CacheService implements CacheInterface {
         console.log('Constructor instance counter:', CacheService.instanceCounter);
     }
 
-    async getCache(): Promise<any> {
-        let contentArr = [];
-        let i = 0;
-        for (const key of this.cache.keys()) {
-            if (i === 5) {
-                break;
-            }
-            contentArr.push({
-                id: key,
-                address: this.cache.get(key).listingDetails.propertyDetails.address.fullAddress,
-            });
-            i++;
-        }
-
+    async getCacheDetails(): Promise<any> {
+        const contentArr = [...this.cache.keys()].map(key => ({
+            key: key,
+            fullAddress: this.cache.get(key).listingDetails.propertyDetails.address.fullAddress,
+        }));
         return {
             length: this.cache.size,
             content: contentArr,
@@ -54,7 +45,10 @@ export class CacheService implements CacheInterface {
             console.log('Property cache is disabled.');
             return;
         }
-        await this._setFreshCache(listingDetailsArr);
+        console.log(`Setting cache with ${listingDetailsArr.length} properties.`);
+        await this.resetCache();
+        await this._setCache(listingDetailsArr, false);
+        console.log(`Cache has been set with ${this.cache.size} properties.`);
     }
 
     async resetCache(): Promise<void> {
@@ -80,9 +74,8 @@ export class CacheService implements CacheInterface {
             console.log('Property cache is disabled.');
             return;
         }
-        for (const listingDetails of listingDetailsList) {
-            await this._setCache(listingDetails, forceUpdate);
-        }
+        await this._setCache(listingDetailsList, forceUpdate);
+
     }
 
     async getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]> {
@@ -91,23 +84,11 @@ export class CacheService implements CacheInterface {
             console.log('Property cache is disabled. Creating investment metrics directly.');
             return listingDetailsArr.map(listingDetails => this.createInvestmentMetrics(listingDetails));
         }
-        return Promise.all(listingDetailsArr.map(listingDetails => this._getFromCache(listingDetails)));
-        // const results = await Promise.all(listingDetailsArr.map(listingDetails => this._getFromCache(listingDetails)));
-        // console.log('Cache retrieval results:', results);
-        // return results;
-    }
+        console.log(`Fetching ${listingDetailsArr.length} properties`);
+        const listingWithScenarios: ListingWithScenariosResponseDTO[] = await Promise.all(listingDetailsArr.map(listingDetails => this._getFromCache(listingDetails)));
+        console.log('Finished fetching all  properties');
+        return listingWithScenarios;
 
-    private async _setFreshCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<void> {
-        await this.resetCache();
-        console.log(`Setting cache with ${listingDetailsArr.length} properties.`);
-        for (const listingDetail of listingDetailsArr) {
-            const listingWithScenariosDTO: ListingWithScenariosResponseDTO = this.createInvestmentMetrics(listingDetail);
-            this.cache.set(listingDetail.id, listingWithScenariosDTO);
-        }
-        console.log(`Fresh Cache has been set with ${this.cache.size} properties found in cache.`);
-        for (const key of this.cache.keys()) {
-            console.log(`key: ${key}, value: ${this.cache.get(key)?.listingDetails.id}`);
-        }
     }
 
     private async _resetCache(): Promise<void> {
@@ -147,8 +128,8 @@ export class CacheService implements CacheInterface {
         }
     }
 
-    private async _setCache(listingDetails: ListingDetailsResponseDTO, forceUpdate: boolean): Promise<void> {
-        this.cacheUpdateQueue.push(listingDetails);
+    private async _setCache(listingDetailsList: ListingDetailsResponseDTO[], forceUpdate: boolean): Promise<void> {
+        this.cacheUpdateQueue.push(...listingDetailsList);
         if (!this.cacheUpdateInProgress) {
             this.processCacheUpdateQueue(forceUpdate);
         }
@@ -156,8 +137,6 @@ export class CacheService implements CacheInterface {
 
     private async _getFromCache(listingDetails: ListingDetailsResponseDTO): Promise<ListingWithScenariosResponseDTO> {
         const listingId: number = listingDetails.id;
-        console.log('this.cache.has(listingId): ', (this.cache.has(listingId)));
-
         if (this.cache.has(listingId)) {
             const cachedListing: ListingWithScenariosResponseDTO = this.cache.get(listingId);
             if (Utility.deepEqual(cachedListing.listingDetails, listingDetails)) {

@@ -9,7 +9,6 @@ import { RentCastApiEndPointManager, RentCastEndPoint } from './rent.cast.api.en
 import { RentCastDetails } from '../models/rentcastdetails.model';
 import { ApiClient } from 'src/shared/api.client';
 import { EndpointDetails } from 'src/shared/endpoint.details.interface';
-import { PropertyUtility } from 'src/utility/PropertyUtility';
 import { Utility } from '@realestatemanager/utilities';
 
 export type RentCastApiResponse = {
@@ -28,7 +27,7 @@ export class RentCastApiClient extends ApiClient {
 
     constructor(
         private readonly databaseService: DatabaseService,
-        private readonly rentCastManager: RentCastManager,
+        private readonly rentCastManager: RentCastManager, 
     ) {
         super(
             rentCastConfig.rentCastApiUrl,
@@ -139,5 +138,6 @@ export class RentCastApiClient extends ApiClient {
             return;
         }
     }
+ 
 
 }

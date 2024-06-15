@@ -21,8 +21,11 @@ export class RentCastApiEndPointManager {
 
     getEndPointDetails(baseUrl: string, rentCastApiEndPoint: RentCastEndPoint): EndpointDetails {
         const endPointDetails: EndpointDetails = this.endPointMap[rentCastApiEndPoint];
-        endPointDetails.endPoint = `${baseUrl}/${endPointDetails.endPoint}`;
-        return endPointDetails;
+        const endPointDetailsClone: EndpointDetails = {
+            endPoint: `${baseUrl}/${endPointDetails.endPoint}`,
+            responseFilePath: endPointDetails.responseFilePath,
+        }
+        return endPointDetailsClone;
     }
 
 

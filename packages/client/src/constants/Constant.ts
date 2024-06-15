@@ -34,6 +34,12 @@ const formatDollarAmount = (amount: number): string => {
 
 const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
 
+// Calculates the time spent in seconds from the given start time to now.
+export const getTimeSpent = (startTime: number): number => {
+    const endTime = Date.now();
+    return (endTime - startTime) / 1000;
+}
+
 export const getDateNDaysAgo = (daysAgo: number): string => {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Remove time component

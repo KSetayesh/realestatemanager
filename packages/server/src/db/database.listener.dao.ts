@@ -15,41 +15,26 @@ type TriggerCacheHandler = {
 export class DatabaseListenerDAO implements OnModuleDestroy {
     private pool: Pool;
 
+    // I don't want to "await" on any of these calls, 
+    // I want to send the message to my cache api and then continue with the application right away
     private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
         [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listDetails: ListingDetails[]): Promise<void> => {
             console.log('In setNewCache');
-            await this.cacheHandler.setNewCache(listDetails);
+            // this.cacheHandler.setNewCache(listDetails);
         },
         [DatabaseTriggerType.INSERT]: async (listDetails: ListingDetails[]): Promise<void> => {
             console.log('In updateCache (Insert)');
-            await this.cacheHandler.updateCache(listDetails, false);
+            this.cacheHandler.updateCache(listDetails, false);
         },
         [DatabaseTriggerType.UPDATE]: async (listDetails: ListingDetails[]): Promise<void> => {
             console.log('In updateCache (Update)');
-            await this.cacheHandler.updateCache(listDetails, true);
+            this.cacheHandler.updateCache(listDetails, true);
         },
         [DatabaseTriggerType.DELETE]: async (listDetailsIds: number[]): Promise<void> => {
             console.log('In deleteFromCache');
-            await this.cacheHandler.deleteFromCache(listDetailsIds);
+            this.cacheHandler.deleteFromCache(listDetailsIds);
         },
     };
-
-    // private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
-    //     [DatabaseTriggerType.GET_ALL_LISTINGS]: (listDetails: ListingDetails[]): Promise<void> => {
-    //         return this.queueCacheHandler(() => this.cacheHandler.setNewCache(listDetails));
-    //     },
-    //     [DatabaseTriggerType.INSERT]: (listDetails: ListingDetails[]): Promise<void> => {
-    //         return this.queueCacheHandler(() => this.cacheHandler.updateCache(listDetails, false));
-    //     },
-    //     [DatabaseTriggerType.UPDATE]: (listDetails: ListingDetails[]): Promise<void> => {
-    //         return this.queueCacheHandler(() => this.cacheHandler.updateCache(listDetails, true));
-    //     },
-    //     [DatabaseTriggerType.DELETE]: (listDetailsIds: number[]): Promise<void> => {
-    //         return this.queueCacheHandler(() => this.cacheHandler.deleteFromCache(listDetailsIds));
-    //     },
-    // };
-
-    // private cacheQueue: Promise<void> = Promise.resolve();
 
     constructor(
         private readonly databaseService: DatabaseService,
@@ -155,8 +140,5 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
         }
     }
 
-    // private queueCacheHandler(handler: () => Promise<void>): Promise<void> {
-    //     this.cacheQueue = this.cacheQueue.then(() => handler());
-    //     return this.cacheQueue;
-    // }
+
 }
