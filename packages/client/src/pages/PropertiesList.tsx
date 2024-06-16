@@ -60,6 +60,10 @@ const PropertiesList: React.FC = () => {
         console.log('---filteredPropertyListRequest:', filteredPropertyListRequest);
         const dataToSubmit: CreateGetAllPropertiesRequest = {
             filteredPropertyListRequest: filteredPropertyListRequest,
+            paginationDetails: {
+                limit: 100,
+                offset: 0,
+            },
         };
         console.log('---dataToSubmit:', dataToSubmit);
 
@@ -92,6 +96,13 @@ const PropertiesList: React.FC = () => {
         return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
     };
 
+    const handlePaginationChange = (newPage: number, newRowsPerPage: number) => {
+        console.log('In handlePaginationChange()');
+        console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
+        // setPage(newPage);
+        // setRowsPerPage(newRowsPerPage);
+    };
+
     return (
         <div>
             <h2> Filter Properties </h2>
@@ -117,9 +128,8 @@ const PropertiesList: React.FC = () => {
                         tableActions={{
                             handleEditUpdate: handleUpdate,
                             handleDeleteUpdate: handleDeleteUpdate,
-                        }} //{true}
-                    // isEditable={true}
-                    // handleUpdate={handleUpdate}
+                        }}
+                        onPaginationChange={handlePaginationChange}
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}

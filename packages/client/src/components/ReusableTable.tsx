@@ -1,4 +1,3 @@
-// ReusableTable.tsx
 import React, { useState, useEffect } from 'react';
 import {
     Table,
@@ -88,8 +87,7 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     tableSeperatorDetails?: TableSeparatorDetails;
     exportIntoCSV?: ExportIntoCSV;
     tableActions?: TableActions<Y>;
-    // isEditable?: boolean;
-    // handleUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+    onPaginationChange?: (page: number, rowsPerPage: number) => void;
 };
 
 const StyledTableContainer = styled(TableContainer)(() => ({
@@ -138,8 +136,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     tableSeperatorDetails,
     exportIntoCSV,
     tableActions,
-    // isEditable = false,
-    // handleUpdate,
+    onPaginationChange,
 }: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
@@ -165,6 +162,12 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     useEffect(() => {
         setEditableData(getTableData());
     }, [data, tableType]);
+
+    // useEffect(() => {
+    //     if (onPaginationChange) {
+    //         onPaginationChange(page, rowsPerPage);
+    //     }
+    // }, [page, rowsPerPage, onPaginationChange]);
 
     const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
@@ -292,14 +295,26 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setEditableData(newData);
     };
 
+    const needToFetchData = (page: number, rowsPerPage: number): boolean => {
+        const numberOfRowsAvailable = editableData.length;
+        return numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage);
+    };
+
     const handleChangePage = (event: unknown, newPage: number) => {
         console.log(event);
         setPage(newPage);
+
+        if (onPaginationChange && needToFetchData(page, rowsPerPage)) {
+            onPaginationChange(page, rowsPerPage);
+        }
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+        if (onPaginationChange && needToFetchData(0, rowsPerPage)) {
+            onPaginationChange(page, rowsPerPage);
+        }
     };
 
     const displayEditActionButton = (rowIndex: number) => {

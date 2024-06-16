@@ -8,7 +8,7 @@ export interface CacheInterface {
 
     setCache(listingDetailsList: ListingDetailsResponseDTO[], forceUpdate: boolean): Promise<void>;
 
-    getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]>;
+    // getFromCache(listingDetailsArr: ListingDetailsResponseDTO[]): Promise<ListingWithScenariosResponseDTO[]>;
 
     deleteFromCache(listingDetailsIds: number[]): Promise<void>;
 

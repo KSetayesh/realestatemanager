@@ -12,10 +12,11 @@
         "build:calc": "cd packages/calculations && npm run build",
         "build:server": "cd packages/server && npm run build",
         "build:client": "cd packages/client && npm run build",
-        "start:calc": "cd packages/calculations && npm run start:dev",
+        "start:redis": "redis-server",
+        "start:calc": " cd packages/calculations && npm run start:dev",
         "start:server": "cd packages/server && npm run start:dev",
         "start:client": "cd packages/client && npm run dev",
-        "start": "npm run start:calc && npm run start:server && npm run start:client",
+        "start": "npm run start:redis && npm run start:calc && npm run start:server && npm run start:client",
         "start:client:prod": "cd packages/client && npm run preview",
         "start:server:prod": "cd packages/server && npm run start:prod",
         "start:prod": "npm run start:server:prod"
@@ -28,12 +29,16 @@
         "packages/*"
     ],
     "devDependencies": {
-        "@types/papaparse": "^5.3.14"
+        "@types/papaparse": "^5.3.14",
+        "@types/redis": "^4.0.11"
     },
     "dependencies": {
         "@nestjs/config": "^3.2.2",
         "@nestjs/serve-static": "^4.0.2",
         "@types/config": "^3.3.4",
+        "axios": "^1.7.2",
+        "ioredis": "^5.4.1",
+        "redis": "^4.6.14",
         "serve-static": "^1.15.0"
     }
 }

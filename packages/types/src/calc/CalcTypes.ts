@@ -7,6 +7,6 @@ export interface CreateSetCacheRequest {
 };
 
 export interface CreateListingDetailsCalculationsRequest {
-    investmentScenarioRequest: CreateInvestmentScenarioRequest;
+    investmentScenarioRequest?: CreateInvestmentScenarioRequest;
     listingDetails: ListingDetailsResponseDTO;
 };

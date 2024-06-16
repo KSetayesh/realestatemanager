@@ -49,7 +49,7 @@ export class PropertyService {
         // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
         // this.updateCacheIfNeeded(zillowUrls, false);
 
-        return this.getFromCache(listingDetailsArr);
+        return this.getCalcResults(listingDetailsArr);
 
     }
 
@@ -76,13 +76,13 @@ export class PropertyService {
             zillowURL
         );
 
-        const listingsFromCache: ListingWithScenariosResponseDTO[] = await this.getFromCache([updatedListingDetailsFromDb]);
+        const listingsFromCache: ListingWithScenariosResponseDTO[] = await this.getCalcResults([updatedListingDetailsFromDb]);
         return listingsFromCache[0];
 
     }
 
     async updateListingDetails(pool: Pool, updatedListingDetails: ListingDetails): Promise<void> {
-        await this.listingManager.updateListingDetails(pool, updatedListingDetails); 
+        await this.listingManager.updateListingDetails(pool, updatedListingDetails);
     }
 
     async deleteListingDetails(pool: Pool, zillowURL: string): Promise<boolean> {
@@ -278,8 +278,8 @@ export class PropertyService {
         return true;
     }
 
-    private async getFromCache(listingDetailsList: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
-        return this.cacheHandler.getFromCache(listingDetailsList);
+    private async getCalcResults(listingDetailsList: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
+        return this.cacheHandler.getCalcResults(listingDetailsList);
     }
 
 }

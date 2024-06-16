@@ -25,6 +25,11 @@ export interface ValueRateInput extends ValueInputBase {
 
 export type ValueInput = ValueAmountInput | ValueRateInput;
 
+export type PaginationDetails = {
+    limit: number;
+    offset: number;
+};
+
 export function isValueAmountInput(value: ValueInput): value is ValueAmountInput {
     return value.type === ValueType.AMOUNT;
 };

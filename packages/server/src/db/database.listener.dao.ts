@@ -20,7 +20,7 @@ export class DatabaseListenerDAO implements OnModuleDestroy {
     private triggerCacheBasedOnTriggerType: TriggerCacheHandler = {
         [DatabaseTriggerType.GET_ALL_LISTINGS]: async (listDetails: ListingDetails[]): Promise<void> => {
             console.log('In setNewCache');
-            // this.cacheHandler.setNewCache(listDetails);
+            this.cacheHandler.setNewCache(listDetails);
         },
         [DatabaseTriggerType.INSERT]: async (listDetails: ListingDetails[]): Promise<void> => {
             console.log('In updateCache (Insert)');

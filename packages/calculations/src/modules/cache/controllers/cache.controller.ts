@@ -1,5 +1,4 @@
 import { Controller, Post, Body, Delete, Param } from '@nestjs/common';
-import { CacheService } from '../services/cache.service';
 import {
     CreateListingDetailsCalculationsRequest,
     CreateSetCacheRequest,
@@ -7,17 +6,18 @@ import {
     ListingWithScenariosResponseDTO
 } from '@realestatemanager/types';
 import { CalcService } from '../services/calc.service';
+import { RedisCacheService } from '../services/redis.cache.service';
 
 @Controller('cache')
 export class CacheController {
     constructor(
-        private readonly cacheService: CacheService,
+        private readonly redisCacheService: RedisCacheService,
         private readonly calcService: CalcService
     ) { }
 
     @Post('checkCache')
     async checkCache(): Promise<any> {
-        return this.cacheService.getCache();
+        return this.redisCacheService.getCacheDetails();
     }
 
     @Post('setFreshCache')
@@ -25,7 +25,7 @@ export class CacheController {
         @Body() listingDetailsArr: ListingDetailsResponseDTO[],
     ): Promise<void> {
         console.log('hi_1');
-        await this.cacheService.setFreshCache(listingDetailsArr);
+        await this.redisCacheService.setFreshCache(listingDetailsArr);
     }
 
     @Post('set')
@@ -34,30 +34,30 @@ export class CacheController {
     ): Promise<void> {
         console.log('hi_2');
         console.log('createSetCacheRequest:', createSetCacheRequest);
-        await this.cacheService.setCache(createSetCacheRequest.listingDetailsList, createSetCacheRequest.forceUpdate);
+        await this.redisCacheService.setCache(createSetCacheRequest.listingDetailsList, createSetCacheRequest.forceUpdate);
     }
 
     @Post('reset')
     async resetCache(): Promise<void> {
         console.log('hi_3');
-        await this.cacheService.resetCache();
+        await this.redisCacheService.resetCache();
     }
 
-    @Post('get')
-    async getFromCache(
-        @Body() listingDetails: ListingDetailsResponseDTO[],
-    ): Promise<ListingWithScenariosResponseDTO[]> {
-        console.log('hi_4');
-        // console.log('listingDetails:', listingDetails);
-        return this.cacheService.getFromCache(listingDetails);
-    }
+    // @Post('get')
+    // async getFromCache(
+    //     @Body() listingDetails: ListingDetailsResponseDTO[],
+    // ): Promise<ListingWithScenariosResponseDTO[]> {
+    //     console.log('hi_4');
+    //     // console.log('listingDetails:', listingDetails);
+    //     return this.redisCacheService.getFromCache(listingDetails);
+    // }
 
     @Post('delete')
     async deleteCache(
         @Body() listingDetailIds: number[],
     ): Promise<void> {
         console.log('hi_5');
-        await this.cacheService.deleteFromCache(listingDetailIds);
+        await this.redisCacheService.deleteFromCache(listingDetailIds);
     }
 
     @Post('calculate')
@@ -66,10 +66,17 @@ export class CacheController {
     ): Promise<ListingWithScenariosResponseDTO> {
         console.log('hi_6');
         console.log(createListingDetailsCalculationsRequest);
-        return this.calcService.calculate(
-            createListingDetailsCalculationsRequest.listingDetails,
-            createListingDetailsCalculationsRequest.investmentScenarioRequest
-        );
+        return this.calcService.calculate(createListingDetailsCalculationsRequest);
     }
+
+    @Post('calculateinbulk')
+    async calculateInBulk(
+        @Body() createListingDetailsCalculationsListRequest: CreateListingDetailsCalculationsRequest[],
+    ): Promise<ListingWithScenariosResponseDTO[]> {
+        console.log('hi_6');
+        console.log(createListingDetailsCalculationsListRequest);
+        return this.calcService.calculateInBulk(createListingDetailsCalculationsListRequest);
+    }
+
 
 }

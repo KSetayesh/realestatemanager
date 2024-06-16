@@ -1,4 +1,4 @@
-import { ValueAmountInput, ValueInput, ValueRateInput } from "./ApiTypes";
+import { PaginationDetails, ValueAmountInput, ValueInput, ValueRateInput } from "./ApiTypes";
 import { InterestType, TransactionKey, TransactionType } from "../Constants";
 import { CreateFilteredPropertyListRequest } from "./FilterPropertyListApiTypes";
 import { ListingDetailsResponseDTO } from "./ListingTypes";
@@ -18,6 +18,7 @@ export interface CreateInvestmentScenarioRequest {
 export interface CreateGetAllPropertiesRequest {
     investmentScenarioRequest?: CreateInvestmentScenarioRequest,
     filteredPropertyListRequest?: CreateFilteredPropertyListRequest,
+    paginationDetails: PaginationDetails;
 };
 
 export interface CreateInvestmentDetailsRequest {
