@@ -267,15 +267,7 @@ export class PropertyService {
     }
 
     private isValidInvestmentScenarioRequest(investmentScenarioRequest?: CreateInvestmentScenarioRequest): boolean {
-        if (investmentScenarioRequest) {
-            if (investmentScenarioRequest.useDefaultRequest) {
-                return true;
-            }
-            else if (!investmentScenarioRequest.investmentDetails) {
-                return false;
-            }
-        }
-        return true;
+        return !investmentScenarioRequest || investmentScenarioRequest.useDefaultRequest || !!investmentScenarioRequest.investmentDetails;
     }
 
     private async getCalcResults(listingDetailsList: ListingDetails[]): Promise<ListingWithScenariosResponseDTO[]> {
