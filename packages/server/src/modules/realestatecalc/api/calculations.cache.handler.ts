@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInvestmentScenarioRequest, CreateListingDetailsCalculationsRequest, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO } from '@realestatemanager/types';
+import {
+    CreateInvestmentScenarioRequest,
+    CreateListingDetailsCalculationsRequest,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosResponseDTO
+} from '@realestatemanager/types';
 import { CalculationsApiClient } from "src/modules/realestatecalc/api/calculations.api.client";
 import { ListingDetails } from "src/modules/realestatecalc/models/listingdetails.model";
 import applicationConfig from 'src/config/applicationConfig';
@@ -26,7 +31,8 @@ export class CalculationsCacheHandler {
 
 
     async setNewCache(listingDetailsArr: ListingDetails[]): Promise<void> {
-        const response = await this.calculationsApiClient.setFreshCache(listingDetailsArr);
+        const listingDetailsDTOArr: ListingDetailsResponseDTO[] = listingDetailsArr.map(listingDetails => listingDetails.toDTO());
+        const response = await this.calculationsApiClient.setFreshCache(listingDetailsDTOArr);
         if (!response.ok) {
             throw new Error(`Failed to set new cache: ${response.status} ${response.statusText}`);
         }
@@ -71,8 +77,9 @@ export class CalculationsCacheHandler {
     }
 
 
-    async updateCache(listingDetails: ListingDetails[], forceUpdate: boolean): Promise<void> {
-        const response = await this.calculationsApiClient.setCache(listingDetails, forceUpdate);
+    async updateCache(listingDetailsList: ListingDetails[], forceUpdate: boolean): Promise<void> {
+        const listingDetailsListDTO: ListingDetailsResponseDTO[] = listingDetailsList.map(listingDetails => listingDetails.toDTO());
+        const response = await this.calculationsApiClient.setCache(listingDetailsListDTO, forceUpdate);
         if (!response.ok) {
             throw new Error(`Failed to update cache: ${response.status} ${response.statusText}`);
         }

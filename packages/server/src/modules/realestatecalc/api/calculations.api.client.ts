@@ -70,9 +70,8 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(endPointDetails.endPoint, undefined, Method.POST);
     }
 
-    async setCache(listingDetailsList: ListingDetails[], forceUpdate: boolean): Promise<Response> {
+    async setCache(listingDetailsListDTO: ListingDetailsResponseDTO[], forceUpdate: boolean): Promise<Response> {
         const endPointDetails: EndpointDetails = this.constructUrl(CaclulationEndPoint.SET);
-        const listingDetailsListDTO: ListingDetailsResponseDTO[] = listingDetailsList.map(listingDetails => listingDetails.toDTO());
         const requestBody: CreateSetCacheRequest = {
             listingDetailsList: listingDetailsListDTO,
             forceUpdate: forceUpdate,
@@ -80,15 +79,13 @@ export class CalculationsApiClient extends ApiClient {
         return this._makeApiCall(endPointDetails.endPoint, JSON.stringify(requestBody), Method.POST);
     }
 
-    async setFreshCache(listingDetails: ListingDetails[]): Promise<Response> {
+    async setFreshCache(listingDetailsDTOArr: ListingDetailsResponseDTO[]): Promise<Response> {
         const endPointDetails: EndpointDetails = this.constructUrl(CaclulationEndPoint.SET_FRESH_CACHE);
-        const listingDetailsDTOArr: ListingDetailsResponseDTO[] = listingDetails.map(listingDetails => listingDetails.toDTO());
         return this._makeApiCall(endPointDetails.endPoint, JSON.stringify(listingDetailsDTOArr), Method.POST);
     }
 
     async getFromCalcServer(listingDetailsToGetFromCalcServer: CreateListingDetailsCalculationsRequest[]): Promise<Response> {
         const endPointDetails: EndpointDetails = this.constructUrl(CaclulationEndPoint.CALCULATE_IN_BULK);
-        // const listingDetailsDTO: ListingDetailsResponseDTO[] = listingDetailsArr.map(listing => listing.toDTO());
         return this._makeApiCall(endPointDetails.endPoint, JSON.stringify(listingDetailsToGetFromCalcServer), Method.POST);
     }
 
