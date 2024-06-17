@@ -70,6 +70,11 @@ export type ExportIntoCSV = {
 export type TableActions<Y> = {
     handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
     handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+    onPaginationChange?: (
+        event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        page: number,
+        rowsPerPage: number,
+    ) => void;
 };
 
 /* ----For PropertiesListTable---- 
@@ -87,7 +92,6 @@ export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
     tableSeperatorDetails?: TableSeparatorDetails;
     exportIntoCSV?: ExportIntoCSV;
     tableActions?: TableActions<Y>;
-    onPaginationChange?: (page: number, rowsPerPage: number) => void;
 };
 
 const StyledTableContainer = styled(TableContainer)(() => ({
@@ -136,7 +140,6 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     tableSeperatorDetails,
     exportIntoCSV,
     tableActions,
-    onPaginationChange,
 }: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
@@ -163,11 +166,6 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         setEditableData(getTableData());
     }, [data, tableType]);
 
-    // useEffect(() => {
-    //     if (onPaginationChange) {
-    //         onPaginationChange(page, rowsPerPage);
-    //     }
-    // }, [page, rowsPerPage, onPaginationChange]);
 
     const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
         return JSON.parse(JSON.stringify(obj));
@@ -300,22 +298,43 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         return numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage);
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        newPage: number
+    ) => {
         console.log(event);
         setPage(newPage);
-
-        if (onPaginationChange && needToFetchData(page, rowsPerPage)) {
-            onPaginationChange(page, rowsPerPage);
+        if (tableActions && tableActions.onPaginationChange && needToFetchData(newPage, rowsPerPage)) {
+            tableActions.onPaginationChange(event, newPage, rowsPerPage);
         }
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        const newRowsPerPage = parseInt(event.target.value, 10);
+        setRowsPerPage(newRowsPerPage);
         setPage(0);
-        if (onPaginationChange && needToFetchData(0, rowsPerPage)) {
-            onPaginationChange(page, rowsPerPage);
+        if (tableActions && tableActions.onPaginationChange && needToFetchData(0, newRowsPerPage)) {
+            tableActions.onPaginationChange(event, page, newRowsPerPage);
         }
     };
+
+
+    // const handleChangePage = (event: unknown, newPage: number) => {
+    //     console.log(event);
+    //     setPage(newPage);
+
+    //     if (tableActions && tableActions.onPaginationChange && needToFetchData(page, rowsPerPage)) {
+    //         tableActions.onPaginationChange(event, page, rowsPerPage);
+    //     }
+    // };
+
+    // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setRowsPerPage(parseInt(event.target.value, 10));
+    //     setPage(0);
+    //     if (tableActions && tableActions.onPaginationChange && needToFetchData(0, rowsPerPage)) {
+    //         tableActions.onPaginationChange(event, page, rowsPerPage);
+    //     }
+    // };
 
     const displayEditActionButton = (rowIndex: number) => {
         if (editMode === rowIndex) {

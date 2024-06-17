@@ -4,7 +4,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ServeStaticMiddleware } from './serve-static.middleware';
 import { PathUtil } from './utility/PathUtil';
 import * as bodyParser from 'body-parser';
-import { Utility } from '@realestatemanager/utilities';
 
 const port = process.env.PORT || 3000;
 

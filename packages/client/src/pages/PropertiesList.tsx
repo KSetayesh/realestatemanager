@@ -56,13 +56,39 @@ const PropertiesList: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        fetchPropertiesFromServer(100, 0);
+    };
+
+    const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
+        const createUpdatePropertyRequest: CreateUpdatePropertyRequest =
+            propertiesListWithInvestmentBreakdownTable.createUpdatePropertyRequest(tableDataItem);
+        return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
+    };
+
+    const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
+        console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
+        return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
+    };
+
+    const handlePaginationChange = (
+        e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        newPage: number,
+        newRowsPerPage: number
+    ) => {
+        e?.preventDefault();
+        fetchPropertiesFromServer(newRowsPerPage, newPage);
+        console.log('In handlePaginationChange()');
+        console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
+    };
+
+    const fetchPropertiesFromServer = async (limit: number, offset: number) => {
         const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
         console.log('---filteredPropertyListRequest:', filteredPropertyListRequest);
         const dataToSubmit: CreateGetAllPropertiesRequest = {
             filteredPropertyListRequest: filteredPropertyListRequest,
             paginationDetails: {
-                limit: 100,
-                offset: 0,
+                limit: limit,
+                offset: offset,
             },
         };
         console.log('---dataToSubmit:', dataToSubmit);
@@ -83,25 +109,7 @@ const PropertiesList: React.FC = () => {
             setFormData(getDefaultFormData());
             setIsLoading(false);
         }
-    };
-
-    const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
-        const createUpdatePropertyRequest: CreateUpdatePropertyRequest =
-            propertiesListWithInvestmentBreakdownTable.createUpdatePropertyRequest(tableDataItem);
-        return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
-    };
-
-    const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
-        console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
-        return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
-    };
-
-    const handlePaginationChange = (newPage: number, newRowsPerPage: number) => {
-        console.log('In handlePaginationChange()');
-        console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
-        // setPage(newPage);
-        // setRowsPerPage(newRowsPerPage);
-    };
+    }
 
     return (
         <div>
@@ -128,8 +136,8 @@ const PropertiesList: React.FC = () => {
                         tableActions={{
                             handleEditUpdate: handleUpdate,
                             handleDeleteUpdate: handleDeleteUpdate,
+                            onPaginationChange: handlePaginationChange
                         }}
-                        onPaginationChange={handlePaginationChange}
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}
