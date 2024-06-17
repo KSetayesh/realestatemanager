@@ -41,16 +41,7 @@ export class CacheController {
     async resetCache(): Promise<void> {
         console.log('hi_3');
         await this.redisCacheService.resetCache();
-    }
-
-    // @Post('get')
-    // async getFromCache(
-    //     @Body() listingDetails: ListingDetailsResponseDTO[],
-    // ): Promise<ListingWithScenariosResponseDTO[]> {
-    //     console.log('hi_4');
-    //     // console.log('listingDetails:', listingDetails);
-    //     return this.redisCacheService.getFromCache(listingDetails);
-    // }
+    } 
 
     @Post('delete')
     async deleteCache(

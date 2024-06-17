@@ -17,13 +17,9 @@ export class RedisCacheService implements CacheInterface, OnModuleInit, OnModule
     private usePropertyCache: boolean = applicationConfig.useCache;
     private cacheUpdateInProgress: boolean = false;
 
-    static instanceCounter = 0;
-
     constructor() {
         console.log('CacheService instance created');
         console.log(`usePropertyCache: ${this.usePropertyCache}`);
-        RedisCacheService.instanceCounter++;
-        console.log('Constructor instance counter:', RedisCacheService.instanceCounter);
 
         // Initialize Redis client with environment variable or default to localhost
         const redisUrl = applicationConfig.redisUrl || 'redis://127.0.0.1:6380';
