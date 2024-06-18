@@ -65,3 +65,26 @@ $ heroku config:set GITHUB_USERNAME=joesmith --app {name_of_your_app}
 3) To remove a config variable, run the following command. heroku config:unset <VARIABLE_NAME>
 $ heroku config:unset GITHUB_USERNAME --app {name_of_your_app}
 
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Heroku Logs--
+
+1) To view logs 
+$ heroku logs --tail
+
+2) To view logs of a specific app 
+$ heroku logs --app {name_of_your_app}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Restarting Apps--
+
+1) Login through terminal
+$ heroku login
+
+2) Go to Project root 
+$ cd path/to/your/project
+
+3) Restart the application on heroku 
+$ heroku restart --app your-app-name
+

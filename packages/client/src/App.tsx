@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link as RouterLink } from 'react-router-dom';
-import { ThemeProvider, CssBaseline, createTheme, Box } from '@mui/material';
+import { ThemeProvider, CssBaseline, createTheme, Box, Link } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -54,7 +54,9 @@ const App: React.FC = () => {
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                            Real Estate Manager
+                            <Link component={RouterLink} to="/" color="inherit" underline="none">
+                                Real Estate Manager
+                            </Link>
                         </Typography>
                         <Button component={RouterLink} to="/" color="inherit">
                             Home
