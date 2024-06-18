@@ -27,6 +27,7 @@
         "@nestjs/serve-static": "^4.0.2",
         "@realestatemanager/types": "1.0.0",
         "@realestatemanager/utilities": "1.0.0",
+        "aws-sdk": "^2.1644.0",
         "dotenv": "^16.3.1",
         "imagekit": "^5.0.1",
         "node-fetch": "^2.7.0",

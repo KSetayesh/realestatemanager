@@ -14,6 +14,7 @@ import HighYieldSavings from './pages/HighYieldSavings';
 import AgentForm from './pages/AgentForm';
 import AgentsList from './pages/AgentsList';
 import CollectProperties from './pages/CollectProperties';
+import AppDescription from './pages/AppDescription';
 
 const theme = createTheme({
     palette: {
@@ -61,6 +62,9 @@ const App: React.FC = () => {
                         <Button component={RouterLink} to="/" color="inherit">
                             Home
                         </Button>
+                        <Button component={RouterLink} to="/appDescription" color="inherit">
+                            App Description
+                        </Button>
                         <Button component={RouterLink} to="/agentForm" color="inherit">
                             Agent Form
                         </Button>
@@ -87,6 +91,7 @@ const App: React.FC = () => {
                 <Box className="pages" sx={{ maxWidth: '1900px', margin: '0 auto', padding: '2rem', textAlign: 'center' }}>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/appDescription" element={<AppDescription />} />
                         <Route path="/agentForm" element={<AgentForm />} />
                         <Route path="/agentsList" element={<AgentsList />} />
                         <Route path="/propertyForm" element={<PropertyForm />} />

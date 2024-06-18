@@ -9,16 +9,11 @@ export abstract class CalcApi {
 
     protected abstract getURL(): string;
 
-    // protected getBaseURL(): string {
-    //     return this.baseURL;
-    // }
-
     private baseApiUrl: string;
 
     constructor() {
         this.baseApiUrl = appConfig.apiUrl;
     }
-
 
     protected getBaseURL(): string {
         console.log('apiUrl:', this.baseApiUrl);

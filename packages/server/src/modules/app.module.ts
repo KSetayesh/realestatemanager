@@ -16,6 +16,7 @@ import { CalculationsCacheHandler } from './realestatecalc/api/calculations.cach
 import { CalculationsApiClient } from './realestatecalc/api/calculations.api.client';
 import { InitService } from './init.service';
 import { PropertyTransactionService } from './realestatecalc/services/property.transaction.service';
+import { AppdescriptionModule } from './appdescription/appdescription.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { PropertyTransactionService } from './realestatecalc/services/property.t
         AgentModule,
         PhotosModule,
         RentCastModule,
+        AppdescriptionModule,
     ],
     controllers: [],
     providers: [

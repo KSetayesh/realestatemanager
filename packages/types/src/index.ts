@@ -5,6 +5,7 @@ export * from './server/AgentApiTypes';
 export * from './server/RentCastApiTypes';
 export * from './server/ListingTypes';
 export * from './server/InvestmentTypes';
+export * from './server/AppDescription';
 export * from './server/FilterPropertyListApiTypes';
 export * from './server/BuilderInterface';
 export * from './server/IDTOConvertible';
