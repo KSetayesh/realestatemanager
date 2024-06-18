@@ -4,7 +4,7 @@ import * as AWS from 'aws-sdk';
 import s3Config from 'src/config/s3Config';
 
 @Injectable()
-export class AppdescriptionService {
+export class AppDescriptionService {
 
     private s3: AWS.S3;
     private _fileName = 'realestatemanagerdetails.json';

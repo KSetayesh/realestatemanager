@@ -1,12 +1,12 @@
 import { Controller, Get, HttpException, HttpStatus, Res } from '@nestjs/common';
-import { AppdescriptionService } from '../service/appdescription.service';
+import { AppDescriptionService } from '../service/appdescription.service';
 import { Response } from 'express';
 import { ProjectDescription } from '@realestatemanager/types';
 
 @Controller('appdescription')
-export class AppdescriptionController {
+export class AppDescriptionController {
 
-    constructor(private readonly appDescriptionService: AppdescriptionService) { }
+    constructor(private readonly appDescriptionService: AppDescriptionService) { }
 
     @Get()
     async getAppDescription(@Res() res: Response) {
