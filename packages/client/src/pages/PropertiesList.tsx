@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DetailsModal from '../components/DetailsModal';
 import ReusableTable, { TableDataItem } from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
@@ -20,6 +20,8 @@ export enum PropertiesListTableType {
     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
 };
 
+const DEFAULT_NUMBER_OF_ROWS = 100;
+
 const PropertiesList: React.FC = () => {
 
     const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
@@ -29,8 +31,13 @@ const PropertiesList: React.FC = () => {
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
+    // const [filteredRequest, setFilteredRequest] = useState<CreateGetAllPropertiesRequest>();
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
+
+    useEffect(() => {
+        fetchPropertiesFromServer(DEFAULT_NUMBER_OF_ROWS, 0);
+    }, []);
 
     const getDefaultFormData = (): PropertyFilterFormFields => {
         return propertiesListFormDetails.getDefaultFormData();
@@ -56,7 +63,7 @@ const PropertiesList: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetchPropertiesFromServer(100, 0);
+        fetchPropertiesFromServer(DEFAULT_NUMBER_OF_ROWS, 0);
     };
 
     const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
@@ -101,6 +108,9 @@ const PropertiesList: React.FC = () => {
             if (properties.length === 0) {
                 alert('No properties found with the applied filters.');
             }
+            // else {
+            //     setFilteredRequest(dataToSubmit);
+            // }
             // window.location.reload();
         } catch (error) {
             console.error('Failed to submit data.', error);
@@ -109,7 +119,7 @@ const PropertiesList: React.FC = () => {
             setFormData(getDefaultFormData());
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div>
