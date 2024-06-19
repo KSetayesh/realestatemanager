@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs';
 import { ValueInput, ValueType } from "@realestatemanager/types";
 
 export class PropertyUtility {

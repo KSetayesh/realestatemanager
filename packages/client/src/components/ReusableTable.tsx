@@ -30,69 +30,7 @@ import ExportCSVButton from './ExportCSVButton';
 import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
 import ConfirmationDialog from './ConfirmationDialog';
 
-enum SortDirection {
-    ASCENDING = 'ascending',
-    DESCENDING = 'descending',
-};
-
-export interface TableRow { [key: string]: any };
-
-export interface TableDataItem<Y> {
-    objectData: {
-        key: Y;
-    };
-    rowData: TableRow;
-};
-
-export interface TableColumn {
-    header: string;
-    accessor: string;
-    isURL: boolean;
-    isDollarAmount: boolean;
-    showColumn: boolean;
-    inputType: InputType;
-    isSortable: boolean;
-    routeTo?: string;
-    addSuffix?: string;
-    detailedDescription?: string;
-    isEditable?: boolean;
-};
-
-export type TableSeparatorDetails = {
-    separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
-    rowsInterval: number;  // Number of rows between each separator
-};
-
-export type ExportIntoCSV = {
-    buttonTitle: string;
-};
-
-export type TableActions<Y> = {
-    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
-    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
-    onPaginationChange?: (
-        event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-        page: number,
-        rowsPerPage: number,
-    ) => Promise<void>;
-};
-
-/* ----For PropertiesListTable---- 
-    Y = ListingWithScenariosResponseDTO
-    X = PropertiesListTableType
-
-   ----For InvestmentBreakdownTable---- 
-    Y = MonthlyInvestmentDetailsResponseDTO
-    X = InvestmentBreakdownTableType
-*/
-export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
-    data: Y[];
-    tableHandler: AbstractTable<Y, X>;
-    onRowClick?: (item: Y) => void;
-    tableSeperatorDetails?: TableSeparatorDetails;
-    exportIntoCSV?: ExportIntoCSV;
-    tableActions?: TableActions<Y>;
-};
+const TEMP_FEATURE_FLAG = true;
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     overflowX: 'auto',
@@ -133,6 +71,74 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     borderRadius: '5px', // Curved edges
 }));
 
+export interface TableRow { [key: string]: any };
+
+export interface TableDataItem<Y> {
+    objectData: {
+        key: Y;
+    };
+    rowData: TableRow;
+};
+
+export interface TableColumn {
+    header: string;
+    accessor: string;
+    isURL: boolean;
+    isDollarAmount: boolean;
+    showColumn: boolean;
+    inputType: InputType;
+    isSortable: boolean;
+    routeTo?: string;
+    addSuffix?: string;
+    detailedDescription?: string;
+    isEditable?: boolean;
+};
+
+export type TableSeparatorDetails = {
+    separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
+    rowsInterval: number;  // Number of rows between each separator
+};
+
+export type ExportIntoCSV = {
+    buttonTitle: string;
+};
+
+export enum SortDirection {
+    ASCENDING = 'ascending',
+    DESCENDING = 'descending',
+};
+
+export type SortConfig = { key: string; direction: SortDirection };
+
+export type TableActions<Y> = {
+    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+    onPaginationChange?: (
+        event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        page: number,
+        rowsPerPage: number,
+        sortConfig?: SortConfig,
+    ) => Promise<void>;
+};
+
+/* ----For PropertiesListTable---- 
+    Y = ListingWithScenariosResponseDTO
+    X = PropertiesListTableType
+
+   ----For InvestmentBreakdownTable---- 
+    Y = MonthlyInvestmentDetailsResponseDTO
+    X = InvestmentBreakdownTableType
+*/
+export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
+    data: Y[];
+    tableHandler: AbstractTable<Y, X>;
+    onRowClick?: (item: Y) => void;
+    tableSeperatorDetails?: TableSeparatorDetails;
+    exportIntoCSV?: ExportIntoCSV;
+    tableActions?: TableActions<Y>;
+    rowLimit?: number;
+};
+
 const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     data,
     tableHandler,
@@ -140,6 +146,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     tableSeperatorDetails,
     exportIntoCSV,
     tableActions,
+    rowLimit
 }: ReusableTableProps<Y, X>) => {
 
     const getTableColumns = (): TableColumn[] => {
@@ -152,7 +159,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const [tableType, setTableType] = useState<X>(tableHandler.getDefaultTableType());
-    const [sortConfig, setSortConfig] = useState<{ key: string; direction: SortDirection } | null>(null);
+    const [sortConfig, setSortConfig] = useState<SortConfig>();
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData());
@@ -172,7 +179,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const sortData = (data: TableDataItem<Y>[]) => {
-        if (sortConfig !== null) {
+        if (sortConfig) {
             return [...data].sort((a, b) => {
                 if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
                     return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
@@ -195,6 +202,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
             direction = SortDirection.DESCENDING;
         }
         setSortConfig({ key, direction });
+    };
+
+    const getExpectedNumberOfRows = (): number => {
+        return rowLimit ? rowLimit : editableData.length;
     };
 
     const areTableRowsEditable = (): boolean => {
@@ -294,7 +305,14 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const needToFetchData = (page: number, rowsPerPage: number): boolean => {
+        if (TEMP_FEATURE_FLAG) {
+            return false;
+        }
         const numberOfRowsAvailable = editableData.length;
+        console.log('numberOfRowsAvailable:', numberOfRowsAvailable);
+        console.log('((page * rowsPerPage) + rowsPerPage:', ((page * rowsPerPage) + rowsPerPage));
+        console.log('Need to fetch data:', (numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage)));
+
         return numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage);
     };
 
@@ -302,8 +320,8 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number
     ) => {
-        console.log(event);
         setPage(newPage);
+
         if (tableActions && tableActions.onPaginationChange && needToFetchData(newPage, rowsPerPage)) {
             await tableActions.onPaginationChange(event, newPage, rowsPerPage);
         }
@@ -313,6 +331,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         const newRowsPerPage = parseInt(event.target.value, 10);
         setRowsPerPage(newRowsPerPage);
         setPage(0);
+
         if (tableActions && tableActions.onPaginationChange && needToFetchData(0, newRowsPerPage)) {
             await tableActions.onPaginationChange(event, page, newRowsPerPage);
         }
@@ -554,13 +573,15 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                         </StyledTable>
                     </StyledTableContainer>
                     <TablePagination
-                        rowsPerPageOptions={[10, 25, 50, 100]}
+                        // rowsPerPageOptions={[10, 25, 50, 100]}
                         component="div"
-                        count={editableData.length}
+                        count={getExpectedNumberOfRows()}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
+                        showFirstButton={true}
+                        showLastButton={true}
                     />
                 </StyledPaper>
             </Box>

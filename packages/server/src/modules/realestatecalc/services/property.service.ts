@@ -10,6 +10,8 @@ import {
     AddPropertyTitlesAndLabels,
     CreatePropertiesInBulkRequest,
     TitleAndName,
+    PaginationDetails,
+    CreateFilteredPropertyListRequest,
 } from '@realestatemanager/types';
 import { ListingManager } from 'src/db/realestate/dbmanager/listing.manager';
 import { ListingDetailsRequestBuilder } from '../builders/listing.details.request.builder';
@@ -40,8 +42,25 @@ export class PropertyService {
         if (!this.isValidInvestmentScenarioRequest(investmentScenarioRequest)) {
             throw new Error('Not a valid Investment Scenario Request');
         }
-
         const filteredPropertyListRequest = getAllPropertiesRequest?.filteredPropertyListRequest;
+        const paginationDetails: PaginationDetails = getAllPropertiesRequest?.paginationDetails;
+
+        const getPaginationLimit = (paginationDetails: PaginationDetails): number => {
+            if (!paginationDetails || paginationDetails.limit > 100) {
+                return 100;
+            }
+            return paginationDetails.limit;
+        };
+
+        // const setFilteredPropertyLimit = (filteredPropertyListRequest: CreateFilteredPropertyListRequest): void => {
+        //     if (filteredPropertyListRequest && filteredPropertyListRequest.limit > 1000) {
+        //         filteredPropertyListRequest.limit = 1000;
+        //     }
+        // };
+
+        paginationDetails.limit = getPaginationLimit(paginationDetails);
+        // setFilteredPropertyLimit(filteredPropertyListRequest);
+
         const listingDetailsArr: ListingDetails[] = await this.listingManager.getAllListings(pool, filteredPropertyListRequest);
 
         // Start by fetching the listing details of the new property from the database asynchronously.

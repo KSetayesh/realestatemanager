@@ -19,6 +19,9 @@ import { ListingDAOInterface } from './listing.dao.interface';
 @Injectable()
 export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
 
+    // change this to 100
+    private MAX_NUMBER_OF_ROWS = 1000;
+
     private GET_LISTINGS_QUERY = `SELECT 
             ld.id AS listing_details_id, ld.zillow_url, ld.listing_price, ld.property_status, ld.date_listed,
             ld.creation_type, ld.created_at, ld.updated_at, ld.rent_cast_sale_response_id, 
@@ -248,6 +251,8 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
             return `\n ${(counter === 1 ? 'WHERE' : 'AND')} `;
         };
 
+        let numberOfProperties = this.MAX_NUMBER_OF_ROWS;
+
         if (filteredPropertyListRequest) {
             console.log('filteredPropertyListRequest:', filteredPropertyListRequest);
             if (filteredPropertyListRequest.state) {
@@ -330,16 +335,22 @@ export class ListingDAO extends RealEstateDAO implements ListingDAOInterface {
                 params.push(filteredPropertyListRequest.isActive ? 'Active' : 'Inactive');
                 counter++;
             }
-
-            query += ' ORDER BY ld.created_at ';
-
             if (filteredPropertyListRequest.limit) {
-                query += `\n LIMIT $${counter}`;
-                params.push(filteredPropertyListRequest.limit);
-                counter++;
+                const filteredPropertyLimit = filteredPropertyListRequest.limit;
+                numberOfProperties = filteredPropertyLimit > numberOfProperties ? numberOfProperties : filteredPropertyLimit;
             }
+            // query += ' ORDER BY ld.created_at ';
+
+            // if (filteredPropertyListRequest.limit) {
+            //     query += `\n LIMIT $${counter}`;
+            //     params.push(filteredPropertyListRequest.limit);
+            //     counter++;
+            // }
         }
 
+        query += ' ORDER BY ld.created_at ';
+        query += `\n LIMIT $${counter}`;
+        params.push(numberOfProperties);
         query += ';';
 
         const queryWithParams = query.replace(/\$(\d+)/g, (_, idx) => JSON.stringify(params[idx - 1]));

@@ -7,7 +7,7 @@ import {
     CreateGetAllPropertiesRequest,
     CreateUpdatePropertyRequest,
     ListingWithScenariosResponseDTO,
-    PropertyFilterFormFields
+    PropertyFilterFormFields,
 } from '@realestatemanager/types';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
@@ -80,13 +80,18 @@ const PropertiesList: React.FC = () => {
     const handlePaginationChange = async (
         e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number,
-        newRowsPerPage: number
+        newRowsPerPage: number,
     ) => {
         e?.preventDefault();
         await fetchPropertiesFromServer(newRowsPerPage, newPage);
         console.log('In handlePaginationChange()');
         console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
     };
+
+    // const getExpectedNumberOfRows = (): number => {
+    //     const rowLimit = filteredRequest?.filteredPropertyListRequest?.limit;
+    //     return rowLimit ? rowLimit : DEFAULT_NUMBER_OF_ROWS;
+    // }
 
     const fetchPropertiesFromServer = async (limit: number, offset: number) => {
         const filteredPropertyListRequest: CreateFilteredPropertyListRequest = getRequestData();
@@ -104,14 +109,11 @@ const PropertiesList: React.FC = () => {
         try {
             const properties: ListingWithScenariosResponseDTO[] = await realEstateCalcApi.getAllProperties(dataToSubmit);
             setProperties(properties);
+            // setFilteredRequest(dataToSubmit);
 
             if (properties.length === 0) {
                 alert('No properties found with the applied filters.');
             }
-            // else {
-            //     setFilteredRequest(dataToSubmit);
-            // }
-            // window.location.reload();
         } catch (error) {
             console.error('Failed to submit data.', error);
             alert('Failed to submit data.');
@@ -148,6 +150,7 @@ const PropertiesList: React.FC = () => {
                             handleDeleteUpdate: handleDeleteUpdate,
                             onPaginationChange: handlePaginationChange
                         }}
+                    // rowLimit={getExpectedNumberOfRows()}
                     />
                     {selectedProperty && <DetailsModal
                         data={selectedProperty}
