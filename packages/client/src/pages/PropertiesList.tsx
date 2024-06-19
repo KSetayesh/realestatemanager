@@ -70,13 +70,13 @@ const PropertiesList: React.FC = () => {
         return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
     };
 
-    const handlePaginationChange = (
+    const handlePaginationChange = async (
         e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number,
         newRowsPerPage: number
     ) => {
         e?.preventDefault();
-        fetchPropertiesFromServer(newRowsPerPage, newPage);
+        await fetchPropertiesFromServer(newRowsPerPage, newPage);
         console.log('In handlePaginationChange()');
         console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
     };

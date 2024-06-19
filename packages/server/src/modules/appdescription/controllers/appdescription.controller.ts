@@ -14,7 +14,7 @@ export class AppDescriptionController {
         try {
             const data: ProjectDescription = await this.appDescriptionService.fetchFile();
             res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Disposition', `inline; filename="${this.appDescriptionService.fileName}"`);
+            // res.setHeader('Content-Disposition', `inline; filename="${this.appDescriptionService.fileName}"`);
             res.json(data);
         } catch (error) {
             console.error('Error fetching file from S3:', error);

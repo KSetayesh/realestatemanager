@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ProjectDescription, ProjectInterface } from '@realestatemanager/types';
+import {
+    ProjectDescription,
+    ProjectInterface
+} from '@realestatemanager/types';
 import * as AWS from 'aws-sdk';
 import s3Config from 'src/config/s3Config';
 
@@ -45,7 +48,4 @@ export class AppDescriptionService {
         }
     }
 
-    get fileName(): string {
-        return this._fileName;
-    }
 }

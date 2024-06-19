@@ -74,7 +74,7 @@ export type TableActions<Y> = {
         event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         page: number,
         rowsPerPage: number,
-    ) => void;
+    ) => Promise<void>;
 };
 
 /* ----For PropertiesListTable---- 
@@ -298,23 +298,23 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         return numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage);
     };
 
-    const handleChangePage = (
+    const handleChangePage = async (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         newPage: number
     ) => {
         console.log(event);
         setPage(newPage);
         if (tableActions && tableActions.onPaginationChange && needToFetchData(newPage, rowsPerPage)) {
-            tableActions.onPaginationChange(event, newPage, rowsPerPage);
+            await tableActions.onPaginationChange(event, newPage, rowsPerPage);
         }
     };
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeRowsPerPage = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newRowsPerPage = parseInt(event.target.value, 10);
         setRowsPerPage(newRowsPerPage);
         setPage(0);
         if (tableActions && tableActions.onPaginationChange && needToFetchData(0, newRowsPerPage)) {
-            tableActions.onPaginationChange(event, page, newRowsPerPage);
+            await tableActions.onPaginationChange(event, page, newRowsPerPage);
         }
     };
 
