@@ -6,6 +6,8 @@ import {
     PropertyType,
     State
 } from "../../Constants";
+import { PropertyColumnAccessorEnum } from "../tabledata/properylisttabledata/table/PropertiesTableData";
+import { TableColumn } from "../tabledata/properylisttabledata/tablecolumns/TableColumn";
 
 export enum InputType {
     TEXT = 'text',
@@ -176,4 +178,17 @@ export type PropertyFilterFormFields = {
     hasPool: boolean;
     isActive: boolean;
     limit: number;
+};
+
+export type _TableColumnsMapType<Y> = {
+    [key in PropertyColumnAccessorEnum]: TableColumn<Y>;
+};
+
+export type TableColumnsMapType<Y, X extends string> = {
+    [key in X]: TableColumn<Y>;
+};
+
+export enum SortDirection {
+    ASCENDING = 'ascending',
+    DESCENDING = 'descending',
 };

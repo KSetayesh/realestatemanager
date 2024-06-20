@@ -9,7 +9,7 @@ export * from './server/AppDescription';
 export * from './server/FilterPropertyListApiTypes';
 export * from './server/BuilderInterface';
 export * from './server/IDTOConvertible';
-export * from './client/tabledata/PropertiesTableData';
+export * from './client/tabledata/properylisttabledata/table/PropertiesTableData';
 export * from './client/formdata/AddAgentTitlesAndLabelsGetter';
 export * from './client/formdata/AddCollectPropertiesTitlesAndLabelsGetter';
 export * from './client/formdata/AddHighYieldSavingsTitlesAndLabelsGetter';
