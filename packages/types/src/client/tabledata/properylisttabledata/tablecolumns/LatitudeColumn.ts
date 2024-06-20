@@ -7,12 +7,12 @@ import { LATITUDE } from "../../TableTitles";
 
 export class LatitudeColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = LATITUDE;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.LATITUDE;
-    private _inputType: InputType = InputType.NUMBER;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = false;
-    private _addSuffix: string = '';
+    protected _title: string = LATITUDE;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.LATITUDE;
+    protected _inputType: InputType = InputType.NUMBER;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = false;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = false,
@@ -20,30 +20,6 @@ export class LatitudeColumn extends TableColumn<ListingWithScenariosResponseDTO,
         isSortable: boolean = false,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
     }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {

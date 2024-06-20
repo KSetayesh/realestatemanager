@@ -8,12 +8,12 @@ import { ZILLOW_RENT_ESTIMATE } from "../../TableTitles";
 
 export class ZillowRentEstimateColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = ZILLOW_RENT_ESTIMATE;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZILLOW_RENT_ESTIMATE;
-    private _inputType: InputType = InputType.NUMBER;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = true;
-    private _addSuffix: string = '';
+    protected _title: string = ZILLOW_RENT_ESTIMATE;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZILLOW_RENT_ESTIMATE;
+    protected _inputType: InputType = InputType.NUMBER;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = true;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = false,
@@ -21,26 +21,6 @@ export class ZillowRentEstimateColumn extends TableColumn<ListingWithScenariosRe
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
     }
 
     get addSuffix(): string {

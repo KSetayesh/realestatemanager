@@ -7,12 +7,12 @@ import { CREATION_TYPE } from "../../TableTitles";
 
 export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = CREATION_TYPE;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.CREATION_TYPE;
-    private _inputType: InputType = InputType.STRING;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = false;
-    private _addSuffix: string = '';
+    protected _title: string = CREATION_TYPE;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.CREATION_TYPE;
+    protected _inputType: InputType = InputType.STRING;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = false;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = false,
@@ -20,31 +20,7 @@ export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponse
         isSortable: boolean = false,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
-    }
+    } 
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).creationType;

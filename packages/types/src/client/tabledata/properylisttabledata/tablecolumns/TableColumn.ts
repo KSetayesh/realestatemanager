@@ -22,19 +22,19 @@ export abstract class TableColumn<Y, T extends string> {
 
     protected abstract _isValidEdit(value: string): boolean;
 
-    abstract value(list: Y): number | string | boolean;
+    protected abstract value(list: Y): number | string | boolean;
 
-    abstract get title(): string;
+    protected abstract _title: string;
 
-    abstract get accessor(): T;
+    protected abstract _accessor: T;
 
-    abstract get inputType(): InputType;
+    protected abstract _inputType: InputType;
 
-    abstract get isUrl(): boolean;
+    protected abstract _isUrl: boolean;
 
-    abstract get isDollarAmount(): boolean;
+    protected abstract _isDollarAmount: boolean;
 
-    abstract get addSuffix(): string;
+    protected abstract _addSuffix: string;
 
     protected genericSort(
         aValue: number | string | boolean,
@@ -77,9 +77,29 @@ export abstract class TableColumn<Y, T extends string> {
         this._isValidEdit(value);
     }
 
-    // get title(): string {
-    //     return TableTitles[this.accessor];
-    // }
+    get title(): string {
+        return this._title;
+    }
+
+    get accessor(): T {
+        return this._accessor;
+    }
+
+    get inputType(): InputType {
+        return this._inputType;
+    }
+
+    get isUrl(): boolean {
+        return this._isUrl;
+    }
+
+    get isDollarAmount(): boolean {
+        return this._isDollarAmount;
+    }
+
+    get addSuffix(): string {
+        return this._addSuffix;
+    }
 
     get showColumn(): boolean {
         return this._showColumn;

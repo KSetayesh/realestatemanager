@@ -7,12 +7,12 @@ import { DATE_LISTED } from "../../TableTitles";
 
 export class DateListedColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = DATE_LISTED;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.DATE_LISTED;
-    private _inputType: InputType = InputType.STRING;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = false;
-    private _addSuffix: string = '';
+    protected _title: string = DATE_LISTED;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.DATE_LISTED;
+    protected _inputType: InputType = InputType.STRING;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = false;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = true,
@@ -21,31 +21,7 @@ export class DateListedColumn extends TableColumn<ListingWithScenariosResponseDT
     ) {
         super(showColumn, isEditable, isSortable);
     }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
-    }
-
+ 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).dateListed;
     }

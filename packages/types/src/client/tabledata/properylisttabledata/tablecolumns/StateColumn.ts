@@ -7,12 +7,12 @@ import { STATE } from "../../TableTitles";
 
 export class StateColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = STATE;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.STATE;
-    private _inputType: InputType = InputType.STRING;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = false;
-    private _addSuffix: string = '';
+    protected _title: string = STATE;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.STATE;
+    protected _inputType: InputType = InputType.STRING;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = false;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = true,
@@ -20,30 +20,6 @@ export class StateColumn extends TableColumn<ListingWithScenariosResponseDTO, Pr
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
     }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {

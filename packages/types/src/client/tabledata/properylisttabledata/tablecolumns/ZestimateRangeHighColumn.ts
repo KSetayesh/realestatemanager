@@ -8,12 +8,12 @@ import { ZESTIMATE_RANGE_HIGH } from "../../TableTitles";
 
 export class ZestimateRangeHighColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
 
-    private _title: string = ZESTIMATE_RANGE_HIGH;
-    private _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZESTIMATE_RANGE_HIGH;
-    private _inputType: InputType = InputType.NUMBER;
-    private _isUrl: boolean = false;
-    private _isDollarAmount: boolean = true;
-    private _addSuffix: string = '';
+    protected _title: string = ZESTIMATE_RANGE_HIGH;
+    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZESTIMATE_RANGE_HIGH;
+    protected _inputType: InputType = InputType.NUMBER;
+    protected _isUrl: boolean = false;
+    protected _isDollarAmount: boolean = true;
+    protected _addSuffix: string = '';
 
     constructor(
         showColumn: boolean = false,
@@ -21,30 +21,6 @@ export class ZestimateRangeHighColumn extends TableColumn<ListingWithScenariosRe
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get accessor(): PropertyColumnAccessorEnum {
-        return this._accessor;
-    }
-
-    get inputType(): InputType {
-        return this._inputType;
-    }
-
-    get isUrl(): boolean {
-        return this._isUrl;
-    }
-
-    get isDollarAmount(): boolean {
-        return this._isDollarAmount;
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
     }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
