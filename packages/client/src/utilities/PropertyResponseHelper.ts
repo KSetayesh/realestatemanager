@@ -309,7 +309,7 @@ export const getCapRate = (property: ListingWithScenariosResponseDTO): number =>
 };
 
 export const getRecurringCosts = (property: ListingWithScenariosResponseDTO): number => {
-    return initialInvestmentDetails(property).investmentBreakdown.ROI;
+    return initialInvestmentDetails(property).transactions["Operational Recurring Expense"].totalAmount.amount; //investmentBreakdown.ROI;
 };
 
 // Come back to this
@@ -331,7 +331,7 @@ export const getYearlyCashFlow = (property: ListingWithScenariosResponseDTO): nu
 };
 
 const initialInvestmentDetails = (property: ListingWithScenariosResponseDTO): InitialInvestmentBreakdownResponseDTO => {
-    return property.metrics.initialInvestmenDetails;
+    return property.metrics.initialInvestmentDetails;
 };
 
 const growthProjections = (property: ListingWithScenariosResponseDTO): GrowthProjectionsResponseDTO => {

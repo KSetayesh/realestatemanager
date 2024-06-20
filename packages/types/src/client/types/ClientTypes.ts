@@ -7,6 +7,15 @@ import {
     State
 } from "../../Constants";
 
+export enum InputType {
+    TEXT = 'text',
+    SELECT = 'select',
+    NUMBER = 'number',
+    RADIO = 'radio',
+    STRING = 'string',
+    CHECKBOX = 'checkbox',
+};
+
 export interface CreatePropertiesInBulkRequest {
     csvData: Record<string, string | number>[];
 };
