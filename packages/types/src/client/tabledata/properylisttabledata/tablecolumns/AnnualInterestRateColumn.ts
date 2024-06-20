@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ANNUAL_INTEREST_RATE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class AnnualInterestRateColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class AnnualInterestRateColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ANNUAL_INTEREST_RATE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ANNUAL_INTEREST_RATE;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '%';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ANNUAL_INTEREST_RATE;
 
     constructor(
         showColumn: boolean = true,
@@ -32,5 +26,5 @@ export class AnnualInterestRateColumn extends TableColumn<ListingWithScenariosRe
             const bValue = TableHelper.getInitialInvestmentDetails(b).transactions.Mortgage.breakdown.percentage;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    } 
+    }
 }

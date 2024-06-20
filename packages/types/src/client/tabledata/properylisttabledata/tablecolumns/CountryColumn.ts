@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { COUNTRY } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class CountryColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class CountryColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = COUNTRY;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.COUNTRY;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.COUNTRY;
 
     constructor(
         showColumn: boolean = false,
@@ -32,5 +26,5 @@ export class CountryColumn extends TableColumn<ListingWithScenariosResponseDTO, 
             const bValue = TableHelper.getListingDetails(b).propertyDetails.address.country;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    } 
+    }
 }

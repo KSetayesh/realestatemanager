@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { CREATION_TYPE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = CREATION_TYPE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.CREATION_TYPE;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.CREATION_TYPE;
 
     constructor(
         showColumn: boolean = false,
@@ -20,7 +14,7 @@ export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponse
         isSortable: boolean = false,
     ) {
         super(showColumn, isEditable, isSortable);
-    } 
+    }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).creationType;
@@ -32,6 +26,6 @@ export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponse
             const bValue = TableHelper.getListingDetails(b).creationType;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    } 
+    }
 
 }

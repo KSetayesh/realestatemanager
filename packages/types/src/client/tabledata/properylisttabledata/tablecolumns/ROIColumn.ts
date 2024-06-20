@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ROI } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ROIColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ROIColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ROI;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ROI;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '%';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ROI;
 
     constructor(
         showColumn: boolean = true,

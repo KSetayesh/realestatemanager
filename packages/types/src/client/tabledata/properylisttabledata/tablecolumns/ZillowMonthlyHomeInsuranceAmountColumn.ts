@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ZillowMonthlyHomeInsuranceAmountColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ZillowMonthlyHomeInsuranceAmountColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT;
 
     constructor(
         showColumn: boolean = false,

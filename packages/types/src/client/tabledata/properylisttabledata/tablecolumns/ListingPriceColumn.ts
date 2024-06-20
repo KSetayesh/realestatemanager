@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { LISTING_PRICE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ListingPriceColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ListingPriceColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = LISTING_PRICE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.LISTING_PRICE;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.LISTING_PRICE;
 
     constructor(
         showColumn: boolean = false,
@@ -21,8 +15,8 @@ export class ListingPriceColumn extends TableColumn<ListingWithScenariosResponse
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    } 
-    
+    }
+
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).listingPrice;
     }

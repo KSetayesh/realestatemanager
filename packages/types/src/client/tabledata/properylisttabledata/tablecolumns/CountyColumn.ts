@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { COUNTY } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class CountyColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class CountyColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = COUNTY;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.COUNTY;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.COUNTY;
 
     constructor(
         showColumn: boolean = false,
@@ -20,7 +14,7 @@ export class CountyColumn extends TableColumn<ListingWithScenariosResponseDTO, P
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    } 
+    }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).propertyDetails.address.county;
@@ -32,5 +26,5 @@ export class CountyColumn extends TableColumn<ListingWithScenariosResponseDTO, P
             const bValue = TableHelper.getListingDetails(b).propertyDetails.address.county;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    } 
+    }
 }

@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
+import { tableColumnDetailsMap } from "../../TableTitles";
 import { TableColumn } from "./TableColumn";
-import { CITY } from "../../TableTitles";
 
-export class CityColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class CityColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = CITY;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.CITY;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
-
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.CITY;
+ 
     constructor(
         showColumn: boolean = false,
         isEditable: boolean = false,

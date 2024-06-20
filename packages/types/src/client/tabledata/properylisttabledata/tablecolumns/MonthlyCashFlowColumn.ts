@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { MONTHLY_CASH_FLOW } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class MonthlyCashFlowColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class MonthlyCashFlowColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = MONTHLY_CASH_FLOW;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.MONTHLY_CASH_FLOW;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.MONTHLY_CASH_FLOW;
 
     constructor(
         showColumn: boolean = true,

@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ZIP_CODE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ZipCodeColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ZipCodeColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ZIP_CODE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZIP_CODE;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ZIP_CODE;
 
     constructor(
         showColumn: boolean = true,

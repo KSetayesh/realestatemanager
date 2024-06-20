@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { FULL_ADDRESS } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class FullAddressColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class FullAddressColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = FULL_ADDRESS;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.FULL_ADDRESS;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.FULL_ADDRESS;
 
     constructor(
         showColumn: boolean = true,

@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { NUMBER_OF_DAYS_ON_MARKET } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class NumberOfDaysOnMarketColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class NumberOfDaysOnMarketColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = NUMBER_OF_DAYS_ON_MARKET;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.NUMBER_OF_DAYS_ON_MARKET;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.NUMBER_OF_DAYS_ON_MARKET;
 
     constructor(
         showColumn: boolean = true,

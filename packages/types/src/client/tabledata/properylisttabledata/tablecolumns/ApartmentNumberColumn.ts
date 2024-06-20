@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { APARTMENT_NUMBER } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ApartmentNumberColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ApartmentNumberColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = APARTMENT_NUMBER;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.APARTMENT_NUMBER;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ANNUAL_INTEREST_RATE;
 
     constructor(
         showColumn: boolean = false,
@@ -32,5 +26,5 @@ export class ApartmentNumberColumn extends TableColumn<ListingWithScenariosRespo
             const bValue = TableHelper.getListingDetails(b).propertyDetails.address.apartmentNumber;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    } 
+    }
 }

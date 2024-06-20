@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ACRES } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class AcresColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class AcresColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ACRES;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ACRES;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ACRES;
 
     constructor(
         showColumn: boolean = false,

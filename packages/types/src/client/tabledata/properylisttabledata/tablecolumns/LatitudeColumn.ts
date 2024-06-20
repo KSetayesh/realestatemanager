@@ -1,18 +1,12 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { LATITUDE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class LatitudeColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class LatitudeColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = LATITUDE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.LATITUDE;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.LATITUDE;
 
     constructor(
         showColumn: boolean = false,

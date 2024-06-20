@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { YEAR_BUILT } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class YearBuiltColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class YearBuiltColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = YEAR_BUILT;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.YEAR_BUILT;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.YEAR_BUILT;
 
     constructor(
         showColumn: boolean = false,

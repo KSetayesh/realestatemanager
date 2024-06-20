@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ZESTIMATE_RANGE_HIGH } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ZestimateRangeHighColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ZestimateRangeHighColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ZESTIMATE_RANGE_HIGH;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZESTIMATE_RANGE_HIGH;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ZESTIMATE_RANGE_HIGH;
 
     constructor(
         showColumn: boolean = false,

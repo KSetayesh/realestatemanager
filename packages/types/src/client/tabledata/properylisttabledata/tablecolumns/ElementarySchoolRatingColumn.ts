@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ELEMENTARY_SCHOOL_RATING } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ElementarySchoolRatingColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ElementarySchoolRatingColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ELEMENTARY_SCHOOL_RATING;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ELEMENTARY_SCHOOL_RATING;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ELEMENTARY_SCHOOL_RATING;
 
     constructor(
         showColumn: boolean = false,
@@ -22,7 +16,7 @@ export class ElementarySchoolRatingColumn extends TableColumn<ListingWithScenari
     ) {
         super(showColumn, isEditable, isSortable);
     }
-    
+
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getListingDetails(listingWithScenarios).propertyDetails.schoolRating.elementarySchoolRating;
     }

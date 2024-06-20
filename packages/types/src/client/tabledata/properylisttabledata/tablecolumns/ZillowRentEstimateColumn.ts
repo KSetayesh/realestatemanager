@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isInteger } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { ZILLOW_RENT_ESTIMATE } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ZillowRentEstimateColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class ZillowRentEstimateColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = ZILLOW_RENT_ESTIMATE;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.ZILLOW_RENT_ESTIMATE;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ZILLOW_RENT_ESTIMATE;
 
     constructor(
         showColumn: boolean = false,
@@ -21,10 +15,6 @@ export class ZillowRentEstimateColumn extends TableColumn<ListingWithScenariosRe
         isSortable: boolean = true,
     ) {
         super(showColumn, isEditable, isSortable);
-    }
-
-    get addSuffix(): string {
-        return this._addSuffix;
     }
 
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {

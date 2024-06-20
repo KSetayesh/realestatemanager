@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
 import { isBoolean } from "../../../../utilities/Utility";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { HAS_POOL } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class HasPoolColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class HasPoolColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = HAS_POOL;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.HAS_POOL;
-    protected _inputType: InputType = InputType.STRING;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = false;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.HAS_POOL;
 
     constructor(
         showColumn: boolean = false,

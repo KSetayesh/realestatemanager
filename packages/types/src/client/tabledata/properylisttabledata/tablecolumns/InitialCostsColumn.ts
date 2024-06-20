@@ -1,19 +1,13 @@
 import { ListingWithScenariosResponseDTO } from "../../../../server/InvestmentTypes";
-import { InputType, SortDirection } from "../../../types/ClientTypes";
-import { PropertyColumnAccessorEnum } from "../table/PropertiesTableData";
+import { SortDirection, TableColumnDetailsType } from "../../../types/ClientTypes";
 import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
-import { INITIAL_COSTS } from "../../TableTitles";
+import { tableColumnDetailsMap } from "../../TableTitles";
 
 
-export class InitialCostsColumn extends TableColumn<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> {
+export class InitialCostsColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
-    protected _title: string = INITIAL_COSTS;
-    protected _accessor: PropertyColumnAccessorEnum = PropertyColumnAccessorEnum.INITIAL_COSTS;
-    protected _inputType: InputType = InputType.NUMBER;
-    protected _isUrl: boolean = false;
-    protected _isDollarAmount: boolean = true;
-    protected _addSuffix: string = '';
+    protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.INITIAL_COSTS;
 
     constructor(
         showColumn: boolean = true,
