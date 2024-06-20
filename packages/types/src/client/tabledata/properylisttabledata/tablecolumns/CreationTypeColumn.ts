@@ -32,10 +32,6 @@ export class CreationTypeColumn extends TableColumn<ListingWithScenariosResponse
             const bValue = TableHelper.getListingDetails(b).creationType;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
+    } 
 
 }

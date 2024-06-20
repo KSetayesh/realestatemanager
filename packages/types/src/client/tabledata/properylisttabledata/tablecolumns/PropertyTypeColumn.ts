@@ -34,8 +34,4 @@ export class PropertyTypeColumn extends TableColumn<ListingWithScenariosResponse
         });
     }
 
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
-
 }

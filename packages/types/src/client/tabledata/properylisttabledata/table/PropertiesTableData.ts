@@ -39,7 +39,6 @@ import { RentEstimateColumn } from "../tablecolumns/RentEstimateColumn";
 import { SquareFeetColumn } from "../tablecolumns/SquareFeetColumn";
 import { StateColumn } from "../tablecolumns/StateColumn";
 import { StreetAddressColumn } from "../tablecolumns/StreetAddressColumn";
-import { TableColumn } from "../tablecolumns/TableColumn";
 import { YearBuiltColumn } from "../tablecolumns/YearBuiltColumn";
 import { YearlyCashFlowColumn } from "../tablecolumns/YearlyCashFlowColumn";
 import { ZestimateColumn } from "../tablecolumns/ZestimateColumn";
@@ -104,15 +103,6 @@ export enum PropertyColumnAccessorEnum {
     CREATION_TYPE = 'creationType',
     DESCRIPTION = 'description',
 };
-
-// export type TableColumnsMapType<Y> = {
-//     [key in PropertyColumnAccessorEnum]: TableColumn<Y>;
-// };
-
-// export enum SortDirection {
-//     ASCENDING = 'ascending',
-//     DESCENDING = 'descending',
-// };
 
 export const tableColumnsMap: TableColumnsMapType<ListingWithScenariosResponseDTO, PropertyColumnAccessorEnum> = {
     [PropertyColumnAccessorEnum.PROPERTY_TYPE]: new PropertyTypeColumn(),

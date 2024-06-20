@@ -33,8 +33,4 @@ export class DateCreatedColumn extends TableColumn<ListingWithScenariosResponseD
             return this.genericSort(new Date(aValue).getTime(), new Date(bValue).getTime(), sortDirection);
         });
     }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
 }

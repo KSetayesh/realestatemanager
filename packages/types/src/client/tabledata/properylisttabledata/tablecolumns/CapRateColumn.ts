@@ -32,9 +32,5 @@ export class CapRateColumn extends TableColumn<ListingWithScenariosResponseDTO, 
             const bValue = TableHelper.getInitialInvestmentDetails(b).investmentBreakdown.capRate;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
+    } 
 }

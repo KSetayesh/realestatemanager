@@ -32,9 +32,5 @@ export class AnnualInterestRateColumn extends TableColumn<ListingWithScenariosRe
             const bValue = TableHelper.getInitialInvestmentDetails(b).transactions.Mortgage.breakdown.percentage;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
+    } 
 }

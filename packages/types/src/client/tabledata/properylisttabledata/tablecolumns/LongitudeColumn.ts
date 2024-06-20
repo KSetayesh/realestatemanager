@@ -34,7 +34,4 @@ export class LongitudeColumn extends TableColumn<ListingWithScenariosResponseDTO
         });
     }
 
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
 }

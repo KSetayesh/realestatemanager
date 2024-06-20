@@ -32,9 +32,5 @@ export class CityColumn extends TableColumn<ListingWithScenariosResponseDTO, Pro
             const bValue = TableHelper.getListingDetails(b).propertyDetails.address.city;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
+    } 
 }

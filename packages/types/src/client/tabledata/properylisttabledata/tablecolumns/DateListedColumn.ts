@@ -34,7 +34,4 @@ export class DateListedColumn extends TableColumn<ListingWithScenariosResponseDT
         });
     }
 
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
 }

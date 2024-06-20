@@ -180,12 +180,12 @@ export type PropertyFilterFormFields = {
     limit: number;
 };
 
-export type _TableColumnsMapType<Y> = {
-    [key in PropertyColumnAccessorEnum]: TableColumn<Y>;
+export type _TableColumnsMapType<Y, T extends string> = {
+    [key in PropertyColumnAccessorEnum]: TableColumn<Y, T>;
 };
 
-export type TableColumnsMapType<Y, X extends string> = {
-    [key in X]: TableColumn<Y>;
+export type TableColumnsMapType<Y, T extends string> = {
+    [key in T]: TableColumn<Y, T>;
 };
 
 export enum SortDirection {

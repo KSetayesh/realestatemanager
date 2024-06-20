@@ -22,7 +22,7 @@ export class InitialCostsColumn extends TableColumn<ListingWithScenariosResponse
     ) {
         super(showColumn, isEditable, isSortable);
     }
-    
+
     value(listingWithScenarios: ListingWithScenariosResponseDTO): string | number | boolean {
         return TableHelper.getInitialInvestmentDetails(listingWithScenarios).transactions["Initial Expense"].totalAmount.amount;
     }
@@ -33,10 +33,6 @@ export class InitialCostsColumn extends TableColumn<ListingWithScenariosResponse
             const bValue = TableHelper.getInitialInvestmentDetails(b).transactions["Initial Expense"].totalAmount.amount;
             return this.genericSort(aValue, bValue, sortDirection);
         });
-    }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
     }
 
 }

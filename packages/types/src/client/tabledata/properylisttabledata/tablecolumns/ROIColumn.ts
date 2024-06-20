@@ -34,7 +34,4 @@ export class ROIColumn extends TableColumn<ListingWithScenariosResponseDTO, Prop
         });
     }
 
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
 }

@@ -20,8 +20,6 @@ export abstract class TableColumn<Y, T extends string> {
 
     protected abstract _sort(list: Y[], sortDirection: SortDirection): Y[];
 
-    protected abstract _isValidEdit(value: string): boolean;
-
     protected abstract value(list: Y): number | string | boolean;
 
     protected abstract _title: string;
@@ -61,6 +59,10 @@ export abstract class TableColumn<Y, T extends string> {
 
         // For mixed types or unhandled types, treat as equal
         return 0;
+    }
+
+    protected _isValidEdit(value: string): boolean {
+        throw new Error("Method not implemented.");
     }
 
     sort(list: Y[], sortDirection: SortDirection): Y[] {

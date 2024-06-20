@@ -34,8 +34,4 @@ export class FullAddressColumn extends TableColumn<ListingWithScenariosResponseD
         });
     }
 
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
-
 }

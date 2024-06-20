@@ -33,8 +33,4 @@ export class YearlyCashFlowColumn extends TableColumn<ListingWithScenariosRespon
             return this.genericSort(aValue, bValue, sortDirection);
         });
     }
-
-    protected _isValidEdit(value: string): boolean {
-        throw new Error("Method not implemented.");
-    }
 }
