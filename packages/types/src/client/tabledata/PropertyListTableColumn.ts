@@ -9,7 +9,7 @@ export class PropertyListTableColumn extends TableColumn<TableType.PROPERTY_LIST
         return this.getTableTypeDetails().sortFunction(list, sortDirection);
     }
 
-    value(item: ListingWithScenariosResponseDTO): void | ValueType {
+    value(item: ListingWithScenariosResponseDTO): ValueType {
         return this.getTableTypeDetails().value(item);
     }
 

@@ -7,7 +7,7 @@ import {
 } from "../../server/InvestmentTypes";
 import { ListingDetailsResponseDTO } from "../../server/ListingTypes";
 
-export class TableHelper {
+export class PropertiesListTableHelper {
 
     static getFullAddress(property: ListingWithScenariosResponseDTO): string {
         return this.getListingDetails(property).propertyDetails.address.fullAddress;

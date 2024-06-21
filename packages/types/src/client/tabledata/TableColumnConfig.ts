@@ -1,6 +1,6 @@
 import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
 import { InputType, SortDirection } from "../types/ClientTypes";
-import { TableHelper } from "./TableHelper";
+import { PropertiesListTableHelper } from "./PropertiesListTableHelper";
 
 export enum TableColumnDetailsEnum {
     // Property List Columns
@@ -191,12 +191,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getFullAddress(listing),
+                    listing => PropertiesListTableHelper.getFullAddress(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getFullAddress(listingWithScenarios);
+                return PropertiesListTableHelper.getFullAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -226,12 +226,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getFullAddress(listing),
+                    listing => PropertiesListTableHelper.getFullAddress(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getFullAddress(listingWithScenarios);
+                return PropertiesListTableHelper.getFullAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -261,12 +261,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getState(listing),
+                    listing => PropertiesListTableHelper.getState(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getState(listingWithScenarios);
+                return PropertiesListTableHelper.getState(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -296,12 +296,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZipCode(listing),
+                    listing => PropertiesListTableHelper.getZipCode(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZipCode(listingWithScenarios);
+                return PropertiesListTableHelper.getZipCode(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -331,12 +331,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZillowURL(listing),
+                    listing => PropertiesListTableHelper.getZillowURL(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZillowURL(listingWithScenarios);
+                return PropertiesListTableHelper.getZillowURL(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -366,12 +366,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getPrice(listing),
+                    listing => PropertiesListTableHelper.getPrice(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getPrice(listingWithScenarios);
+                return PropertiesListTableHelper.getPrice(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -401,12 +401,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getRentEstimate(listing),
+                    listing => PropertiesListTableHelper.getRentEstimate(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getRentEstimate(listingWithScenarios);
+                return PropertiesListTableHelper.getRentEstimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -441,12 +441,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getInitialCosts(listing),
+                    listing => PropertiesListTableHelper.getInitialCosts(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getInitialCosts(listingWithScenarios);
+                return PropertiesListTableHelper.getInitialCosts(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -476,12 +476,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getLoanAmount(listing),
+                    listing => PropertiesListTableHelper.getLoanAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getLoanAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getLoanAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -511,12 +511,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getDownPaymentAmount(listing),
+                    listing => PropertiesListTableHelper.getDownPaymentAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getDownPaymentAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getDownPaymentAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -546,12 +546,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getAnnualInterestRate(listing),
+                    listing => PropertiesListTableHelper.getAnnualInterestRate(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getAnnualInterestRate(listingWithScenarios);
+                return PropertiesListTableHelper.getAnnualInterestRate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -581,12 +581,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getROI(listing),
+                    listing => PropertiesListTableHelper.getROI(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getROI(listingWithScenarios);
+                return PropertiesListTableHelper.getROI(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -616,12 +616,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getCapRate(listing),
+                    listing => PropertiesListTableHelper.getCapRate(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getCapRate(listingWithScenarios);
+                return PropertiesListTableHelper.getCapRate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -655,12 +655,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getRecurringCosts(listing),
+                    listing => PropertiesListTableHelper.getRecurringCosts(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getRecurringCosts(listingWithScenarios);
+                return PropertiesListTableHelper.getRecurringCosts(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -693,12 +693,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getInitialMonthlyAmount(listing),
+                    listing => PropertiesListTableHelper.getInitialMonthlyAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getInitialMonthlyAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getInitialMonthlyAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -728,12 +728,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getMortgage(listing),
+                    listing => PropertiesListTableHelper.getMortgage(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getMortgage(listingWithScenarios);
+                return PropertiesListTableHelper.getMortgage(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -763,12 +763,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getMonthlyCashFlow(listing),
+                    listing => PropertiesListTableHelper.getMonthlyCashFlow(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getMonthlyCashFlow(listingWithScenarios);
+                return PropertiesListTableHelper.getMonthlyCashFlow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -798,12 +798,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getYearlyCashFlow(listing),
+                    listing => PropertiesListTableHelper.getYearlyCashFlow(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getYearlyCashFlow(listingWithScenarios);
+                return PropertiesListTableHelper.getYearlyCashFlow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -833,12 +833,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getNumberOfDaysOnMarket(listing),
+                    listing => PropertiesListTableHelper.getNumberOfDaysOnMarket(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getNumberOfDaysOnMarket(listingWithScenarios);
+                return PropertiesListTableHelper.getNumberOfDaysOnMarket(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -868,12 +868,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getDateListed(listing),
+                    listing => PropertiesListTableHelper.getDateListed(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getDateListed(listingWithScenarios);
+                return PropertiesListTableHelper.getDateListed(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -903,12 +903,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getDateCreated(listing),
+                    listing => PropertiesListTableHelper.getDateCreated(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getDateCreated(listingWithScenarios);
+                return PropertiesListTableHelper.getDateCreated(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -938,12 +938,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getCity(listing),
+                    listing => PropertiesListTableHelper.getCity(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getCity(listingWithScenarios);
+                return PropertiesListTableHelper.getCity(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -973,12 +973,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getCounty(listing),
+                    listing => PropertiesListTableHelper.getCounty(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getCounty(listingWithScenarios);
+                return PropertiesListTableHelper.getCounty(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1008,12 +1008,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getCountry(listing),
+                    listing => PropertiesListTableHelper.getCountry(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getCountry(listingWithScenarios);
+                return PropertiesListTableHelper.getCountry(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1043,12 +1043,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getStreetAddress(listing),
+                    listing => PropertiesListTableHelper.getStreetAddress(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getStreetAddress(listingWithScenarios);
+                return PropertiesListTableHelper.getStreetAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1078,12 +1078,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getApartmentNumber(listing),
+                    listing => PropertiesListTableHelper.getApartmentNumber(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getApartmentNumber(listingWithScenarios);
+                return PropertiesListTableHelper.getApartmentNumber(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1113,12 +1113,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getLongitude(listing),
+                    listing => PropertiesListTableHelper.getLongitude(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getLongitude(listingWithScenarios);
+                return PropertiesListTableHelper.getLongitude(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1148,12 +1148,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getLatitude(listing),
+                    listing => PropertiesListTableHelper.getLatitude(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getLatitude(listingWithScenarios);
+                return PropertiesListTableHelper.getLatitude(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1183,12 +1183,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getElementarySchoolRating(listing),
+                    listing => PropertiesListTableHelper.getElementarySchoolRating(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getElementarySchoolRating(listingWithScenarios);
+                return PropertiesListTableHelper.getElementarySchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1218,12 +1218,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getMiddleSchoolRating(listing),
+                    listing => PropertiesListTableHelper.getMiddleSchoolRating(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getMiddleSchoolRating(listingWithScenarios);
+                return PropertiesListTableHelper.getMiddleSchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1253,12 +1253,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getHighSchoolRating(listing),
+                    listing => PropertiesListTableHelper.getHighSchoolRating(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getHighSchoolRating(listingWithScenarios);
+                return PropertiesListTableHelper.getHighSchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1288,12 +1288,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getNumberOfBedrooms(listing),
+                    listing => PropertiesListTableHelper.getNumberOfBedrooms(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getNumberOfBedrooms(listingWithScenarios);
+                return PropertiesListTableHelper.getNumberOfBedrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1323,12 +1323,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getNumberOfFullBathrooms(listing),
+                    listing => PropertiesListTableHelper.getNumberOfFullBathrooms(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getNumberOfFullBathrooms(listingWithScenarios);
+                return PropertiesListTableHelper.getNumberOfFullBathrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1358,12 +1358,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getNumberOfHalfBathrooms(listing),
+                    listing => PropertiesListTableHelper.getNumberOfHalfBathrooms(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
+                return PropertiesListTableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1393,12 +1393,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getSquareFeet(listing),
+                    listing => PropertiesListTableHelper.getSquareFeet(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getSquareFeet(listingWithScenarios);
+                return PropertiesListTableHelper.getSquareFeet(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1428,12 +1428,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getAcres(listing),
+                    listing => PropertiesListTableHelper.getAcres(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getAcres(listingWithScenarios);
+                return PropertiesListTableHelper.getAcres(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1463,12 +1463,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getYearBuilt(listing),
+                    listing => PropertiesListTableHelper.getYearBuilt(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getYearBuilt(listingWithScenarios);
+                return PropertiesListTableHelper.getYearBuilt(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1498,12 +1498,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.hasGarage(listing),
+                    listing => PropertiesListTableHelper.hasGarage(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.hasGarage(listingWithScenarios);
+                return PropertiesListTableHelper.hasGarage(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1533,12 +1533,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.hasPool(listing),
+                    listing => PropertiesListTableHelper.hasPool(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.hasPool(listingWithScenarios);
+                return PropertiesListTableHelper.hasPool(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1568,12 +1568,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.hasBasement(listing),
+                    listing => PropertiesListTableHelper.hasBasement(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.hasBasement(listingWithScenarios);
+                return PropertiesListTableHelper.hasBasement(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1603,12 +1603,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getListingPrice(listing),
+                    listing => PropertiesListTableHelper.getListingPrice(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getListingPrice(listingWithScenarios);
+                return PropertiesListTableHelper.getListingPrice(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1638,12 +1638,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZestimate(listing),
+                    listing => PropertiesListTableHelper.getZestimate(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZestimate(listingWithScenarios);
+                return PropertiesListTableHelper.getZestimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1673,12 +1673,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZillowRentEstimate(listing),
+                    listing => PropertiesListTableHelper.getZillowRentEstimate(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZillowRentEstimate(listingWithScenarios);
+                return PropertiesListTableHelper.getZillowRentEstimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1708,12 +1708,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZestimateRangeLow(listing),
+                    listing => PropertiesListTableHelper.getZestimateRangeLow(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZestimateRangeLow(listingWithScenarios);
+                return PropertiesListTableHelper.getZestimateRangeLow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1743,12 +1743,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZestimateRangeHigh(listing),
+                    listing => PropertiesListTableHelper.getZestimateRangeHigh(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZestimateRangeHigh(listingWithScenarios);
+                return PropertiesListTableHelper.getZestimateRangeHigh(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1778,12 +1778,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZillowMonthlyPropertyTaxAmount(listing),
+                    listing => PropertiesListTableHelper.getZillowMonthlyPropertyTaxAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1813,12 +1813,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZillowMonthlyHomeInsuranceAmount(listing),
+                    listing => PropertiesListTableHelper.getZillowMonthlyHomeInsuranceAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1848,12 +1848,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getZillowMonthlyHOAFeesAmount(listing),
+                    listing => PropertiesListTableHelper.getZillowMonthlyHOAFeesAmount(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
+                return PropertiesListTableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1883,12 +1883,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getCreationType(listing),
+                    listing => PropertiesListTableHelper.getCreationType(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getCreationType(listingWithScenarios);
+                return PropertiesListTableHelper.getCreationType(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -1918,12 +1918,12 @@ export const columnDetails: ColumnsDetails = {
             ) => {
                 return sort(
                     listingWithScenarios,
-                    listing => TableHelper.getDescription(listing),
+                    listing => PropertiesListTableHelper.getDescription(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return TableHelper.getDescription(listingWithScenarios);
+                return PropertiesListTableHelper.getDescription(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {

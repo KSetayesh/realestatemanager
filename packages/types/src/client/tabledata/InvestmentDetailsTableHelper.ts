@@ -1,6 +1,6 @@
 import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/types";
 
-export class InvestmentDetailsHelper {
+export class InvestmentDetailsTableHelper {
 
     static getYear(ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): number {
         return ammortizationDetail.monthlyDateData.yearCounter;
