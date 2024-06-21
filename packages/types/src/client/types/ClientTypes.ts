@@ -6,6 +6,11 @@ import {
     PropertyType,
     State
 } from "../../Constants";
+import {
+    ListingWithScenariosResponseDTO,
+    MonthlyInvestmentDetailsResponseDTO
+} from "../../server/InvestmentTypes";
+import { TableColumnDetailsEnum, TableType } from "../tabledata/TableColumnConfig";
 
 export enum InputType {
     TEXT = 'text',
@@ -178,14 +183,6 @@ export type PropertyFilterFormFields = {
     limit: number;
 };
 
-// export type _TableColumnsMapType<Y, T extends string> = {
-//     [key in PropertyColumnAccessorEnum]: TableColumn<Y, T>;
-// };
-
-// export type TableColumnsMapType<Y, T extends string> = {
-//     [key in T]: TableColumn<Y, T>;
-// };
-
 export type TableColumnDetailsType = {
     title: string;
     accessor: string;
@@ -198,4 +195,40 @@ export type TableColumnDetailsType = {
 export enum SortDirection {
     ASCENDING = 'ascending',
     DESCENDING = 'descending',
+};
+
+export type ValueType = string | boolean | number;
+
+// Define a type that maps TableType to its corresponding DTO type
+export type TableTypeSpecific<T extends TableType> =
+    T extends TableType.PROPERTY_LIST_TABLE ? ListingWithScenariosResponseDTO :
+    T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO : never;
+
+// Define the sort and value function types based on TableType
+export type SortFunction<T extends TableType> = (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
+
+export type ValueFunction<T extends TableType> = (item: TableTypeSpecific<T>) => ValueType | void;
+
+// Define the type for the table-specific details
+export type TableTypeDetails<T extends TableType> = {
+    sortFunction: SortFunction<T>;
+    value: ValueFunction<T>;
+};
+
+// Define the type for the sortMap structure
+export type ColumnsDetails = {
+    [key in TableColumnDetailsEnum]: {
+        title: string;
+        accessor: string;
+        inputType: InputType;
+        isUrl: boolean;
+        isDollarAmount: boolean;
+        addSuffix: string;
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
+    } & {
+        [T in TableType]: TableTypeDetails<T>;
+    };
 };

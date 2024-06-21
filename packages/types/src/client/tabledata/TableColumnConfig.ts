@@ -1,6 +1,101 @@
 import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableTitles";
-import { InputType, SortDirection } from "./ClientTypes";
+import { InputType, SortDirection } from "../types/ClientTypes";
+
+export enum TableColumnDetailsEnum {
+    // Property List Columns
+    PROPERTY_TYPE = 'PROPERTY_TYPE',
+    FULL_ADDRESS = 'FULL_ADDRESS',
+    STATE = 'STATE',
+    ZIP_CODE = 'ZIP_CODE',
+    ZILLOW_URL = 'ZILLOW_URL',
+    PRICE = 'PRICE',
+    RENT_ESTIMATE = 'RENT_ESTIMATE',
+    INITIAL_COSTS = 'INITIAL_COSTS',
+    LOAN_AMOUNT = 'LOAN_AMOUNT',
+    DOWN_PAYMENT_AMOUNT = 'DOWN_PAYMENT_AMOUNT',
+    ANNUAL_INTEREST_RATE = 'ANNUAL_INTEREST_RATE',
+    ROI = 'ROI',
+    CAP_RATE = 'CAP_RATE',
+    RECURRING_COSTS = 'RECURRING_COSTS',
+    INITIAL_MONTHLY_AMOUNT = 'INITIAL_MONTHLY_AMOUNT',
+    MORTGAGE = 'MORTGAGE',
+    MONTHLY_CASH_FLOW = 'MONTHLY_CASH_FLOW',
+    YEARLY_CASH_FLOW = 'YEARLY_CASH_FLOW',
+    NUMBER_OF_DAYS_ON_MARKET = 'NUMBER_OF_DAYS_ON_MARKET',
+    DATE_LISTED = 'DATE_LISTED',
+    DATE_CREATED = 'DATE_CREATED',
+    CITY = 'CITY',
+    COUNTY = 'COUNTY',
+    COUNTRY = 'COUNTRY',
+    STREET_ADDRESS = 'STREET_ADDRESS',
+    APARTMENT_NUMBER = 'APARTMENT_NUMBER',
+    LONGITUDE = 'LONGITUDE',
+    LATITUDE = 'LATITUDE',
+    ELEMENTARY_SCHOOL_RATING = 'ELEMENTARY_SCHOOL_RATING',
+    MIDDLE_SCHOOL_RATING = 'MIDDLE_SCHOOL_RATING',
+    HIGH_SCHOOL_RATING = 'HIGH_SCHOOL_RATING',
+    NUMBER_OF_BEDROOMS = 'NUMBER_OF_BEDROOMS',
+    NUMBER_OF_FULL_BATHROOMS = 'NUMBER_OF_FULL_BATHROOMS',
+    NUMBER_OF_HALF_BATHROOMS = 'NUMBER_OF_HALF_BATHROOMS',
+    SQUARE_FEET = 'SQUARE_FEET',
+    ACRES = 'ACRES',
+    YEAR_BUILT = 'YEAR_BUILT',
+    HAS_GARAGE = 'HAS_GARAGE',
+    HAS_POOL = 'HAS_POOL',
+    HAS_BASEMENT = 'HAS_BASEMENT',
+    LISTING_PRICE = 'LISTING_PRICE',
+    ZESTIMATE = 'ZESTIMATE',
+    ZILLOW_RENT_ESTIMATE = 'ZILLOW_RENT_ESTIMATE',
+    ZESTIMATE_RANGE_LOW = 'ZESTIMATE_RANGE_LOW',
+    ZESTIMATE_RANGE_HIGH = 'ZESTIMATE_RANGE_HIGH',
+    ZILLOW_MONTHLY_PROPERTY_TAX_AMOUNT = 'ZILLOW_MONTHLY_PROPERTY_TAX_AMOUNT',
+    ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT = 'ZILLOW_MONTHLY_HOME_INSURANCE_AMOUNT',
+    ZILLOW_MONTHLY_HOA_FEES_AMOUNT = 'ZILLOW_MONTHLY_HOA_FEES_AMOUNT',
+    CREATION_TYPE = 'CREATION_TYPE',
+    DESCRIPTION = 'DESCRIPTION',
+
+    // InvestmentBreakdown Columns
+    YEAR = 'YEAR',
+    MONTH = 'MONTH',
+    DATE = 'DATE',
+    //MORTGAGE
+    TOTAL_INTEREST_PAID = 'TOTAL_INTEREST_PAID',
+    TOTAL_PRINCIPAL_PAID = 'TOTAL_PRINCIPAL_PAID',
+    REMAINING_BALANCE = 'REMAINING_BALANCE',
+    // RENT ESTIMATE
+    // MONTHLY INCOME
+    MONTHLY_EXPENSES = 'MONTHLY_EXPENSES',
+    // MONTHLY CASH FLOW
+    ACCUMULATED_CASH_FLOW = 'ACCUMULATED_CASH_FLOW',
+    APPRECIATION_AMOUNT = 'APPRECIATION_AMOUNT',
+    PMI_AMOUNT = 'PMI_AMOUNT',
+    INTEREST_PAYMENT = 'INTEREST_PAYMENT',
+    PRINCIPAL_PAYMENT = 'PRINCIPAL_PAYMENT',
+    PERCENTAGE_OF_INTEREST = 'PERCENTAGE_OF_INTEREST',
+    PERCENTAGE_OF_PRINCIPAL = 'PERCENTAGE_OF_PRINCIPAL',
+    EQUITY_AMOUNT = 'EQUITY_AMOUNT',
+    NET_OPERATING_INCOME = 'NET_OPERATING_INCOME',
+    ACCUMULATED_NET_OPERATING_INCOME = 'ACCUMULATED_NET_OPERATING_INCOME',
+    CASH_ON_CASH_RETURN = 'CASH_ON_CASH_RETURN',
+    MONTHLY_NET_INCOME = 'MONTHLY_NET_INCOME',
+    ACCUMULATED_NET_INCOME = 'ACCUMULATED_NET_INCOME',
+    PROPERTY_MANAGEMENT_AMOUNT = 'PROPERTY_MANAGEMENT_AMOUNT',
+    VACANCY_AMOUNT = 'VACANCY_AMOUNT',
+    MAINTENANCE_AMOUNT = 'MAINTENANCE_AMOUNT',
+    CAP_EX_RESERVE_AMOUNT = 'CAP_EX_RESERVE_AMOUNT',
+    OTHER_EXPENSE_AMOUNT = 'OTHER_EXPENSE_AMOUNT',
+    OPERATIONAL_COSTS = 'OPERATIONAL_COSTS',
+    PROPERTY_TAX_AMOUNT = 'PROPERTY_TAX_AMOUNT',
+    MONTHLY_HOME_INSURANCE_AMOUNT = 'MONTHLY_HOME_INSURANCE_AMOUNT',
+    MONTHLY_HOA_FEES_AMOUNT = 'MONTHLY_HOA_FEES_AMOUNT',
+    FIXED_COSTS = 'FIXED_COSTS',
+    MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS = 'MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS',
+};
+
+export enum TableType {
+    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
+    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
+};
 
 export const genericSort = (
     aValue: number | string | boolean,
@@ -29,45 +124,6 @@ export const genericSort = (
     return 0;
 };
 
-export enum TableType {
-    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
-    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
-}
-
-// // Define the type for the sort function
-// export type SortFunction<T> = (items?: T[], sortDirection?: SortDirection) => T[] | void;
-
-// // Define the type for the value function
-// export type ValueFunction<T> = (item?: T) => string | boolean | number | void;
-
-// export type SortFunctionTypes = SortFunction<ListingWithScenariosResponseDTO> | SortFunction<MonthlyInvestmentDetailsResponseDTO>;
-
-// export type ValueFunctionTypes = ValueFunction<ListingWithScenariosResponseDTO> | ValueFunction<MonthlyInvestmentDetailsResponseDTO>;
-
-// // Define the type for the table-specific details
-// export type TableTypeDetails = {
-//     sortFunction: SortFunctionTypes;
-//     value: ValueFunctionTypes;
-// };
-
-// // Define the type for the sortMap structure
-// export type ColumnsDetails = {
-//     [key in TableColumnDetailsEnum]: {
-//         title: string;
-//         accessor: string;
-//         inputType: InputType;
-//         isUrl: boolean;
-//         isDollarAmount: boolean;
-//         addSuffix: string;
-//         showColumn: undefined,
-//         isEditable: undefined,
-//         isSortable: undefined,
-//         detailedDescription: undefined,
-//     } & {
-//         [key in TableType]: TableTypeDetails;
-//     };
-// };
-
 export type ValueType = string | boolean | number;
 
 // Define a type that maps TableType to its corresponding DTO type
@@ -76,8 +132,11 @@ export type TableTypeSpecific<T extends TableType> =
     T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO : never;
 
 // Define the sort and value function types based on TableType
-export type SortFunction<T extends TableType> = (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
-export type ValueFunction<T extends TableType> = (item: TableTypeSpecific<T>) => ValueType | void;
+export type SortFunction<T extends TableType> =
+    (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
+
+export type ValueFunction<T extends TableType> =
+    (item: TableTypeSpecific<T>) => ValueType | void;
 
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
@@ -94,16 +153,16 @@ export type ColumnsDetails = {
         isUrl: boolean;
         isDollarAmount: boolean;
         addSuffix: string;
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: boolean,
+        isEditable: boolean,
+        isSortable: boolean,
+        detailedDescription: string,
     } & {
         [T in TableType]: TableTypeDetails<T>;
     };
 };
 
-const sort = <T>(list: T[], _func: (s: T) => ValueType, sortDirection: SortDirection) => {
+const sort = <T>(list: T[], _func: (s: T) => ValueType, sortDirection: SortDirection): T[] => {
     return list.sort((a, b) => {
         const aValue = _func(a);
         const bValue = _func(b);
@@ -125,13 +184,16 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: (listingWithScenarios: ListingWithScenariosResponseDTO[], sortDirection: SortDirection) => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return sort(
                     listingWithScenarios, listing => listing.listingDetails.propertyDetails.propertyType,
                     sortDirection
                 );
             },
-            value: (listingWithScenarios: ListingWithScenariosResponseDTO): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return listingWithScenarios.listingDetails.propertyDetails.propertyType;
             }
         },
@@ -139,7 +201,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -156,10 +218,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -167,7 +232,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -184,10 +249,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -195,7 +263,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -212,10 +280,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -223,7 +294,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -240,10 +311,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -251,7 +325,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -268,10 +342,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -279,7 +356,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -296,10 +373,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -307,7 +387,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -324,10 +404,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -335,7 +418,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -352,10 +435,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -363,7 +449,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -380,10 +466,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -391,7 +480,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -408,10 +497,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -419,7 +511,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -436,10 +528,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -447,7 +542,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -464,10 +559,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -475,7 +573,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -492,10 +590,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -503,7 +604,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -520,10 +621,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -531,7 +635,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -548,10 +652,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -559,7 +666,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -576,10 +683,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -587,7 +697,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -604,10 +714,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -615,7 +728,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -632,10 +745,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -643,7 +759,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -660,10 +776,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -671,7 +790,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -688,10 +807,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -699,7 +821,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -716,10 +838,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -727,7 +852,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -744,10 +869,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -755,7 +883,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -772,10 +900,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -783,7 +914,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -800,10 +931,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -811,7 +945,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -828,10 +962,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -839,7 +976,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -856,10 +993,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -867,7 +1007,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -884,10 +1024,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -895,7 +1038,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -912,10 +1055,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -923,7 +1069,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -940,10 +1086,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -951,7 +1100,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -968,10 +1117,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -979,7 +1131,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -996,10 +1148,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1007,7 +1162,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1024,10 +1179,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1035,7 +1193,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1052,10 +1210,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1063,7 +1224,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1080,10 +1241,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1091,7 +1255,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1108,10 +1272,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1119,7 +1286,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1136,10 +1303,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1147,7 +1317,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1164,10 +1334,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1175,7 +1348,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1192,10 +1365,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1203,7 +1379,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1220,10 +1396,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1231,7 +1410,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1248,10 +1427,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1259,7 +1441,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1276,10 +1458,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1287,7 +1472,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1304,10 +1489,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1315,7 +1503,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1332,10 +1520,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1343,7 +1534,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1360,10 +1551,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1371,7 +1565,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1388,10 +1582,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1399,7 +1596,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1416,10 +1613,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1427,7 +1627,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1444,10 +1644,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1455,7 +1658,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1472,10 +1675,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1483,7 +1689,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1500,10 +1706,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1511,7 +1720,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1528,10 +1737,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1539,7 +1751,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1556,10 +1768,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1567,7 +1782,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1584,10 +1799,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1595,7 +1813,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1612,10 +1830,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1623,7 +1844,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1640,10 +1861,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1651,7 +1875,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1668,10 +1892,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1679,7 +1906,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1696,10 +1923,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1707,7 +1937,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1724,10 +1954,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1735,7 +1968,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1752,10 +1985,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1763,7 +1999,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1780,10 +2016,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1791,7 +2030,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1808,10 +2047,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1819,7 +2061,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1836,10 +2078,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1847,7 +2092,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1864,10 +2109,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1875,7 +2123,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1892,10 +2140,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1903,7 +2154,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1920,10 +2171,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1931,7 +2185,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1948,10 +2202,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1959,7 +2216,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -1976,10 +2233,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -1987,7 +2247,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2004,10 +2264,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2015,7 +2278,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2032,10 +2295,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2043,7 +2309,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2060,10 +2326,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2071,7 +2340,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2088,10 +2357,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2099,7 +2371,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2116,10 +2388,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2127,7 +2402,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2144,10 +2419,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2155,7 +2433,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2172,10 +2450,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2183,7 +2464,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2200,10 +2481,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2211,7 +2495,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2228,10 +2512,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2239,7 +2526,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2256,10 +2543,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2267,7 +2557,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2284,10 +2574,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2295,7 +2588,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2312,10 +2605,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2323,7 +2619,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2340,10 +2636,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2351,7 +2650,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }
@@ -2368,10 +2667,13 @@ export const columnDetails: ColumnsDetails = {
         isSortable: undefined,
         detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                listingWithScenarios: ListingWithScenariosResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
             }
         },
@@ -2379,7 +2681,7 @@ export const columnDetails: ColumnsDetails = {
             sortFunction: () => {
                 return;
             },
-            value: (): string | boolean | number => {
+            value: (): ValueType => {
                 return;
             }
         }

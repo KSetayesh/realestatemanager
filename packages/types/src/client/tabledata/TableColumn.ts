@@ -1,6 +1,13 @@
-import { TableColumnDetailsEnum } from "../tabledata/TableTitles";
-import { InputType, SortDirection } from "./ClientTypes";
-import { SortFunction, TableType, TableTypeSpecific, ValueFunction, ValueType, columnDetails } from "./TableColumnConfig";
+import { InputType, SortDirection } from "../types/ClientTypes";
+import {
+    SortFunction,
+    TableColumnDetailsEnum,
+    TableType,
+    TableTypeSpecific,
+    ValueFunction,
+    ValueType,
+    columnDetails
+} from "./TableColumnConfig";
 
 export class TableColumn<T extends TableType> {
 

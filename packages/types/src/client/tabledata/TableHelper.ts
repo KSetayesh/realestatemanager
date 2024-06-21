@@ -1,4 +1,9 @@
-import { GrowthProjectionsResponseDTO, InitialInvestmentBreakdownResponseDTO, ListingWithScenariosResponseDTO, TaxImplicationsResponseDTO } from "../../server/InvestmentTypes";
+import {
+    GrowthProjectionsResponseDTO,
+    InitialInvestmentBreakdownResponseDTO,
+    ListingWithScenariosResponseDTO,
+    TaxImplicationsResponseDTO
+} from "../../server/InvestmentTypes";
 import { ListingDetailsResponseDTO } from "../../server/ListingTypes";
 
 export class TableHelper {
