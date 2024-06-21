@@ -106,7 +106,6 @@ export class InvestmentDetailsTableHelper {
         return ammortizationDetail.monthlyBreakdown.investmentBreakdown.accumulatedNetIncome;
     }
 
-
     static getPropertyManagementAmount(ammortizationDetail: MonthlyInvestmentDetailsResponseDTO): number {
         return ammortizationDetail.monthlyBreakdown.transactions.breakdown['Operational Recurring Expense'].breakdown['Property Management Expense'].amount;
     }

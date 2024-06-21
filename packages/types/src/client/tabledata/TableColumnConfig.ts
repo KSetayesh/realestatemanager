@@ -2,6 +2,11 @@ import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } 
 import { InputType, SortDirection } from "../types/ClientTypes";
 import { PropertiesListTableHelper } from "./PropertiesListTableHelper";
 
+export enum TableType {
+    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
+    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
+};
+
 export enum TableColumnDetailsEnum {
     // Property List Columns
     PROPERTY_TYPE = 'PROPERTY_TYPE',
@@ -93,11 +98,6 @@ export enum TableColumnDetailsEnum {
     MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS = 'MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS',
 };
 
-export enum TableType {
-    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
-    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
-};
-
 export const genericSort = (
     aValue: number | string | boolean,
     bValue: number | string | boolean,
@@ -169,7 +169,7 @@ const sort = <T>(list: T[], _func: (s: T) => ValueType, sortDirection: SortDirec
         const bValue = _func(b);
         return genericSort(aValue, bValue, sortDirection);
     });
-}
+};
 
 // Implement the sortMap with the defined types
 export const columnDetails: ColumnsDetails = {
@@ -200,10 +200,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[], 
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -235,10 +238,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -270,10 +276,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -305,10 +314,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -340,10 +352,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -375,10 +390,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -410,10 +428,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -450,10 +471,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -485,10 +509,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -520,10 +547,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -555,10 +585,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -590,10 +623,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -625,10 +661,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -664,10 +703,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -702,10 +744,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -737,10 +782,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -772,10 +820,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -807,10 +858,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -842,10 +896,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -877,10 +934,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -912,10 +972,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -947,10 +1010,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -982,10 +1048,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1017,10 +1086,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1052,10 +1124,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1087,10 +1162,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1122,10 +1200,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1157,10 +1238,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1192,10 +1276,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1227,10 +1314,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1262,10 +1352,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1297,10 +1390,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1332,10 +1428,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1367,10 +1466,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1402,10 +1504,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1437,10 +1542,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1472,10 +1580,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1507,10 +1618,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1542,10 +1656,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1577,10 +1694,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1612,10 +1732,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1647,10 +1770,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1682,10 +1808,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1717,10 +1846,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1752,10 +1884,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1787,10 +1922,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1822,10 +1960,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1857,10 +1998,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1892,10 +2036,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1927,10 +2074,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1958,10 +2108,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -1989,10 +2142,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2020,10 +2176,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2051,10 +2210,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2082,10 +2244,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2113,10 +2278,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2144,10 +2312,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2175,10 +2346,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2206,10 +2380,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2237,10 +2414,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2268,10 +2448,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2299,10 +2482,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2330,10 +2516,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2361,10 +2550,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2392,10 +2584,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2423,10 +2618,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2454,10 +2652,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2485,10 +2686,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2516,10 +2720,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2547,10 +2754,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2578,10 +2788,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2609,10 +2822,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2640,10 +2856,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2671,10 +2890,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2702,10 +2924,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2733,10 +2958,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2764,10 +2992,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2795,10 +3026,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2826,10 +3060,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2857,10 +3094,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }
@@ -2888,10 +3128,13 @@ export const columnDetails: ColumnsDetails = {
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
-            sortFunction: () => {
+            sortFunction: (
+                monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO[],
+                sortDirection: SortDirection
+            ) => {
                 throw new Error("Not implemented");
             },
-            value: (): ValueType => {
+            value: (monthlyInvestmentDetails: MonthlyInvestmentDetailsResponseDTO): ValueType => {
                 return;
             }
         }

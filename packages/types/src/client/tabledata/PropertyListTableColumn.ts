@@ -17,5 +17,4 @@ export class PropertyListTableColumn extends TableColumn<TableType.PROPERTY_LIST
         return columnDetails[this.tableColumnDetail][TableType.PROPERTY_LIST_TABLE];
     }
 
-
 }
