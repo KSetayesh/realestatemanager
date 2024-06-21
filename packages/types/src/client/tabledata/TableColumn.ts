@@ -1,10 +1,7 @@
-import { InputType, SortDirection } from "../types/ClientTypes";
+import { InputType, SortDirection, TableTypeDetails, TableTypeSpecific, PrimitiveType } from "../types/ClientTypes";
 import {
     TableColumnDetailsEnum,
     TableType,
-    TableTypeDetails,
-    TableTypeSpecific,
-    ValueType,
     columnDetails
 } from "./TableColumnConfig";
 
@@ -37,7 +34,7 @@ export abstract class TableColumn<T extends TableType> {
 
     abstract sort(list: TableTypeSpecific<T>[], sortDirection: SortDirection): TableTypeSpecific<T>[];
 
-    abstract value(item: TableTypeSpecific<T>): ValueType;
+    abstract value(item: TableTypeSpecific<T>): PrimitiveType;
 
     get tableType(): T {
         return this._tableType;

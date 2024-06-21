@@ -1,7 +1,7 @@
 import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
-import { SortDirection } from "../types/ClientTypes";
+import { SortDirection, TableTypeDetails, PrimitiveType } from "../types/ClientTypes";
 import { TableColumn } from "./TableColumn";
-import { TableType, TableTypeDetails, ValueType, columnDetails } from "./TableColumnConfig";
+import { TableType, columnDetails } from "./TableColumnConfig";
 
 export class PropertyListTableColumn extends TableColumn<TableType.PROPERTY_LIST_TABLE> {
 
@@ -9,7 +9,7 @@ export class PropertyListTableColumn extends TableColumn<TableType.PROPERTY_LIST
         return this.getTableTypeDetails().sortFunction(list, sortDirection);
     }
 
-    value(item: ListingWithScenariosResponseDTO): ValueType {
+    value(item: ListingWithScenariosResponseDTO): PrimitiveType {
         return this.getTableTypeDetails().value(item);
     }
 

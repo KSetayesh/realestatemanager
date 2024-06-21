@@ -183,31 +183,25 @@ export type PropertyFilterFormFields = {
     limit: number;
 };
 
-export type TableColumnDetailsType = {
-    title: string;
-    accessor: string;
-    inputType: InputType;
-    isUrl: boolean;
-    isDollarAmount: boolean;
-    addSuffix: string;
-};
-
 export enum SortDirection {
     ASCENDING = 'ascending',
     DESCENDING = 'descending',
 };
 
-export type ValueType = string | boolean | number;
+export type PrimitiveType = string | boolean | number;
 
 // Define a type that maps TableType to its corresponding DTO type
 export type TableTypeSpecific<T extends TableType> =
     T extends TableType.PROPERTY_LIST_TABLE ? ListingWithScenariosResponseDTO :
     T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO : never;
+// T extends TableType.AGENT_TABLE ? AgentResponseDTO : never;
 
 // Define the sort and value function types based on TableType
-export type SortFunction<T extends TableType> = (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
+export type SortFunction<T extends TableType> =
+    (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[];
 
-export type ValueFunction<T extends TableType> = (item: TableTypeSpecific<T>) => ValueType | void;
+export type ValueFunction<T extends TableType> =
+    (item: TableTypeSpecific<T>) => PrimitiveType;
 
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
@@ -215,20 +209,22 @@ export type TableTypeDetails<T extends TableType> = {
     value: ValueFunction<T>;
 };
 
-// Define the type for the sortMap structure
-export type ColumnsDetails = {
-    [key in TableColumnDetailsEnum]: {
-        title: string;
-        accessor: string;
-        inputType: InputType;
-        isUrl: boolean;
-        isDollarAmount: boolean;
-        addSuffix: string;
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
-    } & {
+export type ColumnDetail = {
+    title: string;
+    accessor: string;
+    inputType: InputType;
+    isUrl: boolean;
+    isDollarAmount: boolean;
+    addSuffix: string;
+    showColumn: boolean,
+    isEditable: boolean,
+    isSortable: boolean,
+    detailedDescription: string,
+} & {
         [T in TableType]: TableTypeDetails<T>;
     };
+
+// Define the type for the sortMap structure
+export type ColumnsDetails = {
+    [key in TableColumnDetailsEnum]: ColumnDetail;
 };
