@@ -1,6 +1,9 @@
-import { TableColumnDetailsType } from "../types/ClientTypes";
+import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
+import { InputType, SortDirection, TableColumnDetailsType } from "../types/ClientTypes";
+import { TableHelper } from "./TableHelper";
 
 export enum TableColumnDetailsEnum {
+    // Property List Columns
     PROPERTY_TYPE = 'PROPERTY_TYPE',
     FULL_ADDRESS = 'FULL_ADDRESS',
     STATE = 'STATE',
@@ -51,7 +54,71 @@ export enum TableColumnDetailsEnum {
     ZILLOW_MONTHLY_HOA_FEES_AMOUNT = 'ZILLOW_MONTHLY_HOA_FEES_AMOUNT',
     CREATION_TYPE = 'CREATION_TYPE',
     DESCRIPTION = 'DESCRIPTION',
+
+    // InvestmentBreakdown Columns
+    YEAR = 'YEAR',
+    MONTH = 'MONTH',
+    DATE = 'DATE',
+    //MORTGAGE
+    TOTAL_INTEREST_PAID = 'TOTAL_INTEREST_PAID',
+    TOTAL_PRINCIPAL_PAID = 'TOTAL_PRINCIPAL_PAID',
+    REMAINING_BALANCE = 'REMAINING_BALANCE',
+    // RENT ESTIMATE
+    // MONTHLY INCOME
+    MONTHLY_EXPENSES = 'MONTHLY_EXPENSES',
+    // MONTHLY CASH FLOW
+    ACCUMULATED_CASH_FLOW = 'ACCUMULATED_CASH_FLOW',
+    APPRECIATION_AMOUNT = 'APPRECIATION_AMOUNT',
+    PMI_AMOUNT = 'PMI_AMOUNT',
+    INTEREST_PAYMENT = 'INTEREST_PAYMENT',
+    PRINCIPAL_PAYMENT = 'PRINCIPAL_PAYMENT',
+    PERCENTAGE_OF_INTEREST = 'PERCENTAGE_OF_INTEREST',
+    PERCENTAGE_OF_PRINCIPAL = 'PERCENTAGE_OF_PRINCIPAL',
+    EQUITY_AMOUNT = 'EQUITY_AMOUNT',
+    NET_OPERATING_INCOME = 'NET_OPERATING_INCOME',
+    ACCUMULATED_NET_OPERATING_INCOME = 'ACCUMULATED_NET_OPERATING_INCOME',
+    CASH_ON_CASH_RETURN = 'CASH_ON_CASH_RETURN',
+    MONTHLY_NET_INCOME = 'MONTHLY_NET_INCOME',
+    ACCUMULATED_NET_INCOME = 'ACCUMULATED_NET_INCOME',
+    PROPERTY_MANAGEMENT_AMOUNT = 'PROPERTY_MANAGEMENT_AMOUNT',
+    VACANCY_AMOUNT = 'VACANCY_AMOUNT',
+    MAINTENANCE_AMOUNT = 'MAINTENANCE_AMOUNT',
+    CAP_EX_RESERVE_AMOUNT = 'CAP_EX_RESERVE_AMOUNT',
+    OTHER_EXPENSE_AMOUNT = 'OTHER_EXPENSE_AMOUNT',
+    OPERATIONAL_COSTS = 'OPERATIONAL_COSTS',
+    PROPERTY_TAX_AMOUNT = 'PROPERTY_TAX_AMOUNT',
+    MONTHLY_HOME_INSURANCE_AMOUNT = 'MONTHLY_HOME_INSURANCE_AMOUNT',
+    MONTHLY_HOA_FEES_AMOUNT = 'MONTHLY_HOA_FEES_AMOUNT',
+    FIXED_COSTS = 'FIXED_COSTS',
+    MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS = 'MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS',
 }
+
+const genericSort = (
+    aValue: number | string | boolean,
+    bValue: number | string | boolean,
+    sortDirection: SortDirection
+): number => {
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortDirection === SortDirection.ASCENDING
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+    }
+
+    if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortDirection === SortDirection.ASCENDING
+            ? aValue - bValue
+            : bValue - aValue;
+    }
+
+    if (typeof aValue === 'boolean' && typeof bValue === 'boolean') {
+        return sortDirection === SortDirection.ASCENDING
+            ? (aValue === bValue ? 0 : aValue ? -1 : 1)
+            : (aValue === bValue ? 0 : aValue ? 1 : -1);
+    }
+
+    // For mixed types or unhandled types, treat as equal
+    return 0;
+};
 
 
 export const tableColumnDetailsMap: { [key in TableColumnDetailsEnum]: TableColumnDetailsType } = {
@@ -453,6 +520,254 @@ export const tableColumnDetailsMap: { [key in TableColumnDetailsEnum]: TableColu
         inputType: InputType.TEXT,
         isUrl: false,
         isDollarAmount: false,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.YEAR]: {
+        title: "Year",
+        accessor: "year",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MONTH]: {
+        title: "Month",
+        accessor: "month",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.DATE]: {
+        title: "Date",
+        accessor: "date",
+        inputType: InputType.STRING,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.TOTAL_INTEREST_PAID]: {
+        title: "Total Interest Paid",
+        accessor: "totalInterestPaid",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.TOTAL_PRINCIPAL_PAID]: {
+        title: "Total Principal Paid",
+        accessor: "totalPrincipalPaid",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.REMAINING_BALANCE]: {
+        title: "Remaining Balance",
+        accessor: "remainingBalance",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MONTHLY_EXPENSES]: {
+        title: "Monthly Expenses",
+        accessor: "monthlyExpenses",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.ACCUMULATED_CASH_FLOW]: {
+        title: "Accumulated Cash Flow",
+        accessor: "accumulatedCashFlow",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.APPRECIATION_AMOUNT]: {
+        title: "Appreciation Amount",
+        accessor: "appreciationAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.PMI_AMOUNT]: {
+        title: "PMI Amount",
+        accessor: "pmiAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.INTEREST_PAYMENT]: {
+        title: "Interest Payment",
+        accessor: "interestPayment",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.PRINCIPAL_PAYMENT]: {
+        title: "Principal Payment",
+        accessor: "principalPayment",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.PERCENTAGE_OF_INTEREST]: {
+        title: "Percentage of Interest (%)",
+        accessor: "percentageOfInterest",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: "%"
+    },
+    [TableColumnDetailsEnum.PERCENTAGE_OF_PRINCIPAL]: {
+        title: "Percentage of Principal (%)",
+        accessor: "percentageOfPrincipal",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: "%"
+    },
+    [TableColumnDetailsEnum.EQUITY_AMOUNT]: {
+        title: "Equity Amount",
+        accessor: "equityAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.NET_OPERATING_INCOME]: {
+        title: "Net Operating Income (NOI)",
+        accessor: "netOperatingIncome",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.ACCUMULATED_NET_OPERATING_INCOME]: {
+        title: "Accumulated Net Operating Income (NOI)",
+        accessor: "accumulatedNetOperatingIncome",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.CASH_ON_CASH_RETURN]: {
+        title: "Cash On Cash Return (COC %)",
+        accessor: "cashOnCashReturn",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: false,
+        addSuffix: "%"
+    },
+    [TableColumnDetailsEnum.MONTHLY_NET_INCOME]: {
+        title: "Monthly Net Income",
+        accessor: "monthlyNetIncome",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.ACCUMULATED_NET_INCOME]: {
+        title: "Accumulated Net Income",
+        accessor: "accumulatedNetIncome",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.PROPERTY_MANAGEMENT_AMOUNT]: {
+        title: "Property Management Amount",
+        accessor: "propertyManagementAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.VACANCY_AMOUNT]: {
+        title: "Vacancy Amount",
+        accessor: "vacancyAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MAINTENANCE_AMOUNT]: {
+        title: "Maintenance Amount",
+        accessor: "maintenanceAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.CAP_EX_RESERVE_AMOUNT]: {
+        title: "Cap Ex Reserve Amount",
+        accessor: "capExReserveAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.OTHER_EXPENSE_AMOUNT]: {
+        title: "Other Expense Amount",
+        accessor: "otherExpenseAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.OPERATIONAL_COSTS]: {
+        title: "Operational Costs",
+        accessor: "operationalCosts",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.PROPERTY_TAX_AMOUNT]: {
+        title: "Property Tax Amount",
+        accessor: "propertyTaxAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MONTHLY_HOME_INSURANCE_AMOUNT]: {
+        title: "Monthly Home Insurance Amount",
+        accessor: "monthlyHomeInsuranceAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MONTHLY_HOA_FEES_AMOUNT]: {
+        title: "Monthly HOA Fees Amount",
+        accessor: "monthlyHOAFeesAmount",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.FIXED_COSTS]: {
+        title: "Fixed Costs",
+        accessor: "fixedCosts",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
+        addSuffix: ""
+    },
+    [TableColumnDetailsEnum.MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS]: {
+        title: "Monthly Payment + Operational Costs",
+        accessor: "monthlyPaymentAndOperationalCosts",
+        inputType: InputType.NUMBER,
+        isUrl: false,
+        isDollarAmount: true,
         addSuffix: ""
     }
 };

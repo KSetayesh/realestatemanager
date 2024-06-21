@@ -32,4 +32,5 @@ export class AcresColumn extends TableColumn<ListingWithScenariosResponseDTO> {
     protected _isValidEdit(value: string): boolean {
         return isInteger(value);
     }
+
 }

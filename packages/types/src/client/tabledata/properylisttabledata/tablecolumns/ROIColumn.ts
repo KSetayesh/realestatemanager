@@ -4,7 +4,7 @@ import { TableHelper } from "../../TableHelper";
 import { TableColumn } from "./TableColumn";
 import { tableColumnDetailsMap } from "../../TableTitles";
 
-export class ROIColumn extends TableColumn<ListingWithScenariosResponseDTO> {
+export abstract class AbstractROIColumn extends TableColumn<ListingWithScenariosResponseDTO> {
 
     protected tableColumnDetails: TableColumnDetailsType = tableColumnDetailsMap.ROI;
 
