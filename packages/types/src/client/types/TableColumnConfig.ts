@@ -34,40 +34,59 @@ export enum TableType {
     INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
 }
 
-// Define the type for the sort function
-export type SortFunction<T> = (items?: T[], sortDirection?: SortDirection) => T[] | void;
+// // Define the type for the sort function
+// export type SortFunction<T> = (items?: T[], sortDirection?: SortDirection) => T[] | void;
 
-// Define the type for the value function
-export type ValueFunction<T> = (item?: T) => string | boolean | number | void;
+// // Define the type for the value function
+// export type ValueFunction<T> = (item?: T) => string | boolean | number | void;
 
-export type SortFunctionTypes = SortFunction<ListingWithScenariosResponseDTO> | SortFunction<MonthlyInvestmentDetailsResponseDTO>;
+// export type SortFunctionTypes = SortFunction<ListingWithScenariosResponseDTO> | SortFunction<MonthlyInvestmentDetailsResponseDTO>;
 
-export type ValueFunctionTypes = ValueFunction<ListingWithScenariosResponseDTO> | ValueFunction<MonthlyInvestmentDetailsResponseDTO>;
+// export type ValueFunctionTypes = ValueFunction<ListingWithScenariosResponseDTO> | ValueFunction<MonthlyInvestmentDetailsResponseDTO>;
 
-// Define the type for the table-specific details
-export type TableTypeDetails = {
-    sortFunction: SortFunctionTypes;
-    value: ValueFunctionTypes;
-};
+// // Define the type for the table-specific details
+// export type TableTypeDetails = {
+//     sortFunction: SortFunctionTypes;
+//     value: ValueFunctionTypes;
+// };
 
-// Define the type for the sortMap structure
-// type SortMap = {
+// // Define the type for the sortMap structure
+// export type ColumnsDetails = {
 //     [key in TableColumnDetailsEnum]: {
 //         title: string;
 //         accessor: string;
-//         inputType: InputType,
-//         isUrl: boolean,
-//         isDollarAmount: boolean,
-//         addSuffix: string,
-//         [key in TableType]: {
-//             sortFunction: SortFunctionTypes;
-//             value: ValueFunctionTypes;
-//         };
+//         inputType: InputType;
+//         isUrl: boolean;
+//         isDollarAmount: boolean;
+//         addSuffix: string;
+//         showColumn: undefined,
+//         isEditable: undefined,
+//         isSortable: undefined,
+//         detailedDescription: undefined,
+//     } & {
+//         [key in TableType]: TableTypeDetails;
 //     };
 // };
 
+export type ValueType = string | boolean | number;
+
+// Define a type that maps TableType to its corresponding DTO type
+export type TableTypeSpecific<T extends TableType> =
+    T extends TableType.PROPERTY_LIST_TABLE ? ListingWithScenariosResponseDTO :
+    T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO : never;
+
+// Define the sort and value function types based on TableType
+export type SortFunction<T extends TableType> = (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
+export type ValueFunction<T extends TableType> = (item: TableTypeSpecific<T>) => ValueType | void;
+
+// Define the type for the table-specific details
+export type TableTypeDetails<T extends TableType> = {
+    sortFunction: SortFunction<T>;
+    value: ValueFunction<T>;
+};
+
 // Define the type for the sortMap structure
-export type SortMap = {
+export type ColumnsDetails = {
     [key in TableColumnDetailsEnum]: {
         title: string;
         accessor: string;
@@ -75,12 +94,16 @@ export type SortMap = {
         isUrl: boolean;
         isDollarAmount: boolean;
         addSuffix: string;
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
     } & {
-        [key in TableType]: TableTypeDetails;
+        [T in TableType]: TableTypeDetails<T>;
     };
 };
 
-const sort = <T>(list: T[], _func: (s: T) => number | string | boolean, sortDirection: SortDirection) => {
+const sort = <T>(list: T[], _func: (s: T) => ValueType, sortDirection: SortDirection) => {
     return list.sort((a, b) => {
         const aValue = _func(a);
         const bValue = _func(b);
@@ -89,7 +112,7 @@ const sort = <T>(list: T[], _func: (s: T) => number | string | boolean, sortDire
 }
 
 // Implement the sortMap with the defined types
-export const sortMap: SortMap = {
+export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.PROPERTY_TYPE]: {
         title: "Property Type",
         accessor: "propertyType",
@@ -97,6 +120,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (listingWithScenarios: ListingWithScenariosResponseDTO[], sortDirection: SortDirection) => {
                 return sort(
@@ -124,6 +151,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -148,6 +179,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -172,6 +207,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -196,6 +235,10 @@ export const sortMap: SortMap = {
         isUrl: true,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -220,6 +263,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -244,6 +291,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -268,6 +319,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -292,6 +347,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -316,6 +375,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -340,6 +403,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -364,6 +431,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -388,6 +459,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -412,6 +487,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -436,6 +515,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -460,6 +543,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -484,6 +571,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -508,6 +599,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -532,6 +627,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -556,6 +655,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -580,6 +683,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -604,6 +711,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -628,6 +739,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -652,6 +767,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -676,6 +795,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -700,6 +823,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -724,6 +851,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -748,6 +879,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -772,6 +907,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -796,6 +935,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -820,6 +963,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -844,6 +991,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -868,6 +1019,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -892,6 +1047,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -916,6 +1075,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -940,6 +1103,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -964,6 +1131,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -988,6 +1159,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1012,6 +1187,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1036,6 +1215,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1060,6 +1243,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1084,6 +1271,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1108,6 +1299,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1132,6 +1327,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1156,6 +1355,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1180,6 +1383,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1204,6 +1411,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1228,6 +1439,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1252,6 +1467,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1276,6 +1495,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1300,6 +1523,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1324,6 +1551,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1348,6 +1579,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1372,6 +1607,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1396,6 +1635,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1420,6 +1663,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1444,6 +1691,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1468,6 +1719,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1492,6 +1747,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1516,6 +1775,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1540,6 +1803,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1564,6 +1831,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1588,6 +1859,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1612,6 +1887,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1636,6 +1915,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1660,6 +1943,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1684,6 +1971,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1708,6 +1999,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1732,6 +2027,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1756,6 +2055,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1780,6 +2083,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1804,6 +2111,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1828,6 +2139,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1852,6 +2167,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1876,6 +2195,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1900,6 +2223,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1924,6 +2251,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1948,6 +2279,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1972,6 +2307,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -1996,6 +2335,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -2020,6 +2363,10 @@ export const sortMap: SortMap = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
+        showColumn: undefined,
+        isEditable: undefined,
+        isSortable: undefined,
+        detailedDescription: undefined,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: () => {
                 return;
@@ -2038,3 +2385,4 @@ export const sortMap: SortMap = {
         }
     },
 };
+

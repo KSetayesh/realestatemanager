@@ -34,7 +34,6 @@ import { NumberOfFullBathroomsColumn } from "../tablecolumns/NumberOfFullBathroo
 import { NumberOfHalfBathroomsColumn } from "../tablecolumns/NumberOfHalfBathroomsColumn";
 import { PriceColumn } from "../tablecolumns/PriceColumn";
 import { PropertyTypeColumn } from "../tablecolumns/PropertyTypeColumn";
-import { ROIColumn } from "../tablecolumns/ROIColumn";
 import { RecurringCostsColumn } from "../tablecolumns/RecurringCostsColumn";
 import { RentEstimateColumn } from "../tablecolumns/RentEstimateColumn";
 import { SquareFeetColumn } from "../tablecolumns/SquareFeetColumn";
