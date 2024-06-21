@@ -1,5 +1,6 @@
 import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
 import { InputType, SortDirection } from "../types/ClientTypes";
+import { TableHelper } from "./TableHelper";
 
 export enum TableColumnDetailsEnum {
     // Property List Columns
@@ -133,10 +134,10 @@ export type TableTypeSpecific<T extends TableType> =
 
 // Define the sort and value function types based on TableType
 export type SortFunction<T extends TableType> =
-    (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[] | void;
+    (items: TableTypeSpecific<T>[], sortDirection?: SortDirection) => TableTypeSpecific<T>[];
 
 export type ValueFunction<T extends TableType> =
-    (item: TableTypeSpecific<T>) => ValueType | void;
+    (item: TableTypeSpecific<T>) => ValueType;
 
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
@@ -179,27 +180,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
                 return sort(
-                    listingWithScenarios, listing => listing.listingDetails.propertyDetails.propertyType,
+                    listingWithScenarios,
+                    listing => TableHelper.getFullAddress(listing),
                     sortDirection
                 );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return listingWithScenarios.listingDetails.propertyDetails.propertyType;
+                return TableHelper.getFullAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -213,24 +215,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getFullAddress(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getFullAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -244,24 +250,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getState(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getState(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -275,24 +285,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZipCode(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZipCode(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -306,24 +320,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: true,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZillowURL(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZillowURL(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -337,24 +355,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getPrice(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getPrice(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -368,24 +390,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getRentEstimate(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getRentEstimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -399,24 +425,33 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: `downPaymentAmount +
+                            legalAndProfessionalFees +
+                            initialRepairCosts +
+                            travelingCosts +
+                            closingCosts +
+                            otherInitialExpenses`,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getInitialCosts(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getInitialCosts(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -430,24 +465,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getLoanAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getLoanAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -461,24 +500,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getDownPaymentAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getDownPaymentAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -492,24 +535,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getAnnualInterestRate(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getAnnualInterestRate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -523,24 +570,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getROI(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getROI(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -554,24 +605,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getCapRate(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getCapRate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -585,24 +640,32 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: `propertyManagementAmount +
+                            vacancyAmount +
+                            maintenanceAmount +
+                            otherExpensesAmount +
+                            capExReserveAmount`,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getRecurringCosts(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getRecurringCosts(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -616,24 +679,31 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: `Mortgage Amount +
+                            Property Tax Amount +
+                            Monthly Home Insurance Amount +
+                            Monthly HOA Fees Amount`,
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getInitialMonthlyAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getInitialMonthlyAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -647,24 +717,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getMortgage(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getMortgage(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -678,24 +752,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getMonthlyCashFlow(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getMonthlyCashFlow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -709,24 +787,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getYearlyCashFlow(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getYearlyCashFlow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -740,24 +822,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getNumberOfDaysOnMarket(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getNumberOfDaysOnMarket(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -771,24 +857,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getDateListed(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getDateListed(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -802,24 +892,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getDateCreated(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getDateCreated(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -833,24 +927,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getCity(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getCity(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -864,24 +962,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getCounty(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getCounty(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -895,24 +997,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getCountry(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getCountry(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -926,24 +1032,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getStreetAddress(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getStreetAddress(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -957,24 +1067,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getApartmentNumber(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getApartmentNumber(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -988,24 +1102,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getLongitude(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getLongitude(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1019,24 +1137,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getLatitude(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getLatitude(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1050,24 +1172,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getElementarySchoolRating(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getElementarySchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1081,24 +1207,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getMiddleSchoolRating(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getMiddleSchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1112,24 +1242,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getHighSchoolRating(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getHighSchoolRating(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1143,24 +1277,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getNumberOfBedrooms(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getNumberOfBedrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1174,24 +1312,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getNumberOfFullBathrooms(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getNumberOfFullBathrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1205,24 +1347,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getNumberOfHalfBathrooms(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1236,24 +1382,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getSquareFeet(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getSquareFeet(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1267,24 +1417,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getAcres(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getAcres(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1298,24 +1452,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getYearBuilt(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getYearBuilt(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1329,24 +1487,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.hasGarage(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.hasGarage(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1360,24 +1522,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.hasPool(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.hasPool(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1391,24 +1557,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.hasBasement(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.hasBasement(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1422,24 +1592,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getListingPrice(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getListingPrice(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1453,24 +1627,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZestimate(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZestimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1484,24 +1662,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZillowRentEstimate(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZillowRentEstimate(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1515,24 +1697,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZestimateRangeLow(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZestimateRangeLow(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1546,24 +1732,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZestimateRangeHigh(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZestimateRangeHigh(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1577,24 +1767,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZillowMonthlyPropertyTaxAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1608,24 +1802,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZillowMonthlyHomeInsuranceAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1639,24 +1837,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: true,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getZillowMonthlyHOAFeesAmount(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1670,24 +1872,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getCreationType(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getCreationType(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1701,24 +1907,28 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: false,
+        isEditable: true,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return sort(
+                    listingWithScenarios,
+                    listing => TableHelper.getDescription(listing),
+                    sortDirection
+                );
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
-                return;
+                return TableHelper.getDescription(listingWithScenarios);
             }
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1732,16 +1942,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1749,7 +1959,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1763,16 +1973,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1780,7 +1990,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1794,16 +2004,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1811,7 +2021,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1825,16 +2035,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1842,7 +2052,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1856,16 +2066,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1873,7 +2083,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1887,16 +2097,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1904,7 +2114,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1918,16 +2128,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1935,7 +2145,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1949,16 +2159,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1966,7 +2176,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -1980,16 +2190,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -1997,7 +2207,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2011,16 +2221,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2028,7 +2238,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2042,16 +2252,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2059,7 +2269,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2073,16 +2283,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2090,7 +2300,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2104,16 +2314,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2121,7 +2331,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2135,16 +2345,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2152,7 +2362,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2166,16 +2376,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2183,7 +2393,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2197,16 +2407,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2214,7 +2424,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2228,16 +2438,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2245,7 +2455,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2259,16 +2469,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: false,
         addSuffix: "%",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2276,7 +2486,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2290,16 +2500,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2307,7 +2517,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2321,16 +2531,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2338,7 +2548,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2352,16 +2562,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2369,7 +2579,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2383,16 +2593,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2400,7 +2610,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2414,16 +2624,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2431,7 +2641,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2445,16 +2655,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2462,7 +2672,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2476,16 +2686,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2493,7 +2703,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2507,16 +2717,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2524,7 +2734,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2538,16 +2748,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2555,7 +2765,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2569,16 +2779,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2586,7 +2796,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2600,16 +2810,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2617,7 +2827,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2631,16 +2841,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2648,7 +2858,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2662,16 +2872,16 @@ export const columnDetails: ColumnsDetails = {
         isUrl: false,
         isDollarAmount: true,
         addSuffix: "",
-        showColumn: undefined,
-        isEditable: undefined,
-        isSortable: undefined,
-        detailedDescription: undefined,
+        showColumn: true,
+        isEditable: false,
+        isSortable: false,
+        detailedDescription: "",
         [TableType.PROPERTY_LIST_TABLE]: {
             sortFunction: (
                 listingWithScenarios: ListingWithScenariosResponseDTO[],
                 sortDirection: SortDirection
             ) => {
-                return;
+                return listingWithScenarios;
             },
             value: (listingWithScenarios: ListingWithScenariosResponseDTO): ValueType => {
                 return;
@@ -2679,7 +2889,7 @@ export const columnDetails: ColumnsDetails = {
         },
         [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
             sortFunction: () => {
-                return;
+                throw new Error("Not implemented");
             },
             value: (): ValueType => {
                 return;
@@ -2687,4 +2897,3 @@ export const columnDetails: ColumnsDetails = {
         }
     },
 };
-

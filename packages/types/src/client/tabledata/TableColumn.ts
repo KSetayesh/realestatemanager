@@ -3,16 +3,17 @@ import {
     SortFunction,
     TableColumnDetailsEnum,
     TableType,
+    TableTypeDetails,
     TableTypeSpecific,
     ValueFunction,
     ValueType,
     columnDetails
 } from "./TableColumnConfig";
 
-export class TableColumn<T extends TableType> {
+export abstract class TableColumn<T extends TableType> {
 
     private _tableType: T;
-    private tableColumnDetail: TableColumnDetailsEnum;
+    protected tableColumnDetail: TableColumnDetailsEnum;
     private overrideShowColumn?: boolean;
     private overrideIsEditable?: boolean;
     private overrideIsSortable?: boolean;
@@ -33,6 +34,12 @@ export class TableColumn<T extends TableType> {
         this.overrideIsSortable = overrideIsSortable;
         this.overrideDetailedDescription = overrideDetailedDescription;
     }
+
+    protected abstract getTableTypeDetails(): TableTypeDetails<T>;
+
+    abstract sort(list: TableTypeSpecific<T>[], sortDirection: SortDirection): TableTypeSpecific<T>[];
+
+    abstract value(item: TableTypeSpecific<T>): ValueType | void;
 
     get tableType(): T {
         return this._tableType;
@@ -88,16 +95,6 @@ export class TableColumn<T extends TableType> {
             return columnDetails[this.tableColumnDetail].detailedDescription;
         }
         return this.overrideDetailedDescription;
-    }
-
-    sort(list: TableTypeSpecific<T>[], sortDirection: SortDirection = SortDirection.ASCENDING): TableTypeSpecific<T>[] {
-        const sortFunction: SortFunction<T> = columnDetails[this.tableColumnDetail][this._tableType].sortFunction as SortFunction<T>;
-        return sortFunction(list, sortDirection) as TableTypeSpecific<T>[];
-    }
-
-    value(item: TableTypeSpecific<T>): ValueType | void {
-        const valueFunction: ValueFunction<T> = columnDetails[this.tableColumnDetail][this._tableType].value as ValueFunction<T>;
-        return valueFunction(item);
     }
 
 }
