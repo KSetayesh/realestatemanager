@@ -82,12 +82,12 @@ import { ZillowUrlColumn } from "../tablecolumns/ZillowUrlColumn";
 import { ZipCodeColumn } from "../tablecolumns/ZipCodeColumn";
 import { ColumnsDetails, SortDirection, PrimitiveType } from "../types/ClientTypes";
 import { MonthlyPaymentColumn } from "../tablecolumns/MonthlyPaymentColumn";
-import { AgentResponseDTO } from "../../server/AgentApiTypes";
 
 export enum TableType {
     PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
     INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
-    // AGENT_TABLE = 'AGENT_TABLE',
+    AGENT_TABLE = 'AGENT_TABLE',
+    HIGH_YIELD_SAVINGS_TABLE = 'HIGH_YIELD_SAVINGS_TABLE',
 };
 
 export enum TableColumnDetailsEnum {

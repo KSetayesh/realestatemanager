@@ -221,7 +221,7 @@ export type ColumnDetail = {
     isSortable: boolean,
     detailedDescription: string,
 } & {
-        [T in TableType]: TableTypeDetails<T>;
+        [T in TableType]?: TableTypeDetails<T>;
     };
 
 // Define the type for the sortMap structure
