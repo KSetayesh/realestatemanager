@@ -205,7 +205,7 @@ export type ValueFunction<T extends TableType> =
 
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
-    sortFunction: SortFunction<T>;
+    sortFunction?: SortFunction<T>;
     value: ValueFunction<T>;
 };
 

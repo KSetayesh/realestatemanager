@@ -82,6 +82,14 @@ import { ZillowUrlColumn } from "../tablecolumns/ZillowUrlColumn";
 import { ZipCodeColumn } from "../tablecolumns/ZipCodeColumn";
 import { ColumnsDetails, SortDirection, PrimitiveType } from "../types/ClientTypes";
 import { MonthlyPaymentColumn } from "../tablecolumns/MonthlyPaymentColumn";
+import { FirstNameColumn } from "../tablecolumns/FirstNameColumn";
+import { LastNameColumn } from "../tablecolumns/LastNameColumn";
+import { FullNameColumn } from "../tablecolumns/FullNameColumn";
+import { WebsiteColumn } from "../tablecolumns/WebsiteColumn";
+import { CompanyNameColumn } from "../tablecolumns/CompanyNameColumn";
+import { PhoneNumberColumn } from "../tablecolumns/PhoneNumberColumn";
+import { EmailColumn } from "../tablecolumns/EmailColumn";
+import { AgentTypeColumn } from "../tablecolumns/AgentTypeColumn";
 
 export enum TableType {
     PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
@@ -180,6 +188,16 @@ export enum TableColumnDetailsEnum {
     FIXED_COSTS = 'FIXED_COSTS',
     MONTHLY_PAYMENT = 'MONTHLY_PAYMENT',
     MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS = 'MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS',
+
+    // Agent 
+    FIRST_NAME = 'FIRST_NAME',
+    LAST_NAME = 'LAST_NAME',
+    FULL_NAME = 'FULL_NAME',
+    WEBSITE = 'WEBSITE',
+    COMPANY_NAME = 'COMPANY_NAME',
+    PHONE_NUMBER = 'PHONE_NUMBER',
+    EMAIL = 'EMAIL',
+    AGENT_TYPE = 'AGENT_TYPE',
 };
 
 export const genericSort = (
@@ -303,4 +321,12 @@ export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.FIXED_COSTS]: FixedCostsColumn,
     [TableColumnDetailsEnum.MONTHLY_PAYMENT]: MonthlyPaymentColumn,
     [TableColumnDetailsEnum.MONTHLY_PAYMENT_AND_OPERATIONAL_COSTS]: MonthlyPaymentAndOperationalCostsColumn,
+    [TableColumnDetailsEnum.FIRST_NAME]: FirstNameColumn,
+    [TableColumnDetailsEnum.LAST_NAME]: LastNameColumn,
+    [TableColumnDetailsEnum.FULL_NAME]: FullNameColumn,
+    [TableColumnDetailsEnum.WEBSITE]: WebsiteColumn,
+    [TableColumnDetailsEnum.COMPANY_NAME]: CompanyNameColumn,
+    [TableColumnDetailsEnum.PHONE_NUMBER]: PhoneNumberColumn,
+    [TableColumnDetailsEnum.EMAIL]: EmailColumn,
+    [TableColumnDetailsEnum.AGENT_TYPE]: AgentTypeColumn,
 };
