@@ -248,7 +248,15 @@ export const tableDetails: TableDetailsType = {
         pageable: true,
         subTables: {
             [DefaultTableType.DEFAULT]: [
-
+                TableColumnDetailsEnum.YEAR,
+                TableColumnDetailsEnum.MONTH,
+                TableColumnDetailsEnum.DATE,
+                TableColumnDetailsEnum.START_PRINCIPAL,
+                TableColumnDetailsEnum.START_BALANCE,
+                TableColumnDetailsEnum.INTEREST,
+                TableColumnDetailsEnum.ACCUMULATED_INTEREST,
+                TableColumnDetailsEnum.END_BALANCE,
+                TableColumnDetailsEnum.END_PRINCIPAL,
             ],
         },
     },

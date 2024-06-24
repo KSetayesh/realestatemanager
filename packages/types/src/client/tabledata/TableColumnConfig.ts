@@ -90,6 +90,12 @@ import { CompanyNameColumn } from "../tablecolumns/CompanyNameColumn";
 import { PhoneNumberColumn } from "../tablecolumns/PhoneNumberColumn";
 import { EmailColumn } from "../tablecolumns/EmailColumn";
 import { AgentTypeColumn } from "../tablecolumns/AgentTypeColumn";
+import { StartPrincipalColumn } from "../tablecolumns/StartPrincipalColumn";
+import { StartBalanceColumn } from "../tablecolumns/StartBalanceColumn";
+import { InterestColumn } from "../tablecolumns/InterestColumn";
+import { AccumulatedInterestColumn } from "../tablecolumns/AccumulatedInterestColumn";
+import { EndBalanceColumn } from "../tablecolumns/EndBalanceColumn";
+import { EndPrincipalColumn } from "../tablecolumns/EndPrincipalColumn";
 
 export enum TableType {
     PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
@@ -198,6 +204,14 @@ export enum TableColumnDetailsEnum {
     PHONE_NUMBER = 'PHONE_NUMBER',
     EMAIL = 'EMAIL',
     AGENT_TYPE = 'AGENT_TYPE',
+
+    // High Yield Savings 
+    START_PRINCIPAL = 'START_PRINCIPAL',
+    START_BALANCE = 'START_BALANCE',
+    INTEREST = 'INTEREST',
+    ACCUMULATED_INTEREST = 'ACCUMULATED_INTEREST',
+    END_BALANCE = 'END_BALANCE',
+    END_PRINCIPAL = 'END_PRINCIPAL',
 };
 
 export const genericSort = (
@@ -329,4 +343,10 @@ export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.PHONE_NUMBER]: PhoneNumberColumn,
     [TableColumnDetailsEnum.EMAIL]: EmailColumn,
     [TableColumnDetailsEnum.AGENT_TYPE]: AgentTypeColumn,
+    [TableColumnDetailsEnum.START_PRINCIPAL]: StartPrincipalColumn,
+    [TableColumnDetailsEnum.START_BALANCE]: StartBalanceColumn,
+    [TableColumnDetailsEnum.INTEREST]: InterestColumn,
+    [TableColumnDetailsEnum.ACCUMULATED_INTEREST]: AccumulatedInterestColumn,
+    [TableColumnDetailsEnum.END_BALANCE]: EndBalanceColumn,
+    [TableColumnDetailsEnum.END_PRINCIPAL]: EndPrincipalColumn,
 };
