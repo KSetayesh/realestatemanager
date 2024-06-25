@@ -27,5 +27,4 @@ export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResp
         throw new Error(`Column ${columnType} does not have a value function for AGENT_TABLE`);
     }
 
-
 }

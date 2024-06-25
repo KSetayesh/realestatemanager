@@ -27,9 +27,8 @@ import {
     renderCellData
 } from '../constants/Constant';
 import ExportCSVButton from './ExportCSVButton';
-import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
 import ConfirmationDialog from './ConfirmationDialog';
-import { AbstractTable1, TableColumnDetailsEnum, TableType } from '@realestatemanager/types';
+import { AbstractTable1, TableColumnDetailsEnum, TableDataItem, TableType } from '@realestatemanager/types';
 
 const TEMP_FEATURE_FLAG = true;
 
@@ -109,18 +108,21 @@ export enum SortDirection {
     DESCENDING = 'descending',
 };
 
-export type SortConfig = { key: string; direction: SortDirection };
-
-export type TableActions<Y> = {
-    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
-    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
-    onPaginationChange?: (
-        event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-        page: number,
-        rowsPerPage: number,
-        sortConfig?: SortConfig,
-    ) => Promise<void>;
+export type SortConfig = {
+    key: TableColumnDetailsEnum;
+    direction: SortDirection
 };
+
+// export type TableActions<Y> = {
+//     handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+//     handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+//     onPaginationChange?: (
+//         event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+//         page: number,
+//         rowsPerPage: number,
+//         sortConfig?: SortConfig,
+//     ) => Promise<void>;
+// };
 
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
@@ -135,9 +137,9 @@ export interface ReusableTableProps<K extends TableType, Y, X> {
     tableHandler: AbstractTable1<K, Y, X>;
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
-    exportIntoCSV?: ExportIntoCSV;
-    tableActions?: TableActions<Y>;
-    rowLimit?: number;
+    // exportIntoCSV?: ExportIntoCSV;
+    // tableActions?: TableActions<Y>;
+    // rowLimit?: number;
 };
 
 const NewReusableTable = <K extends TableType, Y, X>({
@@ -145,9 +147,9 @@ const NewReusableTable = <K extends TableType, Y, X>({
     tableHandler,
     onRowClick,
     tableSeperatorDetails,
-    exportIntoCSV,
-    tableActions,
-    rowLimit
+    // exportIntoCSV,
+    // tableActions,
+    // rowLimit
 }: ReusableTableProps<K, Y, X>) => {
 
     const getTableColumns = (): TableColumnDetailsEnum[] => {
@@ -156,7 +158,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
         return tableHandler.getAllSubTableColumns(tableType);
     };
 
-    const getTableData = (): TableDataItem<Y>[] => {
+    const getFormattedTableData = (): TableDataItem<Y>[] => {
         return tableHandler.getTableData(data, tableType);
     };
 
@@ -164,7 +166,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
     const [sortConfig, setSortConfig] = useState<SortConfig>();
     const [editMode, setEditMode] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData());
+    const [tableData, setTableData] = useState<TableDataItem<Y>[]>(getFormattedTableData());
     const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(50);
@@ -172,7 +174,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
     const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        setEditableData(getTableData());
+        setTableData(getFormattedTableData());
     }, [data, tableType]);
 
 
@@ -180,18 +182,11 @@ const NewReusableTable = <K extends TableType, Y, X>({
         return JSON.parse(JSON.stringify(obj));
     };
 
-    const sortData = (data: TableDataItem<Y>[]) => {
-        if (sortConfig) {
-            return [...data].sort((a, b) => {
-                if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
-                    return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
-                } else if (a.rowData[sortConfig.key] > b.rowData[sortConfig.key]) {
-                    return sortConfig.direction === SortDirection.ASCENDING ? 1 : -1;
-                }
-                return 0;
-            });
+    const sortData = (data: Y[]): Y[] => {
+        if (!sortConfig) {
+            return data;
         }
-        return data;
+        return tableHandler.sort(data, tableType, sortConfig.key, sortConfig.direction);
     };
 
     const requestSort = (column: TableColumn) => {
@@ -207,7 +202,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
     };
 
     const getExpectedNumberOfRows = (): number => {
-        return rowLimit ? rowLimit : editableData.length;
+        return rowLimit ? rowLimit : tableData.length;
     };
 
     const areTableRowsEditable = (): boolean => {
@@ -235,13 +230,13 @@ const NewReusableTable = <K extends TableType, Y, X>({
 
     const confirmDelete = async () => {
         if (deleteIndex !== null) {
-            const row = editableData[deleteIndex];
+            const row = tableData[deleteIndex];
             if (areTableRowsDeletable()) {
                 try {
                     const wasDeleted = await tableActions!.handleDeleteUpdate!(row);
                     console.log('Was deleted: ', wasDeleted);
                     if (wasDeleted) {
-                        setEditableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
+                        setTableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
                     }
                 } catch (error) {
                     console.error('Error deleting row:', error);
@@ -256,14 +251,14 @@ const NewReusableTable = <K extends TableType, Y, X>({
     const handleEditClick = (index: number) => {
         setEditMode(index);
         setIsEditing(true);
-        setCurrentEdit(deepCopy(editableData[index])); // Backup the current state before editing
+        setCurrentEdit(deepCopy(tableData[index])); // Backup the current state before editing
     };
 
     const handleCancelClick = () => {
         if (editMode !== null && currentEdit) {
-            const newData = [...editableData];
+            const newData = [...tableData];
             newData[editMode] = currentEdit;
-            setEditableData(newData);
+            setTableData(newData);
         }
         setEditMode(null);
         setIsEditing(false);
@@ -272,16 +267,16 @@ const NewReusableTable = <K extends TableType, Y, X>({
 
     const handleSaveClick = async () => {
         if (editMode !== null) {
-            const editedRow = editableData[editMode];
+            const editedRow = tableData[editMode];
             if (areTableRowsEditable()) {
                 try {
                     const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
 
-                    const updatedEditableData = [...editableData];
+                    const updatedEditableData = [...tableData];
                     const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
                     updatedEditableData[editMode] = rowDataItem;
 
-                    setEditableData(updatedEditableData);
+                    setTableData(updatedEditableData);
                 } catch (error) {
                     console.error('Error updating row:', error);
                 }
@@ -295,7 +290,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => {
         const accessor = column.accessor;
-        const newData = [...editableData];
+        const newData = [...tableData];
         const value = e.target.value;
         if (InputType.NUMBER === column.inputType) {
             newData[rowIndex].rowData[accessor] = Number(value);
@@ -303,14 +298,14 @@ const NewReusableTable = <K extends TableType, Y, X>({
         else {
             newData[rowIndex].rowData[accessor] = value;
         }
-        setEditableData(newData);
+        setTableData(newData);
     };
 
     const needToFetchData = (page: number, rowsPerPage: number): boolean => {
         if (TEMP_FEATURE_FLAG) {
             return false;
         }
-        const numberOfRowsAvailable = editableData.length;
+        const numberOfRowsAvailable = tableData.length;
         console.log('numberOfRowsAvailable:', numberOfRowsAvailable);
         console.log('((page * rowsPerPage) + rowsPerPage:', ((page * rowsPerPage) + rowsPerPage));
         console.log('Need to fetch data:', (numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage)));
@@ -382,7 +377,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
         return (
             exportIntoCSV && <ExportCSVButton
                 columns={getTableColumns()}
-                tableData={editableData}
+                tableData={tableData}
                 disabled={isEditing}
                 buttonTitle={exportIntoCSV.buttonTitle}
             />
@@ -426,7 +421,7 @@ const NewReusableTable = <K extends TableType, Y, X>({
         return (
             <TextField
                 type={column.inputType === InputType.NUMBER ? 'number' : 'text'}
-                value={editableData[originalIndex].rowData[column.accessor]}
+                value={tableData[originalIndex].rowData[column.accessor]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, originalIndex, column)}
                 fullWidth
                 size="small"
@@ -503,13 +498,13 @@ const NewReusableTable = <K extends TableType, Y, X>({
     };
 
     const getTableBody = () => {
-        const sortedData = sortData(editableData);
+        const sortedData = sortData(tableData);
         const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
         return (
             <TableBody>
                 {paginatedData.map((item) => {
-                    const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
+                    const originalIndex = tableData.findIndex(data => data.objectData.key === item.objectData.key);
                     return (
                         <React.Fragment key={originalIndex}>
                             {getTableRow(originalIndex, item)}

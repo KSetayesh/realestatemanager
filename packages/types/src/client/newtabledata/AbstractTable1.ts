@@ -14,6 +14,11 @@ export type TableDataItem<Y> = {
     tableRow: CellData[];
 };
 
+export type SortConfig = {
+    columnKey: TableColumnDetailsEnum;
+    direction: SortDirection;
+};
+
 export abstract class AbstractTable1<K extends TableType, Y, X> {
     private details: TableDetailType<K>;
     private _subTables: TableTypeMapping[K];
@@ -63,7 +68,12 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return this._subTables;
     }
 
-    sort(list: Y[], subTableType: X, columnType: TableColumnDetailsEnum, sortDirection: SortDirection): Y[] {
+    sort(
+        list: TableDataItem<Y>[],
+        subTableType: X,
+        sortConfig: SortConfig,
+    ): TableDataItem<Y>[] {
+
         if (!this.isSortable) {
             return list;
         }
@@ -95,15 +105,13 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
             return 0;
         };
 
-        const _sort = <T>(list: T[], _func: (s: T) => PrimitiveType, sortDirection: SortDirection): T[] => {
-            return list.sort((a, b) => {
-                const aValue = _func(a);
-                const bValue = _func(b);
-                return genericSort(aValue, bValue, sortDirection);
-            });
-        };
-
-        return _sort(list, data => this.getColumnValue(subTableType, data, columnType), sortDirection);
+        return list.sort((a, b) => {
+            const data_a: Y = a.objectData.key;
+            const data_b: Y = b.objectData.key;
+            const cellValue_a: PrimitiveType = this.getColumnValue(subTableType, data_a, sortConfig.columnKey);
+            const cellValue_b: PrimitiveType = this.getColumnValue(subTableType, data_b, sortConfig.columnKey);
+            return genericSort(cellValue_a, cellValue_b, sortConfig.direction);
+        });
     }
 
     getTableData(listOfData: Y[], subTableType: X): TableDataItem<Y>[] {
