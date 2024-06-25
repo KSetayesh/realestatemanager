@@ -2,13 +2,17 @@ import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
 import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
 import { PropertiesListTableType, TableType } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable1 } from "./AbstractTable1";
 
-export class PropertiesListTable extends AbstractTable<
+export class PropertiesListTable1 extends AbstractTable1<
     TableType.PROPERTY_LIST_TABLE,
     ListingWithScenariosResponseDTO,
     PropertiesListTableType
 > {
+
+    getDefaultTableType(): PropertiesListTableType {
+        return PropertiesListTableType.STANDARD_BREAKDOWN;
+    }
 
     getAllSubTableColumns(subTableType: PropertiesListTableType): TableColumnDetailsEnum[] {
         return this.subTables[subTableType];

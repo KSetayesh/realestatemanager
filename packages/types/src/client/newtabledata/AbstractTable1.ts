@@ -2,7 +2,7 @@ import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnC
 import { TableDetailType, TableType, TableTypeMapping, tableDetails } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType, SortDirection } from "../types/ClientTypes";
 
-export abstract class AbstractTable<K extends TableType, Y, X> {
+export abstract class AbstractTable1<K extends TableType, Y, X> {
     private details: TableDetailType<K>;
     private _subTables: TableTypeMapping[K];
     private _tableType: K;
@@ -111,5 +111,7 @@ export abstract class AbstractTable<K extends TableType, Y, X> {
     abstract getAllSubTableColumns(subTableType: X): TableColumnDetailsEnum[];
 
     abstract getColumnValue(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): PrimitiveType;
+
+    abstract getDefaultTableType(): X;
 
 }

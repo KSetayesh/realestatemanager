@@ -2,14 +2,18 @@ import { MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentType
 import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
 import { InvestmentBreakdownTableType, TableType } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable1 } from "./AbstractTable1";
 
-export class InvestmentBreakdownTable extends AbstractTable<
+export class InvestmentBreakdownTable1 extends AbstractTable1<
     TableType.INVESTMENT_BREAKDOWN_TABLE,
     MonthlyInvestmentDetailsResponseDTO,
     InvestmentBreakdownTableType
-> { 
-    
+> {
+
+    getDefaultTableType(): InvestmentBreakdownTableType {
+        return InvestmentBreakdownTableType.STANDARD_BREAKDOWN;
+    }
+
     getAllSubTableColumns(subTableType: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
         return this.subTables[subTableType];
     }

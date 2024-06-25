@@ -19,12 +19,12 @@ export * from './client/types/ClientTypes';
 export * from './calc/CalcTypes';
 
 
-export * from './client/newtabledata/AbstractTable';
-export * from './client/newtabledata/AgentTable';
-export * from './client/newtabledata/HighYieldSavingsTable';
-export * from './client/newtabledata/InvestmentBreakdownTable';
-export * from './client/newtabledata/PropertiesListTable';
-export * from './client/newtabledata/RentCastDetailsTable';
+export * from './client/newtabledata/AbstractTable1';
+export * from './client/newtabledata/AgentTable1';
+export * from './client/newtabledata/HighYieldSavingsTable1';
+export * from './client/newtabledata/InvestmentBreakdownTable1';
+export * from './client/newtabledata/PropertiesListTable1';
+export * from './client/newtabledata/RentCastDetailsTable1';
 export * from './client/tablecolumns/AgentTypeColumns';
 export * from './client/tablecolumns/HighYieldSavingsColumns';
 export * from './client/tablecolumns/InvestmentBreakdownColumns';
