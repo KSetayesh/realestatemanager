@@ -1,7 +1,7 @@
 import { FirstNameColumn, LastNameColumn, FullNameColumn, WebsiteColumn, CompanyNameColumn, PhoneNumberColumn, EmailColumn, AgentTypeColumn } from "../tablecolumns/AgentTypeColumns";
 import { StartPrincipalColumn, StartBalanceColumn, InterestColumn, AccumulatedInterestColumn, EndBalanceColumn, EndPrincipalColumn } from "../tablecolumns/HighYieldSavingsColumns";
 import { TotalInterestPaidColumn, TotalPrincipalPaidColumn, RemainingBalanceColumn, MonthlyIncomeColumn, MonthlyExpensesColumn, AccumulatedCashFlowColumn, AppreciationAmountColumn, PMIAmountColumn, InterestPaymentColumn, PrincipalPaymentColumn, PercentageOfInterestColumn, PercentageOfPrincipalColumn, EquityAmountColumn, NetOperatingIncomeColumn, AccumulatedNetOperatingIncomeColumn, CashOnCashReturnColumn, MonthlyNetIncomeColumn, AccumulatedNetIncomeColumn, PropertyManagementAmountColumn, VacancyAmountColumn, MaintenanceAmountColumn, CapExReserveAmountColumn, OtherExpenseAmountColumn, OperationalCostsColumn, PropertyTaxAmountColumn, MonthlyHomeInsuranceAmountColumn, MonthlyHOAFeesAmountColumn, FixedCostsColumn, MonthlyPaymentColumn, MonthlyPaymentAndOperationalCostsColumn } from "../tablecolumns/InvestmentBreakdownColumns";
-import { AcresColumn, AnnualInterestRateColumn, ApartmentNumberColumn, CityColumn, CountyColumn, CreationTypeColumn, DateCreatedColumn, DateListedColumn, DescriptionColumn, DownPaymentAmountColumn, ElementarySchoolRatingColumn, FullAddressColumn, HasBasementColumn, HasGarageColumn, HasPoolColumn, HighSchoolRatingColumn, InitialCostsColumn, InitialMonthlyPaymentColumn, LatitudeColumn, ListingPriceColumn, LoanAmountColumn, LongitudeColumn, MiddleSchoolRatingColumn, NumberOfBedroomsColumn, NumberOfDaysOnMarketColumn, NumberOfFullBathroomsColumn, NumberOfHalfBathroomsColumn, PriceColumn, PropertyTypeColumn, RecurringCostsColumn, SquareFeetColumn, StreetAddressColumn, YearBuiltColumn, YearlyCashFlowColumn, ZestimateColumn, ZestimateRangeHighColumn, ZestimateRangeLowColumn, ZillowMonthlyHOAFeesAmountColumn, ZillowMonthlyHomeInsuranceAmountColumn, ZillowMonthlyPropertyTaxAmountColumn, ZillowRentEstimateColumn, ZillowUrlColumn, ZipCodeColumn } from "../tablecolumns/PropertyListColumns";
+import { AcresColumn, AnnualInterestRateColumn, ApartmentNumberColumn, CityColumn, CountyColumn, CreationTypeColumn, DateCreatedColumn, DateListedColumn, DescriptionColumn, DownPaymentAmountColumn, ElementarySchoolRatingColumn, FullAddressColumn, HasBasementColumn, HasGarageColumn, HasPoolColumn, HighSchoolRatingColumn, InitialCostsColumn, InitialMonthlyPaymentColumn, InvestmentBreakdownColumn, LatitudeColumn, ListingPriceColumn, LoanAmountColumn, LongitudeColumn, MiddleSchoolRatingColumn, NumberOfBedroomsColumn, NumberOfDaysOnMarketColumn, NumberOfFullBathroomsColumn, NumberOfHalfBathroomsColumn, PriceColumn, PropertyTypeColumn, RecurringCostsColumn, SquareFeetColumn, StreetAddressColumn, YearBuiltColumn, YearlyCashFlowColumn, ZestimateColumn, ZestimateRangeHighColumn, ZestimateRangeLowColumn, ZillowMonthlyHOAFeesAmountColumn, ZillowMonthlyHomeInsuranceAmountColumn, ZillowMonthlyPropertyTaxAmountColumn, ZillowRentEstimateColumn, ZillowUrlColumn, ZipCodeColumn } from "../tablecolumns/PropertyListColumns";
 import { ApiKeyNameColumn, CanMakeApiCallColumn, ApiCallsMadeThisMonthColumn, RemainingNumberOfFreeApiCallsColumn, DaysIntoBillingPeriodColumn, BillingPeriodColumn, MostRecentBillingDateColumn, FirstBilledOnColumn } from "../tablecolumns/RentCastApiDetailsColumns";
 import { StateColumn, RentEstimateColumn, ROIColumn, CapRateColumn, MortgageAmountColumn, MonthlyCashFlowColumn, CountryColumn, YearColumn, MonthColumn, DateColumn } from "../tablecolumns/SharedColumns";
 import { ColumnsDetails } from "../types/ClientTypes";
@@ -58,6 +58,7 @@ export enum TableColumnDetailsEnum {
     ZILLOW_MONTHLY_HOA_FEES_AMOUNT = 'ZILLOW_MONTHLY_HOA_FEES_AMOUNT',
     CREATION_TYPE = 'CREATION_TYPE',
     DESCRIPTION = 'DESCRIPTION',
+    INVESTMENT_BREAKDOWN_COLUMN = 'INVESTMENT_BREAKDOWN_COLUMN',
 
     // InvestmentBreakdown Columns
     YEAR = 'YEAR',
@@ -178,6 +179,7 @@ export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.ZILLOW_MONTHLY_HOA_FEES_AMOUNT]: ZillowMonthlyHOAFeesAmountColumn,
     [TableColumnDetailsEnum.CREATION_TYPE]: CreationTypeColumn,
     [TableColumnDetailsEnum.DESCRIPTION]: DescriptionColumn,
+    [TableColumnDetailsEnum.INVESTMENT_BREAKDOWN_COLUMN]: InvestmentBreakdownColumn,
     [TableColumnDetailsEnum.YEAR]: YearColumn,
     [TableColumnDetailsEnum.MONTH]: MonthColumn,
     [TableColumnDetailsEnum.DATE]: DateColumn,

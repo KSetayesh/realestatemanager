@@ -226,6 +226,7 @@ export type ColumnDetail = {
     isEditable: boolean,
     isSortable: boolean,
     detailedDescription: string,
+    routeTo?: string,
     // tableTypeDetails?: TableTypeDetails<T>,
 } & {
         [T in TableType]?: TableTypeDetails<T>;

@@ -548,7 +548,7 @@ export const YearBuiltColumn: ColumnDetail = {
     isEditable: true,
     isSortable: true,
     detailedDescription: "",
-    [TableType.PROPERTY_LIST_TABLE]: { 
+    [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getYearBuilt(listingWithScenarios);
         }
@@ -788,4 +788,24 @@ export const DescriptionColumn: ColumnDetail = {
         }
     },
 };
- 
+
+// Only certain PropertyList tables will have this
+export const InvestmentBreakdownColumn: ColumnDetail = {
+    title: "Investment Breakdown",
+    accessor: "investmentBreakdown",
+    inputType: InputType.STRING,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: true,
+    isSortable: false,
+    detailedDescription: "",
+    routeTo: 'investmentBreakdown',
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return 'View';
+        }
+    },
+};
+

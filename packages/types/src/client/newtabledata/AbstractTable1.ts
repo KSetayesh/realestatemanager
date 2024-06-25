@@ -2,6 +2,18 @@ import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnC
 import { TableDetailType, TableType, TableTypeMapping, tableDetails } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType, SortDirection } from "../types/ClientTypes";
 
+export type CellData = {
+    column: TableColumnDetailsEnum;
+    value: PrimitiveType;
+};
+
+export type TableDataItem<Y> = {
+    objectData: {
+        key: Y;
+    };
+    tableRow: CellData[];
+};
+
 export abstract class AbstractTable1<K extends TableType, Y, X> {
     private details: TableDetailType<K>;
     private _subTables: TableTypeMapping[K];
@@ -11,7 +23,6 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
     private _isEditable: boolean;
     private _isSortable: boolean;
     private _pageable: boolean;
-
 
     constructor(tableType: K) {
         this._tableType = tableType;
@@ -95,7 +106,30 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return _sort(list, data => this.getColumnValue(subTableType, data, columnType), sortDirection);
     }
 
-    getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): ColumnDetail {
+    getTableData(listOfData: Y[], subTableType: X): TableDataItem<Y>[] {
+        const tableData: TableDataItem<Y>[] = [];
+        const tableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
+        for (const data of listOfData) {
+            const tableRow: CellData[] = [];
+            for (const column of tableColumns) {
+                const value: PrimitiveType = this.getColumnValue(subTableType, data, column);
+                const cellData: CellData = {
+                    column: column,
+                    value: value,
+                };
+                tableRow.push(cellData);
+            }
+            tableData.push({
+                objectData: {
+                    key: data,
+                },
+                tableRow: tableRow,
+            });
+        }
+        return tableData;
+    }
+
+    protected getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): ColumnDetail {
         const tableColumnEnums: Set<TableColumnDetailsEnum> = this.getAllSubTableColumnsAsSet(subTableType);
         if (!tableColumnEnums.has(columnType)) {
             throw new Error('Error with table structure');

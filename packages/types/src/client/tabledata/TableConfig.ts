@@ -119,6 +119,7 @@ export const tableDetails: TableDetailsType = {
                 TableColumnDetailsEnum.ZILLOW_MONTHLY_HOA_FEES_AMOUNT,
                 TableColumnDetailsEnum.CREATION_TYPE,
                 TableColumnDetailsEnum.DESCRIPTION,
+                TableColumnDetailsEnum.INVESTMENT_BREAKDOWN_COLUMN,
             ],
             [PropertiesListTableType.STANDARD_BREAKDOWN]: [
                 TableColumnDetailsEnum.PROPERTY_TYPE,
@@ -142,6 +143,7 @@ export const tableDetails: TableDetailsType = {
                 TableColumnDetailsEnum.NUMBER_OF_DAYS_ON_MARKET,
                 TableColumnDetailsEnum.DATE_LISTED,
                 TableColumnDetailsEnum.DATE_CREATED,
+                TableColumnDetailsEnum.INVESTMENT_BREAKDOWN_COLUMN,
             ],
         },
     },
