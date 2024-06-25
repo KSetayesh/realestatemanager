@@ -9,7 +9,6 @@ export * from './server/AppDescription';
 export * from './server/FilterPropertyListApiTypes';
 export * from './server/BuilderInterface';
 export * from './server/IDTOConvertible';
-export * from './client/tabledata/properylisttabledata/table/PropertiesTableData';
 export * from './client/formdata/AddAgentTitlesAndLabelsGetter';
 export * from './client/formdata/AddCollectPropertiesTitlesAndLabelsGetter';
 export * from './client/formdata/AddHighYieldSavingsTitlesAndLabelsGetter';
@@ -18,5 +17,22 @@ export * from './client/formdata/AddPropertyFilterTitlesAndLabelsGetter';
 export * from './client/formdata/AddPropertyTitlesAndLabelsGetter';
 export * from './client/types/ClientTypes';
 export * from './calc/CalcTypes';
+
+
+export * from './client/newtabledata/AbstractTable';
+export * from './client/newtabledata/AgentTable';
+export * from './client/newtabledata/HighYieldSavingsTable';
+export * from './client/newtabledata/InvestmentBreakdownTable';
+export * from './client/newtabledata/PropertiesListTable';
+export * from './client/newtabledata/RentCastDetailsTable';
+export * from './client/tablecolumns/AgentTypeColumns';
+export * from './client/tablecolumns/HighYieldSavingsColumns';
+export * from './client/tablecolumns/InvestmentBreakdownColumns';
+export * from './client/tablecolumns/PropertyListColumns';
+export * from './client/tablecolumns/RentCastApiDetailsColumns';
+export * from './client/tabledata/InvestmentDetailsTableHelper';
+export * from './client/tabledata/PropertiesListTableHelper';
+export * from './client/tabledata/TableColumnConfig';
+export * from './client/tabledata/TableConfig';
 
 

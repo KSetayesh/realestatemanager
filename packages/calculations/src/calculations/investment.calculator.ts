@@ -66,7 +66,7 @@ export class InvestmentCalculator {
         }
 
         const returnData: AmortizationBreakdownResponseDTO = {
-            initialInvestmenDetails: this.getInitialValues(),
+            initialInvestmentDetails: this.getInitialValues(),
             growthProjections: this.growthProjections.toDTO(),
             taxImplications: this.taxImplications.toDTO(),
             amortizationData: ammortizationList,

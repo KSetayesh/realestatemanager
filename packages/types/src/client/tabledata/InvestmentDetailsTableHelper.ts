@@ -155,6 +155,4 @@ export class InvestmentDetailsTableHelper {
         return ammortizationDetail.monthlyBreakdown.transactions.expenseAmount;
     }
 
-
-
 }

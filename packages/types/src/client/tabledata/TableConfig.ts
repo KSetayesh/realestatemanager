@@ -1,4 +1,3 @@
-import { ColumnDetail } from "../types/ClientTypes";
 import { TableColumnDetailsEnum } from "./TableColumnConfig";
 
 
@@ -7,6 +6,7 @@ export enum TableType {
     INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
     AGENT_TABLE = 'AGENT_TABLE',
     HIGH_YIELD_SAVINGS_TABLE = 'HIGH_YIELD_SAVINGS_TABLE',
+    RENT_CAST_DETAILS_TABLE = 'RENT_CAST_DETAILS_TABLE',
 }
 
 export enum InvestmentBreakdownTableType {
@@ -38,6 +38,9 @@ export type TableTypeMapping = {
     [TableType.HIGH_YIELD_SAVINGS_TABLE]: {
         [key in DefaultTableType]: TableColumnDetailsEnum[]
     };
+    [TableType.RENT_CAST_DETAILS_TABLE]: {
+        [key in DefaultTableType]: TableColumnDetailsEnum[]
+    };
 };
 
 export type TableDetailType<T extends keyof TableTypeMapping> = {
@@ -47,6 +50,7 @@ export type TableDetailType<T extends keyof TableTypeMapping> = {
     canDeleteFromTable: boolean;
     isSortable: boolean;
     pageable: boolean;
+    canExportIntoCSV: boolean;
     subTables: TableTypeMapping[T];
 };
 
@@ -62,6 +66,7 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: true,
         isSortable: true,
         pageable: true,
+        canExportIntoCSV: true,
         subTables: {
             [PropertiesListTableType.ALL]: [
                 TableColumnDetailsEnum.PROPERTY_TYPE,
@@ -147,6 +152,7 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: false,
         isSortable: false,
         pageable: true,
+        canExportIntoCSV: true,
         subTables: {
             [InvestmentBreakdownTableType.STANDARD_BREAKDOWN]: [
                 TableColumnDetailsEnum.YEAR,
@@ -224,6 +230,7 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: true,
         isSortable: true,
         pageable: true,
+        canExportIntoCSV: true,
         subTables: {
             [DefaultTableType.DEFAULT]: [
                 TableColumnDetailsEnum.FIRST_NAME,
@@ -246,6 +253,7 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: false,
         isSortable: false,
         pageable: true,
+        canExportIntoCSV: true,
         subTables: {
             [DefaultTableType.DEFAULT]: [
                 TableColumnDetailsEnum.YEAR,
@@ -257,6 +265,27 @@ export const tableDetails: TableDetailsType = {
                 TableColumnDetailsEnum.ACCUMULATED_INTEREST,
                 TableColumnDetailsEnum.END_BALANCE,
                 TableColumnDetailsEnum.END_PRINCIPAL,
+            ],
+        },
+    },
+    [TableType.RENT_CAST_DETAILS_TABLE]: {
+        title: 'Rent Cast Details',
+        tableType: TableType.RENT_CAST_DETAILS_TABLE,
+        isEditable: false,
+        canDeleteFromTable: false,
+        isSortable: true,
+        pageable: true,
+        canExportIntoCSV: false,
+        subTables: {
+            [DefaultTableType.DEFAULT]: [
+                TableColumnDetailsEnum.API_KEY_NAME,
+                TableColumnDetailsEnum.CAN_MAKE_API_CALL,
+                TableColumnDetailsEnum.API_CALLS_MAKE_THIS_MONTH,
+                TableColumnDetailsEnum.REMAINING_NUMBER_OF_FREE_API_CALLS,
+                TableColumnDetailsEnum.DAYS_INTO_BILLING_PERIOD,
+                TableColumnDetailsEnum.BILLING_PERIOD,
+                TableColumnDetailsEnum.MOST_RECENT_BILLING_DATE,
+                TableColumnDetailsEnum.FIRST_BILLED_ON,
             ],
         },
     },

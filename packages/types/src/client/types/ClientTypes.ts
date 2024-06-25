@@ -6,11 +6,15 @@ import {
     PropertyType,
     State
 } from "../../Constants";
+import { AgentResponseDTO } from "../../server/AgentApiTypes";
+import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTypes";
 import {
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO
 } from "../../server/InvestmentTypes";
-import { TableColumnDetailsEnum, TableType } from "../tabledata/TableColumnConfig";
+import { RentCastDetailsResponseDTO } from "../../server/RentCastApiTypes";
+import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
+import { TableType } from "../tabledata/TableConfig";
 
 export enum InputType {
     TEXT = 'text',
@@ -193,8 +197,10 @@ export type PrimitiveType = string | boolean | number;
 // Define a type that maps TableType to its corresponding DTO type
 export type TableTypeSpecific<T extends TableType> =
     T extends TableType.PROPERTY_LIST_TABLE ? ListingWithScenariosResponseDTO :
-    T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO : never;
-// T extends TableType.AGENT_TABLE ? AgentResponseDTO : never;
+    T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO :
+    T extends TableType.AGENT_TABLE ? AgentResponseDTO :
+    T extends TableType.HIGH_YIELD_SAVINGS_TABLE ? HighYeildSavingsResponseDTO :
+    T extends TableType.RENT_CAST_DETAILS_TABLE ? RentCastDetailsResponseDTO : never;
 
 // Define the sort and value function types based on TableType
 export type SortFunction<T extends TableType> =
@@ -220,6 +226,7 @@ export type ColumnDetail = {
     isEditable: boolean,
     isSortable: boolean,
     detailedDescription: string,
+    // tableTypeDetails?: TableTypeDetails<T>,
 } & {
         [T in TableType]?: TableTypeDetails<T>;
     };

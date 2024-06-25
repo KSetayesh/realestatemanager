@@ -1,108 +1,10 @@
-import { AccumulatedCashFlowColumn } from "../tablecolumns/AccumulatedCashFlowColumn";
-import { AccumulatedNetIncomeColumn } from "../tablecolumns/AccumulatedNetIncomeColumn";
-import { AccumulatedNetOperatingIncomeColumn } from "../tablecolumns/AccumulatedNetOperatingIncomeColumn";
-import { AcresColumn } from "../tablecolumns/AcresColumn";
-import { AnnualInterestRateColumn } from "../tablecolumns/AnnualInterestRateColumn";
-import { ApartmentNumberColumn } from "../tablecolumns/ApartmentNumberColumn";
-import { AppreciationAmountColumn } from "../tablecolumns/AppreciationAmountColumn";
-import { CapExReserveAmountColumn } from "../tablecolumns/CapExReserveAmountColumn";
-import { CapRateColumn } from "../tablecolumns/CapRateColumn";
-import { CashOnCashReturnColumn } from "../tablecolumns/CashOnCashReturnColumn";
-import { CityColumn } from "../tablecolumns/CityColumn";
-import { CountryColumn } from "../tablecolumns/CountryColumn";
-import { CountyColumn } from "../tablecolumns/CountyColumn";
-import { CreationTypeColumn } from "../tablecolumns/CreationTypeColumn";
-import { DateColumn } from "../tablecolumns/DateColumn";
-import { DateCreatedColumn } from "../tablecolumns/DateCreatedColumn";
-import { DateListedColumn } from "../tablecolumns/DateListedColumn";
-import { DescriptionColumn } from "../tablecolumns/DescriptionColumn";
-import { DownPaymentAmountColumn } from "../tablecolumns/DownPaymentAmountColumn";
-import { ElementarySchoolRatingColumn } from "../tablecolumns/ElementarySchoolRatingColumn";
-import { EquityAmountColumn } from "../tablecolumns/EquityAmountColumn";
-import { FixedCostsColumn } from "../tablecolumns/FixedCostsColumn";
-import { FullAddressColumn } from "../tablecolumns/FullAddressColumn";
-import { HasBasementColumn } from "../tablecolumns/HasBasementColumn";
-import { HasGarageColumn } from "../tablecolumns/HasGarageColumn";
-import { HasPoolColumn } from "../tablecolumns/HasPoolColumn";
-import { HighSchoolRatingColumn } from "../tablecolumns/HighSchoolRatingColumn";
-import { InitialCostsColumn } from "../tablecolumns/InitialCostsColumn";
-import { InterestPaymentColumn } from "../tablecolumns/InterestPaymentColumn";
-import { LatitudeColumn } from "../tablecolumns/LatitudeColumn";
-import { ListingPriceColumn } from "../tablecolumns/ListingPriceColumn";
-import { LoanAmountColumn } from "../tablecolumns/LoanAmountColumn";
-import { LongitudeColumn } from "../tablecolumns/LongitudeColumn";
-import { MaintenanceAmountColumn } from "../tablecolumns/MaintenanceAmountColumn";
-import { MiddleSchoolRatingColumn } from "../tablecolumns/MiddleSchoolRatingColumn";
-import { MonthColumn } from "../tablecolumns/MonthColumn";
-import { MonthlyCashFlowColumn } from "../tablecolumns/MonthlyCashFlowColumn";
-import { MonthlyExpensesColumn } from "../tablecolumns/MonthlyExpensesColumn";
-import { MonthlyHOAFeesAmountColumn } from "../tablecolumns/MonthlyHOAFeesAmountColumn";
-import { MonthlyHomeInsuranceAmountColumn } from "../tablecolumns/MonthlyHomeInsuranceAmountColumn";
-import { MonthlyIncomeColumn } from "../tablecolumns/MonthlyIncomeColumn";
-import { MonthlyNetIncomeColumn } from "../tablecolumns/MonthlyNetIncomeColumn";
-import { MonthlyPaymentAndOperationalCostsColumn } from "../tablecolumns/MonthlyPaymentAndOperationalCostsColumn";
-import { InitialMonthlyPaymentColumn } from "../tablecolumns/InitialMonthlyPaymentColumn";
-import { MortgageAmountColumn } from "../tablecolumns/MortgageAmountColumn";
-import { NetOperatingIncomeColumn } from "../tablecolumns/NetOperatingIncomeColumn";
-import { NumberOfBedroomsColumn } from "../tablecolumns/NumberOfBedroomsColumn";
-import { NumberOfDaysOnMarketColumn } from "../tablecolumns/NumberOfDaysOnMarketColumn";
-import { NumberOfFullBathroomsColumn } from "../tablecolumns/NumberOfFullBathroomsColumn";
-import { NumberOfHalfBathroomsColumn } from "../tablecolumns/NumberOfHalfBathroomsColumn";
-import { OperationalCostsColumn } from "../tablecolumns/OperationalCostsColumn";
-import { OtherExpenseAmountColumn } from "../tablecolumns/OtherExpenseAmountColumn";
-import { PMIAmountColumn } from "../tablecolumns/PMIAmountColumn";
-import { PercentageOfInterestColumn } from "../tablecolumns/PercentageOfInterestColumn";
-import { PercentageOfPrincipalColumn } from "../tablecolumns/PercentageOfPrincipalColumn";
-import { PriceColumn } from "../tablecolumns/PriceColumn";
-import { PrincipalPaymentColumn } from "../tablecolumns/PrincipalPaymentColumn";
-import { PropertyManagementAmountColumn } from "../tablecolumns/PropertyManagementAmountColumn";
-import { PropertyTaxAmountColumn } from "../tablecolumns/PropertyTaxAmountColumn";
-import { PropertyTypeColumn } from "../tablecolumns/PropertyTypeColumn";
-import { ROIColumn } from "../tablecolumns/ROIColumn";
-import { RecurringCostsColumn } from "../tablecolumns/RecurringCostsColumn";
-import { RemainingBalanceColumn } from "../tablecolumns/RemainingBalanceColumn";
-import { RentEstimateColumn } from "../tablecolumns/RentEstimateColumn";
-import { SquareFeetColumn } from "../tablecolumns/SquareFeetColumn";
-import { StateColumn } from "../tablecolumns/StateColumn";
-import { StreetAddressColumn } from "../tablecolumns/StreetAddressColumn";
-import { TotalInterestPaidColumn } from "../tablecolumns/TotalInterestPaidColumn";
-import { TotalPrincipalPaidColumn } from "../tablecolumns/TotalPrincipalPaidColumn";
-import { VacancyAmountColumn } from "../tablecolumns/VacancyAmountColumn";
-import { YearBuiltColumn } from "../tablecolumns/YearBuiltColumn";
-import { YearColumn } from "../tablecolumns/YearColumn";
-import { YearlyCashFlowColumn } from "../tablecolumns/YearlyCashFlowColumn";
-import { ZestimateColumn } from "../tablecolumns/ZestimateColumn";
-import { ZestimateRangeHighColumn } from "../tablecolumns/ZestimateRangeHighColumn";
-import { ZestimateRangeLowColumn } from "../tablecolumns/ZestimateRangeLowColumn";
-import { ZillowMonthlyHOAFeesAmountColumn } from "../tablecolumns/ZillowMonthlyHOAFeesAmountColumn";
-import { ZillowMonthlyHomeInsuranceAmountColumn } from "../tablecolumns/ZillowMonthlyHomeInsuranceAmountColumn";
-import { ZillowMonthlyPropertyTaxAmountColumn } from "../tablecolumns/ZillowMonthlyPropertyTaxAmountColumn";
-import { ZillowRentEstimateColumn } from "../tablecolumns/ZillowRentEstimateColumn";
-import { ZillowUrlColumn } from "../tablecolumns/ZillowUrlColumn";
-import { ZipCodeColumn } from "../tablecolumns/ZipCodeColumn";
-import { ColumnsDetails, SortDirection, PrimitiveType } from "../types/ClientTypes";
-import { MonthlyPaymentColumn } from "../tablecolumns/MonthlyPaymentColumn";
-import { FirstNameColumn } from "../tablecolumns/FirstNameColumn";
-import { LastNameColumn } from "../tablecolumns/LastNameColumn";
-import { FullNameColumn } from "../tablecolumns/FullNameColumn";
-import { WebsiteColumn } from "../tablecolumns/WebsiteColumn";
-import { CompanyNameColumn } from "../tablecolumns/CompanyNameColumn";
-import { PhoneNumberColumn } from "../tablecolumns/PhoneNumberColumn";
-import { EmailColumn } from "../tablecolumns/EmailColumn";
-import { AgentTypeColumn } from "../tablecolumns/AgentTypeColumn";
-import { StartPrincipalColumn } from "../tablecolumns/StartPrincipalColumn";
-import { StartBalanceColumn } from "../tablecolumns/StartBalanceColumn";
-import { InterestColumn } from "../tablecolumns/InterestColumn";
-import { AccumulatedInterestColumn } from "../tablecolumns/AccumulatedInterestColumn";
-import { EndBalanceColumn } from "../tablecolumns/EndBalanceColumn";
-import { EndPrincipalColumn } from "../tablecolumns/EndPrincipalColumn";
-
-export enum TableType {
-    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
-    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
-    AGENT_TABLE = 'AGENT_TABLE',
-    HIGH_YIELD_SAVINGS_TABLE = 'HIGH_YIELD_SAVINGS_TABLE',
-};
+import { FirstNameColumn, LastNameColumn, FullNameColumn, WebsiteColumn, CompanyNameColumn, PhoneNumberColumn, EmailColumn, AgentTypeColumn } from "../tablecolumns/AgentTypeColumns";
+import { StartPrincipalColumn, StartBalanceColumn, InterestColumn, AccumulatedInterestColumn, EndBalanceColumn, EndPrincipalColumn } from "../tablecolumns/HighYieldSavingsColumns";
+import { TotalInterestPaidColumn, TotalPrincipalPaidColumn, RemainingBalanceColumn, MonthlyIncomeColumn, MonthlyExpensesColumn, AccumulatedCashFlowColumn, AppreciationAmountColumn, PMIAmountColumn, InterestPaymentColumn, PrincipalPaymentColumn, PercentageOfInterestColumn, PercentageOfPrincipalColumn, EquityAmountColumn, NetOperatingIncomeColumn, AccumulatedNetOperatingIncomeColumn, CashOnCashReturnColumn, MonthlyNetIncomeColumn, AccumulatedNetIncomeColumn, PropertyManagementAmountColumn, VacancyAmountColumn, MaintenanceAmountColumn, CapExReserveAmountColumn, OtherExpenseAmountColumn, OperationalCostsColumn, PropertyTaxAmountColumn, MonthlyHomeInsuranceAmountColumn, MonthlyHOAFeesAmountColumn, FixedCostsColumn, MonthlyPaymentColumn, MonthlyPaymentAndOperationalCostsColumn } from "../tablecolumns/InvestmentBreakdownColumns";
+import { AcresColumn, AnnualInterestRateColumn, ApartmentNumberColumn, CityColumn, CountyColumn, CreationTypeColumn, DateCreatedColumn, DateListedColumn, DescriptionColumn, DownPaymentAmountColumn, ElementarySchoolRatingColumn, FullAddressColumn, HasBasementColumn, HasGarageColumn, HasPoolColumn, HighSchoolRatingColumn, InitialCostsColumn, InitialMonthlyPaymentColumn, LatitudeColumn, ListingPriceColumn, LoanAmountColumn, LongitudeColumn, MiddleSchoolRatingColumn, NumberOfBedroomsColumn, NumberOfDaysOnMarketColumn, NumberOfFullBathroomsColumn, NumberOfHalfBathroomsColumn, PriceColumn, PropertyTypeColumn, RecurringCostsColumn, SquareFeetColumn, StreetAddressColumn, YearBuiltColumn, YearlyCashFlowColumn, ZestimateColumn, ZestimateRangeHighColumn, ZestimateRangeLowColumn, ZillowMonthlyHOAFeesAmountColumn, ZillowMonthlyHomeInsuranceAmountColumn, ZillowMonthlyPropertyTaxAmountColumn, ZillowRentEstimateColumn, ZillowUrlColumn, ZipCodeColumn } from "../tablecolumns/PropertyListColumns";
+import { ApiKeyNameColumn, CanMakeApiCallColumn, ApiCallsMadeThisMonthColumn, RemainingNumberOfFreeApiCallsColumn, DaysIntoBillingPeriodColumn, BillingPeriodColumn, MostRecentBillingDateColumn, FirstBilledOnColumn } from "../tablecolumns/RentCastApiDetailsColumns";
+import { StateColumn, RentEstimateColumn, ROIColumn, CapRateColumn, MortgageAmountColumn, MonthlyCashFlowColumn, CountryColumn, YearColumn, MonthColumn, DateColumn } from "../tablecolumns/SharedColumns";
+import { ColumnsDetails } from "../types/ClientTypes";
 
 export enum TableColumnDetailsEnum {
     // Property List Columns
@@ -212,42 +114,16 @@ export enum TableColumnDetailsEnum {
     ACCUMULATED_INTEREST = 'ACCUMULATED_INTEREST',
     END_BALANCE = 'END_BALANCE',
     END_PRINCIPAL = 'END_PRINCIPAL',
-};
 
-export const genericSort = (
-    aValue: number | string | boolean,
-    bValue: number | string | boolean,
-    sortDirection: SortDirection
-): number => {
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sortDirection === SortDirection.ASCENDING
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-    }
-
-    if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return sortDirection === SortDirection.ASCENDING
-            ? aValue - bValue
-            : bValue - aValue;
-    }
-
-    if (typeof aValue === 'boolean' && typeof bValue === 'boolean') {
-        return sortDirection === SortDirection.ASCENDING
-            ? (aValue === bValue ? 0 : aValue ? -1 : 1)
-            : (aValue === bValue ? 0 : aValue ? 1 : -1);
-    }
-
-    // For mixed types or unhandled types, treat as equal
-    return 0;
-};
-
-
-export const sort = <T>(list: T[], _func: (s: T) => PrimitiveType, sortDirection: SortDirection): T[] => {
-    return list.sort((a, b) => {
-        const aValue = _func(a);
-        const bValue = _func(b);
-        return genericSort(aValue, bValue, sortDirection);
-    });
+    // RentCast
+    API_KEY_NAME = 'API_KEY_NAME',
+    CAN_MAKE_API_CALL = 'CAN_MAKE_API_CALL',
+    API_CALLS_MAKE_THIS_MONTH = 'API_CALLS_MAKE_THIS_MONTH',
+    REMAINING_NUMBER_OF_FREE_API_CALLS = 'REMAINING_NUMBER_OF_FREE_API_CALLS',
+    DAYS_INTO_BILLING_PERIOD = 'DAYS_INTO_BILLING_PERIOD',
+    BILLING_PERIOD = 'BILLING_PERIOD',
+    MOST_RECENT_BILLING_DATE = 'MOST_RECENT_BILLING_DATE',
+    FIRST_BILLED_ON = 'FIRST_BILLED_ON',
 };
 
 // Implement the sortMap with the defined types
@@ -349,4 +225,12 @@ export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.ACCUMULATED_INTEREST]: AccumulatedInterestColumn,
     [TableColumnDetailsEnum.END_BALANCE]: EndBalanceColumn,
     [TableColumnDetailsEnum.END_PRINCIPAL]: EndPrincipalColumn,
+    [TableColumnDetailsEnum.API_KEY_NAME]: ApiKeyNameColumn,
+    [TableColumnDetailsEnum.CAN_MAKE_API_CALL]: CanMakeApiCallColumn,
+    [TableColumnDetailsEnum.API_CALLS_MAKE_THIS_MONTH]: ApiCallsMadeThisMonthColumn,
+    [TableColumnDetailsEnum.REMAINING_NUMBER_OF_FREE_API_CALLS]: RemainingNumberOfFreeApiCallsColumn,
+    [TableColumnDetailsEnum.DAYS_INTO_BILLING_PERIOD]: DaysIntoBillingPeriodColumn,
+    [TableColumnDetailsEnum.BILLING_PERIOD]: BillingPeriodColumn,
+    [TableColumnDetailsEnum.MOST_RECENT_BILLING_DATE]: MostRecentBillingDateColumn,
+    [TableColumnDetailsEnum.FIRST_BILLED_ON]: FirstBilledOnColumn,
 };
