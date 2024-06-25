@@ -8,11 +8,10 @@ export class InvestmentBreakdownTable extends AbstractTable<
     TableType.INVESTMENT_BREAKDOWN_TABLE,
     MonthlyInvestmentDetailsResponseDTO,
     InvestmentBreakdownTableType
-> {
-
-    getAllSubTableColumns(subTableType: InvestmentBreakdownTableType): Set<TableColumnDetailsEnum> {
-        const tableColumnsTypes: TableColumnDetailsEnum[] = this.subTables[subTableType];
-        return new Set(tableColumnsTypes);
+> { 
+    
+    getAllSubTableColumns(subTableType: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
     }
 
     getColumnValue(

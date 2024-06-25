@@ -4,11 +4,14 @@ import { DefaultTableType, TableType } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
 import { AbstractTable } from "./AbstractTable";
 
-export class RentCastDetailsTable extends AbstractTable<TableType.RENT_CAST_DETAILS_TABLE, RentCastDetailsResponseDTO, DefaultTableType> {
+export class RentCastDetailsTable extends AbstractTable<
+    TableType.RENT_CAST_DETAILS_TABLE,
+    RentCastDetailsResponseDTO,
+    DefaultTableType
+> {
 
-    getAllSubTableColumns(subTableType: DefaultTableType): Set<TableColumnDetailsEnum> {
-        const tableColumnsTypes: TableColumnDetailsEnum[] = this.subTables[subTableType];
-        return new Set(tableColumnsTypes);
+    getAllSubTableColumns(subTableType: DefaultTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
     }
 
     getColumnValue(

@@ -4,11 +4,14 @@ import { DefaultTableType, TableType } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
 import { AbstractTable } from "./AbstractTable";
 
-export class HighYieldSavingsTable extends AbstractTable<TableType.HIGH_YIELD_SAVINGS_TABLE, HighYeildSavingsResponseDTO, DefaultTableType> {
+export class HighYieldSavingsTable extends AbstractTable<
+    TableType.HIGH_YIELD_SAVINGS_TABLE,
+    HighYeildSavingsResponseDTO,
+    DefaultTableType
+> { 
 
-    getAllSubTableColumns(subTableType: DefaultTableType): Set<TableColumnDetailsEnum> {
-        const tableColumnsTypes: TableColumnDetailsEnum[] = this.subTables[subTableType];
-        return new Set(tableColumnsTypes);
+    getAllSubTableColumns(subTableType: DefaultTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
     }
 
     getColumnValue(

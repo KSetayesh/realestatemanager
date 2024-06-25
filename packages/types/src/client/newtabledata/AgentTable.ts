@@ -6,9 +6,8 @@ import { AbstractTable } from "./AbstractTable";
 
 export class AgentTable extends AbstractTable<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
 
-    getAllSubTableColumns(subTableType: DefaultTableType): Set<TableColumnDetailsEnum> {
-        const tableColumnsTypes: TableColumnDetailsEnum[] = this.subTables[subTableType];
-        return new Set(tableColumnsTypes);
+    getAllSubTableColumns(subTableType: DefaultTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
     }
 
     getColumnValue(

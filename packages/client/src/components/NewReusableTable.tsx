@@ -337,24 +337,6 @@ const NewReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         }
     };
 
-
-    // const handleChangePage = (event: unknown, newPage: number) => {
-    //     console.log(event);
-    //     setPage(newPage);
-
-    //     if (tableActions && tableActions.onPaginationChange && needToFetchData(page, rowsPerPage)) {
-    //         tableActions.onPaginationChange(event, page, rowsPerPage);
-    //     }
-    // };
-
-    // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setRowsPerPage(parseInt(event.target.value, 10));
-    //     setPage(0);
-    //     if (tableActions && tableActions.onPaginationChange && needToFetchData(0, rowsPerPage)) {
-    //         tableActions.onPaginationChange(event, page, rowsPerPage);
-    //     }
-    // };
-
     const displayEditActionButton = (rowIndex: number) => {
         if (editMode === rowIndex) {
             return (

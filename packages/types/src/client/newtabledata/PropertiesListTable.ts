@@ -4,11 +4,14 @@ import { PropertiesListTableType, TableType } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
 import { AbstractTable } from "./AbstractTable";
 
-export class PropertiesListTable extends AbstractTable<TableType.PROPERTY_LIST_TABLE, ListingWithScenariosResponseDTO, PropertiesListTableType> {
+export class PropertiesListTable extends AbstractTable<
+    TableType.PROPERTY_LIST_TABLE,
+    ListingWithScenariosResponseDTO,
+    PropertiesListTableType
+> {
 
-    getAllSubTableColumns(subTableType: PropertiesListTableType): Set<TableColumnDetailsEnum> {
-        const tableColumnsTypes: TableColumnDetailsEnum[] = this.subTables[subTableType];
-        return new Set(tableColumnsTypes);
+    getAllSubTableColumns(subTableType: PropertiesListTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
     }
 
     getColumnValue(

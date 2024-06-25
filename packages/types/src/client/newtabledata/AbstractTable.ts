@@ -2,7 +2,7 @@ import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnC
 import { TableDetailType, TableType, TableTypeMapping, tableDetails } from "../tabledata/TableConfig";
 import { ColumnDetail, PrimitiveType, SortDirection } from "../types/ClientTypes";
 
-export abstract class AbstractTable<K extends TableType, T, S> {
+export abstract class AbstractTable<K extends TableType, Y, X> {
     private details: TableDetailType<K>;
     private _subTables: TableTypeMapping[K];
     private _tableType: K;
@@ -52,7 +52,7 @@ export abstract class AbstractTable<K extends TableType, T, S> {
         return this._subTables;
     }
 
-    sort(list: T[], subTableType: S, columnType: TableColumnDetailsEnum, sortDirection: SortDirection): T[] {
+    sort(list: Y[], subTableType: X, columnType: TableColumnDetailsEnum, sortDirection: SortDirection): Y[] {
         if (!this.isSortable) {
             return list;
         }
@@ -95,8 +95,8 @@ export abstract class AbstractTable<K extends TableType, T, S> {
         return _sort(list, data => this.getColumnValue(subTableType, data, columnType), sortDirection);
     }
 
-    getColumnDetails(subTableType: S, columnType: TableColumnDetailsEnum): ColumnDetail {
-        const tableColumnEnums: Set<TableColumnDetailsEnum> = this.getAllSubTableColumns(subTableType);
+    getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): ColumnDetail {
+        const tableColumnEnums: Set<TableColumnDetailsEnum> = this.getAllSubTableColumnsAsSet(subTableType);
         if (!tableColumnEnums.has(columnType)) {
             throw new Error('Error with table structure');
         }
@@ -104,8 +104,12 @@ export abstract class AbstractTable<K extends TableType, T, S> {
 
     }
 
-    abstract getAllSubTableColumns(subTableType: S): Set<TableColumnDetailsEnum>;
+    protected getAllSubTableColumnsAsSet(subTableType: X): Set<TableColumnDetailsEnum> {
+        return new Set(this.getAllSubTableColumns(subTableType));
+    }
 
-    abstract getColumnValue(subTableType: S, item: T, columnType: TableColumnDetailsEnum): PrimitiveType;
+    abstract getAllSubTableColumns(subTableType: X): TableColumnDetailsEnum[];
+
+    abstract getColumnValue(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): PrimitiveType;
 
 }
