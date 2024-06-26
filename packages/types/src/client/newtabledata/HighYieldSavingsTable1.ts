@@ -24,7 +24,7 @@ export class HighYieldSavingsTable1 extends AbstractTable1<
         return DefaultTableType.DEFAULT;
     }
 
-    getColumnValue(
+    protected getColumnValue(
         subTableType: DefaultTableType,
         item: HighYeildSavingsResponseDTO,
         columnType: TableColumnDetailsEnum

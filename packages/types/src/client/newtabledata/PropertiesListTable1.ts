@@ -24,7 +24,7 @@ export class PropertiesListTable1 extends AbstractTable1<
         return PropertiesListTableType.STANDARD_BREAKDOWN;
     }
 
-    getColumnValue(
+    protected getColumnValue(
         subTableType: PropertiesListTableType,
         item: ListingWithScenariosResponseDTO,
         columnType: TableColumnDetailsEnum

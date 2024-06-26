@@ -24,7 +24,7 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         return InvestmentBreakdownTableType.STANDARD_BREAKDOWN;
     }
 
-    getColumnValue(
+    protected getColumnValue(
         subTableType: InvestmentBreakdownTableType,
         item: MonthlyInvestmentDetailsResponseDTO,
         columnType: TableColumnDetailsEnum

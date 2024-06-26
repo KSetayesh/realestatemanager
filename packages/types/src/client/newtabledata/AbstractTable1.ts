@@ -5,6 +5,7 @@ import { ColumnDetail, PrimitiveType, SortDirection, TableDetailType, TableType,
 export type CellData = {
     column: TableColumnDetailsEnum;
     value: PrimitiveType;
+    valueToBeDisplayed: string;
 };
 
 export type TableColumn = {
@@ -147,6 +148,67 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return subTableColumns.map(column => this.getColumnDetails(subTableType, column));
     }
 
+    getColumnValueToBeDisplayed(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): string {
+        const columnValue: PrimitiveType = this.getColumnValue(subTableType, item, columnType);
+        const columnDetails = this.getColumnDetails(subTableType, columnType).columnDetails;
+
+        return this.updateValueToBeDisplayed(columnValue, columnDetails);
+    }
+
+    private updateValueToBeDisplayed(cellData: PrimitiveType, columnDetails: ColumnDetail): string {
+
+        const formatDollarAmount = (amount: number): string => {
+            return amount.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+        };
+
+        const booleanToYesNo = (value: boolean | undefined) => value ? 'Yes' : 'No';
+
+        const ensureAbsoluteUrl = (url: string): string => {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'http://' + url;  // Defaulting to http if no protocol is specified
+            }
+            return url;
+        };
+
+        const renderCellData = (cellData: PrimitiveType, columnDetails: ColumnDetail): string => {
+            const isDollarAmount: boolean = columnDetails.isDollarAmount;
+            const addSuffix: string = columnDetails.addSuffix;
+
+            let toReturn = '';
+            if (typeof cellData === 'boolean') {
+                toReturn = booleanToYesNo(cellData);
+            }
+            else if (typeof cellData === 'string') {
+                toReturn = cellData.toString();
+            }
+            else if (typeof cellData === 'number') {
+                toReturn = isDollarAmount ? formatDollarAmount(cellData) : cellData.toString();
+            }
+            // else if (Array.isArray(cellData)) {
+            //     toReturn = cellData.join(', '); // Example: array to comma-separated string
+            // }
+            else if (typeof cellData === 'object' && cellData !== null) {
+                toReturn = JSON.stringify(cellData); // Or extract specific properties to render
+            }
+
+            toReturn = toReturn === '' ? toReturn : toReturn + (addSuffix ? addSuffix : ''); // Fallback for undefined or null
+
+            if (columnDetails.isUrl) {
+                toReturn = ensureAbsoluteUrl(toReturn);
+            }
+            if (columnDetails.routeTo) {
+                toReturn = `/${columnDetails.routeTo}/${toReturn}`;
+            }
+
+            return toReturn;
+        };
+
+        return renderCellData(cellData, columnDetails);
+    }
+
     private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumnDetailsEnum[]): TableDataItem<Y> {
         if (!tableColumns) {
             tableColumns = this.getAllSubTableColumns(subTableType);
@@ -154,9 +216,11 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         const tableRow: TableRow = {};
         for (const column of tableColumns) {
             const value: PrimitiveType = this.getColumnValue(subTableType, data, column);
+            const valueToBeDisplayed: string = this.getColumnValueToBeDisplayed(subTableType, data, column);
             const cellData: CellData = {
                 column: column,
                 value: value,
+                valueToBeDisplayed: valueToBeDisplayed,
             };
             tableRow[column] = cellData;
         }

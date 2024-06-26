@@ -20,7 +20,7 @@ export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResp
         return DefaultTableType.DEFAULT;
     }
 
-    getColumnValue(
+    protected getColumnValue(
         subTableType: DefaultTableType,
         item: AgentResponseDTO,
         columnType: TableColumnDetailsEnum

@@ -150,8 +150,8 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
         // originalIndex: number,
         column: TableColumn,
         item: TableDataItem<Y>,
-    ): PrimitiveType => {
-        return item.tableRow[column.columnKey]?.value ?? '';
+    ): string => {
+        return item.tableRow[column.columnKey]?.valueToBeDisplayed ?? '';
         // return tableHandler.getColumnValue(tableType, item.objectData.key, column.columnKey);
 
         // const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
