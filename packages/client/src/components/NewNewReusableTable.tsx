@@ -64,7 +64,12 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 export type SortConfig = {
     columnKey: TableColumnDetailsEnum;
-    direction: SortDirection
+    direction: SortDirection;
+};
+
+export type TableSeparatorDetails = {
+    separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
+    rowsInterval: number;  // Number of rows between each separator
 };
 
 /* ----For PropertiesListTable---- 
@@ -78,11 +83,15 @@ export type SortConfig = {
 export interface ReusableTableProps<K extends TableType, Y, X> {
     data: Y[];
     tableHandler: AbstractTable1<K, Y, X>;
+    onRowClick?: (item: Y) => void;
+    tableSeperatorDetails?: TableSeparatorDetails;
 };
 
 const NewNewReusableTable = <K extends TableType, Y, X>({
     data,
     tableHandler,
+    onRowClick,
+    tableSeperatorDetails,
 }: ReusableTableProps<K, Y, X>) => {
 
     const getTableData = (_data: Y[]) => {
@@ -92,6 +101,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
     const [tableType, setTableType] = useState<X>(tableHandler.getDefaultTableType());
     const [tableData, setTableData] = useState<TableDataItem<Y>[]>(getTableData(data));
     const [sortConfig, setSortConfig] = useState<SortConfig>();
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
     useEffect(() => {
         setTableData(getTableData(data));
@@ -107,6 +117,28 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
 
     const getColumnKey = (tableColumn: TableColumn): TableColumnDetailsEnum => {
         return tableColumn.columnKey;
+    };
+
+    const getTableSeparator = (originalIndex: number) => {
+        if (!tableSeperatorDetails) {
+            return;
+        }
+
+        const getVisibleColumnCount = (): number => {
+            const columns: TableColumn[] = getTableColumns();
+            return columns.filter(column => column.showColumn).length;
+        };
+
+        const rowsInterval: number = tableSeperatorDetails.rowsInterval;
+        return ((originalIndex + 1) % rowsInterval === 0) && (
+            <TableRow key={`separator_${originalIndex}`}>
+                <TableCell colSpan={getVisibleColumnCount() + 1} align="center">
+                    <Typography variant="subtitle1">
+                        <b>{tableSeperatorDetails.separatorText(originalIndex)}</b>
+                    </Typography>
+                </TableCell>
+            </TableRow>
+        );
     };
 
     const getTableHead = () => {
@@ -179,8 +211,8 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
             <TableRow
                 key={originalIndex}
                 hover
-            // style={{ cursor: isEditing ? 'default' : 'pointer' }}
-            // onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
+                // style={{ cursor: isEditing ? 'default' : 'pointer' }}
+                onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
             >
                 {/* {(areTableRowsEditable() || areTableRowsDeletable()) && (
                     <StyledTableBodyCell>
