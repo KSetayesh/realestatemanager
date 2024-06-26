@@ -1,6 +1,5 @@
 import { RentCastDetailsResponseDTO } from "../../server/RentCastApiTypes";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const ApiKeyNameColumn: ColumnDetail = {
     title: "Api Key Name",

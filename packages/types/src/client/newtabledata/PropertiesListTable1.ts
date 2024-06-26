@@ -1,8 +1,7 @@
 import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
 import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { PropertiesListTableType, TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, PrimitiveType } from "../types/ClientTypes";
-import { AbstractTable1 } from "./AbstractTable1";
+import { ColumnDetail, PrimitiveType, PropertiesListTableType, TableType } from "../types/ClientTypes";
+import { AbstractTable1, TableColumn } from "./AbstractTable1";
 
 export class PropertiesListTable1 extends AbstractTable1<
     TableType.PROPERTY_LIST_TABLE,
@@ -10,12 +9,19 @@ export class PropertiesListTable1 extends AbstractTable1<
     PropertiesListTableType
 > {
 
-    getDefaultTableType(): PropertiesListTableType {
-        return PropertiesListTableType.STANDARD_BREAKDOWN;
+    constructor() {
+        super(TableType.PROPERTY_LIST_TABLE);
     }
 
-    getAllSubTableColumns(subTableType: PropertiesListTableType): TableColumnDetailsEnum[] {
+    protected getAllSubTableColumns(subTableType?: PropertiesListTableType): TableColumnDetailsEnum[] {
+        if (!subTableType) {
+            return this.subTables[this.getDefaultTableType()];
+        }
         return this.subTables[subTableType];
+    }
+
+    getDefaultTableType(): PropertiesListTableType {
+        return PropertiesListTableType.STANDARD_BREAKDOWN;
     }
 
     getColumnValue(
@@ -23,12 +29,13 @@ export class PropertiesListTable1 extends AbstractTable1<
         item: ListingWithScenariosResponseDTO,
         columnType: TableColumnDetailsEnum
     ): PrimitiveType {
-        const columnDetail: ColumnDetail = this.getColumnDetails(subTableType, columnType);
+        const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType);
+        const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.PROPERTY_LIST_TABLE]) {
             const { value } = columnDetail[TableType.PROPERTY_LIST_TABLE]!;
             return value(item);
         }
-        throw new Error(`Column ${columnType} does not have a value function for AGENT_TABLE`);
+        throw new Error(`Column ${columnType} does not have a value function for ${TableType.PROPERTY_LIST_TABLE}`);
     }
 
 

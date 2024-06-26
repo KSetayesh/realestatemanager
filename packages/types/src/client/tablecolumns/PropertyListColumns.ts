@@ -1,7 +1,6 @@
 import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
 import { PropertiesListTableHelper } from "../tabledata/PropertiesListTableHelper";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const PropertyTypeColumn: ColumnDetail = {
     title: "Property Type",

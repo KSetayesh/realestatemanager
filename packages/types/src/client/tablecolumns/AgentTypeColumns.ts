@@ -1,6 +1,5 @@
 import { AgentResponseDTO } from "../../server/AgentApiTypes";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const FirstNameColumn: ColumnDetail = {
     title: "First Name",

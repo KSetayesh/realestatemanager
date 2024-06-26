@@ -14,7 +14,6 @@ import {
 } from "../../server/InvestmentTypes";
 import { RentCastDetailsResponseDTO } from "../../server/RentCastApiTypes";
 import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { TableType } from "../tabledata/TableConfig";
 
 export enum InputType {
     TEXT = 'text',
@@ -235,4 +234,61 @@ export type ColumnDetail = {
 // Define the type for the sortMap structure
 export type ColumnsDetails = {
     [key in TableColumnDetailsEnum]: ColumnDetail;
+};
+
+export enum TableType {
+    PROPERTY_LIST_TABLE = 'PROPERTY_LIST_TABLE',
+    INVESTMENT_BREAKDOWN_TABLE = 'INVESTMENT_BREAKDOWN_TABLE',
+    AGENT_TABLE = 'AGENT_TABLE',
+    HIGH_YIELD_SAVINGS_TABLE = 'HIGH_YIELD_SAVINGS_TABLE',
+    RENT_CAST_DETAILS_TABLE = 'RENT_CAST_DETAILS_TABLE',
+}
+
+export enum InvestmentBreakdownTableType {
+    STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
+    MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
+    EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
+    INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
+}
+
+export enum PropertiesListTableType {
+    ALL = 'ALL',
+    STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
+}
+
+export enum DefaultTableType {
+    DEFAULT = 'DEFAULT',
+}
+
+export type TableTypeMapping = {
+    [TableType.PROPERTY_LIST_TABLE]: {
+        [key in PropertiesListTableType]: TableColumnDetailsEnum[]
+    };
+    [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
+        [key in InvestmentBreakdownTableType]: TableColumnDetailsEnum[]
+    };
+    [TableType.AGENT_TABLE]: {
+        [key in DefaultTableType]: TableColumnDetailsEnum[]
+    };
+    [TableType.HIGH_YIELD_SAVINGS_TABLE]: {
+        [key in DefaultTableType]: TableColumnDetailsEnum[]
+    };
+    [TableType.RENT_CAST_DETAILS_TABLE]: {
+        [key in DefaultTableType]: TableColumnDetailsEnum[]
+    };
+};
+
+export type TableDetailType<T extends keyof TableTypeMapping> = {
+    title: string;
+    tableType: T;
+    isEditable: boolean;
+    canDeleteFromTable: boolean;
+    isSortable: boolean;
+    pageable: boolean;
+    canExportIntoCSV: boolean;
+    subTables: TableTypeMapping[T];
+};
+
+export type TableDetailsType = {
+    [K in TableType]: TableDetailType<K>;
 };

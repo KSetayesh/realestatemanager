@@ -3,8 +3,7 @@ import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTyp
 import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
 import { InvestmentDetailsTableHelper } from "../tabledata/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../tabledata/PropertiesListTableHelper";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",

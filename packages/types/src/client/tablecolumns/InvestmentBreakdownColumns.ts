@@ -1,7 +1,6 @@
 import { MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
 import { InvestmentDetailsTableHelper } from "../tabledata/InvestmentDetailsTableHelper";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const TotalInterestPaidColumn: ColumnDetail = {
     title: "Total Interest Paid",

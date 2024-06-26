@@ -1,4 +1,4 @@
-import { MonthlyInvestmentDetailsResponseDTO } from "@realestatemanager/types";
+import { MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
 
 export class InvestmentDetailsTableHelper {
 

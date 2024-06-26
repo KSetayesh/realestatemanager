@@ -1,6 +1,5 @@
 import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTypes";
-import { TableType } from "../tabledata/TableConfig";
-import { ColumnDetail, InputType, PrimitiveType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
 
 export const StartPrincipalColumn: ColumnDetail = {
     title: "Start Principal",

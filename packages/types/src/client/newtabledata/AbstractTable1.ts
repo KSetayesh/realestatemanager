@@ -1,17 +1,24 @@
 import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnConfig";
-import { TableDetailType, TableType, TableTypeMapping, tableDetails } from "../tabledata/TableConfig";
-import { ColumnDetail, PrimitiveType, SortDirection } from "../types/ClientTypes";
+import { tableDetails } from "../tabledata/TableConfig";
+import { ColumnDetail, PrimitiveType, SortDirection, TableDetailType, TableType, TableTypeMapping } from "../types/ClientTypes";
 
 export type CellData = {
     column: TableColumnDetailsEnum;
     value: PrimitiveType;
 };
 
+export type TableColumn = {
+    columnKey: TableColumnDetailsEnum;
+    columnDetails: ColumnDetail;
+}
+
+export type TableRow = Partial<Record<TableColumnDetailsEnum, CellData>>;
+
 export type TableDataItem<Y> = {
     objectData: {
         key: Y;
     };
-    tableRow: CellData[];
+    tableRow: TableRow;
 };
 
 export type SortConfig = {
@@ -71,10 +78,10 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
     sort(
         list: TableDataItem<Y>[],
         subTableType: X,
-        sortConfig: SortConfig,
+        sortConfig?: SortConfig,
     ): TableDataItem<Y>[] {
 
-        if (!this.isSortable) {
+        if (!this.isSortable || !sortConfig) {
             return list;
         }
 
@@ -114,45 +121,60 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         });
     }
 
-    getTableData(listOfData: Y[], subTableType: X): TableDataItem<Y>[] {
+    getTableData(listOfData: Y[], subTableType?: X): TableDataItem<Y>[] {
         const tableData: TableDataItem<Y>[] = [];
         const tableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
         for (const data of listOfData) {
-            const tableRow: CellData[] = [];
-            for (const column of tableColumns) {
-                const value: PrimitiveType = this.getColumnValue(subTableType, data, column);
-                const cellData: CellData = {
-                    column: column,
-                    value: value,
-                };
-                tableRow.push(cellData);
-            }
-            tableData.push({
-                objectData: {
-                    key: data,
-                },
-                tableRow: tableRow,
-            });
+            tableData.push(this.getTableRow(data, subTableType, tableColumns));
         }
         return tableData;
     }
 
-    protected getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): ColumnDetail {
+    getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): TableColumn {
         const tableColumnEnums: Set<TableColumnDetailsEnum> = this.getAllSubTableColumnsAsSet(subTableType);
         if (!tableColumnEnums.has(columnType)) {
             throw new Error('Error with table structure');
         }
-        return columnDetails[columnType];
+        return {
+            columnKey: columnType,
+            columnDetails: columnDetails[columnType],
+        };
 
     }
 
-    protected getAllSubTableColumnsAsSet(subTableType: X): Set<TableColumnDetailsEnum> {
+    getAllSubTableColumnDetails(subTableType: X): TableColumn[] {
+        const subTableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
+        return subTableColumns.map(column => this.getColumnDetails(subTableType, column));
+    }
+
+    private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumnDetailsEnum[]): TableDataItem<Y> {
+        if (!tableColumns) {
+            tableColumns = this.getAllSubTableColumns(subTableType);
+        }
+        const tableRow: TableRow = {};
+        for (const column of tableColumns) {
+            const value: PrimitiveType = this.getColumnValue(subTableType, data, column);
+            const cellData: CellData = {
+                column: column,
+                value: value,
+            };
+            tableRow[column] = cellData;
+        }
+        return {
+            objectData: {
+                key: data,
+            },
+            tableRow: tableRow,
+        };
+    }
+
+    private getAllSubTableColumnsAsSet(subTableType?: X): Set<TableColumnDetailsEnum> {
         return new Set(this.getAllSubTableColumns(subTableType));
     }
 
-    abstract getAllSubTableColumns(subTableType: X): TableColumnDetailsEnum[];
+    protected abstract getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[];
 
-    abstract getColumnValue(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): PrimitiveType;
+    protected abstract getColumnValue(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): PrimitiveType;
 
     abstract getDefaultTableType(): X;
 
