@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 import {
     AbstractTable1,
     TableDataItem,
@@ -28,7 +29,8 @@ import {
     TableColumn,
     TableColumnDetailsEnum,
     SortDirection,
-    PrimitiveType
+    PrimitiveType,
+    InputType
 } from '@realestatemanager/types';
 import NewExportCSVButton from './NewExportCSVButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
@@ -261,11 +263,76 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
     };
 
     const getCellContent = (
-        // originalIndex: number,
+        originalIndex: number,
         column: TableColumn,
         item: TableDataItem<Y>,
-    ): string => {
-        return item.tableRow[column.columnKey]?.valueToBeDisplayed ?? '';
+    ) => {
+
+        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => {
+            const key = column.columnKey;
+            const newData = [...tableData];
+            const value = e.target.value;
+            if (InputType.NUMBER === column.columnDetails.inputType) {
+                newData[rowIndex].tableRow[key]?.valueToBeDisplayed = Number(value);
+            }
+            else {
+                newData[rowIndex].tableRow[key]?.valueToBeDisplayed = value;
+            }
+            setTableData(newData);
+        };
+
+        const getEditableCellContent = (originalIndex: number, column: TableColumn) => {
+            return (
+                <TextField
+                    type={column.columnDetails.inputType === InputType.NUMBER ? 'number' : 'text'}
+                    value={tableData[originalIndex].tableRow[column.columnKey]?.valueToBeDisplayed ?? ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, originalIndex, column)}
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    InputProps={{
+                        style: { fontSize: '0.9rem' }, // Adjust font size to match table data
+                    }}
+                />
+            );
+        };
+
+        const getUrlCellContent = (cellData: string) => {
+            return (
+                <a href={cellData} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+                    View
+                </a>
+            );
+        };
+
+        const getRouteToCellContent = (cellData: string, item: TableDataItem<Y>) => {
+            return (
+                <span>
+                    <Link to={cellData} state={{ data: item.objectData.key }}>
+                        {cellData}
+                    </Link>
+                </span>
+            );
+        };
+
+
+        const cellData: string = item.tableRow[column.columnKey]?.valueToBeDisplayed ?? '';
+        let cellContent;
+        if (editMode === originalIndex && column.columnDetails.isEditable) {
+            cellContent = getEditableCellContent(originalIndex, column);
+        }
+        else if (column.columnDetails.isUrl) {
+            cellContent = getUrlCellContent(cellData);
+        }
+        else {
+            cellContent = cellData;
+        }
+
+        if (column.columnDetails.routeTo) {
+            cellContent = getRouteToCellContent(cellData, item);
+        }
+
+        return cellContent;
         // return tableHandler.getColumnValue(tableType, item.objectData.key, column.columnKey);
 
         // const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
@@ -391,8 +458,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                     </StyledTableBodyCell>
                 )}
                 {tableColumns.map((column, colIndex) => {
-                    // const cellContent = getCellContent(originalIndex, column, item);
-                    const cellContent = getCellContent(column, item);
+                    const cellContent = getCellContent(originalIndex, column, item);
                     return (
                         <StyledTableBodyCell key={`cell_${colIndex}_${originalIndex}`}>
                             {cellContent}
