@@ -9,7 +9,7 @@ export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResp
         super(TableType.AGENT_TABLE);
     }
 
-    protected getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
+    protected _getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
         if (!subTableType) {
             return this.subTables[this.getDefaultTableType()];
         }

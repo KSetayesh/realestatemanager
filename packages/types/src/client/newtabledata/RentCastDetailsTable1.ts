@@ -13,7 +13,7 @@ export class RentCastDetailsTable1 extends AbstractTable1<
         super(TableType.RENT_CAST_DETAILS_TABLE);
     }
 
-    protected getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
+    protected _getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
         if (!subTableType) {
             return this.subTables[this.getDefaultTableType()];
         }

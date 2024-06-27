@@ -9,7 +9,10 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: true,
         isSortable: true,
         pageable: true,
-        canExportIntoCSV: true,
+        exportToCSV: {
+            buttonName: 'Export CSV',
+            enabled: true,
+        },
         subTables: {
             [PropertiesListTableType.ALL]: [
                 TableColumnDetailsEnum.PROPERTY_TYPE,
@@ -97,7 +100,10 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: false,
         isSortable: false,
         pageable: true,
-        canExportIntoCSV: true,
+        exportToCSV: {
+            buttonName: 'Export CSV',
+            enabled: true,
+        },
         subTables: {
             [InvestmentBreakdownTableType.STANDARD_BREAKDOWN]: [
                 TableColumnDetailsEnum.YEAR,
@@ -175,7 +181,10 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: true,
         isSortable: true,
         pageable: true,
-        canExportIntoCSV: true,
+        exportToCSV: {
+            buttonName: 'Export CSV',
+            enabled: true,
+        },
         subTables: {
             [DefaultTableType.DEFAULT]: [
                 TableColumnDetailsEnum.FIRST_NAME,
@@ -198,7 +207,10 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: false,
         isSortable: false,
         pageable: true,
-        canExportIntoCSV: true,
+        exportToCSV: {
+            buttonName: 'Export CSV',
+            enabled: true,
+        },
         subTables: {
             [DefaultTableType.DEFAULT]: [
                 TableColumnDetailsEnum.YEAR,
@@ -220,7 +232,10 @@ export const tableDetails: TableDetailsType = {
         canDeleteFromTable: false,
         isSortable: true,
         pageable: true,
-        canExportIntoCSV: false,
+        exportToCSV: {
+            buttonName: 'Export CSV',
+            enabled: false,
+        },
         subTables: {
             [DefaultTableType.DEFAULT]: [
                 TableColumnDetailsEnum.API_KEY_NAME,

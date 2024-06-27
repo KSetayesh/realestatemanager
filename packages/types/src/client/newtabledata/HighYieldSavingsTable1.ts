@@ -13,7 +13,7 @@ export class HighYieldSavingsTable1 extends AbstractTable1<
         super(TableType.HIGH_YIELD_SAVINGS_TABLE);
     }
 
-    protected getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
+    protected _getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
         if (!subTableType) {
             return this.subTables[this.getDefaultTableType()];
         }

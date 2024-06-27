@@ -125,8 +125,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
         }
 
         const getVisibleColumnCount = (): number => {
-            const columns: TableColumn[] = getTableColumns();
-            return columns.filter(column => column.showColumn).length;
+            return getTableColumns().length;
         };
 
         const rowsInterval: number = tableSeperatorDetails.rowsInterval;
@@ -245,7 +244,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                     return (
                         <React.Fragment key={originalIndex}>
                             {getTableRow(originalIndex, item)}
-                            {/* {tableSeperatorDetails && getTableSeparator(originalIndex)} */}
+                            {tableSeperatorDetails && getTableSeparator(originalIndex)}
                         </React.Fragment>
                     );
                 })}

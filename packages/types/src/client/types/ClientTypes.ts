@@ -278,6 +278,11 @@ export type TableTypeMapping = {
     };
 };
 
+export type ExportOption = {
+    buttonName: string;
+    enabled: boolean;
+};
+
 export type TableDetailType<T extends keyof TableTypeMapping> = {
     title: string;
     tableType: T;
@@ -285,7 +290,7 @@ export type TableDetailType<T extends keyof TableTypeMapping> = {
     canDeleteFromTable: boolean;
     isSortable: boolean;
     pageable: boolean;
-    canExportIntoCSV: boolean;
+    exportToCSV: ExportOption;
     subTables: TableTypeMapping[T];
 };
 

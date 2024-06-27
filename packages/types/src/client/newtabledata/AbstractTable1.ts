@@ -1,6 +1,14 @@
 import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnConfig";
 import { tableDetails } from "../tabledata/TableConfig";
-import { ColumnDetail, PrimitiveType, SortDirection, TableDetailType, TableType, TableTypeMapping } from "../types/ClientTypes";
+import {
+    ColumnDetail,
+    ExportOption,
+    PrimitiveType,
+    SortDirection,
+    TableDetailType,
+    TableType,
+    TableTypeMapping
+} from "../types/ClientTypes";
 
 export type CellData = {
     column: TableColumnDetailsEnum;
@@ -36,6 +44,7 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
     private _isEditable: boolean;
     private _isSortable: boolean;
     private _pageable: boolean;
+    private _exportToCSV: ExportOption;
 
     constructor(tableType: K) {
         this._tableType = tableType;
@@ -46,6 +55,7 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         this._isEditable = this.details.isEditable;
         this._isSortable = this.details.isSortable;
         this._pageable = this.details.pageable;
+        this._exportToCSV = this.details.exportToCSV;
     }
 
     get tableType(): TableType {
@@ -70,6 +80,10 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
     get pageable(): boolean {
         return this._pageable;
+    }
+
+    get exportToCSV(): ExportOption {
+        return this._exportToCSV;
     }
 
     get subTables(): TableTypeMapping[K] {
@@ -236,7 +250,23 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return new Set(this.getAllSubTableColumns(subTableType));
     }
 
-    protected abstract getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[];
+    private getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[] {
+
+        const showColumn = (column: TableColumnDetailsEnum): boolean => {
+            return this.getColumnDetails(subTableType, column).columnDetails.showColumn;
+        };
+
+        const columnEnums: TableColumnDetailsEnum[] = this._getAllSubTableColumns(subTableType);
+        const toReturn: TableColumnDetailsEnum[] = [];
+        for (const column of columnEnums) {
+            if (showColumn(column)) {
+                toReturn.push(column);
+            }
+        }
+        return toReturn;
+    }
+
+    protected abstract _getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[];
 
     protected abstract getColumnValue(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): PrimitiveType;
 

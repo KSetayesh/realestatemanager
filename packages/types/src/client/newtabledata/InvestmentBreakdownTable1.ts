@@ -13,7 +13,7 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         super(TableType.INVESTMENT_BREAKDOWN_TABLE);
     }
 
-    protected getAllSubTableColumns(subTableType?: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
+    protected _getAllSubTableColumns(subTableType?: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
         if (!subTableType) {
             return this.subTables[this.getDefaultTableType()];
         }

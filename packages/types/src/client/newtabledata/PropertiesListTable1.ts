@@ -13,7 +13,7 @@ export class PropertiesListTable1 extends AbstractTable1<
         super(TableType.PROPERTY_LIST_TABLE);
     }
 
-    protected getAllSubTableColumns(subTableType?: PropertiesListTableType): TableColumnDetailsEnum[] {
+    protected _getAllSubTableColumns(subTableType?: PropertiesListTableType): TableColumnDetailsEnum[] {
         if (!subTableType) {
             return this.subTables[this.getDefaultTableType()];
         }
