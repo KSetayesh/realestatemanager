@@ -30,6 +30,12 @@ export type TableDataItem<Y> = {
     tableRow: TableRow;
 };
 
+type TableData<Y, X> = {
+    subTable: X;
+    columns: TableColumn[];
+    rows: TableDataItem<Y>[];
+};
+
 export type SortConfig = {
     columnKey: TableColumnDetailsEnum;
     direction: SortDirection;
@@ -88,6 +94,11 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
     get subTables(): TableTypeMapping[K] {
         return this._subTables;
+    }
+
+
+    getAllSubTableTypes(): X[] {
+        return Object.keys(this.subTables) as X[];
     }
 
     sort(
@@ -227,7 +238,7 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return renderCellData(cellData, columnDetails);
     }
 
-    private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumnDetailsEnum[]): TableDataItem<Y> {
+    getTableRow(data: Y, subTableType: X, tableColumns?: TableColumnDetailsEnum[]): TableDataItem<Y> {
         if (!tableColumns) {
             tableColumns = this.getAllSubTableColumns(subTableType);
         }

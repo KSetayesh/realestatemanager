@@ -8,10 +8,18 @@ import {
     TableRow,
     Paper,
     Tooltip,
+    Button,
     Box,
     Typography,
+    IconButton,
     styled,
+    TextField,
+    TablePagination
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import {
     AbstractTable1,
     TableDataItem,
@@ -23,6 +31,7 @@ import {
     PrimitiveType
 } from '@realestatemanager/types';
 import NewExportCSVButton from './NewExportCSVButton';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     overflowX: 'auto',
@@ -73,6 +82,17 @@ export type TableSeparatorDetails = {
     rowsInterval: number;  // Number of rows between each separator
 };
 
+export type TableActions<Y> = {
+    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
+    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+    onPaginationChange?: (
+        event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+        page: number,
+        rowsPerPage: number,
+        sortConfig?: SortConfig,
+    ) => Promise<void>;
+};
+
 /* ----For PropertiesListTable---- 
     Y = ListingWithScenariosResponseDTO
     X = PropertiesListTableType
@@ -86,6 +106,7 @@ export interface ReusableTableProps<K extends TableType, Y, X> {
     tableHandler: AbstractTable1<K, Y, X>;
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
+    tableActions?: TableActions<Y>;
 };
 
 const NewNewReusableTable = <K extends TableType, Y, X>({
@@ -93,6 +114,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
     tableHandler,
     onRowClick,
     tableSeperatorDetails,
+    tableActions,
 }: ReusableTableProps<K, Y, X>) => {
 
     const getTableData = (_data: Y[]) => {
@@ -103,6 +125,10 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
     const [tableData, setTableData] = useState<TableDataItem<Y>[]>(getTableData(data));
     const [sortConfig, setSortConfig] = useState<SortConfig>();
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [editMode, setEditMode] = useState<number | null>(null);
+    const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
     useEffect(() => {
         setTableData(getTableData(data));
@@ -133,6 +159,40 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                 )}
             </>
         );
+    };
+
+    const areTableRowsEditable = (): boolean => {
+        if (tableActions) {
+            return tableActions.handleEditUpdate ? true : false;
+        }
+        return false;
+    };
+
+    const areTableRowsDeletable = (): boolean => {
+        if (tableActions) {
+            return tableActions.handleDeleteUpdate ? true : false;
+        }
+        return false;
+    };
+
+    const confirmDelete = async () => {
+        if (deleteIndex !== null) {
+            const row = tableData[deleteIndex];
+            if (areTableRowsDeletable()) {
+                try {
+                    const wasDeleted = await tableActions!.handleDeleteUpdate!(row);
+                    console.log('Was deleted: ', wasDeleted);
+                    if (wasDeleted) {
+                        setTableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
+                    }
+                } catch (error) {
+                    console.error('Error deleting row:', error);
+                } finally {
+                    setOpenDialog(false);
+                    setDeleteIndex(null);
+                }
+            }
+        }
     };
 
     const getTableSeparator = (originalIndex: number) => {
@@ -167,7 +227,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
         };
 
         const requestSort = (columnKey: TableColumnDetailsEnum, columnDetails: ColumnDetail) => {
-            if (!columnDetails.isSortable) { //|| isEditing) {
+            if (!columnDetails.isSortable || isEditing) {
                 return;
             }
             let direction = SortDirection.ASCENDING;
@@ -182,7 +242,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
         return (
             <TableHead>
                 <TableRow>
-                    {/* {(areTableRowsEditable() || areTableRowsDeletable()) && <StyledTableCell>Actions</StyledTableCell>} */}
+                    {(areTableRowsEditable() || areTableRowsDeletable()) && <StyledTableCell>Actions</StyledTableCell>}
                     {tableColumns
                         .map((tableColumn) => {
                             const columnDetails = getColumnDetails(tableColumn);
@@ -229,19 +289,107 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
 
         const tableColumns: TableColumn[] = getTableColumns();
 
+        const handleSaveClick = async () => {
+            if (editMode !== null) {
+                const editedRow = tableData[editMode];
+                if (areTableRowsEditable()) {
+                    try {
+                        const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
+
+                        const updatedEditableData = [...tableData];
+                        const rowDataItem: TableDataItem<Y> = tableHandler.getTableRow(updatedRow, tableType);
+                        updatedEditableData[editMode] = rowDataItem;
+
+                        setTableData(updatedEditableData);
+                    } catch (error) {
+                        console.error('Error updating row:', error);
+                    }
+                }
+            }
+
+            setEditMode(null);
+            setIsEditing(false);
+            setCurrentEdit(null);
+        };
+
+        const handleCancelClick = () => {
+            if (editMode !== null && currentEdit) {
+                const newData = [...tableData];
+                newData[editMode] = currentEdit;
+                setTableData(newData);
+            }
+            setEditMode(null);
+            setIsEditing(false);
+            setCurrentEdit(null);
+        };
+
+        const handleEditClick = (index: number) => {
+
+            const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
+                return JSON.parse(JSON.stringify(obj));
+            };
+
+            setEditMode(index);
+            setIsEditing(true);
+            setCurrentEdit(deepCopy(tableData[index])); // Backup the current state before editing
+        };
+
+        const handleDeleteClick = async (index: number) => {
+            if (editMode === null) {
+                if (areTableRowsDeletable()) {
+                    setOpenDialog(true);
+                    setDeleteIndex(index);
+                }
+            }
+        };
+
+        const displayEditActionButton = (rowIndex: number) => {
+            if (editMode === rowIndex) {
+                return (
+                    <>
+                        <IconButton onClick={(e) => { e.stopPropagation(); handleSaveClick(); }}>
+                            <CheckIcon />
+                        </IconButton>
+                        <IconButton onClick={(e) => { e.stopPropagation(); handleCancelClick(); }}>
+                            <CloseIcon />
+                        </IconButton>
+                    </>
+                );
+            }
+            return (
+                <>
+                    <IconButton onClick={(e) => { e.stopPropagation(); handleEditClick(rowIndex); }}>
+                        <EditIcon />
+                    </IconButton>
+                </>
+            );
+        };
+
+        const displayDeleteActionButton = (rowIndex: number) => {
+            if (editMode !== rowIndex) {
+                return (
+                    <>
+                        <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteClick(rowIndex); }}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </>
+                )
+            }
+        };
+
         return (
             <TableRow
                 key={originalIndex}
                 hover
-                // style={{ cursor: isEditing ? 'default' : 'pointer' }}
+                style={{ cursor: isEditing ? 'default' : 'pointer' }}
                 onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
             >
-                {/* {(areTableRowsEditable() || areTableRowsDeletable()) && (
+                {(areTableRowsEditable() || areTableRowsDeletable()) && (
                     <StyledTableBodyCell>
                         {areTableRowsEditable() && displayEditActionButton(originalIndex)}
                         {areTableRowsDeletable() && displayDeleteActionButton(originalIndex)}
                     </StyledTableBodyCell>
-                )} */}
+                )}
                 {tableColumns.map((column, colIndex) => {
                     // const cellContent = getCellContent(originalIndex, column, item);
                     const cellContent = getCellContent(column, item);
@@ -294,6 +442,13 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                     </StyledTableContainer>
                 </StyledPaper>
             </Box>
+            <ConfirmationDialog
+                open={openDialog}
+                onClose={() => setOpenDialog(false)}
+                onConfirm={confirmDelete}
+                title="Confirm Delete"
+                content="Are you sure you want to delete this row?"
+            />
         </Box>
     );
 };
