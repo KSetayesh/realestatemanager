@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableDataItem } from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
-import NewNewReusableTable from "../components/NewNewReusableTable";
+import NewNewReusableTable from "../newcomponents/NewNewReusableTable";
 
 const AgentsList: React.FC = () => {
     const agentApi: AgentApi = new AgentApi();

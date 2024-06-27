@@ -145,7 +145,17 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return tableData;
     }
 
-    getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): TableColumn {
+    // getAllSubTableColumnTitles(subTableType: X): string[] {
+    //     const subTableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
+    //     return subTableColumns.map(column => this.getColumnDetails(subTableType, column).columnDetails.title);
+    // }
+
+    getAllSubTableColumnDetails(subTableType: X): TableColumn[] {
+        const subTableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
+        return subTableColumns.map(column => this.getColumnDetails(subTableType, column));
+    }
+
+    protected getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): TableColumn {
         const tableColumnEnums: Set<TableColumnDetailsEnum> = this.getAllSubTableColumnsAsSet(subTableType);
         if (!tableColumnEnums.has(columnType)) {
             throw new Error('Error with table structure');
@@ -157,15 +167,9 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
     }
 
-    getAllSubTableColumnDetails(subTableType: X): TableColumn[] {
-        const subTableColumns: TableColumnDetailsEnum[] = this.getAllSubTableColumns(subTableType);
-        return subTableColumns.map(column => this.getColumnDetails(subTableType, column));
-    }
-
-    getColumnValueToBeDisplayed(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): string {
+    private getColumnValueToBeDisplayed(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): string {
         const columnValue: PrimitiveType = this.getColumnValue(subTableType, item, columnType);
         const columnDetails = this.getColumnDetails(subTableType, columnType).columnDetails;
-
         return this.updateValueToBeDisplayed(columnValue, columnDetails);
     }
 

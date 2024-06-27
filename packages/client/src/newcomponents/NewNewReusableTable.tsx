@@ -22,6 +22,7 @@ import {
     SortDirection,
     PrimitiveType
 } from '@realestatemanager/types';
+import NewExportCSVButton from './NewExportCSVButton';
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     overflowX: 'auto',
@@ -111,12 +112,27 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
         return tableHandler.getAllSubTableColumnDetails(tableType);
     };
 
-    const getColumnDetails = (tableColumn: TableColumn): ColumnDetail => {
-        return tableColumn.columnDetails;
-    };
+    const getExportCSVButton = () => {
 
-    const getColumnKey = (tableColumn: TableColumn): TableColumnDetailsEnum => {
-        return tableColumn.columnKey;
+        const hasExportCsvOption = (): boolean => {
+            return tableHandler.exportToCSV.enabled;
+        };
+
+        return (
+            <>
+                {hasExportCsvOption() && (
+                    <Box mb={2}>
+                        {/* Come back and update ExportCSVButton component */}
+                        <NewExportCSVButton
+                            columns={getTableColumns()}
+                            tableData={tableData}
+                            disabled={isEditing}
+                            buttonTitle={tableHandler.exportToCSV.buttonName}
+                        />
+                    </Box>
+                )}
+            </>
+        );
     };
 
     const getTableSeparator = (originalIndex: number) => {
@@ -142,6 +158,14 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
 
     const getTableHead = () => {
 
+        const getColumnKey = (tableColumn: TableColumn): TableColumnDetailsEnum => {
+            return tableColumn.columnKey;
+        };
+
+        const getColumnDetails = (tableColumn: TableColumn): ColumnDetail => {
+            return tableColumn.columnDetails;
+        };
+
         const requestSort = (columnKey: TableColumnDetailsEnum, columnDetails: ColumnDetail) => {
             if (!columnDetails.isSortable) { //|| isEditing) {
                 return;
@@ -160,7 +184,6 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                 <TableRow>
                     {/* {(areTableRowsEditable() || areTableRowsDeletable()) && <StyledTableCell>Actions</StyledTableCell>} */}
                     {tableColumns
-                        .filter(tableColumn => getColumnDetails(tableColumn).showColumn)
                         .map((tableColumn) => {
                             const columnDetails = getColumnDetails(tableColumn);
                             const columnKey = getColumnKey(tableColumn);
@@ -219,7 +242,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
                         {areTableRowsDeletable() && displayDeleteActionButton(originalIndex)}
                     </StyledTableBodyCell>
                 )} */}
-                {tableColumns.filter(column => getColumnDetails(column).showColumn).map((column, colIndex) => {
+                {tableColumns.map((column, colIndex) => {
                     // const cellContent = getCellContent(originalIndex, column, item);
                     const cellContent = getCellContent(column, item);
                     return (
@@ -260,6 +283,7 @@ const NewNewReusableTable = <K extends TableType, Y, X>({
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
             {getTableOptions()}
+            {getExportCSVButton()}
             <Box width="95%">
                 <StyledPaper>
                     <StyledTableContainer>
