@@ -13,29 +13,25 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         super(TableType.INVESTMENT_BREAKDOWN_TABLE);
     }
 
-    protected _getAllSubTableColumns(subTableType?: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
-        if (!subTableType) {
-            return this.subTables[this.getDefaultTableType()];
-        }
-        return this.subTables[subTableType];
-    }
-
     getDefaultTableType(): InvestmentBreakdownTableType {
         return InvestmentBreakdownTableType.STANDARD_BREAKDOWN;
     }
 
+    protected _getAllSubTableColumns(subTableType: InvestmentBreakdownTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
+    }
+
+
     protected getColumnValue(
-        subTableType: InvestmentBreakdownTableType,
         item: MonthlyInvestmentDetailsResponseDTO,
-        columnType: TableColumnDetailsEnum
+        tableColumn: TableColumn,
     ): PrimitiveType {
-        const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType);
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]) {
             const { value } = columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]!;
             return value(item);
         }
-        throw new Error(`Column ${columnType} does not have a value function for ${TableType.INVESTMENT_BREAKDOWN_TABLE}`);
+        throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.INVESTMENT_BREAKDOWN_TABLE}`);
     }
 
 

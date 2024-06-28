@@ -13,29 +13,24 @@ export class RentCastDetailsTable1 extends AbstractTable1<
         super(TableType.RENT_CAST_DETAILS_TABLE);
     }
 
-    protected _getAllSubTableColumns(subTableType?: DefaultTableType): TableColumnDetailsEnum[] {
-        if (!subTableType) {
-            return this.subTables[this.getDefaultTableType()];
-        }
-        return this.subTables[subTableType];
-    }
-
     getDefaultTableType(): DefaultTableType {
         return DefaultTableType.DEFAULT;
     }
 
+    protected _getAllSubTableColumns(subTableType: DefaultTableType): TableColumnDetailsEnum[] {
+        return this.subTables[subTableType];
+    }
+
     protected getColumnValue(
-        subTableType: DefaultTableType,
         item: RentCastDetailsResponseDTO,
-        columnType: TableColumnDetailsEnum
+        tableColumn: TableColumn,
     ): PrimitiveType {
-        const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType);
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.RENT_CAST_DETAILS_TABLE]) {
             const { value } = columnDetail[TableType.RENT_CAST_DETAILS_TABLE]!;
             return value(item);
         }
-        throw new Error(`Column ${columnType} does not have a value function for ${TableType.RENT_CAST_DETAILS_TABLE}`);
+        throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.RENT_CAST_DETAILS_TABLE}`);
     }
 
 }
