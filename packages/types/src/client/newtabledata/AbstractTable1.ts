@@ -10,29 +10,29 @@ import {
     TableTypeMapping
 } from "../types/ClientTypes";
 
-export type CellData = {
-    column: TableColumnDetailsEnum;
-    value: PrimitiveType;
-};
+// export type CellData = {
+//     column: TableColumnDetailsEnum;
+//     value: PrimitiveType;
+// };
 
 export type TableColumn = {
     columnKey: TableColumnDetailsEnum;
     columnDetails: ColumnDetail;
 }
 
-export type TableRow = Partial<Record<TableColumnDetailsEnum, CellData>>;
+// export type TableRow = Partial<Record<TableColumnDetailsEnum, CellData>>;
 
-export type TableDataItem<Y> = {
-    objectData: {
-        key: Y;
-    };
-    tableRow: TableRow;
-};
+// export type TableDataItem<Y> = {
+//     objectData: {
+//         key: Y;
+//     };
+//     tableRow: TableRow;
+// };
 
 export type TableData<Y, X> = {
     subTable: X;
     columns: TableColumn[];
-    rows: TableDataItem<Y>[];
+    rows: Y[];
 };
 
 export type SortConfig = {
@@ -137,38 +137,49 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
         tableData.rows.sort((a, b) => {
             const subTableType: X = tableData.subTable;
-            const data_a: Y = a.objectData.key;
-            const data_b: Y = b.objectData.key;
+            // const data_a: Y = a.objectData.key;
+            // const data_b: Y = b.objectData.key;
             const tableColumn: TableColumn = this.getColumnDetails(subTableType, sortConfig.columnKey);
-            const cellValue_a: PrimitiveType = this.getColumnValue(data_a, tableColumn);
-            const cellValue_b: PrimitiveType = this.getColumnValue(data_b, tableColumn);
+            const cellValue_a: PrimitiveType = this.getColumnValue(a, tableColumn);
+            const cellValue_b: PrimitiveType = this.getColumnValue(b, tableColumn);
             return genericSort(cellValue_a, cellValue_b, sortConfig.direction);
         });
 
         return tableData;
     }
 
-    getTableData(listOfData: Y[], subTableType?: X): TableData<Y, X> {
-        if (!subTableType) {
-            subTableType = this.getDefaultTableType();
-        }
-        const tableRows: TableDataItem<Y>[] = [];
-        const tableColumns: TableColumn[] = this.getAllSubTableColumnDetails(subTableType);
-        for (const data of listOfData) {
-            tableRows.push(this.getTableRow(data, subTableType, tableColumns));
-        }
+    getTableData(listOfData: Y[], subTableType: X = this.getDefaultTableType()): TableData<Y, X> {
+        // const tableRows: TableDataItem<Y>[] = [];
+        // const tableColumns: TableColumn[] = this.getAllSubTableColumnDetails(subTableType);
+        // for (const data of listOfData) {
+        //     tableRows.push(this.getTableRow(data, subTableType, tableColumns));
+        // }
         return {
             subTable: subTableType,
             columns: this.getAllSubTableColumnDetails(subTableType),
-            rows: tableRows,
+            rows: listOfData, //tableRows,
         };
     }
 
-    getColumnValueToBeDisplayed(subTableType: X, item: Y, columnType: TableColumnDetailsEnum): string {
-        const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType)
+    // getColumnValueToBeDisplayed(tableData: TableData<Y, X>): PrimitiveType {
+    //     const subTableType: X = tableData.subTable;
+    //     const tableColumns: TableColumn[] = tableData.columns;
+    //     const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType)
+    // }
+
+    getColumnValueToBeDisplayed(item: Y, tableColumn: TableColumn): PrimitiveType { // columnType: TableColumnDetailsEnum): PrimitiveType {
+        // const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType)
         const columnValue: PrimitiveType = this.getColumnValue(item, tableColumn);
         const columnDetails: ColumnDetail = tableColumn.columnDetails;
-        return this.updateValueToBeDisplayed(columnValue, columnDetails);
+        return this.formatValueToBeDisplayed(columnValue, columnDetails);
+    }
+
+    updateValue(item: Y, newValue: PrimitiveType, tableColumn: TableColumn): void {
+        const columnDetails: ColumnDetail = tableColumn.columnDetails;
+        if (!this.isEditable || !columnDetails.isEditable) {
+            return;
+        }
+        this.setColumnValue(item, newValue, tableColumn);
     }
 
     protected getColumnDetails(subTableType: X, columnType: TableColumnDetailsEnum): TableColumn {
@@ -187,7 +198,7 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return subTableColumns.map(column => this.getColumnDetails(subTableType, column));
     }
 
-    private updateValueToBeDisplayed(cellData: PrimitiveType, columnDetails: ColumnDetail): string {
+    private formatValueToBeDisplayed(cellData: PrimitiveType, columnDetails: ColumnDetail): PrimitiveType {
 
         const formatDollarAmount = (amount: number): string => {
             return amount.toLocaleString('en-US', {
@@ -241,26 +252,26 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
         return renderCellData(cellData, columnDetails);
     }
 
-    private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumn[]): TableDataItem<Y> {
-        if (!tableColumns) {
-            tableColumns = this.getAllSubTableColumnDetails(subTableType); //this.getAllSubTableColumns(subTableType);
-        }
-        const tableRow: TableRow = {};
-        for (const column of tableColumns) {
-            const value: PrimitiveType = this.getColumnValue(data, column);
-            const cellData: CellData = {
-                column: column.columnKey,
-                value: value,
-            };
-            tableRow[column.columnKey] = cellData;
-        }
-        return {
-            objectData: {
-                key: data,
-            },
-            tableRow: tableRow,
-        };
-    }
+    // private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumn[]): TableDataItem<Y> {
+    //     if (!tableColumns) {
+    //         tableColumns = this.getAllSubTableColumnDetails(subTableType); //this.getAllSubTableColumns(subTableType);
+    //     }
+    //     const tableRow: TableRow = {};
+    //     for (const column of tableColumns) {
+    //         const value: PrimitiveType = this.getColumnValue(data, column);
+    //         const cellData: CellData = {
+    //             column: column.columnKey,
+    //             value: value,
+    //         };
+    //         tableRow[column.columnKey] = cellData;
+    //     }
+    //     return {
+    //         objectData: {
+    //             key: data,
+    //         },
+    //         tableRow: tableRow,
+    //     };
+    // }
 
     private getAllSubTableColumnsAsSet(subTableType: X): Set<TableColumnDetailsEnum> {
         return new Set(this.getAllSubTableColumns(subTableType));
@@ -285,6 +296,12 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
     protected abstract _getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[];
 
     protected abstract getColumnValue(item: Y, tableColumn: TableColumn): PrimitiveType;
+
+    protected abstract setColumnValue(
+        item: Y,
+        newValue: PrimitiveType,
+        tableColumn: TableColumn,
+    ): void;
 
     abstract getDefaultTableType(): X;
 

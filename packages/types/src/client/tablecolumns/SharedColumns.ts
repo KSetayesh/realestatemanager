@@ -111,6 +111,9 @@ export const RentEstimateColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getRentEstimate(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setRentEstimate(listingWithScenarios, Number(newValue));
         }
     },
     [TableType.INVESTMENT_BREAKDOWN_TABLE]: {

@@ -208,10 +208,13 @@ export type SortFunction<T extends TableType> =
 export type ValueFunction<T extends TableType> =
     (item: TableTypeSpecific<T>) => PrimitiveType;
 
+export type SetValueFunction<T extends TableType> =
+    (item: TableTypeSpecific<T>, newValue: PrimitiveType) => void;
+
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
-    sortFunction?: SortFunction<T>;
     value: ValueFunction<T>;
+    setValue?: SetValueFunction<T>;
 };
 
 export type ColumnDetail = {

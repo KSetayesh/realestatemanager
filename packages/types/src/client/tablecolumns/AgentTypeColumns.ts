@@ -1,5 +1,6 @@
-import { AgentResponseDTO } from "../../server/AgentApiTypes";
+import { AgentResponseDTO, AgentType } from "../../server/AgentApiTypes";
 import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
+import { Utility } from "@realestatemanager/utilities";
 
 export const FirstNameColumn: ColumnDetail = {
     title: "First Name",
@@ -15,6 +16,9 @@ export const FirstNameColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.firstName;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.firstName = newValue.toString();
         }
     },
 };
@@ -33,6 +37,9 @@ export const LastNameColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.lastName;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.lastName = newValue.toString();
         }
     },
 };
@@ -51,6 +58,9 @@ export const FullNameColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.fullName;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.fullName = newValue.toString();
         }
     },
 };
@@ -69,6 +79,9 @@ export const WebsiteColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.website;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.website = newValue.toString();
         }
     },
 };
@@ -87,6 +100,9 @@ export const CompanyNameColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.companyName;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.companyName = newValue.toString();
         }
     },
 };
@@ -105,6 +121,9 @@ export const PhoneNumberColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.phoneNumber;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.phoneNumber = newValue.toString();
         }
     },
 };
@@ -123,6 +142,9 @@ export const EmailColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.email;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.email = newValue.toString();
         }
     },
 };
@@ -141,6 +163,9 @@ export const AgentTypeColumn: ColumnDetail = {
     [TableType.AGENT_TABLE]: {
         value: (agent: AgentResponseDTO): PrimitiveType => {
             return agent.agentType;
+        },
+        setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
+            agent.agentType = Utility.getEnumValue(AgentType, newValue.toString());
         }
     },
 };

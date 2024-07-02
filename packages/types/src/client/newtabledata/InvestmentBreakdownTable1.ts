@@ -34,5 +34,18 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.INVESTMENT_BREAKDOWN_TABLE}`);
     }
 
+    protected setColumnValue(
+        item: MonthlyInvestmentDetailsResponseDTO,
+        newValue: PrimitiveType,
+        tableColumn: TableColumn,
+    ): PrimitiveType {
+        const columnDetail: ColumnDetail = tableColumn.columnDetails;
+        if (columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]) {
+            const { setValue } = columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]!;
+            setValue(item, newValue);
+        }
+        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.INVESTMENT_BREAKDOWN_TABLE}`);
+    }
+
 
 }

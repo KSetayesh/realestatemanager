@@ -1,4 +1,4 @@
-import { PropertyType } from "../../Constants";
+import { ListingCreationType, PropertyType } from "../../Constants";
 import {
     GrowthProjectionsResponseDTO,
     InitialInvestmentBreakdownResponseDTO,
@@ -73,88 +73,176 @@ export class PropertiesListTableHelper {
         return this.getListingDetails(property).propertyDetails.schoolRating.elementarySchoolRating;
     }
 
+    static setElementarySchoolRating(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.schoolRating.elementarySchoolRating = newValue;
+    }
+
     static getMiddleSchoolRating(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.schoolRating.middleSchoolRating;
+    }
+
+    static setMiddleSchoolRating(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.schoolRating.middleSchoolRating = newValue;
     }
 
     static getHighSchoolRating(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.schoolRating.highSchoolRating;
     }
 
+    static setHighSchoolRating(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.schoolRating.highSchoolRating = newValue;
+    }
+
     static getNumberOfBedrooms(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.numberOfBedrooms;
+    }
+
+    static setNumberOfBedrooms(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.numberOfBedrooms = newValue;
     }
 
     static getNumberOfFullBathrooms(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.numberOfFullBathrooms;
     }
 
+    static setNumberOfFullBathrooms(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.numberOfFullBathrooms = newValue;
+    }
+
     static getNumberOfHalfBathrooms(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.numberOfHalfBathrooms;
+    }
+
+    static setNumberOfHalfBathrooms(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.numberOfHalfBathrooms = newValue;
     }
 
     static getSquareFeet(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.squareFeet;
     }
 
+    static setSquareFeet(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.squareFeet = newValue;
+    }
+
     static getAcres(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.acres;
+    }
+
+    static setAcres(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.acres = newValue;
     }
 
     static getYearBuilt(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).propertyDetails.yearBuilt;
     }
 
+    static setYearBuilt(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).propertyDetails.yearBuilt = newValue;
+    }
+
     static hasGarage(property: ListingWithScenariosResponseDTO): boolean {
         return this.getListingDetails(property).propertyDetails.hasGarage;
+    }
+
+    static setHasGarage(property: ListingWithScenariosResponseDTO, newValue: boolean): void {
+        this.getListingDetails(property).propertyDetails.hasGarage = newValue;
     }
 
     static hasPool(property: ListingWithScenariosResponseDTO): boolean {
         return this.getListingDetails(property).propertyDetails.hasPool;
     }
 
+    static setHasPool(property: ListingWithScenariosResponseDTO, newValue: boolean): void {
+        this.getListingDetails(property).propertyDetails.hasPool = newValue;
+    }
+
     static hasBasement(property: ListingWithScenariosResponseDTO): boolean {
         return this.getListingDetails(property).propertyDetails.hasBasement;
+    }
+
+    static setHasBasement(property: ListingWithScenariosResponseDTO, newValue: boolean): void {
+        this.getListingDetails(property).propertyDetails.hasBasement = newValue;
     }
 
     static getListingPrice(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).listingPrice;
     }
 
+    static setListingPrice(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).listingPrice = newValue;
+    }
+
     static getZestimate(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zestimate;
+    }
+
+    static setZestimate(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zestimate = newValue;
     }
 
     static getZillowRentEstimate(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zillowRentEstimate;
     }
 
+    static setZillowRentEstimate(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zillowRentEstimate = newValue;
+    }
+
     static getZestimateRangeLow(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zestimateRange.low;
+    }
+
+    static setZestimateRangeLow(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zestimateRange.low = newValue;
     }
 
     static getZestimateRangeHigh(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zestimateRange.high;
     }
 
+    static setZestimateRangeHigh(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zestimateRange.high = newValue;
+    }
+
     static getZillowMonthlyPropertyTaxAmount(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyPropertyTaxAmount;
+    }
+
+    static setZillowMonthlyPropertyTaxAmount(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyPropertyTaxAmount = newValue;
     }
 
     static getZillowMonthlyHomeInsuranceAmount(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount;
     }
 
+    static setZillowMonthlyHomeInsuranceAmount(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyHomeInsuranceAmount = newValue;
+    }
+
     static getZillowMonthlyHOAFeesAmount(property: ListingWithScenariosResponseDTO): number {
         return this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyHOAFeesAmount;
+    }
+
+    static setZillowMonthlyHOAFeesAmount(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getListingDetails(property).zillowMarketEstimates.zillowMonthlyHOAFeesAmount = newValue;
     }
 
     static getDescription(property: ListingWithScenariosResponseDTO): string {
         return this.getListingDetails(property).propertyDetails.description;
     }
 
+    static setDescription(property: ListingWithScenariosResponseDTO, newValue: string): void {
+        this.getListingDetails(property).propertyDetails.description = newValue;
+    }
+
     static getCreationType(property: ListingWithScenariosResponseDTO): string {
         return this.getListingDetails(property).creationType;
+    }
+
+    static setCreationType(property: ListingWithScenariosResponseDTO, newValue: ListingCreationType): string {
+        return this.getListingDetails(property).creationType = newValue;
     }
 
     static getPMIRate(property: ListingWithScenariosResponseDTO): number {
@@ -281,8 +369,16 @@ export class PropertiesListTableHelper {
         return this.getInitialInvestmentDetails(property).transactions.Financing.breakdown["Purchase Price"].amount;
     }
 
+    static setPrice(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getInitialInvestmentDetails(property).transactions.Financing.breakdown["Purchase Price"].amount = newValue;
+    }
+
     static getRentEstimate(property: ListingWithScenariosResponseDTO): number {
         return this.getInitialInvestmentDetails(property).transactions["Income Streams"].breakdown["Rental Income"].amount;
+    }
+
+    static setRentEstimate(property: ListingWithScenariosResponseDTO, newValue: number): void {
+        this.getInitialInvestmentDetails(property).transactions["Income Streams"].breakdown["Rental Income"].amount = newValue;
     }
 
     static getInitialCosts(property: ListingWithScenariosResponseDTO): number {

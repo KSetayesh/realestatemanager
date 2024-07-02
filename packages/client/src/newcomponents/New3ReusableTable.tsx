@@ -23,13 +23,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import {
     InputType,
-    ensureAbsoluteUrl,
-    renderCellData
 } from '../constants/Constant';
-import ExportCSVButton from './ExportCSVButton';
+// import ExportCSVButton from './ExportCSVButton';
 // import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
-import ConfirmationDialog from './ConfirmationDialog';
-import { AbstractTable1, TableColumn, TableData, TableDataItem, TableType } from '@realestatemanager/types';
+// import ConfirmationDialog from './ConfirmationDialog';
+import { AbstractTable1, PrimitiveType, TableColumn, TableData, TableType } from '@realestatemanager/types';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 
 const TEMP_FEATURE_FLAG = true;
 
@@ -112,8 +111,8 @@ export enum SortDirection {
 export type SortConfig = { key: string; direction: SortDirection };
 
 export type TableActions<Y> = {
-    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
-    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+    handleEditUpdate?: (tableDataItem: Y) => Promise<Y>;
+    handleDeleteUpdate?: (tableDataItem: Y) => Promise<boolean>;
     onPaginationChange?: (
         event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         page: number,
@@ -157,7 +156,7 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     const [editIndex, setEditIndex] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [tableData, setTableData] = useState<TableData<Y, X>>(getTableData());
-    const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
+    const [currentEdit, setCurrentEdit] = useState<Y | null>(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(50);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -168,7 +167,7 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     }, [data, tableType]);
 
 
-    const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
+    const deepCopy = (obj: Y): Y => {
         return JSON.parse(JSON.stringify(obj));
     };
 
@@ -277,13 +276,15 @@ const New3ReusableTable = <K extends TableType, Y, X>({
             const editedRow = tableData.rows[editIndex];
             if (areTableRowsEditable()) {
                 try {
+
                     const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
+                    const updatedRows: Y[] = [...tableData.rows];
+                    updatedRows[editIndex] = updatedRow;
 
-                    const updatedEditableData = [...tableData.rows];
-                    const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
-                    updatedEditableData[editIndex] = rowDataItem;
-
-                    setTableData(updatedEditableData);
+                    setTableData((prevData) => ({
+                        ...prevData,
+                        rows: updatedRows,
+                    }));
                 } catch (error) {
                     console.error('Error updating row:', error);
                 }
@@ -296,15 +297,16 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => {
-        const key = column.columnKey;
+        // const key = column.columnKey;
         const newData = [...tableData.rows];
         const value = e.target.value;
-        if (InputType.NUMBER === column.columnDetails.inputType) {
-            newData[rowIndex].tableRow[key]!.value = Number(value);
-        }
-        else {
-            newData[rowIndex].tableRow[key]!.value = value;
-        }
+        tableHandler.updateValue(newData[rowIndex], value, column);
+        // if (InputType.NUMBER === column.columnDetails.inputType) {
+        //     newData[rowIndex].tableRow[key]!.value = Number(value);
+        // }
+        // else {
+        //     newData[rowIndex].tableRow[key]!.value = value;
+        // }
         setTableData({
             ...tableData,
             rows: newData
@@ -404,7 +406,7 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     const getExportCSVButton = () => {
         return (
             exportIntoCSV && <ExportCSVButton
-                columns={getTableColumns()}
+                columns={tableData.columns}
                 tableData={tableData}
                 disabled={isEditing}
                 buttonTitle={exportIntoCSV.buttonTitle}
@@ -415,41 +417,42 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     const getCellContent = (
         originalIndex: number,
         column: TableColumn,
-        item: TableDataItem<Y>,
+        item: Y,
     ) => {
-        const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+        // const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+        const cellData: PrimitiveType = tableHandler.getColumnValueToBeDisplayed(item, column);
 
         let cellContent;
-        if (editIndex === originalIndex && column.isEditable) {
-            cellContent = getEditableCellContent(originalIndex, column);
-        } else if (column.isURL) {
+        if (editIndex === originalIndex && column.columnDetails.isEditable) {
+            cellContent = getEditableCellContent(cellData, originalIndex, column);
+        } else if (column.columnDetails.isUrl) {
             cellContent = getUrlCellContent(cellData);
         } else {
             cellContent = cellData;
         }
 
-        if (column.routeTo) {
-            cellContent = getRouteToCellContent(cellData, column, item);
+        if (column.columnDetails.routeTo) {
+            cellContent = getRouteToCellContent(cellData, item);
         }
 
         return cellContent;
     };
 
-    const getRouteToCellContent = (cellData: string, column: TableColumn, item: TableDataItem<Y>) => {
+    const getRouteToCellContent = (cellData: PrimitiveType, item: Y) => {
         return (
             <span>
-                <Link to={`/${column.routeTo}/${cellData}`} state={{ data: item.objectData.key }}>
+                <Link to={cellData.toString()} state={{ data: item }}>
                     {cellData}
                 </Link>
             </span>
         );
     };
 
-    const getEditableCellContent = (originalIndex: number, column: TableColumn) => {
+    const getEditableCellContent = (cellData: PrimitiveType, originalIndex: number, column: TableColumn) => {
         return (
             <TextField
                 type={column.columnDetails.inputType === InputType.NUMBER ? 'number' : 'text'}
-                value={tableData.rows[originalIndex].tableRow[column.columnKey]}
+                value={cellData}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, originalIndex, column)}
                 fullWidth
                 size="small"
@@ -461,10 +464,10 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         );
     };
 
-    const getUrlCellContent = (cellData: string) => {
-        const formattedUrl = ensureAbsoluteUrl(cellData);
+    const getUrlCellContent = (cellData: PrimitiveType) => {
+        // const formattedUrl = ensureAbsoluteUrl(cellData);
         return (
-            <a href={formattedUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+            <a href={cellData.toString()} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                 View
             </a>
         );
@@ -486,13 +489,13 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         );
     };
 
-    const getTableRow = (originalIndex: number, item: TableDataItem<Y>) => {
+    const getTableRow = (originalIndex: number, item: Y) => {
         return (
             <TableRow
                 key={originalIndex}
                 hover
                 style={{ cursor: isEditing ? 'default' : 'pointer' }}
-                onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
+                onClick={() => !isEditing && onRowClick ? onRowClick(item) : undefined}
             >
                 {(areTableRowsEditable() || areTableRowsDeletable()) && (
                     <StyledTableBodyCell>

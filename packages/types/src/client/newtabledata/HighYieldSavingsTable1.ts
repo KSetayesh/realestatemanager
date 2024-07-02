@@ -24,7 +24,7 @@ export class HighYieldSavingsTable1 extends AbstractTable1<
 
     protected getColumnValue(
         item: HighYeildSavingsResponseDTO,
-        tableColumn: TableColumn, 
+        tableColumn: TableColumn,
     ): PrimitiveType {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE]) {
@@ -32,6 +32,19 @@ export class HighYieldSavingsTable1 extends AbstractTable1<
             return value(item);
         }
         throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.HIGH_YIELD_SAVINGS_TABLE}`);
+    }
+
+    protected setColumnValue(
+        item: HighYeildSavingsResponseDTO,
+        newValue: PrimitiveType,
+        tableColumn: TableColumn,
+    ): PrimitiveType {
+        const columnDetail: ColumnDetail = tableColumn.columnDetails;
+        if (columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE]) {
+            const { setValue } = columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE]!;
+            setValue(item, newValue);
+        }
+        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.HIGH_YIELD_SAVINGS_TABLE}`);
     }
 
 

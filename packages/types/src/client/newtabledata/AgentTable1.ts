@@ -29,4 +29,17 @@ export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResp
         throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.AGENT_TABLE}`);
     }
 
+    protected setColumnValue(
+        item: AgentResponseDTO,
+        newValue: PrimitiveType,
+        tableColumn: TableColumn,
+    ): PrimitiveType {
+        const columnDetail: ColumnDetail = tableColumn.columnDetails;
+        if (columnDetail[TableType.AGENT_TABLE]) {
+            const { setValue } = columnDetail[TableType.AGENT_TABLE]!;
+            setValue(item, newValue);
+        }
+        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.AGENT_TABLE}`);
+    }
+
 }

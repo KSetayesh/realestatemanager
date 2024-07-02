@@ -1,6 +1,8 @@
+import { ListingCreationType } from "../../Constants";
 import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
 import { PropertiesListTableHelper } from "../tabledata/PropertiesListTableHelper";
 import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
+import { Utility } from "@realestatemanager/utilities";
 
 export const PropertyTypeColumn: ColumnDetail = {
     title: "Property Type",
@@ -88,6 +90,9 @@ export const PriceColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getPrice(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setPrice(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -406,6 +411,9 @@ export const ElementarySchoolRatingColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getElementarySchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setElementarySchoolRating(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -424,6 +432,9 @@ export const MiddleSchoolRatingColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getMiddleSchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setMiddleSchoolRating(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -442,6 +453,9 @@ export const HighSchoolRatingColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getHighSchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHighSchoolRating(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -460,6 +474,9 @@ export const NumberOfBedroomsColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getNumberOfBedrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfBedrooms(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -478,6 +495,9 @@ export const NumberOfFullBathroomsColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getNumberOfFullBathrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfFullBathrooms(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -496,6 +516,9 @@ export const NumberOfHalfBathroomsColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfHalfBathrooms(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -514,6 +537,9 @@ export const SquareFeetColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getSquareFeet(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setSquareFeet(listingWithScenarios, Number(newValue));
         }
     },
 }
@@ -532,6 +558,9 @@ export const AcresColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getAcres(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setAcres(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -550,6 +579,9 @@ export const YearBuiltColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getYearBuilt(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setYearBuilt(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -568,6 +600,9 @@ export const HasGarageColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.hasGarage(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasGarage(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
 };
@@ -586,6 +621,9 @@ export const HasPoolColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.hasPool(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasPool(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
 };
@@ -604,6 +642,9 @@ export const HasBasementColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.hasBasement(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasBasement(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
 };
@@ -622,6 +663,9 @@ export const ListingPriceColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getListingPrice(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setListingPrice(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -640,6 +684,9 @@ export const ZestimateColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZestimate(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimate(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -658,6 +705,9 @@ export const ZillowRentEstimateColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZillowRentEstimate(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowRentEstimate(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -676,6 +726,9 @@ export const ZestimateRangeLowColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZestimateRangeLow(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimateRangeLow(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -694,6 +747,9 @@ export const ZestimateRangeHighColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZestimateRangeHigh(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimateRangeHigh(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -712,6 +768,9 @@ export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyPropertyTaxAmount(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -730,6 +789,9 @@ export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyHomeInsuranceAmount(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -748,6 +810,9 @@ export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyHOAFeesAmount(listingWithScenarios, Number(newValue));
         }
     },
 };
@@ -766,6 +831,9 @@ export const CreationTypeColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getCreationType(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setCreationType(listingWithScenarios, Utility.getEnumNameFromValue(ListingCreationType, newValue));
         }
     },
 };
@@ -784,6 +852,9 @@ export const DescriptionColumn: ColumnDetail = {
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getDescription(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setDescription(listingWithScenarios, newValue.toString());
         }
     },
 };
@@ -797,7 +868,7 @@ export const InvestmentBreakdownColumn: ColumnDetail = {
     isDollarAmount: false,
     addSuffix: "",
     showColumn: true,
-    isEditable: true,
+    isEditable: false,
     isSortable: false,
     detailedDescription: "",
     routeTo: 'investmentBreakdown',

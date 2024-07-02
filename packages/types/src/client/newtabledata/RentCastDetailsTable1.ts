@@ -33,4 +33,17 @@ export class RentCastDetailsTable1 extends AbstractTable1<
         throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.RENT_CAST_DETAILS_TABLE}`);
     }
 
+    protected setColumnValue(
+        item: RentCastDetailsResponseDTO,
+        newValue: PrimitiveType,
+        tableColumn: TableColumn,
+    ): PrimitiveType {
+        const columnDetail: ColumnDetail = tableColumn.columnDetails;
+        if (columnDetail[TableType.RENT_CAST_DETAILS_TABLE]) {
+            const { setValue } = columnDetail[TableType.RENT_CAST_DETAILS_TABLE]!;
+            setValue(item, newValue);
+        }
+        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.RENT_CAST_DETAILS_TABLE}`);
+    }
+
 }
