@@ -24,9 +24,6 @@ import { Link } from 'react-router-dom';
 import {
     InputType,
 } from '../constants/Constant';
-// import ExportCSVButton from './ExportCSVButton';
-// import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
-// import ConfirmationDialog from './ConfirmationDialog';
 import { AbstractTable1, PrimitiveType, TableColumn, TableData, TableType } from '@realestatemanager/types';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import NewExportCSVButton from './NewExportCSVButton';
@@ -71,29 +68,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Increased shadow
     borderRadius: '5px', // Curved edges
 }));
-
-// export interface TableRow { [key: string]: any };
-
-// export interface TableDataItem<Y> {
-//     objectData: {
-//         key: Y;
-//     };
-//     rowData: TableRow;
-// };
-
-// export interface TableColumn {
-//     header: string;
-//     accessor: string;
-//     isURL: boolean;
-//     isDollarAmount: boolean;
-//     showColumn: boolean;
-//     inputType: InputType;
-//     isSortable: boolean;
-//     routeTo?: string;
-//     addSuffix?: string;
-//     detailedDescription?: string;
-//     isEditable?: boolean;
-// };
 
 export type TableSeparatorDetails = {
     separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
@@ -390,15 +364,6 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         return tableData.columns.length;
     };
 
-    const getExportCSVButton = () => {
-        return (
-            tableHandler.exportToCSV.enabled && <NewExportCSVButton
-                tableHandler={tableHandler}
-                tableData={tableData}
-            />
-        );
-    };
-
     const getCellContent = (
         originalIndex: number,
         column: TableColumn,
@@ -532,11 +497,22 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         );
     };
 
-    const tableOptions: X[] = tableHandler.getAllSubTableTypes();
+    const getExportCSVButton = () => {
+        if (tableHandler.exportToCSV.enabled) {
+            return (<Box mb={2}>
+                <NewExportCSVButton
+                    tableHandler={tableHandler}
+                    tableData={tableData}
+                />
+            </Box>);
+        }
+        return <></>;
+    };
 
-    return (
-        <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-            {setTableType && (tableOptions.length > 1) && (
+    const getTableOptions = () => {
+        const tableOptions: X[] = tableHandler.getAllSubTableTypes();
+        if (tableType && (tableOptions.length > 1)) {
+            return (
                 <Box mb={2}>
                     <Typography variant="h6" gutterBottom>Select Table Type</Typography>
                     <Box display="flex" flexDirection="row">
@@ -553,33 +529,40 @@ const New3ReusableTable = <K extends TableType, Y, X>({
                         ))}
                     </Box>
                 </Box>
-            )}
-            {tableHandler.exportToCSV.enabled && (
-                <Box mb={2}>
-                    {getExportCSVButton()}
-                </Box>
-            )}
-            <Box width="95%">
-                <StyledPaper>
-                    <StyledTableContainer>
-                        <StyledTable>
-                            {getTableHead()}
-                            {getTableBody()}
-                        </StyledTable>
-                    </StyledTableContainer>
-                    <TablePagination
-                        // rowsPerPageOptions={[10, 25, 50, 100]}
-                        component="div"
-                        count={getExpectedNumberOfRows()}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        showFirstButton={true}
-                        showLastButton={true}
-                    />
-                </StyledPaper>
-            </Box>
+            );
+        }
+        return <></>;
+    };
+
+    const getTable = () => {
+        return (<Box width="95%">
+            <StyledPaper>
+                <StyledTableContainer>
+                    <StyledTable>
+                        {getTableHead()}
+                        {getTableBody()}
+                    </StyledTable>
+                </StyledTableContainer>
+                <TablePagination
+                    // rowsPerPageOptions={[10, 25, 50, 100]}
+                    component="div"
+                    count={getExpectedNumberOfRows()}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    showFirstButton={true}
+                    showLastButton={true}
+                />
+            </StyledPaper>
+        </Box>);
+    };
+
+    return (
+        <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
+            {getTableOptions()}
+            {getExportCSVButton()}
+            {getTable()}
             <ConfirmationDialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}

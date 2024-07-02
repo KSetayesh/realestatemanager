@@ -5,26 +5,20 @@ import { AbstractTable1, TableColumn, TableData, TableType } from "@realestatema
 export interface TableRow { [key: string]: any };
 
 export interface ExportDataProps<K extends TableType, Y, X> {
-    // columns: TableColumn[];
-    // tableData: Y[];
     tableHandler: AbstractTable1<K, Y, X>;
     tableData: TableData<Y, X>,
-    // disabled: boolean;
-    // buttonTitle: string;
 };
 
 const NewExportCSVButton = <K extends TableType, Y, X>({
     tableHandler,
     tableData,
-    // disabled = false,
-    // buttonTitle,
 }: ExportDataProps<K, Y, X>) => {
 
     const getCellContent = (
         tableColumn: TableColumn,
         item: Y,
     ): string => {
-        return tableHandler.getColumnValueToBeDisplayed(item, tableColumn).toString(); //item.tableRow[column.columnKey]?.valueToBeDisplayed ?? '';
+        return tableHandler.getColumnValueToBeDisplayed(item, tableColumn).toString();
     };
 
     const preprocessDataForCSV = (data: Y[], columns: TableColumn[]) => {
@@ -37,7 +31,6 @@ const NewExportCSVButton = <K extends TableType, Y, X>({
         });
     };
 
-    // const exportToCSV = (data: TableDataItem<Y>[], columns: TableColumn[], filename: string) => {
     const exportToCSV = (filename: string) => {
         const preprocessedData = preprocessDataForCSV(tableData.rows, tableData.columns);
         const headers = tableData.columns.map(column => column.columnDetails.title);
