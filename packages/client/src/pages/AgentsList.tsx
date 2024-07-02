@@ -1,9 +1,8 @@
-import { AgentResponseDTO, AgentTable1, CreateUpdateAgentRequest, TableType } from "@realestatemanager/types";
+import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableDataItem } from "../components/ReusableTable";
 import { AgentTable } from "../tables/AgentTable";
-import NewNewReusableTable from "../newcomponents/NewNewReusableTable";
 
 const AgentsList: React.FC = () => {
     const agentApi: AgentApi = new AgentApi();
@@ -47,11 +46,7 @@ const AgentsList: React.FC = () => {
                 <p>Loading agents...</p>
             ) : (
                 <>
-                    {<NewNewReusableTable
-                        data={agents}
-                        tableHandler={new AgentTable1()}
-                    />}
-                    {/* <ReusableTable
+                    <ReusableTable
                         data={agents}
                         tableHandler={agentTable}
                         onRowClick={undefined}
@@ -62,8 +57,9 @@ const AgentsList: React.FC = () => {
                         tableActions={{
                             handleEditUpdate: handleUpdate,
                             handleDeleteUpdate: handleDeleteUpdate,
-                        }}  
-                    /> */}
+                        }} //{true}
+                    //handleUpdate={handleUpdate}
+                    />
                 </>
             )}
         </div>
