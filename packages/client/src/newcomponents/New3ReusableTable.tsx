@@ -29,6 +29,7 @@ import {
 // import ConfirmationDialog from './ConfirmationDialog';
 import { AbstractTable1, PrimitiveType, TableColumn, TableData, TableType } from '@realestatemanager/types';
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import NewExportCSVButton from './NewExportCSVButton';
 
 const TEMP_FEATURE_FLAG = true;
 
@@ -170,20 +171,6 @@ const New3ReusableTable = <K extends TableType, Y, X>({
     const deepCopy = (obj: Y): Y => {
         return JSON.parse(JSON.stringify(obj));
     };
-
-    // const sortData = (data: TableDataItem<Y>[]) => {
-    //     if (sortConfig) {
-    //         return [...data].sort((a, b) => {
-    //             if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
-    //                 return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
-    //             } else if (a.rowData[sortConfig.key] > b.rowData[sortConfig.key]) {
-    //                 return sortConfig.direction === SortDirection.ASCENDING ? 1 : -1;
-    //             }
-    //             return 0;
-    //         });
-    //     }
-    //     return data;
-    // };
 
     const requestSort = (column: TableColumn) => {
         if (!column.columnDetails.isSortable || isEditing) {
@@ -405,11 +392,9 @@ const New3ReusableTable = <K extends TableType, Y, X>({
 
     const getExportCSVButton = () => {
         return (
-            exportIntoCSV && <ExportCSVButton
-                columns={tableData.columns}
+            tableHandler.exportToCSV.enabled && <NewExportCSVButton
+                tableHandler={tableHandler}
                 tableData={tableData}
-                disabled={isEditing}
-                buttonTitle={exportIntoCSV.buttonTitle}
             />
         );
     };
@@ -535,7 +520,7 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         return (
             <TableBody>
                 {paginatedData.map((item) => {
-                    const originalIndex = tableData.rows.findIndex(data => data.objectData.key === item.objectData.key);
+                    const originalIndex = tableData.rows.findIndex(data => data === item);
                     return (
                         <React.Fragment key={originalIndex}>
                             {getTableRow(originalIndex, item)}
@@ -547,7 +532,7 @@ const New3ReusableTable = <K extends TableType, Y, X>({
         );
     };
 
-    const tableOptions: X[] = tableHandler.getTableOptions();
+    const tableOptions: X[] = tableHandler.getAllSubTableTypes();
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
@@ -556,20 +541,20 @@ const New3ReusableTable = <K extends TableType, Y, X>({
                     <Typography variant="h6" gutterBottom>Select Table Type</Typography>
                     <Box display="flex" flexDirection="row">
                         {tableOptions.map((option) => (
-                            <Box key={option} mr={2}>
+                            <Box key={String(option)} mr={2}>
                                 <Button
                                     variant={tableType === option ? "contained" : "outlined"}
                                     color="primary"
                                     onClick={() => setTableType(option)}
                                 >
-                                    {option}
+                                    {String(option)}
                                 </Button>
                             </Box>
                         ))}
                     </Box>
                 </Box>
             )}
-            {exportIntoCSV && (
+            {tableHandler.exportToCSV.enabled && (
                 <Box mb={2}>
                     {getExportCSVButton()}
                 </Box>
