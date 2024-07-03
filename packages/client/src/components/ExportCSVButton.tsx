@@ -1,41 +1,39 @@
-import { renderCellData } from "../constants/Constant";
 import CustomButtonComponent from "../basicdatadisplaycomponents/ButtonComponent";
-import {
-    TableColumn,
-    TableDataItem,
-    TableRow
-} from "./ReusableTable";
 import Papa from 'papaparse';
+import { AbstractTable1, TableColumn, TableData, TableType } from "@realestatemanager/types";
 
-export interface ExportDataProps<T> {
-    columns: TableColumn[];
-    tableData: TableDataItem<T>[];
-    disabled: boolean;
-    buttonTitle: string;
+export interface TableRow { [key: string]: any };
+
+export interface ExportDataProps<K extends TableType, Y, X> {
+    tableHandler: AbstractTable1<K, Y, X>;
+    tableData: TableData<Y, X>,
 };
 
-const ExportCSVButton = <T,>({
-    columns,
+const ExportCSVButton = <K extends TableType, Y, X>({
+    tableHandler,
     tableData,
-    disabled = false,
-    buttonTitle,
-}: ExportDataProps<T>) => {
+}: ExportDataProps<K, Y, X>) => {
 
-    const preprocessDataForCSV = (data: TableDataItem<T>[], columns: TableColumn[]) => {
-        const visibleColumns = columns.filter(column => column.showColumn);
+    const getCellContent = (
+        tableColumn: TableColumn,
+        item: Y,
+    ): string => {
+        return tableHandler.getColumnValueToBeDisplayed(item, tableColumn).toString();
+    };
+
+    const preprocessDataForCSV = (data: Y[], columns: TableColumn[]) => {
         return data.map(item => {
             const processedRow: TableRow = {};
-            visibleColumns.forEach(column => {
-                processedRow[column.header] = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+            columns.forEach(column => {
+                processedRow[column.columnDetails.title] = getCellContent(column, item);
             });
             return processedRow;
         });
     };
 
-    const exportToCSV = (data: TableDataItem<T>[], columns: TableColumn[], filename: string) => {
-        const visibleColumns = columns.filter(column => column.showColumn);
-        const preprocessedData = preprocessDataForCSV(data, visibleColumns);
-        const headers = visibleColumns.map(column => column.header);
+    const exportToCSV = (filename: string) => {
+        const preprocessedData = preprocessDataForCSV(tableData.rows, tableData.columns);
+        const headers = tableData.columns.map(column => column.columnDetails.title);
         const csv = Papa.unparse({
             fields: headers,
             data: preprocessedData
@@ -51,12 +49,20 @@ const ExportCSVButton = <T,>({
         document.body.removeChild(link);
     };
 
+    const isEnabled = (): boolean => {
+        return tableHandler.exportToCSV.enabled;
+    };
+
+    const buttonTitle = (): string => {
+        return tableHandler.exportToCSV.buttonName;
+    };
+
     return (
         <CustomButtonComponent
-            disabled={disabled}
-            onClick={() => !disabled && exportToCSV(tableData, columns, 'table-data.csv')}
+            disabled={!isEnabled()}
+            onClick={() => !isEnabled() && exportToCSV('table-data.csv')}
             style={{ marginBottom: '20px' }}  // Add margin bottom
-            buttonTitle={buttonTitle}
+            buttonTitle={buttonTitle()}
         />
     );
 };

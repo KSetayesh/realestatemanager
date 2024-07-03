@@ -286,7 +286,7 @@ export const getInitialCosts = (property: ListingWithScenariosResponseDTO): numb
 
 export const getLoanAmount = (property: ListingWithScenariosResponseDTO): number => {
     return initialInvestmentDetails(property).transactions.Financing.breakdown["Loan Amount"];
-}
+};
 
 export const getDownPaymentAmount = (property: ListingWithScenariosResponseDTO): number => {
     return initialInvestmentDetails(property).transactions["Initial Expense"].breakdown["Down Payment"].amount;

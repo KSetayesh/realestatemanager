@@ -19,7 +19,7 @@ const HighYieldSavings: React.FC = () => {
 
     const getDefaultFormData = (): HighYieldSavingsFormData => {
         return highYieldSavingsFormDetails.getDefaultFormData();
-    }
+    };
 
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState<HighYieldSavingsFormData>(getDefaultFormData());

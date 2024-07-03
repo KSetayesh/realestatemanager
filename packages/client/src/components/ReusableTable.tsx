@@ -23,12 +23,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import {
     InputType,
-    ensureAbsoluteUrl,
-    renderCellData
 } from '../constants/Constant';
-import ExportCSVButton from './ExportCSVButton';
-import { AbstractTable, TablesConfig } from '../tables/AbstractTable';
+import {
+    AbstractTable1,
+    PrimitiveType,
+    TableColumn,
+    TableData,
+    TableType
+} from '@realestatemanager/types';
 import ConfirmationDialog from './ConfirmationDialog';
+import NewExportCSVButton from './ExportCSVButton';
 
 const TEMP_FEATURE_FLAG = true;
 
@@ -71,29 +75,6 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
     borderRadius: '5px', // Curved edges
 }));
 
-export interface TableRow { [key: string]: any };
-
-export interface TableDataItem<Y> {
-    objectData: {
-        key: Y;
-    };
-    rowData: TableRow;
-};
-
-export interface TableColumn {
-    header: string;
-    accessor: string;
-    isURL: boolean;
-    isDollarAmount: boolean;
-    showColumn: boolean;
-    inputType: InputType;
-    isSortable: boolean;
-    routeTo?: string;
-    addSuffix?: string;
-    detailedDescription?: string;
-    isEditable?: boolean;
-};
-
 export type TableSeparatorDetails = {
     separatorText: (rowCounter: number) => string; // Text to be displayed at the separator
     rowsInterval: number;  // Number of rows between each separator
@@ -111,8 +92,8 @@ export enum SortDirection {
 export type SortConfig = { key: string; direction: SortDirection };
 
 export type TableActions<Y> = {
-    handleEditUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<Y>;
-    handleDeleteUpdate?: (tableDataItem: TableDataItem<Y>) => Promise<boolean>;
+    handleEditUpdate?: (tableDataItem: Y) => Promise<Y>;
+    handleDeleteUpdate?: (tableDataItem: Y) => Promise<boolean>;
     onPaginationChange?: (
         event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
         page: number,
@@ -129,74 +110,53 @@ export type TableActions<Y> = {
     Y = MonthlyInvestmentDetailsResponseDTO
     X = InvestmentBreakdownTableType
 */
-export interface ReusableTableProps<Y, X extends keyof TablesConfig<Y>> {
+export interface ReusableTableProps<K extends TableType, Y, X> {
     data: Y[];
-    tableHandler: AbstractTable<Y, X>;
+    tableHandler: AbstractTable1<K, Y, X>;
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
-    exportIntoCSV?: ExportIntoCSV;
     tableActions?: TableActions<Y>;
     rowLimit?: number;
 };
 
-const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
+const ReusableTable = <K extends TableType, Y, X>({
     data,
     tableHandler,
     onRowClick,
     tableSeperatorDetails,
-    exportIntoCSV,
     tableActions,
-    rowLimit
-}: ReusableTableProps<Y, X>) => {
+    rowLimit,
+}: ReusableTableProps<K, Y, X>) => {
 
-    const getTableColumns = (): TableColumn[] => {
-        const tablesConfig: TablesConfig<Y> = tableHandler.getTablesConfig();
-        return tablesConfig[tableType].columns;
-    };
-
-    const getTableData = (): TableDataItem<Y>[] => {
+    const getTableData = (): TableData<Y, X> => {
         return tableHandler.getTableData(data, tableType);
     };
 
     const [tableType, setTableType] = useState<X>(tableHandler.getDefaultTableType());
     const [sortConfig, setSortConfig] = useState<SortConfig>();
-    const [editMode, setEditMode] = useState<number | null>(null);
+    const [editIndex, setEditIndex] = useState<number | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editableData, setEditableData] = useState<TableDataItem<Y>[]>(getTableData());
-    const [currentEdit, setCurrentEdit] = useState<TableDataItem<Y> | null>(null);
+    const [tableData, setTableData] = useState<TableData<Y, X>>(getTableData());
+    const [currentEdit, setCurrentEdit] = useState<Y | null>(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(50);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        setEditableData(getTableData());
+        setTableData(getTableData());
     }, [data, tableType]);
 
 
-    const deepCopy = (obj: TableDataItem<Y>): TableDataItem<Y> => {
+    const deepCopy = (obj: Y): Y => {
         return JSON.parse(JSON.stringify(obj));
     };
 
-    const sortData = (data: TableDataItem<Y>[]) => {
-        if (sortConfig) {
-            return [...data].sort((a, b) => {
-                if (a.rowData[sortConfig.key] < b.rowData[sortConfig.key]) {
-                    return sortConfig.direction === SortDirection.ASCENDING ? -1 : 1;
-                } else if (a.rowData[sortConfig.key] > b.rowData[sortConfig.key]) {
-                    return sortConfig.direction === SortDirection.ASCENDING ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-        return data;
-    };
-
     const requestSort = (column: TableColumn) => {
-        if (!column.isSortable || isEditing) {
+        if (!column.columnDetails.isSortable || isEditing) {
             return;
         }
-        const key = column.accessor;
+        const key = column.columnKey;
         let direction = SortDirection.ASCENDING;
         if (sortConfig && sortConfig.key === key && sortConfig.direction === SortDirection.ASCENDING) {
             direction = SortDirection.DESCENDING;
@@ -205,25 +165,25 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const getExpectedNumberOfRows = (): number => {
-        return rowLimit ? rowLimit : editableData.length;
+        return rowLimit ? rowLimit : tableData.rows.length;
     };
 
     const areTableRowsEditable = (): boolean => {
-        if (tableActions) {
+        if (tableHandler.isEditable && tableActions) {
             return tableActions.handleEditUpdate ? true : false;
         }
         return false;
     };
 
     const areTableRowsDeletable = (): boolean => {
-        if (tableActions) {
+        if (tableHandler.canDeleteFromTable && tableActions) {
             return tableActions.handleDeleteUpdate ? true : false;
         }
         return false;
     };
 
     const handleDeleteClick = async (index: number) => {
-        if (editMode === null) {
+        if (editIndex === null) {
             if (areTableRowsDeletable()) {
                 setOpenDialog(true);
                 setDeleteIndex(index);
@@ -233,13 +193,20 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
 
     const confirmDelete = async () => {
         if (deleteIndex !== null) {
-            const row = editableData[deleteIndex];
+            const row = tableData.rows[deleteIndex];
             if (areTableRowsDeletable()) {
                 try {
                     const wasDeleted = await tableActions!.handleDeleteUpdate!(row);
                     console.log('Was deleted: ', wasDeleted);
                     if (wasDeleted) {
-                        setEditableData(prevData => prevData.filter((_, i) => i !== deleteIndex));
+                        const removeTableRow = (deleteIndex: number) => {
+                            const filteredRows = tableData.rows.filter((_, i) => i !== deleteIndex);
+                            setTableData({
+                                ...tableData,
+                                rows: filteredRows
+                            });
+                        };
+                        removeTableRow(deleteIndex);
                     }
                 } catch (error) {
                     console.error('Error deleting row:', error);
@@ -252,63 +219,73 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const handleEditClick = (index: number) => {
-        setEditMode(index);
+        setEditIndex(index);
         setIsEditing(true);
-        setCurrentEdit(deepCopy(editableData[index])); // Backup the current state before editing
+        setCurrentEdit(deepCopy(tableData.rows[index])); // Backup the current state before editing
     };
 
     const handleCancelClick = () => {
-        if (editMode !== null && currentEdit) {
-            const newData = [...editableData];
-            newData[editMode] = currentEdit;
-            setEditableData(newData);
+        if (editIndex !== null && currentEdit) {
+            const newData = [...tableData.rows];
+            newData[editIndex] = currentEdit;
+            setTableData({
+                ...tableData,
+                rows: newData
+            });
         }
-        setEditMode(null);
+        setEditIndex(null);
         setIsEditing(false);
         setCurrentEdit(null);
     };
 
     const handleSaveClick = async () => {
-        if (editMode !== null) {
-            const editedRow = editableData[editMode];
+        if (editIndex !== null) {
+            const editedRow = tableData.rows[editIndex];
             if (areTableRowsEditable()) {
                 try {
+
                     const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
+                    const updatedRows: Y[] = [...tableData.rows];
+                    updatedRows[editIndex] = updatedRow;
 
-                    const updatedEditableData = [...editableData];
-                    const rowDataItem: TableDataItem<Y> = tableHandler.getRowData(updatedRow, tableType);
-                    updatedEditableData[editMode] = rowDataItem;
-
-                    setEditableData(updatedEditableData);
+                    setTableData((prevData) => ({
+                        ...prevData,
+                        rows: updatedRows,
+                    }));
                 } catch (error) {
                     console.error('Error updating row:', error);
                 }
             }
         }
 
-        setEditMode(null);
+        setEditIndex(null);
         setIsEditing(false);
         setCurrentEdit(null);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, column: TableColumn) => {
-        const accessor = column.accessor;
-        const newData = [...editableData];
+        // const key = column.columnKey;
+        const newData = [...tableData.rows];
         const value = e.target.value;
-        if (InputType.NUMBER === column.inputType) {
-            newData[rowIndex].rowData[accessor] = Number(value);
-        }
-        else {
-            newData[rowIndex].rowData[accessor] = value;
-        }
-        setEditableData(newData);
+        tableHandler.updateValue(newData[rowIndex], value, column);
+        // if (InputType.NUMBER === column.columnDetails.inputType) {
+        //     newData[rowIndex].tableRow[key]!.value = Number(value);
+        // }
+        // else {
+        //     newData[rowIndex].tableRow[key]!.value = value;
+        // }
+        setTableData({
+            ...tableData,
+            rows: newData
+        });
+        // setTableData(newData);
     };
 
     const needToFetchData = (page: number, rowsPerPage: number): boolean => {
         if (TEMP_FEATURE_FLAG) {
             return false;
         }
-        const numberOfRowsAvailable = editableData.length;
+        const numberOfRowsAvailable = tableData.rows.length;
         console.log('numberOfRowsAvailable:', numberOfRowsAvailable);
         console.log('((page * rowsPerPage) + rowsPerPage:', ((page * rowsPerPage) + rowsPerPage));
         console.log('Need to fetch data:', (numberOfRowsAvailable < ((page * rowsPerPage) + rowsPerPage)));
@@ -356,7 +333,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     // };
 
     const displayEditActionButton = (rowIndex: number) => {
-        if (editMode === rowIndex) {
+        if (editIndex === rowIndex) {
             return (
                 <>
                     <IconButton onClick={(e) => { e.stopPropagation(); handleSaveClick(); }}>
@@ -378,7 +355,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const displayDeleteActionButton = (rowIndex: number) => {
-        if (editMode !== rowIndex) {
+        if (editIndex !== rowIndex) {
             return (
                 <>
                     <IconButton onClick={(e) => { e.stopPropagation(); handleDeleteClick(rowIndex); }}>
@@ -390,59 +367,48 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const getVisibleColumnCount = (): number => {
-        const columns: TableColumn[] = getTableColumns();
-        return columns.filter(column => column.showColumn).length;
-    };
-
-    const getExportCSVButton = () => {
-        return (
-            exportIntoCSV && <ExportCSVButton
-                columns={getTableColumns()}
-                tableData={editableData}
-                disabled={isEditing}
-                buttonTitle={exportIntoCSV.buttonTitle}
-            />
-        );
+        return tableData.columns.length;
     };
 
     const getCellContent = (
         originalIndex: number,
         column: TableColumn,
-        item: TableDataItem<Y>,
+        item: Y,
     ) => {
-        const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+        // const cellData = renderCellData(item.rowData[column.accessor], column.isDollarAmount, column.addSuffix);
+        const cellData: PrimitiveType = tableHandler.getColumnValueToBeDisplayed(item, column);
 
         let cellContent;
-        if (editMode === originalIndex && column.isEditable) {
-            cellContent = getEditableCellContent(originalIndex, column);
-        } else if (column.isURL) {
+        if (editIndex === originalIndex && column.columnDetails.isEditable) {
+            cellContent = getEditableCellContent(cellData, originalIndex, column);
+        } else if (column.columnDetails.isUrl) {
             cellContent = getUrlCellContent(cellData);
         } else {
             cellContent = cellData;
         }
 
-        if (column.routeTo) {
-            cellContent = getRouteToCellContent(cellData, column, item);
+        if (column.columnDetails.routeTo) {
+            cellContent = getRouteToCellContent(cellData, item);
         }
 
         return cellContent;
     };
 
-    const getRouteToCellContent = (cellData: string, column: TableColumn, item: TableDataItem<Y>) => {
+    const getRouteToCellContent = (cellData: PrimitiveType, item: Y) => {
         return (
             <span>
-                <Link to={`/${column.routeTo}/${cellData}`} state={{ data: item.objectData.key }}>
+                <Link to={cellData.toString()} state={{ data: item }}>
                     {cellData}
                 </Link>
             </span>
         );
     };
 
-    const getEditableCellContent = (originalIndex: number, column: TableColumn) => {
+    const getEditableCellContent = (cellData: PrimitiveType, originalIndex: number, column: TableColumn) => {
         return (
             <TextField
-                type={column.inputType === InputType.NUMBER ? 'number' : 'text'}
-                value={editableData[originalIndex].rowData[column.accessor]}
+                type={column.columnDetails.inputType === InputType.NUMBER ? 'number' : 'text'}
+                value={cellData}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange(e, originalIndex, column)}
                 fullWidth
                 size="small"
@@ -454,10 +420,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         );
     };
 
-    const getUrlCellContent = (cellData: string) => {
-        const formattedUrl = ensureAbsoluteUrl(cellData);
+    const getUrlCellContent = (cellData: PrimitiveType) => {
+        // const formattedUrl = ensureAbsoluteUrl(cellData);
         return (
-            <a href={formattedUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+            <a href={cellData.toString()} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                 View
             </a>
         );
@@ -479,13 +445,13 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         );
     };
 
-    const getTableRow = (originalIndex: number, item: TableDataItem<Y>) => {
+    const getTableRow = (originalIndex: number, item: Y) => {
         return (
             <TableRow
                 key={originalIndex}
                 hover
                 style={{ cursor: isEditing ? 'default' : 'pointer' }}
-                onClick={() => !isEditing && onRowClick ? onRowClick(item.objectData.key) : undefined}
+                onClick={() => !isEditing && onRowClick ? onRowClick(item) : undefined}
             >
                 {(areTableRowsEditable() || areTableRowsDeletable()) && (
                     <StyledTableBodyCell>
@@ -493,7 +459,7 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
                         {areTableRowsDeletable() && displayDeleteActionButton(originalIndex)}
                     </StyledTableBodyCell>
                 )}
-                {getTableColumns().filter(column => column.showColumn).map((column, colIndex) => {
+                {tableData.columns.map((column, colIndex) => {
                     const cellContent = getCellContent(originalIndex, column, item);
                     return <StyledTableBodyCell key={`cell_${colIndex}_${originalIndex}`}>{cellContent}</StyledTableBodyCell>;
                 })}
@@ -506,10 +472,10 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
             <TableHead>
                 <TableRow>
                     {(areTableRowsEditable() || areTableRowsDeletable()) && <StyledTableCell>Actions</StyledTableCell>}
-                    {getTableColumns().filter(column => column.showColumn).map((column) => (
-                        <StyledTableCell key={column.accessor} onClick={() => requestSort(column)}>
-                            <Tooltip title={column.detailedDescription || column.header}>
-                                <Typography variant="subtitle2">{column.header}</Typography>
+                    {tableData.columns.map((column) => (
+                        <StyledTableCell key={column.columnKey} onClick={() => requestSort(column)}>
+                            <Tooltip title={column.columnDetails.detailedDescription || column.columnDetails.title}>
+                                <Typography variant="subtitle2">{column.columnDetails.title}</Typography>
                             </Tooltip>
                         </StyledTableCell>
                     ))}
@@ -519,13 +485,13 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
     };
 
     const getTableBody = () => {
-        const sortedData = sortData(editableData);
+        const sortedData = tableHandler.sort(tableData).rows;
         const paginatedData = sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
         return (
             <TableBody>
                 {paginatedData.map((item) => {
-                    const originalIndex = editableData.findIndex(data => data.objectData.key === item.objectData.key);
+                    const originalIndex = tableData.rows.findIndex(data => data === item);
                     return (
                         <React.Fragment key={originalIndex}>
                             {getTableRow(originalIndex, item)}
@@ -537,54 +503,72 @@ const ReusableTable = <Y, X extends keyof TablesConfig<Y>>({
         );
     };
 
-    const tableOptions: X[] = tableHandler.getTableOptions();
+    const getExportCSVButton = () => {
+        if (tableHandler.exportToCSV.enabled) {
+            return (<Box mb={2}>
+                <NewExportCSVButton
+                    tableHandler={tableHandler}
+                    tableData={tableData}
+                />
+            </Box>);
+        }
+        return <></>;
+    };
 
-    return (
-        <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-            {setTableType && (tableOptions.length > 1) && (
+    const getTableOptions = () => {
+        const tableOptions: X[] = tableHandler.getAllSubTableTypes();
+        if (tableType && (tableOptions.length > 1)) {
+            return (
                 <Box mb={2}>
                     <Typography variant="h6" gutterBottom>Select Table Type</Typography>
                     <Box display="flex" flexDirection="row">
                         {tableOptions.map((option) => (
-                            <Box key={option} mr={2}>
+                            <Box key={String(option)} mr={2}>
                                 <Button
                                     variant={tableType === option ? "contained" : "outlined"}
                                     color="primary"
                                     onClick={() => setTableType(option)}
                                 >
-                                    {option}
+                                    {String(option)}
                                 </Button>
                             </Box>
                         ))}
                     </Box>
                 </Box>
-            )}
-            {exportIntoCSV && (
-                <Box mb={2}>
-                    {getExportCSVButton()}
-                </Box>
-            )}
-            <Box width="95%">
-                <StyledPaper>
-                    <StyledTableContainer>
-                        <StyledTable>
-                            {getTableHead()}
-                            {getTableBody()}
-                        </StyledTable>
-                    </StyledTableContainer>
-                    <TablePagination
-                        // rowsPerPageOptions={[10, 25, 50, 100]}
-                        component="div"
-                        count={getExpectedNumberOfRows()}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        showFirstButton={true}
-                        showLastButton={true}
-                    />
-                </StyledPaper>
-            </Box>
+            );
+        }
+        return <></>;
+    };
+
+    const getTable = () => {
+        return (<Box width="95%">
+            <StyledPaper>
+                <StyledTableContainer>
+                    <StyledTable>
+                        {getTableHead()}
+                        {getTableBody()}
+                    </StyledTable>
+                </StyledTableContainer>
+                <TablePagination
+                    // rowsPerPageOptions={[10, 25, 50, 100]}
+                    component="div"
+                    count={getExpectedNumberOfRows()}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    showFirstButton={true}
+                    showLastButton={true}
+                />
+            </StyledPaper>
+        </Box>);
+    };
+
+    return (
+        <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
+            {getTableOptions()}
+            {getExportCSVButton()}
+            {getTable()}
             <ConfirmationDialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}
