@@ -37,11 +37,14 @@ export class PropertiesListTable1 extends AbstractTable1<
         item: ListingWithScenariosResponseDTO,
         newValue: PrimitiveType,
         tableColumn: TableColumn,
-    ): PrimitiveType {
+    ): void {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.PROPERTY_LIST_TABLE]) {
-            const { setValue } = columnDetail[TableType.PROPERTY_LIST_TABLE]!;
-            setValue(item, newValue);
+            const { setValue } = columnDetail[TableType.PROPERTY_LIST_TABLE];
+            if (setValue) {
+                setValue(item, newValue);
+                return;
+            }
         }
         throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.PROPERTY_LIST_TABLE}`);
     }

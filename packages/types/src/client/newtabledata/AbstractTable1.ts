@@ -137,8 +137,6 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
         tableData.rows.sort((a, b) => {
             const subTableType: X = tableData.subTable;
-            // const data_a: Y = a.objectData.key;
-            // const data_b: Y = b.objectData.key;
             const tableColumn: TableColumn = this.getColumnDetails(subTableType, sortConfig.columnKey);
             const cellValue_a: PrimitiveType = this.getColumnValue(a, tableColumn);
             const cellValue_b: PrimitiveType = this.getColumnValue(b, tableColumn);
@@ -149,26 +147,14 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
     }
 
     getTableData(listOfData: Y[], subTableType: X = this.getDefaultTableType()): TableData<Y, X> {
-        // const tableRows: TableDataItem<Y>[] = [];
-        // const tableColumns: TableColumn[] = this.getAllSubTableColumnDetails(subTableType);
-        // for (const data of listOfData) {
-        //     tableRows.push(this.getTableRow(data, subTableType, tableColumns));
-        // }
         return {
             subTable: subTableType,
             columns: this.getAllSubTableColumnDetails(subTableType),
-            rows: listOfData, //tableRows,
+            rows: listOfData,
         };
     }
 
-    // getColumnValueToBeDisplayed(tableData: TableData<Y, X>): PrimitiveType {
-    //     const subTableType: X = tableData.subTable;
-    //     const tableColumns: TableColumn[] = tableData.columns;
-    //     const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType)
-    // }
-
-    getColumnValueToBeDisplayed(item: Y, tableColumn: TableColumn): PrimitiveType { // columnType: TableColumnDetailsEnum): PrimitiveType {
-        // const tableColumn: TableColumn = this.getColumnDetails(subTableType, columnType)
+    getColumnValueToBeDisplayed(item: Y, tableColumn: TableColumn): PrimitiveType {
         const columnValue: PrimitiveType = this.getColumnValue(item, tableColumn);
         const columnDetails: ColumnDetail = tableColumn.columnDetails;
         return this.formatValueToBeDisplayed(columnValue, columnDetails);
@@ -251,27 +237,6 @@ export abstract class AbstractTable1<K extends TableType, Y, X> {
 
         return renderCellData(cellData, columnDetails);
     }
-
-    // private getTableRow(data: Y, subTableType: X, tableColumns?: TableColumn[]): TableDataItem<Y> {
-    //     if (!tableColumns) {
-    //         tableColumns = this.getAllSubTableColumnDetails(subTableType); //this.getAllSubTableColumns(subTableType);
-    //     }
-    //     const tableRow: TableRow = {};
-    //     for (const column of tableColumns) {
-    //         const value: PrimitiveType = this.getColumnValue(data, column);
-    //         const cellData: CellData = {
-    //             column: column.columnKey,
-    //             value: value,
-    //         };
-    //         tableRow[column.columnKey] = cellData;
-    //     }
-    //     return {
-    //         objectData: {
-    //             key: data,
-    //         },
-    //         tableRow: tableRow,
-    //     };
-    // }
 
     private getAllSubTableColumnsAsSet(subTableType: X): Set<TableColumnDetailsEnum> {
         return new Set(this.getAllSubTableColumns(subTableType));

@@ -38,11 +38,14 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         item: MonthlyInvestmentDetailsResponseDTO,
         newValue: PrimitiveType,
         tableColumn: TableColumn,
-    ): PrimitiveType {
+    ): void {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]) {
-            const { setValue } = columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE]!;
-            setValue(item, newValue);
+            const { setValue } = columnDetail[TableType.INVESTMENT_BREAKDOWN_TABLE];
+            if (setValue) {
+                setValue(item, newValue);
+                return;
+            }
         }
         throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.INVESTMENT_BREAKDOWN_TABLE}`);
     }

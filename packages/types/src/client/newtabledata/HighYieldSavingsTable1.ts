@@ -38,11 +38,14 @@ export class HighYieldSavingsTable1 extends AbstractTable1<
         item: HighYeildSavingsResponseDTO,
         newValue: PrimitiveType,
         tableColumn: TableColumn,
-    ): PrimitiveType {
+    ): void {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
         if (columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE]) {
-            const { setValue } = columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE]!;
-            setValue(item, newValue);
+            const { setValue } = columnDetail[TableType.HIGH_YIELD_SAVINGS_TABLE];
+            if (setValue) {
+                setValue(item, newValue);
+                return;
+            }
         }
         throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.HIGH_YIELD_SAVINGS_TABLE}`);
     }
