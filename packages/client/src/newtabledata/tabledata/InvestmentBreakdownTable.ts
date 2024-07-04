@@ -21,7 +21,6 @@ export class InvestmentBreakdownTable1 extends AbstractTable1<
         return this.subTables[subTableType];
     }
 
-
     protected getColumnValue(
         item: MonthlyInvestmentDetailsResponseDTO,
         tableColumn: TableColumn,

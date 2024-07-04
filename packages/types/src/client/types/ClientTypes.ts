@@ -13,7 +13,7 @@ import {
     MonthlyInvestmentDetailsResponseDTO
 } from "../../server/InvestmentTypes";
 import { RentCastDetailsResponseDTO } from "../../server/RentCastApiTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
+import { TableColumnDetailsEnum } from "../tablecolumnconfig/TableColumnConfig";
 
 export enum InputType {
     TEXT = 'text',

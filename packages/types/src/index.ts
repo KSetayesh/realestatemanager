@@ -30,9 +30,9 @@ export * from './client/tablecolumns/HighYieldSavingsColumns';
 export * from './client/tablecolumns/InvestmentBreakdownColumns';
 export * from './client/tablecolumns/PropertyListColumns';
 export * from './client/tablecolumns/RentCastApiDetailsColumns';
-export * from './client/tabledata/InvestmentDetailsTableHelper';
-export * from './client/tabledata/PropertiesListTableHelper';
-export * from './client/tabledata/TableColumnConfig';
-export * from './client/tabledata/TableConfig';
+export * from './client/tablecolumnconfig/InvestmentDetailsTableHelper';
+export * from './client/tablecolumnconfig/PropertiesListTableHelper';
+export * from './client/tablecolumnconfig/TableColumnConfig';
+export * from './client/tablecolumnconfig/TableConfig';
 
 
