@@ -1,5 +1,4 @@
-import { AgentResponseDTO, AgentType } from "../../server/AgentApiTypes";
-import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
+import { AgentResponseDTO, AgentType, ColumnDetail, InputType, PrimitiveType, TableType } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 
 export const FirstNameColumn: ColumnDetail = {
@@ -165,7 +164,7 @@ export const AgentTypeColumn: ColumnDetail = {
             return agent.agentType;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.agentType = Utility.getEnumValue(AgentType, newValue.toString());
+            agent.agentType = Utility.getEnumValue(AgentType, newValue.toString())!;
         }
     },
 };

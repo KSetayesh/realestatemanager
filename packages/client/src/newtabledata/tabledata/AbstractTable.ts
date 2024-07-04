@@ -1,33 +1,20 @@
-import { TableColumnDetailsEnum, columnDetails } from "../tabledata/TableColumnConfig";
-import { tableDetails } from "../tabledata/TableConfig";
 import {
     ColumnDetail,
     ExportOption,
     PrimitiveType,
     SortDirection,
+    TableColumnDetailsEnum,
     TableDetailType,
     TableType,
-    TableTypeMapping
-} from "../types/ClientTypes";
-
-// export type CellData = {
-//     column: TableColumnDetailsEnum;
-//     value: PrimitiveType;
-// };
+    TableTypeMapping,
+    columnDetails
+} from "@realestatemanager/types";
+import { tableDetails } from "../config/TableConfig";
 
 export type TableColumn = {
     columnKey: TableColumnDetailsEnum;
     columnDetails: ColumnDetail;
-}
-
-// export type TableRow = Partial<Record<TableColumnDetailsEnum, CellData>>;
-
-// export type TableDataItem<Y> = {
-//     objectData: {
-//         key: Y;
-//     };
-//     tableRow: TableRow;
-// };
+};
 
 export type TableData<Y, X> = {
     subTable: X;
@@ -40,7 +27,7 @@ export type SortConfig = {
     direction: SortDirection;
 };
 
-export abstract class AbstractTable1<K extends TableType, Y, X> {
+export abstract class AbstractTable<K extends TableType, Y, X> {
     private details: TableDetailType<K>;
     private _subTables: TableTypeMapping[K];
     private _tableType: K;

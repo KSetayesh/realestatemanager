@@ -1,9 +1,7 @@
-import { AgentResponseDTO } from "../../server/AgentApiTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { ColumnDetail, DefaultTableType, PrimitiveType, TableType, TableTypeMapping } from "../types/ClientTypes";
-import { AbstractTable1, TableColumn } from "./AbstractTable1";
+import { AgentResponseDTO, ColumnDetail, CreateUpdateAgentRequest, DefaultTableType, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import { AbstractTable } from "./AbstractTable";
 
-export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
+export class AgentTable extends AbstractTable<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
 
     constructor() {
         super(TableType.AGENT_TABLE);
@@ -44,5 +42,18 @@ export class AgentTable1 extends AbstractTable1<TableType.AGENT_TABLE, AgentResp
         }
         throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.AGENT_TABLE}`);
     }
+
+    createUpdateAgentRequest(agent: AgentResponseDTO): CreateUpdateAgentRequest {
+        return {
+            id: agent.id,
+            firstName: agent.firstName,
+            lastName: agent.lastName,
+            website: agent.website,
+            companyName: agent.companyName,
+            phoneNumber: agent.phoneNumber,
+            email: agent.email,
+        };
+    }
+
 
 }

@@ -22,11 +22,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import {
-    InputType,
-} from '../constants/Constant';
-import {
     AbstractTable1,
+    InputType,
     PrimitiveType,
+    SortDirection,
     TableColumn,
     TableData,
     TableType
@@ -84,10 +83,10 @@ export type ExportIntoCSV = {
     buttonTitle: string;
 };
 
-export enum SortDirection {
-    ASCENDING = 'ascending',
-    DESCENDING = 'descending',
-};
+// export enum SortDirection {
+//     ASCENDING = 'ascending',
+//     DESCENDING = 'descending',
+// };
 
 export type SortConfig = { key: string; direction: SortDirection };
 

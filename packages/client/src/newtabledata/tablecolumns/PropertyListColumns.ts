@@ -1,8 +1,6 @@
-import { ListingCreationType } from "../../Constants";
-import { ListingWithScenariosResponseDTO } from "../../server/InvestmentTypes";
-import { PropertiesListTableHelper } from "../tabledata/PropertiesListTableHelper";
-import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
+import { ColumnDetail, InputType, ListingCreationType, ListingWithScenariosResponseDTO, PrimitiveType, TableType } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
+import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 
 export const PropertyTypeColumn: ColumnDetail = {
     title: "Property Type",
@@ -833,7 +831,7 @@ export const CreationTypeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getCreationType(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setCreationType(listingWithScenarios, Utility.getEnumNameFromValue(ListingCreationType, newValue));
+            PropertiesListTableHelper.setCreationType(listingWithScenarios, Utility.getEnumValue(ListingCreationType, newValue.toString()));
         }
     },
 };

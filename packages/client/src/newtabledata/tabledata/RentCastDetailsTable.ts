@@ -1,9 +1,7 @@
-import { RentCastDetailsResponseDTO } from "../../server/RentCastApiTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { ColumnDetail, DefaultTableType, PrimitiveType, TableType } from "../types/ClientTypes";
-import { AbstractTable1, TableColumn } from "./AbstractTable1";
+import { ColumnDetail, DefaultTableType, PrimitiveType, RentCastDetailsResponseDTO, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import { AbstractTable } from "./AbstractTable";
 
-export class RentCastDetailsTable1 extends AbstractTable1<
+export class RentCastDetailsTable extends AbstractTable<
     TableType.RENT_CAST_DETAILS_TABLE,
     RentCastDetailsResponseDTO,
     DefaultTableType

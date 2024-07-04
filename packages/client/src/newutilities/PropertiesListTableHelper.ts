@@ -1,11 +1,4 @@
-import { ListingCreationType, PropertyType } from "../../Constants";
-import {
-    GrowthProjectionsResponseDTO,
-    InitialInvestmentBreakdownResponseDTO,
-    ListingWithScenariosResponseDTO,
-    TaxImplicationsResponseDTO
-} from "../../server/InvestmentTypes";
-import { ListingDetailsResponseDTO } from "../../server/ListingTypes";
+import { GrowthProjectionsResponseDTO, InitialInvestmentBreakdownResponseDTO, ListingCreationType, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO, PropertyType, TaxImplicationsResponseDTO } from "@realestatemanager/types";
 
 export class PropertiesListTableHelper {
 

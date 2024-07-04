@@ -1,9 +1,7 @@
-import { MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { ColumnDetail, InvestmentBreakdownTableType, PrimitiveType, TableType } from "../types/ClientTypes";
-import { AbstractTable1, TableColumn } from "./AbstractTable1";
+import { ColumnDetail, InvestmentBreakdownTableType, MonthlyInvestmentDetailsResponseDTO, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import { AbstractTable } from "./AbstractTable";
 
-export class InvestmentBreakdownTable1 extends AbstractTable1<
+export class InvestmentBreakdownTable extends AbstractTable<
     TableType.INVESTMENT_BREAKDOWN_TABLE,
     MonthlyInvestmentDetailsResponseDTO,
     InvestmentBreakdownTableType

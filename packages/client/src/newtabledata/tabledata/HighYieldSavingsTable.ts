@@ -1,9 +1,7 @@
-import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTypes";
-import { TableColumnDetailsEnum } from "../tabledata/TableColumnConfig";
-import { ColumnDetail, DefaultTableType, PrimitiveType, TableType } from "../types/ClientTypes";
-import { AbstractTable1, TableColumn } from "./AbstractTable1";
+import { ColumnDetail, DefaultTableType, HighYeildSavingsResponseDTO, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import { AbstractTable } from "./AbstractTable";
 
-export class HighYieldSavingsTable1 extends AbstractTable1<
+export class HighYieldSavingsTable extends AbstractTable<
     TableType.HIGH_YIELD_SAVINGS_TABLE,
     HighYeildSavingsResponseDTO,
     DefaultTableType

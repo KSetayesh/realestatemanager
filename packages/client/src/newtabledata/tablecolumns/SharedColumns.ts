@@ -1,9 +1,6 @@
-import { AgentResponseDTO } from "../../server/AgentApiTypes";
-import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTypes";
-import { ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO } from "../../server/InvestmentTypes";
-import { InvestmentDetailsTableHelper } from "../tabledata/InvestmentDetailsTableHelper";
-import { PropertiesListTableHelper } from "../tabledata/PropertiesListTableHelper";
-import { ColumnDetail, InputType, PrimitiveType, TableType } from "../types/ClientTypes";
+import { AgentResponseDTO, ColumnDetail, HighYeildSavingsResponseDTO, InputType, ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO, PrimitiveType, TableType } from "@realestatemanager/types";
+import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
+import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",
