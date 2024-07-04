@@ -82,6 +82,7 @@ import {
     NumberOfFullBathroomsColumn,
     NumberOfHalfBathroomsColumn,
     PriceColumn,
+    PropertyStatusColumn,
     PropertyTypeColumn,
     RecurringCostsColumn,
     SquareFeetColumn,
@@ -124,6 +125,7 @@ import {
 // Implement the sortMap with the defined types
 export const columnDetails: ColumnsDetails = {
     [TableColumnDetailsEnum.PROPERTY_TYPE]: PropertyTypeColumn,
+    [TableColumnDetailsEnum.PROPERTY_STATUS]: PropertyStatusColumn,
     [TableColumnDetailsEnum.FULL_ADDRESS]: FullAddressColumn,
     [TableColumnDetailsEnum.STATE]: StateColumn,
     [TableColumnDetailsEnum.ZIP_CODE]: ZipCodeColumn,

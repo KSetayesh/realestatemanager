@@ -10,6 +10,11 @@ export class PropertiesListTableHelper {
         return this.getListingDetails(property).propertyDetails.propertyType;
     }
 
+
+    static getPropertyStatus(property: ListingWithScenariosResponseDTO): PropertyType {
+        return this.getListingDetails(property).propertyStatus;
+    }
+
     static getState(property: ListingWithScenariosResponseDTO): string {
         return this.getListingDetails(property).propertyDetails.address.state;
     }

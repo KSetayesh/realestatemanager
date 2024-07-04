@@ -188,6 +188,7 @@ export type PropertyFilterFormFields = {
 export enum TableColumnDetailsEnum {
     // Property List Columns
     PROPERTY_TYPE = 'PROPERTY_TYPE',
+    PROPERTY_STATUS = 'PROPERTY_STATUS',
     FULL_ADDRESS = 'FULL_ADDRESS',
     STATE = 'STATE',
     ZIP_CODE = 'ZIP_CODE',

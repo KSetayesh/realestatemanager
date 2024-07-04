@@ -15,7 +15,25 @@ export const PropertyTypeColumn: ColumnDetail = {
     detailedDescription: "",
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
-            return PropertiesListTableHelper.getFullAddress(listingWithScenarios);
+            return PropertiesListTableHelper.getPropertyType(listingWithScenarios);
+        }
+    },
+};
+
+export const PropertyStatusColumn: ColumnDetail = {
+    title: "Property Status",
+    accessor: "propertyStatus",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getPropertyStatus(listingWithScenarios);
         }
     },
 };
