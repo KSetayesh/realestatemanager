@@ -1,4 +1,10 @@
-import { ColumnDetail, HighYeildSavingsResponseDTO, InputType, PrimitiveType, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    HighYeildSavingsResponseDTO,
+    InputType,
+    PrimitiveType,
+    TableType
+} from "@realestatemanager/types";
 
 export const StartPrincipalColumn: ColumnDetail = {
     title: "Start Principal",

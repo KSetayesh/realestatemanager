@@ -1,4 +1,12 @@
-import { ColumnDetail, InvestmentBreakdownTableType, MonthlyInvestmentDetailsResponseDTO, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    InvestmentBreakdownTableType,
+    MonthlyInvestmentDetailsResponseDTO,
+    PrimitiveType,
+    TableColumn,
+    TableColumnDetailsEnum,
+    TableType
+} from "@realestatemanager/types";
 import { AbstractTable } from "./AbstractTable";
 
 export class InvestmentBreakdownTable extends AbstractTable<

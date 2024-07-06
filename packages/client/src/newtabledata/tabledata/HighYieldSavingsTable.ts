@@ -1,4 +1,12 @@
-import { ColumnDetail, DefaultTableType, HighYeildSavingsResponseDTO, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    DefaultTableType,
+    HighYeildSavingsResponseDTO,
+    PrimitiveType,
+    TableColumn,
+    TableColumnDetailsEnum,
+    TableType
+} from "@realestatemanager/types";
 import { AbstractTable } from "./AbstractTable";
 
 export class HighYieldSavingsTable extends AbstractTable<
@@ -18,7 +26,6 @@ export class HighYieldSavingsTable extends AbstractTable<
     protected _getAllSubTableColumns(subTableType: DefaultTableType): TableColumnDetailsEnum[] {
         return this.subTables[subTableType];
     }
-
 
     protected getColumnValue(
         item: HighYeildSavingsResponseDTO,

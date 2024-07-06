@@ -1,4 +1,12 @@
-import { ColumnDetail, DefaultTableType, PrimitiveType, RentCastDetailsResponseDTO, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    DefaultTableType,
+    PrimitiveType,
+    RentCastDetailsResponseDTO,
+    TableColumn,
+    TableColumnDetailsEnum,
+    TableType
+} from "@realestatemanager/types";
 import { AbstractTable } from "./AbstractTable";
 
 export class RentCastDetailsTable extends AbstractTable<

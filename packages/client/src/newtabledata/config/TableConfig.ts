@@ -1,4 +1,11 @@
-import { DefaultTableType, InvestmentBreakdownTableType, PropertiesListTableType, TableColumnDetailsEnum, TableDetailsType, TableType } from "@realestatemanager/types";
+import {
+    DefaultTableType,
+    InvestmentBreakdownTableType,
+    PropertiesListTableType,
+    TableColumnDetailsEnum,
+    TableDetailsType,
+    TableType
+} from "@realestatemanager/types";
 
 export const tableDetails: TableDetailsType = {
     [TableType.PROPERTY_LIST_TABLE]: {

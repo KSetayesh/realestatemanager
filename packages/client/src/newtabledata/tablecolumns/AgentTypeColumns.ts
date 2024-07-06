@@ -1,4 +1,11 @@
-import { AgentResponseDTO, AgentType, ColumnDetail, InputType, PrimitiveType, TableType } from "@realestatemanager/types";
+import {
+    AgentResponseDTO,
+    AgentType,
+    ColumnDetail,
+    InputType,
+    PrimitiveType,
+    TableType
+} from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 
 export const FirstNameColumn: ColumnDetail = {

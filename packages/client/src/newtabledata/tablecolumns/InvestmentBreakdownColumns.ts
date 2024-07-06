@@ -1,4 +1,10 @@
-import { ColumnDetail, InputType, MonthlyInvestmentDetailsResponseDTO, PrimitiveType, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    InputType,
+    MonthlyInvestmentDetailsResponseDTO,
+    PrimitiveType,
+    TableType
+} from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 
 export const TotalInterestPaidColumn: ColumnDetail = {

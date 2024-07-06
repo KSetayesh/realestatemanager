@@ -1,4 +1,13 @@
-import { AgentResponseDTO, ColumnDetail, HighYeildSavingsResponseDTO, InputType, ListingWithScenariosResponseDTO, MonthlyInvestmentDetailsResponseDTO, PrimitiveType, TableType } from "@realestatemanager/types";
+import {
+    AgentResponseDTO,
+    ColumnDetail,
+    HighYeildSavingsResponseDTO,
+    InputType,
+    ListingWithScenariosResponseDTO,
+    MonthlyInvestmentDetailsResponseDTO,
+    PrimitiveType,
+    TableType
+} from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 

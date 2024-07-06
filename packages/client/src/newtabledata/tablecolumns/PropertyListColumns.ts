@@ -1,4 +1,11 @@
-import { ColumnDetail, InputType, ListingCreationType, ListingWithScenariosResponseDTO, PrimitiveType, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    InputType,
+    ListingCreationType,
+    ListingWithScenariosResponseDTO,
+    PrimitiveType,
+    TableType
+} from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 

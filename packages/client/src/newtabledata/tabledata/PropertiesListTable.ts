@@ -1,4 +1,13 @@
-import { ColumnDetail, CreateUpdatePropertyRequest, ListingWithScenariosResponseDTO, PrimitiveType, PropertiesListTableType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    CreateUpdatePropertyRequest,
+    ListingWithScenariosResponseDTO,
+    PrimitiveType,
+    PropertiesListTableType,
+    TableColumn,
+    TableColumnDetailsEnum,
+    TableType
+} from "@realestatemanager/types";
 import { AbstractTable } from "./AbstractTable";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 

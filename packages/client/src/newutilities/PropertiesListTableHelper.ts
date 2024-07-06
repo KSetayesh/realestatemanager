@@ -1,4 +1,12 @@
-import { GrowthProjectionsResponseDTO, InitialInvestmentBreakdownResponseDTO, ListingCreationType, ListingDetailsResponseDTO, ListingWithScenariosResponseDTO, PropertyType, TaxImplicationsResponseDTO } from "@realestatemanager/types";
+import {
+    GrowthProjectionsResponseDTO,
+    InitialInvestmentBreakdownResponseDTO,
+    ListingCreationType,
+    ListingDetailsResponseDTO,
+    ListingWithScenariosResponseDTO,
+    PropertyType,
+    TaxImplicationsResponseDTO
+} from "@realestatemanager/types";
 
 export class PropertiesListTableHelper {
 

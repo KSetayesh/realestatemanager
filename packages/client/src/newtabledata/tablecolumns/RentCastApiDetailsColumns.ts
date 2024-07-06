@@ -1,4 +1,10 @@
-import { ColumnDetail, InputType, PrimitiveType, RentCastDetailsResponseDTO, TableType } from "@realestatemanager/types";
+import {
+    ColumnDetail,
+    InputType,
+    PrimitiveType,
+    RentCastDetailsResponseDTO,
+    TableType
+} from "@realestatemanager/types";
 
 export const ApiKeyNameColumn: ColumnDetail = {
     title: "Api Key Name",

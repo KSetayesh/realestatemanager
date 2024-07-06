@@ -1,4 +1,13 @@
-import { AgentResponseDTO, ColumnDetail, CreateUpdateAgentRequest, DefaultTableType, PrimitiveType, TableColumn, TableColumnDetailsEnum, TableType } from "@realestatemanager/types";
+import {
+    AgentResponseDTO,
+    ColumnDetail,
+    CreateUpdateAgentRequest,
+    DefaultTableType,
+    PrimitiveType,
+    TableColumn,
+    TableColumnDetailsEnum,
+    TableType
+} from "@realestatemanager/types";
 import { AbstractTable } from "./AbstractTable";
 
 export class DummyCSVDataTable extends AbstractTable<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
