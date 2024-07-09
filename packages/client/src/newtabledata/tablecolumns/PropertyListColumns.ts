@@ -8,6 +8,7 @@ import {
 } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
+import { DummyCSVDataType } from "../../pages/PropertyForm";
 
 export const PropertyTypeColumn: ColumnDetail = {
     title: "Property Type",
@@ -25,6 +26,11 @@ export const PropertyTypeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getPropertyType(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.propertyType;
+        }
+    }
 };
 
 export const PropertyStatusColumn: ColumnDetail = {
@@ -43,6 +49,11 @@ export const PropertyStatusColumn: ColumnDetail = {
             return PropertiesListTableHelper.getPropertyStatus(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.propertyStatus;
+        }
+    }
 };
 
 export const FullAddressColumn: ColumnDetail = {
@@ -61,6 +72,11 @@ export const FullAddressColumn: ColumnDetail = {
             return PropertiesListTableHelper.getFullAddress(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.fullAddress;
+        }
+    }
 };
 
 export const ZipCodeColumn: ColumnDetail = {
@@ -79,6 +95,11 @@ export const ZipCodeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZipCode(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zipcode;
+        }
+    }
 };
 
 export const ZillowUrlColumn: ColumnDetail = {
@@ -97,6 +118,11 @@ export const ZillowUrlColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZillowURL(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowURL;
+        }
+    }
 };
 
 export const PriceColumn: ColumnDetail = {
@@ -117,7 +143,7 @@ export const PriceColumn: ColumnDetail = {
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setPrice(listingWithScenarios, Number(newValue));
         }
-    },
+    }
 };
 
 export const InitialCostsColumn: ColumnDetail = {
@@ -140,7 +166,7 @@ export const InitialCostsColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getInitialCosts(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const LoanAmountColumn: ColumnDetail = {
@@ -158,7 +184,7 @@ export const LoanAmountColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getLoanAmount(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const DownPaymentAmountColumn: ColumnDetail = {
@@ -176,7 +202,7 @@ export const DownPaymentAmountColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getDownPaymentAmount(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const AnnualInterestRateColumn: ColumnDetail = {
@@ -194,7 +220,7 @@ export const AnnualInterestRateColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getAnnualInterestRate(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const RecurringCostsColumn: ColumnDetail = {
@@ -216,7 +242,7 @@ export const RecurringCostsColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getRecurringCosts(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const InitialMonthlyPaymentColumn: ColumnDetail = {
@@ -237,7 +263,7 @@ export const InitialMonthlyPaymentColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getInitialMonthlyAmount(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const YearlyCashFlowColumn: ColumnDetail = {
@@ -255,7 +281,7 @@ export const YearlyCashFlowColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getYearlyCashFlow(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const NumberOfDaysOnMarketColumn: ColumnDetail = {
@@ -274,6 +300,11 @@ export const NumberOfDaysOnMarketColumn: ColumnDetail = {
             return PropertiesListTableHelper.getNumberOfDaysOnMarket(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfDaysOnMarket;
+        }
+    }
 };
 
 export const DateListedColumn: ColumnDetail = {
@@ -291,7 +322,7 @@ export const DateListedColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getDateListed(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const DateCreatedColumn: ColumnDetail = {
@@ -309,7 +340,7 @@ export const DateCreatedColumn: ColumnDetail = {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
             return PropertiesListTableHelper.getDateCreated(listingWithScenarios);
         }
-    },
+    }
 };
 
 export const CityColumn: ColumnDetail = {
@@ -328,6 +359,11 @@ export const CityColumn: ColumnDetail = {
             return PropertiesListTableHelper.getCity(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.city;
+        }
+    }
 };
 
 export const CountyColumn: ColumnDetail = {
@@ -346,6 +382,11 @@ export const CountyColumn: ColumnDetail = {
             return PropertiesListTableHelper.getCounty(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.county;
+        }
+    }
 };
 
 export const StreetAddressColumn: ColumnDetail = {
@@ -364,6 +405,11 @@ export const StreetAddressColumn: ColumnDetail = {
             return PropertiesListTableHelper.getStreetAddress(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.streetAddress;
+        }
+    }
 };
 
 export const ApartmentNumberColumn: ColumnDetail = {
@@ -382,6 +428,11 @@ export const ApartmentNumberColumn: ColumnDetail = {
             return PropertiesListTableHelper.getApartmentNumber(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.apartmentNumber;
+        }
+    }
 };
 
 export const LongitudeColumn: ColumnDetail = {
@@ -400,6 +451,11 @@ export const LongitudeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getLongitude(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.longitude;
+        }
+    }
 };
 
 export const LatitudeColumn: ColumnDetail = {
@@ -418,6 +474,11 @@ export const LatitudeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getLatitude(listingWithScenarios);
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.latitude;
+        }
+    }
 };
 
 export const ElementarySchoolRatingColumn: ColumnDetail = {
@@ -439,6 +500,11 @@ export const ElementarySchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setElementarySchoolRating(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.elementarySchoolRating;
+        }
+    }
 };
 
 export const MiddleSchoolRatingColumn: ColumnDetail = {
@@ -460,6 +526,11 @@ export const MiddleSchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setMiddleSchoolRating(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.middleSchoolRating;
+        }
+    }
 };
 
 export const HighSchoolRatingColumn: ColumnDetail = {
@@ -481,6 +552,11 @@ export const HighSchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setHighSchoolRating(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.highSchoolRating;
+        }
+    }
 };
 
 export const NumberOfBedroomsColumn: ColumnDetail = {
@@ -502,6 +578,11 @@ export const NumberOfBedroomsColumn: ColumnDetail = {
             PropertiesListTableHelper.setNumberOfBedrooms(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfBedrooms;
+        }
+    }
 };
 
 export const NumberOfFullBathroomsColumn: ColumnDetail = {
@@ -523,6 +604,11 @@ export const NumberOfFullBathroomsColumn: ColumnDetail = {
             PropertiesListTableHelper.setNumberOfFullBathrooms(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfFullBathrooms;
+        }
+    }
 };
 
 export const NumberOfHalfBathroomsColumn: ColumnDetail = {
@@ -544,6 +630,11 @@ export const NumberOfHalfBathroomsColumn: ColumnDetail = {
             PropertiesListTableHelper.setNumberOfHalfBathrooms(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfHalfBathrooms;
+        }
+    }
 };
 
 export const SquareFeetColumn: ColumnDetail = {
@@ -565,6 +656,11 @@ export const SquareFeetColumn: ColumnDetail = {
             PropertiesListTableHelper.setSquareFeet(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.squareFeet;
+        }
+    }
 }
 
 export const AcresColumn: ColumnDetail = {
@@ -586,6 +682,11 @@ export const AcresColumn: ColumnDetail = {
             PropertiesListTableHelper.setAcres(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.acres;
+        }
+    }
 };
 
 export const YearBuiltColumn: ColumnDetail = {
@@ -607,6 +708,11 @@ export const YearBuiltColumn: ColumnDetail = {
             PropertiesListTableHelper.setYearBuilt(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.yearBuilt;
+        }
+    }
 };
 
 export const HasGarageColumn: ColumnDetail = {
@@ -628,6 +734,11 @@ export const HasGarageColumn: ColumnDetail = {
             PropertiesListTableHelper.setHasGarage(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasGarage;
+        }
+    }
 };
 
 export const HasPoolColumn: ColumnDetail = {
@@ -649,6 +760,11 @@ export const HasPoolColumn: ColumnDetail = {
             PropertiesListTableHelper.setHasPool(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasPool;
+        }
+    }
 };
 
 export const HasBasementColumn: ColumnDetail = {
@@ -670,6 +786,11 @@ export const HasBasementColumn: ColumnDetail = {
             PropertiesListTableHelper.setHasBasement(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasBasement;
+        }
+    }
 };
 
 export const ListingPriceColumn: ColumnDetail = {
@@ -691,6 +812,11 @@ export const ListingPriceColumn: ColumnDetail = {
             PropertiesListTableHelper.setListingPrice(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.listingPrice;
+        }
+    }
 };
 
 export const ZestimateColumn: ColumnDetail = {
@@ -712,6 +838,11 @@ export const ZestimateColumn: ColumnDetail = {
             PropertiesListTableHelper.setZestimate(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimate;
+        }
+    }
 };
 
 export const ZillowRentEstimateColumn: ColumnDetail = {
@@ -733,6 +864,11 @@ export const ZillowRentEstimateColumn: ColumnDetail = {
             PropertiesListTableHelper.setZillowRentEstimate(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowRentEstimate;
+        }
+    }
 };
 
 export const ZestimateRangeLowColumn: ColumnDetail = {
@@ -754,6 +890,11 @@ export const ZestimateRangeLowColumn: ColumnDetail = {
             PropertiesListTableHelper.setZestimateRangeLow(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimateRangeLow;
+        }
+    }
 };
 
 export const ZestimateRangeHighColumn: ColumnDetail = {
@@ -775,6 +916,11 @@ export const ZestimateRangeHighColumn: ColumnDetail = {
             PropertiesListTableHelper.setZestimateRangeHigh(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimateRangeHigh;
+        }
+    }
 };
 
 export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
@@ -796,6 +942,11 @@ export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
             PropertiesListTableHelper.setZillowMonthlyPropertyTaxAmount(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyPropertyTaxAmount;
+        }
+    }
 };
 
 export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
@@ -817,6 +968,11 @@ export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
             PropertiesListTableHelper.setZillowMonthlyHomeInsuranceAmount(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyHomeInsuranceAmount;
+        }
+    }
 };
 
 export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
@@ -838,6 +994,11 @@ export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
             PropertiesListTableHelper.setZillowMonthlyHOAFeesAmount(listingWithScenarios, Number(newValue));
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyHOAFeesAmount;
+        }
+    }
 };
 
 export const CreationTypeColumn: ColumnDetail = {
@@ -858,7 +1019,7 @@ export const CreationTypeColumn: ColumnDetail = {
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setCreationType(listingWithScenarios, Utility.getEnumValue(ListingCreationType, newValue.toString()));
         }
-    },
+    }
 };
 
 export const DescriptionColumn: ColumnDetail = {
@@ -880,6 +1041,11 @@ export const DescriptionColumn: ColumnDetail = {
             PropertiesListTableHelper.setDescription(listingWithScenarios, newValue.toString());
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.description;
+        }
+    }
 };
 
 // Only certain PropertyList tables will have this

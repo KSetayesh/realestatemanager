@@ -10,6 +10,7 @@ import {
 } from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
+import { DummyCSVDataType } from "../../pages/PropertyForm";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",
@@ -219,6 +220,11 @@ export const CountryColumn: ColumnDetail = {
             return agent.country;
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.country;
+        }
+    }
 };
 
 export const StateColumn: ColumnDetail = {
@@ -242,4 +248,9 @@ export const StateColumn: ColumnDetail = {
             return agent.state;
         }
     },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.state;
+        }
+    }
 };

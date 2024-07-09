@@ -4,11 +4,10 @@ import {
     ListingWithScenariosResponseDTO,
     PrimitiveType,
     PropertiesListTableType,
-    TableColumn,
     TableColumnDetailsEnum,
     TableType
 } from "@realestatemanager/types";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TableColumn } from "./AbstractTable";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
 
 export class PropertiesListTable extends AbstractTable<

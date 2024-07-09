@@ -7,9 +7,9 @@ import {
     TableDetailType,
     TableType,
     TableTypeMapping,
-    columnDetails
 } from "@realestatemanager/types";
 import { tableDetails } from "../config/TableConfig";
+import { columnDetails } from "../config/TableColumnConfig";
 
 export type TableColumn = {
     columnKey: TableColumnDetailsEnum;

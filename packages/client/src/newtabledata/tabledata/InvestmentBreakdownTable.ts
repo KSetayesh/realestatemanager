@@ -3,11 +3,10 @@ import {
     InvestmentBreakdownTableType,
     MonthlyInvestmentDetailsResponseDTO,
     PrimitiveType,
-    TableColumn,
     TableColumnDetailsEnum,
     TableType
 } from "@realestatemanager/types";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TableColumn } from "./AbstractTable";
 
 export class InvestmentBreakdownTable extends AbstractTable<
     TableType.INVESTMENT_BREAKDOWN_TABLE,

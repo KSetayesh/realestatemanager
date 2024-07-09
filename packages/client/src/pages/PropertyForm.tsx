@@ -3,7 +3,8 @@ import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
     AddPropertyFormData,
     CreateListingDetailsRequest,
-    CreatePropertiesInBulkRequest
+    CreatePropertiesInBulkRequest,
+    DummyCSVDataType
 } from '@realestatemanager/types';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
@@ -15,9 +16,9 @@ import { Box, Paper, Typography } from '@mui/material';
 import { AddPropertyType } from '../constants/Constant';
 
 // New type with all properties as strings
-export type DummyCSVDataType = {
-    [K in keyof AddPropertyFormData]: string;
-};
+// export type DummyCSVDataType = {
+//     [K in keyof AddPropertyFormData]: string;
+// };
 
 const PropertyForm: React.FC = () => {
 

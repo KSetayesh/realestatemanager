@@ -36,6 +36,10 @@ export type AddFormTitlesAndLabel<T> = {
     [K in keyof T]: TitleAndName;
 };
 
+export type DummyCSVDataType = {
+    [K in keyof AddPropertyFormData]: string;
+};
+
 export type AddPropertyFormData = {
     zillowURL: string;
     fullAddress: string;
@@ -320,7 +324,8 @@ export type TableTypeSpecific<T extends TableType> =
     T extends TableType.INVESTMENT_BREAKDOWN_TABLE ? MonthlyInvestmentDetailsResponseDTO :
     T extends TableType.AGENT_TABLE ? AgentResponseDTO :
     T extends TableType.HIGH_YIELD_SAVINGS_TABLE ? HighYeildSavingsResponseDTO :
-    T extends TableType.RENT_CAST_DETAILS_TABLE ? RentCastDetailsResponseDTO : never;
+    T extends TableType.RENT_CAST_DETAILS_TABLE ? RentCastDetailsResponseDTO :
+    T extends TableType.DUMMY_CSV_DATA_TABLE ? DummyCSVDataType : never;
 
 // Define the sort and value function types based on TableType
 export type SortFunction<T extends TableType> =

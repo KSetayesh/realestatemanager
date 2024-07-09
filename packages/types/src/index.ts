@@ -19,20 +19,20 @@ export * from './client/types/ClientTypes';
 export * from './calc/CalcTypes';
 
 
-export * from './client/newtabledata/AbstractTable1';
-export * from './client/newtabledata/AgentTable1';
-export * from './client/newtabledata/HighYieldSavingsTable1';
-export * from './client/newtabledata/InvestmentBreakdownTable1';
-export * from './client/newtabledata/PropertiesListTable1';
-export * from './client/newtabledata/RentCastDetailsTable1';
-export * from './client/tablecolumns/AgentTypeColumns';
-export * from './client/tablecolumns/HighYieldSavingsColumns';
-export * from './client/tablecolumns/InvestmentBreakdownColumns';
-export * from './client/tablecolumns/PropertyListColumns';
-export * from './client/tablecolumns/RentCastApiDetailsColumns';
-export * from './client/tablecolumnconfig/InvestmentDetailsTableHelper';
-export * from './client/tablecolumnconfig/PropertiesListTableHelper';
-export * from './client/tablecolumnconfig/TableColumnConfig';
-export * from './client/tablecolumnconfig/TableConfig';
+// export * from './client/newtabledata/AbstractTable1';
+// export * from './client/newtabledata/AgentTable1';
+// export * from './client/newtabledata/HighYieldSavingsTable1';
+// export * from './client/newtabledata/InvestmentBreakdownTable1';
+// export * from './client/newtabledata/PropertiesListTable1';
+// export * from './client/newtabledata/RentCastDetailsTable1';
+// export * from './client/tablecolumns/AgentTypeColumns';
+// export * from './client/tablecolumns/HighYieldSavingsColumns';
+// export * from './client/tablecolumns/InvestmentBreakdownColumns';
+// export * from './client/tablecolumns/PropertyListColumns';
+// export * from './client/tablecolumns/RentCastApiDetailsColumns';
+// export * from './client/tablecolumnconfig/InvestmentDetailsTableHelper';
+// export * from './client/tablecolumnconfig/PropertiesListTableHelper';
+// export * from './client/tablecolumnconfig/TableColumnConfig';
+// export * from './client/tablecolumnconfig/TableConfig';
 
 

@@ -1,19 +1,17 @@
 import {
-    AgentResponseDTO,
     ColumnDetail,
-    CreateUpdateAgentRequest,
     DefaultTableType,
+    DummyCSVDataType,
     PrimitiveType,
-    TableColumn,
     TableColumnDetailsEnum,
     TableType
 } from "@realestatemanager/types";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TableColumn } from "./AbstractTable";
 
-export class DummyCSVDataTable extends AbstractTable<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
+export class DummyCSVDataTable extends AbstractTable<TableType.DUMMY_CSV_DATA_TABLE, DummyCSVDataType, DefaultTableType> {
 
     constructor() {
-        super(TableType.AGENT_TABLE);
+        super(TableType.DUMMY_CSV_DATA_TABLE);
     }
 
     getDefaultTableType(): DefaultTableType {
@@ -25,44 +23,31 @@ export class DummyCSVDataTable extends AbstractTable<TableType.AGENT_TABLE, Agen
     }
 
     protected getColumnValue(
-        item: AgentResponseDTO,
+        item: DummyCSVDataType,
         tableColumn: TableColumn,
     ): PrimitiveType {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
-        if (columnDetail[TableType.AGENT_TABLE]) {
-            const { value } = columnDetail[TableType.AGENT_TABLE]!;
+        if (columnDetail[TableType.DUMMY_CSV_DATA_TABLE]) {
+            const { value } = columnDetail[TableType.DUMMY_CSV_DATA_TABLE]!;
             return value(item);
         }
-        throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.AGENT_TABLE}`);
+        throw new Error(`Column ${tableColumn.columnKey} does not have a value function for ${TableType.DUMMY_CSV_DATA_TABLE}`);
     }
 
     protected setColumnValue(
-        item: AgentResponseDTO,
+        item: DummyCSVDataType,
         newValue: PrimitiveType,
         tableColumn: TableColumn,
     ): void {
         const columnDetail: ColumnDetail = tableColumn.columnDetails;
-        if (columnDetail[TableType.AGENT_TABLE]) {
-            const { setValue } = columnDetail[TableType.AGENT_TABLE];
+        if (columnDetail[TableType.DUMMY_CSV_DATA_TABLE]) {
+            const { setValue } = columnDetail[TableType.DUMMY_CSV_DATA_TABLE];
             if (setValue) {
                 setValue(item, newValue);
                 return;
             }
         }
-        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.AGENT_TABLE}`);
+        throw new Error(`Column ${tableColumn.columnKey} does not have a setValue function for ${TableType.DUMMY_CSV_DATA_TABLE}`);
     }
-
-    createUpdateAgentRequest(agent: AgentResponseDTO): CreateUpdateAgentRequest {
-        return {
-            id: agent.id,
-            firstName: agent.firstName,
-            lastName: agent.lastName,
-            website: agent.website,
-            companyName: agent.companyName,
-            phoneNumber: agent.phoneNumber,
-            email: agent.email,
-        };
-    }
-
 
 }

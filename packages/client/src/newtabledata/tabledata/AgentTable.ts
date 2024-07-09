@@ -4,11 +4,10 @@ import {
     CreateUpdateAgentRequest,
     DefaultTableType,
     PrimitiveType,
-    TableColumn,
     TableColumnDetailsEnum,
     TableType
 } from "@realestatemanager/types";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TableColumn } from "./AbstractTable";
 
 export class AgentTable extends AbstractTable<TableType.AGENT_TABLE, AgentResponseDTO, DefaultTableType> {
 

@@ -3,11 +3,10 @@ import {
     DefaultTableType,
     HighYeildSavingsResponseDTO,
     PrimitiveType,
-    TableColumn,
     TableColumnDetailsEnum,
     TableType
 } from "@realestatemanager/types";
-import { AbstractTable } from "./AbstractTable";
+import { AbstractTable, TableColumn } from "./AbstractTable";
 
 export class HighYieldSavingsTable extends AbstractTable<
     TableType.HIGH_YIELD_SAVINGS_TABLE,
