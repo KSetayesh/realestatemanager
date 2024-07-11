@@ -1,6 +1,7 @@
 import {
     AgentResponseDTO,
     ColumnDetail,
+    DummyCSVDataType,
     HighYeildSavingsResponseDTO,
     InputType,
     ListingWithScenariosResponseDTO,
@@ -10,7 +11,6 @@ import {
 } from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
-import { DummyCSVDataType } from "../../pages/PropertyForm";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",
@@ -251,6 +251,828 @@ export const StateColumn: ColumnDetail = {
     [TableType.DUMMY_CSV_DATA_TABLE]: {
         value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
             return dummyCSVData.state;
+        }
+    }
+};
+
+export const PropertyTypeColumn: ColumnDetail = {
+    title: "Property Type",
+    accessor: "propertyType",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getPropertyType(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.propertyType;
+        }
+    }
+};
+
+export const PropertyStatusColumn: ColumnDetail = {
+    title: "Property Status",
+    accessor: "propertyStatus",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getPropertyStatus(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.propertyStatus;
+        }
+    }
+};
+
+export const FullAddressColumn: ColumnDetail = {
+    title: "Full Address",
+    accessor: "fullAddress",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getFullAddress(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.fullAddress;
+        }
+    }
+};
+
+export const ZipCodeColumn: ColumnDetail = {
+    title: "Zip Code",
+    accessor: "zipcode",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZipCode(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zipcode;
+        }
+    }
+};
+
+export const ZillowUrlColumn: ColumnDetail = {
+    title: "Zillow Url",
+    accessor: "zillowUrl",
+    inputType: InputType.TEXT,
+    isUrl: true,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: false,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZillowURL(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowURL;
+        }
+    }
+};
+
+export const NumberOfDaysOnMarketColumn: ColumnDetail = {
+    title: "Number of Days On Market",
+    accessor: "numberOfDaysOnMarket",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: true,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getNumberOfDaysOnMarket(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfDaysOnMarket;
+        }
+    }
+};
+
+export const CityColumn: ColumnDetail = {
+    title: "City",
+    accessor: "city",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getCity(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.city;
+        }
+    }
+};
+
+export const CountyColumn: ColumnDetail = {
+    title: "County",
+    accessor: "county",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getCounty(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.county;
+        }
+    }
+};
+
+export const StreetAddressColumn: ColumnDetail = {
+    title: "Street Address",
+    accessor: "streetAddress",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getStreetAddress(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.streetAddress;
+        }
+    }
+};
+
+export const ApartmentNumberColumn: ColumnDetail = {
+    title: "Apartment Number",
+    accessor: "apartmentNumber",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: false,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getApartmentNumber(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.apartmentNumber;
+        }
+    }
+};
+
+export const LongitudeColumn: ColumnDetail = {
+    title: "Longitude",
+    accessor: "longitude",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: false,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getLongitude(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.longitude;
+        }
+    }
+};
+
+export const LatitudeColumn: ColumnDetail = {
+    title: "Latitude",
+    accessor: "latitude",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: false,
+    isSortable: false,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getLatitude(listingWithScenarios);
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.latitude;
+        }
+    }
+};
+
+export const ElementarySchoolRatingColumn: ColumnDetail = {
+    title: "Elementary School Rating",
+    accessor: "elementarySchoolRating",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getElementarySchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setElementarySchoolRating(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.elementarySchoolRating;
+        }
+    }
+};
+
+export const MiddleSchoolRatingColumn: ColumnDetail = {
+    title: "Middle School Rating",
+    accessor: "middleSchoolRating",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getMiddleSchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setMiddleSchoolRating(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.middleSchoolRating;
+        }
+    }
+};
+
+export const HighSchoolRatingColumn: ColumnDetail = {
+    title: "High School Rating",
+    accessor: "highSchoolRating",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getHighSchoolRating(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHighSchoolRating(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.highSchoolRating;
+        }
+    }
+};
+
+export const NumberOfBedroomsColumn: ColumnDetail = {
+    title: "Number Of Bedrooms",
+    accessor: "numberOfBedrooms",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getNumberOfBedrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfBedrooms(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfBedrooms;
+        }
+    }
+};
+
+export const NumberOfFullBathroomsColumn: ColumnDetail = {
+    title: "Number Of Full Bathrooms",
+    accessor: "numberOfFullBathrooms",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getNumberOfFullBathrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfFullBathrooms(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfFullBathrooms;
+        }
+    }
+};
+
+export const NumberOfHalfBathroomsColumn: ColumnDetail = {
+    title: "Number Of Half Bathrooms",
+    accessor: "numberOfHalfBathrooms",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setNumberOfHalfBathrooms(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.numberOfHalfBathrooms;
+        }
+    }
+};
+
+export const SquareFeetColumn: ColumnDetail = {
+    title: "Square Feet",
+    accessor: "squareFeet",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getSquareFeet(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setSquareFeet(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.squareFeet;
+        }
+    }
+}
+
+export const AcresColumn: ColumnDetail = {
+    title: "Acres",
+    accessor: "acres",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getAcres(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setAcres(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.acres;
+        }
+    }
+};
+
+export const YearBuiltColumn: ColumnDetail = {
+    title: "Year Built",
+    accessor: "yearBuilt",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getYearBuilt(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setYearBuilt(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.yearBuilt;
+        }
+    }
+};
+
+export const HasGarageColumn: ColumnDetail = {
+    title: "Has Garage",
+    accessor: "hasGarage",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.hasGarage(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasGarage(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasGarage;
+        }
+    }
+};
+
+export const HasPoolColumn: ColumnDetail = {
+    title: "Has Pool",
+    accessor: "hasPool",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.hasPool(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasPool(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasPool;
+        }
+    }
+};
+
+export const HasBasementColumn: ColumnDetail = {
+    title: "Has Basement",
+    accessor: "hasBasement",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.hasBasement(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setHasBasement(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.hasBasement;
+        }
+    }
+};
+
+export const ListingPriceColumn: ColumnDetail = {
+    title: "Listing Price",
+    accessor: "listingPrice",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getListingPrice(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setListingPrice(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.listingPrice;
+        }
+    }
+};
+
+export const ZestimateColumn: ColumnDetail = {
+    title: "Zestimate",
+    accessor: "zestimate",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZestimate(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimate(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimate;
+        }
+    }
+};
+
+export const ZillowRentEstimateColumn: ColumnDetail = {
+    title: "Zillow Rent Estimate",
+    accessor: "zillowRentEstimate",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZillowRentEstimate(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowRentEstimate(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowRentEstimate;
+        }
+    }
+};
+
+export const ZestimateRangeLowColumn: ColumnDetail = {
+    title: "Zillow Range Low",
+    accessor: "zestimateRangeLow",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZestimateRangeLow(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimateRangeLow(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimateRangeLow;
+        }
+    }
+};
+
+export const ZestimateRangeHighColumn: ColumnDetail = {
+    title: "Zillow Range High",
+    accessor: "zestimateRangeHigh",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZestimateRangeHigh(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZestimateRangeHigh(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zestimateRangeHigh;
+        }
+    }
+};
+
+export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
+    title: "Zillow Monthly Property Tax Amount",
+    accessor: "zillowMonthlyPropertyTaxAmount",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyPropertyTaxAmount(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyPropertyTaxAmount;
+        }
+    }
+};
+
+export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
+    title: "Zillow Monthly Home Insurance Amount",
+    accessor: "zillowMonthlyHomeInsuranceAmount",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyHomeInsuranceAmount(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyHomeInsuranceAmount;
+        }
+    }
+};
+
+export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
+    title: "Zillow Monthly HOA Fees Amount",
+    accessor: "zillowMonthlyHOAFeesAmount",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: true,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: true,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setZillowMonthlyHOAFeesAmount(listingWithScenarios, Number(newValue));
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.zillowMonthlyHOAFeesAmount;
+        }
+    }
+};
+
+export const DescriptionColumn: ColumnDetail = {
+    title: "Description",
+    accessor: "description",
+    inputType: InputType.TEXT,
+    isUrl: false,
+    isDollarAmount: false,
+    addSuffix: "",
+    showColumn: false,
+    isEditable: true,
+    isSortable: false,
+    detailedDescription: "",
+    [TableType.PROPERTY_LIST_TABLE]: {
+        value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            return PropertiesListTableHelper.getDescription(listingWithScenarios);
+        },
+        setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
+            PropertiesListTableHelper.setDescription(listingWithScenarios, newValue.toString());
+        }
+    },
+    [TableType.DUMMY_CSV_DATA_TABLE]: {
+        value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
+            return dummyCSVData.description;
         }
     }
 };

@@ -22,16 +22,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import {
-    AbstractTable1,
     InputType,
     PrimitiveType,
     SortDirection,
-    TableColumn,
-    TableData,
     TableType
 } from '@realestatemanager/types';
 import ConfirmationDialog from './ConfirmationDialog';
 import NewExportCSVButton from './ExportCSVButton';
+import { AbstractTable, TableColumn, TableData } from '../newtabledata/tabledata/AbstractTable';
 
 const TEMP_FEATURE_FLAG = true;
 
@@ -111,7 +109,7 @@ export type TableActions<Y> = {
 */
 export interface ReusableTableProps<K extends TableType, Y, X> {
     data: Y[];
-    tableHandler: AbstractTable1<K, Y, X>;
+    tableHandler: AbstractTable<K, Y, X>;
     onRowClick?: (item: Y) => void;
     tableSeperatorDetails?: TableSeparatorDetails;
     tableActions?: TableActions<Y>;

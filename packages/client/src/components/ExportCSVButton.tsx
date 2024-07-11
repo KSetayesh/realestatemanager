@@ -1,11 +1,12 @@
 import CustomButtonComponent from "../basicdatadisplaycomponents/ButtonComponent";
 import Papa from 'papaparse';
-import { AbstractTable1, TableColumn, TableData, TableType } from "@realestatemanager/types";
+import { TableType } from "@realestatemanager/types";
+import { AbstractTable, TableColumn, TableData } from "../newtabledata/tabledata/AbstractTable";
 
 export interface TableRow { [key: string]: any };
 
 export interface ExportDataProps<K extends TableType, Y, X> {
-    tableHandler: AbstractTable1<K, Y, X>;
+    tableHandler: AbstractTable<K, Y, X>;
     tableData: TableData<Y, X>,
 };
 
