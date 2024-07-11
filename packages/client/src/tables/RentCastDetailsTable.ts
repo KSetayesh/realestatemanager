@@ -1,28 +1,28 @@
-import { RentCastDetailsResponseDTO } from "@realestatemanager/types";
-import { AbstractTable, TablesConfig } from "./AbstractTable";
-import { TableColumn, TableRow } from "../components/ReusableTable";
-import { DefaultTableType } from "../constants/Constant";
-import { rentCastDetailsColumns } from "./columns/RentCastDetailsColumns";
+// import { RentCastDetailsResponseDTO } from "@realestatemanager/types";
+// import { AbstractTable, TablesConfig } from "./AbstractTable";
+// import { TableColumn, TableRow } from "../components/ReusableTable";
+// import { DefaultTableType } from "../constants/Constant";
+// import { rentCastDetailsColumns } from "./columns/RentCastDetailsColumns";
 
-export class RentCastDetailsTable extends AbstractTable<RentCastDetailsResponseDTO, DefaultTableType> {
+// export class RentCastDetailsTable extends AbstractTable<RentCastDetailsResponseDTO, DefaultTableType> {
 
-    getDefaultTableType(): DefaultTableType {
-        return DefaultTableType.DEFAULT;
-    }
+//     getDefaultTableType(): DefaultTableType {
+//         return DefaultTableType.DEFAULT;
+//     }
 
-    getTablesConfig(): TablesConfig<RentCastDetailsResponseDTO> {
-        return {
-            [DefaultTableType.DEFAULT]: {
-                columns: this.getDefaultColumns(),
-                data: (data: RentCastDetailsResponseDTO): TableRow => {
-                    return data;
-                },
-            },
-        };
-    }
+//     getTablesConfig(): TablesConfig<RentCastDetailsResponseDTO> {
+//         return {
+//             [DefaultTableType.DEFAULT]: {
+//                 columns: this.getDefaultColumns(),
+//                 data: (data: RentCastDetailsResponseDTO): TableRow => {
+//                     return data;
+//                 },
+//             },
+//         };
+//     }
 
-    getDefaultColumns(): TableColumn[] {
-        return rentCastDetailsColumns;
-    }
+//     getDefaultColumns(): TableColumn[] {
+//         return rentCastDetailsColumns;
+//     }
 
-}
+// }

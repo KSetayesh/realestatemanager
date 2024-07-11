@@ -1,55 +1,55 @@
-import {
-    TableColumn,
-    TableDataItem,
-    TableRow
-} from "../components/ReusableTable";
+// import {
+//     TableColumn,
+//     TableDataItem,
+//     TableRow
+// } from "../components/ReusableTable";
 
-/* ----For PropertiesListTable---- 
-    Y = ListingWithScenariosResponseDTO
-    X = PropertiesListTableType
+// /* ----For PropertiesListTable---- 
+//     Y = ListingWithScenariosResponseDTO
+//     X = PropertiesListTableType
 
-   ----For InvestmentBreakdownTable---- 
-    Y = MonthlyInvestmentDetailsResponseDTO
-    X = InvestmentBreakdownTableType
-*/
+//    ----For InvestmentBreakdownTable---- 
+//     Y = MonthlyInvestmentDetailsResponseDTO
+//     X = InvestmentBreakdownTableType
+// */
 
-export interface TableConfig<Y> {
-    columns: TableColumn[];
-    data: (data: Y) => TableRow;
-};
+// export interface TableConfig<Y> {
+//     columns: TableColumn[];
+//     data: (data: Y) => TableRow;
+// };
 
-export interface TablesConfig<Y> {
-    [type: string]: TableConfig<Y>;
-};
+// export interface TablesConfig<Y> {
+//     [type: string]: TableConfig<Y>;
+// };
 
-export abstract class AbstractTable<Y, X extends keyof TablesConfig<Y>> {
+// export abstract class AbstractTable<Y, X extends keyof TablesConfig<Y>> {
 
-    abstract getTablesConfig(): TablesConfig<Y>;
+//     abstract getTablesConfig(): TablesConfig<Y>;
 
-    abstract getDefaultColumns(): TableColumn[];
+//     abstract getDefaultColumns(): TableColumn[];
 
-    abstract getDefaultTableType(): X;
+//     abstract getDefaultTableType(): X;
 
-    getRowData(data: Y, tableType: X): TableDataItem<Y> {
-        const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
-        return {
-            objectData: {
-                key: data,
-            },
-            rowData: tablesConfig[tableType].data(data),
-        };
-    }
+//     getRowData(data: Y, tableType: X): TableDataItem<Y> {
+//         const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
+//         return {
+//             objectData: {
+//                 key: data,
+//             },
+//             rowData: tablesConfig[tableType].data(data),
+//         };
+//     }
 
-    getTableData(
-        listOfData: Y[],
-        tableType: X
-    ): TableDataItem<Y>[] {
-        return listOfData.map(data => this.getRowData(data, tableType));
-    }
+//     getTableData(
+//         listOfData: Y[],
+//         tableType: X
+//     ): TableDataItem<Y>[] {
+//         return listOfData.map(data => this.getRowData(data, tableType));
+//     }
 
-    getTableOptions(): X[] {
-        const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
-        return Object.keys(tablesConfig) as X[];
-    }
+//     getTableOptions(): X[] {
+//         const tablesConfig: TablesConfig<Y> = this.getTablesConfig();
+//         return Object.keys(tablesConfig) as X[];
+//     }
 
-};
+// };

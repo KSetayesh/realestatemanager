@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
-    AddPropertyFormData,
     CreateListingDetailsRequest,
     CreatePropertiesInBulkRequest,
     DummyCSVDataType
@@ -10,10 +9,10 @@ import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AddPropertyFormDetails } from '../forms/AddPropertyFormDetails';
 import UploadCSVFile from '../components/UploadCSVFile';
 import ReusableTable from '../components/ReusableTable';
-import { DummyCSVDataTable } from '../tables/DummyCSVDataTable';
 import RadioButtonComponent from '../basicdatadisplaycomponents/RadioButtonComponent';
 import { Box, Paper, Typography } from '@mui/material';
 import { AddPropertyType } from '../constants/Constant';
+import { DummyCSVDataTable } from '../newtabledata/tabledata/DummyCSVDataTable';
 
 // New type with all properties as strings
 // export type DummyCSVDataType = {
