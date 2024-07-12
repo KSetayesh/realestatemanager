@@ -1,25 +1,5 @@
 export const Any: string = 'Any';
 
-// export enum InputType {
-//     TEXT = 'text',
-//     SELECT = 'select',
-//     NUMBER = 'number',
-//     RADIO = 'radio',
-//     STRING = 'string',
-//     CHECKBOX = 'checkbox',
-// };
-
-// export enum DefaultTableType {
-//     DEFAULT = 'DEFAULT',
-// };
-
-// export enum InvestmentBreakdownTableType {
-//     STANDARD_BREAKDOWN = "STANDARD_BREAKDOWN",
-//     MORTGAGE_BREAKDOWN = "MORTGAGE_BREAKDOWN",
-//     EXPENSES_BREAKDOWN = "EXPENSES_BREAKDOWN",
-//     INVESTMENT_BREAKDOWN = "INVESTMENT_BREAKDOWN",
-// };
-
 export enum AddPropertyType {
     SINGLE_PROPERTY_INPUT = 'SINGLE_PROPERTY_INPUT',
     BULK_UPLOAD = 'BULK_UPLOAD',
