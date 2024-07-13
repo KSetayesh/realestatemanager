@@ -56,3 +56,25 @@ export const renderCellData = (cellData: any, isDollarAmount: boolean = false, a
     return toReturn === '' ? toReturn : toReturn + (addSuffix ? addSuffix : ''); // Fallback for undefined or null
 
 };
+
+export const isValidPhoneNumber = (phoneNumber: string): boolean => {
+    // Define a regex pattern for U.S. phone numbers
+    const pattern = /^(\+\d{1,2}\s?)?(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/;
+    // Test the pattern against the provided phone number
+    return pattern.test(phoneNumber);
+};
+
+export const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+};
+
+export const isPositiveWholeNumber = (value: string, callBack?: (num: number) => boolean): boolean => {
+    const num = parseInt(value, 10);
+    // Check if parsed number is not NaN, is a whole number, and is greater than 0
+    const isValidPostitiveNumber = !isNaN(num) && num >= 0 && num.toString() === value.trim();
+    if (!callBack || !isValidPostitiveNumber) {
+        return isValidPostitiveNumber;
+    }
+    return callBack(num);
+}

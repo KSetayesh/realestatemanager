@@ -4,9 +4,11 @@ import {
     ColumnDetail,
     InputType,
     PrimitiveType,
-    TableType
+    TableType,
+    ValidationValue
 } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
+import { isValidEmail, isValidPhoneNumber } from "../../constants/Constant";
 
 export const FirstNameColumn: ColumnDetail = {
     title: "First Name",
@@ -24,7 +26,18 @@ export const FirstNameColumn: ColumnDetail = {
             return agent.firstName;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.firstName = newValue.toString();
+            agent.firstName = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a first name'
+                };
+            }
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -45,7 +58,18 @@ export const LastNameColumn: ColumnDetail = {
             return agent.lastName;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.lastName = newValue.toString();
+            agent.lastName = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a last name'
+                };
+            }
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -66,7 +90,18 @@ export const FullNameColumn: ColumnDetail = {
             return agent.fullName;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.fullName = newValue.toString();
+            agent.fullName = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a full name'
+                };
+            }
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -87,7 +122,7 @@ export const WebsiteColumn: ColumnDetail = {
             return agent.website;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.website = newValue.toString();
+            agent.website = newValue === undefined ? "" : newValue.toString();
         }
     },
 };
@@ -108,7 +143,7 @@ export const CompanyNameColumn: ColumnDetail = {
             return agent.companyName;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.companyName = newValue.toString();
+            agent.companyName = newValue === undefined ? "" : newValue.toString();
         }
     },
 };
@@ -129,7 +164,24 @@ export const PhoneNumberColumn: ColumnDetail = {
             return agent.phoneNumber;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.phoneNumber = newValue.toString();
+            agent.phoneNumber = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a phone number'
+                };
+            }
+            if (!isValidPhoneNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid phone number format'
+                };
+            }
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -150,7 +202,24 @@ export const EmailColumn: ColumnDetail = {
             return agent.email;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.email = newValue.toString();
+            agent.email = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have an email'
+                };
+            }
+            if (!isValidEmail(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid email format'
+                };
+            }
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -171,7 +240,18 @@ export const AgentTypeColumn: ColumnDetail = {
             return agent.agentType;
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
-            agent.agentType = Utility.getEnumValue(AgentType, newValue.toString())!;
-        }
+            const errorMsg = 'CreationType cannot be undefined';
+            if (newValue === undefined) {
+                throw new Error(errorMsg);
+            }
+            const agentTypeEnum: AgentType | undefined = Utility.getEnumValue(
+                AgentType,
+                newValue.toString()
+            );
+            if (agentTypeEnum === undefined) {
+                throw new Error(errorMsg);
+            }
+            agent.agentType = agentTypeEnum;
+        },
     },
 };

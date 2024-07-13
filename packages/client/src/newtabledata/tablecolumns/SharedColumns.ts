@@ -7,10 +7,12 @@ import {
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO,
     PrimitiveType,
-    TableType
+    TableType,
+    ValidationValue
 } from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
+import { isPositiveWholeNumber } from "../../constants/Constant";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",
@@ -121,6 +123,23 @@ export const RentEstimateColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setRentEstimate(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a rent value',
+                };
+            }
+            if (!isPositiveWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Rent value (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.INVESTMENT_BREAKDOWN_TABLE]: {
@@ -548,6 +567,23 @@ export const ElementarySchoolRatingColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setElementarySchoolRating(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a school rating value',
+                };
+            }
+            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -574,6 +610,23 @@ export const MiddleSchoolRatingColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setMiddleSchoolRating(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a school rating value',
+                };
+            }
+            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -600,6 +653,23 @@ export const HighSchoolRatingColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setHighSchoolRating(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a school rating value',
+                };
+            }
+            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -625,7 +695,10 @@ export const NumberOfBedroomsColumn: ColumnDetail = {
             return PropertiesListTableHelper.getNumberOfBedrooms(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setNumberOfBedrooms(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setNumberOfBedrooms(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -651,7 +724,10 @@ export const NumberOfFullBathroomsColumn: ColumnDetail = {
             return PropertiesListTableHelper.getNumberOfFullBathrooms(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setNumberOfFullBathrooms(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setNumberOfFullBathrooms(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -677,7 +753,10 @@ export const NumberOfHalfBathroomsColumn: ColumnDetail = {
             return PropertiesListTableHelper.getNumberOfHalfBathrooms(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setNumberOfHalfBathrooms(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setNumberOfHalfBathrooms(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -703,7 +782,10 @@ export const SquareFeetColumn: ColumnDetail = {
             return PropertiesListTableHelper.getSquareFeet(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setSquareFeet(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setSquareFeet(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -729,7 +811,10 @@ export const AcresColumn: ColumnDetail = {
             return PropertiesListTableHelper.getAcres(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setAcres(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setAcres(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -755,7 +840,10 @@ export const YearBuiltColumn: ColumnDetail = {
             return PropertiesListTableHelper.getYearBuilt(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setYearBuilt(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setYearBuilt(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -781,7 +869,10 @@ export const HasGarageColumn: ColumnDetail = {
             return PropertiesListTableHelper.hasGarage(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setHasGarage(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+            PropertiesListTableHelper.setHasGarage(
+                listingWithScenarios,
+                newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -807,7 +898,10 @@ export const HasPoolColumn: ColumnDetail = {
             return PropertiesListTableHelper.hasPool(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setHasPool(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+            PropertiesListTableHelper.setHasPool(
+                listingWithScenarios,
+                newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -833,7 +927,10 @@ export const HasBasementColumn: ColumnDetail = {
             return PropertiesListTableHelper.hasBasement(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setHasBasement(listingWithScenarios, newValue.toString().toLocaleLowerCase() === 'true');
+            PropertiesListTableHelper.setHasBasement(
+                listingWithScenarios,
+                newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -885,7 +982,10 @@ export const ZestimateColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZestimate(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZestimate(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZestimate(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -911,7 +1011,10 @@ export const ZillowRentEstimateColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZillowRentEstimate(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZillowRentEstimate(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZillowRentEstimate(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            )
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -937,7 +1040,10 @@ export const ZestimateRangeLowColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZestimateRangeLow(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZestimateRangeLow(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZestimateRangeLow(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -963,7 +1069,10 @@ export const ZestimateRangeHighColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZestimateRangeHigh(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZestimateRangeHigh(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZestimateRangeHigh(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -989,7 +1098,10 @@ export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZillowMonthlyPropertyTaxAmount(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZillowMonthlyPropertyTaxAmount(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZillowMonthlyPropertyTaxAmount(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1015,7 +1127,10 @@ export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZillowMonthlyHomeInsuranceAmount(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZillowMonthlyHomeInsuranceAmount(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZillowMonthlyHomeInsuranceAmount(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1041,7 +1156,10 @@ export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
             return PropertiesListTableHelper.getZillowMonthlyHOAFeesAmount(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setZillowMonthlyHOAFeesAmount(listingWithScenarios, Number(newValue));
+            PropertiesListTableHelper.setZillowMonthlyHOAFeesAmount(
+                listingWithScenarios,
+                newValue === undefined ? undefined : Number(newValue)
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1067,7 +1185,10 @@ export const DescriptionColumn: ColumnDetail = {
             return PropertiesListTableHelper.getDescription(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setDescription(listingWithScenarios, newValue.toString());
+            PropertiesListTableHelper.setDescription(
+                listingWithScenarios,
+                newValue === undefined ? "" : newValue.toString()
+            );
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {

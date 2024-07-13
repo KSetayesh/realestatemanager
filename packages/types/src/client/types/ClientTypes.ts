@@ -318,6 +318,11 @@ export enum SortDirection {
 
 export type PrimitiveType = string | boolean | number | undefined;
 
+export type ValidationValue = {
+    isValid: boolean;
+    message?: string;
+};
+
 // Define a type that maps TableType to its corresponding DTO type
 export type TableTypeSpecific<T extends TableType> =
     T extends TableType.PROPERTY_LIST_TABLE ? ListingWithScenariosResponseDTO :
@@ -337,10 +342,13 @@ export type ValueFunction<T extends TableType> =
 export type SetValueFunction<T extends TableType> =
     (item: TableTypeSpecific<T>, newValue: PrimitiveType) => void;
 
+export type IsValidFunction = (newValue: PrimitiveType) => ValidationValue;
+
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
     value: ValueFunction<T>;
     setValue?: SetValueFunction<T>;
+    validate?: IsValidFunction;
 };
 
 export type ColumnDetail = {

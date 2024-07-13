@@ -4,10 +4,12 @@ import {
     ListingCreationType,
     ListingWithScenariosResponseDTO,
     PrimitiveType,
-    TableType
+    TableType,
+    ValidationValue
 } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
+import { isPositiveWholeNumber } from "../../constants/Constant";
 
 export const PriceColumn: ColumnDetail = {
     title: "Price",
@@ -26,6 +28,23 @@ export const PriceColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setPrice(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString.length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a price',
+                };
+            }
+            if (!isPositiveWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     }
 };
@@ -220,7 +239,18 @@ export const CreationTypeColumn: ColumnDetail = {
             return PropertiesListTableHelper.getCreationType(listingWithScenarios);
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
-            PropertiesListTableHelper.setCreationType(listingWithScenarios, Utility.getEnumValue(ListingCreationType, newValue.toString()));
+            const errorMsg = 'CreationType cannot be undefined';
+            if (newValue === undefined) {
+                throw new Error(errorMsg);
+            }
+            const listingCreationTypeEnum: ListingCreationType | undefined = Utility.getEnumValue(
+                ListingCreationType,
+                newValue.toString()
+            );
+            if (listingCreationTypeEnum === undefined) {
+                throw new Error(errorMsg);
+            }
+            PropertiesListTableHelper.setCreationType(listingWithScenarios, listingCreationTypeEnum);
         }
     }
 };
