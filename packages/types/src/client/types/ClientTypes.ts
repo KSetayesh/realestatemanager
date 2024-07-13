@@ -316,7 +316,7 @@ export enum SortDirection {
     DESCENDING = 'descending',
 };
 
-export type PrimitiveType = string | boolean | number;
+export type PrimitiveType = string | boolean | number | undefined;
 
 // Define a type that maps TableType to its corresponding DTO type
 export type TableTypeSpecific<T extends TableType> =
