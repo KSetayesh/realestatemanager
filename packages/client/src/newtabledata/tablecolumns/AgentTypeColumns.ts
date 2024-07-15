@@ -123,6 +123,11 @@ export const WebsiteColumn: ColumnDetail = {
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
             agent.website = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -144,6 +149,11 @@ export const CompanyNameColumn: ColumnDetail = {
         },
         setValue: (agent: AgentResponseDTO, newValue: PrimitiveType): void => {
             agent.companyName = newValue === undefined ? "" : newValue.toString();
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
         }
     },
 };
@@ -253,5 +263,10 @@ export const AgentTypeColumn: ColumnDetail = {
             }
             agent.agentType = agentTypeEnum;
         },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
+        }
     },
 };

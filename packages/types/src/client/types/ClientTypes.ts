@@ -347,9 +347,25 @@ export type IsValidFunction = (newValue: PrimitiveType) => ValidationValue;
 // Define the type for the table-specific details
 export type TableTypeDetails<T extends TableType> = {
     value: ValueFunction<T>;
-    setValue?: SetValueFunction<T>;
-    validate?: IsValidFunction;
+} & (SetValueFunctionExists<T> | SetValueFunctionDoesNotExist<T>);
+
+// Utility types to enforce conditional inclusion of validate when setValue is implemented
+type SetValueFunctionExists<T extends TableType> = {
+    setValue: SetValueFunction<T>;
+    validate: IsValidFunction;  // Mandatory if setValue is defined
 };
+
+type SetValueFunctionDoesNotExist<T extends TableType> = {
+    setValue?: never;
+    validate?: never;
+};
+
+// // Define the type for the table-specific details
+// export type TableTypeDetails<T extends TableType> = {
+//     value: ValueFunction<T>;
+//     setValue?: SetValueFunction<T>;
+//     validate?: IsValidFunction;
+// };
 
 export type ColumnDetail = {
     title: string;

@@ -976,6 +976,11 @@ export const HasGarageColumn: ColumnDetail = {
                 newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
             );
         },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
+        }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
         value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
@@ -1004,6 +1009,11 @@ export const HasPoolColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1033,6 +1043,11 @@ export const HasBasementColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {

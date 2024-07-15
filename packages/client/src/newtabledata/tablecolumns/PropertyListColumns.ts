@@ -251,6 +251,11 @@ export const CreationTypeColumn: ColumnDetail = {
                 throw new Error(errorMsg);
             }
             PropertiesListTableHelper.setCreationType(listingWithScenarios, listingCreationTypeEnum);
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            return {
+                isValid: true
+            }
         }
     }
 };
