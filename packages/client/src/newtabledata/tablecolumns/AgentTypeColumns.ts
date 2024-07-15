@@ -29,7 +29,7 @@ export const FirstNameColumn: ColumnDetail = {
             agent.firstName = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a first name'
@@ -61,7 +61,7 @@ export const LastNameColumn: ColumnDetail = {
             agent.lastName = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a last name'
@@ -93,7 +93,7 @@ export const FullNameColumn: ColumnDetail = {
             agent.fullName = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a full name'
@@ -167,7 +167,7 @@ export const PhoneNumberColumn: ColumnDetail = {
             agent.phoneNumber = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a phone number'
@@ -205,7 +205,7 @@ export const EmailColumn: ColumnDetail = {
             agent.email = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have an email'

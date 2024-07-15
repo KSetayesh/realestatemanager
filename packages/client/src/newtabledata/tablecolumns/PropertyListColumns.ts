@@ -9,7 +9,7 @@ import {
 } from "@realestatemanager/types";
 import { Utility } from "@realestatemanager/utilities";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
-import { isPositiveWholeNumber } from "../../constants/Constant";
+import { isNonNegativeWholeNumber } from "../../constants/Constant";
 
 export const PriceColumn: ColumnDetail = {
     title: "Price",
@@ -30,13 +30,13 @@ export const PriceColumn: ColumnDetail = {
             PropertiesListTableHelper.setPrice(listingWithScenarios, Number(newValue));
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a price',
                 };
             }
-            if (!isPositiveWholeNumber(newValue.toString())) {
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
                 return {
                     isValid: false,
                     message: 'Not a valid Price (must be whole number and => 0',

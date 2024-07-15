@@ -12,7 +12,7 @@ import {
 } from "@realestatemanager/types";
 import { InvestmentDetailsTableHelper } from "../../newutilities/InvestmentDetailsTableHelper";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
-import { isPositiveWholeNumber } from "../../constants/Constant";
+import { isNonNegativeNumber, isNonNegativeWholeNumber } from "../../constants/Constant";
 
 export const YearColumn: ColumnDetail = {
     title: "Year",
@@ -125,13 +125,13 @@ export const RentEstimateColumn: ColumnDetail = {
             PropertiesListTableHelper.setRentEstimate(listingWithScenarios, Number(newValue));
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a rent value',
                 };
             }
-            if (!isPositiveWholeNumber(newValue.toString())) {
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
                 return {
                     isValid: false,
                     message: 'Not a valid Rent value (must be whole number and => 0',
@@ -569,13 +569,13 @@ export const ElementarySchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setElementarySchoolRating(listingWithScenarios, Number(newValue));
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a school rating value',
                 };
             }
-            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+            if (!isNonNegativeWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
                 return {
                     isValid: false,
                     message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
@@ -612,13 +612,13 @@ export const MiddleSchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setMiddleSchoolRating(listingWithScenarios, Number(newValue));
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a school rating value',
                 };
             }
-            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+            if (!isNonNegativeWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
                 return {
                     isValid: false,
                     message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
@@ -655,13 +655,13 @@ export const HighSchoolRatingColumn: ColumnDetail = {
             PropertiesListTableHelper.setHighSchoolRating(listingWithScenarios, Number(newValue));
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
-            if (newValue === undefined || newValue.toString.length === 0) {
+            if (newValue === undefined || newValue.toString().length === 0) {
                 return {
                     isValid: false,
                     message: 'Must have a school rating value',
                 };
             }
-            if (!isPositiveWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
+            if (!isNonNegativeWholeNumber(newValue.toString(), (num: number) => { return num > 0 || num <= 10 })) {
                 return {
                     isValid: false,
                     message: 'Not a valid school rating value (must be whole number and between greater than 0 and less than or equal to 10',
@@ -699,6 +699,23 @@ export const NumberOfBedroomsColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid  Number Of Bedrooms value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -728,6 +745,23 @@ export const NumberOfFullBathroomsColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid  Number Of Full Bathrooms value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -757,6 +791,23 @@ export const NumberOfHalfBathroomsColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid  Number Of Half Bathrooms value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -786,6 +837,23 @@ export const SquareFeetColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Square Feet value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -815,6 +883,23 @@ export const AcresColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Acres value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -844,6 +929,23 @@ export const YearBuiltColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Year Built value',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -873,7 +975,7 @@ export const HasGarageColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : newValue.toString().toLocaleLowerCase() === 'true'
             );
-        }
+        },
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
         value: (dummyCSVData: DummyCSVDataType): PrimitiveType => {
@@ -957,6 +1059,23 @@ export const ListingPriceColumn: ColumnDetail = {
         },
         setValue: (listingWithScenarios: ListingWithScenariosResponseDTO, newValue: PrimitiveType): void => {
             PropertiesListTableHelper.setListingPrice(listingWithScenarios, Number(newValue));
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: false,
+                    message: 'Must have a Listing Price',
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Listing Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -986,6 +1105,23 @@ export const ZestimateColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zestimate Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1015,6 +1151,23 @@ export const ZillowRentEstimateColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             )
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zillow Rent Estimate (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1044,6 +1197,23 @@ export const ZestimateRangeLowColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zestimate Range Low Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1073,6 +1243,23 @@ export const ZestimateRangeHighColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zestimate Range High Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1102,6 +1289,23 @@ export const ZillowMonthlyPropertyTaxAmountColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zillow Monthly Property Tax Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1131,6 +1335,23 @@ export const ZillowMonthlyHomeInsuranceAmountColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zillow Monthly Home Insurance Price (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1160,6 +1381,23 @@ export const ZillowMonthlyHOAFeesAmountColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? undefined : Number(newValue)
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            // Undefined value is okay
+            if (newValue === undefined || newValue.toString().length === 0) {
+                return {
+                    isValid: true,
+                };
+            }
+            if (!isNonNegativeWholeNumber(newValue.toString())) {
+                return {
+                    isValid: false,
+                    message: 'Not a valid Zillow Monthly HOA Fee Amount (must be whole number and => 0',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {
@@ -1189,6 +1427,17 @@ export const DescriptionColumn: ColumnDetail = {
                 listingWithScenarios,
                 newValue === undefined ? "" : newValue.toString()
             );
+        },
+        validate: (newValue: PrimitiveType): ValidationValue => {
+            if (newValue && newValue.toString().length > 1000) {
+                return {
+                    isValid: false,
+                    message: 'Description must be less than or equal to 1000 characters',
+                };
+            }
+            return {
+                isValid: true
+            };
         }
     },
     [TableType.DUMMY_CSV_DATA_TABLE]: {

@@ -69,10 +69,20 @@ export const isValidEmail = (email: string): boolean => {
     return emailRegex.test(email);
 };
 
-export const isPositiveWholeNumber = (value: string, callBack?: (num: number) => boolean): boolean => {
+export const isNonNegativeWholeNumber = (value: string, callBack?: (num: number) => boolean): boolean => {
     const num = parseInt(value, 10);
     // Check if parsed number is not NaN, is a whole number, and is greater than 0
     const isValidPostitiveNumber = !isNaN(num) && num >= 0 && num.toString() === value.trim();
+    if (!callBack || !isValidPostitiveNumber) {
+        return isValidPostitiveNumber;
+    }
+    return callBack(num);
+};
+
+export const isNonNegativeNumber = (value: string, callBack?: (num: number) => boolean): boolean => {
+    const num = parseFloat(value);
+    // Check if the parsed number is not NaN and is greater than 0
+    const isValidPostitiveNumber = !isNaN(num) && num >= 0;
     if (!callBack || !isValidPostitiveNumber) {
         return isValidPostitiveNumber;
     }
