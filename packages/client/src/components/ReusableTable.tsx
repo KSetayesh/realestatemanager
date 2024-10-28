@@ -240,7 +240,6 @@ const ReusableTable = <K extends TableType, Y, X>({
             const editedRow = tableData.rows[editIndex];
             if (areTableRowsEditable()) {
                 try {
-
                     const updatedRow: Y = await tableActions!.handleEditUpdate!(editedRow);
                     const updatedRows: Y[] = [...tableData.rows];
                     updatedRows[editIndex] = updatedRow;
@@ -394,7 +393,7 @@ const ReusableTable = <K extends TableType, Y, X>({
     const getRouteToCellContent = (cellData: PrimitiveType, item: Y) => {
         return (
             <span>
-                <Link to={cellData.toString()} state={{ data: item }}>
+                <Link to={cellData?.toString() ?? ''} state={{ data: item }}>
                     {cellData}
                 </Link>
             </span>
@@ -420,7 +419,7 @@ const ReusableTable = <K extends TableType, Y, X>({
     const getUrlCellContent = (cellData: PrimitiveType) => {
         // const formattedUrl = ensureAbsoluteUrl(cellData);
         return (
-            <a href={cellData.toString()} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+            <a href={cellData?.toString() ?? ''} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                 View
             </a>
         );

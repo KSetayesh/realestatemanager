@@ -69,27 +69,27 @@ export interface CreateUpdatePropertyRequest {
     propertyIdentifier: PropertyIdentifier;
     price: number;
     rentEstimate: number;
-    elementarySchoolRating: number;
-    middleSchoolRating: number;
-    highSchoolRating: number;
-    numberOfBedrooms: number;
-    numberOfFullBathrooms: number;
-    numberOfHalfBathrooms: number;
-    squareFeet: number;
-    acres: number;
-    yearBuilt: number;
-    hasGarage: boolean;
-    hasPool: boolean;
-    hasBasement: boolean;
+    elementarySchoolRating: number | undefined;
+    middleSchoolRating: number | undefined;
+    highSchoolRating: number | undefined;
+    numberOfBedrooms: number | undefined;
+    numberOfFullBathrooms: number | undefined;
+    numberOfHalfBathrooms: number | undefined;
+    squareFeet: number | undefined;
+    acres: number | undefined;
+    yearBuilt: number | undefined;
+    hasGarage: boolean | undefined;
+    hasPool: boolean | undefined;
+    hasBasement: boolean | undefined;
     listingPrice: number;
-    zestimate: number;
-    zillowRentEstimate: number;
-    zestimateRangeLow: number;
-    zestimateRangeHigh: number;
-    zillowMonthlyPropertyTaxAmount: number;
-    zillowMonthlyHomeInsuranceAmount: number;
-    zillowMonthlyHOAFeesAmount: number;
-    description: string;
+    zestimate: number | undefined;
+    zillowRentEstimate: number | undefined;
+    zestimateRangeLow: number | undefined;
+    zestimateRangeHigh: number | undefined;
+    zillowMonthlyPropertyTaxAmount: number | undefined;
+    zillowMonthlyHomeInsuranceAmount: number | undefined;
+    zillowMonthlyHOAFeesAmount: number | undefined;
+    description: string | undefined;
 };
 
 //------------------------------------------------------------------------------------------------
@@ -109,20 +109,20 @@ export interface ListingDetailsResponseDTO {
 };
 
 export type AddressResponseDTO = {
-    fullAddress?: string;
-    state?: State;
-    zipcode?: string;
-    city?: string;
+    fullAddress: string;
+    state: State;
+    zipcode: string;
+    city: string;
     county?: string;
-    country?: Country;
-    streetAddress?: string;
+    country: Country;
+    streetAddress: string;
     apartmentNumber?: string;
     longitude?: number;
     latitude?: number;
 };
 
 export interface PropertyDetailsResponseDTO {
-    address?: AddressResponseDTO;
+    address: AddressResponseDTO;
     schoolRating?: SchoolRatingResponseDTO;
     numberOfBedrooms?: number;
     numberOfFullBathrooms?: number;
