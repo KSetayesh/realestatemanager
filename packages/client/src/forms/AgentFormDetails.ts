@@ -4,10 +4,10 @@ import {
     AgentType,
     Country,
     CreateAgentRequest,
-    State
+    State,
+    InputType
 } from "@realestatemanager/types";
 import { FormProperty } from "../components/StandardForm";
-import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import {
     BasicStringForm,

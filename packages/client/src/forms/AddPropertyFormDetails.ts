@@ -5,11 +5,12 @@ import {
     CreateListingDetailsRequest,
     PropertyStatus,
     PropertyType,
-    State
+    State,
+    InputType
 } from "@realestatemanager/types";
-import {
-    InputType,
-} from "../constants/Constant";
+// import {
+//     InputType,
+// } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import { FormProperty } from "../components/StandardForm";
 import {

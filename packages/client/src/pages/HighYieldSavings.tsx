@@ -10,7 +10,8 @@ import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
-import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
+import { HighYieldSavingsTable } from '../newtabledata/tabledata/HighYieldSavingsTable';
+// import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
 
 const HighYieldSavings: React.FC = () => {
 

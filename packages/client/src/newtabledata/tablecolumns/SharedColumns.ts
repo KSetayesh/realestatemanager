@@ -977,6 +977,7 @@ export const HasGarageColumn: ColumnDetail = {
             );
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }
@@ -1011,6 +1012,7 @@ export const HasPoolColumn: ColumnDetail = {
             );
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }
@@ -1045,6 +1047,7 @@ export const HasBasementColumn: ColumnDetail = {
             );
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }

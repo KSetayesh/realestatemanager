@@ -200,7 +200,7 @@ export const DateListedColumn: ColumnDetail = {
     detailedDescription: "",
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
-            return PropertiesListTableHelper.getDateListed(listingWithScenarios);
+            return PropertiesListTableHelper.getDateListed(listingWithScenarios).toLocaleDateString('en-US');;
         }
     }
 };
@@ -218,7 +218,7 @@ export const DateCreatedColumn: ColumnDetail = {
     detailedDescription: "",
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
-            return PropertiesListTableHelper.getDateCreated(listingWithScenarios);
+            return PropertiesListTableHelper.getDateCreated(listingWithScenarios).toLocaleDateString('en-US');;
         }
     }
 };
@@ -253,6 +253,7 @@ export const CreationTypeColumn: ColumnDetail = {
             PropertiesListTableHelper.setCreationType(listingWithScenarios, listingCreationTypeEnum);
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }
@@ -275,6 +276,7 @@ export const InvestmentBreakdownColumn: ColumnDetail = {
     routeTo: 'investmentBreakdown',
     [TableType.PROPERTY_LIST_TABLE]: {
         value: (listingWithScenarios: ListingWithScenariosResponseDTO): PrimitiveType => {
+            console.log('listingWithScenarios:', listingWithScenarios);
             return 'View';
         }
     },

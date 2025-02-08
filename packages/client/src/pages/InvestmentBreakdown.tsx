@@ -5,14 +5,16 @@ import DetailsModal from '../components/DetailsModal';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
-import { PropertiesListTable } from '../tables/PropertiesListTable';
-import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
+// import { PropertiesListTable } from '../tables/PropertiesListTable';
+// import { InvestmentBreakdownTable } from '../tables/InvestmentBreakdownTable';
 import {
     CreateInvestmentScenarioRequest,
     InvestmentFormData,
     ListingWithScenariosResponseDTO,
     MonthlyInvestmentDetailsResponseDTO
 } from '@realestatemanager/types';
+import { PropertiesListTable } from '../newtabledata/tabledata/PropertiesListTable';
+import { InvestmentBreakdownTable } from '../newtabledata/tabledata/InvestmentBreakdownTable';
 
 const InvestmentBreakdown: React.FC = () => {
 

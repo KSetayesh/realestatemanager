@@ -125,6 +125,7 @@ export const WebsiteColumn: ColumnDetail = {
             agent.website = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }
@@ -151,6 +152,7 @@ export const CompanyNameColumn: ColumnDetail = {
             agent.companyName = newValue === undefined ? "" : newValue.toString();
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }
@@ -264,6 +266,7 @@ export const AgentTypeColumn: ColumnDetail = {
             agent.agentType = agentTypeEnum;
         },
         validate: (newValue: PrimitiveType): ValidationValue => {
+            console.log('newValue:', newValue);
             return {
                 isValid: true
             }

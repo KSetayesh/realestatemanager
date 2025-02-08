@@ -4,7 +4,9 @@ import { RentCastApi } from '../api/rentcastapi';
 import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import ReusableTable from '../components/ReusableTable';
-import { RentCastDetailsTable } from '../tables/RentCastDetailsTable';
+import { RentCastDetailsTable } from '../newtabledata/tabledata/RentCastDetailsTable';
+// import { RentCastDetailsTable } from '../tables/RentCastDetailsTable';
+
 
 const CollectProperties: React.FC = () => {
     const rentCastApi: RentCastApi = new RentCastApi();

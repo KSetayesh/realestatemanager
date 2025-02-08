@@ -1,5 +1,5 @@
 import { FormProperty } from "../components/StandardForm";
-import { InputType } from "../constants/Constant";
+// import { InputType } from "../constants/Constant";
 import {
     getAnnualAppreciationRate,
     getAnnualHOAFeesIncreaseRate,
@@ -44,7 +44,8 @@ import {
     ListingWithScenariosResponseDTO,
     PercentageAndAmount,
     ValueInput,
-    ValueType
+    ValueType,
+    InputType
 } from "@realestatemanager/types";
 import { FormInterface } from "./FormInterface";
 import { BasicNumberForm, GetOptionsForFormProperty } from "./ReusableFormFields";

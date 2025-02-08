@@ -4,10 +4,11 @@ import {
     CreateRentCastApiRequest,
     PropertyStatus,
     PropertyType,
-    State
+    State,
+    InputType
 } from "@realestatemanager/types";
 import { FormInterface } from "./FormInterface";
-import { InputType } from "../constants/Constant";
+// import { InputType } from "../constants/Constant";
 import { FormProperty } from "../components/StandardForm";
 import {
     BasicCheckBoxForm,

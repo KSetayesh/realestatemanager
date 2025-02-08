@@ -4,10 +4,11 @@ import {
     Filter,
     PropertyFilterFormFields,
     PropertyType,
-    State
+    State,
+    InputType
 } from "@realestatemanager/types";
 import { FormProperty } from "../components/StandardForm";
-import { InputType } from "../constants/Constant";
+// import { InputType } from "../constants/Constant";
 import { FormInterface } from "./FormInterface";
 import {
     BasicCheckBoxForm,

@@ -1,5 +1,6 @@
 import React from 'react';
-import { InputType } from '../constants/Constant'; // Import constants as needed
+// import { InputType } from '../constants/Constant'; // Import constants as needed
+import { InputType } from "@realestatemanager/types";
 import {
     Box,
     Grid,

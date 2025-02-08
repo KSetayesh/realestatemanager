@@ -2,7 +2,8 @@ import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/t
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
 import ReusableTable, { TableDataItem } from "../components/ReusableTable";
-import { AgentTable } from "../tables/AgentTable";
+import { AgentTable } from "../newtabledata/tabledata/AgentTable";
+// import { AgentTable } from "../tables/AgentTable";
 
 const AgentsList: React.FC = () => {
     const agentApi: AgentApi = new AgentApi();
