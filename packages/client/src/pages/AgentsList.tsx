@@ -1,7 +1,9 @@
-import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
+// import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
+import { AgentResponseDTO } from "@realestatemanager/types";
 import { useEffect, useState } from "react";
 import { AgentApi } from "../api/agentapi";
-import ReusableTable, { TableDataItem } from "../components/ReusableTable";
+// import ReusableTable, { TableDataItem } from "../components/ReusableTable";
+import ReusableTable from "../components/ReusableTable";
 import { AgentTable } from "../newtabledata/tabledata/AgentTable";
 // import { AgentTable } from "../tables/AgentTable";
 
@@ -27,15 +29,15 @@ const AgentsList: React.FC = () => {
         })();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const handleUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<AgentResponseDTO> => {
-        const createUpdateAgentRequest: CreateUpdateAgentRequest =
-            agentTable.createUpdateAgentRequest(tableDataItem);
-        return agentApi.updateAgent(createUpdateAgentRequest);
-    };
+    // const handleUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<AgentResponseDTO> => {
+    //     const createUpdateAgentRequest: CreateUpdateAgentRequest =
+    //         agentTable.createUpdateAgentRequest(tableDataItem);
+    //     return agentApi.updateAgent(createUpdateAgentRequest);
+    // };
 
-    const handleDeleteUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<boolean> => {
-        return agentApi.deleteAgent(tableDataItem.objectData.key.id);
-    };
+    // const handleDeleteUpdate = async (tableDataItem: TableDataItem<AgentResponseDTO>): Promise<boolean> => {
+    //     return agentApi.deleteAgent(tableDataItem.objectData.key.id);
+    // };
 
     // Inside PropertiesList component
 
@@ -52,13 +54,13 @@ const AgentsList: React.FC = () => {
                         tableHandler={agentTable}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
-                        exportIntoCSV={{
-                            buttonTitle: 'Export CSV'
-                        }}
-                        tableActions={{
-                            handleEditUpdate: handleUpdate,
-                            handleDeleteUpdate: handleDeleteUpdate,
-                        }} //{true}
+                        // exportIntoCSV={{
+                        //     buttonTitle: 'Export CSV'
+                        // }}
+                        // tableActions={{
+                        //     handleEditUpdate: handleUpdate,
+                        //     handleDeleteUpdate: handleDeleteUpdate,
+                        // }} //{true}
                     //handleUpdate={handleUpdate}
                     />
                 </>

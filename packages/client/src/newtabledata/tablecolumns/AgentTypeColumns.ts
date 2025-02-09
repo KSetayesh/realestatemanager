@@ -7,8 +7,8 @@ import {
     TableType,
     ValidationValue
 } from "@realestatemanager/types";
-import { Utility } from "@realestatemanager/utilities";
-import { isValidEmail, isValidPhoneNumber } from "../../constants/Constant";
+// import { Utility } from "@realestatemanager/utilities";
+import { getEnumValue, isValidEmail, isValidPhoneNumber } from "../../constants/Constant";
 
 export const FirstNameColumn: ColumnDetail = {
     title: "First Name",
@@ -256,7 +256,11 @@ export const AgentTypeColumn: ColumnDetail = {
             if (newValue === undefined) {
                 throw new Error(errorMsg);
             }
-            const agentTypeEnum: AgentType | undefined = Utility.getEnumValue(
+            // const agentTypeEnum: AgentType | undefined = Utility.getEnumValue(
+            //     AgentType,
+            //     newValue.toString()
+            // );
+            const agentTypeEnum: AgentType | undefined = getEnumValue(
                 AgentType,
                 newValue.toString()
             );

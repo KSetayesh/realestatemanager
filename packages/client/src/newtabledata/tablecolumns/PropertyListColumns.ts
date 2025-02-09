@@ -7,9 +7,9 @@ import {
     TableType,
     ValidationValue
 } from "@realestatemanager/types";
-import { Utility } from "@realestatemanager/utilities";
+// import { Utility } from "@realestatemanager/utilities";
 import { PropertiesListTableHelper } from "../../newutilities/PropertiesListTableHelper";
-import { isNonNegativeWholeNumber } from "../../constants/Constant";
+import { getEnumValue, isNonNegativeWholeNumber } from "../../constants/Constant";
 
 export const PriceColumn: ColumnDetail = {
     title: "Price",
@@ -243,7 +243,11 @@ export const CreationTypeColumn: ColumnDetail = {
             if (newValue === undefined) {
                 throw new Error(errorMsg);
             }
-            const listingCreationTypeEnum: ListingCreationType | undefined = Utility.getEnumValue(
+            // const listingCreationTypeEnum: ListingCreationType | undefined = Utility.getEnumValue(
+            //     ListingCreationType,
+            //     newValue.toString()
+            // );
+            const listingCreationTypeEnum: ListingCreationType | undefined = getEnumValue(
                 ListingCreationType,
                 newValue.toString()
             );

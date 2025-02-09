@@ -164,9 +164,9 @@ const PropertyForm: React.FC = () => {
                                 tableHandler={dummyCSVDataTable}
                                 onRowClick={undefined}
                                 tableSeperatorDetails={undefined}
-                                exportIntoCSV={{
-                                    buttonTitle: 'Export Template CSV'
-                                }}
+                                // exportIntoCSV={{
+                                //     buttonTitle: 'Export Template CSV'
+                                // }}
                                 // isEditable={false}
                                 // handleUpdate={undefined}
                                 tableActions={undefined} //{true}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable from '../components/ReusableTable';
-import DetailsModal from '../components/DetailsModal';
+// import DetailsModal from '../components/DetailsModal';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
@@ -27,6 +27,7 @@ const InvestmentBreakdown: React.FC = () => {
     );
 
     const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
+    console.log('selectedProperty:', selectedProperty);
 
     const getAmmortizationDetails = (): MonthlyInvestmentDetailsResponseDTO[] => {
         return property.metrics.amortizationData;
@@ -45,9 +46,9 @@ const InvestmentBreakdown: React.FC = () => {
         setSelectedProperty(property);
     };
 
-    const handleCloseModal = () => {
-        setSelectedProperty(null);
-    };
+    // const handleCloseModal = () => {
+    //     setSelectedProperty(null);
+    // };
 
     const getFormDetails = (): FormProperty[] => {
         return investmentBreakdownFormDetails.getFormDetails(formData);
@@ -82,11 +83,11 @@ const InvestmentBreakdown: React.FC = () => {
                         tableHandler={propertiesListTable}
                         onRowClick={handleRowClick}
                     />
-                    {selectedProperty && <DetailsModal
+                    {/* {selectedProperty && <DetailsModal
                         data={selectedProperty}
                         tableHandler={propertiesListTable}
                         onClose={handleCloseModal}
-                    />}
+                    />} */}
                     <br />
                     <hr />
                     <br />
@@ -100,9 +101,9 @@ const InvestmentBreakdown: React.FC = () => {
                             },
                             rowsInterval: 12,
                         }}
-                        exportIntoCSV={{
-                            buttonTitle: 'Export CSV'
-                        }}
+                    // exportIntoCSV={{
+                    //     buttonTitle: 'Export CSV'
+                    // }}
                     />
                 </>
             ) : (

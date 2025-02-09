@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import DetailsModal from '../components/DetailsModal';
-import ReusableTable, { TableDataItem } from '../components/ReusableTable';
+// import DetailsModal from '../components/DetailsModal';
+// import ReusableTable, { TableDataItem } from '../components/ReusableTable';
+// import ReusableTable from '../components/ReusableTable';
 import { RealEstateCalcApi } from '../api/realestatecalcapi';
 import {
     CreateFilteredPropertyListRequest,
     CreateGetAllPropertiesRequest,
-    CreateUpdatePropertyRequest,
+    // CreateUpdatePropertyRequest,
     ListingWithScenariosResponseDTO,
     PropertyFilterFormFields,
 } from '@realestatemanager/types';
@@ -13,7 +14,7 @@ import StandardForm, { FormProperty } from '../components/StandardForm';
 import {
     PropertiesListFormDetails,
 } from '../forms/PropertiesListFormDetails';
-import { PropertiesListWithInvestmentBreakdownTable } from '../tables/PropertiesListWithInvestmentBreakdownTable';
+// import { PropertiesListWithInvestmentBreakdownTable } from '../tables/PropertiesListWithInvestmentBreakdownTable';
 
 export enum PropertiesListTableType {
     ALL = 'ALL',
@@ -25,12 +26,13 @@ const DEFAULT_NUMBER_OF_ROWS = 100;
 const PropertiesList: React.FC = () => {
 
     const propertiesListFormDetails: PropertiesListFormDetails = new PropertiesListFormDetails();
-    const propertiesListWithInvestmentBreakdownTable: PropertiesListWithInvestmentBreakdownTable =
-        new PropertiesListWithInvestmentBreakdownTable();
+    // const propertiesListWithInvestmentBreakdownTable: PropertiesListWithInvestmentBreakdownTable =
+    //     new PropertiesListWithInvestmentBreakdownTable();
 
     const [properties, setProperties] = useState<ListingWithScenariosResponseDTO[]>([]);
+    console.log('properties:', properties);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
+    // const [selectedProperty, setSelectedProperty] = useState<ListingWithScenariosResponseDTO | null>(null);
     // const [filteredRequest, setFilteredRequest] = useState<CreateGetAllPropertiesRequest>();
 
     const realEstateCalcApi: RealEstateCalcApi = new RealEstateCalcApi();
@@ -49,13 +51,13 @@ const PropertiesList: React.FC = () => {
         return propertiesListFormDetails.getFormDetails(formData);
     };
 
-    const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
-        setSelectedProperty(property);
-    };
+    // const handleRowClick = (property: ListingWithScenariosResponseDTO) => {
+    //     setSelectedProperty(property);
+    // };
 
-    const handleCloseModal = () => {
-        setSelectedProperty(null);
-    };
+    // const handleCloseModal = () => {
+    //     setSelectedProperty(null);
+    // };
 
     const getRequestData = (): CreateFilteredPropertyListRequest => {
         return propertiesListFormDetails.createRequest(formData);
@@ -66,27 +68,27 @@ const PropertiesList: React.FC = () => {
         fetchPropertiesFromServer(DEFAULT_NUMBER_OF_ROWS, 0);
     };
 
-    const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
-        const createUpdatePropertyRequest: CreateUpdatePropertyRequest =
-            propertiesListWithInvestmentBreakdownTable.createUpdatePropertyRequest(tableDataItem);
-        return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
-    };
+    // const handleUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<ListingWithScenariosResponseDTO> => {
+    //     const createUpdatePropertyRequest: CreateUpdatePropertyRequest =
+    //         propertiesListWithInvestmentBreakdownTable.createUpdatePropertyRequest(tableDataItem);
+    //     return realEstateCalcApi.updateProperty(createUpdatePropertyRequest);
+    // };
 
-    const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
-        console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
-        return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
-    };
+    // const handleDeleteUpdate = async (tableDataItem: TableDataItem<ListingWithScenariosResponseDTO>): Promise<boolean> => {
+    //     console.log('I have been deleted', tableDataItem.objectData.key.listingDetails.zillowURL);
+    //     return realEstateCalcApi.deleteListingDetails(tableDataItem.objectData.key.listingDetails.zillowURL);
+    // };
 
-    const handlePaginationChange = async (
-        e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-        newPage: number,
-        newRowsPerPage: number,
-    ) => {
-        e?.preventDefault();
-        await fetchPropertiesFromServer(newRowsPerPage, newPage);
-        console.log('In handlePaginationChange()');
-        console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
-    };
+    // const handlePaginationChange = async (
+    //     e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    //     newPage: number,
+    //     newRowsPerPage: number,
+    // ) => {
+    //     e?.preventDefault();
+    //     await fetchPropertiesFromServer(newRowsPerPage, newPage);
+    //     console.log('In handlePaginationChange()');
+    //     console.log(`On page ${newPage}, with ${newRowsPerPage} rows per page`);
+    // };
 
     // const getExpectedNumberOfRows = (): number => {
     //     const rowLimit = filteredRequest?.filteredPropertyListRequest?.limit;
@@ -135,31 +137,32 @@ const PropertiesList: React.FC = () => {
             <h2> Properties List </h2>
             {isLoading ? (
                 <p><h3>Loading properties...</h3></p>
-            ) : (
-                <>
-                    <ReusableTable
-                        data={properties}
-                        tableHandler={propertiesListWithInvestmentBreakdownTable}
-                        onRowClick={handleRowClick}
-                        tableSeperatorDetails={undefined}
-                        exportIntoCSV={{
-                            buttonTitle: 'Export CSV'
-                        }}
-                        tableActions={{
-                            handleEditUpdate: handleUpdate,
-                            handleDeleteUpdate: handleDeleteUpdate,
-                            onPaginationChange: handlePaginationChange
-                        }}
-                    // rowLimit={getExpectedNumberOfRows()}
-                    />
-                    {selectedProperty && <DetailsModal
-                        data={selectedProperty}
-                        tableHandler={propertiesListWithInvestmentBreakdownTable}
-                        onClose={handleCloseModal}
-                    />}
-                </>
-            )}
-        </div>
+            ) : (<p><h3>Hello...</h3></p>)  } </div>
+            // ) : (
+            //     <>
+            //         <ReusableTable
+            //             data={properties}
+            //             tableHandler={propertiesListWithInvestmentBreakdownTable}
+            //             onRowClick={handleRowClick}
+            //             tableSeperatorDetails={undefined}
+            //             // exportIntoCSV={{
+            //             //     buttonTitle: 'Export CSV'
+            //             // }}
+            //             tableActions={{
+            //                 handleEditUpdate: handleUpdate,
+            //                 handleDeleteUpdate: handleDeleteUpdate,
+            //                 onPaginationChange: handlePaginationChange
+            //             }}
+            //         // rowLimit={getExpectedNumberOfRows()}
+            //         />
+            //         {/* {selectedProperty && <DetailsModal
+            //             data={selectedProperty}
+            //             tableHandler={propertiesListWithInvestmentBreakdownTable}
+            //             onClose={handleCloseModal}
+            //         />} */}
+            //     </>
+            // )}
+        // </div>
     );
 };
 

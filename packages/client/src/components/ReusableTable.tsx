@@ -28,7 +28,7 @@ import {
     TableType
 } from '@realestatemanager/types';
 import ConfirmationDialog from './ConfirmationDialog';
-import NewExportCSVButton from './ExportCSVButton';
+// import NewExportCSVButton from './ExportCSVButton';
 import { AbstractTable, TableColumn, TableData } from '../newtabledata/tabledata/AbstractTable';
 
 const TEMP_FEATURE_FLAG = true;
@@ -502,10 +502,10 @@ const ReusableTable = <K extends TableType, Y, X>({
     const getExportCSVButton = () => {
         if (tableHandler.exportToCSV.enabled) {
             return (<Box mb={2}>
-                <NewExportCSVButton
+                {/* <NewExportCSVButton
                     tableHandler={tableHandler}
                     tableData={tableData}
-                />
+                /> */}
             </Box>);
         }
         return <></>;

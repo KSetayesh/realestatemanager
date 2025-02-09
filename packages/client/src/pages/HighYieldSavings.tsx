@@ -74,9 +74,9 @@ const HighYieldSavings: React.FC = () => {
                         tableHandler={highYieldSavingsTable}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
-                        exportIntoCSV={{
-                            buttonTitle: 'Export CSV'
-                        }}
+                        // exportIntoCSV={{
+                        //     buttonTitle: 'Export CSV'
+                        // }}
                     />
                 </>
             )}

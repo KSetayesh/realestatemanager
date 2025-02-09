@@ -88,3 +88,18 @@ export const isNonNegativeNumber = (value: string, callBack?: (num: number) => b
     }
     return callBack(num);
 }
+
+/** 
+ * This is copied directory from Utilities directory, client cannot use Utilities module. Find a way 
+ * to abstract this function out so that I don't have 2 of the same functions in the monorepo.
+ * 
+*   enum State {
+*        NY = 'New York'
+*   };
+*
+*   In this example the function below would take in (State, "NY") and it will return "New York" as a string
+*/
+export const getEnumValue = <T extends object>(enumType: T, enumKey: string): T[keyof T] | undefined => {
+    const key = enumKey as keyof T;
+    return enumType[key];
+}
