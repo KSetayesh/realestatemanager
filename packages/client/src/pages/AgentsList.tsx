@@ -1,14 +1,14 @@
 // import { AgentResponseDTO, CreateUpdateAgentRequest } from "@realestatemanager/types";
 import { AgentResponseDTO } from "@realestatemanager/types";
 import { useEffect, useState } from "react";
-import { AgentApi } from "../api/agentapi";
 // import ReusableTable, { TableDataItem } from "../components/ReusableTable";
 import ReusableTable from "../components/ReusableTable";
 import { AgentTable } from "../newtabledata/tabledata/AgentTable";
+import { AgentService } from "../api/agent/agentservice";
 // import { AgentTable } from "../tables/AgentTable";
 
 const AgentsList: React.FC = () => {
-    const agentApi: AgentApi = new AgentApi();
+    const agentService: AgentService = new AgentService();
     const agentTable: AgentTable = new AgentTable();
     const [agents, setAgents] = useState<AgentResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ const AgentsList: React.FC = () => {
         (async () => {
             try {
                 setIsLoading(true); // Set loading state to true before fetching data
-                const agentsData: AgentResponseDTO[] = await agentApi.getAllAgents();
+                const agentsData: AgentResponseDTO[] = await agentService.getAllAgents();
                 setAgents(agentsData); // Update state with fetched data
                 console.log("Fetched data:", agentsData);
             } catch (error) {
@@ -54,13 +54,13 @@ const AgentsList: React.FC = () => {
                         tableHandler={agentTable}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
-                        // exportIntoCSV={{
-                        //     buttonTitle: 'Export CSV'
-                        // }}
-                        // tableActions={{
-                        //     handleEditUpdate: handleUpdate,
-                        //     handleDeleteUpdate: handleDeleteUpdate,
-                        // }} //{true}
+                    // exportIntoCSV={{
+                    //     buttonTitle: 'Export CSV'
+                    // }}
+                    // tableActions={{
+                    //     handleEditUpdate: handleUpdate,
+                    //     handleDeleteUpdate: handleDeleteUpdate,
+                    // }} //{true}
                     //handleUpdate={handleUpdate}
                     />
                 </>

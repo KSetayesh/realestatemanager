@@ -1,8 +1,9 @@
 import { ProjectDescription } from "@realestatemanager/types";
-import { CalcApi } from "./calcapi";
 import axios from "axios";
+import { CalcApi } from "../calcapi";
+import { AppDescriptionApiInterface } from "./appdescriptionapiinterface";
 
-export class AppDescriptionApi extends CalcApi {
+export class AppDescriptionApi extends CalcApi implements AppDescriptionApiInterface<ProjectDescription> {
 
     async getAppDescription(): Promise<ProjectDescription> {
 

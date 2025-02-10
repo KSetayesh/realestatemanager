@@ -17,6 +17,7 @@
         "@realestatemanager/types": "1.0.0",
         "apexcharts": "^4.4.0",
         "axios": "^1.6.7",
+        "date-fns": "^4.1.0",
         "papaparse": "^5.4.1",
         "react": "^18.2.0",
         "react-apexcharts": "^1.7.0",

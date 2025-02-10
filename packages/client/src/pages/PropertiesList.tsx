@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import DetailsModal from '../components/DetailsModal';
 // import ReusableTable, { TableDataItem } from '../components/ReusableTable';
 // import ReusableTable from '../components/ReusableTable';
-import { RealEstateCalcApi } from '../api/realestatecalcapi';
+import { RealEstateCalcApi } from '../api/realestatecalc/realestatecalcapi';
 import {
     CreateFilteredPropertyListRequest,
     CreateGetAllPropertiesRequest,
@@ -137,31 +137,31 @@ const PropertiesList: React.FC = () => {
             <h2> Properties List </h2>
             {isLoading ? (
                 <p><h3>Loading properties...</h3></p>
-            ) : (<p><h3>Hello...</h3></p>)  } </div>
-            // ) : (
-            //     <>
-            //         <ReusableTable
-            //             data={properties}
-            //             tableHandler={propertiesListWithInvestmentBreakdownTable}
-            //             onRowClick={handleRowClick}
-            //             tableSeperatorDetails={undefined}
-            //             // exportIntoCSV={{
-            //             //     buttonTitle: 'Export CSV'
-            //             // }}
-            //             tableActions={{
-            //                 handleEditUpdate: handleUpdate,
-            //                 handleDeleteUpdate: handleDeleteUpdate,
-            //                 onPaginationChange: handlePaginationChange
-            //             }}
-            //         // rowLimit={getExpectedNumberOfRows()}
-            //         />
-            //         {/* {selectedProperty && <DetailsModal
-            //             data={selectedProperty}
-            //             tableHandler={propertiesListWithInvestmentBreakdownTable}
-            //             onClose={handleCloseModal}
-            //         />} */}
-            //     </>
-            // )}
+            ) : (<p><h3>Hello...</h3></p>)} </div>
+        // ) : (
+        //     <>
+        //         <ReusableTable
+        //             data={properties}
+        //             tableHandler={propertiesListWithInvestmentBreakdownTable}
+        //             onRowClick={handleRowClick}
+        //             tableSeperatorDetails={undefined}
+        //             // exportIntoCSV={{
+        //             //     buttonTitle: 'Export CSV'
+        //             // }}
+        //             tableActions={{
+        //                 handleEditUpdate: handleUpdate,
+        //                 handleDeleteUpdate: handleDeleteUpdate,
+        //                 onPaginationChange: handlePaginationChange
+        //             }}
+        //         // rowLimit={getExpectedNumberOfRows()}
+        //         />
+        //         {/* {selectedProperty && <DetailsModal
+        //             data={selectedProperty}
+        //             tableHandler={propertiesListWithInvestmentBreakdownTable}
+        //             onClose={handleCloseModal}
+        //         />} */}
+        //     </>
+        // )}
         // </div>
     );
 };

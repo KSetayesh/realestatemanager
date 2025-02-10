@@ -7,7 +7,7 @@ import {
     CreatePropertiesInBulkRequest
 } from "@realestatemanager/types";
 import axios from "axios";
-import { CalcApi } from "./calcapi";
+import { CalcApi } from "../calcapi";
 
 export class RealEstateCalcApi extends CalcApi {
 

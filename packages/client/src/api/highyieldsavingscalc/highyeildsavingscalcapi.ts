@@ -1,8 +1,9 @@
 import { HighYeildSavingsResponseDTO, HighYeildSavingsRequest } from "@realestatemanager/types";
 import axios from "axios";
-import { CalcApi } from "./calcapi";
+import { CalcApi } from "../calcapi";
+import { HighYieldSavingsCalcApiInterface } from "./highyieldsavingscalcapiinterface";
 
-export class HighYieldSavingsCalcApi extends CalcApi {
+export class HighYieldSavingsCalcApi extends CalcApi implements HighYieldSavingsCalcApiInterface<HighYeildSavingsResponseDTO> {
 
     async highYieldSavingsCalculator(dataToSubmit: HighYeildSavingsRequest): Promise<HighYeildSavingsResponseDTO[]> {
 

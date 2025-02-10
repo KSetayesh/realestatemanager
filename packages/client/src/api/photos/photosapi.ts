@@ -1,7 +1,8 @@
 import axios from "axios";
-import { CalcApi } from "./calcapi";
+import { CalcApi } from "../calcapi";
+import { PhotosApiInterface } from "./photosapiinterface";
 
-export class PhotosApi extends CalcApi {
+export class PhotosApi extends CalcApi implements PhotosApiInterface {
 
     async getAllPhotoUrls(): Promise<string[]> {
 

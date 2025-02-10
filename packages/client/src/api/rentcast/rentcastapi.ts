@@ -1,8 +1,9 @@
 import axios from "axios";
-import { CalcApi } from "./calcapi";
+import { CalcApi } from "../calcapi";
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from "@realestatemanager/types";
+import { RentCastApiInterface } from "./rentcastapiinterface";
 
-export class RentCastApi extends CalcApi {
+export class RentCastApi extends CalcApi implements RentCastApiInterface<RentCastDetailsResponseDTO> {
 
     async getRentCastApiDetails(): Promise<RentCastDetailsResponseDTO[]> {
 

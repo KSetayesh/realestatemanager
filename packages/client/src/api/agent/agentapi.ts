@@ -1,12 +1,13 @@
 import axios from "axios";
-import { CalcApi } from "./calcapi";
+import { CalcApi } from "../calcapi";
 import {
     AgentResponseDTO,
     CreateAgentRequest,
     CreateUpdateAgentRequest
 } from "@realestatemanager/types";
+import { AgentApiInterface } from "./agentapiinterface";
 
-export class AgentApi extends CalcApi {
+export class AgentApi extends CalcApi implements AgentApiInterface<AgentResponseDTO> {
 
     async getAllAgents(): Promise<AgentResponseDTO[]> {
 

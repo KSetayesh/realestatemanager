@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { AgentFormData, CreateAgentRequest } from '@realestatemanager/types';
-import { AgentApi } from '../api/agentapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AgentFormDetails } from '../forms/AgentFormDetails';
+import { AgentService } from '../api/agent/agentservice';
 
 const AgentForm: React.FC = () => {
 
-    const agentApi: AgentApi = new AgentApi();
+    const agentservice: AgentService = new AgentService();
 
     const agentFormDetails: AgentFormDetails = new AgentFormDetails();
 
@@ -19,7 +19,7 @@ const AgentForm: React.FC = () => {
             return agentFormDetails.createRequest(formData);
         };
 
-        const postSuccess: boolean = await agentApi.addNewAgent(getAgentRequest());
+        const postSuccess: boolean = await agentservice.addNewAgent(getAgentRequest());
 
         if (postSuccess) {
             alert('Agent has been successfully added!');

@@ -6,7 +6,7 @@ import {
     PropertyType,
     State
 } from "../../Constants";
-import { AgentResponseDTO } from "../../server/AgentApiTypes";
+import { AgentResponseDTO, AgentType } from "../../server/AgentApiTypes";
 import { HighYeildSavingsResponseDTO } from "../../server/HighYieldSavingsApiTypes";
 import {
     ListingWithScenariosResponseDTO,
@@ -381,8 +381,8 @@ export type ColumnDetail = {
     routeTo?: string,
     // tableTypeDetails?: TableTypeDetails<T>,
 } & {
-        [T in TableType]?: TableTypeDetails<T>;
-    };
+    [T in TableType]?: TableTypeDetails<T>;
+};
 
 // Define the type for the sortMap structure
 export type ColumnsDetails = {
@@ -453,4 +453,46 @@ export type TableDetailType<T extends keyof TableTypeMapping> = {
 
 export type TableDetailsType = {
     [K in TableType]: TableDetailType<K>;
+};
+
+
+//-------------------------------------------------------------------------------------------------------------
+// New Client types (transformed DTO's to client side models)
+
+export interface Agent {
+    id: number;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    website: string;
+    companyName: string;
+    phoneNumber: string;
+    email: string;
+    state: State;
+    country: Country;
+    agentType: AgentType;
+};
+
+export interface HighYeildSavings {
+    date: string;
+    year: number;
+    month: number;
+    startPrincipal: number;
+    startBalance: number;
+    interest: number;
+    accumulatedInterest: number;
+    endBalance: number;
+    endPrincipal: number;
+};
+
+export interface RentCastDetails {
+    apiKeyName: string;
+    apiCallsThisMonth: number;
+    numberOfFreeApiCalls: number;
+    remainingNumberOfFreeApiCalls: number;
+    daysIntoBillingPeriod: number;
+    canMakeApiCalls: boolean;
+    billingPeriod: number;
+    mostRecentBillingDate: Date;
+    firstBilledOn: Date;
 };
