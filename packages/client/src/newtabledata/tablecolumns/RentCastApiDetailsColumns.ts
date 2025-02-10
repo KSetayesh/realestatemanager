@@ -127,7 +127,8 @@ export const MostRecentBillingDateColumn: ColumnDetail = {
     detailedDescription: "",
     [TableType.RENT_CAST_DETAILS_TABLE]: {
         value: (rentCastDetails: RentCastDetailsResponseDTO): PrimitiveType => {
-            return rentCastDetails.mostRecentBillingDate.toLocaleDateString('en-US');
+            // console.log('rentCastDetails.mostRecentBillingDate:', typeof (rentCastDetails.mostRecentBillingDate));
+            return rentCastDetails.mostRecentBillingDate; //.toLocaleDateString('en-US');
         }
     },
 };
@@ -145,7 +146,7 @@ export const FirstBilledOnColumn: ColumnDetail = {
     detailedDescription: "",
     [TableType.RENT_CAST_DETAILS_TABLE]: {
         value: (rentCastDetails: RentCastDetailsResponseDTO): PrimitiveType => {
-            return rentCastDetails.firstBilledOn.toLocaleDateString('en-US');
+            return rentCastDetails.firstBilledOn; //.toLocaleDateString('en-US');
         }
     },
 };

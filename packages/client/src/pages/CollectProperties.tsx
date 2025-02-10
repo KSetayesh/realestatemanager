@@ -23,7 +23,6 @@ const CollectProperties: React.FC = () => {
                 const rentCastDetails: RentCastDetailsResponseDTO[] = await rentCastApi.getRentCastApiDetails();
                 // For now just show the first rentCastDetails in the list
                 setRentCastDetails(rentCastDetails);
-                console.log("Fetched data:", rentCastDetails);
             } catch (error) {
                 // Error handling if fetchProperties fails
                 console.error('Failed to fetch rentCastApi details:', error);

@@ -230,20 +230,27 @@ export abstract class AbstractTable<K extends TableType, Y, X> {
     }
 
     private getAllSubTableColumns(subTableType: X): TableColumnDetailsEnum[] {
-
-        const showColumn = (column: TableColumnDetailsEnum): boolean => {
-            return this.getColumnDetails(subTableType, column).columnDetails.showColumn;
-        };
-
-        const columnEnums: TableColumnDetailsEnum[] = this._getAllSubTableColumns(subTableType);
-        const toReturn: TableColumnDetailsEnum[] = [];
-        for (const column of columnEnums) {
-            if (showColumn(column)) {
-                toReturn.push(column);
-            }
-        }
-        return toReturn;
+        return this._getAllSubTableColumns(subTableType).filter((column) => {
+            const details = columnDetails[column]; // Directly access columnDetails instead of calling getColumnDetails()
+            return details ? details.showColumn : false;
+        });
     }
+
+
+    // private getAllSubTableColumns(subTableType: X): TableColumnDetailsEnum[] {
+    //     const showColumn = (column: TableColumnDetailsEnum): boolean => {
+    //         return this.getColumnDetails(subTableType, column).columnDetails.showColumn;
+    //     };
+
+    //     const columnEnums: TableColumnDetailsEnum[] = this._getAllSubTableColumns(subTableType);
+    //     const toReturn: TableColumnDetailsEnum[] = [];
+    //     for (const column of columnEnums) {
+    //         if (showColumn(column)) {
+    //             toReturn.push(column);
+    //         }
+    //     }
+    //     return toReturn;
+    // }
 
     protected abstract _getAllSubTableColumns(subTableType?: X): TableColumnDetailsEnum[];
 

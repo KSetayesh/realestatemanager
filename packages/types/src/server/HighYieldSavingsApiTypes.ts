@@ -5,6 +5,8 @@ export interface HighYeildSavingsRequest {
     monthlyDeposit?: number;
 };
 
+//------------------------------------------------------------------------------------------------
+
 export interface HighYeildSavingsResponseDTO {
     date: string;
     year: number;

@@ -90,8 +90,10 @@ export class RentCastDetails extends Entity implements IDTOConvertible<RentCastD
             canMakeApiCalls: this.canMakeFreeApiCall,
             daysIntoBillingPeriod: this.daysIntoBillingPeriod,
             billingPeriod: this.billingPeriod,
-            mostRecentBillingDate: this.mostRecentBillingDate,
-            firstBilledOn: this.firstBilledOn,
+            mostRecentBillingDate: this.mostRecentBillingDate.toLocaleDateString('en-US'),
+            firstBilledOn: this.firstBilledOn.toLocaleDateString('en-US'),
+            // mostRecentBillingDate: this.mostRecentBillingDate,
+            // firstBilledOn: this.firstBilledOn,
         };
 
     }

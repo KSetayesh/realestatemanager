@@ -20,6 +20,18 @@ export interface CreateAgentRequest {
     agentType: AgentType;
 };
 
+export interface CreateUpdateAgentRequest {
+    id: number;
+    firstName: string;
+    lastName: string;
+    website: string;
+    companyName: string;
+    phoneNumber: string;
+    email: string;
+};
+
+//------------------------------------------------------------------------------------------------
+
 export interface AgentResponseDTO {
     id: number;
     firstName: string;
@@ -32,14 +44,4 @@ export interface AgentResponseDTO {
     state: State;
     country: Country;
     agentType: AgentType;
-};
-
-export interface CreateUpdateAgentRequest {
-    id: number;
-    firstName: string;
-    lastName: string;
-    website: string;
-    companyName: string;
-    phoneNumber: string;
-    email: string;
 };

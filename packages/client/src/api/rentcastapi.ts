@@ -9,6 +9,7 @@ export class RentCastApi extends CalcApi {
         try {
             const response = await axios.get(`${this.getURL()}/rentCastApiCallDetails`);
             console.log("response:", response);
+            console.log('type of mostRecentBillingDate:', typeof (response.data[2].mostRecentBillingDate));
             return response.data;
         } catch (error) {
             const message = `Error sending form data to backend:", ${error}`;

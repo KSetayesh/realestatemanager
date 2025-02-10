@@ -18,6 +18,8 @@ export interface CreateRentCastApiRequest {
     retrieveExtraData: boolean;
 };
 
+//------------------------------------------------------------------------------------------------
+
 export interface RentCastDetailsResponseDTO {
     apiKeyName: string;
     apiCallsThisMonth: number;
@@ -26,6 +28,6 @@ export interface RentCastDetailsResponseDTO {
     daysIntoBillingPeriod: number;
     canMakeApiCalls: boolean;
     billingPeriod: number;
-    mostRecentBillingDate: Date;
-    firstBilledOn: Date;
+    mostRecentBillingDate: string;
+    firstBilledOn: string;
 };
