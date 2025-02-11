@@ -1,11 +1,11 @@
 import { Box, CircularProgress, Container, Paper, Tab, Tabs, Typography } from "@mui/material";
-import { AppDescriptionApi } from "../api/appdescriptionapi";
 import { useEffect, useState } from "react";
 import { ProjectDescription } from "@realestatemanager/types";
+import { AppDescriptionService } from "../api/appdescription/appdescriptionservice";
 
 const AppDescription: React.FC = () => {
 
-    const appDescriptionApi: AppDescriptionApi = new AppDescriptionApi();
+    const appDescriptionService: AppDescriptionService = new AppDescriptionService();
     const [appDescription, setAppDescription] = useState<ProjectDescription>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ const AppDescription: React.FC = () => {
     useEffect(() => {
         const fetchAppDetails = async () => {
             try {
-                const appDescriptionFromServer: ProjectDescription = await appDescriptionApi.getAppDescription();
+                const appDescriptionFromServer: ProjectDescription = await appDescriptionService.getAppDescription();
 
                 setAppDescription(appDescriptionFromServer);
             } catch (err) {

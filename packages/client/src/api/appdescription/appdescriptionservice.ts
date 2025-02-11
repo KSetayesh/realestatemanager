@@ -3,7 +3,7 @@ import { AppDescriptionApi } from "./appdescriptionapi";
 import { AppDescriptionApiInterface } from "./appdescriptionapiinterface";
 import { AppDescriptionTransformer } from "./appdescriptiondatatransformer";
 
-export class AgentDescriptionService implements AppDescriptionApiInterface<ProjectDescription> {
+export class AppDescriptionService implements AppDescriptionApiInterface<ProjectDescription> {
 
     private api: AppDescriptionApi;
     private transformer: AppDescriptionTransformer;

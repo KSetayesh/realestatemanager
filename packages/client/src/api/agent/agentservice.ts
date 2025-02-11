@@ -1,9 +1,9 @@
-import { Agent, AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/types";
+import { AgentResponseDTO, CreateAgentRequest, CreateUpdateAgentRequest } from "@realestatemanager/types";
 import { AgentApi } from "./agentapi";
 import { AgentDataTransformer } from "./agentdatatransformer";
 import { AgentApiInterface } from "./agentapiinterface";
 
-export class AgentService implements AgentApiInterface<Agent> {
+export class AgentService implements AgentApiInterface<AgentResponseDTO> {
 
     private api: AgentApi;
     private transformer: AgentDataTransformer;
@@ -13,7 +13,7 @@ export class AgentService implements AgentApiInterface<Agent> {
         this.transformer = new AgentDataTransformer();
     }
 
-    async getAllAgents(): Promise<Agent[]> {
+    async getAllAgents(): Promise<AgentResponseDTO[]> {
         const agentDTOs: AgentResponseDTO[] = await this.api.getAllAgents();
         return this.transformer.toClientArray(agentDTOs); // Transform before returning
     }
@@ -22,7 +22,7 @@ export class AgentService implements AgentApiInterface<Agent> {
         return this.api.addNewAgent(dataToSubmit);
     }
 
-    async updateAgent(dataToSubmit: CreateUpdateAgentRequest): Promise<Agent> {
+    async updateAgent(dataToSubmit: CreateUpdateAgentRequest): Promise<AgentResponseDTO> {
         const updatedAgentDTO: AgentResponseDTO = await this.api.updateAgent(dataToSubmit);
         return this.transformer.toClient(updatedAgentDTO);
     }

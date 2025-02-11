@@ -31,3 +31,9 @@ export interface RentCastDetailsResponseDTO {
     mostRecentBillingDate: string;
     firstBilledOn: string;
 };
+
+export type RentCastDetails = Omit<RentCastDetailsResponseDTO, 'mostRecentBillingDate' | 'firstBilledOn'> & {
+    mostRecentBillingDate: Date;
+    firstBilledOn: Date;
+};
+

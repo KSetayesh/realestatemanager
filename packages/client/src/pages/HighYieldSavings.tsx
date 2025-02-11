@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { HighYieldSavingsCalcApi } from '../api/highyeildsavingscalcapi';
 import {
     HighYeildSavingsResponseDTO,
     HighYeildSavingsRequest,
@@ -11,6 +10,7 @@ import {
     HighYieldSavingsFormDetails,
 } from '../forms/HighYieldSavingsFormDetails';
 import { HighYieldSavingsTable } from '../newtabledata/tabledata/HighYieldSavingsTable';
+import { HighYeildSavingsCalcService } from '../api/highyieldsavingscalc/highyieldsavingscalcservice';
 // import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
 
 const HighYieldSavings: React.FC = () => {
@@ -31,11 +31,14 @@ const HighYieldSavings: React.FC = () => {
         const getCalculateRequest = (): HighYeildSavingsRequest => {
             return highYieldSavingsFormDetails.createRequest(formData);
         };
-        const highYieldSavingsCalcApi: HighYieldSavingsCalcApi = new HighYieldSavingsCalcApi();
+        const highYieldSavingsCalcService: HighYeildSavingsCalcService = new HighYeildSavingsCalcService();
 
         setIsLoading(true);
         try {
-            const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcApi.highYieldSavingsCalculator(getCalculateRequest());
+            const data: HighYeildSavingsResponseDTO[] = await highYieldSavingsCalcService.highYieldSavingsCalculator(
+                getCalculateRequest()
+            );
+
             setMetrics(data);
             console.log("Calculation result:", data);
             // window.location.reload();
@@ -74,9 +77,9 @@ const HighYieldSavings: React.FC = () => {
                         tableHandler={highYieldSavingsTable}
                         onRowClick={undefined}
                         tableSeperatorDetails={undefined}
-                        // exportIntoCSV={{
-                        //     buttonTitle: 'Export CSV'
-                        // }}
+                    // exportIntoCSV={{
+                    //     buttonTitle: 'Export CSV'
+                    // }}
                     />
                 </>
             )}

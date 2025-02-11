@@ -8,8 +8,9 @@ import {
 } from "@realestatemanager/types";
 import axios from "axios";
 import { CalcApi } from "../calcapi";
+import { RealEstateCalcApiInterface } from "./realestatecalcapiinterface";
 
-export class RealEstateCalcApi extends CalcApi {
+export class RealEstateCalcApi extends CalcApi implements RealEstateCalcApiInterface<ListingWithScenariosResponseDTO> {
 
     async getAllProperties(getAllPropertiesRequest?: CreateGetAllPropertiesRequest): Promise<ListingWithScenariosResponseDTO[]> {
         console.log('getAllPropertiesRequest:', getAllPropertiesRequest);

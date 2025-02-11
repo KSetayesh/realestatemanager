@@ -4,7 +4,7 @@ import { Transformer } from "../transformer";
 export class AppDescriptionTransformer implements Transformer<ProjectDescription, ProjectDescription> {
 
     toClient(projectDescription: ProjectDescription): ProjectDescription {
-        return { ...projectDescription };
+        return projectDescription;
     }
 
     toClientArray(): ProjectDescription[] {
