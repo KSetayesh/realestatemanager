@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Container, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ProjectDescription } from "@realestatemanager/types";
-import { AppDescriptionService } from "../api/appdescription/appdescriptionservice";
+import { AppDescriptionService } from "../../api/appdescription/appdescriptionservice";
 
 const AppDescription: React.FC = () => {
 

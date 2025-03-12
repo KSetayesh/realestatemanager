@@ -4,13 +4,16 @@ import {
     HighYeildSavingsRequest,
     HighYieldSavingsFormData
 } from '@realestatemanager/types';
-import ReusableTable from '../components/ReusableTable';
-import StandardForm, { FormProperty } from '../components/StandardForm';
+import ReusableTable from '../../oldCode/components/ReusableTable';
+import StandardForm, { FormProperty } from '../../oldCode/components/StandardForm';
 import {
     HighYieldSavingsFormDetails,
-} from '../forms/HighYieldSavingsFormDetails';
-import { HighYieldSavingsTable } from '../newtabledata/tabledata/HighYieldSavingsTable';
-import { HighYeildSavingsCalcService } from '../api/highyieldsavingscalc/highyieldsavingscalcservice';
+} from '../../oldCode/forms/HighYieldSavingsFormDetails';
+import { HighYieldSavingsTable } from '../../oldCode/newtabledata/tabledata/HighYieldSavingsTable';
+import { HighYeildSavingsCalcService } from '../../oldCode/api/highyieldsavingscalc/highyieldsavingscalcservice';
+import { BasicTable, TableComponent } from 'react-ui-library-ks-dev';
+import { CreateHighYieldSavingsTable } from './HighYieldSavingsTable';
+// import { TableComponent } from 'react-ui-library-ks-dev';
 
 // import { HighYieldSavingsTable } from '../tables/HighYieldSavingsTable';
 
@@ -56,6 +59,10 @@ const HighYieldSavings: React.FC = () => {
         return highYieldSavingsFormDetails.getFormDetails(formData);
     };
 
+    const createTable = (data: HighYeildSavingsResponseDTO[]): BasicTable<HighYeildSavingsResponseDTO> => {
+        return new CreateHighYieldSavingsTable().createDefaultTable(data);
+    }
+
     return (
         <div>
             <h2> Investment Breakdown </h2>
@@ -73,6 +80,9 @@ const HighYieldSavings: React.FC = () => {
                 <p>Loading properties...</p>
             ) : (
                 <>
+                    <TableComponent
+                        table={createTable(metrics)}
+                    />
                     <ReusableTable
                         data={metrics}
                         tableHandler={highYieldSavingsTable}

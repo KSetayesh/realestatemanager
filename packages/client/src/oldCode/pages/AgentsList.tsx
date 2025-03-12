@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // import ReusableTable, { TableDataItem } from "../components/ReusableTable";
 import ReusableTable from "../components/ReusableTable";
 import { AgentTable } from "../newtabledata/tabledata/AgentTable";
-import { AgentService } from "../api/agent/agentservice";
+import { AgentService } from "../../api/agent/agentservice";
 // import { AgentTable } from "../tables/AgentTable";
 
 const AgentsList: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CreateRentCastApiRequest, RentCastDetailsResponseDTO } from '@realestatemanager/types';
-import { RentCastApi } from '../api/rentcast/rentcastapi';
+import { RentCastApi } from '../../api/rentcast/rentcastapi';
 import { CollectPropertiesFormDetails } from '../forms/CollectPropertiesFormDetails';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import ReusableTable from '../components/ReusableTable';

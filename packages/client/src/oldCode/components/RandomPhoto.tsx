@@ -1,6 +1,6 @@
 // RandomPhoto.tsx
 import { useEffect, useState } from "react";
-import { PhotosApi } from "../api/photos/photosapi";
+import { PhotosApi } from "../../api/photos/photosapi";
 import { Box, Card, CardMedia, styled } from '@mui/material';
 
 const StyledCard = styled(Card)(({ theme }) => ({

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AgentFormData, CreateAgentRequest } from '@realestatemanager/types';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { AgentFormDetails } from '../forms/AgentFormDetails';
-import { AgentService } from '../api/agent/agentservice';
+import { AgentService } from '../../api/agent/agentservice';
 
 const AgentForm: React.FC = () => {
 
