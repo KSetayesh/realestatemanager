@@ -131,7 +131,6 @@ const HighYieldSavingsForm: React.FC<HighYieldSavingsFormProps> = ({ onSubmit })
         }
     };
 
-    // Create table from metrics data
     const createForm = (data: HighYieldSavingsData): FormProperty[] => {
         return new HighYeildSavingsFormConfig().createDefaultForm(data);
     };
