@@ -1,4 +1,4 @@
-import appConfig from '../oldCode/config/AppConfig';
+import appConfig from '../../oldCode/config/AppConfig';
 
 export type ContentType = { 'Content-Type': string };
 

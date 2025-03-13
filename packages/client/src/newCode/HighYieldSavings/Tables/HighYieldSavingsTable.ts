@@ -1,6 +1,6 @@
 import { HighYeildSavingsResponseDTO } from '@realestatemanager/types';
 import { BasicColumn, BasicTable, InputType } from 'react-ui-library-ks-dev';
-import { CreateTableInterface } from '../types/CreateTableInterface';
+import { CreateTableInterface } from '../../types/CreateTableInterface';
 
 export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYeildSavingsResponseDTO> {
 
@@ -14,7 +14,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
             isFilterable: false,
             isEditable: false,
             isDeletable: false,
-            isPageable: false,
+            isPageable: true,
             isSelectable: false,
             isMultiSelectable: false,
             isSearchable: false,

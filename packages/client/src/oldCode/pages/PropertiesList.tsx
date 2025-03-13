@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import DetailsModal from '../components/DetailsModal';
 // import ReusableTable, { TableDataItem } from '../components/ReusableTable';
 // import ReusableTable from '../components/ReusableTable';
-import { RealEstateCalcApi } from '../../api/realestatecalc/realestatecalcapi';
+import { RealEstateCalcApi } from '../api/realestatecalc/realestatecalcapi';
 import {
     CreateFilteredPropertyListRequest,
     CreateGetAllPropertiesRequest,

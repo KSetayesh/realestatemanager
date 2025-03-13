@@ -117,8 +117,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Home from './oldCode/pages/Home';
-import HighYieldSavings from './newCode/HighYieldSavings/HighYieldSavings';
+import Home from './newCode/Home/Home';
+import HighYieldSavings from './newCode/HighYieldSavings/HighYieldSavingsPage';
+import AgentsPage from './newCode/Agents/AgentsPage';
+import AppDescription from './newCode/AppDescription/AppDescription';
+import Projections from './newCode/Projections/Projections';
 
 const theme = createTheme({
     palette: {
@@ -169,12 +172,15 @@ const App: React.FC = () => {
                         <Button component={RouterLink} to="/appDescription" color="inherit">
                             App Description
                         </Button>
-                        <Button component={RouterLink} to="/agentForm" color="inherit">
+                        <Button component={RouterLink} to="/agentsPage" color="inherit">
+                            Agents Page
+                        </Button>
+                        {/* <Button component={RouterLink} to="/agentForm" color="inherit">
                             Agent Form
                         </Button>
                         <Button component={RouterLink} to="/agentsList" color="inherit">
                             Agents List
-                        </Button>
+                        </Button> */}
                         <Button component={RouterLink} to="/propertyForm" color="inherit">
                             Property Form
                         </Button>
@@ -195,15 +201,19 @@ const App: React.FC = () => {
                 <Box className="pages" sx={{ maxWidth: '1900px', margin: '0 auto', padding: '2rem', textAlign: 'center' }}>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        {/* <Route path="/appDescription" element={<AppDescription />} />
-                        <Route path="/agentForm" element={<AgentForm />} />
-                        <Route path="/agentsList" element={<AgentsList />} />
-                        <Route path="/propertyForm" element={<PropertyForm />} />
+                        <Route path="/appDescription" element={<AppDescription />} />
+
+                        <Route path="/agentsPage" element={<AgentsPage />} />
+                        {/* <Route path="/agentsList" element={<AgentsList />} /> */}
+
+                        {/* <Route path="/agentForm" element={<AgentForm />} />
+                        <Route path="/agentsList" element={<AgentsList />} /> */}
+                        {/* <Route path="/propertyForm" element={<PropertyForm />} />
                         <Route path="/propertiesList" element={<PropertiesList />} />
                         <Route path="/collectProperties" element={<CollectProperties />} /> */}
                         <Route path="/highYieldSavings" element={<HighYieldSavings />} />
-                        {/* <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} />
-                        <Route path="/projections" element={<Projections />} /> */}
+                        {/* <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} /> */}
+                        <Route path="/projections" element={<Projections />} />
                     </Routes>
                 </Box>
             </Router>

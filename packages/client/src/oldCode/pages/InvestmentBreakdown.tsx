@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ReusableTable from '../components/ReusableTable';
 // import DetailsModal from '../components/DetailsModal';
-import { RealEstateCalcApi } from '../../api/realestatecalc/realestatecalcapi';
+import { RealEstateCalcApi } from '../api/realestatecalc/realestatecalcapi';
 import StandardForm, { FormProperty } from '../components/StandardForm';
 import { InvestmentBreakdownFormDetails } from '../forms/InvestmentBreakdownFormDetails';
 // import { PropertiesListTable } from '../tables/PropertiesListTable';

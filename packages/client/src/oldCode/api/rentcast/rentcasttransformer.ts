@@ -1,6 +1,6 @@
 import { RentCastDetails, RentCastDetailsResponseDTO } from "@realestatemanager/types";
 import { Transformer } from "../transformer";
-import { DateUtility } from "../../oldCode/utilities/DateUtility";
+import { DateUtility } from "../../../oldCode/utilities/DateUtility";
 
 export class RentCastTransformer implements Transformer<RentCastDetailsResponseDTO, RentCastDetails> {
 

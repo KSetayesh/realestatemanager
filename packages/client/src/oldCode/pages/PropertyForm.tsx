@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RealEstateCalcApi } from '../../api/realestatecalc/realestatecalcapi';
+import { RealEstateCalcApi } from '../api/realestatecalc/realestatecalcapi';
 import {
     CreateListingDetailsRequest,
     CreatePropertiesInBulkRequest,
