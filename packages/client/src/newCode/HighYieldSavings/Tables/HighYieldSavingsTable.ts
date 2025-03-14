@@ -22,7 +22,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'year',
                     title: 'Year',
-                    accessor: 'year',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.year,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: false,
@@ -35,7 +35,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'month',
                     title: 'Month',
-                    accessor: 'month',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.month,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: false,
@@ -48,7 +48,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'date',
                     title: 'Date',
-                    accessor: 'date',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.date,
                     inputType: InputType.DATE,
                     isUrl: false,
                     isDollarAmount: false,
@@ -61,7 +61,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'startPrincipal',
                     title: 'Start Principal',
-                    accessor: 'startPrincipal',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.startPrincipal,
                     inputType: InputType.DATE,
                     isUrl: false,
                     isDollarAmount: true,
@@ -74,7 +74,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'startBalance',
                     title: 'Start Balance',
-                    accessor: 'startBalance',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.startBalance,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: true,
@@ -87,7 +87,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'interest',
                     title: 'Interest',
-                    accessor: 'interest',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.interest,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: true,
@@ -100,7 +100,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'accumulatedInterest',
                     title: 'Accumulated Interest',
-                    accessor: 'accumulatedInterest',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.accumulatedInterest,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: true,
@@ -113,7 +113,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'endBalance',
                     title: 'End Balance',
-                    accessor: 'endBalance',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.endBalance,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: true,
@@ -126,7 +126,7 @@ export class CreateHighYieldSavingsTable implements CreateTableInterface<HighYei
                 new BasicColumn<HighYeildSavingsResponseDTO>({
                     key: 'endPrincipal',
                     title: 'End Principal',
-                    accessor: 'endPrincipal',
+                    accessor: (item: HighYeildSavingsResponseDTO) => item.endPrincipal,
                     inputType: InputType.NUMBER,
                     isUrl: false,
                     isDollarAmount: true,

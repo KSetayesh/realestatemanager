@@ -1,14 +1,16 @@
 import { ListingWithScenariosResponseDTO } from '@realestatemanager/types';
 import { BasicColumn, BasicTable, InputType } from 'react-ui-library-ks-dev';
 import { CreateTableInterface } from '../../types/CreateTableInterface';
+import { PropertiesListTableHelper } from './PropertiesListTableHelper';
 
 export class CreatePropertiesTable implements CreateTableInterface<ListingWithScenariosResponseDTO> {
 
     createDefaultTable(data: ListingWithScenariosResponseDTO[]): BasicTable<ListingWithScenariosResponseDTO> {
+        console.log(data);
         return new BasicTable<ListingWithScenariosResponseDTO>({
             data: data,
-            title: 'High Yield Savings',
-            description: 'High Yield Savings',
+            title: 'Properties',
+            description: 'Properties',
             isSortable: false,
             isFilterable: false,
             isEditable: false,
@@ -21,7 +23,8 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'price',
                     title: 'Price',
-                    accessor: 'listingDetails',
+                    // accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getPrice(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -34,7 +37,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'initialCosts',
                     title: 'Initial Costs',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getInitialCosts(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -47,7 +50,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'loanAmount',
                     title: 'Loan Amount',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getLoanAmount(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -60,7 +63,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'downPaymentAmount',
                     title: 'Down Payment',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getDownPaymentAmount(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -73,7 +76,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'downPaymentAmount',
                     title: 'Down Payment',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getDownPaymentPercentage(item),
                     inputType: InputType.PERCENTAGE,
                     isUrl: false,
                     isDollarAmount: false,
@@ -86,7 +89,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'recurringCosts',
                     title: 'Recurring Costs',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getRecurringCosts(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -99,7 +102,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'initialMonthlyAmount',
                     title: 'Initial Monthly Amount',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getInitialMonthlyAmount(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -112,7 +115,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'yearlyCashFlow',
                     title: 'Yearly Cash Flow',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getYearlyCashFlow(item),
                     inputType: InputType.MONEY,
                     isUrl: false,
                     isDollarAmount: true,
@@ -125,7 +128,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'dateListed',
                     title: 'Date Listed',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getDateListed(item),
                     inputType: InputType.DATE,
                     isUrl: false,
                     isDollarAmount: false,
@@ -138,7 +141,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'dateCreated',
                     title: 'Date Created',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getDateCreated(item),
                     inputType: InputType.DATE,
                     isUrl: false,
                     isDollarAmount: false,
@@ -151,7 +154,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'creationType',
                     title: 'Creation Type',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => PropertiesListTableHelper.getCreationType(item),
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -164,7 +167,7 @@ export class CreatePropertiesTable implements CreateTableInterface<ListingWithSc
                 new BasicColumn<ListingWithScenariosResponseDTO>({
                     key: 'investmentBreakdown',
                     title: 'Investment Breakdown',
-                    accessor: 'listingDetails',
+                    accessor: (item: ListingWithScenariosResponseDTO) => undefined, // Come back to this
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,

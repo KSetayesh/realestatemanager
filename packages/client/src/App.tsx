@@ -122,6 +122,8 @@ import HighYieldSavings from './newCode/HighYieldSavings/HighYieldSavingsPage';
 import AgentsPage from './newCode/Agents/AgentsPage';
 import AppDescription from './newCode/AppDescription/AppDescription';
 import Projections from './newCode/Projections/Projections';
+import PropertyForm from './newCode/Properties/Forms/PropertiesForm';
+import PropertiesPage from './newCode/Properties/PropertiesPage';
 
 const theme = createTheme({
     palette: {
@@ -208,9 +210,9 @@ const App: React.FC = () => {
 
                         {/* <Route path="/agentForm" element={<AgentForm />} />
                         <Route path="/agentsList" element={<AgentsList />} /> */}
-                        {/* <Route path="/propertyForm" element={<PropertyForm />} />
-                        <Route path="/propertiesList" element={<PropertiesList />} />
-                        <Route path="/collectProperties" element={<CollectProperties />} /> */}
+                        <Route path="/propertyForm" element={<PropertyForm onPropertyAdded={async () => true} />} />
+                        <Route path="/propertiesList" element={<PropertiesPage />} />
+                        {/* <Route path="/collectProperties" element={<CollectProperties />} />  */}
                         <Route path="/highYieldSavings" element={<HighYieldSavings />} />
                         {/* <Route path="/investmentBreakdown/:address" element={<InvestmentBreakdown />} /> */}
                         <Route path="/projections" element={<Projections />} />

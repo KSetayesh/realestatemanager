@@ -60,7 +60,7 @@ export interface PropertyData {
 }
 
 // Props interface
-interface PropertyFormProps {
+export interface PropertyFormProps {
     onPropertyAdded: () => Promise<boolean>;
 }
 

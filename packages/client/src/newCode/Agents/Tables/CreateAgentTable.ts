@@ -22,7 +22,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'firstName',
                     title: 'First Name',
-                    accessor: 'firstName',
+                    accessor: (item: AgentResponseDTO) => item.firstName,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -35,7 +35,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'lastName',
                     title: 'Last Name',
-                    accessor: 'lastName',
+                    accessor: (item: AgentResponseDTO) => item.lastName,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -48,7 +48,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'fullName',
                     title: 'Full Name',
-                    accessor: 'fullName',
+                    accessor: (item: AgentResponseDTO) => item.fullName,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -61,7 +61,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'website',
                     title: 'Website',
-                    accessor: 'website',
+                    accessor: (item: AgentResponseDTO) => item.website,
                     inputType: InputType.URL,
                     isUrl: true,
                     isDollarAmount: false,
@@ -74,7 +74,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'companyName',
                     title: 'Company Name',
-                    accessor: 'companyName',
+                    accessor: (item: AgentResponseDTO) => item.companyName,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -87,7 +87,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'phoneNumber',
                     title: 'Phone Number',
-                    accessor: 'phoneNumber',
+                    accessor: (item: AgentResponseDTO) => item.phoneNumber,
                     inputType: InputType.PHONE,
                     isUrl: false,
                     isDollarAmount: false,
@@ -100,7 +100,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'email',
                     title: 'Email',
-                    accessor: 'email',
+                    accessor: (item: AgentResponseDTO) => item.email,
                     inputType: InputType.EMAIL,
                     isUrl: false,
                     isDollarAmount: false,
@@ -113,7 +113,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'country',
                     title: 'Country',
-                    accessor: 'country',
+                    accessor: (item: AgentResponseDTO) => item.country,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -126,7 +126,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'state',
                     title: 'State',
-                    accessor: 'state',
+                    accessor: (item: AgentResponseDTO) => item.state,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
@@ -139,7 +139,7 @@ export class CreateAgentsTable implements CreateTableInterface<AgentResponseDTO>
                 new BasicColumn<AgentResponseDTO>({
                     key: 'agentType',
                     title: 'Agent Type',
-                    accessor: 'agentType',
+                    accessor: (item: AgentResponseDTO) => item.agentType,
                     inputType: InputType.TEXT,
                     isUrl: false,
                     isDollarAmount: false,
