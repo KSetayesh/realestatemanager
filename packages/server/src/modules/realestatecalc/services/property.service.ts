@@ -68,7 +68,12 @@ export class PropertyService {
         // For this reason we DO NOT want to "await" on the updateCacheInBackground function.
         // this.updateCacheIfNeeded(zillowUrls, false);
 
-        return this.getCalcResults(listingDetailsArr);
+        const results: ListingWithScenariosResponseDTO[] = await this.getCalcResults(listingDetailsArr);
+        // console.log('Size of results:', results.length);
+        // Hardcoded for now (remove this)
+        const limitedResults = results.slice(0, 100);
+        return limitedResults;
+        // return this.getCalcResults(listingDetailsArr);
 
     }
 

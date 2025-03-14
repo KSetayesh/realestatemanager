@@ -5,7 +5,7 @@ import { ServeStaticMiddleware } from './serve-static.middleware';
 import { PathUtil } from './utility/PathUtil';
 import * as bodyParser from 'body-parser';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT ?? 3000;
 
 async function bootstrap() {
 
